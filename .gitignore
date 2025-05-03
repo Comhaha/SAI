@@ -1,10 +1,16 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,androidstudio,android,kotlin,intellij,python,pycharm,gradle,visualstudiocode,visualstudio,maven,windows,macos,git,netbeans,intellij+all,intellij+iml
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,androidstudio,android,kotlin,intellij,python,pycharm,gradle,visualstudiocode,visualstudio,maven,windows,macos,git,netbeans,intellij+all,intellij+iml
 
+# Visual Studio 캐시/빌드 폴더
+bin/
+obj/
+.vs/
+
 ### Android ###
 # Gradle files
 .gradle/
 build/
+
 
 # Local configuration file (sdk path, etc)
 local.properties
