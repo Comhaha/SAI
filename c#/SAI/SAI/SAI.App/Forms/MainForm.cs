@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Forms;
 
 namespace SAI
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm
     {
         public MainForm()
         {
             InitializeComponent();
-            this.ClientSize = new System.Drawing.Size(1920, 1040);
 
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
         {
 
         }

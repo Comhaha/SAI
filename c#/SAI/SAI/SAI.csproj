@@ -52,14 +52,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SAI.App\Form\MainForm.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SAI.App\Form\MainForm.Designer.cs">
+    <Compile Include="SAI.App\Forms\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Views\Common\UcBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Common\UcBase.Designer.cs">
+      <DependentUpon>UcBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,15 +85,17 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="SAI.App\Form\MainForm.resx">
+    <EmbeddedResource Include="SAI.App\Forms\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Common\UcBase.resx">
+      <DependentUpon>UcBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialGuide.resx">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
@@ -91,6 +110,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SAI.Application\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -99,15 +119,16 @@
     <Folder Include="SAI.App\Presenters\" />
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
-    <Folder Include="SAI.App\Resources\Images\" />
     <Folder Include="SAI.App\Resources\Styles\" />
     <Folder Include="SAI.App\Views.Interfaces\" />
-    <Folder Include="SAI.App\Views\Common\" />
     <Folder Include="SAI.App\Views\Dialogs\" />
     <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
     <Folder Include="SAI.Core\ValueObjects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SAI.App\Resources\Images\img_background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
