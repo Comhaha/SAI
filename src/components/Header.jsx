@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/images/logo.svg";
 import SearchIcon from '@mui/icons-material/Search';
 
 
