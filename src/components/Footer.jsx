@@ -12,8 +12,8 @@ function Footer() {
 
   return (
     <>
-      <footer className="bg-white w-full h-[320px]">
-        <div className="max-w-[1280px] mx-auto px-[72px] py-[40px]">
+      <footer className="bg-white w-full h-[320px] border-t border-black/10">
+        <div className="max-w-[1296px] mx-auto px-[30px] min-[1130px]:px-[72px] py-[40px]">
           <div className="grid grid-cols-5 gap-8">
             {/* SAI 섹션 */}
             <div>
