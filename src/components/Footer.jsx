@@ -14,7 +14,7 @@ function Footer() {
     <>
       <footer className="bg-white w-full h-[320px] border-t border-black/10 ">
         <div className="max-w-[1296px] mx-auto px-[30px] min-[1130px]:px-[72px] py-[40px]">
-          <div className="grid grid-cols-5 gap-8">
+          <div className="grid grid-cols-5 max-[900px]:grid-cols-3 max-[720px]:grid-cols-2 gap-8 max-[900px]:gap-4 max-[720px]:gap-2">
             {/* SAI 섹션 */}
             <div>
               <h3 className="font-bold mb-4">SAI</h3>
@@ -71,14 +71,14 @@ function Footer() {
               <button 
                 onClick={() => handleComingSoon('Get Secret Key')}
                 className="mt-6 inline-block px-6 py-3 bg-custom-300 text-white rounded-lg
-                          hover:bg-opacity-90 transition-all shadow-md"
+                          hover:bg-opacity-90 transition-all shadow-md max-[900px]:mx-auto max-[720px]:mx-auto"
               >
                 Get Secret Key
               </button>
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-gray-100 text-center text-gray-600">
+          <div className="mt-12 pt-8 border-t border-gray-100 text-center text-gray-600 max-[720px]:mt-6 max-[720px]:pt-4">
             <p>Copyright © SAI. All rights reserved.</p>
           </div>
         </div>
