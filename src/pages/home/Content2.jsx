@@ -2,6 +2,7 @@ import content11 from '@/assets/images/content1-1.svg';
 import content12 from '@/assets/images/content1-2.svg';
 import content13 from '@/assets/images/content1-3.svg';
 import content14 from '@/assets/images/content1-4.svg';
+import Card from '@/components/Card';
 
 function Content2() {
   return (
@@ -26,42 +27,25 @@ function Content2() {
 
       {/* 오른쪽 영역 */}
       <div className="flex flex-col w-1/2 gap-6 justify-between h-full max-[900px]:w-full max-[900px]:gap-4">
-        {/* 뉴스 카드 1: AI Labeling */}
-        <div className="flex gap-4 items-start border-b pb-4 max-[900px]:flex-row max-[900px]:items-center">
-          <div className="flex-1 flex flex-col justify-between max-[900px]:w-2/3">
-            <div className="text-[23px] font-bold font-['Noto_Sans_KR'] mb-1 max-[900px]:text-[16px]">AI Labeling</div>
-            <div className="text-[18px] font-medium font-['Noto_Sans_KR'] text-gray-600 max-[900px]:text-[12px]">
-              Add meaningful tags to your data so AI can learn. Good labeling leads to better models.
-            </div>
-          </div>
-          <div className="flex-shrink-0 w-[180px] max-[900px]:w-[120px]">
-            <img src={content12} alt="AI Labeling" className="w-full h-auto object-cover rounded" />
-          </div>
-        </div>
-        {/* 뉴스 카드 2: AI Training */}
-        <div className="flex gap-4 items-start border-b pb-4 max-[900px]:flex-row max-[900px]:items-center">
-          <div className="flex-1 flex flex-col justify-between max-[900px]:w-2/3">
-            <div className="text-[23px] font-bold font-['Noto_Sans_KR'] mb-1 max-[900px]:text-[16px]">AI Training</div>
-            <div className="text-[18px] font-medium font-['Noto_Sans_KR'] text-gray-600 max-[900px]:text-[12px]">
-              Train your model with prepared data. Adjust settings and find the best solution for your task.
-            </div>
-          </div>
-          <div className="flex-shrink-0 w-[180px] max-[900px]:w-[120px]">
-            <img src={content13} alt="AI Training" className="w-full h-auto object-cover rounded" />
-          </div>
-        </div>
-        {/* 뉴스 카드 3: AI Inference */}
-        <div className="flex gap-4 items-start max-[900px]:flex-row max-[900px]:items-center">
-          <div className="flex-1 flex flex-col justify-between max-[900px]:w-2/3">
-            <div className="text-[23px] font-bold font-['Noto_Sans_KR'] mb-1 max-[900px]:text-[16px]">AI Inference</div>
-            <div className="text-[18px] font-medium font-['Noto_Sans_KR'] text-gray-600 max-[900px]:text-[12px]">
-              Use your trained model to predict, classify, or recommend. See results instantly and visually.
-            </div>
-          </div>
-          <div className="flex-shrink-0 w-[180px] max-[900px]:w-[120px]">
-            <img src={content14} alt="AI Inference" className="w-full h-auto object-cover rounded" />
-          </div>
-        </div>
+        <Card
+          title="AI Labeling"
+          description="Add meaningful tags to your data so AI can learn. Good labeling leads to better models."
+          image={content12}
+          alt="AI Labeling"
+        />
+        <Card
+          title="AI Training"
+          description="Train your model with prepared data. Adjust settings and find the best solution for your task."
+          image={content13}
+          alt="AI Training"
+        />
+        <Card
+          title="AI Inference"
+          description="Use your trained model to predict, classify, or recommend. See results instantly and visually."
+          image={content14}
+          alt="AI Inference"
+          borderBottom={false}
+        />
       </div>
     </div>
   );
