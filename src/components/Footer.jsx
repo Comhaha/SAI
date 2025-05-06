@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/useToast';
+import Toast from './Toast';
+
 
 function Footer() {
+    const { isVisible, message, showToast } = useToast();
 
+    const handleComingSoon = (feature) => {
+      showToast(`${feature} feature is coming soon!`);
+    };
 
   return (
     <>
@@ -12,11 +19,11 @@ function Footer() {
             <div>
               <h3 className="font-bold mb-4">SAI</h3>
               <ul className="space-y-2">
-                <li><button  className="text-gray-600 hover:text-custom-300">FAQ</button></li>
-                <li><button  className="text-gray-600 hover:text-custom-300">License</button></li>
-                <li><button  className="text-gray-600 hover:text-custom-300">Privacy</button></li>
-                <li><button  className="text-gray-600 hover:text-custom-300">Citation</button></li>
-                <li><button  className="text-gray-600 hover:text-custom-300">Contact</button></li>
+                <li><button  onClick={() => handleComingSoon('FAQ')} className="text-gray-600 hover:text-custom-300">FAQ</button></li>
+                <li><button  onClick={() => handleComingSoon('License')} className="text-gray-600 hover:text-custom-300">License</button></li>
+                <li><button  onClick={() => handleComingSoon('Privacy')} className="text-gray-600 hover:text-custom-300">Privacy</button></li>
+                <li><button  onClick={() => handleComingSoon('Citation')} className="text-gray-600 hover:text-custom-300">Citation</button></li>
+                <li><button  onClick={() => handleComingSoon('Contact')} className="text-gray-600 hover:text-custom-300">Contact</button></li>
               </ul>
             </div>
 
@@ -46,11 +53,11 @@ function Footer() {
             <div>
               <h3 className="font-bold mb-4">Documentation</h3>
               <ul className="space-y-2">
-                <li><button className="text-gray-600 hover:text-custom-300">Get started</button></li>
-                <li><button className="text-gray-600 hover:text-custom-300">YouTube tutorials</button></li>
-                <li><button className="text-gray-600 hover:text-custom-300">Example workflows</button></li>
-                <li><button  className="text-gray-600 hover:text-custom-300">Widgets</button></li>
-                <li><button className="text-gray-600 hover:text-custom-300">Scripting</button></li>
+                <li><button onClick={() => handleComingSoon('Documentation')} className="text-gray-600 hover:text-custom-300">Get started</button></li>
+                <li><button onClick={() => handleComingSoon('YouTube tutorials')} className="text-gray-600 hover:text-custom-300">YouTube tutorials</button></li>
+                <li><button onClick={() => handleComingSoon('Example workflows')} className="text-gray-600 hover:text-custom-300">Example workflows</button></li>
+                <li><button onClick={() => handleComingSoon('Widgets')} className="text-gray-600 hover:text-custom-300">Widgets</button></li>
+                <li><button onClick={() => handleComingSoon('Scripting')} className="text-gray-600 hover:text-custom-300">Scripting</button></li>
               </ul>
             </div>
 
@@ -76,6 +83,8 @@ function Footer() {
           </div>
         </div>
       </footer>
+      <Toast isVisible={isVisible} message={message} />
+
     </>
   );
 }
