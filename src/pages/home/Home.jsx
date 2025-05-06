@@ -14,10 +14,8 @@ function Home() {
                 <hr className="my-5"/>
                 <Content3 />
                 <Content4 />
-                <Content5 />
             </div>
-         
-        
+            <div className="flex w-full"><Content5 /></div>
         </div>
         
     )
