@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="https://unpkg.com/blockly/python.min.js"></script>
+    <script src="custom_blocks.js"></script>
+</head>
+<body>
+    <div id="blocklyDiv" style="height: 100vh; width: 100vw;"></div>
+    <xml id="toolbox" style="display: none">
+        <block type="controls_if"></block>
+        <block type="math_number"></block>
+        <block type="text_print"></block>
+        <block type="say_hello"></block>
+    </xml>
+
+    <script>
+        const workspace = Blockly.inject('blocklyDiv', {
+        toolbox: null
+        });
+
+        function getPythonCode() {
+        return Blockly.Python.workspaceToCode(workspace);
+        }
+
+        window.getPythonCode = getPythonCode;
+
+		function addBlock(type) {
+			const block = workspace.newBlock(type);
+			block.initSvg();
+			block.render();
+		}
+    </script>
+</body>
+</html>
