@@ -1,0 +1,83 @@
+import { Link } from 'react-router-dom';
+
+function Footer() {
+
+
+  return (
+    <>
+      <footer className="bg-white w-full h-[320px]">
+        <div className="max-w-[1280px] mx-auto px-[72px] py-[40px]">
+          <div className="grid grid-cols-5 gap-8">
+            {/* SAI 섹션 */}
+            <div>
+              <h3 className="font-bold mb-4">SAI</h3>
+              <ul className="space-y-2">
+                <li><button  className="text-gray-600 hover:text-custom-300">FAQ</button></li>
+                <li><button  className="text-gray-600 hover:text-custom-300">License</button></li>
+                <li><button  className="text-gray-600 hover:text-custom-300">Privacy</button></li>
+                <li><button  className="text-gray-600 hover:text-custom-300">Citation</button></li>
+                <li><button  className="text-gray-600 hover:text-custom-300">Contact</button></li>
+              </ul>
+            </div>
+
+            {/* Download 섹션 */}
+            <div>
+              <h3 className="font-bold mb-4">Download</h3>
+              <ul className="space-y-2">
+                <li><Link to="/download" className="text-gray-600 hover:text-custom-300">Windows</Link></li>
+                <li><Link to="/download" className="text-gray-600 hover:text-custom-300">Mac OS</Link></li>
+                <li><Link to="/download" className="text-gray-600 hover:text-custom-300">Other platforms</Link></li>
+              </ul>
+            </div>
+
+            {/* Community 섹션 */}
+            <div>
+              <h3 className="font-bold mb-4">Community</h3>
+              <ul className="space-y-2">
+                <li><a href="https://twitter.com/sai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">Twitter</a></li>
+                <li><a href="https://facebook.com/sai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">Facebook</a></li>
+                <li><a href="https://stackoverflow.com/questions/tagged/sai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">Stack Exchange</a></li>
+                <li><a href="https://youtube.com/sai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">YouTube</a></li>
+                <li><a href="https://discord.gg/sai" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">Discord</a></li>
+              </ul>
+            </div>
+
+            {/* Documentation 섹션 */}
+            <div>
+              <h3 className="font-bold mb-4">Documentation</h3>
+              <ul className="space-y-2">
+                <li><button className="text-gray-600 hover:text-custom-300">Get started</button></li>
+                <li><button className="text-gray-600 hover:text-custom-300">YouTube tutorials</button></li>
+                <li><button className="text-gray-600 hover:text-custom-300">Example workflows</button></li>
+                <li><button  className="text-gray-600 hover:text-custom-300">Widgets</button></li>
+                <li><button className="text-gray-600 hover:text-custom-300">Scripting</button></li>
+              </ul>
+            </div>
+
+            {/* Developers 섹션 */}
+            <div>
+              <h3 className="font-bold mb-4">Developers</h3>
+              <ul className="space-y-2">
+                <li><a href="" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-custom-300">GitHub</a></li>
+                <li><button onClick={() => handleComingSoon('Getting started')} className="text-gray-600 hover:text-custom-300">Getting started</button></li>
+              </ul>
+              <button 
+                onClick={() => handleComingSoon('Get Secret Key')}
+                className="mt-6 inline-block px-6 py-3 bg-custom-300 text-white rounded-lg
+                          hover:bg-opacity-90 transition-all shadow-md"
+              >
+                Get Secret Key
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-gray-100 text-center text-gray-600">
+            <p>Copyright © SAI. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+export default Footer;
