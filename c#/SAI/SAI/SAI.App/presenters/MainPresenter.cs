@@ -1,5 +1,6 @@
 ﻿using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,19 @@ namespace SAI.SAI.App.Presenters
 {
 	internal class MainPresenter
 	{
-		private readonly IMainView view;
+		private readonly IMainView mainView;
 
 		public MainPresenter(IMainView view)
 		{
-			this.view = view;
-			this.view.AddBlockButtonClicked += OnAddBlockClicked;
+			this.mainView = view;
 		}
 
-		private void OnAddBlockClicked(object sender, BlockEventArgs e)
+		// 앱 실행 시 초기 페이지 로드
+		public void Initialize()
 		{
-			// JS 함수로 이벤트 함수 파라미터 BlockEventArg 안 blockType으로 블록 생성
-			view.InsertBlockToBlockly(e.BlockType);
+			var blockly = new Blockly(); // View 생성
+			var blocklyPresenter = new BlocklyPresenter(blockly); // Presenter 연결
+			mainView.LoadPage(blockly); // 메인 폼에 삽입
 		}
 	}
 }

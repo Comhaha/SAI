@@ -7,45 +7,40 @@ using System.IO;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Models;
+using SAI.SAI.App.Views.Pages;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 
 namespace SAI
 {
     public partial class MainForm : Form, IMainView
     {
-		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-
 		private MainPresenter presenter;
+
 		public MainForm()
         {
             InitializeComponent();
-
 			presenter = new MainPresenter(this);
-
-            // blockly html을 웹뷰에 연결
-            string localPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html";
-			chromiumWebBrowser1.Load(new Uri(localPath).AbsoluteUri);
-
-			// btnPip 클릭시 이벤트 함수 호출(mainForm에서, 전달값 BlockType(string))
-			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 		}
-
-		// 이건 Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위)
-		public void InsertBlockToBlockly(string blockType)
-		{
-			// 웹뷰에 블록 생성하는 함수(addBlock)를 JavaScript로 실행
-			chromiumWebBrowser1.ExecuteScriptAsync($"addBlock('{blockType}')");
-		}
-
 
 		private void MainForm_Load(object sender, EventArgs e)
-        {
+		{
+			// 초기 페이지인 Blockly를 불러온다.
+			presenter.Initialize();
+		}
 
-        }
+		private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+		{
 
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-        {
+		}
 
-        }
-    }
+		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
+		public void LoadPage(UserControl page)
+		{
+			guna2Panel1.Controls.Clear();
+			page.Dock = DockStyle.Fill;
+			guna2Panel1.Controls.Add(page);
+		}
+	}
 }

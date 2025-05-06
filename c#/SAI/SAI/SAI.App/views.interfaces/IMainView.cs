@@ -1,15 +1,15 @@
-﻿using SAI.SAI.App.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
-	public interface IMainView
+	internal interface IMainView
 	{
-		event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-		void InsertBlockToBlockly(string blockType);  // 웹뷰에 블록 추가
+		// 페이지 불러오는 함수
+		void LoadPage(UserControl page);
 	}
 }
