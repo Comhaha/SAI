@@ -1,10 +1,13 @@
 package com.sai.backend.global.config;
 
+import com.sai.backend.domain.token.repository.redis.RedisTokenRepository;
+import com.sai.backend.global.filter.ApiTokenFilter;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +24,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final RedisTokenRepository redisTokenRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -52,6 +58,27 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /*───────────────── ②  나머지 API (stateless) ─────────────────*/
+    @Bean
+    @Order(2)
+    public SecurityFilterChain apiChain(HttpSecurity http) throws Exception {
+
+        ApiTokenFilter apiTokenFilter =
+            new ApiTokenFilter(redisTokenRepository, redisTemplate);
+
+        http.csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/download/**").permitAll()
+                .requestMatchers("/api/ai/**").authenticated()
+                .anyRequest().permitAll())
+            .addFilterBefore(apiTokenFilter,
+                org.springframework.security.web.authentication.
+                    UsernamePasswordAuthenticationFilter.class);
+
+
+        return http.build();
+    }
 
     /*───────────────── 커스텀 세션 만료 전략 ─────────────────*/
     private InvalidSessionStrategy refererRedirect() {
