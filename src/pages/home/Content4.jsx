@@ -37,7 +37,7 @@ function Content4() {
   const fadeInUpAvatar = useFadeInUp(0.1);
 
   return (
-    <div className="w-full flex justify-center items-start gap-12 py-16 max-w-[1296px] mx-auto">
+    <div className="w-full flex justify-center items-start gap-12 py-16 max-w-[1296px] mx-auto max-[900px]:flex-col max-[900px]:items-stretch">
       {/* Left: Section Title and Intro */}
       <div className="flex-1 min-w-[320px] max-w-[500px]">
         <div className="text-[40px] font-bold font-['Noto_Sans_KR'] text-black mb-4">AI Learning, Real User Stories</div>
@@ -50,7 +50,7 @@ function Content4() {
         </a>
       </div>
       {/* Right: Carousel */}
-      <div className="flex-1 min-w-[340px] max-w-[600px]">
+      <div className="flex-1 min-w-[340px] max-w-[600px] max-[900px]:mt-10">
         <Carousel autoplay autoplayInterval={3000} opts={{ loop: true }}>
           <CarouselContent>
             {reviews.map((review, idx) => (
