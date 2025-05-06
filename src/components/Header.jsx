@@ -7,7 +7,7 @@ function Header() {
     return (
         <>
         <header className="fixed top-0 left-0 right-0 z-50 bg-white h-[80px] w-full box-border border-b border-custom-300/30">
-          <nav className="flex justify-between items-center h-[80px] max-w-[1296px] mx-auto px-[30px] min-[1130px]:px-[72px] box-border">
+          <nav className="flex justify-between items-center h-[80px] max-w-[1280px] mx-auto px-[30px] min-[1130px]:px-[72px] box-border">
             {/* 로고 */}
             <div className="text-2xl font-bold text-custom-300">
               <Link to="/">
