@@ -18,7 +18,6 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-
 *.iws
 *.iml
 *.ipr
@@ -35,3 +34,4 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application-secret.yml

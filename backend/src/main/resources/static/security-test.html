@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Session Test</title>
+  <style>
+    html { font-family: system-ui, sans-serif; }
+    section { margin-bottom: 2rem; }
+    button { margin-left:.4rem; padding:.4rem .8rem; }
+    input { padding:.4rem; }
+    #out { white-space: pre-line; border:1px solid #ddd; padding:1rem; }
+  </style>
+</head>
+<body>
+
+<h1>Admin Session Test</h1>
+
+<!-- 1. Register ----------------------------------------------------------->
+<section>
+  <h2>1️⃣ 어드민 등록 (최초 1회)</h2>
+  <input id="regPw1" type="password" placeholder="비밀번호">
+  <input id="regPw2" type="password" placeholder="비밀번호 확인">
+  <button id="regBtn">Register</button>
+</section>
+
+<!-- 2. Login ------------------------------------------------------------->
+<section>
+  <h2>2️⃣ 로그인</h2>
+  <input id="loginPw" type="password" placeholder="비밀번호">
+  <button id="loginBtn">Login</button>
+</section>
+
+<!-- 3. Change Password --------------------------------------------------->
+<section>
+  <h2>3️⃣ 비밀번호 변경</h2>
+  <input id="curPw" type="password" placeholder="현재 PW">
+  <input id="newPw" type="password" placeholder="새 PW">
+  <button id="chgBtn">Change</button>
+</section>
+
+<!-- 4. Ping -------------------------------------------------------------->
+<section>
+  <h2>4️⃣ Ping (세션 확인)</h2>
+  <button id="pingBtn">Ping</button>
+</section>
+
+<h3>Result</h3>
+<div id="out"></div>
+
+<script>
+  const $ = s => document.querySelector(s);
+  const print = v => $('#out').textContent = typeof v === 'string' ? v
+      : JSON.stringify(v, null, 2);
+
+  // 공통 fetch 래퍼
+  async function api(url, method='GET', body) {
+    const res = await fetch(url, {
+      method, credentials:'same-origin',
+      headers: { 'Content-Type':'application/json' },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    return res.ok ? res.json() : { code: res.status, message:'HTTP 오류' };
+  }
+
+  /* 1) register */
+  $('#regBtn').onclick = async () => {
+    const pw1=$('#regPw1').value, pw2=$('#regPw2').value;
+    if(!pw1||!pw2) return alert('비밀번호 두 칸 모두 입력');
+    const r = await api('/api/admin/register','POST',{password:pw1,password2:pw2});
+    print(r);
+  };
+
+  /* 2) login */
+  $('#loginBtn').onclick = async () => {
+    const pw=$('#loginPw').value;
+    if(!pw) return alert('비밀번호 입력');
+    const r = await api('/api/admin/login','POST',{password:pw});
+    print(r);
+  };
+
+  /* 3) change */
+  $('#chgBtn').onclick = async () => {
+    const cur=$('#curPw').value, nw=$('#newPw').value;
+    if(!cur||!nw) return alert('현재·새 PW 입력');
+    const r = await api('/api/admin/change','POST',
+        {currentPw:cur, newPw:nw});
+    print(r);
+  };
+
+  /* 4) ping */
+  $('#pingBtn').onclick = async () => {
+    const r = await api('/api/admin/ping');
+    print(r);
+  };
+</script>
+
+</body>
+</html>

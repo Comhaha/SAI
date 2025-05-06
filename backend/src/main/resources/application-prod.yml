@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: application-secret.yml
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+server:
+  port: 9091

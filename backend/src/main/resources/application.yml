@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: backend
+  profiles:
+    active: local
+    group:
+      local: local, secret
+      prod: prod, secret
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+  data:
+    redis:
+      repositories:
+        enabled: true
