@@ -26,7 +26,6 @@ pipeline {
                         dir('frontend') {  
                            sh """
                                 docker build -t ${FRONTEND_IMAGE_NAME}:${GIT_SHA} .
-                                docker push ${FRONTEND_IMAGE_NAME}:${GIT_SHA}
                             """
                         }
                     }
