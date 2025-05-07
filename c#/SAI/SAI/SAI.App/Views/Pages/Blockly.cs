@@ -30,6 +30,7 @@ namespace SAI.SAI.App.Views.Pages
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 		}
 
+
 		// 이건 Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위)
 		public void addBlock(string blockType)
 		{
