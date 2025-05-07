@@ -7,63 +7,35 @@ auto_merge_request:
         - branches
     script:
         - |
-            Write-Host "🔍 최신 커밋 메시지 읽는 중..."
-            $COMMIT_MSG = git log -1 --pretty=%B
-            $BODY_ONLY = $COMMIT_MSG -split "`n" | Select-Object -Skip 1
+            Write-Host "📄 커밋 메시지:"
+            $commitMsg = git log -1 --pretty=%B
+            $bodyOnly = ($commitMsg -split "`n") | Select-Object -Skip 1 -Join "`n"
 
-            Write-Host "📄 커밋 본문:"
-            Write-Host $BODY_ONLY
+            Write-Host $bodyOnly
 
-            # 본문에 [MR]이 없으면 종료
-            if (-not ($BODY_ONLY -match "\[MR\]")) {
-              Write-Host "🚫 [MR] 태그가 커밋 본문에 없습니다. MR 생성 생략."
+            if ($bodyOnly -notmatch '\[MR\]') {
+              Write-Host "🚫 [MR] 태그 없음, MR 생성 생략"
               exit 0
             }
 
-            Write-Host "✅ [MR] 태그 확인됨. 기존 MR 존재 여부 확인 중..."
+            Write-Host "✅ [MR] 태그 확인됨. 기존 MR 확인 중..."
 
-            # 열린 MR만 필터링하도록 조회 방식 변경
-            $SOURCE_BRANCH = $env:CI_COMMIT_REF_NAME
+            $sourceBranch = "$env:CI_COMMIT_REF_NAME"
+            $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?state=opened&source_branch=$sourceBranch"
 
-            # GitLab API 헤더 설정 - 개인 액세스 토큰 사용
-            $headers = @{
-                "PRIVATE-TOKEN" = $env:GITLAB_API_TOKEN  # CI/CD 변수로 설정된 개인 액세스 토큰
-                "Content-Type" = "application/json"
+            $existingMR = Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $apiUrl -Method Get
+
+            if ($existingMR.Count -gt 0) {
+              Write-Host "⚠️ 이미 열린 MR이 있음 → 새로 만들지 않음"
+              exit 0
             }
 
-            try {
-                $mrApiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH&state=opened"
-                Write-Host "API URL: $mrApiUrl"
-                
-                $EXISTING_MR_ALL = Invoke-RestMethod -Uri $mrApiUrl -Headers $headers -Method Get
-                
-                if ($EXISTING_MR_ALL.Count -gt 0) {
-                  Write-Host "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
-                  exit 0
-                }
-
-                Write-Host "🚀 MR 자동 생성 시작..."
-
-                $MR_BODY = @{
-                    source_branch = $SOURCE_BRANCH
-                    target_branch = "develop"
-                    title = "자동 MR: $SOURCE_BRANCH"
-                    description = "이 커밋에서 자동 생성되었습니다: $env:CI_COMMIT_SHORT_SHA"
-                    remove_source_branch = $true
-                } | ConvertTo-Json
-                
-                $createMrUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests"
-                Write-Host "Create MR URL: $createMrUrl"
-                
-                $response = Invoke-RestMethod -Uri $createMrUrl -Headers $headers -Method Post -Body $MR_BODY
-                Write-Host "✅ MR 생성 완료! MR 번호: $($response.iid), 제목: $($response.title)"
+            $createUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests"
+            Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $createUrl -Method Post -Form @{
+              source_branch = $sourceBranch
+              target_branch = "develop"
+              title = "자동 MR: $sourceBranch"
+              description = "자동 생성됨"
             }
-            catch {
-                Write-Host "❌ 에러 발생:"
-                Write-Host $_.Exception.Message
-                if ($_.ErrorDetails) {
-                    Write-Host "응답 본문:"
-                    Write-Host $_.ErrorDetails.Message
-                }
-                exit 1
-            }
+
+            Write-Host "✅ MR 생성 완료!"
