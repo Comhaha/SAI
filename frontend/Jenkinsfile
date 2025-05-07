@@ -1,0 +1,99 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'GIT_SHA', defaultValue: 'latest', description: 'Git Commit Short SHA')
+    }
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                script {
+                    checkout scm
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script{
+                    withCredentials([string(credentialsId: 'FRONTEND_IMAGE_NAME', variable: 'FRONTEND_IMAGE_NAME')]) {
+                        dir('frontend') {  
+                           sh """
+                                docker build -t ${FRONTEND_IMAGE_NAME}:${GIT_SHA} .
+                                docker push ${FRONTEND_IMAGE_NAME}:${GIT_SHA}
+                            """
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Frontend') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'FRONTEND_IMAGE_NAME', variable: 'FRONTEND_IMAGE_NAME'),
+                        string(credentialsId: 'FRONTEND_CONTAINER_NAME', variable: 'FRONTEND_CONTAINER_NAME'),
+                        string(credentialsId: 'DOCKER_NETWORK', variable: 'DOCKER_NETWORK')   
+                    ]) {
+                        sh """
+                            docker stop ${FRONTEND_CONTAINER_NAME} | true
+                            docker rm ${FRONTEND_CONTAINER_NAME} | true
+
+                            docker run -d --name ${FRONTEND_CONTAINER_NAME} \
+                                --network ${DOCKER_NETWORK} -p 3001:3000 \
+                            ${FRONTEND_IMAGE_NAME}:${GIT_SHA}
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                withCredentials([string(credentialsId: 'FRONTEND_WEBHOOK_URL', variable: 'FRONTEND_MM_WEBHOOK_URL')]) {
+                    def jsonMessage = """{
+                        "attachments": [{
+                            "text": "**✅ Frontend Build 성공**\\\\n- 상태: SUCCESS\\\\n- [🔗 상세 정보](${env.BUILD_URL})",
+                            "color": "#00FF00"
+                        }]
+                    }"""
+
+                    sh """
+                    echo '${jsonMessage}' > mattermost_payload.json
+                    cat mattermost_payload.json
+                    curl -X POST -H "Content-Type: application/json" --data @mattermost_payload.json '${FRONTEND_MM_WEBHOOK_URL}'
+                    rm -f mattermost_payload.json
+                    """
+                }
+            }
+        }
+        failure {
+            script {
+                withCredentials([string(credentialsId: 'FRONTEND_WEBHOOK_URL', variable: 'FRONTEND_MM_WEBHOOK_URL')]) {
+                    def jsonMessage = """{
+                        "attachments": [{
+                            "text": "**❌ Frontend Build 실패**\\\\n- 상태: FAILURE\\\\n- [🔗 상세 정보](${env.BUILD_URL}/console) ",
+                            "color": "#FF0000"
+                        }]
+                    }"""
+
+                    sh """
+                    echo '${jsonMessage}' > mattermost_payload.json
+                    cat mattermost_payload.json
+                    curl -X POST -H "Content-Type: application/json" --data @mattermost_payload.json '${FRONTEND_MM_WEBHOOK_URL}'
+                    rm -f mattermost_payload.json
+                    """
+                }
+            }
+        }
+    }
+}
