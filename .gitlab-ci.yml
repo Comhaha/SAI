@@ -25,22 +25,19 @@ auto_merge_request:
             # 열린 MR만 필터링하도록 조회 방식 변경
             $SOURCE_BRANCH = $env:CI_COMMIT_REF_NAME
 
-            # GitLab API 헤더 설정
+            # GitLab API 헤더 설정 - 개인 액세스 토큰 사용
             $headers = @{
-                "PRIVATE-TOKEN" = $env:CI_JOB_TOKEN
+                "PRIVATE-TOKEN" = $env:GITLAB_API_TOKEN  # CI/CD 변수로 설정된 개인 액세스 토큰
                 "Content-Type" = "application/json"
             }
 
             try {
-                $mrApiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH"
+                $mrApiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH&state=opened"
                 Write-Host "API URL: $mrApiUrl"
                 
                 $EXISTING_MR_ALL = Invoke-RestMethod -Uri $mrApiUrl -Headers $headers -Method Get
                 
-                # opened 상태인 MR 확인
-                $OPEN_MR = $EXISTING_MR_ALL | Where-Object { $_.state -eq "opened" }
-
-                if ($OPEN_MR) {
+                if ($EXISTING_MR_ALL.Count -gt 0) {
                   Write-Host "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
                   exit 0
                 }
@@ -52,18 +49,21 @@ auto_merge_request:
                     target_branch = "develop"
                     title = "자동 MR: $SOURCE_BRANCH"
                     description = "이 커밋에서 자동 생성되었습니다: $env:CI_COMMIT_SHORT_SHA"
+                    remove_source_branch = $true
                 } | ConvertTo-Json
                 
                 $createMrUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests"
                 Write-Host "Create MR URL: $createMrUrl"
                 
                 $response = Invoke-RestMethod -Uri $createMrUrl -Headers $headers -Method Post -Body $MR_BODY
-                Write-Host "✅ MR 생성 완료! MR 번호: $($response.iid)"
+                Write-Host "✅ MR 생성 완료! MR 번호: $($response.iid), 제목: $($response.title)"
             }
             catch {
                 Write-Host "❌ 에러 발생:"
                 Write-Host $_.Exception.Message
-                Write-Host "응답 본문:"
-                Write-Host $_.ErrorDetails.Message
+                if ($_.ErrorDetails) {
+                    Write-Host "응답 본문:"
+                    Write-Host $_.ErrorDetails.Message
+                }
                 exit 1
             }
