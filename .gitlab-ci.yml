@@ -7,42 +7,46 @@ auto_merge_request:
         - branches
     script:
         - |
-            echo "🔍 최신 커밋 메시지 읽는 중..."
-            COMMIT_MSG=$(git log -1 --pretty=%B)
-            BODY_ONLY=$(echo "$COMMIT_MSG" | tail -n +2)
+            Write-Host "🔍 최신 커밋 메시지 읽는 중..."
+            $COMMIT_MSG = git log -1 --pretty=%B
+            $BODY_ONLY = $COMMIT_MSG -split "`n" | Select-Object -Skip 1
 
-            echo "📄 커밋 본문:"
-            echo "$BODY_ONLY"
+            Write-Host "📄 커밋 본문:"
+            Write-Host $BODY_ONLY
 
             # 본문에 [MR]이 없으면 종료
-            if ! echo "$BODY_ONLY" | grep "\[MR\]"; then
-              echo "🚫 [MR] 태그가 커밋 본문에 없습니다. MR 생성 생략."
+            if (-not ($BODY_ONLY -match "\[MR\]")) {
+              Write-Host "🚫 [MR] 태그가 커밋 본문에 없습니다. MR 생성 생략."
               exit 0
-            fi
+            }
 
-            echo "✅ [MR] 태그 확인됨. 기존 MR 존재 여부 확인 중..."
+            Write-Host "✅ [MR] 태그 확인됨. 기존 MR 존재 여부 확인 중..."
 
             # 열린 MR만 필터링하도록 조회 방식 변경
-            SOURCE_BRANCH="$CI_COMMIT_REF_NAME"
-            EXISTING_MR_ALL=$(curl --silent \
-              --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" \
-              "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH")
+            $SOURCE_BRANCH = $env:CI_COMMIT_REF_NAME
+            $EXISTING_MR_ALL = Invoke-RestMethod -Uri "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH" -Headers @{
+                "PRIVATE-TOKEN" = $env:CI_JOB_TOKEN
+            }
 
-            # opened 상태인 MR만 grep
-            OPEN_MR=$(echo "$EXISTING_MR_ALL" | grep '"state":"opened"')
+            # opened 상태인 MR 확인
+            $OPEN_MR = $EXISTING_MR_ALL | Where-Object { $_.state -eq "opened" }
 
-            if [ -n "$OPEN_MR" ]; then
-              echo "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
+            if ($OPEN_MR) {
+              Write-Host "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
               exit 0
-            fi
+            }
 
-            echo "🚀 MR 자동 생성 시작..."
+            Write-Host "🚀 MR 자동 생성 시작..."
 
-            curl --request POST "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests" \
-              --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" \
-              --form "source_branch=$SOURCE_BRANCH" \
-              --form "target_branch=develop" \
-              --form "title=자동 MR: $SOURCE_BRANCH" \
-              --form "description=이 커밋에서 자동 생성되었습니다: $CI_COMMIT_SHORT_SHA"
+            $MR_PARAMS = @{
+                source_branch = $SOURCE_BRANCH
+                target_branch = "develop"
+                title = "자동 MR: $SOURCE_BRANCH"
+                description = "이 커밋에서 자동 생성되었습니다: $env:CI_COMMIT_SHORT_SHA"
+            }
 
-            echo "✅ MR 생성 완료!"
+            Invoke-RestMethod -Method Post -Uri "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests" -Headers @{
+                "PRIVATE-TOKEN" = $env:CI_JOB_TOKEN
+            } -Body $MR_PARAMS
+
+            Write-Host "✅ MR 생성 완료!"
