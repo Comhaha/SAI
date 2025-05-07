@@ -9,7 +9,7 @@ auto_merge_request:
         - |
             Write-Host "📄 커밋 메시지:"
             $commitMsg = git log -1 --pretty=%B
-            $bodyOnly = ($commitMsg -split "`n") | Select-Object -Skip 1 -Join "`n"
+            $bodyOnly = ($commitMsg -split "`n" | Select-Object -Skip 1) -join "`n"
 
             Write-Host $bodyOnly
 
@@ -21,11 +21,12 @@ auto_merge_request:
             Write-Host "✅ [MR] 태그 확인됨. 기존 MR 확인 중..."
 
             $sourceBranch = "$env:CI_COMMIT_REF_NAME"
-            $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?state=opened&source_branch=$sourceBranch"
+            $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$sourceBranch"
 
-            $existingMR = Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $apiUrl -Method Get
+            $existingMRs = Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $apiUrl -Method Get
+            $openMR = $existingMRs | Where-Object { $_.state -eq "opened" }
 
-            if ($existingMR.Count -gt 0) {
+            if ($openMR.Count -gt 0) {
               Write-Host "⚠️ 이미 열린 MR이 있음 → 새로 만들지 않음"
               exit 0
             }
