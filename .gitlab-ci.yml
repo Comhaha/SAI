@@ -24,29 +24,46 @@ auto_merge_request:
 
             # 열린 MR만 필터링하도록 조회 방식 변경
             $SOURCE_BRANCH = $env:CI_COMMIT_REF_NAME
-            $EXISTING_MR_ALL = Invoke-RestMethod -Uri "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH" -Headers @{
+
+            # GitLab API 헤더 설정
+            $headers = @{
                 "PRIVATE-TOKEN" = $env:CI_JOB_TOKEN
+                "Content-Type" = "application/json"
             }
 
-            # opened 상태인 MR 확인
-            $OPEN_MR = $EXISTING_MR_ALL | Where-Object { $_.state -eq "opened" }
+            try {
+                $mrApiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$SOURCE_BRANCH"
+                Write-Host "API URL: $mrApiUrl"
+                
+                $EXISTING_MR_ALL = Invoke-RestMethod -Uri $mrApiUrl -Headers $headers -Method Get
+                
+                # opened 상태인 MR 확인
+                $OPEN_MR = $EXISTING_MR_ALL | Where-Object { $_.state -eq "opened" }
 
-            if ($OPEN_MR) {
-              Write-Host "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
-              exit 0
+                if ($OPEN_MR) {
+                  Write-Host "⚠️ 기존에 열린 MR이 존재합니다. 새로 만들지 않습니다."
+                  exit 0
+                }
+
+                Write-Host "🚀 MR 자동 생성 시작..."
+
+                $MR_BODY = @{
+                    source_branch = $SOURCE_BRANCH
+                    target_branch = "develop"
+                    title = "자동 MR: $SOURCE_BRANCH"
+                    description = "이 커밋에서 자동 생성되었습니다: $env:CI_COMMIT_SHORT_SHA"
+                } | ConvertTo-Json
+                
+                $createMrUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests"
+                Write-Host "Create MR URL: $createMrUrl"
+                
+                $response = Invoke-RestMethod -Uri $createMrUrl -Headers $headers -Method Post -Body $MR_BODY
+                Write-Host "✅ MR 생성 완료! MR 번호: $($response.iid)"
             }
-
-            Write-Host "🚀 MR 자동 생성 시작..."
-
-            $MR_PARAMS = @{
-                source_branch = $SOURCE_BRANCH
-                target_branch = "develop"
-                title = "자동 MR: $SOURCE_BRANCH"
-                description = "이 커밋에서 자동 생성되었습니다: $env:CI_COMMIT_SHORT_SHA"
+            catch {
+                Write-Host "❌ 에러 발생:"
+                Write-Host $_.Exception.Message
+                Write-Host "응답 본문:"
+                Write-Host $_.ErrorDetails.Message
+                exit 1
             }
-
-            Invoke-RestMethod -Method Post -Uri "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests" -Headers @{
-                "PRIVATE-TOKEN" = $env:CI_JOB_TOKEN
-            } -Body $MR_PARAMS
-
-            Write-Host "✅ MR 생성 완료!"
