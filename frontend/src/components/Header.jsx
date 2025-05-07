@@ -1,12 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "@/assets/images/logo.svg";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '@/assets/images/logo.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import useScrollToTop from '@/hooks/useScrollToTop';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const scrollToTop = useScrollToTop();
+
+  const handleNav = (path) => {
+    scrollToTop();
+    navigate(path);
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -14,20 +23,47 @@ function Header() {
         <nav className="flex justify-between items-center h-[80px] max-w-[1280px] mx-auto px-[30px] min-[1130px]:px-[72px]">
           {/* 로고 */}
           <div className="flex items-center">
-            <Link to="/">
+            <button
+              onClick={() => handleNav('/')}
+              className="bg-transparent border-none p-0 m-0 cursor-pointer"
+            >
               <img src={logo} alt="SAI:사이" className="h-10" />
-            </Link>
+            </button>
           </div>
           {/* 데스크탑 네비게이션 */}
           <ul className="flex items-center gap-6 max-[900px]:hidden">
-            <li><Link to="/screenshot" className="text-[18px] hover:text-custom-300 font-medium">Screenshot</Link></li>
-            <li><Link to="/download" className="text-[18px] hover:text-custom-300 font-medium">Download</Link></li>
-            <li><Link to="/docs" className="text-[18px] hover:text-custom-300 font-medium">Docs</Link></li>
-            <li><Link to="/admin" className="text-[18px] hover:text-custom-300 font-medium">Admin</Link></li>
+            <li>
+              <button
+                onClick={() => handleNav('/download')}
+                className="text-[18px] hover:text-custom-300 font-medium bg-transparent border-none cursor-pointer"
+              >
+                Download
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleNav('/screenshots')}
+                className="text-[18px] hover:text-custom-300 font-medium bg-transparent border-none cursor-pointer"
+              >
+                Screenshots
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleNav('/docs')}
+                className="text-[18px] hover:text-custom-300 font-medium bg-transparent border-none cursor-pointer"
+              >
+                Docs
+              </button>
+            </li>
             <li className="flex">
-              <input type="text" placeholder="Search" className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20"
+              />
               <button className="w-[40px] h-[40px] rounded-r-md bg-black/70 text-white">
-                <SearchIcon/>
+                <SearchIcon />
               </button>
             </li>
           </ul>
@@ -38,7 +74,7 @@ function Header() {
             aria-label="Open menu"
             style={{ zIndex: 60 }}
           >
-            <MenuIcon style={{ color: "white", fontSize: 32 }} />
+            <MenuIcon style={{ color: 'white', fontSize: 32 }} />
           </button>
         </nav>
         {/* 모바일 오버레이 메뉴 */}
@@ -53,14 +89,32 @@ function Header() {
                 <CloseIcon style={{ fontSize: 32 }} />
               </button>
               <nav className="flex flex-col gap-8 mt-12">
-                <Link to="/screenshot" className="text-xl font-bold text-gray-800 hover:text-[#FF8000]" onClick={() => setMenuOpen(false)}>Screenshot</Link>
-                <Link to="/download" className="text-xl font-bold text-gray-800 hover:text-[#FF8000]" onClick={() => setMenuOpen(false)}>Download</Link>
-                <Link to="/docs" className="text-xl font-bold text-gray-800 hover:text-[#FF8000]" onClick={() => setMenuOpen(false)}>Docs</Link>
-                <Link to="/admin" className="text-xl font-bold text-gray-800 hover:text-[#FF8000]" onClick={() => setMenuOpen(false)}>Admin</Link>
+                <button
+                  onClick={() => handleNav('/download')}
+                  className="text-xl font-bold text-gray-800 hover:text-[#FF8000] bg-transparent border-none text-left cursor-pointer"
+                >
+                  Download
+                </button>
+                <button
+                  onClick={() => handleNav('/screenshots')}
+                  className="text-xl font-bold text-gray-800 hover:text-[#FF8000] bg-transparent border-none text-left cursor-pointer"
+                >
+                  Screenshots
+                </button>
+                <button
+                  onClick={() => handleNav('/docs')}
+                  className="text-xl font-bold text-gray-800 hover:text-[#FF8000] bg-transparent border-none text-left cursor-pointer"
+                >
+                  Docs
+                </button>
                 <div className="flex mt-4">
-                  <input type="text" placeholder="Search" className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20" />
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20"
+                  />
                   <button className="w-[40px] h-[40px] rounded-r-md bg-black/70 text-white">
-                    <SearchIcon/>
+                    <SearchIcon />
                   </button>
                 </div>
               </nav>
