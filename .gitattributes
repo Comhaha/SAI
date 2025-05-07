@@ -1,11 +1,17 @@
+# 기본
 * text=auto
+
+# 운영체제에 따라 적절한 eol 적용
 *.sh text eol=lf
 *.bat text eol=crlf
+
+# 문서 & 설정파일
 *.md text eol=lf
 *.json text eol=lf
 *.yml text eol=lf
-*.yaml text eol=lf
 *.xml text eol=lf
+
+# 코드 파일 (Linux 스타일)
 *.html text eol=lf
 *.css text eol=lf
 *.js text eol=lf
@@ -16,3 +22,11 @@
 *.kt text eol=lf
 *.gradle text eol=lf
 
+# C#/Windows 프로젝트 전용
+*.cs text eol=crlf
+*.csproj text eol=crlf
+*.sln text eol=crlf
+*.config text eol=crlf
+
+# 바이너리 (Git이 텍스트로 다루지 않게)
+*.vsidx binary
