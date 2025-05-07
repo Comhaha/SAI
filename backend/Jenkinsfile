@@ -1,0 +1,120 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'GIT_SHA', defaultValue: 'latest', description: 'Git Commit Short SHA')
+    }
+
+    tools {
+        jdk 'JDK17'
+    }
+
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Load Credentials') {
+            steps {
+                withCredentials([file(credentialsId: 'BACKEND_APPLICATION_SECRET', variable: 'SECRET_FILE')]) {
+                    sh 'cp "$SECRET_FILE" ./backend/src/main/resources/'
+                }
+            }
+        }
+
+        stage('Build with Gradle') {
+            steps {
+                dir('backend') {
+                    sh 'chmod +x gradlew'
+                    sh './gradlew clean build -x test'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('backend') {
+                    withCredentials([string(credentialsId: 'BACKEND_IMAGE_NAME', variable: 'BACKEND_IMAGE_NAME')]) {
+                        sh """
+                            docker build -t ${BACKEND_IMAGE_NAME}:${GIT_SHA} .
+                            docker push ${BACKEND_IMAGE_NAME}:${GIT_SHA}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Backend') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'BACKEND_IMAGE_NAME', variable: 'BACKEND_IMAGE_NAME'),
+                    string(credentialsId: 'BACKEND_CONTAINER_NAME', variable: 'BACKEND_CONTAINER_NAME'),
+                    string(credentialsId: 'DOCKER_NETWORK', variable: 'DOCKER_NETWORK')
+                ]) {
+                    sh """
+                        docker stop ${BACKEND_CONTAINER_NAME} || true
+                        docker rm ${BACKEND_CONTAINER_NAME} || true
+
+                        docker run -d --name ${BACKEND_CONTAINER_NAME} --network ${DOCKER_NETWORK} \\
+                            -p 9097:9091 \\
+                            -e TZ=Asia/Seoul \\
+                            -e JAVA_TOOL_OPTIONS="-Duser.timezone=Asia/Seoul" \\
+                            -e SPRING_PROFILES_ACTIVE=prod \\
+                            ${BACKEND_IMAGE_NAME}:${GIT_SHA}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+           sh 'rm -f ./backend/src/main/resources/application-secret.yml'
+        }
+        success {
+            script {
+                withCredentials([string(credentialsId: 'BACKEND_WEBHOOK_URL', variable: 'BACKEND_MM_WEBHOOK_URL')]) {
+                    def jsonMessage = """{
+                        "attachments": [{
+                            "text": "**✅ Backend Build 성공**\\\\n- 상태: SUCCESS\\\\n- [🔗 상세 정보](${env.BUILD_URL})",
+                            "color": "#00FF00"
+                        }]
+                    }"""
+
+                    sh """
+                    echo '${jsonMessage}' > mattermost_payload.json
+                    cat mattermost_payload.json
+                    curl -X POST -H "Content-Type: application/json" --data @mattermost_payload.json '${BACKEND_MM_WEBHOOK_URL}'
+                    rm -f mattermost_payload.json
+                    """
+                }
+            }
+        }
+        failure {
+            script {
+                withCredentials([string(credentialsId: 'BACKEND_WEBHOOK_URL', variable: 'BACKEND_MM_WEBHOOK_URL')]) {
+                    def jsonMessage = """{
+                        "attachments": [{
+                            "text": "**❌ Backend Build 실패**\\\\n- 상태: FAILURE\\\\n- [🔗 상세 정보](${env.BUILD_URL}/console) ",
+                            "color": "#FF0000"
+                        }]
+                    }"""
+
+                    sh """
+                    echo '${jsonMessage}' > mattermost_payload.json
+                    cat mattermost_payload.json
+                    curl -X POST -H "Content-Type: application/json" --data @mattermost_payload.json '${BACKEND_MM_WEBHOOK_URL}'
+                    rm -f mattermost_payload.json
+                    """
+                }
+            }
+        }
+    }
+}
