@@ -25,9 +25,10 @@ auto_merge_request:
             $sourceBranch = "$env:CI_COMMIT_REF_NAME"
             $projectId = "$env:CI_PROJECT_ID"
             $apiBase = "$($env:CI_API_V4_URL.TrimEnd('/'))/projects/$projectId/merge_requests"
+            $mrListUrl = "$apiBase?source_branch=$sourceBranch"
 
             # source_branch 기준으로 모든 MR 가져오기
-            $allMRs = Invoke-RestMethod -Headers $headers -Uri "$apiBase?source_branch=$sourceBranch" -Method Get
+            $allMRs = Invoke-RestMethod -Headers $headers -Uri $mrListUrl -Method Get
 
             # 열린 상태(opened)인 MR만 필터링
             $openMR = $allMRs | Where-Object { $_.state -eq "opened" }
