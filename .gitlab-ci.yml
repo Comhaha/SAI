@@ -20,23 +20,30 @@ auto_merge_request:
 
             Write-Host "✅ [MR] 태그 확인됨. 기존 MR 확인 중..."
 
+            # GitLab API 헤더에 Personal Access Token 사용
+            $headers = @{ "PRIVATE-TOKEN" = "$env:PERSONAL_TOKEN" }
             $sourceBranch = "$env:CI_COMMIT_REF_NAME"
-            $apiUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests?source_branch=$sourceBranch"
+            $projectId = "$env:CI_PROJECT_ID"
+            $apiBase = "$env:CI_API_V4_URL/projects/$projectId/merge_requests"
 
-            $existingMRs = Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $apiUrl -Method Get
-            $openMR = $existingMRs | Where-Object { $_.state -eq "opened" }
+            # source_branch 기준으로 모든 MR 가져오기
+            $allMRs = Invoke-RestMethod -Headers $headers -Uri "$apiBase?source_branch=$sourceBranch" -Method Get
+
+            # 열린 상태(opened)인 MR만 필터링
+            $openMR = $allMRs | Where-Object { $_.state -eq "opened" }
 
             if ($openMR.Count -gt 0) {
               Write-Host "⚠️ 이미 열린 MR이 있음 → 새로 만들지 않음"
               exit 0
             }
 
-            $createUrl = "$env:CI_API_V4_URL/projects/$env:CI_PROJECT_ID/merge_requests"
-            Invoke-RestMethod -Headers @{ "PRIVATE-TOKEN" = "$env:CI_JOB_TOKEN" } -Uri $createUrl -Method Post -Form @{
+            Write-Host "🚀 MR 자동 생성 시작..."
+
+            Invoke-RestMethod -Headers $headers -Uri $apiBase -Method Post -Form @{
               source_branch = $sourceBranch
               target_branch = "develop"
               title = "자동 MR: $sourceBranch"
-              description = "자동 생성됨"
+              description = "자동 생성된 Merge Request입니다. 커밋: $env:CI_COMMIT_SHORT_SHA"
             }
 
             Write-Host "✅ MR 생성 완료!"
