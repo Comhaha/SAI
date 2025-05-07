@@ -24,7 +24,7 @@ auto_merge_request:
             $headers = @{ "PRIVATE-TOKEN" = "$env:PERSONAL_TOKEN" }
             $sourceBranch = "$env:CI_COMMIT_REF_NAME"
             $projectId = "$env:CI_PROJECT_ID"
-            $apiBase = "$env:CI_API_V4_URL/projects/$projectId/merge_requests"
+            $apiBase = "$($env:CI_API_V4_URL.TrimEnd('/'))/projects/$projectId/merge_requests"
 
             # source_branch 기준으로 모든 MR 가져오기
             $allMRs = Invoke-RestMethod -Headers $headers -Uri "$apiBase?source_branch=$sourceBranch" -Method Get
