@@ -28,18 +28,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.btnHello = new Guna.UI2.WinForms.Guna2Button();
+			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.SuspendLayout();
 			// 
 			// chromiumWebBrowser1
 			// 
 			this.chromiumWebBrowser1.ActivateBrowserOnCreation = false;
-			this.chromiumWebBrowser1.Location = new System.Drawing.Point(399, 23);
+			this.chromiumWebBrowser1.Location = new System.Drawing.Point(319, 19);
+			this.chromiumWebBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
-			this.chromiumWebBrowser1.Size = new System.Drawing.Size(700, 800);
+			this.chromiumWebBrowser1.Size = new System.Drawing.Size(500, 700);
 			this.chromiumWebBrowser1.TabIndex = 0;
 			// 
 			// btnPip
@@ -50,26 +51,46 @@
 			this.btnPip.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
 			this.btnPip.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPip.ForeColor = System.Drawing.Color.White;
-			this.btnPip.Location = new System.Drawing.Point(80, 106);
+			this.btnPip.Location = new System.Drawing.Point(64, 88);
+			this.btnPip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnPip.Name = "btnPip";
-			this.btnPip.Size = new System.Drawing.Size(265, 45);
+			this.btnPip.Size = new System.Drawing.Size(212, 38);
 			this.btnPip.TabIndex = 1;
 			this.btnPip.Text = "패키지 설치";
 			// 
-			// contextMenuStrip1
+			// btnHello
 			// 
-			this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+			this.btnHello.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnHello.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnHello.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnHello.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnHello.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnHello.ForeColor = System.Drawing.Color.White;
+			this.btnHello.Location = new System.Drawing.Point(64, 142);
+			this.btnHello.Name = "btnHello";
+			this.btnHello.Size = new System.Drawing.Size(212, 45);
+			this.btnHello.TabIndex = 2;
+			this.btnHello.Text = "안녕!";
+			// 
+			// richTextBox1
+			// 
+			this.richTextBox1.Location = new System.Drawing.Point(863, 20);
+			this.richTextBox1.Name = "richTextBox1";
+			this.richTextBox1.Size = new System.Drawing.Size(325, 700);
+			this.richTextBox1.TabIndex = 3;
+			this.richTextBox1.Text = "";
 			// 
 			// Blockly
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.richTextBox1);
+			this.Controls.Add(this.btnHello);
 			this.Controls.Add(this.btnPip);
 			this.Controls.Add(this.chromiumWebBrowser1);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "Blockly";
-			this.Size = new System.Drawing.Size(1920, 1080);
+			this.Size = new System.Drawing.Size(1280, 720);
 			this.ResumeLayout(false);
 
 		}
@@ -78,6 +99,7 @@
 
 		private CefSharp.WinForms.ChromiumWebBrowser chromiumWebBrowser1;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private Guna.UI2.WinForms.Guna2Button btnHello;
+		private System.Windows.Forms.RichTextBox richTextBox1;
 	}
 }

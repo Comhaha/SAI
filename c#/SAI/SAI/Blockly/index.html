@@ -2,35 +2,75 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-    <script src="https://unpkg.com/blockly/python.min.js"></script>
+    <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
     <script src="custom_blocks.js"></script>
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 100vh; width: 100vw;"></div>
+    <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
     <xml id="toolbox" style="display: none">
-        <block type="controls_if"></block>
-        <block type="math_number"></block>
-        <block type="text_print"></block>
         <block type="pipInstall"></block>
+        <block type="hello"></block>
     </xml>
+
+    <div id="customAlert" style="
+        display: none;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        padding: 20px;
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 8px;
+        z-index: 9999;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    ">
+        <p id="customAlertText"></p>
+        <button onclick="closeCustomAlert()">확인</button>
+    </div>
 
     <script>
         const workspace = Blockly.inject('blocklyDiv', {
-        toolbox: null
+            //toolbox: null
+            toolbox: document.getElementById('toolbox')
         });
 
-        function getPythonCode() {
-        return Blockly.Python.workspaceToCode(workspace);
+        function showCustomAlert(text) {
+            document.getElementById('customAlertText').innerText = text;
+            document.getElementById('customAlert').style.display = 'block';
         }
 
-        window.getPythonCode = getPythonCode;
+        function closeCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
 
-		function addBlock(type) {
-			const block = workspace.newBlock(type);
-			block.initSvg();
-			block.render();
-		}
+        function addBlock(type) {
+            const block = workspace.newBlock(type);
+            block.initSvg();
+            block.render();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            workspace.addChangeListener((event) => {
+                if (
+                    event.type === Blockly.Events.BLOCK_CREATE ||
+                    event.type === Blockly.Events.BLOCK_DELETE ||
+                    event.type === Blockly.Events.BLOCK_CHANGE ||
+                    event.type === Blockly.Events.BLOCK_MOVE
+                ) {
+                    // 안전하게 확인
+                    if (Blockly.Python && Blockly.Python.workspaceToCode) {
+                        const code = Blockly.Python.workspaceToCode(workspace);
+                        showCustomAlert(code);
+                    } else {
+                        showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
+                    }
+                }
+            });
+        });
     </script>
+
 </body>
 </html>

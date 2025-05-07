@@ -47,6 +47,9 @@
     <Reference Include="CefSharp.WinForms, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\packages\CefSharp.WinForms.135.0.220\lib\net462\CefSharp.WinForms.dll</HintPath>
     </Reference>
+    <Reference Include="Guna.Charts.WinForms, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.Charts.WinForms.1.1.0\lib\net472\Guna.Charts.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
       <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
     </Reference>
@@ -157,7 +160,6 @@
     <None Include="SAI.App\Resources\Images\img_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Blockly\blockly_compressed.js" />
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
   </ItemGroup>

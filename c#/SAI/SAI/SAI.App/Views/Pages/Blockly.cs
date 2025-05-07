@@ -21,6 +21,11 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			InitializeComponent();
 
+			// 백그라운드 색깔&이미지
+			BackColor = Color.Transparent;
+			BackgroundImage = Properties.Resources.img_background;
+			Size = new Size(1280, 720);
+
 			// blockly html을 웹뷰에 연결
 			string localPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html";
 			chromiumWebBrowser1.Load(new Uri(localPath).AbsoluteUri);
@@ -28,6 +33,7 @@ namespace SAI.SAI.App.Views.Pages
 			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+			btnHello.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("hello"));
 		}
 
 
