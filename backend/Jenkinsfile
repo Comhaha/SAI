@@ -44,7 +44,6 @@ pipeline {
                     withCredentials([string(credentialsId: 'BACKEND_IMAGE_NAME', variable: 'BACKEND_IMAGE_NAME')]) {
                         sh """
                             docker build -t ${BACKEND_IMAGE_NAME}:${GIT_SHA} .
-                            docker push ${BACKEND_IMAGE_NAME}:${GIT_SHA}
                         """
                     }
                 }
