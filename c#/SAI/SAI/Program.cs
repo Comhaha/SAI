@@ -15,10 +15,11 @@ namespace SAI
 		[STAThread]
 		static void Main()
 		{
+			CefSharpSettings.WcfEnabled = true;
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
-			CefSharpSettings.WcfEnabled = true;
 		}
 	}
 }

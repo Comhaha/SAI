@@ -25,16 +25,19 @@
         border: 2px solid black;
         border-radius: 8px;
         z-index: 9999;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    ">
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
         <p id="customAlertText"></p>
         <button onclick="closeCustomAlert()">확인</button>
     </div>
 
     <script>
+
+
+		console.log("HTML 로딩 완료");
+
         const workspace = Blockly.inject('blocklyDiv', {
-            //toolbox: null
-            toolbox: document.getElementById('toolbox')
+            toolbox: null
+            //toolbox: document.getElementById('toolbox')
         });
 
         function showCustomAlert(text) {
@@ -52,7 +55,12 @@
             block.render();
         }
 
+		function sendCode(code) {
+			cefCustom.receiveFromJs(code);
+		}
+
         window.addEventListener('DOMContentLoaded', () => {
+
             workspace.addChangeListener((event) => {
                 if (
                     event.type === Blockly.Events.BLOCK_CREATE ||
@@ -63,7 +71,7 @@
                     // 안전하게 확인
                     if (Blockly.Python && Blockly.Python.workspaceToCode) {
                         const code = Blockly.Python.workspaceToCode(workspace);
-                        showCustomAlert(code);
+						sendCode(code);
                     } else {
                         showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
                     }

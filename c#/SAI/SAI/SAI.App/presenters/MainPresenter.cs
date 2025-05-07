@@ -22,7 +22,6 @@ namespace SAI.SAI.App.Presenters
 		public void Initialize()
 		{
 			var blockly = new Blockly(); // View 생성
-			var blocklyPresenter = new BlocklyPresenter(blockly); // Presenter 연결
 			mainView.LoadPage(blockly); // 메인 폼에 삽입
 		}
 	}
