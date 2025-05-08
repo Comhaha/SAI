@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,8 +12,22 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>게시\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +38,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -36,20 +47,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
-<ItemGroup>
-  <!-- Nuget 패키지 관리 -->
-  <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
-  <PackageReference Include="CefSharp.Common" Version="135.0.220" />
-  <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
-  <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
-  <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
-  <PackageReference Include="Clipper2" Version="1.4.0" />
-  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
-</ItemGroup>
-
+  <ItemGroup>
+    <!-- Nuget 패키지 관리 -->
+    <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
+    <PackageReference Include="CefSharp.Common" Version="135.0.220" />
+    <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
+    <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
+    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+    <PackageReference Include="Clipper2" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,12 +82,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
-    <Compile Include="SAI.App\Forms\BaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Forms\BaseForm.Designer.cs">
-      <DependentUpon>BaseForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,9 +125,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Forms\BaseForm.resx">
-      <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
@@ -172,7 +172,30 @@
   <ItemGroup>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
-    <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok.png" />
+    <None Include="SAI.App\Resources\Images\icon_warning.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close_clicked.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close.png" />
+    <None Include="SAI.App\Resources\Images\btn_close.png" />
+    <None Include="SAI.App\Resources\Images\bg_red_titlebar.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white.png" />
+    <None Include="SAI.App\Resources\Images\bg_redDialog.png" />
+    <None Include="SAI.App\Resources\Images\bg_red_dialog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2%28x86 및 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

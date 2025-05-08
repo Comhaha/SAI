@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,9 @@ namespace SAI.SAI.App.Views.Pages
 			chromiumWebBrowser1.JavascriptObjectRepository.Register("cefCustom", bridge, isAsync: false, options: BindingOptions.DefaultBinder);
 
 			// 웹뷰랑 연결
-			string localPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html";
+			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			//string localPath = Path.GetFullPath(Path.Combine(baseDir, @"resource\\Blockly\index.html"));
+			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\index.html"));
 			chromiumWebBrowser1.Load(new Uri(localPath).AbsoluteUri);
 
 			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
@@ -80,5 +83,6 @@ namespace SAI.SAI.App.Views.Pages
 				dialog.ShowDialog();
 			}
 		}
+
 	}
 }

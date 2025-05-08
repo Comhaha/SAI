@@ -41,17 +41,21 @@
 			this.chromiumWebBrowser1.Location = new System.Drawing.Point(319, 19);
 			this.chromiumWebBrowser1.Margin = new System.Windows.Forms.Padding(2);
 			this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
-			this.chromiumWebBrowser1.Size = new System.Drawing.Size(500, 700);
+			this.chromiumWebBrowser1.Size = new System.Drawing.Size(500, 662);
 			this.chromiumWebBrowser1.TabIndex = 0;
 			// 
 			// btnPip
 			// 
+			this.btnPip.BackColor = System.Drawing.Color.Transparent;
+			this.btnPip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnPip.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnPip.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnPip.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
 			this.btnPip.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnPip.FillColor = System.Drawing.Color.Red;
 			this.btnPip.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPip.ForeColor = System.Drawing.Color.White;
+			this.btnPip.ImageSize = new System.Drawing.Size(59, 50);
 			this.btnPip.Location = new System.Drawing.Point(64, 88);
 			this.btnPip.Margin = new System.Windows.Forms.Padding(2);
 			this.btnPip.Name = "btnPip";
@@ -77,12 +81,13 @@
 			// 
 			this.richTextBox1.Location = new System.Drawing.Point(863, 20);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(325, 700);
+			this.richTextBox1.Size = new System.Drawing.Size(325, 661);
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
 			// 
 			// btnDialog
 			// 
+			this.btnDialog.BackColor = System.Drawing.Color.Transparent;
 			this.btnDialog.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnDialog.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnDialog.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -99,8 +104,8 @@
 			// 
 			// Blockly
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
 			this.Controls.Add(this.btnDialog);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.btnHello);

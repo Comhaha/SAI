@@ -25,20 +25,15 @@ namespace SAI
 			presenter = new MainPresenter(this);
 
 			Size = new Size(1280, 720);
-			MaximizeBox = false;
-			MaximumSize = new Size(1280, 720);
 			MinimumSize = new Size(1280, 720);
+
+			this.MouseWheel += (s, e) => { MainForm_MouseWheel(s, e); };
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			// 초기 페이지인 Blockly를 불러온다.
 			presenter.Initialize();
-		}
-
-		private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-		{
-
 		}
 
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
@@ -49,6 +44,22 @@ namespace SAI
 			guna2Panel1.BackColor = Color.Transparent;
 			guna2Panel1.Controls.Add(page);
 			guna2Panel1.BringToFront();
+		}
+
+		private float zoomFactor = 1.0f;
+
+		private void MainForm_MouseWheel(object sender, MouseEventArgs e)
+		{
+			if (Control.ModifierKeys == Keys.Control)
+			{
+				float delta = e.Delta > 0 ? 0.1f : -0.1f;
+				zoomFactor += delta;
+
+				// 최소/최대 확대 비율 제한
+				zoomFactor = Math.Max(0.2f, Math.Min(zoomFactor, 3.0f));
+
+				this.Scale(new SizeF(zoomFactor, zoomFactor));
+			}
 		}
 	}
 }
