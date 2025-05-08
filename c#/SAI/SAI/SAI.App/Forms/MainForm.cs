@@ -11,6 +11,10 @@ using SAI.SAI.App.Views.Pages;
 using System.Linq;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text.RegularExpressions;
 
 
 namespace SAI
@@ -44,42 +48,101 @@ namespace SAI
 			guna2Panel1.Controls.Add(page);
 		}
 
-        private void guna2Button1_Click(object sender, EventArgs e)
+private void guna2Button1_Click(object sender, EventArgs e)
+{
+    logOutput.Visible = true;
+    logOutput.Clear();
+
+    Task.Run(() => RunPythonScript());
+}
+
+private void RunPythonScript()
+{
+    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+    string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\venv\Scripts\python.exe"));
+    string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\python\test_script.py"));
+
+    var psi = new ProcessStartInfo
+    {
+        FileName = pythonExe,
+        Arguments = $"-u \"{scriptPath}\"", // 실시간 로그를 위한 -u
+        WorkingDirectory = Path.GetDirectoryName(scriptPath),
+        UseShellExecute = false,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+        CreateNoWindow = true
+    };
+
+    var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+
+    process.OutputDataReceived += OnOutputReceived;
+    process.ErrorDataReceived += OnErrorReceived;
+
+    try
+    {
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+        process.WaitForExit();
+    }
+    catch (Exception ex)
+    {
+        ShowErrorMessage("❌ 파이썬 실행 중 예외 발생:\n" + ex.Message);
+    }
+}
+
+private void OnOutputReceived(object sender, DataReceivedEventArgs e)
+{
+    if (!string.IsNullOrEmpty(e.Data))
+    {
+        AppendLog(e.Data);
+    }
+}
+
+private void OnErrorReceived(object sender, DataReceivedEventArgs e)
+{
+    if (!string.IsNullOrEmpty(e.Data))
+    {
+        AppendLog("[Error] " + e.Data);
+    }
+}
+
+private void AppendLog(string text)
+{
+    if (logOutput.InvokeRequired)
+    {
+        logOutput.Invoke(new MethodInvoker(() => AppendLog(text)));
+    }
+    else
+    {
+        logOutput.AppendText(text + Environment.NewLine);
+        logOutput.SelectionStart = logOutput.Text.Length;
+        logOutput.ScrollToCaret();
+    }
+}
+
+private void ShowErrorMessage(string message)
+{
+    if (InvokeRequired)
+    {
+        Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+    }
+    else
+    {
+        MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+
+
+        private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e)
         {
-            try
-            {
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                MessageBox.Show(baseDir);  // baseDir이 실제 어디인지 확인
 
+        }
 
-                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\venv\Scripts\python.exe"));
-                string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\python\test_script.py"));
+        private void logOutput_TextChanged(object sender, EventArgs e)
+        {
 
-                var psi = new ProcessStartInfo
-                {
-                    FileName = pythonExe,
-                    Arguments = $"\"{scriptPath}\"",
-                    WorkingDirectory = Path.GetDirectoryName(scriptPath),
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
-
-                using (var process = Process.Start(psi))
-                {
-                    string output = process.StandardOutput.ReadToEnd();
-                    string error = process.StandardError.ReadToEnd();
-                    process.WaitForExit();
-
-                    MessageBox.Show("✅ 실행 결과:\n" + output + (string.IsNullOrWhiteSpace(error) ? "" : "\n⚠ 오류:\n" + error));
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("실행 중 오류 발생:\n" + ex.Message);
-            }
         }
     }
 }

@@ -31,6 +31,7 @@
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.YoloRun = new Guna.UI2.WinForms.Guna2Button();
+            this.logOutput = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             // 
             // guna2Panel1
             // 
+            this.guna2Panel1.Controls.Add(this.logOutput);
             this.guna2Panel1.Controls.Add(this.YoloRun);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel1);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -73,6 +75,31 @@
             this.YoloRun.Text = "YoloRun";
             this.YoloRun.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
+            // logOutput
+            // 
+            this.logOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.logOutput.DefaultText = "";
+            this.logOutput.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.logOutput.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.logOutput.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.logOutput.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.logOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logOutput.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.logOutput.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.logOutput.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.logOutput.Location = new System.Drawing.Point(0, 0);
+            this.logOutput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.logOutput.Multiline = true;
+            this.logOutput.Name = "logOutput";
+            this.logOutput.PlaceholderText = "";
+            this.logOutput.ReadOnly = true;
+            this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.logOutput.SelectedText = "";
+            this.logOutput.Size = new System.Drawing.Size(2496, 1440);
+            this.logOutput.TabIndex = 3;
+            this.logOutput.Visible = false;
+            this.logOutput.TextChanged += new System.EventHandler(this.logOutput_TextChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
@@ -94,6 +121,7 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
 		private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Button YoloRun;
+        private Guna.UI2.WinForms.Guna2TextBox logOutput;
     }
 }
 
