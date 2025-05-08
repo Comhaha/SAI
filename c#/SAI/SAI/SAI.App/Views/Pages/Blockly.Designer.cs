@@ -32,6 +32,7 @@
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
 			this.btnHello = new Guna.UI2.WinForms.Guna2Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.btnDialog = new Guna.UI2.WinForms.Guna2CircleButton();
 			this.SuspendLayout();
 			// 
 			// chromiumWebBrowser1
@@ -80,10 +81,27 @@
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
 			// 
+			// btnDialog
+			// 
+			this.btnDialog.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnDialog.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnDialog.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnDialog.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnDialog.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnDialog.ForeColor = System.Drawing.Color.White;
+			this.btnDialog.Location = new System.Drawing.Point(77, 488);
+			this.btnDialog.Name = "btnDialog";
+			this.btnDialog.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+			this.btnDialog.Size = new System.Drawing.Size(148, 148);
+			this.btnDialog.TabIndex = 4;
+			this.btnDialog.Text = "showdialog";
+			this.btnDialog.Click += new System.EventHandler(this.btnDialog_Click);
+			// 
 			// Blockly
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.btnDialog);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.btnHello);
 			this.Controls.Add(this.btnPip);
@@ -101,5 +119,6 @@
 		private Guna.UI2.WinForms.Guna2Button btnPip;
 		private Guna.UI2.WinForms.Guna2Button btnHello;
 		private System.Windows.Forms.RichTextBox richTextBox1;
+		private Guna.UI2.WinForms.Guna2CircleButton btnDialog;
 	}
 }

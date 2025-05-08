@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
+using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Presenters;
@@ -70,6 +71,14 @@ namespace SAI.SAI.App.Views.Pages
 			}
 
 			richTextBox1.Text = code;
+		}
+
+		private void btnDialog_Click(object sender, EventArgs e)
+		{
+			using (var dialog = new DialogConfirmExit())
+			{
+				dialog.ShowDialog();
+			}
 		}
 	}
 }

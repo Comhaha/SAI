@@ -58,13 +58,12 @@ local.properties
 *.stackdump
 *.dbmdl
 *.vsidx
-c#/SAI/.vs/*
-c#/SAI/packages/*
+c#/SAI/.vs/
+c#/SAI/SAI/SAI.App/.vs/
+c#/SAI/packages/
 c#/SAI/SAI/package.config
-
-# 빌드 아웃풋
-bin/
-obj/
+c#/SAI/SAI/bin/
+c#/SAI/SAI/obj/
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json
