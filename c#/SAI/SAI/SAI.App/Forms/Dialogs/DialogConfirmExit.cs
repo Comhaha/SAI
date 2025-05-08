@@ -59,16 +59,12 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.MouseEnter += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.Size = new Size(109, 42);
-				btnOk.Location = new Point(476, 210);
 				btnOk.BackgroundImage = Properties.Resources.btn_red_ok_clicked;
 			};
 			// btnOk 마우스 떠날때
 			btnOk.MouseLeave += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.Size = new Size(110, 42);
-				btnOk.Location = new Point(475, 209);
 				btnOk.BackgroundImage = Properties.Resources.btn_red_ok;
 			};
 

@@ -82,6 +82,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
+    <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.Designer.cs">
+      <DependentUpon>DialogCompleteTutorial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteLabeling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteLabeling.Designer.cs">
+      <DependentUpon>DialogCompleteLabeling.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +137,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.resx">
+      <DependentUpon>DialogCompleteTutorial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogCompleteLabeling.resx">
+      <DependentUpon>DialogCompleteLabeling.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
@@ -172,6 +190,20 @@
   <ItemGroup>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_667.282.png" />
+    <None Include="SAI.App\Resources\Images\bg_blue_titlebar_629.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_629.282.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotrain_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotrain.png" />
+    <None Include="SAI.App\Resources\Images\btn_learnmodel_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_learnmodel.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_580.282.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_600.282.png" />
+    <None Include="SAI.App\Resources\Images\icon_check_good.png" />
+    <None Include="SAI.App\Resources\Images\icon_celebration.png" />
+    <None Include="SAI.App\Resources\Images\bg_blue_btn_close_clicked.png" />
+    <None Include="SAI.App\Resources\Images\bg_blue_btn_close.png" />
+    <None Include="SAI.App\Resources\Images\bg_blue_titlebar.png" />
     <None Include="SAI.App\Resources\Images\btn_white_cancel_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_red_ok_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_white_cancel.png" />
