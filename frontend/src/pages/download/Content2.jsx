@@ -1,13 +1,32 @@
 import DownloadIcon from '@mui/icons-material/Download';
 import { useToast } from '../../hooks/useToast';
 import Toast from '../../components/Toast';
-import installImg from '../../assets/images/install.svg'; // 예시 이미지 경로, 실제 경로에 맞게 수정 필요
+import installImg from '../../assets/images/install.svg';
+import apiClient from '@/api/apiClient';
+import { useState } from 'react';
 
 function Content2() {
   const { isVisible, message, showToast } = useToast();
+  const [loading, setLoading] = useState(false);
 
-  const handleDownload = (platform) => {
-    showToast(`${platform} version download will be available soon!`);
+  const handleWindowsDownload = async () => {
+    setLoading(true);
+    try {
+      const res = await apiClient.get('/api/download');
+      if (res.data.isSuccess && res.data.result) {
+        window.location.href = res.data.result;
+      } else {
+        showToast(res.data.message || '다운로드 링크를 가져오지 못했습니다.');
+      }
+    } catch (err) {
+      showToast('The server response is delayed. Please try again in a moment.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleToast = (msg) => {
+    showToast(msg);
   };
 
   return (
@@ -22,9 +41,11 @@ function Content2() {
                 <h3 className="text-xl font-semibold mb-4">Standalone installer (default)</h3>
                 <button
                   className="flex items-center gap-2 text-custom-300 hover:text-opacity-80"
-                  onClick={() => handleDownload('Windows Standalone')}
+                  onClick={handleWindowsDownload}
+                  disabled={loading}
                 >
-                  <DownloadIcon /> SAI-3.38.1-Minforge-x86_64.exe
+                  <DownloadIcon />
+                  {loading ? 'Preparing download...' : 'SAI-3.38.1-Minforge-x86_64.exe'}
                 </button>
                 <p className="text-gray-600 mt-2">Can be used without administrative privileges.</p>
               </div>
@@ -32,7 +53,9 @@ function Content2() {
                 <h3 className="text-xl font-semibold mb-4">Portable SAI</h3>
                 <button
                   className="flex items-center gap-2 text-custom-300 hover:text-opacity-80"
-                  onClick={() => handleDownload('Windows Portable')}
+                  onClick={() =>
+                    handleToast('Windows Portable version download will be available soon!')
+                  }
                 >
                   <DownloadIcon /> SAI-3.38.1.zip
                 </button>
@@ -49,7 +72,9 @@ function Content2() {
                 <h3 className="text-xl font-semibold mb-4">SAI for Apple silicon</h3>
                 <button
                   className="flex items-center gap-2 text-custom-300 hover:text-opacity-80"
-                  onClick={() => handleDownload('macOS Apple Silicon')}
+                  onClick={() =>
+                    handleToast('macOS Apple Silicon version download will be available soon!')
+                  }
                 >
                   <DownloadIcon /> SAI-3.38.1-Python3.11.8-arm64.dmg
                 </button>
@@ -58,7 +83,9 @@ function Content2() {
                 <h3 className="text-xl font-semibold mb-4">SAI for Intel</h3>
                 <button
                   className="flex items-center gap-2 text-custom-300 hover:text-opacity-80"
-                  onClick={() => handleDownload('macOS Intel')}
+                  onClick={() =>
+                    handleToast('macOS Intel version download will be available soon!')
+                  }
                 >
                   <DownloadIcon /> SAI-3.38.1-Python3.10.11-x86_64.dmg
                 </button>
