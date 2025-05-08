@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props')" />
-  <Import Project="..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props" Condition="Exists('..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props')" />
-  <Import Project="..\packages\chromiumembeddedframework.runtime.win-x64.135.0.22\build\chromiumembeddedframework.runtime.win-x64.props" Condition="Exists('..\packages\chromiumembeddedframework.runtime.win-x64.135.0.22\build\chromiumembeddedframework.runtime.win-x64.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
+          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -15,9 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -28,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -37,25 +36,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
+<ItemGroup>
+  <!-- Nuget 패키지 관리 -->
+  <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
+  <PackageReference Include="CefSharp.Common" Version="135.0.220" />
+  <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
+  <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
+  <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
+  <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
+  <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+  <PackageReference Include="Clipper2" Version="1.4.0" />
+  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+</ItemGroup>
+
   <ItemGroup>
-    <Reference Include="CefSharp, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.Common.135.0.220\lib\net462\CefSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="CefSharp.Core, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.Common.135.0.220\lib\net462\CefSharp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CefSharp.WinForms, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.WinForms.135.0.220\lib\net462\CefSharp.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="CefSharp.WinForms, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>..\packages\CefSharp.WinForms.135.0.220\lib\net462\CefSharp.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Guna.Charts.WinForms, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guna.Charts.WinForms.1.1.0\lib\net472\Guna.Charts.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -83,6 +78,12 @@
     </Compile>
     <Compile Include="SAI.App\Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
+      <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -125,6 +126,9 @@
     <EmbeddedResource Include="SAI.App\Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
+      <DependentUpon>DialogConfirmExit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,7 +161,6 @@
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
-    <Folder Include="SAI.App\Views\Dialogs\" />
     <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
@@ -169,16 +172,7 @@
   <ItemGroup>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\chromiumembeddedframework.runtime.win-x64.135.0.22\build\chromiumembeddedframework.runtime.win-x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\chromiumembeddedframework.runtime.win-x64.135.0.22\build\chromiumembeddedframework.runtime.win-x64.props'))" />
-    <Error Condition="!Exists('..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props'))" />
-    <Error Condition="!Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets'))" />
-  </Target>
-  <Import Project="..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets')" />
 </Project>
