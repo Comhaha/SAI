@@ -58,7 +58,13 @@ local.properties
 *.stackdump
 *.dbmdl
 *.vsidx
-packages/
+c#/SAI/.vs/*
+c#/SAI/packages/*
+c#/SAI/SAI/package.config
+
+# 빌드 아웃풋
+bin/
+obj/
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json
@@ -84,9 +90,3 @@ coverage.xml
 *.swp
 .history/
 .idea/httpRequests
-
-# Visual Studio .vs
-.vs/
-
-# NuGet
-packages/
