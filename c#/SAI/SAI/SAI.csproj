@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.App\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,8 +89,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SAI.App\Models\BlockEventArgs.cs" />
-    <Compile Include="SAI.App\Models\JSBridge.cs" />
+    <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
+    <Compile Include="SAI.App\Models\BlocklyModel.cs" />
+    <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
@@ -148,7 +150,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SAI.Application\pythonFile\" />
+    <Folder Include="SAI.Application\Python\" />
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />

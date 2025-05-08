@@ -38,7 +38,7 @@
 			// 
 			this.chromiumWebBrowser1.ActivateBrowserOnCreation = false;
 			this.chromiumWebBrowser1.Location = new System.Drawing.Point(319, 19);
-			this.chromiumWebBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.chromiumWebBrowser1.Margin = new System.Windows.Forms.Padding(2);
 			this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
 			this.chromiumWebBrowser1.Size = new System.Drawing.Size(500, 700);
 			this.chromiumWebBrowser1.TabIndex = 0;
@@ -52,7 +52,7 @@
 			this.btnPip.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPip.ForeColor = System.Drawing.Color.White;
 			this.btnPip.Location = new System.Drawing.Point(64, 88);
-			this.btnPip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnPip.Margin = new System.Windows.Forms.Padding(2);
 			this.btnPip.Name = "btnPip";
 			this.btnPip.Size = new System.Drawing.Size(212, 38);
 			this.btnPip.TabIndex = 1;
@@ -88,7 +88,7 @@
 			this.Controls.Add(this.btnHello);
 			this.Controls.Add(this.btnPip);
 			this.Controls.Add(this.chromiumWebBrowser1);
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "Blockly";
 			this.Size = new System.Drawing.Size(1280, 720);
 			this.ResumeLayout(false);

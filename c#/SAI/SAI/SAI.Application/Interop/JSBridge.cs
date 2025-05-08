@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.App.Models
+namespace SAI.SAI.Application.Interop
 {
 	public class JsBridge
 	{
@@ -15,9 +15,9 @@ namespace SAI.SAI.App.Models
 			_onMessage = onMessage;
 		}
 
+		// JS에서 코드를 전달하기 위해 호출되는 메소드
 		public void receiveFromJs(string message)
 		{
-			Console.WriteLine(message);
 			_onMessage?.Invoke(message);
 		}
 	}

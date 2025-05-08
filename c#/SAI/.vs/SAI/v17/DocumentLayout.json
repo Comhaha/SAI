@@ -3,32 +3,8 @@
   "WorkspaceRootPath": "C:\\S12P31D201\\c#\\SAI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\sai.app\\presenters\\blocklypresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\sai.app\\presenters\\blocklypresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\blockly\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\blockly\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\sai.app\\views\\pages\\blockly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\sai.app\\views\\pages\\blockly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\sai.app\\views\\pages\\blockly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|C:\\S12P31D201\\c#\\SAI\\sai\\sai.app\\views\\pages\\blockly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\sai.app\\views\\pages\\blockly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\sai.app\\models\\jsbridge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\sai.app\\models\\jsbridge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\sai.app\\views.interfaces\\iblocklyview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\sai.app\\views.interfaces\\iblocklyview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|c:\\s12p31d201\\c#\\sai\\sai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}|SAI\\SAI.csproj|solutionrelative:sai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,98 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 256,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Blockly.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
               "RelativeDocumentMoniker": "SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
               "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Views\\Pages\\Blockly.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "SAI\\SAI.App\\Views\\Pages\\Blockly.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T05:58:56.272Z",
+              "WhenOpened": "2025-05-07T08:18:07.623Z",
               "IsPinned": true,
               "EditorCaption": " [\uB514\uC790\uC778]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Blockly.cs",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
-              "RelativeDocumentMoniker": "SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
-              "RelativeToolTip": "SAI\\SAI.App\\Views\\Pages\\Blockly.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAmwD0AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T07:33:54.95Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BlocklyPresenter.cs",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\presenters\\BlocklyPresenter.cs",
-              "RelativeDocumentMoniker": "SAI\\SAI.App\\presenters\\BlocklyPresenter.cs",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\presenters\\BlocklyPresenter.cs",
-              "RelativeToolTip": "SAI\\SAI.App\\presenters\\BlocklyPresenter.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAiwC4AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T07:36:10.041Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IBlocklyView.cs",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\views.interfaces\\IBlocklyView.cs",
-              "RelativeDocumentMoniker": "SAI\\SAI.App\\views.interfaces\\IBlocklyView.cs",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\views.interfaces\\IBlocklyView.cs",
-              "RelativeToolTip": "SAI\\SAI.App\\views.interfaces\\IBlocklyView.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T07:35:04.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "JSBridge.cs",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Models\\JSBridge.cs",
-              "RelativeDocumentMoniker": "SAI\\SAI.App\\Models\\JSBridge.cs",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.App\\Models\\JSBridge.cs",
-              "RelativeToolTip": "SAI\\SAI.App\\Models\\JSBridge.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T07:27:40.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\Program.cs",
-              "RelativeDocumentMoniker": "SAI\\Program.cs",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\Program.cs",
-              "RelativeToolTip": "SAI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-07T06:35:53.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html",
-              "RelativeDocumentMoniker": "SAI\\Blockly\\index.html",
-              "ToolTip": "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html",
-              "RelativeToolTip": "SAI\\Blockly\\index.html",
-              "ViewState": "AgIAABQAAAAAAAAAAAAswEkAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-05-07T06:01:40.003Z",
-              "EditorCaption": ""
             }
           ]
         }
