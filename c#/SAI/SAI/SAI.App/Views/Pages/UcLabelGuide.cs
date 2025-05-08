@@ -1,0 +1,2334 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Clipper2Lib;
+
+namespace SAI.SAI.App.Views.Pages
+{
+    public partial class UcLabelGuide : UserControl
+    {
+
+        // 기본 도구 상태 및 이미지 관련
+        private bool isDragging = false;
+        private Point startPoint = new Point(0, 0);
+        private bool isHandToolActive = false;
+        private List<Image> images = new List<Image>();
+        private int currentImageIndex = 0;
+
+        // 사각형 그리기 관련 변수
+        private bool isSquareToolActive = false;
+        private Rectangle currentRect = Rectangle.Empty;
+        private List<Tuple<Rectangle, string>> boundingBoxes = new List<Tuple<Rectangle, string>>();
+        private Point rectStartPoint;
+
+        // 이미지별 라벨링 데이터 저장
+        private Dictionary<int, string> imageClassifications = new Dictionary<int, string>();
+
+        // 이미지별 바운딩 박스 저장 (Bounding Box)
+        private Dictionary<int, List<Tuple<Rectangle, string>>> imageBoundingBoxes = new Dictionary<int, List<Tuple<Rectangle, string>>>();
+
+        // 이미지별 세그멘테이션 데이터 저장 (Segmentation) - 실제 구현에 따라 자료 구조 변경 가능
+        private Dictionary<int, object> imageSegmentations = new Dictionary<int, object>();
+
+        // 폴리곤 그리기 관련 변수
+        private bool isPolygonToolActive = false;
+        private List<Point> polygonPoints = new List<Point>();
+        private Dictionary<int, List<Tuple<List<Point>, string>>> imagePolygons = new Dictionary<int, List<Tuple<List<Point>, string>>>();
+        private Point? hoveredPoint = null;
+        private bool isEditingPolygon = false;
+        private int selectedPolygonIndex = -1;
+        private int dragPointIndex = -1;
+        private List<Point> editingPolygonPoints = new List<Point>();
+        private bool isPolygonPointDragging = false;
+
+        // 라벨링 데이터 내보내기 변수
+        private Guna.UI2.WinForms.Guna2Button exportBtn;
+
+        // 정답 데이터 저장용 변수
+        private Dictionary<int, string> groundTruthClassifications = new Dictionary<int, string>();
+        private Dictionary<int, Tuple<Rectangle, string>> groundTruthBoundingBoxes = new Dictionary<int, Tuple<Rectangle, string>>();
+        private Dictionary<int, Tuple<List<Point>, string>> groundTruthPolygons = new Dictionary<int, Tuple<List<Point>, string>>();
+
+        // 정확도 표시용 버튼
+        private Guna.UI2.WinForms.Guna2Button accuracyBtn;
+
+        // 이미지별 정확도 저장을 위한 변수 추가
+        private Dictionary<int, double> imageAccuracies = new Dictionary<int, double>();
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 초기 생성자
+        /// </summary>
+        public UcLabelGuide()
+        {
+            InitializeComponent();
+            LoadImages(); // 이미지 로드
+
+            // 초기 설정
+            SetupInitialConfig();
+            RegisterExport();
+            RegisterAccuracyButton();  // 정확도 계산 버튼 추가
+            InitializeGroundTruthData(); // 정답 데이터 초기화
+
+            // 이벤트 핸들러 등록
+            RegisterControlEvents();
+            RegisterMouseEvents();
+            RegisterToolEvents();
+
+            // 초기 라운드 설정
+            SetRoundedRegion();
+
+            // 초기 이미지에 맞게 toolBox 가시성 설정
+            UpdateCurrentLevel();
+
+            // 다음/이전 버튼은 기본 비활성화
+            UpdateNavigationButtonState();
+        }
+
+        // 정답 데이터 초기화 메서드
+        private void InitializeGroundTruthData()
+        {
+            // 바운딩 박스 정답 데이터
+            groundTruthBoundingBoxes[3] = ParseBoundingBoxFromJson(
+                "{\"label\":\"cat\",\"x\":230,\"y\":79,\"width\":307,\"height\":305}");
+            groundTruthBoundingBoxes[4] = ParseBoundingBoxFromJson(
+                "{\"label\":\"cat\",\"x\":198,\"y\":109,\"width\":222,\"height\":364}");
+            groundTruthBoundingBoxes[5] = ParseBoundingBoxFromJson(
+                "{\"label\":\"dog\",\"x\":157,\"y\":31,\"width\":187,\"height\":213}");
+
+            // 세그멘테이션 정답 데이터(폴리곤)
+            groundTruthPolygons[6] = ParsePolygonFromJson(
+                "{\"label\":\"cat\",\"points\":[{\"x\":89,\"y\":98},{\"x\":124,\"y\":146},{\"x\":149,\"y\":175},{\"x\":154,\"y\":212},{\"x\":159,\"y\":235},{\"x\":145,\"y\":310},{\"x\":161,\"y\":333},{\"x\":190,\"y\":344},{\"x\":191,\"y\":373},{\"x\":191,\"y\":400},{\"x\":204,\"y\":413},{\"x\":311,\"y\":414},{\"x\":447,\"y\":408},{\"x\":471,\"y\":379},{\"x\":585,\"y\":370},{\"x\":625,\"y\":367},{\"x\":637,\"y\":336},{\"x\":634,\"y\":314},{\"x\":453,\"y\":270},{\"x\":425,\"y\":245},{\"x\":343,\"y\":226},{\"x\":334,\"y\":201},{\"x\":340,\"y\":157},{\"x\":326,\"y\":94},{\"x\":314,\"y\":28},{\"x\":291,\"y\":9},{\"x\":270,\"y\":44},{\"x\":254,\"y\":72},{\"x\":218,\"y\":77},{\"x\":182,\"y\":104}]}");
+            groundTruthPolygons[7] = ParsePolygonFromJson(
+                "{\"label\":\"dog\",\"points\":[{\"x\":273,\"y\":61},{\"x\":247,\"y\":105},{\"x\":247,\"y\":152},{\"x\":264,\"y\":183},{\"x\":249,\"y\":213},{\"x\":255,\"y\":251},{\"x\":269,\"y\":303},{\"x\":295,\"y\":315},{\"x\":320,\"y\":308},{\"x\":335,\"y\":326},{\"x\":382,\"y\":314},{\"x\":382,\"y\":299},{\"x\":422,\"y\":299},{\"x\":439,\"y\":327},{\"x\":473,\"y\":325},{\"x\":479,\"y\":272},{\"x\":481,\"y\":194},{\"x\":496,\"y\":182},{\"x\":501,\"y\":128},{\"x\":479,\"y\":111},{\"x\":443,\"y\":99},{\"x\":393,\"y\":94},{\"x\":354,\"y\":127},{\"x\":342,\"y\":158},{\"x\":301,\"y\":156},{\"x\":274,\"y\":127},{\"x\":294,\"y\":54}]}");
+            groundTruthPolygons[8] = ParsePolygonFromJson(
+                "{\"label\":\"dog\",\"points\":[{\"x\":163,\"y\":213},{\"x\":162,\"y\":248},{\"x\":186,\"y\":277},{\"x\":181,\"y\":322},{\"x\":236,\"y\":356},{\"x\":270,\"y\":338},{\"x\":294,\"y\":312},{\"x\":331,\"y\":343},{\"x\":366,\"y\":329},{\"x\":343,\"y\":279},{\"x\":371,\"y\":270},{\"x\":417,\"y\":305},{\"x\":454,\"y\":292},{\"x\":447,\"y\":270},{\"x\":414,\"y\":253},{\"x\":399,\"y\":227},{\"x\":406,\"y\":172},{\"x\":417,\"y\":116},{\"x\":381,\"y\":83},{\"x\":333,\"y\":66},{\"x\":288,\"y\":78},{\"x\":262,\"y\":97},{\"x\":243,\"y\":132},{\"x\":251,\"y\":163},{\"x\":213,\"y\":206},{\"x\":196,\"y\":229},{\"x\":192,\"y\":245}]}");
+        }
+
+        // 정확도 계산 버튼 추가 메서드
+        private void RegisterAccuracyButton()
+        {
+            // 정확도 계산 버튼
+            this.accuracyBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.accuracyBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.accuracyBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.accuracyBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.accuracyBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.accuracyBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(133)))), ((int)(((byte)(55)))));
+            this.accuracyBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
+            this.accuracyBtn.ForeColor = System.Drawing.Color.White;
+            this.accuracyBtn.Location = new System.Drawing.Point(870, 830);
+            this.accuracyBtn.Name = "accuracyBtn";
+            this.accuracyBtn.Size = new System.Drawing.Size(138, 35);
+            this.accuracyBtn.TabIndex = 15;
+            this.accuracyBtn.Text = "정확도 계산";
+            this.imageContainer.Controls.Add(this.accuracyBtn);
+
+            // 클릭 이벤트 추가
+            accuracyBtn.Click += AccuracyBtn_Click;
+        }
+        private void RegisterExport()
+        {
+            // 좌표 내보내기 버튼 임시
+            this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
+            this.exportBtn.ForeColor = System.Drawing.Color.White;
+            this.exportBtn.Location = new System.Drawing.Point(0, 0);
+            this.exportBtn.Name = "exportBtn";
+            this.exportBtn.Size = new System.Drawing.Size(138, 35);
+            this.exportBtn.TabIndex = 14;
+            this.exportBtn.Text = "좌표 내보내기";
+            this.imageContainer.Controls.Add(this.exportBtn);
+        }
+
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
+        private void SetupInitialConfig()
+        {
+            // 이미지 페인트 이벤트 추가 (바운딩 박스 그리기)
+            pictureBoxImage.Paint += PictureBoxImage_Paint;
+        }
+
+        /// <summary>
+        /// 이미지 로드
+        /// </summary>
+        private void LoadImages()
+        {
+            string folderPath = @"C:\Users\doseungguk\Documents\GItLab\S12P31D201\c#\SAI\SAI\SAI.App\Resources\Images\";
+            //string baseDir = AppDomain.CurrentDomain.BaseDirectory;  임시
+            //string folderPath = Path.Combine(baseDir, "Resources", "Images");
+
+            //// 디렉터리가 존재하는지 확인
+            //if (!Directory.Exists(folderPath))
+            //{
+            //    // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
+            //    string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\Resources\Images"));
+
+            //    if (Directory.Exists(devPath))
+            //    {
+            //        folderPath = devPath;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show($"이미지 폴더를 찾을 수 없습니다.\n시도한 경로:\n1. {folderPath}\n2. {devPath}",
+            //                        "경로 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        return; // 또는 기본 이미지 사용 등의 대체 전략
+            //    }
+            //}
+
+            //// 이미지 파일 존재 확인 (디버깅용)
+            //string testImagePath = Path.Combine(folderPath, "1.jpg");
+            //if (File.Exists(testImagePath))
+            //{
+            //    Console.WriteLine($"이미지 파일을 찾았습니다: {testImagePath}");
+            //}
+            //else
+            //{
+            //    MessageBox.Show($"첫 번째 이미지 파일을 찾을 수 없습니다.\n경로: {testImagePath}",
+            //                    "파일 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+
+            for (int i = 1; i <= 9; i++)
+            {
+                string filePath = Path.Combine(folderPath, $"{i}.jpg");
+                if (File.Exists(filePath))
+                {
+                    images.Add(Image.FromFile(filePath));
+                }
+            }
+
+            if (images.Count > 0)
+            {
+                currentImageIndex = 0;
+                pictureBoxImage.Image = images[currentImageIndex]; // 첫 번째 이미지 표시
+                UpdateShowLevel(); // showLevel 업데이트
+                UpdateCurrentLevel(); // currentLevel 업데이트
+                LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
+            }
+            else
+            {
+                MessageBox.Show("이미지를 불러올 수 없습니다. 경로를 확인하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 컨트롤 이벤트 등록
+        /// </summary>
+        private void RegisterControlEvents()
+        {
+            // class1 라벨 클릭 시 주석 편집기 열기
+            class1.Click += (s, e) => OpenAnnotationEditor(class1.Text);
+
+            // 이미지 클릭 이벤트 추가
+            pictureBoxImage.Click += PictureBoxImage_Click;
+
+            // 버튼 이벤트 등록
+            nextBtn.Click += (s, e) => ShowNextImage();
+            preBtn.Click += (s, e) => ShowPreviousImage();
+
+            // 이미지가 라운드 밖으로 나가지 않도록 설정
+            imageContainer.Paint += ImageContainer_Paint;
+
+            // SizeChanged 이벤트 추가
+            imageContainer.SizeChanged += (s, e) => SetRoundedRegion();
+            pictureBoxImage.SizeChanged += (s, e) => SetRoundedRegion();
+
+            // 좌표 내보내기 버튼 클릭 이벤트 등록
+            exportBtn.Click += ExportBtn_Click;
+        }
+
+        /// <summary>
+        /// 좌표 내보내기 버튼 클릭 이벤트 핸들러
+        /// </summary>
+        private void ExportBtn_Click(object sender, EventArgs e)
+        {
+            // 현재 이미지의 라벨링 모드에 따라 적절한 데이터 내보내기
+            string jsonData = "";
+
+            if (currentLevel.Text == "Bounding Box")
+            {
+                // 현재 이미지의 바운딩 박스 정보 가져오기
+                jsonData = ExportBoundingBoxCoordinates(currentImageIndex);
+                MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "바운딩 박스 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (currentLevel.Text == "Segmentation")
+            {
+                // 현재 이미지의 폴리곤 정보 가져오기
+                jsonData = ExportPolygonCoordinates(currentImageIndex);
+                MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "세그멘테이션 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else // Classification
+            {
+                // 분류 정보만 있는 경우
+                if (imageClassifications.ContainsKey(currentImageIndex))
+                {
+                    string label = imageClassifications[currentImageIndex];
+                    jsonData = $"{{\"label\":\"{label}\"}}";
+                    MessageBox.Show($"현재 이미지 분류 정보:\n{jsonData}", "분류 정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("현재 이미지에 라벨링 정보가 없습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+            // 모든 이미지의 좌표 정보를 출력할지 물어보기
+            if (DialogResult.Yes == MessageBox.Show("모든 이미지의 좌표 정보도 확인하시겠습니까?", "추가 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                StringBuilder allCoords = new StringBuilder();
+
+                for (int i = 0; i < images.Count; i++)
+                {
+                    string imageType = "";
+                    string coords = "{}";
+
+                    // 이미지 타입에 따른 좌표 추출
+                    if (i < 3) // Classification (0-2 인덱스)
+                    {
+                        imageType = "분류";
+                        if (imageClassifications.ContainsKey(i))
+                        {
+                            string label = imageClassifications[i];
+                            coords = $"{{\"label\":\"{label}\"}}";
+                        }
+                    }
+                    else if (i < 6) // Bounding Box (3-5 인덱스)
+                    {
+                        imageType = "바운딩 박스";
+                        coords = ExportBoundingBoxCoordinates(i);
+                    }
+                    else // Segmentation (6-8 인덱스)
+                    {
+                        imageType = "세그멘테이션";
+                        coords = ExportPolygonCoordinates(i);
+                    }
+
+                    allCoords.AppendLine($"이미지 {i + 1} ({imageType}): {coords}");
+                }
+
+                // 결과를 대화상자로 표시
+                using (Form dialog = new Form())
+                {
+                    dialog.Text = "모든 이미지 좌표 정보";
+                    dialog.Size = new Size(600, 400);
+                    dialog.StartPosition = FormStartPosition.CenterParent;
+
+                    TextBox textBox = new TextBox();
+                    textBox.Multiline = true;
+                    textBox.ScrollBars = ScrollBars.Both;
+                    textBox.Dock = DockStyle.Fill;
+                    textBox.ReadOnly = true;
+                    textBox.Text = allCoords.ToString();
+
+                    dialog.Controls.Add(textBox);
+                    dialog.ShowDialog();
+                }
+            }
+        }
+        /// <summary>
+        /// 마우스 관련 이벤트 핸들러 등록
+        /// </summary>
+        private void RegisterMouseEvents()
+        {
+            // 이벤트 핸들러 등록
+            pictureBoxImage.MouseDown += PictureBoxImage_MouseDown;
+            pictureBoxImage.MouseMove += PictureBoxImage_MouseMove;
+            pictureBoxImage.MouseUp += PictureBoxImage_MouseUp;
+            pictureBoxImage.MouseMove += PictureBoxImage_MouseHover;
+            pictureBoxImage.MouseClick += PictureBoxImage_MouseClick;
+
+            // 이미지 컨테이너에도 마우스 이벤트 핸들러 추가
+            imageContainer.MouseDown += ImageContainer_MouseDown;
+            imageContainer.MouseMove += ImageContainer_MouseMove;
+            imageContainer.MouseUp += ImageContainer_MouseUp;
+        }
+
+        /// <summary>
+        /// 도구 관련 이벤트 핸들러 등록
+        /// </summary>
+        private void RegisterToolEvents()
+        {
+            // 도구 이벤트 등록
+            RegisterHandToolEvent();
+            RegisterSquareToolEvent();
+            RegisterPolygonToolEvent();
+        }
+
+        /// <summary>
+        /// 이미지 컨테이너의 라운드 설정
+        /// </summary>
+        private void SetRoundedRegion()
+        {
+            int borderRadius = 50; // 원하는 borderRadius 값
+
+            // imageContainer의 오른쪽 모서리만 둥글게 처리 (왼쪽은 직각)
+            GraphicsPath containerPath = new GraphicsPath();
+            // 왼쪽 위 (직각)
+            containerPath.AddLine(0, 0, borderRadius, 0);
+            // 오른쪽 위 (라운드)
+            containerPath.AddArc(imageContainer.Width - borderRadius, 0, borderRadius, borderRadius, 270, 90);
+            // 오른쪽 아래 (라운드)
+            containerPath.AddArc(imageContainer.Width - borderRadius, imageContainer.Height - borderRadius, borderRadius, borderRadius, 0, 90);
+            // 왼쪽 아래 (직각)
+            containerPath.AddLine(borderRadius, imageContainer.Height, 0, imageContainer.Height);
+            containerPath.AddLine(0, imageContainer.Height, 0, 0);
+            containerPath.CloseAllFigures();
+            imageContainer.Region = new Region(containerPath);
+
+            // PictureBox 자체에는 Region을 설정하지 않음 (null)
+            // 컨테이너의 Region에 의해 잘려 보이게 됨
+            if (pictureBoxImage.Region != null) // 이미 null이 아니면 null로 설정
+            {
+                pictureBoxImage.Region = null;
+            }
+        }
+
+        private void UpdateNavigationButtonState()
+        {
+            bool isCurrentImageLabeled = false;
+            double currentAccuracy = 0;
+
+            // 현재 이미지에 대한 라벨링 및 정확도 확인
+            if (imageAccuracies.ContainsKey(currentImageIndex))
+            {
+                currentAccuracy = imageAccuracies[currentImageIndex];
+                isCurrentImageLabeled = currentAccuracy >= 90.0;
+            }
+            else
+            {
+                // 이미지 타입에 따라 라벨링 되었는지 확인
+                if (currentLevel.Text == "Classification")
+                {
+                    isCurrentImageLabeled = imageClassifications.ContainsKey(currentImageIndex);
+                }
+                else if (currentLevel.Text == "Bounding Box")
+                {
+                    isCurrentImageLabeled = imageBoundingBoxes.ContainsKey(currentImageIndex) && imageBoundingBoxes[currentImageIndex].Count > 0;
+                }
+                else if (currentLevel.Text == "Segmentation")
+                {
+                    isCurrentImageLabeled = imagePolygons.ContainsKey(currentImageIndex) && imagePolygons[currentImageIndex].Count > 0;
+                }
+            }
+
+            // 이미지가 classification일 경우 라벨링만으로 통과
+            if (currentLevel.Text == "Classification")
+            {
+                //nextBtn.Enabled = currentAccuracy >= 100; 임시
+                nextBtn.Enabled = currentAccuracy >= 0;
+
+            }
+            else
+            {
+                //nextBtn.Enabled = currentAccuracy >= 90.0;임시
+                nextBtn.Enabled = currentAccuracy >= 50;
+            }
+            // 첫 번째 이미지일 경우 이전 버튼 비활성
+            preBtn.Enabled = currentImageIndex > 0;
+
+            // 버튼 시각적 업데이트
+            nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
+            preBtn.FillColor = preBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 도구 관련 이벤트 처리 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        /// <summary>
+        /// 손 도구 관련 이벤트 등록
+        /// </summary>
+        private void RegisterHandToolEvent()
+        {
+            toolHand.Click += (s, e) =>
+            {
+                // 폴리곤 작업 중이었다면 초기화
+                if (isPolygonToolActive && polygonPoints.Count > 0)
+                {
+                    polygonPoints.Clear();
+                    pictureBoxImage.Invalidate();
+                }
+
+                isHandToolActive = !isHandToolActive;
+                isSquareToolActive = false;
+                isPolygonToolActive = false; // 폴리곤 도구 비활성화
+
+                // 손 도구가 활성화되면 폴리곤 편집 모드 설정
+                if (isHandToolActive && currentLevel.Text == "Segmentation" &&
+                    imagePolygons.ContainsKey(currentImageIndex) &&
+                    imagePolygons[currentImageIndex].Count > 0)
+                {
+                    isEditingPolygon = true;
+
+                    // 기존에 저장된 폴리곤의 점들을 편집용으로 복사
+                    var existingPolygon = imagePolygons[currentImageIndex][0]; // 첫 번째 폴리곤만 편집 가능
+                    selectedPolygonIndex = 0;
+
+                    // 이미지 좌표를 화면 좌표로 변환
+                    editingPolygonPoints = ConvertPointsToDisplayCoordinates(existingPolygon.Item1);
+                }
+                else
+                {
+                    isEditingPolygon = false;
+                    selectedPolygonIndex = -1;
+                    editingPolygonPoints.Clear();
+                }
+
+                UpdateToolVisualState();
+                pictureBoxImage.Invalidate();
+            };
+        }
+
+        /// <summary>
+        /// 사각형 도구 관련 이벤트 등록
+        /// </summary>
+        private void RegisterSquareToolEvent()
+        {
+            toolLabelingSquare.Click += (s, e) =>
+            {
+                if (currentLevel.Text == "Bounding Box")
+                {
+                    // 폴리곤 작업 중이었다면 초기화
+                    if (isPolygonToolActive && polygonPoints.Count > 0)
+                    {
+                        polygonPoints.Clear();
+                        pictureBoxImage.Invalidate();
+                    }
+
+                    // 도구 상태 변경
+                    isHandToolActive = false;
+                    isSquareToolActive = true;
+                    isPolygonToolActive = false;
+
+                    UpdateToolVisualState();
+                    pictureBoxImage.Cursor = Cursors.Cross;
+                }
+            };
+        }
+
+        /// <summary>
+        /// 폴리곤 도구 관련 이벤트 등록
+        /// </summary>
+        private void RegisterPolygonToolEvent()
+        {
+            toolLabelingPolygon.Click += (s, e) =>
+            {
+                if (currentLevel.Text == "Segmentation")
+                {
+                    // 현재 편집 모드라면 편집 내용을 저장
+                    if (isEditingPolygon)
+                    {
+                        SaveEditingPolygon();
+                    }
+
+                    // 이미 폴리곤 도구가 활성화된 상태에서 다시 클릭하면 작업 중인 폴리곤 초기화
+                    if (isPolygonToolActive && polygonPoints.Count > 0)
+                    {
+                        polygonPoints.Clear();
+                    }
+
+                    // 모든 도구 상태 비활성화
+                    isHandToolActive = false;
+                    isSquareToolActive = false;
+
+                    // 폴리곤 도구 활성화 상태 토글
+                    isPolygonToolActive = !isPolygonToolActive;
+
+                    UpdateToolVisualState();
+                    pictureBoxImage.Cursor = isPolygonToolActive ? Cursors.Cross : Cursors.Default;
+
+                    // 화면 갱신
+                    pictureBoxImage.Invalidate();
+                }
+            };
+        }
+
+        /// <summary>
+        /// 손 도구 클릭 시 상태를 변경하고 폴리곤 편집 모드를 성정 / 해제
+        /// </summary>
+        private void toolHand_Click(object sender, EventArgs e)
+        {
+            isHandToolActive = !isHandToolActive; // 활성화 상태 토글
+            toolHand.BackColor = isHandToolActive ? Color.LightGray : Color.Transparent; // 시각적 피드백
+        }
+
+        /// <summary>
+        /// 현재 활성화된 도구에 따라 시각적 상태를 업데이트
+        /// </summary>
+        private void UpdateToolVisualState()
+        {
+            toolHand.BackColor = isHandToolActive ? Color.LightGray : Color.Transparent;
+            toolLabelingSquare.BackColor = isSquareToolActive ? Color.LightGray : Color.Transparent;
+            toolLabelingPolygon.BackColor = isPolygonToolActive ? Color.LightGray : Color.Transparent;
+            pictureBoxImage.Cursor = isHandToolActive ? Cursors.Hand : Cursors.Default;
+        }
+
+        /// <summary>
+        /// 모든 도구의 상태를 초기화
+        /// </summary>
+        private void ResetToolState()
+        {
+            // 도구 상태 초기화
+            isHandToolActive = false;
+            isSquareToolActive = false;
+            isDragging = false;
+            isEditingPolygon = false;
+            isPolygonPointDragging = false;
+            selectedPolygonIndex = -1;
+            dragPointIndex = -1;
+            currentRect = Rectangle.Empty;
+            polygonPoints.Clear();
+            editingPolygonPoints.Clear();
+
+            // 호버링 상태 초기화
+            hoveredPoint = null;
+
+            // 도구 버튼 시각적 상태 초기화
+            toolHand.BackColor = Color.Transparent;
+            toolLabelingSquare.BackColor = Color.Transparent;
+            toolLabelingPolygon.BackColor = Color.Transparent;
+
+            // 마우스 커서 기본값으로 설정
+            pictureBoxImage.Cursor = Cursors.Default;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// 이미지 탐색 관련 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 현재 이미지 인덱스에 따라 라벨링 단계 업데이트
+        /// </summary>
+        private void UpdateCurrentLevel()
+        {
+            int imageIndex = currentImageIndex + 1; // 1부터 시작하는 인덱스
+
+            // 도구 상태 초기화
+            isHandToolActive = false;
+            isSquareToolActive = false;
+            isPolygonToolActive = false;
+
+            if (imageIndex >= 1 && imageIndex <= 3)
+            {
+                currentLevel.Text = "Classification"; // 이미지 1,2,3
+                toolBox.Visible = false; // Classification 단계에서는 도구창 숨김
+                accuracyLabel.Visible = false; // 정확도 숨김
+
+                // Classification 단계에서는 손 도구를 기본으로 활성화
+                isHandToolActive = true;
+                pictureBoxImage.Cursor = Cursors.Hand;
+            }
+            else if (imageIndex >= 4 && imageIndex <= 6)
+            {
+                currentLevel.Text = "Bounding Box"; // 이미지 4,5,6
+                toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
+                accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+
+            }
+            else if (imageIndex >= 7 && imageIndex <= 9)
+            {
+                currentLevel.Text = "Segmentation"; // 이미지 7,8,9
+                toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
+                accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+
+            }
+
+            // 도구 버튼 상태 업데이트
+            if (toolHand != null)
+                toolHand.BackColor = isHandToolActive ? Color.LightGray : Color.Transparent;
+            if (toolLabelingSquare != null)
+                toolLabelingSquare.BackColor = isSquareToolActive ? Color.LightGray : Color.Transparent;
+            if (toolLabelingPolygon != null)
+                toolLabelingPolygon.BackColor = isPolygonToolActive ? Color.LightGray : Color.Transparent;
+        }
+
+        /// <summary>
+        /// 현재 이미지 번호를 업데이트하여 showLevel에 표시
+        /// </summary>
+        private void UpdateShowLevel()
+        {
+            // 현재 이미지 인덱스는 0부터 시작하므로 1을 더해 표시
+            showLevel.Text = $"{currentImageIndex + 1}/{images.Count}";
+        }
+
+        /// <summary>
+        /// 다음 이미지로 이동
+        /// </summary>
+        // 다음 이미지 이동 메서드 수정
+        private void ShowNextImage()
+        {
+            if (images.Count > 0)
+            {
+                currentImageIndex = (currentImageIndex + 1) % images.Count; // 다음 이미지로 이동
+                pictureBoxImage.Image = images[currentImageIndex];
+                UpdateShowLevel(); // showLevel 업데이트
+                ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
+                UpdateCurrentLevel(); // currentLevel 업데이트
+                LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
+
+                // 정확도 표시 업데이트
+                if (imageAccuracies.ContainsKey(currentImageIndex))
+                {
+                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+                }
+                else
+                {
+                    accuracyBtn.Text = "Accuracy";
+                    accuracyLabel.Text = "Accuracy: 0%";
+                }
+
+                // 네비게이션 버튼 상태 업데이트
+                UpdateNavigationButtonState();
+            }
+        }
+        /// <summary>
+        /// 이전 이미지로 이동
+        /// </summary>
+        private void ShowPreviousImage()
+        {
+            if (images.Count > 0)
+            {
+                currentImageIndex = (currentImageIndex - 1 + images.Count) % images.Count; // 이전 이미지로 이동
+                pictureBoxImage.Image = images[currentImageIndex];
+                UpdateShowLevel(); // showLevel 업데이트
+                ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
+                UpdateCurrentLevel(); // currentLevel 업데이트
+                LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
+
+                // 정확도 표시 업데이트
+                if (imageAccuracies.ContainsKey(currentImageIndex))
+                {
+                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+                }   
+                else
+                {
+                    accuracyLabel.Text = "Accuracy: 0%";
+                }
+
+                // 네비게이션 버튼 상태 업데이트
+                UpdateNavigationButtonState();
+            }
+        }
+
+        /// <summary>
+        /// 현재 이미지에 대한 라벨 정보를 불러옴
+        /// </summary>
+        private void LoadImageLabels()
+        {
+            // 기본값은 빈 문자열로 설정
+            class1.Text = "";
+
+            // Classification 라벨 불러오기
+            if (imageClassifications.ContainsKey(currentImageIndex))
+            {
+                class1.Text = imageClassifications[currentImageIndex];
+            }
+            // Bounding Box 라벨 불러오기
+            else if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                     imageBoundingBoxes[currentImageIndex].Count > 0)
+            {
+                class1.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
+            }
+            // Segmentation 라벨 불러오기 (구현되어 있다면)
+            else if (imagePolygons.ContainsKey(currentImageIndex) &&
+                     imagePolygons[currentImageIndex].Count > 0)
+            {
+                class1.Text = imagePolygons[currentImageIndex][0].Item2;
+            }
+
+
+            // 이미지 갱신하여 바운딩 박스 표시
+            pictureBoxImage.Invalidate();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// 마우스이벤트 처리 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 이미지 컨테이너에서 마우스 다운 이벤트 핸들러 
+        /// </summary>
+        private void ImageContainer_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (isHandToolActive && e.Button == MouseButtons.Left)
+            {
+                // 이미지 영역 밖에서도 드래그 시작
+                isDragging = true;
+                startPoint = e.Location;
+            }
+        }
+
+        /// <summary>
+        /// 이미지 컨테이너에서 마우스 이동 이벤트 핸들러
+        /// </summary>
+        private void ImageContainer_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                // 이미지 이동
+                pictureBoxImage.Left += e.X - startPoint.X;
+                pictureBoxImage.Top += e.Y - startPoint.Y;
+                startPoint = e.Location;
+            }
+        }
+
+        /// <summary>
+        /// 이미지 컨테이너에서 마우스 업 이벤트 핸들러
+        /// </summary>
+        private void ImageContainer_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false; // 드래그 종료
+            }
+        }
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 다운 이벤트 핸들러
+        /// </summary>
+        private void PictureBoxImage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (isHandToolActive && e.Button == MouseButtons.Left)
+            {
+                if (isEditingPolygon)
+                {
+                    // 폴리곤 꼭지점 클릭 확인
+                    int pointIndex = GetPointAtPosition(e.Location, 10, editingPolygonPoints);
+                    if (pointIndex >= 0)
+                    {
+                        // 꼭지점을 클릭했으면 드래그 모드 시작
+                        isPolygonPointDragging = true;
+                        dragPointIndex = pointIndex;
+                        pictureBoxImage.Cursor = Cursors.SizeAll;
+                    }
+                    else
+                    {
+                        // 선 위를 클릭했는지 확인
+                        int segmentIndex = GetLineSegmentIndex(e.Location, 10);
+                        if (segmentIndex >= 0)
+                        {
+                            // 선 위를 클릭한 경우, 새로운 점을 추가
+                            Point clickPoint = e.Location;
+                            // segmentIndex와 segmentIndex+1 사이에 새로운 점 삽입
+                            editingPolygonPoints.Insert(segmentIndex + 1, clickPoint);
+
+                            // 새로 추가된 점을 즉시 드래그 모드로 설정
+                            isPolygonPointDragging = true;
+                            dragPointIndex = segmentIndex + 1;
+                            pictureBoxImage.Cursor = Cursors.SizeAll;
+
+                            pictureBoxImage.Invalidate();
+                        }
+                        else
+                        {
+                            // 일반 드래그 모드 시작
+                            isDragging = true;
+                            //startPoint = e.Location;
+                            startPoint = pictureBoxImage.PointToScreen(e.Location);
+
+                        }
+                    }
+                }
+                else
+                {
+                    // 일반 드래그 모드 시작
+                    isDragging = true;
+                    //startPoint = e.Location;
+                    startPoint = pictureBoxImage.PointToScreen(e.Location);
+
+                }
+            }
+            else if (isSquareToolActive && e.Button == MouseButtons.Left)
+            {
+                // 사각형 그리기 시작점 저장
+                rectStartPoint = e.Location;
+                currentRect = Rectangle.Empty;
+                pictureBoxImage.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 이동 이벤트 핸들러
+        /// </summary>
+        private void PictureBoxImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isPolygonPointDragging && dragPointIndex >= 0 && isEditingPolygon)
+            {
+                // 폴리곤 꼭지점 드래그 중
+                editingPolygonPoints[dragPointIndex] = e.Location;
+                pictureBoxImage.Invalidate();
+            }
+            //else if (isDragging)
+            //{
+            //    // 이미지 드래그 시 이동 로직을 수정
+            //    pictureBoxImage.Left += e.X - startPoint.X;
+            //    pictureBoxImage.Top += e.Y - startPoint.Y;
+            //    // 시작 위치 업데이트 (연속 드래그를 부드럽게 처리하기 위해)
+            //    startPoint = e.Location;
+            //}
+            else if (isDragging)
+            {
+                // 현재 마우스 위치를 스크린 좌표로 변환
+                Point currentPoint = pictureBoxImage.PointToScreen(e.Location);
+
+                // 이전 위치와 현재 위치의 차이만큼 이미지 이동
+                int deltaX = currentPoint.X - startPoint.X;
+                int deltaY = currentPoint.Y - startPoint.Y;
+                pictureBoxImage.Left += deltaX;
+                pictureBoxImage.Top += deltaY;
+
+                // 현재 위치를 새로운 시작 위치로 업데이트
+                startPoint = currentPoint;
+            }
+            else if (isSquareToolActive && e.Button == MouseButtons.Left)
+            {
+                // 마우스 움직임에 따라 사각형 크기 조정
+                int width = Math.Abs(e.X - rectStartPoint.X);
+                int height = Math.Abs(e.Y - rectStartPoint.Y);
+                int x = Math.Min(rectStartPoint.X, e.X);
+                int y = Math.Min(rectStartPoint.Y, e.Y);
+
+                currentRect = new Rectangle(x, y, width, height);
+                pictureBoxImage.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 업 이벤트 핸들러
+        /// </summary>
+        private void PictureBoxImage_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (isPolygonPointDragging)
+                {
+                    // 폴리곤 꼭지점 드래그 종료
+                    isPolygonPointDragging = false;
+                    dragPointIndex = -1;
+                    pictureBoxImage.Cursor = Cursors.Hand;
+
+                    // 수정된 폴리곤 저장
+                    if (isEditingPolygon && selectedPolygonIndex >= 0 &&
+                        imagePolygons.ContainsKey(currentImageIndex) &&
+                        selectedPolygonIndex < imagePolygons[currentImageIndex].Count)
+                    {
+                        // 화면 좌표를 이미지 좌표로 변환
+                        List<Point> imagePoints = ConvertPointsToImageCoordinates(editingPolygonPoints);
+
+                        // 기존 라벨 유지하면서 좌표만 업데이트
+                        string label = imagePolygons[currentImageIndex][selectedPolygonIndex].Item2;
+                        imagePolygons[currentImageIndex][selectedPolygonIndex] =
+                            new Tuple<List<Point>, string>(imagePoints, label);
+
+                        // 폴리곤 수정 후 정확도 즉시 계산 및 표시
+                        if (currentLevel.Text == "Segmentation")
+                        {
+                            CalculateAndDisplayAccuracy();
+                        }
+                    }
+                }
+                else if (isDragging)
+                {
+                    isDragging = false; // 일반 드래그 종료
+                }
+                else if (isSquareToolActive && !currentRect.IsEmpty)
+                {
+                    // 최소 크기 이상인 경우에만 처리
+                    if (currentRect.Width > 5 && currentRect.Height > 5)
+                    {
+                        // 화면 좌표에서 이미지 좌표로 변환
+                        Rectangle imageRect = ConvertToImageCoordinates(currentRect);
+
+                        // 변환된 이미지 좌표를 사용하여 바운딩 박스 편집기 열기
+                        OpenAnnotationEditorForBoundingBox(imageRect);
+                    }
+                    else
+                    {
+                        // 너무 작은 박스는 취소
+                        currentRect = Rectangle.Empty;
+                        pictureBoxImage.Invalidate();
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 호버 이벤트 핸들러
+        /// </summary>
+        private void PictureBoxImage_MouseHover(object sender, MouseEventArgs e)
+        {
+            Point? previousHoveredPoint = hoveredPoint;
+            hoveredPoint = null;
+
+            if (isPolygonToolActive && polygonPoints.Count > 0)
+            {
+                // 폴리곤 생성 중일 때의 호버링 로직
+                if (polygonPoints.Count >= 3)
+                {
+                    Point firstPoint = polygonPoints[0];
+                    int hoverThreshold = 15;
+
+                    if (Math.Abs(e.X - firstPoint.X) <= hoverThreshold &&
+                        Math.Abs(e.Y - firstPoint.Y) <= hoverThreshold)
+                    {
+                        hoveredPoint = firstPoint;
+                        pictureBoxImage.Cursor = Cursors.Hand;
+                    }
+                    else
+                    {
+                        pictureBoxImage.Cursor = isPolygonToolActive ? Cursors.Cross : Cursors.Default;
+                    }
+                }
+            }
+            else if (isEditingPolygon && editingPolygonPoints.Count > 0)
+            {
+                // 폴리곤 편집 중일 때의 호버링 로직
+                int pointIndex = GetPointAtPosition(e.Location, 10, editingPolygonPoints);
+                if (pointIndex >= 0)
+                {
+                    hoveredPoint = editingPolygonPoints[pointIndex];
+                    pictureBoxImage.Cursor = Cursors.SizeAll;
+                }
+                else
+                {
+                    // 선 위에 있는지 확인
+                    int lineIndex = GetLineSegmentIndex(e.Location, 5);
+                    if (lineIndex >= 0)
+                    {
+                        pictureBoxImage.Cursor = Cursors.Cross; // 선 위에서는 Cross 커서 표시
+                    }
+                    else
+                    {
+                        pictureBoxImage.Cursor = Cursors.Hand;
+                    }
+                }
+            }
+
+            // 호버링 상태가 변경되었으면 화면 갱신
+            if (previousHoveredPoint != hoveredPoint)
+            {
+                pictureBoxImage.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 클릭 이벤트 핸들러
+        /// </summary>
+        private void PictureBoxImage_Click(object sender, EventArgs e)
+        {
+            MouseEventArgs mouseEvent = e as MouseEventArgs;
+            if (mouseEvent == null)
+                return;
+
+            // 현재 마우스 포인터 위치 가져오기
+            Point clickPoint = mouseEvent.Location;
+
+            if (currentLevel.Text == "Classification")
+            {
+                // Classification 단계에서는 이미지 클릭으로 주석 편집기 열기
+                OpenAnnotationEditor(class1.Text);
+            }
+            else if ((currentLevel.Text == "Bounding Box" || currentLevel.Text == "Segmentation") &&
+                      !isSquareToolActive) // 바운딩 박스 그리기 도구가 활성화되지 않았을 때만
+            {
+                // 클릭한 위치가 기존 바운딩 박스 내부인지 확인
+                if (IsClickInsideBoundingBox(clickPoint, out Tuple<Rectangle, string> box))
+                {
+                    // 기존 라벨로 주석 편집기 열기
+                    OpenAnnotationEditor(box.Item2);
+                }
+            }
+        }
+
+        /// <summary>
+        /// pictureBoxImage에서 마우스 클릭 이벤트 핸들러(폴리곤 관련)
+        /// </summary>
+        private void PictureBoxImage_MouseClick(object sender, MouseEventArgs e)
+        {
+            // 폴리곤 도구가 활성화된 상태에서만 처리
+            if (isPolygonToolActive && currentLevel.Text == "Segmentation")
+            {
+                Point clickPoint = e.Location;
+
+                // 클릭한 위치가 이미 있는 점과 근접한지 확인
+                int pointIndex = GetPointAtPosition(clickPoint, hoveredPoint.HasValue ? 15 : 10);
+
+                if (pointIndex == 0 && polygonPoints.Count >= 3)
+                {
+                    // 첫 번째 점을 클릭하면 폴리곤 완성
+                    CompletePolygon();
+
+                    // 호버링 상태 초기화
+                    hoveredPoint = null;
+                    pictureBoxImage.Cursor = isPolygonToolActive ? Cursors.Cross : Cursors.Default;
+                }
+
+                else if (pointIndex > 0)
+                {
+                    // 클릭한 점과 그 이전 점들만 유지
+                    polygonPoints = polygonPoints.Take(pointIndex).ToList();
+                    pictureBoxImage.Invalidate();
+
+                }
+                else if (pointIndex > 0 && pointIndex < polygonPoints.Count)
+                {
+                    // 클릭한 점을 삭제
+                    polygonPoints.RemoveAt(pointIndex);
+                    pictureBoxImage.Invalidate();
+                }
+                else if (pointIndex == 0 && polygonPoints.Count < 3)
+                {
+                    polygonPoints.Clear();
+                    pictureBoxImage.Invalidate();
+                }
+                else
+                {
+                    // 새 점 추가
+                    polygonPoints.Add(clickPoint);
+                    pictureBoxImage.Invalidate();
+                }
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 그리기 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// pictureBox를 다시 그림 
+        /// </summary>
+        private void PictureBoxImage_Paint(object sender, PaintEventArgs e)
+        {
+            // 현재 그리는 중인 사각형 그리기
+            if (isSquareToolActive && currentRect != Rectangle.Empty)
+            {
+                using (Pen pen = new Pen(Color.Red, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, currentRect);
+                }
+            }
+
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            if (imageBoundingBoxes.ContainsKey(currentImageIndex))
+            {
+                foreach (var box in imageBoundingBoxes[currentImageIndex])
+                {
+                    // 이미지와 PictureBox 간의 비율 계산
+                    float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
+                    float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+
+                    // 좌표 변환
+                    Rectangle displayRect = new Rectangle(
+                        (int)(box.Item1.X * scaleX),
+                        (int)(box.Item1.Y * scaleY),
+                        (int)(box.Item1.Width * scaleX),
+                        (int)(box.Item1.Height * scaleY)
+                    );
+
+                    // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                    displayRect.Inflate(-2, -2);
+
+                    using (Pen pen = new Pen(Color.Red, 2))
+                    {
+                        e.Graphics.DrawRectangle(pen, displayRect);
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(box.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.Red))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    displayRect.X,
+                                    displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(box.Item2, font, brush,
+                                    displayRect.X,
+                                    displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 폴리곤 그리기 (현재 작업 중인 폴리곤)
+            if (isPolygonToolActive && polygonPoints.Count > 0)
+            {
+                using (Pen pen = new Pen(Color.Blue, 2))
+                {
+                    // 연결된 점들 그리기
+                    for (int i = 0; i < polygonPoints.Count - 1; i++)
+                    {
+                        e.Graphics.DrawLine(pen, polygonPoints[i], polygonPoints[i + 1]);
+                    }
+
+                    // 마지막 점에서 첫 점까지 선 그리기 (3개 이상 점이 있을 때)
+                    if (polygonPoints.Count >= 3)
+                    {
+                        using (Pen dashedPen = new Pen(Color.Blue, 2))
+                        {
+                            dashedPen.DashStyle = DashStyle.Dash;
+                            e.Graphics.DrawLine(dashedPen, polygonPoints[polygonPoints.Count - 1], polygonPoints[0]);
+                        }
+                    }
+                }
+
+                // 점 그리기
+                int normalPointSize = 10;
+                int hoveredPointSize = 16; // 호버링 시 점 크기
+
+                using (SolidBrush blueBrush = new SolidBrush(Color.Blue))
+                using (SolidBrush redBrush = new SolidBrush(Color.Red))
+                using (SolidBrush orangeBrush = new SolidBrush(Color.Orange)) // 호버링 시 색상
+                {
+                    // 첫 번째 점은 빨간색 또는 오렌지색(호버링 시)으로 표시
+                    if (polygonPoints.Count > 0)
+                    {
+                        Point firstPoint = polygonPoints[0];
+                        bool isHovered = (hoveredPoint.HasValue && hoveredPoint.Value == firstPoint);
+
+                        // 호버링 상태에 따라 크기와 색상 변경
+                        int pointSize = isHovered ? hoveredPointSize : normalPointSize;
+                        SolidBrush brush = isHovered ? orangeBrush : redBrush;
+
+                        e.Graphics.FillEllipse(brush,
+                            firstPoint.X - pointSize / 2,
+                            firstPoint.Y - pointSize / 2,
+                            pointSize, pointSize);
+
+                        // 호버링 시 테두리 추가
+                        if (isHovered)
+                        {
+                            using (Pen outlinePen = new Pen(Color.White, 2))
+                            {
+                                e.Graphics.DrawEllipse(outlinePen,
+                                    firstPoint.X - pointSize / 2,
+                                    firstPoint.Y - pointSize / 2,
+                                    pointSize, pointSize);
+                            }
+                        }
+                    }
+
+                    // 나머지 점들은 파란색으로 표시
+                    for (int i = 1; i < polygonPoints.Count; i++)
+                    {
+                        e.Graphics.FillEllipse(blueBrush,
+                            polygonPoints[i].X - normalPointSize / 2,
+                            polygonPoints[i].Y - normalPointSize / 2,
+                            normalPointSize, normalPointSize);
+                    }
+                }
+            }
+
+            // 폴리곤 편집 모드일 때 편집 중인 폴리곤 그리기
+            if (isEditingPolygon && editingPolygonPoints.Count >= 3)
+            {
+                using (Pen pen = new Pen(Color.Orange, 2))
+                {
+                    // 편집 중인 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, editingPolygonPoints.ToArray());
+
+                    // 꼭지점 그리기
+                    int pointSize = 10;
+                    using (SolidBrush pointBrush = new SolidBrush(Color.Orange))
+                    {
+                        foreach (var point in editingPolygonPoints)
+                        {
+                            // 호버링 중인 점은 더 크게 표시
+                            bool isHovered = (hoveredPoint.HasValue &&
+                                             Math.Abs(point.X - hoveredPoint.Value.X) <= 5 &&
+                                             Math.Abs(point.Y - hoveredPoint.Value.Y) <= 5);
+
+                            int size = isHovered ? 16 : pointSize;
+
+                            e.Graphics.FillEllipse(pointBrush,
+                                point.X - size / 2,
+                                point.Y - size / 2,
+                                size, size);
+
+                            // 호버링 시 테두리 추가
+                            if (isHovered)
+                            {
+                                using (Pen outlinePen = new Pen(Color.White, 2))
+                                {
+                                    e.Graphics.DrawEllipse(outlinePen,
+                                        point.X - size / 2,
+                                        point.Y - size / 2,
+                                        size, size);
+                                }
+                            }
+                        }
+                    }
+
+                    // 라벨 텍스트 그리기
+                    if (imagePolygons.ContainsKey(currentImageIndex) &&
+                        selectedPolygonIndex >= 0 &&
+                        selectedPolygonIndex < imagePolygons[currentImageIndex].Count)
+                    {
+                        string label = imagePolygons[currentImageIndex][selectedPolygonIndex].Item2;
+                        if (!string.IsNullOrEmpty(label))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.Orange))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in editingPolygonPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / editingPolygonPoints.Count,
+                                                       sumY / editingPolygonPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(label, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(label, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            if (!isEditingPolygon && imagePolygons.ContainsKey(currentImageIndex))
+            {
+                foreach (var polygon in imagePolygons[currentImageIndex])
+                {
+                    // 이미지 좌표를 화면 좌표로 변환
+                    List<Point> displayPoints = ConvertPointsToDisplayCoordinates(polygon.Item1);
+
+                    if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                    {
+                        using (Pen pen = new Pen(Color.Green, 2))
+                        {
+                            // 폴리곤 그리기
+                            e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                            // 라벨 텍스트 그리기
+                            if (!string.IsNullOrEmpty(polygon.Item2))
+                            {
+                                using (Font font = new Font("Arial", 10))
+                                using (SolidBrush brush = new SolidBrush(Color.Green))
+                                using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                                {
+                                    // 폴리곤의 중심 계산
+                                    int sumX = 0, sumY = 0;
+                                    foreach (var point in displayPoints)
+                                    {
+                                        sumX += point.X;
+                                        sumY += point.Y;
+                                    }
+                                    Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                    SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                    // 텍스트 배경
+                                    e.Graphics.FillRectangle(bgBrush,
+                                        center.X - textSize.Width / 2,
+                                        center.Y - textSize.Height / 2,
+                                        textSize.Width, textSize.Height);
+
+                                    // 텍스트
+                                    e.Graphics.DrawString(polygon.Item2, font, brush,
+                                        center.X - textSize.Width / 2,
+                                        center.Y - textSize.Height / 2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// ImageContainer를 다시 그림
+        /// </summary>
+        private void ImageContainer_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 바운딩 박스 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 바운딩 박스 좌표를 JSON 형태로 내보내기
+
+        private string ExportBoundingBoxCoordinates(int imageIndex)
+        {
+            if (imageBoundingBoxes.ContainsKey(imageIndex) &&
+                imageBoundingBoxes[imageIndex].Count > 0)
+            {
+                var box = imageBoundingBoxes[imageIndex][0];
+                return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
+            }
+            return "{}";
+        }
+
+        // 폴리곤 좌표를 JSON 형태로 내보내기
+        private string ExportPolygonCoordinates(int imageIndex)
+        {
+            if (imagePolygons.ContainsKey(imageIndex) &&
+                imagePolygons[imageIndex].Count > 0)
+            {
+                var polygon = imagePolygons[imageIndex][0];
+
+                // 점들의 좌표를 배열로 변환
+                var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
+                string pointsJson = string.Join(",", points);
+
+                return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
+            }
+            return "{}";
+        }
+
+        /// <summary>
+        /// 현재 이미지 인덱스에 해당하는 바운딩 박스 목록을 가져옴
+        /// </summary>
+        private List<Tuple<Rectangle, string>> CurrentBoundingBoxes
+        {
+            get
+            {
+                if (!imageBoundingBoxes.ContainsKey(currentImageIndex))
+                {
+                    imageBoundingBoxes[currentImageIndex] = new List<Tuple<Rectangle, string>>();
+                }
+                return imageBoundingBoxes[currentImageIndex];
+            }
+        }
+
+        /// <summary>
+        /// 화면 좌표를 이미지 좌표로 변환
+        /// </summary>
+        private Rectangle ConvertToImageCoordinates(Rectangle displayRect)
+        {
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleX = pictureBoxImage.Image.Width / (float)pictureBoxImage.ClientSize.Width;
+            float scaleY = pictureBoxImage.Image.Height / (float)pictureBoxImage.ClientSize.Height;
+
+            // 화면 좌표를 이미지 좌표로 변환
+            return new Rectangle(
+                (int)(displayRect.X * scaleX),
+                (int)(displayRect.Y * scaleY),
+                (int)(displayRect.Width * scaleX),
+                (int)(displayRect.Height * scaleY)
+            );
+        }
+
+        /// <summary>
+        /// 바운딩 박스 생성을 위한 주석 편집기 열기
+        /// </summary>
+        private void OpenAnnotationEditorForBoundingBox(Rectangle imageRect)
+        {
+            using (var editorForm = new AnnotationEditorForm(class1.Text)) // 기존 라벨을 초기값으로 설정
+            {
+                if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
+                {
+                    // 저장된 주석 텍스트 가져오기
+                    string annotationText = editorForm.AnnotationText;
+
+                    // class1 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
+                    class1.Text = annotationText;
+
+                    // 기존 바운딩 박스 모두 제거 (라벨링은 항상 하나만)
+                    CurrentBoundingBoxes.Clear();
+
+                    // 새 바운딩 박스 추가
+                    CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(imageRect, annotationText));
+
+                    // 그리기 상태 초기화
+                    currentRect = Rectangle.Empty;
+                    pictureBoxImage.Invalidate();
+
+                    // 네비게이션 버튼 상태 업데이트
+                    UpdateNavigationButtonState();
+
+                    // 정확도 계산 버튼 활성화
+                    CalculateAndDisplayAccuracy();
+                }
+                else
+                {
+                    // 취소된 경우 현재 그리던 사각형 취소
+                    currentRect = Rectangle.Empty;
+                    pictureBoxImage.Invalidate();
+                }
+            }
+        }
+
+        // JSON 문자열에서 바운딩 박스 파싱
+        private Tuple<Rectangle, string> ParseBoundingBoxFromJson(string json)
+        {
+            // 간단한 JSON 파싱 (완전한 파서는 Newtonsoft.Json 사용 권장)
+            int xStart = json.IndexOf("\"x\":") + 4;
+            int yStart = json.IndexOf("\"y\":") + 4;
+            int widthStart = json.IndexOf("\"width\":") + 8;
+            int heightStart = json.IndexOf("\"height\":") + 9;
+            int labelStart = json.IndexOf("\"label\":\"") + 9;
+            int labelEnd = json.IndexOf("\"", labelStart);
+
+            string label = json.Substring(labelStart, labelEnd - labelStart);
+            int x = int.Parse(json.Substring(xStart, json.IndexOf(",", xStart) - xStart));
+            int y = int.Parse(json.Substring(yStart, json.IndexOf(",", yStart) - yStart));
+            int width = int.Parse(json.Substring(widthStart, json.IndexOf(",", widthStart) - widthStart));
+            int height = int.Parse(json.Substring(heightStart, json.IndexOf("}", heightStart) - heightStart));
+
+            return new Tuple<Rectangle, string>(new Rectangle(x, y, width, height), label);
+        }
+
+        // JSON 문자열에서 폴리곤 파싱
+        private Tuple<List<Point>, string> ParsePolygonFromJson(string json)
+        {
+            // 라벨 추출
+            int labelStart = json.IndexOf("\"label\":\"") + 9;
+            int labelEnd = json.IndexOf("\"", labelStart);
+            string label = json.Substring(labelStart, labelEnd - labelStart);
+
+            // 포인트 추출
+            List<Point> points = new List<Point>();
+            int pointsStart = json.IndexOf("\"points\":[") + 10;
+            int pointsEnd = json.IndexOf("]", pointsStart);
+            string pointsJson = json.Substring(pointsStart, pointsEnd - pointsStart);
+
+            // 각 점 파싱
+            int index = 0;
+            while (index < pointsJson.Length)
+            {
+                int coordStart = pointsJson.IndexOf("{", index);
+                if (coordStart == -1) break;
+
+                int coordEnd = pointsJson.IndexOf("}", coordStart);
+                string coordJson = pointsJson.Substring(coordStart, coordEnd - coordStart + 1);
+
+                int xStart = coordJson.IndexOf("\"x\":") + 4;
+                int yStart = coordJson.IndexOf("\"y\":") + 4;
+
+                int x = int.Parse(coordJson.Substring(xStart, coordJson.IndexOf(",", xStart) - xStart));
+                int y = int.Parse(coordJson.Substring(yStart, coordJson.IndexOf("}", yStart) - yStart));
+
+                points.Add(new Point(x, y));
+                index = coordEnd + 1;
+            }
+
+            return new Tuple<List<Point>, string>(points, label);
+        }
+
+        // 정확도 계산 버튼 클릭 이벤트 핸들러
+        private void AccuracyBtn_Click(object sender, EventArgs e)
+        {
+            if (currentLevel.Text == "Bounding Box")
+            {
+                // 바운딩 박스 정확도 계산
+                if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                    groundTruthBoundingBoxes.ContainsKey(currentImageIndex))
+                {
+                    var userBox = imageBoundingBoxes[currentImageIndex][0];
+                    var groundTruthBox = groundTruthBoundingBoxes[currentImageIndex];
+
+                    double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
+                    double labelAccuracy = (userBox.Item2 == groundTruthBox.Item2) ? 100.0 : 0.0;
+
+                    // 전체 정확도 = iou 100퍼센트
+                    double accuracy = iou*100;
+
+                    MessageBox.Show(
+                                  $"IoU: {accuracy:F2}%\n" +
+                                  $"라벨 일치: {(userBox.Item2 == groundTruthBox.Item2 ? "예" : "아니오")}",
+                                  "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 정확도 표시
+                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+
+                    // 정확도 저장
+                    imageAccuracies[currentImageIndex] = accuracy;
+                }
+                else
+                {
+                    MessageBox.Show("정확도를 계산할 바운딩 박스가 없거나 정답 데이터가 없습니다.",
+                                  "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else if (currentLevel.Text == "Segmentation")
+            {
+                // 세그멘테이션 정확도 계산
+                if (imagePolygons.ContainsKey(currentImageIndex) &&
+                    groundTruthPolygons.ContainsKey(currentImageIndex))
+                {
+                    var userPolygon = imagePolygons[currentImageIndex][0];
+                    var groundTruthPolygon = groundTruthPolygons[currentImageIndex];
+
+                    double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
+                    double labelAccuracy = (userPolygon.Item2 == groundTruthPolygon.Item2) ? 100.0 : 0.0;
+
+                    // 전체 정확도 = IoA 75% + 레이블 일치 25%
+                    double accuracy = ioa * 100;
+
+                    MessageBox.Show(
+                                  $"IoA: {accuracy:F2}%\n" +
+                                  $"라벨 일치: {(userPolygon.Item2 == groundTruthPolygon.Item2 ? "예" : "아니오")}",
+                                  "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 정확도 표시
+                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                    
+                    // 정확도 저장
+                    imageAccuracies[currentImageIndex] = accuracy;
+                }
+                else
+                {
+                    MessageBox.Show("정확도를 계산할 폴리곤이 없거나 정답 데이터가 없습니다.",
+                                  "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else if (currentLevel.Text == "Classification")
+            {
+                // 분류 정확도 계산
+                if (imageClassifications.ContainsKey(currentImageIndex))
+                {
+                    string userLabel = imageClassifications[currentImageIndex];
+                    double accuracy = 0.0;
+                    // Classification은 정답 데이터가 없어도 라벨링만으로 100% 처리
+                    if (groundTruthClassifications.ContainsKey(currentImageIndex))
+                    {
+                        string gtLabel = groundTruthClassifications[currentImageIndex];
+                        accuracy = (userLabel == gtLabel) ? 100.0 : 0.0;
+
+                        MessageBox.Show($"분류 정확도: {accuracy:F2}%\n" +
+                                      $"사용자 라벨: {userLabel}\n" +
+                                      $"정답 라벨: {gtLabel}",
+                                      "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Classification의 경우 라벨만 있으면 100% 처리
+                        accuracy = 100.0;
+                        MessageBox.Show($"라벨링 성공: {userLabel}", "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // 정확도 표시
+                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+
+                    // 정확도 저장
+                    imageAccuracies[currentImageIndex] = accuracy;
+                }
+                else
+                {
+                    MessageBox.Show("라벨링 정보가 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+            // 네비게이션 버튼 상태 업데이트
+            UpdateNavigationButtonState();
+        }
+
+        // IoU (Intersection over Union) 계산 메서드 (바운딩 박스용)
+        private double CalculateIoU(Rectangle boxA, Rectangle boxB)
+        {
+            // 교집합 영역 계산
+            Rectangle intersectionRect = Rectangle.Intersect(boxA, boxB);
+            int intersectionArea = intersectionRect.Width * intersectionRect.Height;
+
+            // 합집합 영역 계산 (A + B - 교집합)
+            int boxAArea = boxA.Width * boxA.Height;
+            int boxBArea = boxB.Width * boxB.Height;
+            int unionArea = boxAArea + boxBArea - intersectionArea;
+
+            // IoU = 교집합 / 합집합
+            return (double)intersectionArea / unionArea;
+        }
+
+        // IoA (Intersection over Area) 계산 메서드 (세그멘테이션용)
+        private double CalculateIoA(List<Point> userPolygon, List<Point> groundTruthPolygon)
+        {
+            try
+            {
+                if (userPolygon.Count < 3 || groundTruthPolygon.Count < 3)
+                {
+                    MessageBox.Show("폴리곤은 최소 3개 이상의 점이 필요합니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return 0; // 유효하지 않은 폴리곤
+                }
+
+                // Clipper2에서 사용되는 Path64 객체 생성
+                Clipper2Lib.Path64 userPath = new Clipper2Lib.Path64();
+                Clipper2Lib.Path64 groundTruthPath = new Clipper2Lib.Path64();
+
+                // 정밀도를 위해 좌표 스케일링 (Clipper2는 정수 좌표만 사용)
+                const double scale = 1000.0;
+
+                // 사용자 폴리곤 변환
+                foreach (var point in userPolygon)
+                {
+                    userPath.Add(new Clipper2Lib.Point64(
+                        (long)(point.X * scale),
+                        (long)(point.Y * scale)));
+                }
+
+                // 정답 폴리곤 변환
+                foreach (var point in groundTruthPolygon)
+                {
+                    groundTruthPath.Add(new Clipper2Lib.Point64(
+                        (long)(point.X * scale),
+                        (long)(point.Y * scale)));
+                }
+
+                // 폴리곤 경로 생성
+                Clipper2Lib.Paths64 userPaths = new Clipper2Lib.Paths64();
+                Clipper2Lib.Paths64 groundTruthPaths = new Clipper2Lib.Paths64();
+                userPaths.Add(userPath);
+                groundTruthPaths.Add(groundTruthPath);
+
+                // 사용자 폴리곤과 정답 폴리곤 모두 시계 방향으로 정렬
+                if (Clipper2Lib.Clipper.Area(userPath) < 0)
+                    Clipper2Lib.Clipper.ReversePath(userPath);
+                if (Clipper2Lib.Clipper.Area(groundTruthPath) < 0)
+                    Clipper2Lib.Clipper.ReversePath(groundTruthPath);
+
+                // 교집합 계산
+                Clipper2Lib.Paths64 intersectionPaths = Clipper2Lib.Clipper.Intersect(
+                    userPaths,
+                    groundTruthPaths,
+                    Clipper2Lib.FillRule.NonZero);
+
+                // 면적 계산 (절대값 사용)
+                double intersectionArea = 0;
+                foreach (var path in intersectionPaths)
+                {
+                    intersectionArea += Math.Abs(Clipper2Lib.Clipper.Area(path)) / (scale * scale);
+                }
+
+                // 사용자 폴리곤과 정답 폴리곤의 면적 계산 (절대값 사용)
+                double groundTruthArea = Math.Abs(Clipper2Lib.Clipper.Area(groundTruthPath)) / (scale * scale);
+                double userArea = Math.Abs(Clipper2Lib.Clipper.Area(userPath)) / (scale * scale);
+
+                // 교집합 영역이 전체 영역에서 차지하는 비율 계산 (IoU 형태)
+                double unionArea = userArea + groundTruthArea - intersectionArea;
+                if (unionArea <= 0) return 0;
+
+                // 정확도 계산: 교집합 / 합집합 (IoU)
+                double accuracy = intersectionArea / unionArea;
+
+                // 기존 방식: 교집합 / 정답 영역 (IoA)
+                // double accuracy = groundTruthArea > 0 ? intersectionArea / groundTruthArea : 0;
+
+                // 디버그 정보 출력
+                Console.WriteLine($"사용자 폴리곤 면적: {userArea:.2f}, 정답 폴리곤 면적: {groundTruthArea:.2f}, 교집합 면적: {intersectionArea:.2f}");
+                Console.WriteLine($"합집합 면적: {unionArea:.2f}, 정확도: {accuracy:.4f}");
+
+                // 부동소수점 오류 보정
+                if (accuracy > 1.0) accuracy = 1.0;
+
+                return accuracy;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"IoA 계산 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // 비트맵 기반의 대체 방식으로 계산
+                return CalculateIoUWithBitmap(userPolygon, groundTruthPolygon);
+            }
+        }
+
+        // 비트맵 기반의 IoU 계산 대체 메서드 (IoA 대신 IoU를 계산)
+        private double CalculateIoUWithBitmap(List<Point> userPolygon, List<Point> groundTruthPolygon)
+        {
+            try
+            {
+                // 모든 좌표의 경계 구하기
+                int minX = int.MaxValue, minY = int.MaxValue;
+                int maxX = int.MinValue, maxY = int.MinValue;
+
+                foreach (var point in userPolygon.Concat(groundTruthPolygon))
+                {
+                    minX = Math.Min(minX, point.X);
+                    minY = Math.Min(minY, point.Y);
+                    maxX = Math.Max(maxX, point.X);
+                    maxY = Math.Max(maxY, point.Y);
+                }
+
+                // 비트맵 크기 결정 (최대 2000x2000)
+                int width = Math.Min(2000, maxX - minX + 100);
+                int height = Math.Min(2000, maxY - minY + 100);
+
+                // 좌표를 비트맵 영역으로 변환하는 오프셋
+                int offsetX = minX - 50;
+                int offsetY = minY - 50;
+
+                using (Bitmap bmp = new Bitmap(width, height))
+                {
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
+                        g.Clear(Color.Black); // 배경은 검은색
+
+                        // 변환된 폴리곤 좌표 생성
+                        Point[] gtPoints = groundTruthPolygon
+                            .Select(p => new Point(p.X - offsetX, p.Y - offsetY))
+                            .ToArray();
+
+                        Point[] userPoints = userPolygon
+                            .Select(p => new Point(p.X - offsetX, p.Y - offsetY))
+                            .ToArray();
+
+                        // 첫 번째 비트맵: 정답 폴리곤 (흰색으로 그림)
+                        using (Bitmap gtBitmap = new Bitmap(width, height))
+                        using (Graphics gtGraphics = Graphics.FromImage(gtBitmap))
+                        {
+                            gtGraphics.Clear(Color.Black);
+                            using (SolidBrush whiteBrush = new SolidBrush(Color.White))
+                            {
+                                gtGraphics.FillPolygon(whiteBrush, gtPoints);
+                            }
+                            int gtArea = CountWhitePixels(gtBitmap);
+
+                            // 두 번째 비트맵: 사용자 폴리곤 (흰색으로 그림)
+                            using (Bitmap userBitmap = new Bitmap(width, height))
+                            using (Graphics userGraphics = Graphics.FromImage(userBitmap))
+                            {
+                                userGraphics.Clear(Color.Black);
+                                using (SolidBrush whiteBrush = new SolidBrush(Color.White))
+                                {
+                                    userGraphics.FillPolygon(whiteBrush, userPoints);
+                                }
+                                int userArea = CountWhitePixels(userBitmap);
+
+                                // 세 번째 비트맵: 교집합 계산 (두 영역이 겹치는 부분)
+                                g.Clear(Color.Black);
+
+                                // 첫 번째 폴리곤을 빨간색으로 그림
+                                using (SolidBrush redBrush = new SolidBrush(Color.Red))
+                                {
+                                    g.FillPolygon(redBrush, gtPoints);
+                                }
+
+                                // 두 번째 폴리곤을 녹색으로 그림 (겹치는 부분은 노란색이 됨)
+                                using (SolidBrush greenBrush = new SolidBrush(Color.Green))
+                                {
+                                    g.FillPolygon(greenBrush, userPoints);
+                                }
+
+                                // 노란색 픽셀 수 카운트 (교집합)
+                                int intersectionArea = CountYellowPixels(bmp);
+
+                                // 합집합 = 사용자 영역 + 정답 영역 - 교집합
+                                int unionArea = userArea + gtArea - intersectionArea;
+
+                                // IoU = 교집합 / 합집합
+                                double iou = unionArea > 0 ? (double)intersectionArea / unionArea : 0;
+
+                                Console.WriteLine($"비트맵 계산: 정답 면적: {gtArea}, 사용자 면적: {userArea}, 교집합: {intersectionArea}, 합집합: {unionArea}, IoU: {iou}");
+
+                                return Math.Min(iou, 1.0); // 부동소수점 오류 방지
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"비트맵 IoU 계산 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        // 노란색(교집합) 픽셀 수 계산
+        private int CountYellowPixels(Bitmap bmp)
+        {
+            int count = 0;
+            // 성능 최적화를 위해 샘플링
+            int stride = Math.Max(1, bmp.Width > 500 ? 2 : 1);
+
+            for (int y = 0; y < bmp.Height; y += stride)
+            {
+                for (int x = 0; x < bmp.Width; x += stride)
+                {
+                    Color pixelColor = bmp.GetPixel(x, y);
+                    // 노란색 감지 (R과 G 성분이 높고, B 성분이 낮음)
+                    if (pixelColor.R > 200 && pixelColor.G > 200 && pixelColor.B < 100)
+                    {
+                        count += (stride * stride); // 샘플링된 영역 보정
+                    }
+                }
+            }
+            return count;
+        }
+
+
+        // 흰색 픽셀 수 계산
+        private int CountWhitePixels(Bitmap bmp)
+        {
+            int count = 0;
+            // 성능 최적화를 위해 샘플링
+            int stride = Math.Max(1, bmp.Width > 500 ? 2 : 1);
+
+            for (int y = 0; y < bmp.Height; y += stride)
+            {
+                for (int x = 0; x < bmp.Width; x += stride)
+                {
+                    Color pixelColor = bmp.GetPixel(x, y);
+                    if (pixelColor.R > 240 && pixelColor.G > 240 && pixelColor.B > 240) // 흰색
+                    {
+                        count += (stride * stride); // 샘플링된 영역 보정
+                    }
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// 클릭한 위치가 바운딩 박스 영역 내부인지 확인
+        /// </summary>
+        // 클릭한 위치가 바운딩 박스 영역 내부인지 확인하는 메서드
+        private bool IsClickInsideBoundingBox(Point clickPoint, out Tuple<Rectangle, string> clickedBox)
+        {
+            clickedBox = null;
+
+            if (!imageBoundingBoxes.ContainsKey(currentImageIndex) ||
+                imageBoundingBoxes[currentImageIndex].Count == 0)
+                return false;
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
+            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+
+            foreach (var box in imageBoundingBoxes[currentImageIndex])
+            {
+                // 이미지 좌표를 화면 좌표로 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 클릭 좌표가 바운딩 박스 내부인지 확인
+                if (displayRect.Contains(clickPoint))
+                {
+                    clickedBox = box;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 전체 이미지 영역에 대한 바운딩 박스 추가
+        /// </summary>
+        private void AddFullImageBoundingBox(string label)
+        {
+            if (pictureBoxImage.Image != null)
+            {
+                // 원본 이미지 크기에 맞는 직사각형 생성
+                Rectangle fullImageRect = new Rectangle(
+                    0, 0,
+                    pictureBoxImage.Image.Width,
+                    pictureBoxImage.Image.Height
+                );
+
+                // 현재 이미지의 바운딩 박스가 있는지 확인하고, 있으면 제거 (라벨링은 하나만 허용)
+                if (CurrentBoundingBoxes.Count > 0)
+                {
+                    // 첫 번째 아이템만 새 라벨로 교체
+                    var existingBox = CurrentBoundingBoxes[0];
+                    CurrentBoundingBoxes.Clear(); // 목록 초기화
+                    CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(existingBox.Item1, label));
+                }
+                else
+                {
+                    // 바운딩 박스가 없는 경우 새로 추가
+                    CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(fullImageRect, label));
+                }
+
+                // PictureBox 다시 그리기
+                pictureBoxImage.Invalidate();
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 폴리곤 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// 현재 그리고 있는 폴리곤을 완성하고 저장
+        /// </summary>
+        private void CompletePolygon()
+        {
+            using (var editorForm = new AnnotationEditorForm(class1.Text))
+            {
+                if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
+                {
+                    string annotationText = editorForm.AnnotationText;
+                    class1.Text = annotationText;
+
+                    // 화면 좌표를 이미지 좌표로 변환
+                    List<Point> imagePoints = ConvertPointsToImageCoordinates(polygonPoints);
+
+                    // 기존 폴리곤 데이터 삭제
+                    if (imagePolygons.ContainsKey(currentImageIndex))
+                    {
+                        imagePolygons.Remove(currentImageIndex);
+                    }
+
+                    // 폴리곤 저장
+                    if (!imagePolygons.ContainsKey(currentImageIndex))
+                    {
+                        imagePolygons[currentImageIndex] = new List<Tuple<List<Point>, string>>();
+                    }
+
+                    // 새 폴리곤 추가
+                    imagePolygons[currentImageIndex].Add(new Tuple<List<Point>, string>(
+                        new List<Point>(imagePoints), annotationText));
+
+                    // 폴리곤 점 초기화 및 화면 갱신
+                    polygonPoints.Clear();
+                    pictureBoxImage.Invalidate();
+
+                    // 네비게이션 버튼 상태 업데이트
+                    UpdateNavigationButtonState();
+
+                    // 정확도 즉시 계산 및 표시
+                    CalculateAndDisplayAccuracy();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 편집 중인 폴리곤의 변경 사항을 저장
+        /// </summary>
+        private void SaveEditingPolygon()
+        {
+            // 편집 중인 폴리곤 저장
+            if (selectedPolygonIndex >= 0 &&
+                imagePolygons.ContainsKey(currentImageIndex) &&
+                selectedPolygonIndex < imagePolygons[currentImageIndex].Count)
+            {
+                // 화면 좌표를 이미지 좌표로 변환
+                List<Point> imagePoints = ConvertPointsToImageCoordinates(editingPolygonPoints);
+
+                // 기존 라벨 유지하면서 좌표만 업데이트
+                string label = imagePolygons[currentImageIndex][selectedPolygonIndex].Item2;
+                imagePolygons[currentImageIndex][selectedPolygonIndex] =
+                    new Tuple<List<Point>, string>(imagePoints, label);
+            }
+
+            // 편집 모드 종료
+            isEditingPolygon = false;
+            selectedPolygonIndex = -1;
+            editingPolygonPoints.Clear();
+        }
+
+        /// <summary>
+        /// 현재 이미지의 폴리곤 라벨을 업데이트
+        /// </summary>
+        private void UpdatePolygonLabel(string newLabel)
+        {
+            // Segmentation 모드이고, 현재 이미지에 폴리곤이 있는 경우
+            if (currentLevel.Text == "Segmentation" &&
+                imagePolygons.ContainsKey(currentImageIndex) &&
+                imagePolygons[currentImageIndex].Count > 0)
+            {
+                // 기존 폴리곤의 좌표와 새 라벨로 교체
+                var existingPolygon = imagePolygons[currentImageIndex][0];
+                List<Point> polygonCoords = existingPolygon.Item1;
+
+                // 폴리곤 목록 초기화 후 새 라벨로 다시 추가
+                imagePolygons[currentImageIndex].Clear();
+                imagePolygons[currentImageIndex].Add(new Tuple<List<Point>, string>(
+                    polygonCoords, newLabel));
+
+                // 화면 갱신
+                pictureBoxImage.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// 현재 좌표 목록을 이미지 좌표 목록으로 변환
+        /// </summary>
+        private List<Point> ConvertPointsToImageCoordinates(List<Point> displayPoints)
+        {
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleX = pictureBoxImage.Image.Width / (float)pictureBoxImage.ClientSize.Width;
+            float scaleY = pictureBoxImage.Image.Height / (float)pictureBoxImage.ClientSize.Height;
+
+            // 화면 좌표를 이미지 좌표로 변환
+            List<Point> imagePoints = new List<Point>();
+            foreach (var point in displayPoints)
+            {
+                imagePoints.Add(new Point(
+                    (int)(point.X * scaleX),
+                    (int)(point.Y * scaleY)
+                ));
+            }
+
+            return imagePoints;
+        }
+
+        /// <summary>
+        /// 이미지 좌표 목록을 화면 좌표 목록으로 변환
+        /// </summary>
+        private List<Point> ConvertPointsToDisplayCoordinates(List<Point> imagePoints)
+        {
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
+            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPoints = new List<Point>();
+            foreach (var point in imagePoints)
+            {
+                displayPoints.Add(new Point(
+                    (int)(point.X * scaleX),
+                    (int)(point.Y * scaleY)
+                ));
+            }
+
+            return displayPoints;
+        }
+
+        /// <summary>
+        /// 특정 위치에 있는 주어진 점의 인덱스를 반환
+        /// </summary>
+        private int GetPointAtPosition(Point position, int threshold, List<Point> points)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (Math.Abs(position.X - points[i].X) <= threshold &&
+                    Math.Abs(position.Y - points[i].Y) <= threshold)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 특정 위치에 있는 폴리곤 점의 인덱스를 반환
+        /// </summary>
+        private int GetPointAtPosition(Point position, int threshold)
+        {
+            for (int i = 0; i < polygonPoints.Count; i++)
+            {
+                if (Math.Abs(position.X - polygonPoints[i].X) <= threshold &&
+                    Math.Abs(position.Y - polygonPoints[i].Y) <= threshold)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 클릭한 위치가 선분 위에 있는지 확인하고, 해당 선분의 인덱스를 반환
+        /// </summary>
+        private int GetLineSegmentIndex(Point clickPoint, int threshold)
+        {
+            if (editingPolygonPoints.Count < 2)
+                return -1;
+
+            for (int i = 0; i < editingPolygonPoints.Count; i++)
+            {
+                Point start = editingPolygonPoints[i];
+                Point end = editingPolygonPoints[(i + 1) % editingPolygonPoints.Count]; // 마지막 점과 첫 번째 점을 연결
+
+                // 클릭한 위치가 두 점 사이의 선 위에 있는지 확인
+                if (IsPointNearLine(clickPoint, start, end, threshold))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 점이 선분 근처에 있는지 확인
+        /// </summary>
+        private bool IsPointNearLine(Point point, Point lineStart, Point lineEnd, int threshold)
+        {
+            // 선분의 길이가 매우 작으면 선분이 아닌 점으로 처리
+            if (Math.Abs(lineStart.X - lineEnd.X) <= threshold &&
+                Math.Abs(lineStart.Y - lineEnd.Y) <= threshold)
+            {
+                return false;
+            }
+
+            // 선분의 길이를 계산
+            double lineLength = Math.Sqrt(
+                Math.Pow(lineEnd.X - lineStart.X, 2) +
+                Math.Pow(lineEnd.Y - lineStart.Y, 2)
+            );
+
+            // 점에서 선분까지의 거리 계산
+            double distance = Math.Abs(
+                (lineEnd.Y - lineStart.Y) * point.X -
+                (lineEnd.X - lineStart.X) * point.Y +
+                lineEnd.X * lineStart.Y -
+                lineEnd.Y * lineStart.X
+            ) / lineLength;
+
+            // 점이 선분의 끝점 밖에 있는지 확인 (선분 연장선 위에 있는지)
+            double dot1 = (point.X - lineStart.X) * (lineEnd.X - lineStart.X) +
+                          (point.Y - lineStart.Y) * (lineEnd.Y - lineStart.Y);
+            double dot2 = (point.X - lineEnd.X) * (lineStart.X - lineEnd.X) +
+                          (point.Y - lineEnd.Y) * (lineStart.Y - lineEnd.Y);
+
+            return distance <= threshold && dot1 >= 0 && dot2 >= 0;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 주석 편집기 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void OpenAnnotationEditor(string initialText = "")
+        {
+            using (var editorForm = new AnnotationEditorForm(initialText))
+            {
+                // SaveClicked 이벤트 구독 - 저장 시 라벨 업데이트
+                editorForm.SaveClicked += (sender, annotationText) =>
+                {
+                    // class1 라벨 업데이트
+                    class1.Text = annotationText;
+
+                    // 라벨링 단계에 따라 다른 작업 수행
+                    if (currentLevel.Text == "Segmentation")
+                    {
+                        // 세그멘테이션 모드에서 폴리곤 라벨 업데이트
+                        UpdatePolygonLabel(annotationText);
+                        CalculateAndDisplayAccuracy(); // 정확도 계산
+                    }
+                    else if (currentLevel.Text == "Classification")
+                    {
+                        // 현재 이미지의 분류 정보 저장
+                        imageClassifications[currentImageIndex] = annotationText;
+                        // 사진 전체에 네모 박스 추가
+                        AddFullImageBoundingBox(annotationText); 
+
+                        imageAccuracies[currentImageIndex] = 100.0; 
+                        accuracyBtn.Text = "Accuracy: 100%";
+
+                        UpdateNavigationButtonState();
+                       
+                    }
+                    else if (currentLevel.Text == "Bounding Box")
+                    {
+                        // Bounding Box 라벨 업데이트
+                        var existingBox = CurrentBoundingBoxes[0];
+                        Rectangle rect = existingBox.Item1;
+                        CurrentBoundingBoxes.Clear();
+                        CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(rect, annotationText));
+                        pictureBoxImage.Invalidate();
+                        CalculateAndDisplayAccuracy(); // 정확도 계산
+                    }
+                };
+
+                if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
+                {
+                    // 저장된 주석 텍스트 가져오기 (이벤트 핸들러에서 처리되므로 여기서는 추가 작업 필요 없음)
+                }
+            }
+        }
+
+        // 정확도 계산 및 표시 메서드
+        private void CalculateAndDisplayAccuracy()
+        {
+            if (currentLevel.Text == "Bounding Box")
+            {
+                if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                    groundTruthBoundingBoxes.ContainsKey(currentImageIndex))
+                {
+                    var userBox = imageBoundingBoxes[currentImageIndex][0];
+                    var groundTruthBox = groundTruthBoundingBoxes[currentImageIndex];
+
+                    double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
+                    double accuracy = iou * 100;
+
+                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                    imageAccuracies[currentImageIndex] = accuracy;
+                }
+            }
+            else if (currentLevel.Text == "Segmentation")
+            {
+                if (imagePolygons.ContainsKey(currentImageIndex) &&
+                    groundTruthPolygons.ContainsKey(currentImageIndex))
+                {
+                    var userPolygon = imagePolygons[currentImageIndex][0];
+                    var groundTruthPolygon = groundTruthPolygons[currentImageIndex];
+
+                    double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
+                    double accuracy = ioa * 100;
+
+                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                    imageAccuracies[currentImageIndex] = accuracy;
+                }
+            }
+
+            // 네비게이션 버튼 상태 업데이트
+            UpdateNavigationButtonState();
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 기존 이벤트 핸들러들 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void guna2HtmlLabel1_Click_4(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2GradientPanel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBoxImage_Click_1(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

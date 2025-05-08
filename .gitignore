@@ -82,3 +82,6 @@ coverage.xml
 *.swp
 .history/
 .idea/httpRequests
+
+**/.vs
+/.vs
