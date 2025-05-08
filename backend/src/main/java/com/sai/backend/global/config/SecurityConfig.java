@@ -40,6 +40,7 @@ public class SecurityConfig {
 
         http.securityMatcher("/api/admin/**")                  // admin 하위 URL만
             .csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
             .sessionManagement(s -> s
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionStrategy(refererRedirect())   // 세션 만료 시 이전 페이지로
@@ -67,6 +68,7 @@ public class SecurityConfig {
             new ApiTokenFilter(redisTokenRepository, redisTemplate);
 
         http.csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/download/**").permitAll()
