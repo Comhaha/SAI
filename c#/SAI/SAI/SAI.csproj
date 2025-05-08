@@ -160,6 +160,22 @@
     <Content Include="Blockly\blockly_compressed.js" />
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\btn_infer_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_done_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_home_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_minus.png" />
+    <None Include="SAI.App\Resources\Images\btn_plus.png" />
+    <None Include="SAI.App\Resources\Images\btn_run_model.png" />
+    <None Include="SAI.App\Resources\Images\btn_trash_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_block.png" />
+    <None Include="SAI.App\Resources\Images\img_mframe_shadow.png" />
+    <None Include="SAI.App\Resources\Images\btn_memo.png" />
+    <None Include="SAI.App\Resources\Images\btn_zoom.png" />
+    <None Include="SAI.App\Resources\Images\btn_done.png" />
+    <None Include="SAI.App\Resources\Images\btn_home.png" />
+    <None Include="SAI.App\Resources\Images\btn_infer.png" />
+    <None Include="SAI.App\Resources\Images\img_frame_shadow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
