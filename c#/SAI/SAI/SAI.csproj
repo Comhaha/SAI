@@ -47,8 +47,20 @@
     <Reference Include="CefSharp.WinForms, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
       <HintPath>..\packages\CefSharp.WinForms.135.0.220\lib\net462\CefSharp.WinForms.dll</HintPath>
     </Reference>
+    <Reference Include="Guna.Charts.WinForms, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.Charts.WinForms.1.1.0\lib\net472\Guna.Charts.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
       <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.3240.44\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.3240.44\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.3240.44\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -110,6 +122,12 @@
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.Designer.cs">
+      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -126,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPraticeBlockCode.resx">
+      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialGuide.resx">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
@@ -186,6 +207,8 @@
     <Error Condition="!Exists('..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3240.44\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3240.44\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
   <Import Project="..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3240.44\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3240.44\build\Microsoft.Web.WebView2.targets')" />
 </Project>
