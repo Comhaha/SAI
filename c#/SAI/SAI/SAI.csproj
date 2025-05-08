@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.135.0.220\build\CefSharp.Common.props')" />
   <Import Project="..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props" Condition="Exists('..\packages\chromiumembeddedframework.runtime.win-x86.135.0.22\build\chromiumembeddedframework.runtime.win-x86.props')" />
@@ -49,6 +49,8 @@
     </Reference>
     <Reference Include="Clipper2Lib, Version=1.4.0.0, Culture=neutral, PublicKeyToken=ddeb3f68c442d6e4, processorArchitecture=MSIL">
       <HintPath>..\packages\Clipper2.1.4.0\lib\netstandard2.0\Clipper2Lib.dll</HintPath>
+    <Reference Include="Guna.Charts.WinForms, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.Charts.WinForms.1.1.0\lib\net472\Guna.Charts.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
       <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
@@ -76,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.App\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +93,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SAI.App\Models\BlockEventArgs.cs" />
+    <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
+    <Compile Include="SAI.App\Models\BlocklyModel.cs" />
+    <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
@@ -164,6 +169,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SAI.Application\Python\" />
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
@@ -177,7 +183,6 @@
     <None Include="SAI.App\Resources\Images\img_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Blockly\blockly_compressed.js" />
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
     <None Include="SAI.App\Resources\Images\완료.png" />

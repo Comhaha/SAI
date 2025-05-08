@@ -4,7 +4,7 @@ import Layout from '@//components/Layout';
 import Home from '@/pages/home/Home';
 import Download from '@/pages/download/Download';
 import Screenshots from '@/pages/screenshots/Screenshots';
-import Admin from '@/pages/admin/Admin';
+import Admin from '@/pages/ad/Admin';
 import Docs from '@/pages/docs/Docs';
 
 function App() {

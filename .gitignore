@@ -57,6 +57,8 @@ local.properties
 *.sln.docstates
 *.stackdump
 *.dbmdl
+*.vsidx
+packages/
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json
@@ -83,5 +85,8 @@ coverage.xml
 .history/
 .idea/httpRequests
 
-**/.vs
-/.vs
+# Visual Studio .vs
+.vs/
+
+# NuGet
+packages/
