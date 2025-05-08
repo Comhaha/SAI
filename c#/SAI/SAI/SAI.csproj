@@ -88,6 +88,8 @@
     <Compile Include="SAI.App\Models\BlockEventArgs.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Resources\Styles\ColorUtil.cs" />
+    <Compile Include="SAI.App\Resources\Styles\StyleUtil.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views\Common\UcBase.cs">
@@ -144,9 +146,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
-    <Folder Include="SAI.App\Resources\Styles\" />
     <Folder Include="SAI.App\Views\Dialogs\" />
     <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
