@@ -10,6 +10,8 @@ import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +27,23 @@ public class TokenServiceImpl implements TokenService {
     private final JpaTokenRepository jpaTokenRepository;
     private final RedisTokenRepository redisTokenRepository;
 
-    @PostConstruct
-    public void init() {
-        redisTokenRepository.findById(KEY).ifPresentOrElse(oldRedisToken -> {
-            Token token = oldRedisToken.toEntity();
-            jpaTokenRepository.save(token);      // 이전값 이력화
-            replaceWithNewToken(oldRedisToken);
-            log.info("[Token] 시작 시 Redis 값 존재 → 새 토큰 발급 완료");
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        try {
+            redisTokenRepository.findById(KEY).ifPresentOrElse(oldRedisToken -> {
+                Token token = oldRedisToken.toEntity();
+                jpaTokenRepository.save(token);      // 이전값 이력화
+                replaceWithNewToken(oldRedisToken);
+                log.info("[Token] 시작 시 Redis 값 존재 → 새 토큰 발급 완료");
 
-        }, () -> {
-            RedisToken newCt = createCurrentToken(tokenUtil.generate());
-            redisTokenRepository.save(newCt);
-            log.info("[Token] 시작 시 Redis 값 없음 → 새 토큰 발급 완료");
-        });
+            }, () -> {
+                RedisToken newCt = createCurrentToken(tokenUtil.generate());
+                redisTokenRepository.save(newCt);
+                log.info("[Token] 시작 시 Redis 값 없음 → 새 토큰 발급 완료");
+            });
+        } catch (Exception e) {
+            log.error("[Token] Redis 초기화 중 오류 발생", e);
+        }
     }
 
     @Override

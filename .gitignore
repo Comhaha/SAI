@@ -84,3 +84,9 @@ coverage.xml
 *.swp
 .history/
 .idea/httpRequests
+
+# Visual Studio .vs
+.vs/
+
+# NuGet
+packages/

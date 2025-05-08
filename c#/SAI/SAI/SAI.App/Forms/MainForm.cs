@@ -10,6 +10,7 @@ using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Pages;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Drawing;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace SAI
         {
             InitializeComponent();
 			presenter = new MainPresenter(this);
+
+			Size = new Size(1280, 720);
+			MaximizeBox = false;
+			MaximumSize = new Size(1280, 720);
+			MinimumSize = new Size(1280, 720);
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -45,7 +51,9 @@ namespace SAI
 		{
 			guna2Panel1.Controls.Clear();
 			page.Dock = DockStyle.Fill;
+			guna2Panel1.BackColor = Color.Transparent;
 			guna2Panel1.Controls.Add(page);
+			guna2Panel1.BringToFront();
 		}
 
 private void guna2Button1_Click(object sender, EventArgs e)
