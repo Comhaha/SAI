@@ -87,6 +87,7 @@ coverage.xml
 
 # Visual Studio .vs
 .vs/
+**/c#/SAI/.vs/
 
 # NuGet
 packages/
