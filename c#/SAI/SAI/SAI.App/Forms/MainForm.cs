@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Windows.Forms;
 using SAI.SAI.App.Forms;
-using CefSharp;
-using CefSharp.WinForms;
-using System.IO;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Models;
-using SAI.SAI.App.Views.Pages;
-using System.Linq;
-using System.Web.UI.WebControls;
 
 
 namespace SAI
 {
-    public partial class MainForm : Form, IMainView
+    public partial class MainForm : BaseForm, IMainView
     {
 		private MainPresenter presenter;
 
 		public MainForm()
         {
             InitializeComponent();
-			presenter = new MainPresenter(this);
-		}
+            presenter = new MainPresenter(this);
+        }
 
-		private void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
 		{
 			// 초기 페이지인 Blockly를 불러온다.
 			presenter.Initialize();
 		}
 
-		private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-		{
+        //// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
+        public void LoadPage(UserControl page)
+        {
+            guna2Panel1.Controls.Clear();
+            page.Dock = DockStyle.Fill;
+            guna2Panel1.Controls.Add(page);
+        }
 
-		}
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
 
-		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
-		public void LoadPage(UserControl page)
-		{
-			guna2Panel1.Controls.Clear();
-			page.Dock = DockStyle.Fill;
-			guna2Panel1.Controls.Add(page);
-		}
-	}
+        }
+
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+    }
 }
