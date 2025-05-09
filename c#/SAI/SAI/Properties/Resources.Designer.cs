@@ -256,6 +256,9 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap ic_pre {
             get {
                 object obj = ResourceManager.GetObject("ic_pre", resourceCulture);
+        internal static System.Drawing.Bitmap bg_redDialog {
+            get {
+                object obj = ResourceManager.GetObject("bg_redDialog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
+          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,6 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -32,18 +36,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- Nuget 패키지 관리 -->
-    <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
-    <PackageReference Include="CefSharp.Common" Version="135.0.220" />
-    <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
-    <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
-    <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
-    <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
-    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
-    <PackageReference Include="Clipper2" Version="1.4.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
-  </ItemGroup>
+
+<ItemGroup>
+  <!-- Nuget 패키지 관리 -->
+  <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
+  <PackageReference Include="CefSharp.Common" Version="135.0.220" />
+  <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
+  <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
+  <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
+  <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
+  <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+  <PackageReference Include="Clipper2" Version="1.4.0" />
+  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+</ItemGroup>
+
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,6 +78,12 @@
     </Compile>
     <Compile Include="SAI.App\Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
+      <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -126,6 +138,9 @@
     <EmbeddedResource Include="SAI.App\Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
+      <DependentUpon>DialogConfirmExit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +176,6 @@
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
-    <Folder Include="SAI.App\Views\Dialogs\" />
     <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
@@ -207,6 +221,7 @@
     <Content Include="SAI.App\Resources\Images\7.jpg" />
     <Content Include="SAI.App\Resources\Images\8.jpg" />
     <Content Include="SAI.App\Resources\Images\9.jpg" />
+    <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
