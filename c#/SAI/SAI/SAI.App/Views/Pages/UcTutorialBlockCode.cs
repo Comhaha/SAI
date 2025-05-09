@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using SAI.SAI.App.Resources.Styles;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Views.Interfaces;
 

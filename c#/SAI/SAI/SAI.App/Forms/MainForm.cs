@@ -7,7 +7,6 @@ using System.Drawing;
 using SAI.SAI.App.Views.Pages;
 using System.Linq;
 using System.Web.UI.WebControls;
-using System.Drawing;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,61 +57,50 @@ namespace SAI
             LoadPage(selectTypePage);
         }
 
-<<<<<<< HEAD
-        private void panel1_Paint(object sender, PaintEventArgs e)
-=======
-		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
-		public void LoadPage(UserControl page)
-		{
-			guna2Panel1.Controls.Clear();
-			page.Dock = DockStyle.Fill;
-			guna2Panel1.BackColor = Color.Transparent;
-			guna2Panel1.Controls.Add(page);
-			guna2Panel1.BringToFront();
-		}
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
 
 private void guna2Button1_Click(object sender, EventArgs e)
 {
     logOutput.Visible = true;
     logOutput.Clear();
 
-    Task.Run(() => RunPythonScript());
+    //Task.Run(() => RunPythonScript());
 }
 
-private void RunPythonScript()
-{
-    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-    string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\venv\Scripts\python.exe"));
-    string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\python\test_script.py"));
+//private void RunPythonScript()
+//{
+//    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+//    string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\venv\Scripts\python.exe"));
+//    string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\python\test_script.py"));
 
-    var psi = new ProcessStartInfo
-    {
-        FileName = pythonExe,
-        Arguments = $"-u \"{scriptPath}\"", // 실시간 로그를 위한 -u
-        WorkingDirectory = Path.GetDirectoryName(scriptPath),
-        UseShellExecute = false,
-        RedirectStandardOutput = true,
-        RedirectStandardError = true,
-        CreateNoWindow = true
-    };
+//    var psi = new ProcessStartInfo
+//    {
+//        FileName = pythonExe,
+//        Arguments = $"-u \"{scriptPath}\"", // 실시간 로그를 위한 -u
+//        WorkingDirectory = Path.GetDirectoryName(scriptPath),
+//        UseShellExecute = false,
+//        RedirectStandardOutput = true,
+//        RedirectStandardError = true,
+//        CreateNoWindow = true
+//    };
 
-    var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+//    var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
 
-    process.OutputDataReceived += OnOutputReceived;
-    process.ErrorDataReceived += OnErrorReceived;
+//    process.OutputDataReceived += OnOutputReceived;
+//    process.ErrorDataReceived += OnErrorReceived;
 
-    try
-    {
-        process.Start();
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
-        process.WaitForExit();
-    }
-    catch (Exception ex)
-    {
-        ShowErrorMessage("❌ 파이썬 실행 중 예외 발생:\n" + ex.Message);
-    }
-}
+//    try
+//    {
+//        process.Start();
+//        process.BeginOutputReadLine();
+//        process.BeginErrorReadLine();
+//        process.WaitForExit();
+//    }
+//    catch (Exception ex)
+//    {
+//        ShowErrorMessage("❌ 파이썬 실행 중 예외 발생:\n" + ex.Message);
+//    }
+//}
 
 private void OnOutputReceived(object sender, DataReceivedEventArgs e)
 {
@@ -163,7 +151,7 @@ private void ShowErrorMessage(string message)
 
         }
 
-        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        private void mainPanel_Paint(object sender, PaintEventArgs e) { }
         private void logOutput_TextChanged(object sender, EventArgs e)
         {
 
