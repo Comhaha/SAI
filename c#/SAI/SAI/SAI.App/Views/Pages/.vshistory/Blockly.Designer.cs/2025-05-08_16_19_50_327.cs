@@ -30,10 +30,9 @@
 		{
 			this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
-			this.btnLoadModel = new Guna.UI2.WinForms.Guna2Button();
+			this.btnHello = new Guna.UI2.WinForms.Guna2Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.btnDialog = new Guna.UI2.WinForms.Guna2CircleButton();
-			this.btnLoadDataset = new Guna.UI2.WinForms.Guna2Button();
 			this.SuspendLayout();
 			// 
 			// chromiumWebBrowser1
@@ -53,29 +52,30 @@
 			this.btnPip.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnPip.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
 			this.btnPip.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnPip.FillColor = System.Drawing.Color.Red;
 			this.btnPip.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPip.ForeColor = System.Drawing.Color.White;
 			this.btnPip.ImageSize = new System.Drawing.Size(59, 50);
-			this.btnPip.Location = new System.Drawing.Point(64, 19);
+			this.btnPip.Location = new System.Drawing.Point(64, 88);
 			this.btnPip.Margin = new System.Windows.Forms.Padding(2);
 			this.btnPip.Name = "btnPip";
 			this.btnPip.Size = new System.Drawing.Size(212, 38);
 			this.btnPip.TabIndex = 1;
 			this.btnPip.Text = "패키지 설치";
 			// 
-			// btnLoadModel
+			// btnHello
 			// 
-			this.btnLoadModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnLoadModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnLoadModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnLoadModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnLoadModel.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnLoadModel.ForeColor = System.Drawing.Color.White;
-			this.btnLoadModel.Location = new System.Drawing.Point(64, 62);
-			this.btnLoadModel.Name = "btnLoadModel";
-			this.btnLoadModel.Size = new System.Drawing.Size(212, 38);
-			this.btnLoadModel.TabIndex = 2;
-			this.btnLoadModel.Text = "모델 불러오기";
+			this.btnHello.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnHello.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnHello.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnHello.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnHello.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnHello.ForeColor = System.Drawing.Color.White;
+			this.btnHello.Location = new System.Drawing.Point(64, 142);
+			this.btnHello.Name = "btnHello";
+			this.btnHello.Size = new System.Drawing.Size(212, 45);
+			this.btnHello.TabIndex = 2;
+			this.btnHello.Text = "안녕!";
 			// 
 			// richTextBox1
 			// 
@@ -102,28 +102,13 @@
 			this.btnDialog.Text = "showdialog";
 			this.btnDialog.Click += new System.EventHandler(this.btnDialog_Click);
 			// 
-			// btnLoadDataset
-			// 
-			this.btnLoadDataset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnLoadDataset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnLoadDataset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnLoadDataset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnLoadDataset.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnLoadDataset.ForeColor = System.Drawing.Color.White;
-			this.btnLoadDataset.Location = new System.Drawing.Point(64, 106);
-			this.btnLoadDataset.Name = "btnLoadDataset";
-			this.btnLoadDataset.Size = new System.Drawing.Size(212, 38);
-			this.btnLoadDataset.TabIndex = 5;
-			this.btnLoadDataset.Text = "데이터 불러오기";
-			// 
 			// Blockly
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
-			this.Controls.Add(this.btnLoadDataset);
 			this.Controls.Add(this.btnDialog);
 			this.Controls.Add(this.richTextBox1);
-			this.Controls.Add(this.btnLoadModel);
+			this.Controls.Add(this.btnHello);
 			this.Controls.Add(this.btnPip);
 			this.Controls.Add(this.chromiumWebBrowser1);
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -137,9 +122,8 @@
 
 		private CefSharp.WinForms.ChromiumWebBrowser chromiumWebBrowser1;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
-		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
+		private Guna.UI2.WinForms.Guna2Button btnHello;
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private Guna.UI2.WinForms.Guna2CircleButton btnDialog;
-		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
 	}
 }

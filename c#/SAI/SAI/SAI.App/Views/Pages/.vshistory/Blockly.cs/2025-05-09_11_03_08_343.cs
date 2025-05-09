@@ -55,7 +55,7 @@ namespace SAI.SAI.App.Views.Pages
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
-			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 		}
 
 

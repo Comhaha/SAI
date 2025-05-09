@@ -54,8 +54,7 @@ namespace SAI.SAI.App.Views.Pages
 			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
-			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
-			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnHello.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("hello"));
 		}
 
 
@@ -79,8 +78,8 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
-			//using (var dialog = new DialogCompleteTutorial())
-			using (var dialog = new DialogCompleteLabeling())
+			using (var dialog = new DialogCompleteTutorial())
+			//using (var dialog = new DialogCompleteLabeling())
 			//using (var dialog = new DialogConfirmExit())
 			{
 				dialog.ShowDialog();
