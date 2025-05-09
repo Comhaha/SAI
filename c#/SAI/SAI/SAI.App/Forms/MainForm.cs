@@ -3,11 +3,13 @@ using System.Windows.Forms;
 using SAI.SAI.App.Forms;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Presenters;
+using System.Drawing;
+using SAI.SAI.App.Views.Pages;
 
 
 namespace SAI
 {
-    public partial class MainForm : BaseForm, IMainView
+    public partial class MainForm : Form, IMainView
     {
 		private MainPresenter presenter;
 
@@ -15,6 +17,12 @@ namespace SAI
         {
             InitializeComponent();
             presenter = new MainPresenter(this);
+
+            Size = new Size(1280, 720);
+            MaximizeBox = false;
+            MaximumSize = new Size(1280, 720);
+            MinimumSize = new Size(1280, 720);
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -28,7 +36,16 @@ namespace SAI
         {
             guna2Panel1.Controls.Clear();
             page.Dock = DockStyle.Fill;
+            guna2Panel1.BackColor = Color.Transparent;
             guna2Panel1.Controls.Add(page);
+            guna2Panel1.BringToFront();
+        }
+
+        public void ShowHomePage()
+        {
+            var selectTypePage = new UcSelectType(); 
+            //selectTypePage.HomeButtonClicked += (s, e) => presenter.OnHomeButtonClicked();
+            LoadPage(selectTypePage);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
