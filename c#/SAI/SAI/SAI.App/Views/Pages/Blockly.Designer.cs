@@ -34,6 +34,9 @@
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.btnDialog = new Guna.UI2.WinForms.Guna2CircleButton();
 			this.btnLoadDataset = new Guna.UI2.WinForms.Guna2Button();
+			this.btnMachineLearning = new Guna.UI2.WinForms.Guna2Button();
+			this.btnStart = new Guna.UI2.WinForms.Guna2Button();
+			this.btnResultGraph = new Guna.UI2.WinForms.Guna2Button();
 			this.SuspendLayout();
 			// 
 			// chromiumWebBrowser1
@@ -56,7 +59,7 @@
 			this.btnPip.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPip.ForeColor = System.Drawing.Color.White;
 			this.btnPip.ImageSize = new System.Drawing.Size(59, 50);
-			this.btnPip.Location = new System.Drawing.Point(64, 19);
+			this.btnPip.Location = new System.Drawing.Point(77, 63);
 			this.btnPip.Margin = new System.Windows.Forms.Padding(2);
 			this.btnPip.Name = "btnPip";
 			this.btnPip.Size = new System.Drawing.Size(212, 38);
@@ -71,7 +74,7 @@
 			this.btnLoadModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
 			this.btnLoadModel.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnLoadModel.ForeColor = System.Drawing.Color.White;
-			this.btnLoadModel.Location = new System.Drawing.Point(64, 62);
+			this.btnLoadModel.Location = new System.Drawing.Point(77, 106);
 			this.btnLoadModel.Name = "btnLoadModel";
 			this.btnLoadModel.Size = new System.Drawing.Size(212, 38);
 			this.btnLoadModel.TabIndex = 2;
@@ -110,16 +113,61 @@
 			this.btnLoadDataset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
 			this.btnLoadDataset.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnLoadDataset.ForeColor = System.Drawing.Color.White;
-			this.btnLoadDataset.Location = new System.Drawing.Point(64, 106);
+			this.btnLoadDataset.Location = new System.Drawing.Point(77, 150);
 			this.btnLoadDataset.Name = "btnLoadDataset";
 			this.btnLoadDataset.Size = new System.Drawing.Size(212, 38);
 			this.btnLoadDataset.TabIndex = 5;
 			this.btnLoadDataset.Text = "데이터 불러오기";
 			// 
+			// btnMachineLearning
+			// 
+			this.btnMachineLearning.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnMachineLearning.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnMachineLearning.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnMachineLearning.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnMachineLearning.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnMachineLearning.ForeColor = System.Drawing.Color.White;
+			this.btnMachineLearning.Location = new System.Drawing.Point(77, 194);
+			this.btnMachineLearning.Name = "btnMachineLearning";
+			this.btnMachineLearning.Size = new System.Drawing.Size(212, 38);
+			this.btnMachineLearning.TabIndex = 6;
+			this.btnMachineLearning.Text = "모델 학습하기";
+			// 
+			// btnStart
+			// 
+			this.btnStart.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnStart.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnStart.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnStart.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnStart.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnStart.ForeColor = System.Drawing.Color.White;
+			this.btnStart.Location = new System.Drawing.Point(77, 20);
+			this.btnStart.Name = "btnStart";
+			this.btnStart.Size = new System.Drawing.Size(212, 38);
+			this.btnStart.TabIndex = 7;
+			this.btnStart.Text = "start";
+			// 
+			// btnResultGraph
+			// 
+			this.btnResultGraph.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnResultGraph.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnResultGraph.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnResultGraph.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnResultGraph.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnResultGraph.ForeColor = System.Drawing.Color.White;
+			this.btnResultGraph.Location = new System.Drawing.Point(77, 238);
+			this.btnResultGraph.Name = "btnResultGraph";
+			this.btnResultGraph.Size = new System.Drawing.Size(212, 38);
+			this.btnResultGraph.TabIndex = 8;
+			this.btnResultGraph.Text = "학습 결과 그래프 출력하기";
+			// 
 			// Blockly
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+			this.Controls.Add(this.btnResultGraph);
+			this.Controls.Add(this.btnStart);
+			this.Controls.Add(this.btnMachineLearning);
 			this.Controls.Add(this.btnLoadDataset);
 			this.Controls.Add(this.btnDialog);
 			this.Controls.Add(this.richTextBox1);
@@ -141,5 +189,8 @@
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private Guna.UI2.WinForms.Guna2CircleButton btnDialog;
 		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
+		private Guna.UI2.WinForms.Guna2Button btnMachineLearning;
+		private Guna.UI2.WinForms.Guna2Button btnStart;
+		private Guna.UI2.WinForms.Guna2Button btnResultGraph;
 	}
 }
