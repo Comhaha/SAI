@@ -44,19 +44,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1254, 649);
+            this.ClientSize = new System.Drawing.Size(2494, 1440);
             this.Controls.Add(this.guna2Panel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "메인페이지";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Controls.SetChildIndex(this.guna2Panel1, 0);
+            this.guna2Panel1.ResumeLayout(false);
+            this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Panel mainPanel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
     }
 }
