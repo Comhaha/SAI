@@ -1,9 +1,32 @@
+import { useState } from 'react';
 import background from '@/assets/images/background.svg';
 import character from '@/assets/images/download_ch.svg';
+import apiClient from '@/api/apiClient';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/Toast';
 
 function Content1() {
+  const [loading, setLoading] = useState(false);
+  const { isVisible, message, showToast } = useToast();
+
+  const handleDownload = async () => {
+    setLoading(true);
+    try {
+      const res = await apiClient.get('/api/download');
+      if (res.data.isSuccess && res.data.result) {
+        window.location.href = res.data.result;
+      } else {
+        showToast(res.data.message || '다운로드 링크를 가져오지 못했습니다.');
+      }
+    } catch (err) {
+      showToast('The server response is delayed. Please try again in a moment.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="w-full h-[365px] pt-[80px] relative overflow-hidden">
+    <div className="w-full h-[365px] pt-[80px] relative overflow-hidden bg-[#e6f2fb]">
       <img
         src={background}
         alt="background"
@@ -14,8 +37,12 @@ function Content1() {
           <h1 className="text-[40px] font-bold leading-tight text-gray-800 mb-4">
             Suggested Download
           </h1>
-          <button className="mt-[50px] text-white text-[18px] font-medium px-6 py-2 rounded shadow transition-all w-fit bg-[#2878BD] hover:bg-[#4F96D3]">
-            SAi 3.38.1 for Windows
+          <button
+            className="mt-[50px] text-white text-[18px] font-medium px-6 py-2 rounded shadow transition-all w-fit bg-[#2878BD] hover:bg-[#4F96D3]"
+            onClick={handleDownload}
+            disabled={loading}
+          >
+            {loading ? 'Preparing download...' : 'SAi 3.38.1 for Windows'}
           </button>
         </div>
         <img
@@ -24,6 +51,7 @@ function Content1() {
           className="w-[422px] h-auto object-contain drop-shadow-xl max-[720px]:hidden translate-y-[20%]"
         />
       </div>
+      <Toast isVisible={isVisible} message={message} />
     </div>
   );
 }
