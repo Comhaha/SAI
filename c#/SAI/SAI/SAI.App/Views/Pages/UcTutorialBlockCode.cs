@@ -6,7 +6,7 @@ using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IHomeView
+    public partial class UcTutorialBlockCode : UserControl
     {
         public event EventHandler HomeButtonClicked;
         public UcTutorialBlockCode()
