@@ -19,8 +19,8 @@
         {
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.logOutput = new Guna.UI2.WinForms.Guna2TextBox();
             this.YoloRun = new Guna.UI2.WinForms.Guna2Button();
+            this.logOutput = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,21 +48,36 @@
             this.guna2Panel1.Size = new System.Drawing.Size(2496, 1440);
             this.guna2Panel1.TabIndex = 4;
             // 
+            // YoloRun
+            // 
+            this.YoloRun.DefaultAutoSize = true;
+            this.YoloRun.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.YoloRun.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.YoloRun.DisabledState.FillColor = System.Drawing.Color.FromArgb(169, 169, 169);
+            this.YoloRun.DisabledState.ForeColor = System.Drawing.Color.FromArgb(141, 141, 141);
+            this.YoloRun.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.YoloRun.ForeColor = System.Drawing.Color.White;
+            this.YoloRun.Location = new System.Drawing.Point(940, 305);
+            this.YoloRun.Name = "YoloRun";
+            this.YoloRun.Size = new System.Drawing.Size(125, 44);
+            this.YoloRun.TabIndex = 2;
+            this.YoloRun.Text = "YoloRun";
+            this.YoloRun.Click += new System.EventHandler(this.guna2Button1_Click);
+            // 
             // logOutput
             // 
-            this.logOutput.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.logOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.logOutput.DefaultText = "";
-            this.logOutput.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.logOutput.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.logOutput.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.logOutput.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.logOutput.DisabledState.BorderColor = System.Drawing.Color.FromArgb(208, 208, 208);
+            this.logOutput.DisabledState.FillColor = System.Drawing.Color.FromArgb(226, 226, 226);
+            this.logOutput.DisabledState.ForeColor = System.Drawing.Color.FromArgb(138, 138, 138);
+            this.logOutput.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(138, 138, 138);
             this.logOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logOutput.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.logOutput.FocusedState.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
             this.logOutput.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.logOutput.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.logOutput.HoverState.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
             this.logOutput.Location = new System.Drawing.Point(0, 0);
-            this.logOutput.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.logOutput.Margin = new System.Windows.Forms.Padding(6);
             this.logOutput.Multiline = true;
             this.logOutput.Name = "logOutput";
             this.logOutput.PlaceholderText = "";
@@ -73,22 +88,6 @@
             this.logOutput.TabIndex = 3;
             this.logOutput.Visible = false;
             this.logOutput.TextChanged += new System.EventHandler(this.logOutput_TextChanged);
-            // 
-            // YoloRun
-            // 
-            this.YoloRun.DefaultAutoSize = true;
-            this.YoloRun.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.YoloRun.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.YoloRun.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.YoloRun.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.YoloRun.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.YoloRun.ForeColor = System.Drawing.Color.White;
-            this.YoloRun.Location = new System.Drawing.Point(940, 305);
-            this.YoloRun.Name = "YoloRun";
-            this.YoloRun.Size = new System.Drawing.Size(125, 44);
-            this.YoloRun.TabIndex = 2;
-            this.YoloRun.Text = "YoloRun";
-            this.YoloRun.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // MainForm
             // 
@@ -103,7 +102,6 @@
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         #endregion

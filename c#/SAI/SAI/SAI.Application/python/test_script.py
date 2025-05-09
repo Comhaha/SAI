@@ -1,7 +1,6 @@
 # 튜토리얼모드 테스트 py파일.
 import os
 import sys
-
 import subprocess
 
 # 필수 패키지 설치

@@ -67,12 +67,12 @@ private void guna2Button1_Click(object sender, EventArgs e)
 private void RunPythonScript()
 {
     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-    string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\venv\Scripts\python.exe"));
+    string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\...\SAI.Application\venv\Scripts\python.exe"));
     string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\python\test_script.py"));
            
-            Console.WriteLine($" BaseDirectory: {baseDir}");
-            Console.WriteLine($" Python Executable Path: {pythonExe}");
-            Console.WriteLine($" Python Script Path: {scriptPath}");
+            Console.WriteLine($"📂 BaseDirectory: {baseDir}");
+            Console.WriteLine($"🐍 Python Executable Path: {pythonExe}");
+            Console.WriteLine($"📜 Python Script Path: {scriptPath}");
 
             var psi = new ProcessStartInfo
     {

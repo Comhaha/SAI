@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SAI</RootNamespace>
     <AssemblyName>SAI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -15,7 +13,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -36,20 +32,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
-<ItemGroup>
-  <!-- Nuget 패키지 관리 -->
-  <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
-  <PackageReference Include="CefSharp.Common" Version="135.0.220" />
-  <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
-  <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
-  <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
-  <PackageReference Include="Clipper2" Version="1.4.0" />
-  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
-</ItemGroup>
-
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Nuget 패키지 관리 -->
+    <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
+    <PackageReference Include="CefSharp.Common" Version="135.0.220" />
+    <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
+    <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
+    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+    <PackageReference Include="Clipper2" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
