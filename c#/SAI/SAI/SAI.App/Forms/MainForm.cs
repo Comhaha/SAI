@@ -69,12 +69,8 @@ private void RunPythonScript()
     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
     string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
     string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\test_script.py"));
-           
-            Console.WriteLine($" BaseDirectory: {baseDir}");
-            Console.WriteLine($" Python Executable Path: {pythonExe}");
-            Console.WriteLine($" Python Script Path: {scriptPath}");
 
-            var psi = new ProcessStartInfo
+    var psi = new ProcessStartInfo
     {
         FileName = pythonExe,
         Arguments = $"-u \"{scriptPath}\"", // 실시간 로그를 위한 -u
