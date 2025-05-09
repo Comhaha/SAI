@@ -12,7 +12,13 @@ namespace SAI.SAI.App.Forms
         {
             this.AutoScaleMode = AutoScaleMode.None; // DPI 자동 조정 끄기
             this.ClientSize = new Size(1280, 720);
+
             this.StartPosition = FormStartPosition.CenterScreen;
+            Size = new Size(1280, 720);
+			MaximizeBox = false;
+            MaximumSize = new Size(1280, 720);
+            MinimumSize = new Size(1280, 720);
+			this.StartPosition = FormStartPosition.CenterScreen;
 
             // 폼 사이즈 고정 설정
             this.FormBorderStyle = FormBorderStyle.FixedSingle;

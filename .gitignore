@@ -57,6 +57,14 @@ local.properties
 *.sln.docstates
 *.stackdump
 *.dbmdl
+*.vsidx
+**/.vshistory/
+c#/SAI/.vs/
+c#/SAI/SAI/SAI.App/.vs/
+c#/SAI/packages/
+c#/SAI/SAI/package.config
+c#/SAI/SAI/bin/
+c#/SAI/SAI/obj/
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json

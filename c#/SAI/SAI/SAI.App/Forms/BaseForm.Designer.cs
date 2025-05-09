@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // BaseForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "BaseForm";
-            this.Text = "BaseForm";
-            this.Load += new System.EventHandler(this.BaseForm_Load);
-            this.ResumeLayout(false);
+			this.SuspendLayout();
+			// 
+			// BaseForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(1272, 683);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.MaximizeBox = false;
+			this.Name = "BaseForm";
+			this.Text = "BaseForm";
+			this.Load += new System.EventHandler(this.BaseForm_Load);
+			this.ResumeLayout(false);
 
         }
 

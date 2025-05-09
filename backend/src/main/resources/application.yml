@@ -13,7 +13,6 @@ spring:
       ddl-auto: update
     show-sql: true
 
-
   data:
     redis:
       repositories:

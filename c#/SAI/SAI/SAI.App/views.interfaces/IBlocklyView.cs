@@ -1,4 +1,5 @@
 ﻿using SAI.SAI.App.Models;
+using SAI.SAI.App.Models.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,8 @@ namespace SAI.SAI.App.Views.Interfaces
 
 		// 블록을 추가하는 JS 함수를 실행
 		void addBlock(string blockType);
+
+		// RichTextBox에 Python코드 출력용
+		void ShowGeneratedCode(string code);
 	}
 }
