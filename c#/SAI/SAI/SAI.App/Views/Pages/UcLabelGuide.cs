@@ -63,6 +63,19 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지별 정확도 저장을 위한 변수 추가
         private Dictionary<int, double> imageAccuracies = new Dictionary<int, double>();
 
+        // 이미지 인덱스별 히스토리 스택 관리
+        private Dictionary<int, List<ActionState>> imageHistoryStacks = new Dictionary<int, List<ActionState>>();
+        private Dictionary<int, int> imageCurrentHistoryIndices = new Dictionary<int, int>();
+        private const int MAX_HISTORY = 10; // 각 히스토리 스택당 최대 크기
+
+        // 바운딩 박스와 세그멘테이션 가시성 관련 변수
+        private bool isBoundingBoxVisible = true;
+        private bool isSegmentationVisible = true;
+
+        // 클래스 상단의 멤버 변수 영역에 추가
+        private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
+
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,8 +91,9 @@ namespace SAI.SAI.App.Views.Pages
             // 초기 설정
             SetupInitialConfig();
             RegisterExport();
-            RegisterAccuracyButton();  // 정확도 계산 버튼 추가
             InitializeGroundTruthData(); // 정답 데이터 초기화
+            InitializeProgressIndicators(); // 진행 상태 표시기 초기화
+            RegisterAccuracyButton(); // 정확도 계산 버튼 등록
 
             // 이벤트 핸들러 등록
             RegisterControlEvents();
@@ -96,7 +110,7 @@ namespace SAI.SAI.App.Views.Pages
             UpdateNavigationButtonState();
         }
 
-        // 정답 데이터 초기화 메서드
+        // 정답 데이터 초기화 메서드 (변경 필요)
         private void InitializeGroundTruthData()
         {
             // 바운딩 박스 정답 데이터
@@ -115,8 +129,7 @@ namespace SAI.SAI.App.Views.Pages
             groundTruthPolygons[8] = ParsePolygonFromJson(
                 "{\"label\":\"dog\",\"points\":[{\"x\":163,\"y\":213},{\"x\":162,\"y\":248},{\"x\":186,\"y\":277},{\"x\":181,\"y\":322},{\"x\":236,\"y\":356},{\"x\":270,\"y\":338},{\"x\":294,\"y\":312},{\"x\":331,\"y\":343},{\"x\":366,\"y\":329},{\"x\":343,\"y\":279},{\"x\":371,\"y\":270},{\"x\":417,\"y\":305},{\"x\":454,\"y\":292},{\"x\":447,\"y\":270},{\"x\":414,\"y\":253},{\"x\":399,\"y\":227},{\"x\":406,\"y\":172},{\"x\":417,\"y\":116},{\"x\":381,\"y\":83},{\"x\":333,\"y\":66},{\"x\":288,\"y\":78},{\"x\":262,\"y\":97},{\"x\":243,\"y\":132},{\"x\":251,\"y\":163},{\"x\":213,\"y\":206},{\"x\":196,\"y\":229},{\"x\":192,\"y\":245}]}");
         }
-
-        // 정확도 계산 버튼 추가 메서드
+        // 정확도 계산 버튼 추가 메서드 (임시
         private void RegisterAccuracyButton()
         {
             // 정확도 계산 버튼
@@ -171,39 +184,26 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void LoadImages()
         {
-            string folderPath = @"C:\Users\doseungguk\Documents\GItLab\S12P31D201\c#\SAI\SAI\SAI.App\Resources\Images\";
-            //string baseDir = AppDomain.CurrentDomain.BaseDirectory;  임시
-            //string folderPath = Path.Combine(baseDir, "Resources", "Images");
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory; 
+            string folderPath = Path.Combine(baseDir, "Resources", "Images");
 
-            //// 디렉터리가 존재하는지 확인
-            //if (!Directory.Exists(folderPath))
-            //{
-            //    // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
-            //    string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\Resources\Images"));
+            // 디렉터리가 존재하는지 확인
+            if (!Directory.Exists(folderPath))
+            {
+                // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.APP\Resources\Images"));
 
-            //    if (Directory.Exists(devPath))
-            //    {
-            //        folderPath = devPath;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show($"이미지 폴더를 찾을 수 없습니다.\n시도한 경로:\n1. {folderPath}\n2. {devPath}",
-            //                        "경로 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        return; // 또는 기본 이미지 사용 등의 대체 전략
-            //    }
-            //}
-
-            //// 이미지 파일 존재 확인 (디버깅용)
-            //string testImagePath = Path.Combine(folderPath, "1.jpg");
-            //if (File.Exists(testImagePath))
-            //{
-            //    Console.WriteLine($"이미지 파일을 찾았습니다: {testImagePath}");
-            //}
-            //else
-            //{
-            //    MessageBox.Show($"첫 번째 이미지 파일을 찾을 수 없습니다.\n경로: {testImagePath}",
-            //                    "파일 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                if (Directory.Exists(devPath))
+                {
+                    folderPath = devPath;
+                }
+                else
+                {
+                    MessageBox.Show($"이미지 폴더를 찾을 수 없습니다.\n시도한 경로:\n1. {folderPath}\n2. {devPath}",
+                                    "경로 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // 또는 기본 이미지 사용 등의 대체 전략
+                }
+            }
 
             for (int i = 1; i <= 9; i++)
             {
@@ -255,7 +255,7 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         /// <summary>
-        /// 좌표 내보내기 버튼 클릭 이벤트 핸들러
+        /// 좌표 내보내기 버튼 클릭 이벤트 핸들러 (임시)
         /// </summary>
         private void ExportBtn_Click(object sender, EventArgs e)
         {
@@ -273,20 +273,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 현재 이미지의 폴리곤 정보 가져오기
                 jsonData = ExportPolygonCoordinates(currentImageIndex);
                 MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "세그멘테이션 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else // Classification
-            {
-                // 분류 정보만 있는 경우
-                if (imageClassifications.ContainsKey(currentImageIndex))
-                {
-                    string label = imageClassifications[currentImageIndex];
-                    jsonData = $"{{\"label\":\"{label}\"}}";
-                    MessageBox.Show($"현재 이미지 분류 정보:\n{jsonData}", "분류 정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("현재 이미지에 라벨링 정보가 없습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+            
             }
 
             // 모든 이미지의 좌표 정보를 출력할지 물어보기
@@ -369,6 +356,16 @@ namespace SAI.SAI.App.Views.Pages
             RegisterHandToolEvent();
             RegisterSquareToolEvent();
             RegisterPolygonToolEvent();
+
+            // Undo/Redo 버튼 이벤트 등록 추가
+            toolUndo.Click += toolUndo_Click;
+            toolRedo.Click += toolRedo_Click;
+
+            // 라벨 지우기
+            toolDelete.Click += toolDelete_Click;
+
+            // 바운딩 박스 및 세그멘테이션 가시성 토글
+            toolVisible.Click += toolVisible_Click;
         }
 
         /// <summary>
@@ -404,12 +401,13 @@ namespace SAI.SAI.App.Views.Pages
         {
             bool isCurrentImageLabeled = false;
             double currentAccuracy = 0;
+            nextBtn.Enabled = false;
 
             // 현재 이미지에 대한 라벨링 및 정확도 확인
             if (imageAccuracies.ContainsKey(currentImageIndex))
             {
                 currentAccuracy = imageAccuracies[currentImageIndex];
-                isCurrentImageLabeled = currentAccuracy >= 90.0;
+                isCurrentImageLabeled = currentAccuracy >= 50.0;
             }
             else
             {
@@ -429,23 +427,100 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel.Text == "Classification")
+            if (currentLevel.Text == "Classification" && currentAccuracy >= 0)
             {
                 //nextBtn.Enabled = currentAccuracy >= 100; 임시
-                nextBtn.Enabled = currentAccuracy >= 0;
+                nextBtn.Enabled = true;
 
+                // 이미지를 통과 상태로 설정
+                imagePassedStatus[currentImageIndex] = true;
+                UpdateProgressIndicator(currentImageIndex, true);
+            }
+            else if (currentAccuracy >= 50)
+            {
+                //nextBtn.Enabled = currentAccuracy >= 90.0;임시
+                nextBtn.Enabled = true;
+
+                // 이미지를 통과 상태로 설정
+                imagePassedStatus[currentImageIndex] = true;
+                UpdateProgressIndicator(currentImageIndex, true);
             }
             else
             {
-                //nextBtn.Enabled = currentAccuracy >= 90.0;임시
-                nextBtn.Enabled = currentAccuracy >= 50;
+                // 아직 통과하지 못한 상태면 노란색으로 표시
+                UpdateProgressIndicator(currentImageIndex, false);
             }
+
             // 첫 번째 이미지일 경우 이전 버튼 비활성
             preBtn.Enabled = currentImageIndex > 0;
 
             // 버튼 시각적 업데이트
             nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
             preBtn.FillColor = preBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
+        }
+
+        // 진행 상태 표시기를 업데이트하는 메서드
+        private void UpdateProgressIndicator(int imageIndex, bool passed)
+        {
+            // 이미지 인덱스에 맞는 progress 버튼 찾기
+            var progressControl = GetProgressControl(imageIndex);
+
+            if (progressControl != null)
+            {
+                // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
+                progressControl.FillColor = passed ? Color.Green : Color.Yellow;
+
+                // 이미지를 통과했으면 통과 상태 기록
+                if (passed)
+                {
+                    imagePassedStatus[imageIndex] = true;
+                }
+            }
+        }
+
+        // 진행 상태 표시기 초기화 메서드 추가
+        private void InitializeProgressIndicators()
+        {
+            // 모든 progress 버튼 초기화
+            for (int i = 0; i < 9; i++)
+            {
+                var progressControl = GetProgressControl(i);
+                if (progressControl != null)
+                {
+                    // 초기 상태는 테두리만 있는 투명 원
+                    progressControl.FillColor = Color.Transparent;
+                    progressControl.BorderColor = Color.Black;
+                    progressControl.BorderThickness = 1;
+                }
+            }
+        }
+
+        // 이미지 인덱스에 맞는 progress 버튼을 반환하는 헬퍼 메서드
+        private Guna.UI2.WinForms.Guna2CircleButton GetProgressControl(int imageIndex)
+        {
+            switch (imageIndex)
+            {
+                case 0:
+                    return progress0;
+                case 1:
+                    return progress1;
+                case 2:
+                    return progress2;
+                case 3:
+                    return progress3;
+                case 4:
+                    return progress4;
+                case 5:
+                    return progress5;
+                case 6:
+                    return progress6;
+                case 7:
+                    return progress7;
+                case 8:
+                    return progress8;
+                default:
+                    return null;
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -609,6 +684,167 @@ namespace SAI.SAI.App.Views.Pages
             pictureBoxImage.Cursor = Cursors.Default;
         }
 
+        // ActionState 클래스 추가
+        public class ActionState
+        {
+            // 작업 종류
+            public enum ActionType
+            {
+                BoundingBox,
+                Polygon,
+                PolygonEdit
+            }
+
+            // 작업 종류
+            public ActionType Type { get; set; }
+
+            // 작업이 적용된 이미지 인덱스
+            public int ImageIndex { get; set; }
+
+            // 작업 전 상태
+            public object BeforeState { get; set; }
+
+            // 작업 후 상태
+            public object AfterState { get; set; }
+        }
+
+        /// <summary>
+        /// 액션 히스토리에 새 작업 추가
+        /// </summary>
+        private void AddToHistory(ActionState action)
+        {
+            int imageIndex = action.ImageIndex;
+
+            // 해당 이미지의 히스토리 스택이 없으면 생성
+            if (!imageHistoryStacks.ContainsKey(imageIndex))
+            {
+                imageHistoryStacks[imageIndex] = new List<ActionState>();
+                imageCurrentHistoryIndices[imageIndex] = -1;
+            }
+
+            // 현재 인덱스 이후의 모든 히스토리 제거
+            int currentIndex = imageCurrentHistoryIndices[imageIndex];
+            if (currentIndex < imageHistoryStacks[imageIndex].Count - 1)
+            {
+                imageHistoryStacks[imageIndex].RemoveRange(currentIndex + 1,
+                    imageHistoryStacks[imageIndex].Count - currentIndex - 1);
+            }
+
+            // 히스토리 최대 크기 유지
+            if (imageHistoryStacks[imageIndex].Count >= MAX_HISTORY)
+            {
+                imageHistoryStacks[imageIndex].RemoveAt(0);
+                imageCurrentHistoryIndices[imageIndex]--;
+            }
+
+            // 히스토리에 추가
+            imageHistoryStacks[imageIndex].Add(action);
+            imageCurrentHistoryIndices[imageIndex]++;
+        }
+
+        /// <summary>
+        /// Undo - 작업 취소
+        /// </summary>
+        private void Undo()
+        {
+            try
+            {
+                // 현재 이미지에 대한 히스토리 확인
+                if (!imageHistoryStacks.ContainsKey(currentImageIndex) ||
+                    imageCurrentHistoryIndices[currentImageIndex] < 0)
+                {
+                    // 히스토리가 없으면 아무것도 하지 않음
+                    return;
+                }
+
+                // 현재 작업 가져오기
+                int currentIndex = imageCurrentHistoryIndices[currentImageIndex];
+                var action = imageHistoryStacks[currentImageIndex][currentIndex];
+
+                // 작업 타입에 따라 이전 상태로 복원
+                switch (action.Type)
+                {
+                    case ActionState.ActionType.BoundingBox:
+                        if (action.BeforeState == null)
+                            imageBoundingBoxes.Remove(action.ImageIndex);
+                        else
+                            imageBoundingBoxes[action.ImageIndex] = (List<Tuple<Rectangle, string>>)action.BeforeState;
+                        break;
+
+                    case ActionState.ActionType.Polygon:
+                    case ActionState.ActionType.PolygonEdit:
+                        if (action.BeforeState == null)
+                            imagePolygons.Remove(action.ImageIndex);
+                        else
+                            imagePolygons[action.ImageIndex] = (List<Tuple<List<Point>, string>>)action.BeforeState;
+                        break;
+                }
+
+                // 현재 히스토리 인덱스 감소
+                imageCurrentHistoryIndices[currentImageIndex]--;
+
+                // 화면 갱신
+                LoadImageLabels();
+                pictureBoxImage.Invalidate();
+                CalculateAndDisplayAccuracy();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"실행 취소 중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Redo - 작업 재실행
+        /// </summary>
+        private void Redo()
+        {
+            try
+            {
+                // 현재 이미지에 대한 히스토리 확인
+                if (!imageHistoryStacks.ContainsKey(currentImageIndex) ||
+                    imageCurrentHistoryIndices[currentImageIndex] >= imageHistoryStacks[currentImageIndex].Count - 1)
+                {
+                    // 더 이상 앞으로 갈 히스토리가 없음
+                    return;
+                }
+
+                // 다음 작업 인덱스로 이동
+                imageCurrentHistoryIndices[currentImageIndex]++;
+                int currentIndex = imageCurrentHistoryIndices[currentImageIndex];
+                var action = imageHistoryStacks[currentImageIndex][currentIndex];
+
+                // 작업 타입에 따라 작업 상태 복원
+                switch (action.Type)
+                {
+                    case ActionState.ActionType.BoundingBox:
+                        if (action.AfterState == null)
+                            imageBoundingBoxes.Remove(action.ImageIndex);
+                        else
+                            imageBoundingBoxes[action.ImageIndex] = (List<Tuple<Rectangle, string>>)action.AfterState;
+                        break;
+
+                    case ActionState.ActionType.Polygon:
+                    case ActionState.ActionType.PolygonEdit:
+                        if (action.AfterState == null)
+                            imagePolygons.Remove(action.ImageIndex);
+                        else
+                            imagePolygons[action.ImageIndex] = (List<Tuple<List<Point>, string>>)action.AfterState;
+                        break;
+                }
+
+                // 화면 갱신
+                LoadImageLabels();
+                pictureBoxImage.Invalidate();
+                CalculateAndDisplayAccuracy();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"다시 실행 중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// 이미지 탐색 관련 /////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -634,6 +870,18 @@ namespace SAI.SAI.App.Views.Pages
                 // Classification 단계에서는 손 도구를 기본으로 활성화
                 isHandToolActive = true;
                 pictureBoxImage.Cursor = Cursors.Hand;
+
+                // Classification 단계에서는 라벨이 항상 보이도록 설정
+                isBoundingBoxVisible = true;
+                isSegmentationVisible = true;
+
+                // 버튼 비활성화 또는 상태 업데이트
+                if (toolVisible != null)
+                {
+                    toolVisible.Enabled = false;  // 버튼 비활성화
+                    toolVisible.BackColor = Color.Transparent;
+                    toolVisible.Text = "라벨 숨기기";
+                }
             }
             else if (imageIndex >= 4 && imageIndex <= 6)
             {
@@ -641,6 +889,13 @@ namespace SAI.SAI.App.Views.Pages
                 toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
                 accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
 
+                // 버튼 활성화 및 상태 업데이트
+                if (toolVisible != null)
+                {
+                    toolVisible.Enabled = true;  // 버튼 활성화
+                    toolVisible.BackColor = isBoundingBoxVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
+                }
             }
             else if (imageIndex >= 7 && imageIndex <= 9)
             {
@@ -648,6 +903,13 @@ namespace SAI.SAI.App.Views.Pages
                 toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
                 accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
 
+                // 버튼 활성화 및 상태 업데이트
+                if (toolVisible != null)
+                {
+                    toolVisible.Enabled = true;  // 버튼 활성화
+                    toolVisible.BackColor = isSegmentationVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
+                }
             }
 
             // 도구 버튼 상태 업데이트
@@ -671,11 +933,17 @@ namespace SAI.SAI.App.Views.Pages
         /// <summary>
         /// 다음 이미지로 이동
         /// </summary>
-        // 다음 이미지 이동 메서드 수정
         private void ShowNextImage()
         {
             if (images.Count > 0)
             {
+                //// 이동 전 현재 이미지의 통과 상태 확인 및 업데이트
+                //if (imageAccuracies.ContainsKey(currentImageIndex) && imageAccuracies[currentImageIndex] >= 50)
+                //{
+                //    imagePassedStatus[currentImageIndex] = true;
+                //    UpdateProgressIndicator(currentImageIndex, true);
+                //}
+
                 currentImageIndex = (currentImageIndex + 1) % images.Count; // 다음 이미지로 이동
                 pictureBoxImage.Image = images[currentImageIndex];
                 UpdateShowLevel(); // showLevel 업데이트
@@ -694,8 +962,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 네비게이션 버튼 상태 업데이트
-                UpdateNavigationButtonState();
+                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                {
+                    nextBtn.Enabled = true;
+                    UpdateProgressIndicator(currentImageIndex, true);
+                }
+                else
+                {
+                    // 통과 여부에 따라 진행 상태 표시
+                    UpdateNavigationButtonState();
+                }
             }
         }
         /// <summary>
@@ -705,6 +982,13 @@ namespace SAI.SAI.App.Views.Pages
         {
             if (images.Count > 0)
             {
+                //// 이동 전 현재 이미지의 통과 상태 확인 및 업데이트
+                //if (imageAccuracies.ContainsKey(currentImageIndex) && imageAccuracies[currentImageIndex] >= 50)
+                //{
+                //    imagePassedStatus[currentImageIndex] = true;
+                //    UpdateProgressIndicator(currentImageIndex, true);
+                //}
+
                 currentImageIndex = (currentImageIndex - 1 + images.Count) % images.Count; // 이전 이미지로 이동
                 pictureBoxImage.Image = images[currentImageIndex];
                 UpdateShowLevel(); // showLevel 업데이트
@@ -716,14 +1000,23 @@ namespace SAI.SAI.App.Views.Pages
                 if (imageAccuracies.ContainsKey(currentImageIndex))
                 {
                     accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
-                }   
+                }
                 else
                 {
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 네비게이션 버튼 상태 업데이트
-                UpdateNavigationButtonState();
+                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                {
+                    nextBtn.Enabled = true;
+                    UpdateProgressIndicator(currentImageIndex, true);
+                }
+                else
+                {
+                    // 통과 여부에 따라 진행 상태 표시
+                    UpdateNavigationButtonState();
+                }
             }
         }
 
@@ -1126,7 +1419,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
-            if (imageBoundingBoxes.ContainsKey(currentImageIndex))
+            if (isBoundingBoxVisible && imageBoundingBoxes.ContainsKey(currentImageIndex))
             {
                 foreach (var box in imageBoundingBoxes[currentImageIndex])
                 {
@@ -1324,7 +1617,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
-            if (!isEditingPolygon && imagePolygons.ContainsKey(currentImageIndex))
+            if (isSegmentationVisible && !isEditingPolygon && imagePolygons.ContainsKey(currentImageIndex))
             {
                 foreach (var polygon in imagePolygons[currentImageIndex])
                 {
@@ -1451,14 +1744,22 @@ namespace SAI.SAI.App.Views.Pages
         /// <summary>
         /// 바운딩 박스 생성을 위한 주석 편집기 열기
         /// </summary>
+
         private void OpenAnnotationEditorForBoundingBox(Rectangle imageRect)
         {
-            using (var editorForm = new AnnotationEditorForm(class1.Text)) // 기존 라벨을 초기값으로 설정
+            using (var editorForm = new AnnotationEditorForm(class1.Text))
             {
                 if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                 {
                     // 저장된 주석 텍스트 가져오기
                     string annotationText = editorForm.AnnotationText;
+
+                    // 기존 바운딩 박스 상태 저장 (히스토리용)
+                    List<Tuple<Rectangle, string>> previousBoxes = null;
+                    if (imageBoundingBoxes.ContainsKey(currentImageIndex))
+                    {
+                        previousBoxes = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex]);
+                    }
 
                     // class1 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
                     class1.Text = annotationText;
@@ -1468,6 +1769,16 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 새 바운딩 박스 추가
                     CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(imageRect, annotationText));
+
+                    // 히스토리에 작업 추가
+                    var action = new ActionState
+                    {
+                        Type = ActionState.ActionType.BoundingBox,
+                        ImageIndex = currentImageIndex,
+                        BeforeState = previousBoxes,
+                        AfterState = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex])
+                    };
+                    AddToHistory(action);
 
                     // 그리기 상태 초기화
                     currentRect = Rectangle.Empty;
@@ -1976,50 +2287,74 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 폴리곤 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// 현재 그리고 있는 폴리곤을 완성하고 저장
         /// </summary>
         private void CompletePolygon()
         {
-            using (var editorForm = new AnnotationEditorForm(class1.Text))
+            try
             {
-                if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
+                using (var editorForm = new AnnotationEditorForm(class1.Text))
                 {
-                    string annotationText = editorForm.AnnotationText;
-                    class1.Text = annotationText;
-
-                    // 화면 좌표를 이미지 좌표로 변환
-                    List<Point> imagePoints = ConvertPointsToImageCoordinates(polygonPoints);
-
-                    // 기존 폴리곤 데이터 삭제
-                    if (imagePolygons.ContainsKey(currentImageIndex))
+                    if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                     {
-                        imagePolygons.Remove(currentImageIndex);
+                        string annotationText = editorForm.AnnotationText;
+                        string previousLabel = class1.Text;
+
+                        // 이전 폴리곤 상태 저장
+                        List<Tuple<List<Point>, string>> previousPolygons = new List<Tuple<List<Point>, string>>();
+                        if (imagePolygons.ContainsKey(currentImageIndex))
+                        {
+                            previousPolygons = new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]);
+                        }
+
+                        // 화면 좌표를 이미지 좌표로 변환
+                        List<Point> imagePoints = ConvertPointsToImageCoordinates(polygonPoints);
+                        List<Point> savedPolygonPoints = new List<Point>(polygonPoints);
+
+                        class1.Text = annotationText;
+
+                        // 기존 폴리곤 데이터 삭제
+                        if (imagePolygons.ContainsKey(currentImageIndex))
+                        {
+                            imagePolygons.Remove(currentImageIndex);
+                        }
+
+                        // 폴리곤 저장
+                        if (!imagePolygons.ContainsKey(currentImageIndex))
+                        {
+                            imagePolygons[currentImageIndex] = new List<Tuple<List<Point>, string>>();
+                        }
+
+                        // 새 폴리곤 추가
+                        imagePolygons[currentImageIndex].Add(new Tuple<List<Point>, string>(
+                            new List<Point>(imagePoints), annotationText));
+
+                        // 폴리곤 점 초기화 및 화면 갱신
+                        polygonPoints.Clear();
+                        pictureBoxImage.Invalidate();
+
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.Polygon,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousPolygons,
+                            AfterState = new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex])
+                        };
+
+                        AddToHistory(action);
+
+                        // 네비게이션 버튼 상태 업데이트
+                        UpdateNavigationButtonState();
+
+                        // 정확도 즉시 계산 및 표시
+                        CalculateAndDisplayAccuracy();
                     }
-
-                    // 폴리곤 저장
-                    if (!imagePolygons.ContainsKey(currentImageIndex))
-                    {
-                        imagePolygons[currentImageIndex] = new List<Tuple<List<Point>, string>>();
-                    }
-
-                    // 새 폴리곤 추가
-                    imagePolygons[currentImageIndex].Add(new Tuple<List<Point>, string>(
-                        new List<Point>(imagePoints), annotationText));
-
-                    // 폴리곤 점 초기화 및 화면 갱신
-                    polygonPoints.Clear();
-                    pictureBoxImage.Invalidate();
-
-                    // 네비게이션 버튼 상태 업데이트
-                    UpdateNavigationButtonState();
-
-                    // 정확도 즉시 계산 및 표시
-                    CalculateAndDisplayAccuracy();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"폴리곤을 저장하는 중 오류가 발생했습니다.\n\n오류 메시지: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2028,25 +2363,51 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void SaveEditingPolygon()
         {
-            // 편집 중인 폴리곤 저장
-            if (selectedPolygonIndex >= 0 &&
-                imagePolygons.ContainsKey(currentImageIndex) &&
-                selectedPolygonIndex < imagePolygons[currentImageIndex].Count)
+            try
             {
-                // 화면 좌표를 이미지 좌표로 변환
-                List<Point> imagePoints = ConvertPointsToImageCoordinates(editingPolygonPoints);
+                // 편집 중인 폴리곤 저장
+                if (selectedPolygonIndex >= 0 &&
+                    imagePolygons.ContainsKey(currentImageIndex) &&
+                    selectedPolygonIndex < imagePolygons[currentImageIndex].Count)
+                {
+                    // 이전 상태 저장
+                    List<Tuple<List<Point>, string>> previousPolygons = null;
+                    if (imagePolygons.ContainsKey(currentImageIndex))
+                    {
+                        previousPolygons = new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]);
+                    }
 
-                // 기존 라벨 유지하면서 좌표만 업데이트
-                string label = imagePolygons[currentImageIndex][selectedPolygonIndex].Item2;
-                imagePolygons[currentImageIndex][selectedPolygonIndex] =
-                    new Tuple<List<Point>, string>(imagePoints, label);
+                    // 화면 좌표를 이미지 좌표로 변환
+                    List<Point> imagePoints = ConvertPointsToImageCoordinates(editingPolygonPoints);
+                    List<Point> savedEditingPoints = new List<Point>(editingPolygonPoints);
+
+                    // 기존 라벨 유지하면서 좌표만 업데이트
+                    string label = imagePolygons[currentImageIndex][selectedPolygonIndex].Item2;
+                    imagePolygons[currentImageIndex][selectedPolygonIndex] =
+                        new Tuple<List<Point>, string>(imagePoints, label);
+
+                    // 히스토리에 작업 추가 (세그멘테이션 데이터도 포함)
+                    var action = new ActionState
+                    {
+                        Type = ActionState.ActionType.PolygonEdit,
+                        ImageIndex = currentImageIndex,
+                        BeforeState = previousPolygons,
+                        AfterState = new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]),
+                    };
+                    AddToHistory(action);
+                }
+
+                // 편집 모드 종료
+                isEditingPolygon = false;
+                selectedPolygonIndex = -1;
+                editingPolygonPoints.Clear();
             }
-
-            // 편집 모드 종료
-            isEditingPolygon = false;
-            selectedPolygonIndex = -1;
-            editingPolygonPoints.Clear();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"폴리곤 편집 내용을 저장하는 중 오류가 발생했습니다.\n\n오류 메시지: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         /// <summary>
         /// 현재 이미지의 폴리곤 라벨을 업데이트
@@ -2217,38 +2578,76 @@ namespace SAI.SAI.App.Views.Pages
                 // SaveClicked 이벤트 구독 - 저장 시 라벨 업데이트
                 editorForm.SaveClicked += (sender, annotationText) =>
                 {
+                    // 이전 상태 저장
+                    string previousLabel = class1.Text;
+
                     // class1 라벨 업데이트
                     class1.Text = annotationText;
 
                     // 라벨링 단계에 따라 다른 작업 수행
                     if (currentLevel.Text == "Segmentation")
                     {
+                        // 이전 폴리곤 상태 저장
+                        List<Tuple<List<Point>, string>> previousState = null;
+                        if (imagePolygons.ContainsKey(currentImageIndex))
+                        {
+                            previousState = new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]);
+                        }
+
                         // 세그멘테이션 모드에서 폴리곤 라벨 업데이트
                         UpdatePolygonLabel(annotationText);
                         CalculateAndDisplayAccuracy(); // 정확도 계산
+
+                        // 히스토리 추가
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.Polygon,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousState,
+                            AfterState = imagePolygons.ContainsKey(currentImageIndex) ?
+                                new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]) : null
+                        };
+                        AddToHistory(action);
                     }
                     else if (currentLevel.Text == "Classification")
                     {
                         // 현재 이미지의 분류 정보 저장
                         imageClassifications[currentImageIndex] = annotationText;
-                        // 사진 전체에 네모 박스 추가
-                        AddFullImageBoundingBox(annotationText); 
 
-                        imageAccuracies[currentImageIndex] = 100.0; 
+                        // 사진 전체에 네모 박스 추가
+                        AddFullImageBoundingBox(annotationText);
+
+                        imageAccuracies[currentImageIndex] = 100.0;
                         accuracyBtn.Text = "Accuracy: 100%";
 
                         UpdateNavigationButtonState();
-                       
                     }
+
                     else if (currentLevel.Text == "Bounding Box")
                     {
-                        // Bounding Box 라벨 업데이트
+                        // 이전 상태 저장
+                        List<Tuple<Rectangle, string>> previousBoxes = null;
+                        if (imageBoundingBoxes.ContainsKey(currentImageIndex))
+                        {
+                            previousBoxes = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex]);
+                        }
+
                         var existingBox = CurrentBoundingBoxes[0];
                         Rectangle rect = existingBox.Item1;
                         CurrentBoundingBoxes.Clear();
                         CurrentBoundingBoxes.Add(new Tuple<Rectangle, string>(rect, annotationText));
                         pictureBoxImage.Invalidate();
                         CalculateAndDisplayAccuracy(); // 정확도 계산
+
+                        // 히스토리 추가
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.BoundingBox,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousBoxes,
+                            AfterState = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex])
+                        };
+                        AddToHistory(action);
                     }
                 };
 
@@ -2262,40 +2661,64 @@ namespace SAI.SAI.App.Views.Pages
         // 정확도 계산 및 표시 메서드
         private void CalculateAndDisplayAccuracy()
         {
-            if (currentLevel.Text == "Bounding Box")
+            try
             {
-                if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
-                    groundTruthBoundingBoxes.ContainsKey(currentImageIndex))
+                if (currentLevel.Text == "Bounding Box")
                 {
-                    var userBox = imageBoundingBoxes[currentImageIndex][0];
-                    var groundTruthBox = groundTruthBoundingBoxes[currentImageIndex];
+                    if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                        imageBoundingBoxes[currentImageIndex] != null &&
+                        imageBoundingBoxes[currentImageIndex].Count > 0 &&
+                        groundTruthBoundingBoxes.ContainsKey(currentImageIndex))
+                    {
+                        var userBox = imageBoundingBoxes[currentImageIndex][0];
+                        var groundTruthBox = groundTruthBoundingBoxes[currentImageIndex];
 
-                    double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
-                    double accuracy = iou * 100;
+                        double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
+                        double accuracy = iou * 100;
 
-                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
-                    imageAccuracies[currentImageIndex] = accuracy;
+                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                        imageAccuracies[currentImageIndex] = accuracy;
+                    }
+                    else
+                    {
+                        accuracyLabel.Text = "Accuracy: 0%";
+                        imageAccuracies[currentImageIndex] = 0;
+                    }
                 }
+                else if (currentLevel.Text == "Segmentation")
+                {
+                    if (imagePolygons.ContainsKey(currentImageIndex) &&
+                        imagePolygons[currentImageIndex] != null &&
+                        imagePolygons[currentImageIndex].Count > 0 &&
+                        groundTruthPolygons.ContainsKey(currentImageIndex))
+                    {
+                        var userPolygon = imagePolygons[currentImageIndex][0];
+                        var groundTruthPolygon = groundTruthPolygons[currentImageIndex];
+
+                        double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
+                        double accuracy = ioa * 100;
+
+                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                        imageAccuracies[currentImageIndex] = accuracy;
+                    }
+                    else
+                    {
+                        accuracyLabel.Text = "Accuracy: 0%";
+                        imageAccuracies[currentImageIndex] = 0;
+                    }
+                }
+
+                // 네비게이션 버튼 상태 업데이트
+                UpdateNavigationButtonState();
             }
-            else if (currentLevel.Text == "Segmentation")
+            catch (Exception ex)
             {
-                if (imagePolygons.ContainsKey(currentImageIndex) &&
-                    groundTruthPolygons.ContainsKey(currentImageIndex))
-                {
-                    var userPolygon = imagePolygons[currentImageIndex][0];
-                    var groundTruthPolygon = groundTruthPolygons[currentImageIndex];
-
-                    double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
-                    double accuracy = ioa * 100;
-
-                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
-                    imageAccuracies[currentImageIndex] = accuracy;
-                }
+                MessageBox.Show($"정확도 계산 중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                accuracyLabel.Text = "Accuracy: 0%";
+                imageAccuracies[currentImageIndex] = 0;
             }
-
-            // 네비게이션 버튼 상태 업데이트
-            UpdateNavigationButtonState();
         }
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2329,6 +2752,199 @@ namespace SAI.SAI.App.Views.Pages
         private void pictureBoxImage_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolUndo_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void toolRedo_Click(object sender, EventArgs e)
+        {
+            Redo();
+        }
+
+        private void toolDelete_Click(object sender, EventArgs e)
+        {
+            //// 사용자에게 모든 라벨을 지울 것인지 확인
+            //DialogResult result = MessageBox.Show("현재 이미지의 모든 라벨을 지우시겠습니까?",
+            //                                     "라벨 지우기",
+            //                                     MessageBoxButtons.YesNo,
+            //                                     MessageBoxIcon.Question);
+
+            //if (result != DialogResult.Yes)
+            //    return;
+
+            try
+            {
+
+                if (currentLevel.Text == "Bounding Box")
+                {
+                    // 기존 바운딩 박스가 있는지 확인
+                    if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                        imageBoundingBoxes[currentImageIndex].Count > 0)
+                    {
+                        // 이전 상태 저장 (히스토리용)
+                        List<Tuple<Rectangle, string>> previousBoxes =
+                            new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex]);
+
+                        // 바운딩 박스 데이터 삭제
+                        imageBoundingBoxes[currentImageIndex].Clear();
+                        // class1 라벨 지우기
+                        class1.Text = "";
+
+                        // 히스토리에 작업 추가
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.BoundingBox,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousBoxes,
+                            AfterState = null
+                        };
+                        AddToHistory(action);
+
+                        // 정확도 초기화
+                        if (imageAccuracies.ContainsKey(currentImageIndex))
+                            imageAccuracies[currentImageIndex] = 0;
+
+                        accuracyLabel.Text = "Accuracy: 0%";
+
+                        // 화면 갱신
+                        pictureBoxImage.Invalidate();
+
+                        // 네비게이션 버튼 상태 업데이트
+                        UpdateNavigationButtonState();
+                    }
+                }
+                else if (currentLevel.Text == "Segmentation")
+                {
+                    // 기존 폴리곤이 있는지 확인
+                    if (imagePolygons.ContainsKey(currentImageIndex) &&
+                        imagePolygons[currentImageIndex].Count > 0)
+                    {
+                        // 이전 상태 저장 (히스토리용)
+                        List<Tuple<List<Point>, string>> previousPolygons =
+                            new List<Tuple<List<Point>, string>>(imagePolygons[currentImageIndex]);
+
+                        // 폴리곤 데이터 삭제
+                        imagePolygons[currentImageIndex].Clear();
+
+                        // 편집 모드일 경우 편집 상태 초기화
+                        if (isEditingPolygon)
+                        {
+                            isEditingPolygon = false;
+                            selectedPolygonIndex = -1;
+                            editingPolygonPoints.Clear();
+                        }
+
+                        // 폴리곤 그리기 중이었다면 초기화
+                        polygonPoints.Clear();
+
+                        // class1 라벨 지우기
+                        class1.Text = "";
+
+                        // 히스토리에 작업 추가
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.Polygon,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousPolygons,
+                            AfterState = null
+                        };
+                        AddToHistory(action);
+
+                        // 정확도 초기화
+                        if (imageAccuracies.ContainsKey(currentImageIndex))
+                            imageAccuracies[currentImageIndex] = 0;
+
+                        accuracyLabel.Text = "Accuracy: 0%";
+
+                        // 화면 갱신
+                        pictureBoxImage.Invalidate();
+
+                        // 네비게이션 버튼 상태 업데이트
+                        UpdateNavigationButtonState();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"라벨을 지우는 중 오류가 발생했습니다: {ex.Message}",
+                               "오류",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolZoom_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void currentLevel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void currentLevel_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mainpanel_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void toolVisible_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 바운딩 박스 또는 세그멘테이션 가시성 전환
+                if (currentLevel.Text == "Bounding Box")
+                {
+                    // 바운딩 박스 가시성 토글
+                    isBoundingBoxVisible = !isBoundingBoxVisible;
+                    // 시각적 피드백 제공
+                    toolVisible.BackColor = isBoundingBoxVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
+                }
+                else if (currentLevel.Text == "Segmentation")
+                {
+                    // 세그멘테이션 가시성 토글
+                    isSegmentationVisible = !isSegmentationVisible;
+                    // 시각적 피드백 제공
+                    toolVisible.BackColor = isSegmentationVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
+                }
+                else if (currentLevel.Text == "Classification")
+                {
+                    // Classification 모드에서는 항상 라벨이 보이도록 설정
+                    isBoundingBoxVisible = true;
+                    isSegmentationVisible = true;
+
+                    // 버튼을 활성화된 상태로 유지
+                    toolVisible.BackColor = Color.Transparent;
+                    toolVisible.Text = "라벨 숨기기";
+
+                    // 메시지 표시 (선택 사항)
+                    MessageBox.Show("분류 모드에서는 라벨이 항상 표시됩니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // 이미지 갱신
+                pictureBoxImage.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"라벨 가시성을 변경하는 중 오류가 발생했습니다: {ex.Message}",
+                               "오류",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+            }
         }
     }
 }

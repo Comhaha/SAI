@@ -12,25 +12,39 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using System.Drawing;
 
-
 namespace SAI
 {
+
     public partial class MainForm : Form, IMainView
     {
-		private MainPresenter presenter;
-
-		public MainForm()
+        private float zoomFactor = 1.0f;
+        private MainPresenter presenter;
+        public MainForm()
         {
             InitializeComponent();
-			presenter = new MainPresenter(this);
+            presenter = new MainPresenter(this);
 
-			Size = new Size(1280, 720);
-			MaximizeBox = false;
-			MaximumSize = new Size(1280, 720);
-			MinimumSize = new Size(1280, 720);
-		}
+            Size = new Size(1280, 720);
+            MinimumSize = new Size(1280, 720);
 
-		private void MainForm_Load(object sender, EventArgs e)
+            this.MouseWheel += (s, e) => { MainForm_MouseWheel(s, e); };
+        }
+
+        private void MainForm_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Control)
+            {
+                float delta = e.Delta > 0 ? 0.1f : -0.1f;
+                zoomFactor += delta;
+
+                // 최소/최대 확대 비율 제한
+                zoomFactor = Math.Max(0.2f, Math.Min(zoomFactor, 3.0f));
+
+                this.Scale(new SizeF(zoomFactor, zoomFactor));
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
 		{
 			// 초기 페이지인 Blockly를 불러온다.
 			presenter.Initialize();
