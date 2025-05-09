@@ -32,10 +32,10 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지별 라벨링 데이터 저장
         private Dictionary<int, string> imageClassifications = new Dictionary<int, string>();
 
-        // 이미지별 바운딩 박스 저장 (Bounding Box)
+        // 이미지별 바운딩 박스 저장
         private Dictionary<int, List<Tuple<Rectangle, string>>> imageBoundingBoxes = new Dictionary<int, List<Tuple<Rectangle, string>>>();
 
-        // 이미지별 세그멘테이션 데이터 저장 (Segmentation) - 실제 구현에 따라 자료 구조 변경 가능
+        // 이미지별 세그멘테이션 데이터 저장
         private Dictionary<int, object> imageSegmentations = new Dictionary<int, object>();
 
         // 폴리곤 그리기 관련 변수
@@ -60,7 +60,7 @@ namespace SAI.SAI.App.Views.Pages
         // 정확도 표시용 버튼
         private Guna.UI2.WinForms.Guna2Button accuracyBtn;
 
-        // 이미지별 정확도 저장을 위한 변수 추가
+        // 이미지별 정확도 저장을 위한 변수 
         private Dictionary<int, double> imageAccuracies = new Dictionary<int, double>();
 
         // 이미지 인덱스별 히스토리 스택 관리
@@ -72,10 +72,14 @@ namespace SAI.SAI.App.Views.Pages
         private bool isBoundingBoxVisible = true;
         private bool isSegmentationVisible = true;
 
-        // 클래스 상단의 멤버 변수 영역에 추가
+        // 이미지 통과 여부 저장을 위한 변수
         private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
 
+        // 줌 기능을 위한 변수
+        private float zoomFactor = 1.0f;
+        private Size originalImageSize;
 
+        
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,12 +98,13 @@ namespace SAI.SAI.App.Views.Pages
             InitializeGroundTruthData(); // 정답 데이터 초기화
             InitializeProgressIndicators(); // 진행 상태 표시기 초기화
             RegisterAccuracyButton(); // 정확도 계산 버튼 등록
+            SetupZoomFunctionality(); // 줌 기능 설정
 
             // 이벤트 핸들러 등록
             RegisterControlEvents();
             RegisterMouseEvents();
             RegisterToolEvents();
-
+            
             // 초기 라운드 설정
             SetRoundedRegion();
 
@@ -108,6 +113,8 @@ namespace SAI.SAI.App.Views.Pages
 
             // 다음/이전 버튼은 기본 비활성화
             UpdateNavigationButtonState();
+            this.guna2CircleButton10.CheckedState.FillColor = Color.Transparent;
+            this.guna2CircleButton10.PressedColor = Color.Transparent;
         }
 
         // 정답 데이터 초기화 메서드 (변경 필요)
@@ -119,8 +126,7 @@ namespace SAI.SAI.App.Views.Pages
             groundTruthBoundingBoxes[4] = ParseBoundingBoxFromJson(
                 "{\"label\":\"cat\",\"x\":198,\"y\":109,\"width\":222,\"height\":364}");
             groundTruthBoundingBoxes[5] = ParseBoundingBoxFromJson(
-                "{\"label\":\"dog\",\"x\":157,\"y\":31,\"width\":187,\"height\":213}");
-
+                "{\"label\":\"dog\",\"x\":198,\"y\":37,\"width\":237,\"height\":275}");
             // 세그멘테이션 정답 데이터(폴리곤)
             groundTruthPolygons[6] = ParsePolygonFromJson(
                 "{\"label\":\"cat\",\"points\":[{\"x\":89,\"y\":98},{\"x\":124,\"y\":146},{\"x\":149,\"y\":175},{\"x\":154,\"y\":212},{\"x\":159,\"y\":235},{\"x\":145,\"y\":310},{\"x\":161,\"y\":333},{\"x\":190,\"y\":344},{\"x\":191,\"y\":373},{\"x\":191,\"y\":400},{\"x\":204,\"y\":413},{\"x\":311,\"y\":414},{\"x\":447,\"y\":408},{\"x\":471,\"y\":379},{\"x\":585,\"y\":370},{\"x\":625,\"y\":367},{\"x\":637,\"y\":336},{\"x\":634,\"y\":314},{\"x\":453,\"y\":270},{\"x\":425,\"y\":245},{\"x\":343,\"y\":226},{\"x\":334,\"y\":201},{\"x\":340,\"y\":157},{\"x\":326,\"y\":94},{\"x\":314,\"y\":28},{\"x\":291,\"y\":9},{\"x\":270,\"y\":44},{\"x\":254,\"y\":72},{\"x\":218,\"y\":77},{\"x\":182,\"y\":104}]}");
@@ -175,8 +181,14 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void SetupInitialConfig()
         {
-            // 이미지 페인트 이벤트 추가 (바운딩 박스 그리기)
+            // 이미지 페인트 이벤트
             pictureBoxImage.Paint += PictureBoxImage_Paint;
+
+            // 줌 관련 초기화
+            originalImageSize = pictureBoxImage.Size;
+            ZoomInBtn.Click += ZoomInBtn_Click;
+            ZoomOutBtn.Click += ZoomOutBtn_Click;
+            this.MouseWheel += UcLabelGuide_MouseWheel;
         }
 
         /// <summary>
@@ -217,7 +229,7 @@ namespace SAI.SAI.App.Views.Pages
             if (images.Count > 0)
             {
                 currentImageIndex = 0;
-                pictureBoxImage.Image = images[currentImageIndex]; // 첫 번째 이미지 표시
+                pictureBoxImage.BackgroundImage = images[currentImageIndex]; // 첫 번째 이미지 표시
                 UpdateShowLevel(); // showLevel 업데이트
                 UpdateCurrentLevel(); // currentLevel 업데이트
                 LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
@@ -233,8 +245,8 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void RegisterControlEvents()
         {
-            // class1 라벨 클릭 시 주석 편집기 열기
-            class1.Click += (s, e) => OpenAnnotationEditor(class1.Text);
+            // class2 라벨 클릭 시 주석 편집기 열기
+            class2.Click += (s, e) => OpenAnnotationEditor(class2.Text);
 
             // 이미지 클릭 이벤트 추가
             pictureBoxImage.Click += PictureBoxImage_Click;
@@ -454,6 +466,11 @@ namespace SAI.SAI.App.Views.Pages
             // 첫 번째 이미지일 경우 이전 버튼 비활성
             preBtn.Enabled = currentImageIndex > 0;
 
+            if (currentImageIndex == 0)
+            {
+                preBtn.Enabled = false;
+            }
+
             // 버튼 시각적 업데이트
             nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
             preBtn.FillColor = preBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
@@ -521,6 +538,124 @@ namespace SAI.SAI.App.Views.Pages
                 default:
                     return null;
             }
+        }
+
+        private void SetupZoomFunctionality()
+        {
+            // 원본 이미지 크기 저장
+            originalImageSize = pictureBoxImage.Size;
+
+            // 줌 버튼 이벤트 연결
+            ZoomInBtn.Click += ZoomInBtn_Click;
+            ZoomOutBtn.Click += ZoomOutBtn_Click;
+
+            // 마우스 휠 이벤트 등록
+            this.MouseWheel += UcLabelGuide_MouseWheel;
+
+            // ZoomCurrent 초기값 설정
+            UpdateZoomCurrentLabel();
+        }
+
+        // 마우스 휠 이벤트 핸들러
+        private void UcLabelGuide_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Control)
+            {
+                // 확대/축소 계수 조정 (휠을 위로 올리면 확대, 아래로 내리면 축소)
+                float delta = e.Delta > 0 ? 0.1f : -0.1f;
+
+                // 현재 마우스 위치를 기준으로 줌 적용
+                Point mousePos = pictureBoxImage.PointToClient(Cursor.Position);
+                ApplyZoom(delta, mousePos);
+            }
+        }
+
+        // 줌 적용 메서드
+        private void ApplyZoom(float delta, Point? mousePosition = null)
+        {
+            // 이전 줌 계수 저장
+            float prevZoom = zoomFactor;
+
+            // 줌 계수 업데이트
+            zoomFactor += delta;
+
+            // 최소/최대 확대 비율 제한
+            zoomFactor = Math.Max(0.1f, Math.Min(zoomFactor, 5.0f));
+
+            // 크기 조정 전 이미지 중심점 계산
+            Point? zoomCenter = mousePosition;
+            if (!zoomCenter.HasValue)
+            {
+                // 마우스 위치가 없으면 이미지 중앙 사용
+                zoomCenter = new Point(
+                    pictureBoxImage.Width / 2,
+                    pictureBoxImage.Height / 2
+                );
+            }
+
+            // 마우스 위치가 이미지 내에서 어디에 있는지 상대적인 위치 계산 (0.0 ~ 1.0)
+            float relativeX = (zoomCenter.Value.X - pictureBoxImage.Left) / (float)pictureBoxImage.Width;
+            float relativeY = (zoomCenter.Value.Y - pictureBoxImage.Top) / (float)pictureBoxImage.Height;
+
+            // 새 크기 계산
+            int newWidth = (int)(originalImageSize.Width * zoomFactor);
+            int newHeight = (int)(originalImageSize.Height * zoomFactor);
+
+            // 이미지 크기 업데이트
+            pictureBoxImage.Size = new Size(newWidth, newHeight);
+
+            // 마우스 포인터 위치가 같은 상대적 위치를 유지하도록 이미지 위치 조정
+            if (delta != 0)
+            {
+                pictureBoxImage.Left = (int)(zoomCenter.Value.X - (newWidth * relativeX));
+                pictureBoxImage.Top = (int)(zoomCenter.Value.Y - (newHeight * relativeY));
+            }
+
+            // ZoomCurrent 라벨 업데이트
+            UpdateZoomCurrentLabel();
+
+            // 화면 갱신
+            pictureBoxImage.Invalidate();
+        }
+
+        // ZoomCurrent 라벨 업데이트 메서드
+        private void UpdateZoomCurrentLabel()
+        {
+            // 백분율로 표시 (100% = 1.0)
+            int zoomPercentage = (int)(zoomFactor * 100);
+            ZoomCurrent.Text = $"{zoomPercentage}%";
+        }
+
+        /// <summary>
+        /// 줌 상태를 초기화하는 메서드
+        /// </summary>
+        private void ResetZoom()
+        {
+            // 줌 팩터를 기본값(1.0)으로 재설정
+            zoomFactor = 1.0f;
+
+            // 이미지 크기를 원래 크기로 복원
+            pictureBoxImage.Size = originalImageSize;
+
+            // 이미지 위치 중앙으로 조정
+            CenterImage();
+
+            // ZoomCurrent 라벨 업데이트
+            UpdateZoomCurrentLabel();
+        }
+
+        /// <summary>
+        /// 이미지를 컨테이너 중앙에 배치하는 메서드
+        /// </summary>
+        private void CenterImage()
+        {
+            // 이미지를 컨테이너의 중앙에 배치
+            int x = (imageContainer.Width - pictureBoxImage.Width) / 2;
+            int y = (imageContainer.Height - pictureBoxImage.Height) / 2;
+
+            // 위치가 음수가 되지 않도록 보정
+            pictureBoxImage.Left = Math.Max(0, x);
+            pictureBoxImage.Top = Math.Max(0, y);
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -865,7 +1000,9 @@ namespace SAI.SAI.App.Views.Pages
             {
                 currentLevel.Text = "Classification"; // 이미지 1,2,3
                 toolBox.Visible = false; // Classification 단계에서는 도구창 숨김
-                accuracyLabel.Visible = false; // 정확도 숨김
+                accuracyPanel.Visible = false; // 정확도 패널 숨김
+                //accuracyLabel.Visible = false; // 정확도 숨김
+                levelColor.FillColor = Color.FromArgb(216, 121, 89);
 
                 // Classification 단계에서는 손 도구를 기본으로 활성화
                 isHandToolActive = true;
@@ -887,7 +1024,9 @@ namespace SAI.SAI.App.Views.Pages
             {
                 currentLevel.Text = "Bounding Box"; // 이미지 4,5,6
                 toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
-                accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+                //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+                accuracyPanel.Visible = true; // 정확도 패널 숨김
+                levelColor.FillColor = Color.FromArgb(89, 139,246); ; // Bounding Box 단계에서는 레벨 색상 파란색으로 설정
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
@@ -901,7 +1040,9 @@ namespace SAI.SAI.App.Views.Pages
             {
                 currentLevel.Text = "Segmentation"; // 이미지 7,8,9
                 toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
-                accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+                //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
+                accuracyPanel.Visible = true; // 정확도 패널 숨김
+                levelColor.FillColor = Color.FromArgb(83, 163, 69); // Segmentation 단계에서는 레벨 색상 초록색으로 설정
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
@@ -937,15 +1078,18 @@ namespace SAI.SAI.App.Views.Pages
         {
             if (images.Count > 0)
             {
-                //// 이동 전 현재 이미지의 통과 상태 확인 및 업데이트
-                //if (imageAccuracies.ContainsKey(currentImageIndex) && imageAccuracies[currentImageIndex] >= 50)
-                //{
-                //    imagePassedStatus[currentImageIndex] = true;
-                //    UpdateProgressIndicator(currentImageIndex, true);
-                //}
+                if (currentImageIndex == 8)
+                {
+                    nextBtn.Enabled = false; // 마지막 이미지일 경우 다음 버튼 비활성화
+                    nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
+                    return;
+                }
+                preBtn.Enabled = true;
+                preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
 
-                currentImageIndex = (currentImageIndex + 1) % images.Count; // 다음 이미지로 이동
-                pictureBoxImage.Image = images[currentImageIndex];
+                currentImageIndex = currentImageIndex + 1; // 다음 이미지로 이동
+                pictureBoxImage.BackgroundImage = images[currentImageIndex];
+                ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
                 ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
                 UpdateCurrentLevel(); // currentLevel 업데이트
@@ -965,7 +1109,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 이전에 통과한 이미지인 경우 다음 버튼 활성화
                 if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
                 {
-                    nextBtn.Enabled = true;
+                    //nextBtn.Enabled = true;
                     UpdateProgressIndicator(currentImageIndex, true);
                 }
                 else
@@ -975,6 +1119,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
+
         /// <summary>
         /// 이전 이미지로 이동
         /// </summary>
@@ -982,15 +1127,18 @@ namespace SAI.SAI.App.Views.Pages
         {
             if (images.Count > 0)
             {
-                //// 이동 전 현재 이미지의 통과 상태 확인 및 업데이트
-                //if (imageAccuracies.ContainsKey(currentImageIndex) && imageAccuracies[currentImageIndex] >= 50)
-                //{
-                //    imagePassedStatus[currentImageIndex] = true;
-                //    UpdateProgressIndicator(currentImageIndex, true);
-                //}
+                if (currentImageIndex == 0)
+                {
+                    preBtn.Enabled = false; // 첫 번째 이미지일 경우 이전 버튼 비활성화
+                    preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
+                    return;
+                }
+                nextBtn.Enabled = true;
+                nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
 
-                currentImageIndex = (currentImageIndex - 1 + images.Count) % images.Count; // 이전 이미지로 이동
-                pictureBoxImage.Image = images[currentImageIndex];
+                currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
+                pictureBoxImage.BackgroundImage = images[currentImageIndex];
+                ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
                 ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
                 UpdateCurrentLevel(); // currentLevel 업데이트
@@ -1009,7 +1157,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 이전에 통과한 이미지인 경우 다음 버튼 활성화
                 if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
                 {
-                    nextBtn.Enabled = true;
+                    //nextBtn.Enabled = true;
                     UpdateProgressIndicator(currentImageIndex, true);
                 }
                 else
@@ -1019,6 +1167,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
+        
 
         /// <summary>
         /// 현재 이미지에 대한 라벨 정보를 불러옴
@@ -1026,24 +1175,24 @@ namespace SAI.SAI.App.Views.Pages
         private void LoadImageLabels()
         {
             // 기본값은 빈 문자열로 설정
-            class1.Text = "";
+            class2.Text = "";
 
             // Classification 라벨 불러오기
             if (imageClassifications.ContainsKey(currentImageIndex))
             {
-                class1.Text = imageClassifications[currentImageIndex];
+                class2.Text = imageClassifications[currentImageIndex];
             }
             // Bounding Box 라벨 불러오기
             else if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
                      imageBoundingBoxes[currentImageIndex].Count > 0)
             {
-                class1.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
+                class2.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
             }
             // Segmentation 라벨 불러오기 (구현되어 있다면)
             else if (imagePolygons.ContainsKey(currentImageIndex) &&
                      imagePolygons[currentImageIndex].Count > 0)
             {
-                class1.Text = imagePolygons[currentImageIndex][0].Item2;
+                class2.Text = imagePolygons[currentImageIndex][0].Item2;
             }
 
 
@@ -1337,7 +1486,7 @@ namespace SAI.SAI.App.Views.Pages
             if (currentLevel.Text == "Classification")
             {
                 // Classification 단계에서는 이미지 클릭으로 주석 편집기 열기
-                OpenAnnotationEditor(class1.Text);
+                OpenAnnotationEditor(class2.Text);
             }
             else if ((currentLevel.Text == "Bounding Box" || currentLevel.Text == "Segmentation") &&
                       !isSquareToolActive) // 바운딩 박스 그리기 도구가 활성화되지 않았을 때만
@@ -1424,8 +1573,8 @@ namespace SAI.SAI.App.Views.Pages
                 foreach (var box in imageBoundingBoxes[currentImageIndex])
                 {
                     // 이미지와 PictureBox 간의 비율 계산
-                    float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
-                    float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+                    float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.BackgroundImage.Width;
+                    float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.BackgroundImage.Height;
 
                     // 좌표 변환
                     Rectangle displayRect = new Rectangle(
@@ -1729,8 +1878,8 @@ namespace SAI.SAI.App.Views.Pages
         private Rectangle ConvertToImageCoordinates(Rectangle displayRect)
         {
             // 이미지와 PictureBox 간의 비율 계산
-            float scaleX = pictureBoxImage.Image.Width / (float)pictureBoxImage.ClientSize.Width;
-            float scaleY = pictureBoxImage.Image.Height / (float)pictureBoxImage.ClientSize.Height;
+            float scaleX = pictureBoxImage.BackgroundImage.Width / (float)pictureBoxImage.ClientSize.Width;
+            float scaleY = pictureBoxImage.BackgroundImage.Height / (float)pictureBoxImage.ClientSize.Height;
 
             // 화면 좌표를 이미지 좌표로 변환
             return new Rectangle(
@@ -1747,7 +1896,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void OpenAnnotationEditorForBoundingBox(Rectangle imageRect)
         {
-            using (var editorForm = new AnnotationEditorForm(class1.Text))
+            using (var editorForm = new AnnotationEditorForm(class2.Text))
             {
                 if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                 {
@@ -1761,8 +1910,8 @@ namespace SAI.SAI.App.Views.Pages
                         previousBoxes = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex]);
                     }
 
-                    // class1 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
-                    class1.Text = annotationText;
+                    // class2 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
+                    class2.Text = annotationText;
 
                     // 기존 바운딩 박스 모두 제거 (라벨링은 항상 하나만)
                     CurrentBoundingBoxes.Clear();
@@ -2230,8 +2379,8 @@ namespace SAI.SAI.App.Views.Pages
                 return false;
 
             // 이미지와 PictureBox 간의 비율 계산
-            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
-            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.BackgroundImage.Width;
+            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.BackgroundImage.Height;
 
             foreach (var box in imageBoundingBoxes[currentImageIndex])
             {
@@ -2259,13 +2408,13 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void AddFullImageBoundingBox(string label)
         {
-            if (pictureBoxImage.Image != null)
+            if (pictureBoxImage.BackgroundImage != null)
             {
                 // 원본 이미지 크기에 맞는 직사각형 생성
                 Rectangle fullImageRect = new Rectangle(
                     0, 0,
-                    pictureBoxImage.Image.Width,
-                    pictureBoxImage.Image.Height
+                    pictureBoxImage.BackgroundImage.Width,
+                    pictureBoxImage.BackgroundImage.Height
                 );
 
                 // 현재 이미지의 바운딩 박스가 있는지 확인하고, 있으면 제거 (라벨링은 하나만 허용)
@@ -2294,12 +2443,12 @@ namespace SAI.SAI.App.Views.Pages
         {
             try
             {
-                using (var editorForm = new AnnotationEditorForm(class1.Text))
+                using (var editorForm = new AnnotationEditorForm(class2.Text))
                 {
                     if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                     {
                         string annotationText = editorForm.AnnotationText;
-                        string previousLabel = class1.Text;
+                        string previousLabel = class2.Text;
 
                         // 이전 폴리곤 상태 저장
                         List<Tuple<List<Point>, string>> previousPolygons = new List<Tuple<List<Point>, string>>();
@@ -2312,7 +2461,7 @@ namespace SAI.SAI.App.Views.Pages
                         List<Point> imagePoints = ConvertPointsToImageCoordinates(polygonPoints);
                         List<Point> savedPolygonPoints = new List<Point>(polygonPoints);
 
-                        class1.Text = annotationText;
+                        class2.Text = annotationText;
 
                         // 기존 폴리곤 데이터 삭제
                         if (imagePolygons.ContainsKey(currentImageIndex))
@@ -2439,8 +2588,8 @@ namespace SAI.SAI.App.Views.Pages
         private List<Point> ConvertPointsToImageCoordinates(List<Point> displayPoints)
         {
             // 이미지와 PictureBox 간의 비율 계산
-            float scaleX = pictureBoxImage.Image.Width / (float)pictureBoxImage.ClientSize.Width;
-            float scaleY = pictureBoxImage.Image.Height / (float)pictureBoxImage.ClientSize.Height;
+            float scaleX = pictureBoxImage.BackgroundImage.Width / (float)pictureBoxImage.ClientSize.Width;
+            float scaleY = pictureBoxImage.BackgroundImage.Height / (float)pictureBoxImage.ClientSize.Height;
 
             // 화면 좌표를 이미지 좌표로 변환
             List<Point> imagePoints = new List<Point>();
@@ -2461,8 +2610,8 @@ namespace SAI.SAI.App.Views.Pages
         private List<Point> ConvertPointsToDisplayCoordinates(List<Point> imagePoints)
         {
             // 이미지와 PictureBox 간의 비율 계산
-            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.Image.Width;
-            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.Image.Height;
+            float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.BackgroundImage.Width;
+            float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.BackgroundImage.Height;
 
             // 이미지 좌표를 화면 좌표로 변환
             List<Point> displayPoints = new List<Point>();
@@ -2579,10 +2728,10 @@ namespace SAI.SAI.App.Views.Pages
                 editorForm.SaveClicked += (sender, annotationText) =>
                 {
                     // 이전 상태 저장
-                    string previousLabel = class1.Text;
+                    string previousLabel = class2.Text;
 
-                    // class1 라벨 업데이트
-                    class1.Text = annotationText;
+                    // class2 라벨 업데이트
+                    class2.Text = annotationText;
 
                     // 라벨링 단계에 따라 다른 작업 수행
                     if (currentLevel.Text == "Segmentation")
@@ -2790,8 +2939,8 @@ namespace SAI.SAI.App.Views.Pages
 
                         // 바운딩 박스 데이터 삭제
                         imageBoundingBoxes[currentImageIndex].Clear();
-                        // class1 라벨 지우기
-                        class1.Text = "";
+                        // class2 라벨 지우기
+                        class2.Text = "";
 
                         // 히스토리에 작업 추가
                         var action = new ActionState
@@ -2840,8 +2989,8 @@ namespace SAI.SAI.App.Views.Pages
                         // 폴리곤 그리기 중이었다면 초기화
                         polygonPoints.Clear();
 
-                        // class1 라벨 지우기
-                        class1.Text = "";
+                        // class2 라벨 지우기
+                        class2.Text = "";
 
                         // 히스토리에 작업 추가
                         var action = new ActionState
@@ -2946,5 +3095,45 @@ namespace SAI.SAI.App.Views.Pages
                                MessageBoxIcon.Error);
             }
         }
+
+        private void guna2Panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2HtmlLabel2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void levelPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void class2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ZoomOutBtn_Click(object sender, EventArgs e)
+        {
+            ApplyZoom(-0.1f);
+        }
+
+        private void ZoomInBtn_Click(object sender, EventArgs e)
+        {
+            ApplyZoom(0.1f);
+        }
+
+        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accuracyPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
     }
 }

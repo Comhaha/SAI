@@ -22,7 +22,6 @@ namespace SAI
 
     public partial class MainForm : Form, IMainView
     {
-        private float zoomFactor = 1.0f;
         private MainPresenter presenter;
         public MainForm()
         {
@@ -31,22 +30,6 @@ namespace SAI
 
             Size = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
-
-            this.MouseWheel += (s, e) => { MainForm_MouseWheel(s, e); };
-        }
-
-        private void MainForm_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (Control.ModifierKeys == Keys.Control)
-            {
-                float delta = e.Delta > 0 ? 0.1f : -0.1f;
-                zoomFactor += delta;
-
-                // 최소/최대 확대 비율 제한
-                zoomFactor = Math.Max(0.2f, Math.Min(zoomFactor, 3.0f));
-
-                this.Scale(new SizeF(zoomFactor, zoomFactor));
-            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
