@@ -147,8 +147,29 @@ Blockly.Python.forBlock['machineLearning'] = function (block) {
 // 5. 결과 확인
 Blockly.defineBlocksWithJsonArray([
     {
-        "type": "resultGraph",
-        "message0": "학습 결과 그래프 출력하기\n이미지: %1",
+        "type": "resultGraph", // 블록 타입
+        "message0": "학습 결과 그래프 출력하기", // 블록에 표시되는 문구
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 250,
+        "tooltip": "학습 결과 그래프를 출력합니다.",
+        "helpUrl": ""
+    }
+]);
+
+Blockly.Python.forBlock['resultGraph'] = function (block) {
+    return (
+        `# 학습 결과 그래프 출력\n` +
+        `from IPython.display import Image, display\n\n` +
+        `display(Image(filename = 'runs/detect/train/results.png'))\n\n\n`
+    );
+};
+
+// 6. 이미지 경로 지정
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "imgPath",
+        "message0": "이미지 불러오기\n이미지: %1",
         "args0": [
             {
                 "type": "field_filepicker",
@@ -158,17 +179,64 @@ Blockly.defineBlocksWithJsonArray([
         ],
         "previousStatement": null,
         "nextStatement": null,
-        "colour": 250,
-        "tooltip": "학습 결과 지표들을 그래프로 보여줍니다.",
+        "colour": 300,
+        "tooltip": "추론을 위한 이미지 한 장을 불러옵니다.",
         "helpUrl": ""
     }
 ]);
 
-Blockly.Python.forBlock['resultGraph'] = function (block) {
+Blockly.Python.forBlock['imgPath'] = function (block) {
     const filePath = block.getFieldValue('FILE_PATH');
     return (
-        `# 학습 결과 그래프 출력하기\n` +
-        `from IPython.display import Image, display\n\n` +
-        `display(Image(filename='${filePath}'))\n\n\n`
+        `img_path ='${filePath}'))\n\n\n`
+    );
+};
+
+// 7. 추론 실행
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "modelInference", // 블록 타입
+        "message0": "추론 실행하기", // 블록에 표시되는 문구
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 350,
+        "tooltip": "학습한 모델의 추론을 실행합니다.\n",
+        "helpUrl": ""
+    }
+]);
+
+Blockly.Python.forBlock['modelInference'] = function (block) {
+    return (
+        `# 추론 실행\n` +
+        `model = YOLO("/home/.../best.pt")\n` +
+        `results = model.predict(source=img_path, save=False, show=False, conf=0.25)\n\n\n`
+    );
+};
+
+// 8. 결과 시각화
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "visualizeResult", // 블록 타입
+        "message0": "결과 시각화하기", // 블록에 표시되는 문구
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 120,
+        "tooltip": "학습한 결과를 시각화합니다.\n",
+        "helpUrl": ""
+    }
+]);
+
+Blockly.Python.forBlock['visualizeResult'] = function (block) {
+    return (
+        `# 결과 시각화\n` +
+        `import cv2\n` +
+        `import matplotlib.pyplot as plt\n\n` +
+        `# bounding box 그려진 이미지 추출 (BGR)\n` +
+        `result_img = results[0].plot()\n` +
+        `result_img = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)   # matplotlib용 RGB로 변환\n\n` +
+        `plt.imshow(result_img) # 출력\n` +
+        `plt.axis("off")\n` +
+        `plt.title("YOLOv8 Prediction")\n` +
+        `plt.show()\n\n\n`
     );
 };

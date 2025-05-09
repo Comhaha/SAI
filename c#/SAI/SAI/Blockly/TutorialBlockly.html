@@ -24,6 +24,9 @@
         <block type="loadDataset"></block>
         <block type="machineLearning"></block>
         <block type="resultGraph"></block>
+        <block type="imgPath"></block>
+        <block type="modelInference"></block>
+        <block type="visualizeResult"></block>
     </xml>
 
     <div id="customAlert" style="
@@ -49,6 +52,8 @@
             //toolbox: document.getElementById('toolbox')
         });
 
+        Blockly.Tooltip.HOVER_MS = 100; // 툴팁 지연 시간 설정
+
         function showCustomAlert(text) {
             document.getElementById('customAlertText').innerText = text;
             document.getElementById('customAlert').style.display = 'block';
@@ -65,11 +70,11 @@
         }
 
 		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
-		function sendCode(code) {
-			window.chrome.webview.postMessage(JSON.stringify({
-				type: "code",
+        function sendCode(code) {
+			window.chrome.webview.postMessage({
+				type: "blockCode",
 				code: code
-			}));
+			});
 		}
 
 		// 블록 생성 시 Python 코드 생성
@@ -101,10 +106,10 @@
 			showEditor_() {
 				// C#에게 파일 열라고 요청
 				const blockId = this.sourceBlock_.id;
-				window.chrome.webview.postMessage(JSON.stringify({
+				window.chrome.webview.postMessage({
 					type: "openFile",
 					blockId: blockId
-				}));
+				});
             }
 
 			// C#에서 경로가 돌아오면 이 값을 필드에 설정
@@ -117,8 +122,7 @@
 		// JS가 메시지 수신 (C# → JS)
 		window.addEventListener("message", (event) => {
 			const { blockId, filePath } = event.data;
-			const block = Blockly.getMainWorkspace().getBlockById(blockId);
-
+            const block = Blockly.getMainWorkspace().getBlockById(blockId);
 			if (!block) return;
 
 			const fields = block.inputList.flatMap(input => input.fieldRow);

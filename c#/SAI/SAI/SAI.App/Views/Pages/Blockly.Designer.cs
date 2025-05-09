@@ -37,6 +37,9 @@
 			this.btnStart = new Guna.UI2.WinForms.Guna2Button();
 			this.btnResultGraph = new Guna.UI2.WinForms.Guna2Button();
 			this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+			this.btnImgPath = new Guna.UI2.WinForms.Guna2Button();
+			this.btnModelInference = new Guna.UI2.WinForms.Guna2Button();
+			this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
 			((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -167,10 +170,55 @@
 			this.webView21.TabStop = false;
 			this.webView21.ZoomFactor = 1D;
 			// 
+			// btnImgPath
+			// 
+			this.btnImgPath.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnImgPath.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnImgPath.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnImgPath.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnImgPath.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnImgPath.ForeColor = System.Drawing.Color.White;
+			this.btnImgPath.Location = new System.Drawing.Point(77, 282);
+			this.btnImgPath.Name = "btnImgPath";
+			this.btnImgPath.Size = new System.Drawing.Size(212, 38);
+			this.btnImgPath.TabIndex = 10;
+			this.btnImgPath.Text = "이미지 경로 설정하기";
+			// 
+			// btnModelInference
+			// 
+			this.btnModelInference.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnModelInference.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnModelInference.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnModelInference.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnModelInference.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnModelInference.ForeColor = System.Drawing.Color.White;
+			this.btnModelInference.Location = new System.Drawing.Point(77, 326);
+			this.btnModelInference.Name = "btnModelInference";
+			this.btnModelInference.Size = new System.Drawing.Size(212, 38);
+			this.btnModelInference.TabIndex = 11;
+			this.btnModelInference.Text = "추론 실행하기";
+			// 
+			// btnVisualizeResult
+			// 
+			this.btnVisualizeResult.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnVisualizeResult.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnVisualizeResult.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnVisualizeResult.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnVisualizeResult.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnVisualizeResult.ForeColor = System.Drawing.Color.White;
+			this.btnVisualizeResult.Location = new System.Drawing.Point(77, 371);
+			this.btnVisualizeResult.Name = "btnVisualizeResult";
+			this.btnVisualizeResult.Size = new System.Drawing.Size(212, 38);
+			this.btnVisualizeResult.TabIndex = 12;
+			this.btnVisualizeResult.Text = "결과 시각화하기";
+			// 
 			// Blockly
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+			this.Controls.Add(this.btnVisualizeResult);
+			this.Controls.Add(this.btnModelInference);
+			this.Controls.Add(this.btnImgPath);
 			this.Controls.Add(this.webView21);
 			this.Controls.Add(this.btnResultGraph);
 			this.Controls.Add(this.btnStart);
@@ -198,5 +246,8 @@
 		private Guna.UI2.WinForms.Guna2Button btnStart;
 		private Guna.UI2.WinForms.Guna2Button btnResultGraph;
 		private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+		private Guna.UI2.WinForms.Guna2Button btnImgPath;
+		private Guna.UI2.WinForms.Guna2Button btnModelInference;
+		private Guna.UI2.WinForms.Guna2Button btnVisualizeResult;
 	}
 }

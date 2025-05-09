@@ -48,6 +48,9 @@ namespace SAI.SAI.App.Views.Pages
 			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 			btnMachineLearning.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
 			btnResultGraph.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+			btnImgPath.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+			btnModelInference.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+			btnVisualizeResult.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 		}
 
 		private async void InitializeWebView2()
@@ -63,26 +66,53 @@ namespace SAI.SAI.App.Views.Pages
 
 			webView21.WebMessageReceived += async (s, e) =>
 			{
-				string msg = e.TryGetWebMessageAsString();
-
-				if (msg == "openFile")
+				try
 				{
-					using (OpenFileDialog dialog = new OpenFileDialog())
+					// 먼저 시도: 객체 기반 JSON 메시지 처리
+					var doc = JsonDocument.Parse(e.WebMessageAsJson);
+					var root = doc.RootElement;
+
+					if (root.ValueKind == JsonValueKind.Object &&
+						root.TryGetProperty("type", out var typeElem))
 					{
-						dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-						dialog.Multiselect = false;
-						if (dialog.ShowDialog() == DialogResult.OK)
+						string type = typeElem.GetString();
+
+						switch (type)
 						{
-							string filePath = dialog.FileName.Replace("\\", "/");
-							string escaped = JsonSerializer.Serialize(filePath);
-							await webView21.ExecuteScriptAsync($"window.dispatchEvent(new MessageEvent('message', {{ data: {escaped} }}));");
+							case "openFile":
+								using (OpenFileDialog dialog = new OpenFileDialog())
+								{
+									dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+									dialog.Multiselect = false;
+									string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
+									if (dialog.ShowDialog() == DialogResult.OK)
+									{
+										string filePath = dialog.FileName.Replace("\\", "/");
+										string escapedFilePath = JsonSerializer.Serialize(filePath);
+										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+
+										string json = $@"{{
+											""blockId"": {escapedBlockId},
+											""filePath"": {escapedFilePath}
+										}}";
+
+										await webView21.ExecuteScriptAsync(
+											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
+										);
+									}
+								}
+								break;
+
+							case "blockCode":
+								string code = root.GetProperty("code").GetString();
+								jsBridge.receiveFromJs(code);
+								break;
 						}
 					}
 				}
-				else
+				catch (Exception ex)
 				{
-					// 그 외 일반 메시지는 jsBridge로 전달
-					jsBridge.receiveFromJs(msg);
+					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
 				}
 			};
 
