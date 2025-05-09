@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" 
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -15,7 +13,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -36,26 +32,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
-<ItemGroup>
-  <!-- Nuget 패키지 관리 -->
-  <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
-  <PackageReference Include="CefSharp.Common" Version="135.0.220" />
-  <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
-  <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
-  <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
-  <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
-  <PackageReference Include="Clipper2" Version="1.4.0" />
-  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
-</ItemGroup>
-
   <ItemGroup>
+    <!-- Nuget 패키지 관리 -->
+    <!-- 🔥🔥🔥패키지 추가시, 여기에 꼭 추가해주세요.🔥🔥🔥 -->
+    <PackageReference Include="CefSharp.Common" Version="135.0.220" />
+    <PackageReference Include="CefSharp.WinForms" Version="135.0.220" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="135.0.22" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x86" Version="135.0.22" />
+    <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
+    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+    <PackageReference Include="Clipper2" Version="1.4.0" />
+    <PackageReference Include="jacobslusser.ScintillaNET">
+      <Version>3.6.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +65,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -97,7 +98,9 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views\Common\UcBase.cs">
@@ -118,6 +121,24 @@
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCode.Designer.cs">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.Designer.cs">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +158,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialGuide.resx">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
