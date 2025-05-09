@@ -68,7 +68,7 @@ private void RunPythonScript()
 {
     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
     string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
-    string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\test_script.py"));
+    string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\ython\test_script.py"));
            
             Console.WriteLine($" BaseDirectory: {baseDir}");
             Console.WriteLine($" Python Executable Path: {pythonExe}");
