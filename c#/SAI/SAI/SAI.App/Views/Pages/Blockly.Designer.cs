@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLoadModel = new Guna.UI2.WinForms.Guna2Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -37,16 +36,9 @@
 			this.btnMachineLearning = new Guna.UI2.WinForms.Guna2Button();
 			this.btnStart = new Guna.UI2.WinForms.Guna2Button();
 			this.btnResultGraph = new Guna.UI2.WinForms.Guna2Button();
+			this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+			((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// chromiumWebBrowser1
-			// 
-			this.chromiumWebBrowser1.ActivateBrowserOnCreation = false;
-			this.chromiumWebBrowser1.Location = new System.Drawing.Point(319, 19);
-			this.chromiumWebBrowser1.Margin = new System.Windows.Forms.Padding(2);
-			this.chromiumWebBrowser1.Name = "chromiumWebBrowser1";
-			this.chromiumWebBrowser1.Size = new System.Drawing.Size(500, 662);
-			this.chromiumWebBrowser1.TabIndex = 0;
 			// 
 			// btnPip
 			// 
@@ -82,9 +74,9 @@
 			// 
 			// richTextBox1
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(863, 20);
+			this.richTextBox1.Location = new System.Drawing.Point(863, 33);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(325, 661);
+			this.richTextBox1.Size = new System.Drawing.Size(325, 626);
 			this.richTextBox1.TabIndex = 3;
 			this.richTextBox1.Text = "";
 			// 
@@ -161,10 +153,25 @@
 			this.btnResultGraph.TabIndex = 8;
 			this.btnResultGraph.Text = "학습 결과 그래프 출력하기";
 			// 
+			// webView21
+			// 
+			this.webView21.AllowExternalDrop = true;
+			this.webView21.CreationProperties = null;
+			this.webView21.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
+			this.webView21.Location = new System.Drawing.Point(362, 33);
+			this.webView21.Margin = new System.Windows.Forms.Padding(0);
+			this.webView21.Name = "webView21";
+			this.webView21.Size = new System.Drawing.Size(447, 626);
+			this.webView21.TabIndex = 9;
+			this.webView21.TabStop = false;
+			this.webView21.ZoomFactor = 1D;
+			// 
 			// Blockly
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+			this.Controls.Add(this.webView21);
 			this.Controls.Add(this.btnResultGraph);
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.btnMachineLearning);
@@ -173,17 +180,15 @@
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.btnLoadModel);
 			this.Controls.Add(this.btnPip);
-			this.Controls.Add(this.chromiumWebBrowser1);
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "Blockly";
 			this.Size = new System.Drawing.Size(1280, 720);
+			((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private CefSharp.WinForms.ChromiumWebBrowser chromiumWebBrowser1;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
 		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
 		private System.Windows.Forms.RichTextBox richTextBox1;
@@ -192,5 +197,6 @@
 		private Guna.UI2.WinForms.Guna2Button btnMachineLearning;
 		private Guna.UI2.WinForms.Guna2Button btnStart;
 		private Guna.UI2.WinForms.Guna2Button btnResultGraph;
+		private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
 	}
 }

@@ -152,7 +152,7 @@ Blockly.defineBlocksWithJsonArray([
         "args0": [
             {
                 "type": "field_filepicker",
-                "name": "FILE_NAME",
+                "name": "FILE_PATH",
                 "value": "파일 선택"
             }
         ],
@@ -165,10 +165,10 @@ Blockly.defineBlocksWithJsonArray([
 ]);
 
 Blockly.Python.forBlock['resultGraph'] = function (block) {
-    const fileName = block.getFieldValue('FILE_NAME');
+    const filePath = block.getFieldValue('FILE_PATH');
     return (
         `# 학습 결과 그래프 출력하기\n` +
         `from IPython.display import Image, display\n\n` +
-        `display(Image(filename='${fileName}'))\n\n\n`
+        `display(Image(filename='${filePath}'))\n\n\n`
     );
 };

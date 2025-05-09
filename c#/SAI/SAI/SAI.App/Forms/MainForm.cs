@@ -44,8 +44,8 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
+            page.Size = new Size(1280, 720);
 			guna2Panel1.Controls.Clear();
-			page.Dock = DockStyle.Fill;
 			guna2Panel1.BackColor = Color.Transparent;
 			guna2Panel1.Controls.Add(page);
 			guna2Panel1.BringToFront();

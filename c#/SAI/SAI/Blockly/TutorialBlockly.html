@@ -5,9 +5,18 @@
     <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
     <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
     <script src="TutorialBlocks.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 1280px;
+            height: 720px;
+        }
+    </style>
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
+    <div id="blocklyDiv" style="height: 97vh; width: 97vw; "></div>
     <xml id="toolbox" style="display: none">
         <block type="start"></block>
         <block type="pipInstall"></block>
@@ -35,10 +44,6 @@
     </div>
 
     <script>
-
-
-		console.log("HTML 로딩 완료");
-
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: null
             //toolbox: document.getElementById('toolbox')
@@ -59,12 +64,16 @@
             block.render();
         }
 
+		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
 		function sendCode(code) {
-			cefCustom.receiveFromJs(code);
+			window.chrome.webview.postMessage(JSON.stringify({
+				type: "code",
+				code: code
+			}));
 		}
 
+		// 블록 생성 시 Python 코드 생성
         window.addEventListener('DOMContentLoaded', () => {
-
             workspace.addChangeListener((event) => {
                 if (
                     event.type === Blockly.Events.BLOCK_CREATE ||
@@ -83,26 +92,43 @@
             });
         });
 
+		// 나만의 필드 타입(모델 선택 버튼)
 		class FieldFilePicker extends Blockly.Field {
 			static fromJson(options) {
 				return new FieldFilePicker(options['value']);
 			}
 
 			showEditor_() {
-				const input = document.createElement('input');
-				input.type = 'file';
-				input.accept = 'image/*';
-				input.click();
+				// C#에게 파일 열라고 요청
+				const blockId = this.sourceBlock_.id;
+				window.chrome.webview.postMessage(JSON.stringify({
+					type: "openFile",
+					blockId: blockId
+				}));
+            }
 
-				input.onchange = () => {
-					const file = input.files[0];
-					if (file) {
-						this.setValue(file.name); // 또는 file.path (Electron, WinForms 연동 시)
-					}
-				};
+			// C#에서 경로가 돌아오면 이 값을 필드에 설정
+			setImagePath(path) {
+				this.setValue(path);
 			}
 		}
-		Blockly.fieldRegistry.register('field_filepicker', FieldFilePicker);
+        Blockly.fieldRegistry.register('field_filepicker', FieldFilePicker);
+
+		// JS가 메시지 수신 (C# → JS)
+		window.addEventListener("message", (event) => {
+			const { blockId, filePath } = event.data;
+			const block = Blockly.getMainWorkspace().getBlockById(blockId);
+
+			if (!block) return;
+
+			const fields = block.inputList.flatMap(input => input.fieldRow);
+			const filePickerField = fields.find(f => f instanceof FieldFilePicker);
+
+			if (filePickerField) {
+				filePickerField.setImagePath(filePath);
+			}
+		});
+
     </script>
 
 </body>
