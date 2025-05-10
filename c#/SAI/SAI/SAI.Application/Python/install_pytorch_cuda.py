@@ -1,4 +1,6 @@
 # install_pytorch_cuda.py
+# 사용자 컴퓨터에 gpu 확인후 적합한 cuda pytorch 설치하게함
+# 이미 pytorch가 설치돼 있지만 cuda가 아니면 아니거나 cpu 버전이면 삭제 후 재설치하게함
 import sys
 import subprocess
 import platform
