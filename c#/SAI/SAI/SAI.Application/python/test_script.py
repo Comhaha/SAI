@@ -11,6 +11,9 @@ import zipfile
 import glob
 import io
 from datetime import datetime
+import cv2
+
+PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -287,6 +290,120 @@ def check_gpu():
     except Exception as e:
         show_progress(f"GPU 확인 오류: {e}", start_time, 100)
         return {"available": False, "error": str(e)}    
+    
+def find_latest_results_dir():
+    """가장 최근에 생성된 results 디렉토리 찾기"""
+    python_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
+    base_dir = os.path.join(PYTHON_DIR, "runs", "detect")
+    
+    if not os.path.exists(base_dir):
+        # 디렉토리가 없으면 생성
+        os.makedirs(base_dir, exist_ok=True)
+        return os.path.join(PYTHON_DIR, "runs", "detect", "train")
+    
+    # 'train'으로 시작하는 모든 폴더 찾기
+    train_dirs = [d for d in os.listdir(base_dir) if d.startswith('train')]
+    if not train_dirs:
+        return os.path.join(PYTHON_DIR, "runs", "detect", "train")
+    
+    # 숫자 접미사가 있는 경우 가장 큰 숫자 찾기
+    latest_dir = "train"
+    max_num = 0
+    for d in train_dirs:
+        # train, train1, train2, ... 형식에서 숫자 추출
+        match = re.match(r'train(\d*)', d)
+        if match:
+            num_str = match.group(1)
+            num = int(num_str) if num_str else 0
+            if num > max_num:
+                max_num = num
+                latest_dir = d
+    
+    return os.path.join(PYTHON_DIR, "runs", "detect", latest_dir)
+    
+def visualize_training_results(results_path, start_time):
+    """학습 결과 그래프 시각화"""
+    try:
+        # 결과 이미지 경로 확인
+        if not os.path.exists(results_path):
+            show_progress(f"결과 그래프 파일을 찾을 수 없습니다: {results_path}", start_time, 100)
+            return False
+        
+        show_progress(f"학습 결과 그래프 확인: {results_path}", start_time, 100)
+        
+        # 여기서는 파일 경로만 반환 (실제 표시는 C# UI에서 수행)
+        return results_path
+    except Exception as e:
+        show_progress(f"결과 시각화 오류: {e}", start_time, 100)
+        return False    
+
+def run_inference(model_path, image_path, start_time, conf_threshold=0.25):
+    """모델을 사용해 이미지에서 객체 탐지 수행"""
+    try:
+        # 모델 경로 및 이미지 경로 확인
+        if not os.path.exists(model_path):
+            show_progress(f"모델 파일을 찾을 수 없습니다: {model_path}", start_time, 0)
+            return None
+        
+        if not os.path.exists(image_path):
+            show_progress(f"이미지 파일을 찾을 수 없습니다: {image_path}", start_time, 0)
+            return None
+        
+        show_progress(f"모델 로드 중: {model_path}", start_time, 10)
+        from ultralytics import YOLO
+        model = YOLO(model_path)
+        
+        show_progress(f"이미지 추론 중: {image_path}", start_time, 30)
+        results = model.predict(source=image_path, save=False, show=False, conf=conf_threshold)
+        
+        if not results or len(results) == 0:
+            show_progress("추론 결과가 없습니다", start_time, 50)
+            return None
+        
+        # 결과 처리
+        show_progress("추론 결과 처리 중...", start_time, 70)
+        
+        # 결과 시각화
+        result_img = results[0].plot()  # BGR 형식
+        
+        # 결과 이미지 저장
+        output_dir = PYTHON_DIR  # Python 폴더 사용
+        output_path = os.path.join(output_dir, "inference_result.jpg")
+        cv2.imwrite(output_path, result_img)
+        
+        # 탐지 결과 추출 (JSON으로 반환하기 위함)
+        detections = []
+        if hasattr(results[0], 'boxes') and results[0].boxes is not None:
+            for box in results[0].boxes:
+                # 박스 좌표
+                x1, y1, x2, y2 = box.xyxy[0].tolist()
+                
+                # 클래스 및 신뢰도
+                cls = int(box.cls[0].item())
+                conf = float(box.conf[0].item())
+                
+                # 클래스 이름
+                cls_name = results[0].names[cls]
+                
+                detections.append({
+                    "class": cls_name,
+                    "confidence": conf,
+                    "bbox": [x1, y1, x2, y2]
+                })
+        
+        show_progress(f"추론 완료: {len(detections)}개 객체 감지됨", start_time, 100)
+        
+        return {
+            "image_path": image_path,
+            "result_image": output_path,
+            "detections": detections
+        }
+        
+    except Exception as e:
+        show_progress(f"추론 오류: {e}", start_time, 100)
+        return None
+    
+
 
 def main():
     """메인 실행 함수"""
@@ -447,7 +564,8 @@ def main():
             batch=batch_size,
             imgsz=640,
             device=device,
-            # callbacks=callbacks
+            project=os.path.join(PYTHON_DIR, "runs"),  # 결과 저장 상위 폴더 지정
+            name="detect/train"  # 하위 폴더 구조 지정
         )
     
         
@@ -616,39 +734,177 @@ names:
     show_progress("학습 결과 처리 중...", total_start_time, 100)
     
     # 결과 저장 경로
-    results_dir = "runs/detect/train"
+   # 결과 저장 경로를 Python 폴더 내로 설정
+    python_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
+    results_dir = os.path.join(PYTHON_DIR, "runs", "detect", "train")
     
-    # 9. 학습 완료 알림
+    # 9. 학습 결과 그래프 시각화
+    results_image_path = os.path.join(results_dir, "results.png")
+    visualize_result = visualize_training_results(results_image_path, total_start_time)
+
+    # 10. 테스트 이미지로 추론 실행
+    inference_result = None
+    model_path = os.path.join(results_dir, "weights", "best.pt")
+    
+    # 테스트 이미지 경로 설정 (로컬 경로)
+    # 데이터셋 폴더에서 test/images 폴더 내의 첫 번째 이미지 사용
+    test_image_path = None
+    dataset_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python\dataset"
+    tutorial_dataset_dir = os.path.join(dataset_dir, "tutorial_dataset")
+    
+    # 테스트 이미지 폴더 경로들 (여러 가능한 위치 검색)
+    possible_test_folders = [
+        os.path.join(tutorial_dataset_dir, "dataset", "test", "images"),
+        os.path.join(tutorial_dataset_dir, "test", "images"),
+        os.path.join(tutorial_dataset_dir, "dataset", "valid", "images"),  # 검증 이미지도 시도
+        os.path.join(tutorial_dataset_dir, "valid", "images"),
+        os.path.join(tutorial_dataset_dir, "dataset", "train", "images"),  # 학습 이미지도 시도
+        os.path.join(tutorial_dataset_dir, "train", "images")
+    ]
+    
+    # 사용 가능한 테스트 이미지 찾기
+    for folder in possible_test_folders:
+        if os.path.exists(folder):
+            image_files = [f for f in os.listdir(folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.webp'))]
+            if image_files:
+                test_image_path = os.path.join(folder, image_files[0])
+                show_progress(f"테스트 이미지 발견: {test_image_path}", total_start_time, 100)
+                break
+    
+    # # 테스트 이미지를 찾지 못한 경우 기본 이미지 사용
+    # if not test_image_path:
+    #     # 기본 테스트 이미지 경로 (프로젝트 폴더 내에 테스트 이미지 포함)
+    #     test_image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_image.jpg")
+    #     show_progress(f"기본 테스트 이미지 사용: {test_image_path}", total_start_time, 100)
+        
+    #     # 기본 테스트 이미지가 없는 경우 생성 (빈 이미지)
+    #     if not os.path.exists(test_image_path):
+    #         show_progress("테스트 이미지가 없어 빈 이미지 생성", total_start_time, 100)
+    #         try:
+    #             import numpy as np
+    #             import cv2
+                
+    #             # 500x500 크기의 빈 이미지 생성
+    #             blank_image = np.zeros((500, 500, 3), np.uint8)
+    #             blank_image[:] = (255, 255, 255)  # 흰색 배경
+                
+    #             # 이미지 중앙에 텍스트 추가
+    #             font = cv2.FONT_HERSHEY_SIMPLEX
+    #             cv2.putText(blank_image, 'Test Image', (150, 250), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
+                
+    #             # 이미지 저장
+    #             cv2.imwrite(test_image_path, blank_image)
+    #         except Exception as e:
+    #             show_progress(f"테스트 이미지 생성 실패: {e}", total_start_time, 100)
+    
+    # 테스트 이미지로 추론 실행
+    if test_image_path and os.path.exists(test_image_path):
+        inference_start_time = time.time()
+        show_progress(f"테스트 이미지 추론 중... ({test_image_path})", total_start_time, 100)
+        inference_result = run_inference(model_path, test_image_path, inference_start_time)
+    else:
+        show_progress("테스트 이미지를 찾을 수 없어 추론을 건너뜁니다.", total_start_time, 100)
+    
+    # # 10. 샘플 이미지로 추론 실행 (있는 경우)
+    # inference_result = None
+    # model_path = os.path.join(results_dir, "weights", "best.pt")
+    
+    # # 사용자 이미지 경로 확인 (명령줄 인수로 전달받을 수 있음)
+    # sample_image_path = None
+    # if len(sys.argv) > 1:
+    #     sample_image_path = sys.argv[1]
+    
+    # # 샘플 이미지가 제공된 경우 추론 실행
+    # if sample_image_path and os.path.exists(sample_image_path):
+    #     inference_start_time = time.time()
+    #     show_progress(f"샘플 이미지 추론 중... ({sample_image_path})", total_start_time, 100)
+    #     inference_result = run_inference(model_path, sample_image_path, inference_start_time)
+    
+    # 11. 학습 완료 알림
     total_elapsed = time.time() - total_start_time
     hrs, remainder = divmod(total_elapsed, 3600)
     mins, secs = divmod(remainder, 60)
     
     show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
-    show_progress(f"학습된 모델 경로: {results_dir}/weights/best.pt", total_start_time, 100)
+    show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
+
+    # 최신 결과 디렉토리에서 모델 경로 찾기
+    results_dir = find_latest_results_dir()
+    model_path = os.path.join(results_dir, "weights", "best.pt")
+    
+    show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
+    show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
     
     # 결과 정보
     result = {
         "success": True,
-        "model_path": f"{results_dir}/weights/best.pt",
-        "results_path": f"{results_dir}/results.png",
+        "model_path": model_path,
+        "results_path": results_image_path if visualize_result else None,
         "device_used": device,
         "gpu_info": gpu_info,
         "total_time_seconds": total_elapsed,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     
+    # 추론 결과가 있으면 추가
+    if inference_result:
+        result["inference"] = {
+            "image_path": inference_result["image_path"],
+            "result_image": inference_result["result_image"],
+            "detections_count": len(inference_result["detections"]),
+            "detections": inference_result["detections"]
+        }
+    
     # JSON으로 결과 출력 (C# 프로그램에서 파싱)
     print(f"RESULT_JSON:{json.dumps(result)}")
     return result
 
-if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        logger.error(f"프로그램 실행 중 오류 발생: {e}")
+# 추론 전용 함수
+def infer_image(model_path, image_path):
+    """모델을 사용해 개별 이미지 추론 (외부에서 호출용)"""
+    start_time = time.time()
+    show_progress(f"이미지 추론 요청: {image_path}", start_time, 0)
+    
+    # 추론 실행
+    result = run_inference(model_path, image_path, start_time)
+    
+    if result:
+        print(f"INFERENCE_RESULT:{json.dumps(result)}")
+        return result
+    else:
         error_result = {
             "success": False,
-            "error": str(e),
+            "error": "추론 실패",
+            "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"RESULT_JSON:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        return error_result
+
+if __name__ == "__main__":
+    # 명령행 인수 확인
+    if len(sys.argv) > 2 and sys.argv[1] == "infer":
+        # 추론 모드: python script.py infer <모델_경로> <이미지_경로>
+        try:
+            model_path = sys.argv[2]
+            image_path = sys.argv[3]
+            infer_image(model_path, image_path)
+        except Exception as e:
+            error_result = {
+                "success": False,
+                "error": str(e),
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+    else:
+        # 일반 모드: 전체 학습 파이프라인 실행
+        try:
+            main()
+        except Exception as e:
+            logger.error(f"프로그램 실행 중 오류 발생: {e}")
+            error_result = {
+                "success": False,
+                "error": str(e),
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            print(f"RESULT_JSON:{json.dumps(error_result)}")
