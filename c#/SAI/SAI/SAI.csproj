@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE6E7CA6-1321-4D86-AAE3-0DA405B50B74}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>SAI</RootNamespace>
     <AssemblyName>SAI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -13,6 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -101,23 +103,35 @@
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
-    <Compile Include="SAI.App\Views\Common\UcBase.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Common\UcBase.Designer.cs">
-      <DependentUpon>UcBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.Designer.cs">
+      <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcSelectType.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcSelectType.Designer.cs">
+      <DependentUpon>UcSelectType.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.Designer.cs">
+      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -133,11 +147,17 @@
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Common\UcBase.resx">
-      <DependentUpon>UcBase.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
+      <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPraticeBlockCode.resx">
+      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcSelectType.resx">
+      <DependentUpon>UcSelectType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialGuide.resx">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
@@ -173,6 +193,37 @@
   <ItemGroup>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\p_todolist.png" />
+    <None Include="SAI.App\Resources\Images\p_blocklist_tutorial.png" />
+    <None Include="SAI.App\Resources\Images\p_topbar.png" />
+    <None Include="SAI.App\Resources\Images\p_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_select_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_select.png" />
+    <None Include="SAI.App\Resources\Images\btn_pose_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_pose.png" />
+    <None Include="SAI.App\Resources\Images\btn_image_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_image.png" />
+    <None Include="SAI.App\Resources\Images\btn_audio_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_audio.png" />
+    <None Include="SAI.App\Resources\Images\btn_go_pratice_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_go_pratice.png" />
+    <None Include="SAI.App\Resources\Images\btn_copy_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_copy.png" />
+    <None Include="SAI.App\Resources\Images\btn_infer_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_done_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_home_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_minus.png" />
+    <None Include="SAI.App\Resources\Images\btn_plus.png" />
+    <None Include="SAI.App\Resources\Images\btn_run_model.png" />
+    <None Include="SAI.App\Resources\Images\btn_trash_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_block.png" />
+    <None Include="SAI.App\Resources\Images\btn_memo.png" />
+    <None Include="SAI.App\Resources\Images\btn_zoom.png" />
+    <None Include="SAI.App\Resources\Images\btn_done.png" />
+    <None Include="SAI.App\Resources\Images\btn_home.png" />
+    <None Include="SAI.App\Resources\Images\btn_infer.png" />
+    <None Include="SAI.App\Resources\Images\img_frame_shadow.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
