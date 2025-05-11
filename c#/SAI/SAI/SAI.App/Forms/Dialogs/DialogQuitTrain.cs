@@ -12,9 +12,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-	public partial class DialogComfirmTrain : Form
+	public partial class DialogQuitTrain : Form
 	{
-		public DialogComfirmTrain()
+		public DialogQuitTrain()
 		{
 			InitializeComponent();
 
@@ -40,12 +40,12 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnClose.MouseEnter += (s, e) =>
 			{
 				btnClose.BackColor = Color.Transparent;
-				btnClose.BackgroundImage = Properties.Resources.bg_blue_btn_close_clicked;
+				btnClose.BackgroundImage = Properties.Resources.bg_btn_close_clicked;
 			};
 			// btnClose 마우스 떠날때
 			btnClose.MouseLeave += (s, e) =>
 			{
-				btnClose.BackgroundImage = Properties.Resources.bg_blue_btn_close;
+				btnClose.BackgroundImage = Properties.Resources.bg_btn_close;
 			};
 
 			// btnOk
@@ -59,13 +59,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.MouseEnter += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_blue_ok_clicked;
+				btnOk.BackgroundImage = Properties.Resources.btn_red_ok_clicked;
 			};
 			// btnOk 마우스 떠날때
 			btnOk.MouseLeave += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_blue_ok;
+				btnOk.BackgroundImage = Properties.Resources.btn_red_ok;
 			};
 
 			// btnCancel
