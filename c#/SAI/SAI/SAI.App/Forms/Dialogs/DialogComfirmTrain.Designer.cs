@@ -1,6 +1,6 @@
 ﻿namespace SAI.SAI.App.Forms.Dialogs
 {
-	partial class DialogHomeFromLabeling
+	partial class DialogComfirmTrain
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -41,13 +41,13 @@
 			// 
 			// panelTitleBar
 			// 
-			this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_red_titlebar;
+			this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_blue_titlebar_449;
 			this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.panelTitleBar.Controls.Add(this.labelTitle);
 			this.panelTitleBar.Controls.Add(this.btnClose);
 			this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
 			this.panelTitleBar.Name = "panelTitleBar";
-			this.panelTitleBar.Size = new System.Drawing.Size(580, 40);
+			this.panelTitleBar.Size = new System.Drawing.Size(499, 40);
 			this.panelTitleBar.TabIndex = 0;
 			// 
 			// labelTitle
@@ -60,12 +60,12 @@
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(44, 25);
 			this.labelTitle.TabIndex = 1;
-			this.labelTitle.Text = "경고";
+			this.labelTitle.Text = "확인";
 			// 
 			// btnClose
 			// 
 			this.btnClose.BackColor = System.Drawing.Color.Transparent;
-			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_btn_close;
+			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_blue_btn_close;
 			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnClose.BorderColor = System.Drawing.Color.Transparent;
 			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -79,7 +79,7 @@
 			this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
 			this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
 			this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
-			this.btnClose.Location = new System.Drawing.Point(520, 0);
+			this.btnClose.Location = new System.Drawing.Point(439, 0);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(60, 40);
 			this.btnClose.TabIndex = 1;
@@ -87,7 +87,7 @@
 			// panelIcon
 			// 
 			this.panelIcon.BackColor = System.Drawing.Color.Transparent;
-			this.panelIcon.BackgroundImage = global::SAI.Properties.Resources.icon_warning;
+			this.panelIcon.BackgroundImage = global::SAI.Properties.Resources.btn_question;
 			this.panelIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.panelIcon.Location = new System.Drawing.Point(39, 77);
 			this.panelIcon.Name = "panelIcon";
@@ -102,9 +102,9 @@
 			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
 			this.label1.Location = new System.Drawing.Point(66, 70);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(327, 34);
+			this.label1.Size = new System.Drawing.Size(298, 34);
 			this.label1.TabIndex = 2;
-			this.label1.Text = "정말 홈으로 돌아가시겠습니까?";
+			this.label1.Text = "실습으로 이동하시겠습니까?";
 			// 
 			// labelContent
 			// 
@@ -113,14 +113,14 @@
 			this.labelContent.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
 			this.labelContent.Location = new System.Drawing.Point(69, 114);
 			this.labelContent.Name = "labelContent";
-			this.labelContent.Size = new System.Drawing.Size(418, 58);
+			this.labelContent.Size = new System.Drawing.Size(337, 29);
 			this.labelContent.TabIndex = 3;
-			this.labelContent.Text = "[OK]버튼 클릭 시 홈으로 돌아갑니다.\r\n계속 학습하시려면 [CANCEL] 버튼을 눌러주세요.\r\n";
+			this.labelContent.Text = "[OK]버튼 클릭 시 실습으로 이동합니다.";
 			// 
 			// btnOk
 			// 
 			this.btnOk.BackColor = System.Drawing.Color.Transparent;
-			this.btnOk.BackgroundImage = global::SAI.Properties.Resources.btn_red_ok;
+			this.btnOk.BackgroundImage = global::SAI.Properties.Resources.btn_blue_ok;
 			this.btnOk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnOk.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnOk.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -129,7 +129,7 @@
 			this.btnOk.FillColor = System.Drawing.Color.Transparent;
 			this.btnOk.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnOk.ForeColor = System.Drawing.Color.White;
-			this.btnOk.Location = new System.Drawing.Point(440, 202);
+			this.btnOk.Location = new System.Drawing.Point(359, 173);
 			this.btnOk.Margin = new System.Windows.Forms.Padding(4);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(100, 40);
@@ -148,19 +148,19 @@
 			this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnCancel.ForeColor = System.Drawing.Color.White;
 			this.btnCancel.ImageSize = new System.Drawing.Size(110, 42);
-			this.btnCancel.Location = new System.Drawing.Point(330, 202);
+			this.btnCancel.Location = new System.Drawing.Point(249, 173);
 			this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 40);
 			this.btnCancel.TabIndex = 5;
 			// 
-			// DialogHomeFromLabeling
+			// DialogComfirmTrain
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.Color.Gray;
-			this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_white_580_282;
+			this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_white_449_253;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(580, 282);
+			this.ClientSize = new System.Drawing.Size(499, 253);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOk);
 			this.Controls.Add(this.labelContent);
@@ -170,7 +170,7 @@
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
-			this.Name = "DialogHomeFromLabeling";
+			this.Name = "DialogComfirmTrain";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.TopMost = true;
 			this.panelTitleBar.ResumeLayout(false);

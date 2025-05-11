@@ -58,9 +58,9 @@
 			this.labelTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
 			this.labelTitle.Location = new System.Drawing.Point(25, 8);
 			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(113, 25);
+			this.labelTitle.Size = new System.Drawing.Size(44, 25);
 			this.labelTitle.TabIndex = 1;
-			this.labelTitle.Text = "프로그램 종료";
+			this.labelTitle.Text = "경고";
 			// 
 			// btnClose
 			// 
