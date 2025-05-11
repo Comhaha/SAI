@@ -1,4 +1,6 @@
-# 자율 pjt (가제)
+# SAI(SSAFY AI Interface)
+
+[<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1158c1d86fd8f9aa5db790cc2160a5a8/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C.png">]()
 
 #### 👆 위 이미지 클릭하면 `랜딩페이지로` 이동합니다 👆
 
@@ -20,11 +22,11 @@
 
 # ✨ 개요
 
-#### 서비스명 : 자율PJT(가제)
+#### 서비스명 : SAI
 
-#### 한줄 설명 :
+#### 한줄 설명 : AI 모델 학습 과정을 블록 코딩 방식으로 구현하여 누구나 쉽게 실습할 수 있는 교육용 플랫폼
 
-#### 프로젝트 기간 : 2025.04.014 ~ 2025.05.22
+#### 프로젝트 기간 : 2025.04.14 ~ 2025.05.22
 
 <br/>
 
@@ -34,11 +36,34 @@
 
 #### 서비스 설명
 
--   설명1
+-   SAI는 AI 학습에 대한 진입 장벽을 낮추기 위해 설계된 SSAFY 교육생 맞춤형 블록 코딩 플랫폼입니다.
+-   실제 AI 모델 학습 흐름(pip install, 데이터 로딩, 학습, 추론 등)을 시각적으로 구성하여 실습 중심의 학습을 지원합니다.
 
 #### 주요 기능
 
--   기능 1
+-   **AI 블록 코딩**
+
+    -   pip 설치, 모델 불러오기, 데이터셋 불러오기, 파라미터 설정 등 학습 과정을 블록으로 구성
+    -   Run 버튼 클릭만으로 실제 학습 코드 실행 가능
+
+-   **실시간 파이썬 코드 변환**
+
+    -   사용자가 블록을 조립하는 즉시 해당 흐름이 파이썬 코드로 변환되어 표시됨
+    -   코드 구조를 직관적으로 이해하고 실전 환경에도 대비 가능
+
+-   **지능형 피드백 시스템**
+
+    -   오류 블록 원인 분석 및 해결 방법 제시
+    -   학습 결과(지표/그래프)에 대한 해석 및 성능 개선을 위한 파라미터 추천
+
+-   **튜토리얼/실습 모드 지원**
+
+    -   튜토리얼: 라벨링부터 추론까지 고정된 파라미터로 단계별 학습 가이드
+    -   실습: 사용자가 직접 파라미터를 설정하여 반복 실습 가능
+
+-   **학습 결과 Export 기능**
+    -   학습 완료 후 생성된 코드와 피드백을 Notion에 내보내기 지원
+    -   학습 모델 다운로드 및 코드 복사, 자동 주석 기능 포함
 
 <br/>
 
@@ -63,10 +88,7 @@
   <img src="https://img.shields.io/badge/spring-6DB33F?style=flat-square&logo=spring&logoColor=white">
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white">
    <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=flat-square&logo=springsecurity&logoColor=white">
-  <img src="https://img.shields.io/badge/jitpack-000000?style=flat-square&logo=jitpack&logoColor=white">
   <img src="https://img.shields.io/badge/openjdk-000000?style=flat-square&logo=openjdk&logoColor=white">
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white">
-  <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white">
 
 </div>
 
@@ -74,33 +96,31 @@
 
 <div align=left> 
   <img src="https://img.shields.io/badge/gradle-02303A?style=flat-square&logo=gradle&logoColor=white">
-  <img src="https://img.shields.io/badge/kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white">
   <img src="https://img.shields.io/badge/openjdk-000000?style=flat-square&logo=openjdk&logoColor=white">
   <img src="https://img.shields.io/badge/lottiefiles-00DDB3?style=flat-square&logo=lottiefiles&logoColor=white">
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=white">
-  <img src="https://img.shields.io/badge/android-34A853?style=flat-square&logo=android&logoColor=white">
-  <img src="https://img.shields.io/badge/androidstudio-3DDC84?style=flat-square&logo=androidstudio&logoColor=white">
-  <img src="https://img.shields.io/badge/xml-005FAD?style=flat-square&logo=xml&logoColor=white">
-  <img src="https://img.shields.io/badge/jitpack-000000?style=flat-square&logo=jitpack&logoColor=white">
-  <img src="https://img.shields.io/badge/Hilt-008FC7?style=flat-square&logo=Hilt&logoColor=white">
-  <img src="https://img.shields.io/badge/googlecloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white">
+</div>
+
+### Desktop Application
+
+<div align=left> 
+  <img src="https://img.shields.io/badge/Csharp-00599C?style=flat-square&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/VisualStudio-663399?style=flat-square&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/winforms-00DDB3?style=flat-square&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/blockly-61DAFB?style=flat-square&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/Guna-663399?style=flat-square&logo=&logoColor=white">
 
 </div>
 
 ### AI
 
 <div align=left> 
-  <img src="https://img.shields.io/badge/fastapi-009688?style=flat-square&logo=fastapi&logoColor=white">
   <img src="https://img.shields.io/badge/python-3776AB?style=flat-square&logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/yolo-111F68?style=flat-square&logo=yolo&logoColor=white">
-  <img src="https://img.shields.io/badge/fasterrcnn-0A9EDC?style=flat-square&logo=fasterrcnn&logoColor=white">
   <img src="https://img.shields.io/badge/opencv-5C3EE8?style=flat-square&logo=opencv&logoColor=white">
-  <img src="https://img.shields.io/badge/tensorflow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white">
   <img src="https://img.shields.io/badge/pytorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white">
-  <img src="https://img.shields.io/badge/kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white">
   <img src="https://img.shields.io/badge/jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white">
   <img src="https://img.shields.io/badge/googlecolab-F9AB00?style=flat-square&logo=googlecolab&logoColor=white">
-  <img src="https://img.shields.io/badge/googleforms-7248B9?style=flat-square&logo=googleforms&logoColor=white">
 
 </div>
 
@@ -113,8 +133,6 @@
   <img src="https://img.shields.io/badge/letsencrypt-003A70?style=flat-square&logo=letsencrypt&logoColor=white">
   <img src="https://img.shields.io/badge/amazonec2-FF9900?style=flat-square&logo=amazonec2&logoColor=white">
   <img src="https://img.shields.io/badge/amazons3-569A31?style=flat-square&logo=amazons3&logoColor=white">
-  <img src="https://img.shields.io/badge/django-092E20?style=flat-square&logo=django&logoColor=white">
-  <img src="https://img.shields.io/badge/python-3776AB?style=flat-square&logo=python&logoColor=white">
 
 </div>
 
@@ -135,7 +153,7 @@
 
 ## 서비스 아키텍처
 
-<!-- <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/76774816955d653a73dcfee4ce820d00/%EC%84%9C%EB%B9%84%EC%8A%A4_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png"> -->
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/f4c4ef8fdbc0ef323a034dd45d7cd662/%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png">
 
 <br/>
 
@@ -147,11 +165,11 @@
 
 ## API 명세서
 
-<!-- <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/5f3bc1f9560ac42559c0435b7155b303/api_%EB%AA%85%EC%84%B8%EC%84%9C.png"> -->
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5fdbef1b691bf64fd0c1f9acfdc263c6/image.png">
 
 ## ERD
 
-<!-- <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/2bbe33e7bb7cb7c5f0d948160d24fc24/erd.png"> -->
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/b25d73d3d9c65fd1369ac4b61c47d0dd/image.png">
 
 ## Git
 
@@ -164,19 +182,17 @@
 
 # 👨‍👩‍👧‍👦 개발 멤버 및 역할분담
 
-<!-- |                                                                           정유진                                                                            |                                                                           김성수                                                                            |                                                      김정언 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                      |                                                   도승국 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                   |                                                                           이상혁                                                                            |                                                                           이송희                                                                            |
-| :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/d133ed351edaa7dcc1fa7e2c2d38826d/%EC%A0%95%EC%9C%A0%EC%A7%84.png" width="800"> | <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/8530717db2391c0185e8e20df9f3c8af/%EA%B9%80%EC%84%B1%EC%88%98.png" width="800"> | <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/eadaad75c6a97002348a7ce31c94271d/%EA%B9%80%EC%A0%95%EC%96%B8.png" width="800"> | <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/82b7121599bcc7b174aedb3600f6ce2b/%EB%8F%84%EC%8A%B9%EA%B5%AD.png" width="800"> | <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/d8fe9aca9307af2d17c50f5181a481b2/%EC%9D%B4%EC%83%81%ED%98%81.png" width="800"> | <img src="https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/uploads/d524386635e6548591ff1eaa50b459f0/%EC%9D%B4%EC%86%A1%ED%9D%AC.png" width="800"> |
-|                                                                   Leader & Frontend & AI                                                                    |                                                                           Backend                                                                           |                                                                             AI                                                                              |                                                                            Infra                                                                            |                                                                          Frontend                                                                           |                                                                          Frontend                                                                           |
+|                                                                       정유진                                                                        |                                                                       권동현                                                                        |                                                                       김정언                                                                        |                                                                       도승국                                                                        |                                                                       박재영                                                                        |                                                                       조혜정                                                                        |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ebc5118139ebdecb3f59ae732f3213d/%EC%A0%95%EC%9C%A0%EC%A7%84.png" width="800"> | <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cb66373687b47ae6e04f15a4490b9ef/%EA%B6%8C%EB%8F%99%ED%98%84.png" width="800"> | <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6428dd61a1f361ad6eb05efc7cfbc5ae/%EA%B9%80%EC%A0%95%EC%96%B8.png" width="800"> | <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/67548002f143ad004f061e3d9def8fb2/%EB%8F%84%EC%8A%B9%EA%B5%AD.png" width="800"> | <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cd61ace7afbc6dbe7938376030633fe/%EB%B0%95%EC%9E%AC%EC%98%81.png" width="800"> | <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/72da216584bd09d0c07c74f2fb186c16/%EC%A1%B0%ED%98%9C%EC%A0%95.png" width="800"> |
+|                                                               Leader & AI & Training                                                                |                                                             Backend & Infra & Inference                                                             |                                                       UI/UX & Block UI & Real-time Code View                                                        |                                                                  UI/UX & Labeling                                                                   |                                                  WinForms UI Structure & Component Implementation                                                   |                                               UI/UX & Memo Editor & Code Highlighting & Landing Page                                                |
 
-<br/> -->
+<br/>
 
 <div id="7"></div>
 
 # 📒 메뉴얼 및 상세 문서
 
--   [포팅메뉴얼]
+-   [포팅메뉴얼](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/%ED%8F%AC%ED%8C%85-%EB%A9%94%EB%89%B4%EC%96%BC)
 -   [Git]()
 -   [화면 설계서]
-
-
