@@ -10,6 +10,7 @@ namespace SAI
 {
 	internal static class Program
 	{
+		// DPI 무시 설정을 위한 WinAPI 호출
 		[DllImport("user32.dll")]
 		private static extern bool SetProcessDPIAware();
 

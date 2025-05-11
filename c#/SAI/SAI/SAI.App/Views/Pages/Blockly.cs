@@ -143,7 +143,8 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
-			using (var dialog = new DialogCompleteTutorial())
+			using (var dialog = new DialogHomeFromLabeling())
+			//using (var dialog = new DialogCompleteTutorial())
 			//using (var dialog = new DialogCompleteLabeling())
 			//using (var dialog = new DialogConfirmExit())
 			{

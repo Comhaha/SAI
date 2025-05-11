@@ -95,6 +95,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteLabeling.Designer.cs">
       <DependentUpon>DialogCompleteLabeling.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogHomFromLabeling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogHomFromLabeling.Designer.cs">
+      <DependentUpon>DialogHomFromLabeling.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogCompleteLabeling.resx">
       <DependentUpon>DialogCompleteLabeling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomFromLabeling.resx">
+      <DependentUpon>DialogHomFromLabeling.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
