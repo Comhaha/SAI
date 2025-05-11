@@ -117,7 +117,8 @@ namespace SAI.SAI.App.Views.Pages
 			};
 
 
-			// WebView2 초기화
+			webView21.ZoomFactor = 0.9; // 줌 비율 설정
+
 			await webView21.EnsureCoreWebView2Async();
 			webView21.Source = new Uri(uri);
 		}
@@ -150,5 +151,9 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
+		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
+		{
+			webView21.ZoomFactor = 0.9; // 줌 비율 설정
+		}
 	}
 }

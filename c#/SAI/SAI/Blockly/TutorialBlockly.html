@@ -5,15 +5,6 @@
     <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
     <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
     <script src="TutorialBlocks.js"></script>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            width: 1280px;
-            height: 720px;
-        }
-    </style>
 </head>
 <body>
     <div id="blocklyDiv" style="height: 97vh; width: 97vw; "></div>
@@ -48,7 +39,7 @@
 
     <script>
         const workspace = Blockly.inject('blocklyDiv', {
-            toolbox: null
+            toolbox: null,
             //toolbox: document.getElementById('toolbox')
         });
 
@@ -75,7 +66,7 @@
 				type: "blockCode",
 				code: code
 			});
-		}
+        }
 
 		// 블록 생성 시 Python 코드 생성
         window.addEventListener('DOMContentLoaded', () => {

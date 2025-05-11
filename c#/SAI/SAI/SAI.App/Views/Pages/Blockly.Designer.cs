@@ -169,6 +169,7 @@
 			this.webView21.TabIndex = 9;
 			this.webView21.TabStop = false;
 			this.webView21.ZoomFactor = 1D;
+			this.webView21.ZoomFactorChanged += new System.EventHandler<System.EventArgs>(this.webView21_ZoomFactorChanged);
 			// 
 			// btnImgPath
 			// 
