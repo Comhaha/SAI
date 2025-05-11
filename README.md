@@ -182,10 +182,32 @@
 
 # 👨‍👩‍👧‍👦 개발 멤버 및 역할분담
 
-|                                           <div align="center">[**정유진**](https://github.com/breadbirds)</div>                                            |                                                            <div align="center">**권동현**</div>                                                            |                                                            <div align="center">**김정언**</div>                                                            |                                                            <div align="center">**도승국**</div>                                                            |                                                            <div align="center">**박재영**</div>                                                            |                                                            <div align="center">**조혜정**</div>                                                            |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ebc5118139ebdecb3f59ae732f3213d/%EC%A0%95%EC%9C%A0%EC%A7%84.png){width="800" height="800"} | ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cb66373687b47ae6e04f15a4490b9ef/%EA%B6%8C%EB%8F%99%ED%98%84.png){width="800" height="800"} | ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6428dd61a1f361ad6eb05efc7cfbc5ae/%EA%B9%80%EC%A0%95%EC%96%B8.png){width="800" height="800"} | ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/67548002f143ad004f061e3d9def8fb2/%EB%8F%84%EC%8A%B9%EA%B5%AD.png){width="800" height="800"} | ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cd61ace7afbc6dbe7938376030633fe/%EB%B0%95%EC%9E%AC%EC%98%81.png){width="800" height="800"} | ![](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/72da216584bd09d0c07c74f2fb186c16/%EC%A1%B0%ED%98%9C%EC%A0%95.png){width="800" height="800"} |
-|                                                             &nbsp;Leader & AI & Training&nbsp;                                                             |                                                          &nbsp;Backend & Infra & Inference&nbsp;                                                           |                                                     &nbsp;UI/UX & Block UI & Real-time Code View&nbsp;                                                     |                                                                &nbsp;UI/UX & Labeling&nbsp;                                                                |                                                &nbsp;WinForms UI Structure & Component Implementation&nbsp;                                                |                                             &nbsp;UI/UX & Memo Editor & Code Highlighting & Landing Page&nbsp;                                             |
+<table width="100%">
+  <tr>
+    <td width="16.6%" align="center"><a href="https://github.com/breadbirds"><strong>정유진</strong></a></td>
+    <td width="16.6%" align="center"><strong>권동현</strong></td>
+    <td width="16.6%" align="center"><strong>김정언</strong></td>
+    <td width="16.6%" align="center"><strong>도승국</strong></td>
+    <td width="16.6%" align="center"><strong>박재영</strong></td>
+    <td width="16.6%" align="center"><strong>조혜정</strong></td>
+  </tr>
+  <tr>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ebc5118139ebdecb3f59ae732f3213d/%EC%A0%95%EC%9C%A0%EC%A7%84.png" width="150"></td>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cb66373687b47ae6e04f15a4490b9ef/%EA%B6%8C%EB%8F%99%ED%98%84.png" width="150"></td>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6428dd61a1f361ad6eb05efc7cfbc5ae/%EA%B9%80%EC%A0%95%EC%96%B8.png" width="150"></td>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/67548002f143ad004f061e3d9def8fb2/%EB%8F%84%EC%8A%B9%EA%B5%AD.png" width="150"></td>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cd61ace7afbc6dbe7938376030633fe/%EB%B0%95%EC%9E%AC%EC%98%81.png" width="150"></td>
+    <td width="16.6%" align="center"><img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/72da216584bd09d0c07c74f2fb186c16/%EC%A1%B0%ED%98%9C%EC%A0%95.png" width="150"></td>
+  </tr>
+  <tr>
+    <td width="16.6%" align="center">Leader & AI & Training</td>
+    <td width="16.6%" align="center">Backend & Infra & Inference</td>
+    <td width="16.6%" align="center">UI/UX & Block UI<br>& Real-time Code View</td>
+    <td width="16.6%" align="center">UI/UX & Labeling</td>
+    <td width="16.6%" align="center">WinForms UI Structure<br>& Component Implementation</td>
+    <td width="16.6%" align="center">UI/UX & Memo Editor<br>& Code Highlighting & Landing Page</td>
+  </tr>
+</table>
 
 <br/>
 
