@@ -150,9 +150,6 @@ private void ShowErrorMessage(string message)
         MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 }
-
-
-
         private void guna2ProgressBar1_ValueChanged(object sender, EventArgs e)
         {
 
@@ -162,5 +159,11 @@ private void ShowErrorMessage(string message)
         {
 
         }
-    }
+
+		public void CheckedDialogDeleteModel(bool check)
+		{
+			var model = MainModel.Instance;
+			model.DontShowDeleteModelDialog = check;
+		}
+	}
 }
