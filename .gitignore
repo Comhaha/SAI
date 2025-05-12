@@ -92,3 +92,6 @@ coverage.xml
 *.swp
 .history/
 .idea/httpRequests
+
+c
+c-journal
