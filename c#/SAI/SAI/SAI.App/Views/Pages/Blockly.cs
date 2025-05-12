@@ -443,5 +443,10 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			webView21.ZoomFactor = 0.7;
 		}
-	}
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

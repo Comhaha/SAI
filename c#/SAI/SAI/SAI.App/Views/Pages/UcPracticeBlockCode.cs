@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Forms.Dialogs;
+
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -15,10 +18,10 @@ namespace SAI.SAI.App.Views.Pages
 		public event EventHandler HomeButtonClicked;
 
         private bool isInferPanelVisible = false;
-        private int inferPanelWidth = 420; 
-        private int originalCodePanelWidth;
-        private int originalCodePanelLeft;
         private bool isMemoPanelVisible = false;
+
+        private double currentThreshold = 0.5; // threshold 기본값 0.5
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -41,17 +44,13 @@ namespace SAI.SAI.App.Views.Pages
             // 추론사이드패널에서 '이미지 불러오기' 버튼 누르고 'pboxInferAccuracy'에 이미지 띄우고
             // pboxInferAccuracy.Visible = true 해주시면 됩니다.
 
-            // 코드 패널의 초기 위치와 크기 저장
-            originalCodePanelWidth = pCode.Width;
-            originalCodePanelLeft = pCode.Left;
+            MemoUtils.ApplyStyle(tboxMemo);
+            SetupThresholdControls();
+            ScrollUtils.AdjustPanelScroll(pSideInfer);
+
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
-            // 추론 패널 초기화
-            pSideInfer.Width = inferPanelWidth;
-            pSideInfer.Left = pCode.Right - inferPanelWidth;
-            pSideInfer.Top = pCode.Top;
-            pSideInfer.Height = pCode.Height;
         }
         private void ShowpSIdeInfer()
         {
@@ -67,6 +66,13 @@ namespace SAI.SAI.App.Views.Pages
             isInferPanelVisible = false;
         }
 
+        private void SetupThresholdControls()
+        {
+            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            {
+                currentThreshold = newValue;
+            });
+        }
 
         private void leftPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -245,6 +251,19 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
 		private void ibtnDone_Click(object sender, EventArgs e)
 		{
 			ucShowDialogPresenter.clickFinish();
@@ -255,5 +274,5 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
 		}
-	}
+    }
 }
