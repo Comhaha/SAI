@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Views.Pages
@@ -247,6 +248,14 @@ namespace SAI.SAI.App.Views.Pages
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
         }
     }
 }

@@ -229,6 +229,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
+      <DependentUpon>DialogNotion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogQuitTrain.resx">
       <DependentUpon>DialogQuitTrain.cs</DependentUpon>
     </EmbeddedResource>
@@ -295,6 +298,10 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_enter_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_enter.png" />
+    <None Include="SAI.App\Resources\Images\tbox_secretkey.png" />
+    <None Include="SAI.App\Resources\Images\bg_white_titlebar_notion.png" />
     <None Include="SAI.App\Resources\Images\lbl_todo3_finish.png" />
     <None Include="SAI.App\Resources\Images\lbl_todo2_finish.png" />
     <None Include="SAI.App\Resources\Images\lbl_todo1_finish.png" />
@@ -452,6 +459,7 @@
     <None Include="SAI.App\Resources\Images\btn_home.png" />
     <None Include="SAI.App\Resources\Images\btn_infer.png" />
     <None Include="SAI.App\Resources\Images\img_frame_shadow.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_notion.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -86,6 +86,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnCloseMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnQuestionMemo = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.pMain.SuspendLayout();
             this.pToDoList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo2Done)).BeginInit();
@@ -106,6 +107,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.pMemo.SuspendLayout();
+            this.pThreshold.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -522,8 +524,8 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pThreshold);
             this.pSideInfer.Controls.Add(this.ibtnTest);
-            this.pSideInfer.Controls.Add(this.tboxThreshold);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
             this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
             this.pSideInfer.Controls.Add(this.ibtnGoNotion);
@@ -551,8 +553,9 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // tboxThreshold
             // 
-            this.tboxThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
             resources.ApplyResources(this.tboxThreshold, "tboxThreshold");
+            this.tboxThreshold.BorderColor = System.Drawing.Color.Transparent;
+            this.tboxThreshold.BorderThickness = 0;
             this.tboxThreshold.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tboxThreshold.DefaultText = "";
             this.tboxThreshold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -583,7 +586,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnDownloadAIModel.ImageSize = new System.Drawing.Size(160, 50);
             resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
             this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
-            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(160, 50);
             // 
             // ibtnGoNotion
             // 
@@ -596,7 +599,8 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnGoNotion.ImageSize = new System.Drawing.Size(160, 50);
             resources.ApplyResources(this.ibtnGoNotion, "ibtnGoNotion");
             this.ibtnGoNotion.Name = "ibtnGoNotion";
-            this.ibtnGoNotion.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnGoNotion.PressedState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnGoNotion.Click += new System.EventHandler(this.ibtnGoNotion_Click);
             // 
             // ibtnAiFeedback
             // 
@@ -737,6 +741,13 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnQuestionMemo.Name = "ibtnQuestionMemo";
             this.ibtnQuestionMemo.PressedState.ImageSize = new System.Drawing.Size(31, 31);
             // 
+            // pThreshold
+            // 
+            this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
+            resources.ApplyResources(this.pThreshold, "pThreshold");
+            this.pThreshold.Controls.Add(this.tboxThreshold);
+            this.pThreshold.Name = "pThreshold";
+            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -776,6 +787,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.pMemo.ResumeLayout(false);
+            this.pThreshold.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -838,5 +850,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCloseMemo;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnQuestionMemo;
+        private Guna.UI2.WinForms.Guna2Panel pThreshold;
     }
 }

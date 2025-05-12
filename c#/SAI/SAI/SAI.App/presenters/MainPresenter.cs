@@ -23,8 +23,9 @@ namespace SAI.SAI.App.Presenters
 		{
 			//var blockly = new Blockly(); // View 생성
             //var blockly = new UcPracticeBlockCode();
-            //var blockly = new UcTutorialBlockCode();
-            var blockly = new UcSelectType();
+            var blockly = new UcTutorialBlockCode();
+            //var blockly = new UcSelectType();
+            //var blockly = new UcLabelGuide();
             mainView.LoadPage(blockly); // 메인 폼에 삽입
 		}
 

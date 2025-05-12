@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Forms.Dialogs;
 
 
 namespace SAI.SAI.App.Views.Pages
@@ -246,6 +247,14 @@ namespace SAI.SAI.App.Views.Pages
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
         }
     }
 }
