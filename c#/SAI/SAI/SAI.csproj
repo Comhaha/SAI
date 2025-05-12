@@ -118,6 +118,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.Designer.cs">
+      <DependentUpon>DialogPrepare.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogQuitTrain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,17 +166,19 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
+    <Compile Include="SAI.App\Models\UcSelectTypeModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\DialogModelSelectPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\UcSelectTypePresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
-    <Compile Include="SAI.App\Presenters\TrainsitionPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
-    <Compile Include="SAI.App\Views.Interfaces\IPageTransitionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IUcSelectTypeView.cs" />
     <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +191,7 @@
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\IMainview.cs" />
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
