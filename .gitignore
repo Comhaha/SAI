@@ -42,7 +42,8 @@ venv/
 
 # /Python/script/ 폴더는 예외 처리
 !/Python/scripts/
-!/Python/scripts/**
+!/Python/scripts/*.py
+/Python/scripts/*
 
 # Java
 *.class

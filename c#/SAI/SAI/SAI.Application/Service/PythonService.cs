@@ -27,15 +27,15 @@ namespace SAI.SAI.Application.Service
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 onOutput?.Invoke($"Base Directory: {baseDir}");
 
-                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\3rd\c#\SAI\SAI\SAI.Application\Python\venv\Scripts\python.exe"));
+                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
                 onOutput?.Invoke($"Python Executable Path: {pythonExe}");
-                
-                // 모드에 따라 다른 스크립트 파일 실행
-                string scriptPath = mode == Mode.Tutorial 
-                    ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\3rd\c#\SAI\SAI\SAI.Application\Python\scripts\test_script.py"))
-                    : Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\3rd\c#\SAI\SAI\SAI.Application\Python\scripts\yolo_practice.py"));
-                
+
+                string scriptPath = mode == Mode.Tutorial
+                    ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\test_script.py"))
+                    : Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\yolo_practice.py"));
                 onOutput?.Invoke($"Script Path: {scriptPath}");
+
+
 
                 if (!File.Exists(scriptPath))
                 {

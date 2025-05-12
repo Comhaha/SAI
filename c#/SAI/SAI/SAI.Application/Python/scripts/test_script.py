@@ -11,9 +11,9 @@ import zipfile
 import glob
 import io
 from datetime import datetime
-import cv2
 
-PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python\scripts"
+
+PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -438,6 +438,10 @@ def main():
     # roboflow 설치
     show_progress("roboflow 패키지 설치 중...", package_start_time, 50)
     install_packages_with_progress("roboflow", package_start_time)
+
+    # OpenCV 설치 추가
+    show_progress("opencv-python 패키지 설치 중...", package_start_time, 0)
+    install_packages_with_progress("opencv-python", package_start_time)
     
     pkg_elapsed = time.time() - package_start_time
     show_progress(f"패키지 설치 완료 (소요 시간: {int(pkg_elapsed)}초)", total_start_time, 100)
@@ -463,7 +467,8 @@ def main():
     model_start_time = time.time()
     show_progress("YOLOv8 모델 로드 중... (4/7)", total_start_time, 0)
     from ultralytics import YOLO
-    model = YOLO("yolov8n.pt")
+    model_path = os.path.join(PYTHON_DIR, "yolov8n.pt")
+    model = YOLO(model_path)
     model_elapsed = time.time() - model_start_time
     show_progress(f"YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)", total_start_time, 100)
     
@@ -568,6 +573,7 @@ def main():
         
         # 콜백 객체 생성
         callbacks = [ProgressCallback()]
+
         
         # 학습 실행
         model.train(
@@ -576,11 +582,11 @@ def main():
             batch=batch_size,
             imgsz=640,
             device=device,
-            project=os.path.join(PYTHON_DIR, "runs"),  # 결과 저장 상위 폴더 지정
-            name="detect/train"  # 하위 폴더 구조 지정
+            project=os.path.join(PYTHON_DIR, "runs"),
+            name="detect/train",  # 하위 폴더 구조 지정
+            exist_ok=False  # 기존 폴더가 있으면 덮어쓰기
         )
     
-        
         # 진행 스레드 종료 신호
         completed_epochs = total_epochs
         
@@ -619,7 +625,7 @@ def main():
                     batch=reduced_batch,
                     imgsz=640,
                     device=device,
-                    # callbacks=callbacks
+                    project=os.path.join(PYTHON_DIR, "runs")
                 )
                 
                 # 진행 스레드 종료 신호
@@ -655,7 +661,7 @@ def main():
                     batch=4,
                     imgsz=640,
                     device="cpu",
-                    # callbacks=callbacks
+                    project=os.path.join(PYTHON_DIR, "runs")
                 )
                 
                 # 진행 스레드 종료 신호
@@ -727,6 +733,7 @@ names:
                         batch=batch_size if device == "cuda" else 4,
                         imgsz=640,
                         device=device,
+                        project=os.path.join(PYTHON_DIR, "runs")
                     )
                     
                     # 진행 스레드 종료 신호
