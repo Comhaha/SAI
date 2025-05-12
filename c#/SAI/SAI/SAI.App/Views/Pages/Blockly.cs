@@ -169,5 +169,10 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			webView21.ZoomFactor = 0.9; // 줌 비율 설정
 		}
-	}
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
