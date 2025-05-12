@@ -337,7 +337,7 @@ def visualize_training_results(results_path, start_time):
         show_progress(f"결과 시각화 오류: {e}", start_time, 100)
         return False    
 
-def run_inference(model_path, image_path, start_time, conf_threshold=0.25):
+def run_inference(model_path, image_path, start_time, conf_threshold=0.25, show=True):
     """모델을 사용해 이미지에서 객체 탐지 수행"""
     try:
         # 모델 경로 및 이미지 경로 확인
@@ -370,6 +370,18 @@ def run_inference(model_path, image_path, start_time, conf_threshold=0.25):
         output_dir = PYTHON_DIR  # Python 폴더 사용
         output_path = os.path.join(output_dir, "inference_result.jpg")
         cv2.imwrite(output_path, result_img)
+
+        import matplotlib
+        matplotlib.use("TkAgg")
+
+        # ✅ matplotlib 시각화 추가
+        import matplotlib.pyplot as plt
+        result_rgb = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)
+        plt.imshow(result_rgb)
+        plt.axis("off")
+        plt.title("YOLOv8 Prediction")
+        plt.show()
+        input("🔍 창이 떴나요? 아무 키나 눌러 종료하세요.")
         
         # 탐지 결과 추출 (JSON으로 반환하기 위함)
         detections = []
@@ -860,13 +872,13 @@ names:
     return result
 
 # 추론 전용 함수
-def infer_image(model_path, image_path):
+def infer_image(model_path, image_path, show=False):
     """모델을 사용해 개별 이미지 추론 (외부에서 호출용)"""
     start_time = time.time()
     show_progress(f"이미지 추론 요청: {image_path}", start_time, 0)
     
     # 추론 실행
-    result = run_inference(model_path, image_path, start_time)
+    result = run_inference(model_path, image_path, start_time, show=show)
     
     if result:
         print(f"INFERENCE_RESULT:{json.dumps(result)}")
@@ -888,7 +900,7 @@ if __name__ == "__main__":
         try:
             model_path = sys.argv[2]
             image_path = sys.argv[3]
-            infer_image(model_path, image_path)
+            infer_image(model_path, image_path, show=True)
         except Exception as e:
             error_result = {
                 "success": False,
