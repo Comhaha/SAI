@@ -6,6 +6,7 @@ import Download from '@/pages/download/Download';
 import Screenshots from '@/pages/screenshots/Screenshots';
 import Admin from '@/pages/ad/Admin';
 import Docs from '@/pages/docs/Docs';
+import Login from '@/pages/ad/Login';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/screenshots" element={<Screenshots />} />
           <Route path="/docs" element={<Docs />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/login" element={<Login />} />
         </Routes>
       </Layout>
     </BrowserRouter>
