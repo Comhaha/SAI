@@ -65,6 +65,7 @@ local.properties
 *.stackdump
 *.dbmdl
 *.vsidx
+*.htm
 **/.vshistory/
 c#/SAI/.vs/
 c#/SAI/SAI/SAI.App/.vs/
