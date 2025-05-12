@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
-	internal interface IUcSelectTypeView
+	internal interface IUcShowDialogView
 	{
 		void showDialog(Form dialog);
 	}

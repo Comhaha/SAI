@@ -20,17 +20,27 @@ namespace SAI.SAI.App.Presenters
 
 		public void clickTutorial()
 		{			
-			mainView.LoadPage(new UcLabelGuide());			
+			mainView.LoadPage(new UcLabelGuide(mainView ));			
 		}
 
-		public void clickTrain()
+		public void clickTrainAtModelSelect()
 		{
-			mainView.LoadPage(new UcPracticeBlockCode());
+			mainView.LoadPage(new UcPracticeBlockCode(mainView));
 		}
 
 		public void clickGoTutorialBlockCode()
 		{
-			mainView.LoadPage(new UcTutorialBlockCode());
+			mainView.LoadPage(new UcTutorialBlockCode(mainView));
+		}
+
+		public void clickGoTrain()
+		{
+			mainView.LoadPage(new UcPracticeBlockCode(mainView));
+		}
+
+		public void clickFinish()
+		{
+			mainView.LoadPage(new UcSelectType(mainView));
 		}
 	}
 }

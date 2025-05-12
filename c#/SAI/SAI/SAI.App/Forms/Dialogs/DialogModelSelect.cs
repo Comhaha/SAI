@@ -36,7 +36,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
 		private void ibtnGoPractice_Click(object sender, EventArgs e)
 		{
-			presenter.clickTrain();
+			presenter.clickTrainAtModelSelect();
 			this.Close();
 		}
 	}

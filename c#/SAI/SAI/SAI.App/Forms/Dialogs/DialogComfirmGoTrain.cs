@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +16,11 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogComfirmGoTrain : Form
 	{
+		private DialogLoadPagePresenter presenter;
 		public DialogComfirmGoTrain()
 		{
 			InitializeComponent();
+
 
 			// 부모 기준 중앙
 			this.StartPosition = FormStartPosition.CenterParent;
@@ -54,7 +58,10 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.CheckedState.FillColor = Color.Transparent;
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
-			btnOk.Click += (s, e) => { System.Windows.Forms.Application.Exit(); };
+			btnOk.Click += (s, e) => { 
+				presenter.clickGoTrain();
+				this.Close();
+			};
 			// btnOk 마우스 입력 될 때
 			btnOk.MouseEnter += (s, e) =>
 			{
@@ -86,6 +93,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 			{
 				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel;
 			};
+		}
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+
+			var view = this.Owner as IMainView;
+			presenter = new DialogLoadPagePresenter(view);
 		}
 	}
 }

@@ -12,14 +12,18 @@ using System.Windows.Forms;
 using Clipper2Lib;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models.Events;
+using SAI.SAI.App.Presenters;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcLabelGuide : UserControl
+    public partial class UcLabelGuide : UserControl, IUcShowDialogView
     {
+        private UcShowDialogPresenter ucShowDialogPresenter;
+        private readonly IMainView mainView;
 
-        // 기본 도구 상태 및 이미지 관련
-        private bool isDragging = false;
+		// 기본 도구 상태 및 이미지 관련
+		private bool isDragging = false;
         private Point startPoint = new Point(0, 0);
         private bool isHandToolActive = false;
         private List<Image> images = new List<Image>();
@@ -97,11 +101,16 @@ namespace SAI.SAI.App.Views.Pages
 		/// </summary>
 		/// 
 
-		private readonly IMainView mainView;
-		public UcLabelGuide()
+		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
+
+		public UcLabelGuide(IMainView view)
         {
 			InitializeComponent();
-            LoadImages(); // 이미지 로드
+            this.mainView = view;
+			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+			LoadImages(); // 이미지 로드
 
             // 초기 설정
             SetupInitialConfig();
@@ -3641,5 +3650,18 @@ namespace SAI.SAI.App.Views.Pages
             if (editingRect.Width < 10) editingRect.Width = 10;
             if (editingRect.Height < 10) editingRect.Height = 10;
         }
-    }
+
+        // 버튼 클릭 이벤트 - 튜토리얼 블록 코딩으로 넘어가기 전 다이얼로그를 띄움
+		private void guna2Panel1_Click(object sender, EventArgs e)
+		{
+            ucShowDialogPresenter.clickGoTutorialBlockCode();
+		}
+
+		// 블록 코딩으로 넘어가는 다이얼로그를 띄우는 메서드
+		public void showDialog(Form dialog)
+		{
+            dialog.Owner = mainView as Form;
+            dialog.ShowDialog();
+		}
+	}
 }

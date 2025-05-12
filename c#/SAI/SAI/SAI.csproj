@@ -118,6 +118,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogDeleteModel.Designer.cs">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.Designer.cs">
+      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,14 +189,14 @@
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
-    <Compile Include="SAI.App\Presenters\UcSelectTypePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
-    <Compile Include="SAI.App\Views.Interfaces\IUcSelectTypeView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IUcShowDialogView.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,7 +209,6 @@
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\IMainview.cs" />
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -274,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogDeleteModel.resx">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogFinishTrain.resx">
+      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>

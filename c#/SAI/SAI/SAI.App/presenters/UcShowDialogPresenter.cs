@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace SAI.SAI.App.Presenters
 {
-	internal class UcSelectTypePresenter
+	internal class UcShowDialogPresenter
 	{
-		private readonly IUcSelectTypeView view;
-		public UcSelectTypePresenter(IUcSelectTypeView view)
+		private readonly IUcShowDialogView view;
+		public UcShowDialogPresenter(IUcShowDialogView view)
 		{
 			this.view = view;
 		}
@@ -39,6 +39,21 @@ namespace SAI.SAI.App.Presenters
 				default:
 					break;
 			}
+		}
+
+		public void clickGoTutorialBlockCode()
+		{
+			view.showDialog(new DialogConfirmGoTutorialBlockCode());
+		}
+
+		public void clickGoTrain()
+		{
+			view.showDialog(new DialogComfirmGoTrain());
+		}
+
+		public void clickFinish()
+		{
+			view.showDialog(new DialogFinishTrain());
 		}
 	}
 }

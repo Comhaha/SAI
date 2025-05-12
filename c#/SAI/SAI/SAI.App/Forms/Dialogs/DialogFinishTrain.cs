@@ -12,13 +12,14 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-	public partial class DialogConfirmGoTutorialBlockCode : Form
+	public partial class DialogFinishTrain : Form
 	{
 		private DialogLoadPagePresenter presenter;
-		public DialogConfirmGoTutorialBlockCode()
+		public DialogFinishTrain()
 		{
 			InitializeComponent();
 		}
+
 		protected override void OnShown(EventArgs e)
 		{
 			base.OnShown(e);
@@ -29,7 +30,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
 		private void guna2Button1_Click(object sender, EventArgs e)
 		{
-			presenter.clickGoTutorialBlockCode();
+			presenter.clickFinish();
 			this.Close();
 		}
 	}

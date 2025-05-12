@@ -13,15 +13,15 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcSelectType : UserControl, IUcSelectTypeView
+    public partial class UcSelectType : UserControl, IUcShowDialogView
     {
-        private UcSelectTypePresenter presenter;
+        private UcShowDialogPresenter presenter;
 		private readonly IMainView mainView;
 		public UcSelectType(IMainView view)
         {
             InitializeComponent();
 			this.mainView = view;
-			presenter = new UcSelectTypePresenter(this);
+			presenter = new UcShowDialogPresenter(this);
 		}
 
         private void ibtnImage_Click(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace SAI.SAI.App.Views.Pages
             presenter.clickNext();
         }
 
-		void IUcSelectTypeView.showDialog(Form dialog)
+		void IUcShowDialogView.showDialog(Form dialog)
 		{
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
