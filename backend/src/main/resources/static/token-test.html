@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>토큰 테스트 페이지</title>
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:600px;margin:40px auto;padding:0 16px}
+    h1{margin-top:0}
+    button{padding:8px 18px;margin-right:8px;font-size:15px;cursor:pointer}
+    #info{margin-top:20px;border:1px solid #ccc;border-radius:4px;padding:12px;white-space:pre-wrap}
+    #info b{color:#0066cc}
+  </style>
+</head>
+<body>
+<h1>현재 토큰 확인 &middot; 재발급 테스트</h1>
+
+<button id="get">현재 토큰 가져오기 (GET)</button>
+<button id="reload">새 토큰 재발급 (POST)</button>
+
+<div id="info">🛈 결과가 여기 표시됩니다.</div>
+
+<script>
+  const api = location.origin;                         // 동일 호스트/포트
+
+  const $ = id => document.getElementById(id);
+  const out = msg => $("info").textContent = msg;
+
+  /* 공용 fetch 래퍼 */
+  async function call(method, url){
+    const res = await fetch(api+url, {method});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  /* 현재 토큰 조회 */
+  $("get").onclick = async ()=>{
+    out("⏳ 토큰 조회 중…");
+    try{
+      const j = await call("GET", "/api/token");
+      out(`✅ 현재 토큰:\n\n<b>${j.result.token}</b>`);
+    }catch(e){
+      out("❌ 오류: "+e);
+    }
+  };
+
+  /* 토큰 재발급 */
+  $("reload").onclick = async ()=>{
+    out("⏳ 새 토큰 발급 요청 중…");
+    try{
+      const j = await call("POST", "/api/token/reload");
+      out(`🔄 재발급 완료!\n\n<b>${j.result.token}</b>`);
+    }catch(e){
+      out("❌ 오류: "+e);
+    }
+  };
+</script>
+</body>
+</html>

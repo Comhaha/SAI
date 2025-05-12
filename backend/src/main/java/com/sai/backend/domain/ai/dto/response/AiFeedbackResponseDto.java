@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class AiFeedbackResponseDto {
+    private String feedbackId;
     private String feedback;
 }

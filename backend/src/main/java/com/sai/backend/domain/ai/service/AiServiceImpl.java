@@ -3,10 +3,14 @@ package com.sai.backend.domain.ai.service;
 import com.sai.backend.domain.ai.dto.request.AiFeedbackRequestDto;
 import com.sai.backend.domain.ai.dto.response.AiFeedbackResponseDto;
 
+import com.sai.backend.domain.ai.model.AiLog;
+import com.sai.backend.domain.ai.repository.mongo.AiFeedbackRepository;
 import java.util.List;
 import java.util.Map;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,7 @@ public class AiServiceImpl implements AiService {
 
     private final WebClient openAiWebClient;
     private final S3Service s3Service;
+    private final AiFeedbackRepository aiFeedbackRepository;
 
     @Value("${openai.model}")
     private String model;
@@ -34,9 +39,15 @@ public class AiServiceImpl implements AiService {
             "messages", List.of(
                 Map.of("role", "system",
                     "content", """
-                            당신은 모델 평가 전문가야. code와 주석을 보고 학습과정에 대한 log를 분석,
-                            image_url에 있는 추론에 대한 결과 분석하고 지금까지 작성된 코드는 어떤 방식으로
-                            학습하고 더 고도화할 수 있는지 피드백 해줘.
+                            당신은 모델 평가 전문가야.
+                            ## 해야 할 일
+                            1. code와 주석을 보고 학습과정에 대한 log를 분석
+                            2. image_url에 있는 추론에 대한 결과 분석.
+                        
+                            ##  분석 결과
+                            1. 지금까지 작성된 코드는 어떤 방식으로 학습했는지
+                            2. 더 고도화할 수 있는지 피드백 해줘.
+                            3. 피드백 답변은 복사 붙여넣기 했을 때, 노션에 잘 정리 되는 형식으로 해줘.
                         """),
                 Map.of("role", "user",
                     "content", List.of(
@@ -57,7 +68,12 @@ public class AiServiceImpl implements AiService {
                 .get("message")).get("content"))
             .block();
 
-        return new AiFeedbackResponseDto(feedback);
+        String feedbackId = UUID.randomUUID().toString();
+
+        AiLog log = new AiLog(feedbackId, dto.getCode(), dto.getLog(), dataUrl, feedback);
+        aiFeedbackRepository.save(log);
+
+        return new AiFeedbackResponseDto(feedbackId, feedback);
     }
 
 }
