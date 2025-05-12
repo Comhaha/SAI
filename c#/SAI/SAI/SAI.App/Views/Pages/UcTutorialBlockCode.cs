@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Drawing;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl
-    {
-        public event EventHandler HomeButtonClicked;
-        public UcTutorialBlockCode()
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView
+	{
+		private UcShowDialogPresenter ucShowDialogPresenter;
+		private readonly IMainView mainView;
+
+		public event EventHandler HomeButtonClicked;
+        public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
-            ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+
+			this.mainView = view;
+			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -171,7 +180,13 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnDone_Click(object sender, EventArgs e)
         {
+			ucShowDialogPresenter.clickGoTrain();
+		}
 
-        }
-    }
+		public void showDialog(Form dialog)
+		{
+			dialog.Owner = mainView as Form;
+			dialog.ShowDialog();
+		}
+	}
 }

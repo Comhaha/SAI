@@ -106,17 +106,35 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogComfirmGoTrain.Designer.cs">
       <DependentUpon>DialogComfirmGoTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmGoTutorialBlockCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmGoTutorialBlockCode.Designer.cs">
+      <DependentUpon>DialogConfirmGoTutorialBlockCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogDeleteModel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogDeleteModel.Designer.cs">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.Designer.cs">
+      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.Designer.cs">
+      <DependentUpon>DialogPrepare.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogQuitTrain.cs">
       <SubType>Form</SubType>
@@ -166,17 +184,19 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
+    <Compile Include="SAI.App\Models\UcSelectTypeModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
-    <Compile Include="SAI.App\Presenters\TrainsitionPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
-    <Compile Include="SAI.App\Views.Interfaces\IPageTransitionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IUcShowDialogView.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,8 +274,14 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogComfirmGoTrain.resx">
       <DependentUpon>DialogComfirmGoTrain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmGoTutorialBlockCode.resx">
+      <DependentUpon>DialogConfirmGoTutorialBlockCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogDeleteModel.resx">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogFinishTrain.resx">
+      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>

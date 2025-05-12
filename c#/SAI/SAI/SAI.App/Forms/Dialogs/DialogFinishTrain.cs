@@ -12,12 +12,12 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-    public partial class DialogModelSelect : Form
-    {
-        private DialogLoadPagePresenter presenter;
-		public DialogModelSelect()
-        {
-            InitializeComponent();
+	public partial class DialogFinishTrain : Form
+	{
+		private DialogLoadPagePresenter presenter;
+		public DialogFinishTrain()
+		{
+			InitializeComponent();
 		}
 
 		protected override void OnShown(EventArgs e)
@@ -28,15 +28,9 @@ namespace SAI.SAI.App.Forms.Dialogs
 			presenter = new DialogLoadPagePresenter(view);
 		}
 
-		private void ibtnGoTutorial_Click(object sender, EventArgs e)
+		private void guna2Button1_Click(object sender, EventArgs e)
 		{
-            presenter.clickTutorial();
-			this.Close();
-		}
-
-		private void ibtnGoPractice_Click(object sender, EventArgs e)
-		{
-			presenter.clickTrainAtModelSelect();
+			presenter.clickFinish();
 			this.Close();
 		}
 	}
