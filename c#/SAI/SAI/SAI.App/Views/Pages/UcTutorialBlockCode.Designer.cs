@@ -34,6 +34,12 @@ namespace SAI.SAI.App.Views.Pages
 			this.pMain = new Guna.UI2.WinForms.Guna2Panel();
 			this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
 			this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
+			this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
+			this.btnModelInference = new Guna.UI2.WinForms.Guna2Button();
+			this.btnImgPath = new Guna.UI2.WinForms.Guna2Button();
+			this.btnResultGraph = new Guna.UI2.WinForms.Guna2Button();
+			this.btnMachineLearning = new Guna.UI2.WinForms.Guna2Button();
+			this.btnLoadDataset = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLoadModel = new Guna.UI2.WinForms.Guna2Button();
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
 			this.labelBlockContent = new System.Windows.Forms.Label();
@@ -109,12 +115,90 @@ namespace SAI.SAI.App.Views.Pages
 			// 
 			this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_blocklist_tutorial;
 			resources.ApplyResources(this.pBlockList, "pBlockList");
+			this.pBlockList.Controls.Add(this.btnVisualizeResult);
+			this.pBlockList.Controls.Add(this.btnModelInference);
+			this.pBlockList.Controls.Add(this.btnImgPath);
+			this.pBlockList.Controls.Add(this.btnResultGraph);
+			this.pBlockList.Controls.Add(this.btnMachineLearning);
+			this.pBlockList.Controls.Add(this.btnLoadDataset);
 			this.pBlockList.Controls.Add(this.btnLoadModel);
 			this.pBlockList.Controls.Add(this.btnPip);
 			this.pBlockList.Controls.Add(this.labelBlockContent);
 			this.pBlockList.Controls.Add(this.labelBlockTitle);
 			this.pBlockList.Controls.Add(this.btnBlockStart);
 			this.pBlockList.Name = "pBlockList";
+			// 
+			// btnVisualizeResult
+			// 
+			this.btnVisualizeResult.BackgroundImage = global::SAI.Properties.Resources.btnVisualizeResult;
+			resources.ApplyResources(this.btnVisualizeResult, "btnVisualizeResult");
+			this.btnVisualizeResult.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnVisualizeResult.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnVisualizeResult.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnVisualizeResult.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnVisualizeResult.FillColor = System.Drawing.Color.Transparent;
+			this.btnVisualizeResult.ForeColor = System.Drawing.Color.White;
+			this.btnVisualizeResult.Name = "btnVisualizeResult";
+			// 
+			// btnModelInference
+			// 
+			this.btnModelInference.BackgroundImage = global::SAI.Properties.Resources.btnModelInference;
+			resources.ApplyResources(this.btnModelInference, "btnModelInference");
+			this.btnModelInference.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnModelInference.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnModelInference.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnModelInference.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnModelInference.FillColor = System.Drawing.Color.Transparent;
+			this.btnModelInference.ForeColor = System.Drawing.Color.White;
+			this.btnModelInference.Name = "btnModelInference";
+			// 
+			// btnImgPath
+			// 
+			this.btnImgPath.BackgroundImage = global::SAI.Properties.Resources.btnImgPath;
+			resources.ApplyResources(this.btnImgPath, "btnImgPath");
+			this.btnImgPath.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnImgPath.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnImgPath.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnImgPath.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnImgPath.FillColor = System.Drawing.Color.Transparent;
+			this.btnImgPath.ForeColor = System.Drawing.Color.White;
+			this.btnImgPath.Name = "btnImgPath";
+			// 
+			// btnResultGraph
+			// 
+			this.btnResultGraph.BackgroundImage = global::SAI.Properties.Resources.btnResultGraph;
+			resources.ApplyResources(this.btnResultGraph, "btnResultGraph");
+			this.btnResultGraph.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnResultGraph.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnResultGraph.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnResultGraph.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnResultGraph.FillColor = System.Drawing.Color.Transparent;
+			this.btnResultGraph.ForeColor = System.Drawing.Color.White;
+			this.btnResultGraph.Name = "btnResultGraph";
+			// 
+			// btnMachineLearning
+			// 
+			this.btnMachineLearning.BackgroundImage = global::SAI.Properties.Resources.btnMachineLearning;
+			resources.ApplyResources(this.btnMachineLearning, "btnMachineLearning");
+			this.btnMachineLearning.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnMachineLearning.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnMachineLearning.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnMachineLearning.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnMachineLearning.FillColor = System.Drawing.Color.Transparent;
+			this.btnMachineLearning.ForeColor = System.Drawing.Color.White;
+			this.btnMachineLearning.Name = "btnMachineLearning";
+			// 
+			// btnLoadDataset
+			// 
+			this.btnLoadDataset.BackgroundImage = global::SAI.Properties.Resources.btnLoadDataset;
+			resources.ApplyResources(this.btnLoadDataset, "btnLoadDataset");
+			this.btnLoadDataset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnLoadDataset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnLoadDataset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnLoadDataset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnLoadDataset.FillColor = System.Drawing.Color.Transparent;
+			this.btnLoadDataset.ForeColor = System.Drawing.Color.White;
+			this.btnLoadDataset.Name = "btnLoadDataset";
 			// 
 			// btnLoadModel
 			// 
@@ -514,5 +598,11 @@ namespace SAI.SAI.App.Views.Pages
 		private System.Windows.Forms.Label labelBlockContent;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
 		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
+		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
+		private Guna.UI2.WinForms.Guna2Button btnMachineLearning;
+		private Guna.UI2.WinForms.Guna2Button btnResultGraph;
+		private Guna.UI2.WinForms.Guna2Button btnImgPath;
+		private Guna.UI2.WinForms.Guna2Button btnModelInference;
+		private Guna.UI2.WinForms.Guna2Button btnVisualizeResult;
 	}
 }

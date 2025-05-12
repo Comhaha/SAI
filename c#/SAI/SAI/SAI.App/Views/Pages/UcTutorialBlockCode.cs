@@ -60,8 +60,50 @@ namespace SAI.SAI.App.Views.Pages
 				setBtnLoadModel();
 			};
 			btnPip.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
-			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadModel.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+				setBtnLoadDataset();
+			};
 			btnLoadModel.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadDataset.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+				setBtnMachineLearning();
+			};
+			btnLoadDataset.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnMachineLearning.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
+				setBtnResultGraph();
+			};
+			btnMachineLearning.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
+			btnResultGraph.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+				setBtnImgPath();
+			};
+			btnResultGraph.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+			btnImgPath.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+				setBtnModelInference();
+			};
+			btnImgPath.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+			btnModelInference.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+				setBtnVisualizeResult();
+			};
+			btnModelInference.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+			btnVisualizeResult.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
+				setButtonInVisible(btnVisualizeResult);
+				labelBlockTitle.Text = "실행하기";
+				labelBlockContent.Text = "실행 버튼을 클릭하여\r\n모델을 학습시켜보세요.\r\n";
+			};
+			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 		}
 
 		private void setButtonVisible(Guna2Button button)
@@ -78,6 +120,12 @@ namespace SAI.SAI.App.Views.Pages
 			btnBlockStart.Visible = false;
 			btnPip.Visible = false;
 			btnLoadModel.Visible = false;
+			btnLoadDataset.Visible = false;
+			btnMachineLearning.Visible = false;
+			btnResultGraph.Visible = false;
+			btnImgPath.Visible = false;
+			btnModelInference.Visible = false;
+			btnVisualizeResult.Visible = false;
 		}
 
 		private void setBtnBlockStart()
@@ -155,6 +203,162 @@ namespace SAI.SAI.App.Views.Pages
 
 			labelBlockTitle.Text = "모델 불러오기";
 			labelBlockContent.Text = "YOLO 모델의 나노 버전을 불러\r\n오는 블록입니다.\r\n";
+		}
+
+		private void setBtnLoadDataset()
+		{
+			setButtonVisible(btnLoadDataset);
+			setButtonInVisible(btnLoadModel);
+			// 패키지 설치 블럭			
+			btnLoadDataset.BackColor = Color.Transparent;
+			btnLoadDataset.PressedColor = Color.Transparent;
+			btnLoadDataset.CheckedState.FillColor = Color.Transparent;
+			btnLoadDataset.DisabledState.FillColor = Color.Transparent;
+			btnLoadDataset.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnLoadDataset.MouseEnter += (s, e) =>
+			{
+				btnLoadDataset.BackColor = Color.Transparent;
+				btnLoadDataset.BackgroundImage = Properties.Resources.btnLoadDatasetClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnLoadDataset.MouseLeave += (s, e) =>
+			{
+				btnLoadDataset.BackgroundImage = Properties.Resources.btnLoadDataset;
+			};
+
+			labelBlockTitle.Text = "데이터셋 불러오기";
+			labelBlockContent.Text = "데이터셋(딸기와 바나나)을 불러\r\n옵니다.\r\n";
+		}
+
+		private void setBtnMachineLearning()
+		{
+			setButtonVisible(btnMachineLearning);
+			setButtonInVisible(btnLoadDataset);
+			// 패키지 설치 블럭			
+			btnMachineLearning.BackColor = Color.Transparent;
+			btnMachineLearning.PressedColor = Color.Transparent;
+			btnMachineLearning.CheckedState.FillColor = Color.Transparent;
+			btnMachineLearning.DisabledState.FillColor = Color.Transparent;
+			btnMachineLearning.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnMachineLearning.MouseEnter += (s, e) =>
+			{
+				btnMachineLearning.BackColor = Color.Transparent;
+				btnMachineLearning.BackgroundImage = Properties.Resources.btnMachineLearningClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnMachineLearning.MouseLeave += (s, e) =>
+			{
+				btnMachineLearning.BackgroundImage = Properties.Resources.btnMachineLearning;
+			};
+
+			labelBlockTitle.Text = "모델 학습하기";
+			labelBlockContent.Text = "모델 학습을 진행합니다. epoch,\r\nimgsz가 학습에 영향을 줍니다.\r\n";
+		}
+
+		private void setBtnResultGraph()
+		{
+			setButtonVisible(btnResultGraph);
+			setButtonInVisible(btnMachineLearning);
+			// 패키지 설치 블럭			
+			btnResultGraph.BackColor = Color.Transparent;
+			btnResultGraph.PressedColor = Color.Transparent;
+			btnResultGraph.CheckedState.FillColor = Color.Transparent;
+			btnResultGraph.DisabledState.FillColor = Color.Transparent;
+			btnResultGraph.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnResultGraph.MouseEnter += (s, e) =>
+			{
+				btnResultGraph.BackColor = Color.Transparent;
+				btnResultGraph.BackgroundImage = Properties.Resources.btnResultGraphClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnResultGraph.MouseLeave += (s, e) =>
+			{
+				btnResultGraph.BackgroundImage = Properties.Resources.btnResultGraph;
+			};
+
+			labelBlockTitle.Text = "학습 결과 그래프 출력하기";
+			labelBlockContent.Text = "학습 결과 그래프를 출력합니다.\r\n모델 학습률을 볼 수 있습니다.\r\n";
+		}
+
+		private void setBtnImgPath()
+		{
+			setButtonVisible(btnImgPath);
+			setButtonInVisible(btnResultGraph);
+			// 패키지 설치 블럭			
+			btnImgPath.BackColor = Color.Transparent;
+			btnImgPath.PressedColor = Color.Transparent;
+			btnImgPath.CheckedState.FillColor = Color.Transparent;
+			btnImgPath.DisabledState.FillColor = Color.Transparent;
+			btnImgPath.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnImgPath.MouseEnter += (s, e) =>
+			{
+				btnImgPath.BackColor = Color.Transparent;
+				btnImgPath.BackgroundImage = Properties.Resources.btnImgPathClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnImgPath.MouseLeave += (s, e) =>
+			{
+				btnImgPath.BackgroundImage = Properties.Resources.btnImgPath;
+			};
+
+			labelBlockTitle.Text = "이미지 불러오기";
+			labelBlockContent.Text = "추론을 위한 이미지 1장을\r\n선택하여 불러옵니다.\r\n";
+		}
+
+		private void setBtnModelInference()
+		{
+			setButtonVisible(btnModelInference);
+			setButtonInVisible(btnImgPath);
+			// 패키지 설치 블럭			
+			btnModelInference.BackColor = Color.Transparent;
+			btnModelInference.PressedColor = Color.Transparent;
+			btnModelInference.CheckedState.FillColor = Color.Transparent;
+			btnModelInference.DisabledState.FillColor = Color.Transparent;
+			btnModelInference.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnModelInference.MouseEnter += (s, e) =>
+			{
+				btnModelInference.BackColor = Color.Transparent;
+				btnModelInference.BackgroundImage = Properties.Resources.btnModelInferenceClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnModelInference.MouseLeave += (s, e) =>
+			{
+				btnModelInference.BackgroundImage = Properties.Resources.btnModelInference;
+			};
+
+			labelBlockTitle.Text = "추론 실행하기\r\n";
+			labelBlockContent.Text = "불러온 이미지로 학습한 모델의\r\n추론을 실행합니다.\r\n";
+		}
+
+		private void setBtnVisualizeResult()
+		{
+			setButtonVisible(btnVisualizeResult);
+			setButtonInVisible(btnModelInference);
+			// 패키지 설치 블럭			
+			btnVisualizeResult.BackColor = Color.Transparent;
+			btnVisualizeResult.PressedColor = Color.Transparent;
+			btnVisualizeResult.CheckedState.FillColor = Color.Transparent;
+			btnVisualizeResult.DisabledState.FillColor = Color.Transparent;
+			btnVisualizeResult.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnVisualizeResult.MouseEnter += (s, e) =>
+			{
+				btnVisualizeResult.BackColor = Color.Transparent;
+				btnVisualizeResult.BackgroundImage = Properties.Resources.btnVisualizeResultClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnVisualizeResult.MouseLeave += (s, e) =>
+			{
+				btnVisualizeResult.BackgroundImage = Properties.Resources.btnVisualizeResult;
+			};
+
+			labelBlockTitle.Text = "추론 결과 시각화하기";
+			labelBlockContent.Text = "추론 결과를 시각화합니다. 모델\r\n이 판단한 결과를 볼 수 있습니다.\r\n";
 		}
 
 		private void UcTutorialBlockCode_Load(object sender, EventArgs e)

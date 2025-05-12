@@ -180,6 +180,168 @@
   <data name="pBlockList.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="btnVisualizeResult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnVisualizeResult.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnVisualizeResult.Location" type="System.Drawing.Point, System.Drawing">
+    <value>56, 63</value>
+  </data>
+  <data name="btnVisualizeResult.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 65</value>
+  </data>
+  <data name="btnVisualizeResult.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;btnVisualizeResult.Name" xml:space="preserve">
+    <value>btnVisualizeResult</value>
+  </data>
+  <data name="&gt;&gt;btnVisualizeResult.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnVisualizeResult.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnVisualizeResult.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnModelInference.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnModelInference.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnModelInference.Location" type="System.Drawing.Point, System.Drawing">
+    <value>60, 58</value>
+  </data>
+  <data name="btnModelInference.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 70</value>
+  </data>
+  <data name="btnModelInference.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;btnModelInference.Name" xml:space="preserve">
+    <value>btnModelInference</value>
+  </data>
+  <data name="&gt;&gt;btnModelInference.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnModelInference.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnModelInference.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnImgPath.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnImgPath.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnImgPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>57, 38</value>
+  </data>
+  <data name="btnImgPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 110</value>
+  </data>
+  <data name="btnImgPath.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;btnImgPath.Name" xml:space="preserve">
+    <value>btnImgPath</value>
+  </data>
+  <data name="&gt;&gt;btnImgPath.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnImgPath.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnImgPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnResultGraph.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnResultGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnResultGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 70</value>
+  </data>
+  <data name="btnResultGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 48</value>
+  </data>
+  <data name="btnResultGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;btnResultGraph.Name" xml:space="preserve">
+    <value>btnResultGraph</value>
+  </data>
+  <data name="&gt;&gt;btnResultGraph.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnResultGraph.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnResultGraph.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnMachineLearning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnMachineLearning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnMachineLearning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>86, 37</value>
+  </data>
+  <data name="btnMachineLearning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 115</value>
+  </data>
+  <data name="btnMachineLearning.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnMachineLearning.Name" xml:space="preserve">
+    <value>btnMachineLearning</value>
+  </data>
+  <data name="&gt;&gt;btnMachineLearning.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnMachineLearning.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnMachineLearning.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnLoadDataset.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnLoadDataset.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnLoadDataset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>71, 62</value>
+  </data>
+  <data name="btnLoadDataset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 60</value>
+  </data>
+  <data name="btnLoadDataset.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnLoadDataset.Name" xml:space="preserve">
+    <value>btnLoadDataset</value>
+  </data>
+  <data name="&gt;&gt;btnLoadDataset.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnLoadDataset.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;btnLoadDataset.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="btnLoadModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -205,7 +367,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnLoadModel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>6</value>
   </data>
   <data name="btnPip.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -214,10 +376,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnPip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 66</value>
+    <value>83, 60</value>
   </data>
   <data name="btnPip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 56</value>
+    <value>143, 62</value>
   </data>
   <data name="btnPip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -232,7 +394,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnPip.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>7</value>
   </data>
   <data name="labelBlockContent.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR, 10.2pt</value>
@@ -247,8 +409,8 @@
     <value>2</value>
   </data>
   <data name="labelBlockContent.Text" xml:space="preserve">
-    <value>YOLO 모델의 나노 버전을 불러
-오는 블록입니다.</value>
+    <value>추론 결과를 시각화합니다. 모델
+이 판단한 결과를 볼 수 있습니다.</value>
   </data>
   <data name="labelBlockContent.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -263,7 +425,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;labelBlockContent.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>8</value>
   </data>
   <data name="labelBlockTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR Medium, 12pt, style=Bold</value>
@@ -278,7 +440,7 @@
     <value>1</value>
   </data>
   <data name="labelBlockTitle.Text" xml:space="preserve">
-    <value>모델 불러오기</value>
+    <value>추론 결과 시각화하기</value>
   </data>
   <data name="labelBlockTitle.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -293,7 +455,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;labelBlockTitle.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>9</value>
   </data>
   <data name="btnBlockStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -302,10 +464,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnBlockStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 66</value>
+    <value>114, 62</value>
   </data>
   <data name="btnBlockStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 52</value>
+    <value>82, 60</value>
   </data>
   <data name="btnBlockStart.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -320,7 +482,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnBlockStart.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>10</value>
   </data>
   <data name="pBlockList.Location" type="System.Drawing.Point, System.Drawing">
     <value>33, 34</value>
