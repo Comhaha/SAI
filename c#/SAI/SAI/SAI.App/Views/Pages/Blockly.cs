@@ -23,7 +23,7 @@ namespace SAI.SAI.App.Views.Pages
 {
 	public partial class Blockly : UserControl, IBlocklyView
 	{
-		private BlocklyPresenter presenter;
+		private BlocklyPresenter blocklyPresenter;
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
 		private JsBridge jsBridge;
@@ -41,11 +41,10 @@ namespace SAI.SAI.App.Views.Pages
         private int modelTabCount = 0; // 모델 탭 카운터 추가
         private bool isDoubleClickProcessing = false; // 더블클릭 처리 중 플래그 추가
 
-        //public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-
         public Blockly()
         {
-            InitializeComponent();
+			blocklyPresenter = new BlocklyPresenter(this);
+			InitializeComponent();
 
             // 코드박스 초기화 - presenter 초기화 전에 수행
             InitializeCodeContainer();
@@ -94,6 +93,8 @@ namespace SAI.SAI.App.Views.Pages
 
             // -----------------------------------------------------------------------
 
+            InitializeWebView2();
+
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnStart.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 			btnStart.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("start"));
@@ -119,7 +120,7 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			jsBridge = new JsBridge((message, type) =>
 			{
-				presenter.HandleJsMessage(message, type);
+				blocklyPresenter.HandleJsMessage(message, type);
 			});
 
 			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -183,7 +184,6 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-
 			webView21.ZoomFactor = 0.7; // 줌 비율 설정
 
 			await webView21.EnsureCoreWebView2Async();
@@ -240,8 +240,13 @@ namespace SAI.SAI.App.Views.Pages
                         }
                     } catch(err) {
                         console.error('Error in block click listener: ' + err);
-                    }
-                ";
+                    }";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Blockly: 블록 클릭 리스너 추가 오류 - {ex.Message}");
+            }
+        }
 
         // 블록 클릭 처리 - 더블 클릭 감지 및 처리 (개선)
         private void HandleBlockClick(string blockId)

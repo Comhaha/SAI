@@ -52,9 +52,9 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                if (model != null && !string.IsNullOrEmpty(model.code))
+                if (model != null && !string.IsNullOrEmpty(model.blockAllCode))
                 {
-                    view.UpdateCode(model.code);
+                    view.UpdateCode(model.blockAllCode);
                 }
             }
             catch (Exception ex)

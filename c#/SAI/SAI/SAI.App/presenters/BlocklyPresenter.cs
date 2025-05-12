@@ -35,7 +35,10 @@ namespace SAI.SAI.App.Presenters
 				// 혜정언니 여기를 작성하면 돼!
 
 				// 이 코드는 잘 출력되는지 확인용이라서 지워도 돼!
-				MessageBox.Show(newCode);
+				if(newCode != "")
+				{
+					MessageBox.Show(newCode);
+				}
 			};
 
 			// 전체 블록 코드가 변경되면 실행되는 이벤트
@@ -48,19 +51,17 @@ namespace SAI.SAI.App.Presenters
 		private void OnAddBlockDoubleClicked(object sender, BlockEventArgs e)
 		{
 			view.getPythonCodeByType(e.BlockType);
+			// blockCode 초기화
+			blocklyModel.blockCode = "";
 		}
         // 버튼 클릭시 호출되는 이벤트 메소드 -> view에게 전달
         private void OnAddBlockButtonClicked(object sender, BlockEventArgs e)
         {
-            // View에게 JS로 블록 추가 명령
-            view.addBlock(e.BlockType);
-        }
-
-        // 수정: AppendCode 메서드를 사용하여 코드 누적 및 하이라이트 적용
-        public void HandleJsMessage(string code)
-        {
-            // 메시지를 View로 전달해서 RichTextBox에 출력
-            view.ShowGeneratedCode(code);
+			// View에게 JS로 블록 추가 명령
+			view.addBlock(e.BlockType);
+			// blockAllCode 초기화
+			blocklyModel.blockAllCode = "";
+		}
 
 		// presenter가 view와 service에게 전달해주기 위한 메소드
 		public void HandleJsMessage(string code, string type)
