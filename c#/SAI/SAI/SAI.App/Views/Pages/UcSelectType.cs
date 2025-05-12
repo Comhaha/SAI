@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Forms.Dialogs;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -32,7 +33,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnNext_Click(object sender, EventArgs e)
         {
-
+            using (var dialog = new DialogModelSelect())
+            {
+                dialog.ShowDialog();
+            }
         }
 
         private void guna2HtmlLabel2_Click(object sender, EventArgs e)

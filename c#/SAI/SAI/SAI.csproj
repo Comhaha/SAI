@@ -298,6 +298,17 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\img_efficientdet.png" />
+    <None Include="SAI.App\Resources\Images\img_yolo.png" />
+    <None Include="SAI.App\Resources\Images\btn_faster_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_faster_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_faster.png" />
+    <None Include="SAI.App\Resources\Images\btn_efficientdet_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_efficientdet_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_efficientdet.png" />
+    <None Include="SAI.App\Resources\Images\btn_yolo_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_yolo_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_yolo.png" />
     <None Include="SAI.App\Resources\Images\btn_enter_hover.png" />
     <None Include="SAI.App\Resources\Images\btn_enter.png" />
     <None Include="SAI.App\Resources\Images\tbox_secretkey.png" />
@@ -460,6 +471,8 @@
     <None Include="SAI.App\Resources\Images\btn_infer.png" />
     <None Include="SAI.App\Resources\Images\img_frame_shadow.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_white_notion.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_selectmodel.png" />
+    <None Include="SAI.App\Resources\Images\bg_gray_titlebar.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
