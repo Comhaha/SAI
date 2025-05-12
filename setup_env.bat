@@ -2,11 +2,8 @@
 chcp 65001 > nul
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-REM Git 루트 경로 찾기
-FOR /F %%i IN ('git rev-parse --show-toplevel') DO SET GITROOT=%%i
-
-REM 대상 폴더 경로 (따옴표 포함으로 보존)
-SET "TARGET_DIR=%GITROOT%\c#\SAI\SAI\SAI.Application\Python"
+REM 현재 배치 파일의 위치를 기준으로 상대 경로 설정
+SET "TARGET_DIR=%~dp0c#\SAI\SAI\SAI.Application\Python"
 SET "VENV_DIR=%TARGET_DIR%\venv"
 
 REM 가상환경 생성
@@ -25,4 +22,4 @@ call "%VENV_DIR%\Scripts\activate"
 REM 셸 유지
 echo 💡 가상환경이 활성화되었습니다.
 start "" "%VENV_DIR%"
-cmd /k
+cmd /k 
