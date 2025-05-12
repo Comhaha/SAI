@@ -31,8 +31,13 @@
             this.chromiumWebBrowser1 = new CefSharp.WinForms.ChromiumWebBrowser();
             this.btnPip = new Guna.UI2.WinForms.Guna2Button();
             this.btnHello = new Guna.UI2.WinForms.Guna2Button();
+<<<<<<< Updated upstream
             this.btnDialog = new Guna.UI2.WinForms.Guna2CircleButton();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+=======
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btnDialog = new Guna.UI2.WinForms.Guna2CircleButton();
+>>>>>>> Stashed changes
             this.SuspendLayout();
             // 
             // chromiumWebBrowser1
@@ -59,6 +64,10 @@
             this.btnPip.Size = new System.Drawing.Size(212, 38);
             this.btnPip.TabIndex = 1;
             this.btnPip.Text = "패키지 설치";
+<<<<<<< Updated upstream
+=======
+            this.btnPip.Click += new System.EventHandler(this.btnPip_Click);
+>>>>>>> Stashed changes
             // 
             // btnHello
             // 
@@ -75,6 +84,18 @@
             this.btnHello.Text = "안녕!";
             this.btnHello.Click += new System.EventHandler(this.btnHello_Click);
             // 
+<<<<<<< Updated upstream
+=======
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(863, 20);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(325, 700);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+>>>>>>> Stashed changes
             // btnDialog
             // 
             this.btnDialog.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -91,6 +112,7 @@
             this.btnDialog.Text = "showdialog";
             this.btnDialog.Click += new System.EventHandler(this.btnDialog_Click);
             // 
+<<<<<<< Updated upstream
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(863, 20);
@@ -100,6 +122,8 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged_1);
             // 
+=======
+>>>>>>> Stashed changes
             // Blockly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);

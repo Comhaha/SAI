@@ -11,8 +11,8 @@ namespace SAI.SAI.Application.Service
 {
 	public class BlocklyService
 	{
-		private readonly string tutorialPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\tutorial_script.py";
-		private readonly string trainPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\train_script.py";
+		private readonly string tutorialPath = "C:\\Users\\SSAFY\\Desktop\\open_0507_pjt\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\Python\\tutorial_script.py";
+		private readonly string trainPath = "C:\\Users\\SSAFY\\Desktop\\open_0507_pjt\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\Python\\train_script.py";
 
 		// 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드
 		public void SaveCodeToFileInTutorial()

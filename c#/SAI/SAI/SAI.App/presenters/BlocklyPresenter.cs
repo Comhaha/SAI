@@ -21,6 +21,7 @@ namespace SAI.SAI.App.Presenters
         // 유지: CodePresenter 변수 선언
         private CodePresenter codeBoxPresenter;
 
+<<<<<<< Updated upstream
         // 수정: CodePresenter 매개변수 추가 (오버로드)
         public BlocklyPresenter(IBlocklyView view, CodePresenter codeBoxPresenter = null)
         {
@@ -28,6 +29,15 @@ namespace SAI.SAI.App.Presenters
             this.blocklyService = new BlocklyService();
             this.blocklyModel = BlocklyModel.Instance;
             this.codeBoxPresenter = codeBoxPresenter; // CodePresenter 저장
+=======
+		public BlocklyPresenter(IBlocklyView view, CodeBoxPresenter codeBoxPresenter)//수정 
+		{
+			this.view = view;
+			this.blocklyService = new BlocklyService();
+			this.blocklyModel = BlocklyModel.Instance;
+			this.view.AddBlockButtonClicked += OnAddBlockButtonClicked;			
+		}
+>>>>>>> Stashed changes
 
             // 디버깅 메시지 추가
             Console.WriteLine($"[DEBUG] BlocklyPresenter: 생성자 호출됨, codeBoxPresenter {(codeBoxPresenter == null ? "null" : "not null")}");
