@@ -18,14 +18,7 @@ namespace SAI.SAI.App.Presenters
 		}
 		public void clickType(string type)
 		{
-			var model = UcSelectTypeModel.Instance;
-			model.selectType = type;
-		}
-
-		public void clickNext()
-		{
-			var model = UcSelectTypeModel.Instance;
-			switch (model.selectType)
+			switch (type)
 			{
 				case "image":
 					view.showDialog(new DialogModelSelect());

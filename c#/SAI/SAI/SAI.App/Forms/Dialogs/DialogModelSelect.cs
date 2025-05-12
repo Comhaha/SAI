@@ -25,70 +25,172 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.TopMost = true;
 
             // 배경을 투명하게 하기 위해서
-            this.BackColor = Color.Gray;           // 투명 처리할 색
-            this.TransparencyKey = Color.Gray;
+            this.BackColor = Color.Green;           // 투명 처리할 색
+            this.TransparencyKey = Color.Green;
 
-            ibtnYolo.Click += ModelButton_Click;
-            ibtnEfficientdet.Click += ModelButton_Click;
-            ibtnFaster.Click += ModelButton_Click;
-            ibtnClose.Click += ibtnClose_Click;
-        }
+			btnTrain.Visible = false; // 처음에는 Train 버튼 안보이게
+			btnTutorial.Visible = false; // 처음에는 Tutorial 버튼 안보이게
 
-        private void DialogModelSelect_Load(object sender, EventArgs e)
-        {
-            ResetModelSelection();
-        }
+			string clicked = "";
 
-        private void ResetModelSelection()
-        {
-            // 모든 버튼의 이미지를 원래 상태로 복원
-            ibtnYolo.Image = global::SAI.Properties.Resources.btn_yolo_clicked;
-            ibtnEfficientdet.Image = global::SAI.Properties.Resources.btn_efficientdet;
-            ibtnFaster.Image = global::SAI.Properties.Resources.btn_faster;
+			// btnYolo
+			btnYolo.BackColor = Color.Transparent;
+			btnYolo.PressedColor = Color.Transparent;
+			btnYolo.CheckedState.FillColor = Color.Transparent;
+			btnYolo.DisabledState.FillColor = Color.Transparent;
+			btnYolo.HoverState.FillColor = Color.Transparent;
+			btnYolo.Click += (s, e) =>
+			{
+				clicked = "btnYolo";
+				btnYolo.BackgroundImage = Properties.Resources.btn_yolo_clicked;
+				btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet;
+				btnFaster.BackgroundImage = Properties.Resources.btn_faster;
 
-            // 모든 패널 숨기기
-            pYolo.Visible = true;
-            pEfficientdet.Visible = false;
-            pFaster.Visible = false;
-        }
+				this.BackgroundImage = Properties.Resources.selectYolo;
+				btnTutorial.Visible = true;
+				btnTrain.Visible = true;
+			};
+			// btnClose 마우스 입력 될 때
+			btnYolo.MouseEnter += (s, e) =>
+			{
+				btnYolo.BackColor = Color.Transparent;
+				if(clicked != "btnYolo")
+					btnYolo.BackgroundImage = Properties.Resources.btn_yolo_hover;
+				else
+					btnYolo.BackgroundImage = Properties.Resources.btn_yolo_clicked;
+			};
+			// btnYolo 마우스 떠날때
+			btnYolo.MouseLeave += (s, e) =>
+			{
+				if(clicked != "btnYolo")
+					btnYolo.BackgroundImage = Properties.Resources.btn_yolo;
+				else
+					btnYolo.BackgroundImage = Properties.Resources.btn_yolo_clicked;
+			};
 
-        private void ModelButton_Click(object sender, EventArgs e)
-        {
-            // 모든 버튼의 이미지를 원래 상태로 복원
-            ibtnYolo.Image = global::SAI.Properties.Resources.btn_yolo;
-            ibtnEfficientdet.Image = global::SAI.Properties.Resources.btn_efficientdet;
-            ibtnFaster.Image = global::SAI.Properties.Resources.btn_faster;
+			// btnEfficient
+			btnEfficient.BackColor = Color.Transparent;
+			btnEfficient.PressedColor = Color.Transparent;
+			btnEfficient.CheckedState.FillColor = Color.Transparent;
+			btnEfficient.DisabledState.FillColor = Color.Transparent;
+			btnEfficient.HoverState.FillColor = Color.Transparent;
+			btnEfficient.Click += (s, e) =>
+			{
+				clicked = "btnEfficient";
+				btnYolo.BackgroundImage = Properties.Resources.btn_yolo;
+				btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet_clicked;
+				btnFaster.BackgroundImage = Properties.Resources.btn_faster;
+				this.BackgroundImage = Properties.Resources.selectEfficient;
+				btnTutorial.Visible = true;
+				btnTrain.Visible = true;
+			};
+			// btnEfficient 마우스 입력 될 때
+			btnEfficient.MouseEnter += (s, e) =>
+			{
+				btnEfficient.BackColor = Color.Transparent;
+				if (clicked != "btnEfficient")
+					btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet_hover;
+				else
+					btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet_clicked;
+			};
+			// btnEfficient 마우스 떠날때
+			btnEfficient.MouseLeave += (s, e) =>
+			{
+				if (clicked != "btnEfficient")
+					btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet;
+				else
+					btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet_clicked;
+			};
 
-            // 모든 패널 숨기기
-            pYolo.Visible = false;
-            pEfficientdet.Visible = false;
-            pFaster.Visible = false;
+			// btnFaster
+			btnFaster.BackColor = Color.Transparent;
+			btnFaster.PressedColor = Color.Transparent;
+			btnFaster.CheckedState.FillColor = Color.Transparent;
+			btnFaster.DisabledState.FillColor = Color.Transparent;
+			btnFaster.HoverState.FillColor = Color.Transparent;
+			btnFaster.Click += (s, e) =>
+			{
+				clicked = "btnFaster";
+				btnYolo.BackgroundImage = Properties.Resources.btn_yolo;
+				btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet;
+				btnFaster.BackgroundImage = Properties.Resources.btn_faster_clicked;
+				this.BackgroundImage = Properties.Resources.selectFaster;
+				btnTutorial.Visible = true;
+				btnTrain.Visible = true;
+			};
+			// btnFaster 마우스 입력 될 때
+			btnFaster.MouseEnter += (s, e) =>
+			{
+				btnFaster.BackColor = Color.Transparent;
+				if (clicked != "btnFaster")
+					btnFaster.BackgroundImage = Properties.Resources.btn_faster_hover;
+				else
+					btnFaster.BackgroundImage = Properties.Resources.btn_faster_clicked;
+			};
+			// btnFaster 마우스 떠날때
+			btnFaster.MouseLeave += (s, e) =>
+			{
+				if (clicked != "btnFaster")
+					btnFaster.BackgroundImage = Properties.Resources.btn_faster;
+				else
+					btnFaster.BackgroundImage = Properties.Resources.btn_faster_clicked;
+			};
 
-            // 클릭된 버튼을 pressed 상태로 만들기
-            Guna2ImageButton clickedButton = (Guna2ImageButton)sender;
+			// btnClose
+			btnClose.BackColor = Color.Transparent;
+			btnClose.PressedColor = Color.Transparent;
+			btnClose.CheckedState.FillColor = Color.Transparent;
+			btnClose.DisabledState.FillColor = Color.Transparent;
+			btnClose.HoverState.FillColor = Color.Transparent;
+			btnClose.Click += (s, e) => { this.Close(); };
+			// btnClose 마우스 입력 될 때
+			btnClose.MouseEnter += (s, e) =>
+			{
+				btnClose.BackColor = Color.Transparent;
+				btnClose.BackgroundImage = Properties.Resources.btn_close_select_model_clicked;
+			};
+			// btnClose 마우스 떠날때
+			btnClose.MouseLeave += (s, e) =>
+			{
+				btnClose.BackgroundImage = Properties.Resources.btn_close_select_model;
+			};
 
-            // 클릭된 버튼의 이미지와 패널을 변경
-            if (clickedButton == ibtnYolo)
-            {
-                ibtnYolo.Image = global::SAI.Properties.Resources.btn_yolo_clicked;
-                pYolo.Visible = true;
-            }
-            else if (clickedButton == ibtnEfficientdet)
-            {
-                ibtnEfficientdet.Image = global::SAI.Properties.Resources.btn_efficientdet_clicked;
-                pEfficientdet.Visible = true;
-            }
-            else if (clickedButton == ibtnFaster)
-            {
-                ibtnFaster.Image = global::SAI.Properties.Resources.btn_faster_clicked;
-                pFaster.Visible = true;
-            }
-        }
+			// btnTutorial
+			btnTutorial.BackColor = Color.Transparent;
+			btnTutorial.PressedColor = Color.Transparent;
+			btnTutorial.CheckedState.FillColor = Color.Transparent;
+			btnTutorial.DisabledState.FillColor = Color.Transparent;
+			btnTutorial.HoverState.FillColor = Color.Transparent;
+			// btnTutorial 마우스 입력 될 때
+			btnTutorial.MouseEnter += (s, e) =>
+			{
+				btnTutorial.BackColor = Color.Transparent;
+				btnTutorial.BackgroundImage = Properties.Resources.btn_tutorial_clicked;
+			};
+			// btnTutorial 마우스 떠날때
+			btnTutorial.MouseLeave += (s, e) =>
+			{
+				btnTutorial.BackgroundImage = Properties.Resources.btn_tutorial;
+			};
 
-        private void ibtnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+			// btnTrain
+			btnTrain.BackColor = Color.Transparent;
+			btnTrain.PressedColor = Color.Transparent;
+			btnTrain.CheckedState.FillColor = Color.Transparent;
+			btnTrain.DisabledState.FillColor = Color.Transparent;
+			btnTrain.HoverState.FillColor = Color.Transparent;
+			// btnTrain 마우스 입력 될 때
+			btnTrain.MouseEnter += (s, e) =>
+			{
+				btnTrain.BackColor = Color.Transparent;
+				btnTrain.BackgroundImage = Properties.Resources.btn_train_clicked;
+			};
+			// btnTrain 마우스 떠날때
+			btnTrain.MouseLeave += (s, e) =>
+			{
+				btnTrain.BackgroundImage = Properties.Resources.btn_train;
+			};
+		}
 
 		protected override void OnShown(EventArgs e)
 		{
@@ -98,17 +200,17 @@ namespace SAI.SAI.App.Forms.Dialogs
 			presenter = new DialogLoadPagePresenter(view);
 		}
 
-		private void ibtnGoTutorial_Click(object sender, EventArgs e)
-		{
-            presenter.clickTutorial();
-			this.Close();
-		}
-
-		private void ibtnGoPractice_Click(object sender, EventArgs e)
+		private void btnTrain_Click(object sender, EventArgs e)
 		{
 			presenter.clickTrainAtModelSelect();
 			this.Close();
 		}
-    }
+
+		private void btnTutorial_Click(object sender, EventArgs e)
+		{
+			presenter.clickTutorial();
+			this.Close();
+		}
+	}
 
 }
