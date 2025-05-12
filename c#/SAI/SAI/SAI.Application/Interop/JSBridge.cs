@@ -8,17 +8,17 @@ namespace SAI.SAI.Application.Interop
 {
 	public class JsBridge
 	{
-		private readonly Action<string> _onMessage;
+		private readonly Action<string, string> _onMessage;
 
-		public JsBridge(Action<string> onMessage)
+		public JsBridge(Action<string, string> onMessage)
 		{
 			_onMessage = onMessage;
 		}
 
 		// JS에서 코드를 전달하기 위해 호출되는 메소드
-		public void receiveFromJs(string message)
+		public void receiveMessageFromJs(string code, string type)
 		{
-			_onMessage?.Invoke(message);
+			_onMessage?.Invoke(code, type);
 		}
 	}
 

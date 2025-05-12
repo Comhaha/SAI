@@ -64,10 +64,23 @@
 		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
         function sendCode(code) {
 			window.chrome.webview.postMessage({
-				type: "blockCode",
+				type: "blockAllCode",
 				code: code
 			});
         }
+
+		function getPythonCodeByType(blockType) {
+			const blocks = workspace.getAllBlocks();
+			for (let block of blocks) {
+                if (block.type === blockType) {
+					window.chrome.webview.postMessage({
+						type: "blockCode",
+						code: Blockly.Python.blockToCode(block)
+					});
+                    break;
+				}
+			}
+		}
 
 		// 블록 생성 시 Python 코드 생성
         window.addEventListener('DOMContentLoaded', () => {

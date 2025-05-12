@@ -24,6 +24,7 @@ namespace SAI.SAI.App.Views.Pages
 	{
 		private BlocklyPresenter presenter;
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
 		private JsBridge jsBridge;
 
 		public Blockly()
@@ -43,21 +44,30 @@ namespace SAI.SAI.App.Views.Pages
 			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnStart.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+			btnStart.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("start"));
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+			btnPip.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadModel.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadModel"));
 			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnLoadDataset.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 			btnMachineLearning.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
+			btnMachineLearning.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
 			btnResultGraph.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+			btnResultGraph.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
 			btnImgPath.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+			btnImgPath.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("imgPath"));
 			btnModelInference.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+			btnModelInference.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("modelInference"));
 			btnVisualizeResult.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
+			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 		}
 
 		private async void InitializeWebView2()
 		{
-			jsBridge = new JsBridge(message =>
+			jsBridge = new JsBridge((message, type) =>
 			{
-				presenter.HandleJsMessage(message);
+				presenter.HandleJsMessage(message, type);
 			});
 
 			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -103,9 +113,14 @@ namespace SAI.SAI.App.Views.Pages
 								}
 								break;
 
+							case "blockAllCode":
+								string blockAllCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockAllCode, type);
+								break;
+
 							case "blockCode":
-								string code = root.GetProperty("code").GetString();
-								jsBridge.receiveFromJs(code);
+								string blockCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockCode, type);
 								break;
 						}
 					}
@@ -129,18 +144,13 @@ namespace SAI.SAI.App.Views.Pages
 			webView21.ExecuteScriptAsync($"addBlock('{blockType}')");
 		}
 
-		// 코드를 richText에 출력
-		public void ShowGeneratedCode(string code)
+		// 개별 블록 코드를 받아오기위한 JS 코드 호출 함수
+		public void getPythonCodeByType(string blockType)
 		{
-			if (InvokeRequired)
-			{
-				BeginInvoke(new Action(() => ShowGeneratedCode(code)));
-				return;
-			}
-
-			richTextBox1.Text = code;
+			webView21.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
 		}
 
+		// 다이얼로그 확인용 함수(delete)
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
 
@@ -165,6 +175,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
+		// blockly 웹뷰 확대 조절 함수
 		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
 		{
 			webView21.ZoomFactor = 0.7;
