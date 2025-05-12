@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
@@ -10,6 +11,10 @@ namespace SAI.SAI.App.Views.Pages
     public partial class UcTutorialBlockCode : UserControl
     {
         public event EventHandler HomeButtonClicked;
+
+        private bool isInferPanelVisible = false;
+        private double currentThreshold = 0.5;
+
         public UcTutorialBlockCode()
         {
             InitializeComponent();
@@ -19,11 +24,38 @@ namespace SAI.SAI.App.Views.Pages
             ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
+
+            // 초기에는 숨기길 패널들
+            pSideInfer.Visible = false;
+            ibtnCloseInfer.Visible = false;
+            pboxInferAccuracy.Visible = false;
+
+            SetupThresholdControls();
         }
         private void UcTutorialBlockCode_Load(object sender, EventArgs e)
         {
         }
 
+        private void SetupThresholdControls()
+        {
+            ThresholdUtil.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            {
+                currentThreshold = newValue;
+            });
+        }
+        private void ShowpSIdeInfer()
+        {
+            pSideInfer.Visible = true;
+            ibtnCloseInfer.Visible = true;
+            isInferPanelVisible = true;
+        }
+
+        private void HidepSideInfer()
+        {
+            pSideInfer.Visible = false;
+            ibtnCloseInfer.Visible = false;
+            isInferPanelVisible = false;
+        }
 
         private void leftPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -67,7 +99,14 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnInfer_Click(object sender, EventArgs e)
         {
-
+            if (!isInferPanelVisible)
+            {
+                ShowpSIdeInfer();
+            }
+            else
+            {
+                HidepSideInfer();
+            }
         }
 
         private void lblTitle_Click(object sender, EventArgs e)
@@ -172,6 +211,11 @@ namespace SAI.SAI.App.Views.Pages
         private void ibtnDone_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ibtnCloseInfer_Click(object sender, EventArgs e)
+        {
+            HidepSideInfer();
         }
     }
 }

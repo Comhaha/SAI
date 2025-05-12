@@ -163,7 +163,9 @@
     <Compile Include="SAI.App\Views.Interfaces\IPageTransitionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+    <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtil.cs" />
     <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>

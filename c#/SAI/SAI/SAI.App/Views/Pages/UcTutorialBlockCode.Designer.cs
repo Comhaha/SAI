@@ -60,6 +60,22 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblBlockTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblBlockDescription = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnTest = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
+            this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
+            this.ibtnDownloadAIModel = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnGoNotion = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnAiFeedback = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnInfoGraph = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnInfoThreshold = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pInferAccuracy = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnSelectInferImage = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.lblInferGraph = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblInfer = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -69,6 +85,9 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pTopBlock.SuspendLayout();
             this.pZoomBlock.SuspendLayout();
+            this.pSideInfer.SuspendLayout();
+            this.pInferAccuracy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -114,6 +133,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
+            this.pCode.Controls.Add(this.ibtnCloseInfer);
             this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Controls.Add(this.ibtnCopy);
             this.pCode.Controls.Add(this.pTopCode);
@@ -411,12 +431,193 @@ namespace SAI.SAI.App.Views.Pages
             this.lblBlockDescription.ForeColor = System.Drawing.Color.Black;
             this.lblBlockDescription.Name = "lblBlockDescription";
             // 
+            // pSideInfer
+            // 
+            resources.ApplyResources(this.pSideInfer, "pSideInfer");
+            this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.ibtnTest);
+            this.pSideInfer.Controls.Add(this.tboxThreshold);
+            this.pSideInfer.Controls.Add(this.tbarThreshold);
+            this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
+            this.pSideInfer.Controls.Add(this.ibtnGoNotion);
+            this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
+            this.pSideInfer.Controls.Add(this.ibtnInfoGraph);
+            this.pSideInfer.Controls.Add(this.ibtnInfoThreshold);
+            this.pSideInfer.Controls.Add(this.pInferAccuracy);
+            this.pSideInfer.Controls.Add(this.lblInferGraph);
+            this.pSideInfer.Controls.Add(this.lblThreshold);
+            this.pSideInfer.Controls.Add(this.lblInfer);
+            this.pSideInfer.Name = "pSideInfer";
+            // 
+            // ibtnTest
+            // 
+            this.ibtnTest.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnTest.HoverState.Image = global::SAI.Properties.Resources.btn_goNotion_hover;
+            this.ibtnTest.HoverState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnTest.Image = global::SAI.Properties.Resources.btn_goNotion;
+            this.ibtnTest.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnTest.ImageRotate = 0F;
+            this.ibtnTest.ImageSize = new System.Drawing.Size(160, 50);
+            resources.ApplyResources(this.ibtnTest, "ibtnTest");
+            this.ibtnTest.Name = "ibtnTest";
+            this.ibtnTest.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            // 
+            // tboxThreshold
+            // 
+            this.tboxThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
+            resources.ApplyResources(this.tboxThreshold, "tboxThreshold");
+            this.tboxThreshold.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tboxThreshold.DefaultText = "";
+            this.tboxThreshold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tboxThreshold.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tboxThreshold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.ForeColor = System.Drawing.Color.Black;
+            this.tboxThreshold.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.Name = "tboxThreshold";
+            this.tboxThreshold.PlaceholderText = "";
+            this.tboxThreshold.SelectedText = "";
+            // 
+            // tbarThreshold
+            // 
+            resources.ApplyResources(this.tbarThreshold, "tbarThreshold");
+            this.tbarThreshold.Name = "tbarThreshold";
+            this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
+            // 
+            // ibtnDownloadAIModel
+            // 
+            this.ibtnDownloadAIModel.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnDownloadAIModel.HoverState.Image = global::SAI.Properties.Resources.btn_download_aimodel_hover;
+            this.ibtnDownloadAIModel.HoverState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnDownloadAIModel.Image = global::SAI.Properties.Resources.btn_download_aimodel;
+            this.ibtnDownloadAIModel.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnDownloadAIModel.ImageRotate = 0F;
+            this.ibtnDownloadAIModel.ImageSize = new System.Drawing.Size(160, 50);
+            resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
+            this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
+            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            // 
+            // ibtnGoNotion
+            // 
+            this.ibtnGoNotion.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnGoNotion.HoverState.Image = global::SAI.Properties.Resources.btn_goNotion_hover;
+            this.ibtnGoNotion.HoverState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnGoNotion.Image = global::SAI.Properties.Resources.btn_goNotion;
+            this.ibtnGoNotion.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnGoNotion.ImageRotate = 0F;
+            this.ibtnGoNotion.ImageSize = new System.Drawing.Size(160, 50);
+            resources.ApplyResources(this.ibtnGoNotion, "ibtnGoNotion");
+            this.ibtnGoNotion.Name = "ibtnGoNotion";
+            this.ibtnGoNotion.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            // 
+            // ibtnAiFeedback
+            // 
+            this.ibtnAiFeedback.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnAiFeedback.HoverState.Image = global::SAI.Properties.Resources.btn_aifeedback;
+            this.ibtnAiFeedback.HoverState.ImageSize = new System.Drawing.Size(347, 90);
+            this.ibtnAiFeedback.Image = global::SAI.Properties.Resources.btn_aifeedback;
+            this.ibtnAiFeedback.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnAiFeedback.ImageRotate = 0F;
+            this.ibtnAiFeedback.ImageSize = new System.Drawing.Size(347, 90);
+            resources.ApplyResources(this.ibtnAiFeedback, "ibtnAiFeedback");
+            this.ibtnAiFeedback.Name = "ibtnAiFeedback";
+            this.ibtnAiFeedback.PressedState.ImageSize = new System.Drawing.Size(347, 90);
+            // 
+            // ibtnInfoGraph
+            // 
+            this.ibtnInfoGraph.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnInfoGraph.HoverState.ImageSize = new System.Drawing.Size(17, 17);
+            this.ibtnInfoGraph.Image = global::SAI.Properties.Resources.btn_info;
+            this.ibtnInfoGraph.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnInfoGraph.ImageRotate = 0F;
+            this.ibtnInfoGraph.ImageSize = new System.Drawing.Size(17, 17);
+            resources.ApplyResources(this.ibtnInfoGraph, "ibtnInfoGraph");
+            this.ibtnInfoGraph.Name = "ibtnInfoGraph";
+            this.ibtnInfoGraph.PressedState.ImageSize = new System.Drawing.Size(17, 17);
+            // 
+            // ibtnInfoThreshold
+            // 
+            this.ibtnInfoThreshold.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnInfoThreshold.HoverState.ImageSize = new System.Drawing.Size(12, 12);
+            this.ibtnInfoThreshold.Image = global::SAI.Properties.Resources.btn_info;
+            this.ibtnInfoThreshold.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnInfoThreshold.ImageRotate = 0F;
+            this.ibtnInfoThreshold.ImageSize = new System.Drawing.Size(12, 12);
+            resources.ApplyResources(this.ibtnInfoThreshold, "ibtnInfoThreshold");
+            this.ibtnInfoThreshold.Name = "ibtnInfoThreshold";
+            this.ibtnInfoThreshold.PressedState.ImageSize = new System.Drawing.Size(12, 12);
+            // 
+            // pInferAccuracy
+            // 
+            this.pInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            resources.ApplyResources(this.pInferAccuracy, "pInferAccuracy");
+            this.pInferAccuracy.Controls.Add(this.ibtnSelectInferImage);
+            this.pInferAccuracy.Controls.Add(this.pboxInferAccuracy);
+            this.pInferAccuracy.Name = "pInferAccuracy";
+            // 
+            // ibtnSelectInferImage
+            // 
+            this.ibtnSelectInferImage.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnSelectInferImage.HoverState.Image = global::SAI.Properties.Resources.btn_selectinferimage_hover;
+            this.ibtnSelectInferImage.HoverState.ImageSize = new System.Drawing.Size(144, 36);
+            this.ibtnSelectInferImage.Image = global::SAI.Properties.Resources.btn_selectinferimage;
+            this.ibtnSelectInferImage.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnSelectInferImage.ImageRotate = 0F;
+            this.ibtnSelectInferImage.ImageSize = new System.Drawing.Size(144, 36);
+            resources.ApplyResources(this.ibtnSelectInferImage, "ibtnSelectInferImage");
+            this.ibtnSelectInferImage.Name = "ibtnSelectInferImage";
+            this.ibtnSelectInferImage.PressedState.ImageSize = new System.Drawing.Size(144, 36);
+            // 
+            // pboxInferAccuracy
+            // 
+            resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.ImageRotate = 0F;
+            this.pboxInferAccuracy.Name = "pboxInferAccuracy";
+            this.pboxInferAccuracy.TabStop = false;
+            // 
+            // lblInferGraph
+            // 
+            this.lblInferGraph.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblInferGraph, "lblInferGraph");
+            this.lblInferGraph.ForeColor = System.Drawing.Color.Black;
+            this.lblInferGraph.Name = "lblInferGraph";
+            // 
+            // lblThreshold
+            // 
+            this.lblThreshold.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblThreshold, "lblThreshold");
+            this.lblThreshold.ForeColor = System.Drawing.Color.Black;
+            this.lblThreshold.Name = "lblThreshold";
+            // 
+            // lblInfer
+            // 
+            this.lblInfer.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblInfer, "lblInfer");
+            this.lblInfer.ForeColor = System.Drawing.Color.Black;
+            this.lblInfer.Name = "lblInfer";
+            // 
+            // ibtnCloseInfer
+            // 
+            this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
+            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
+            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCloseInfer.ImageRotate = 0F;
+            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
+            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
+            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
+            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
+            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.pSideInfer);
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.ibtnMemo);
             this.Controls.Add(this.ibtnDone);
@@ -436,6 +637,10 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
             this.pTopBlock.ResumeLayout(false);
             this.pZoomBlock.ResumeLayout(false);
+            this.pSideInfer.ResumeLayout(false);
+            this.pSideInfer.PerformLayout();
+            this.pInferAccuracy.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -472,5 +677,21 @@ namespace SAI.SAI.App.Views.Pages
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockDescription;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockTitle;
+        private Guna.UI2.WinForms.Guna2Panel pSideInfer;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnTest;
+        private Guna.UI2.WinForms.Guna2TextBox tboxThreshold;
+        private Guna.UI2.WinForms.Guna2TrackBar tbarThreshold;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnDownloadAIModel;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnGoNotion;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnAiFeedback;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoGraph;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoThreshold;
+        private Guna.UI2.WinForms.Guna2Panel pInferAccuracy;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnSelectInferImage;
+        private Guna.UI2.WinForms.Guna2PictureBox pboxInferAccuracy;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblInferGraph;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblThreshold;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblInfer;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnCloseInfer;
     }
 }
