@@ -4,9 +4,9 @@ using System.IO;
 using System.Text.Json;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models.Events;
+using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Interop;
@@ -26,6 +26,15 @@ namespace SAI.SAI.App.Views.Pages
 		private JsBridge jsBridge;
 
 		public UcTutorialBlockCode(IMainView view)
+        private TodoManager todoManager;
+        // todo 위에서부터 index 0~2번 입니다.
+        // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
+        // 자동으로 pboxTodo1 이 Visible = false되고, pboxTodo1Done.Visible = true 됩니다.
+
+        private bool isInferPanelVisible = false;
+        private double currentThreshold = 0.5;
+        private bool isMemoPanelVisible = false;
+        public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
@@ -363,7 +372,61 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		private void UcTutorialBlockCode_Load(object sender, EventArgs e)
+            // 초기에는 숨기길 패널들
+            pSideInfer.Visible = false;
+            ibtnCloseInfer.Visible = false;
+            pboxInferAccuracy.Visible = false;
+            pMemo.Visible = false;
+
+            SetupThresholdControls();
+            MemoUtils.ApplyStyle(tboxMemo);
+        }
+
+        private void SetupThresholdControls()
         {
+            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            {
+                currentThreshold = newValue;
+            });
+        }
+        private void ShowpSIdeInfer()
+        {
+            pSideInfer.Visible = true;
+            ibtnCloseInfer.Visible = true;
+            isInferPanelVisible = true;
+        }
+
+        private void HidepSideInfer()
+        {
+            pSideInfer.Visible = false;
+            ibtnCloseInfer.Visible = false;
+            isInferPanelVisible = false;
+        }
+
+        // 다른 클래스에서도 사용 가능
+        public void MarkTodoAsDone(int index)
+        {
+            todoManager.SetTodoStatus(index, false); // false면 완료 상태
+        }
+
+        private void leftPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void baseFramePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void leftPanel_Paint_1(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void pnl_Paint(object sender, PaintEventArgs e)
@@ -378,7 +441,14 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnInfer_Click(object sender, EventArgs e)
         {
-
+            if (!isInferPanelVisible)
+            {
+                ShowpSIdeInfer();
+            }
+            else
+            {
+                HidepSideInfer();
+            }
         }
 
         private void ibtnPlusBlock_Click(object sender, EventArgs e)
@@ -427,6 +497,30 @@ namespace SAI.SAI.App.Views.Pages
 			labelBlockTitle.Text = "추론 결과 확인하기";
 			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
 		}
+        private void ibtnCloseInfer_Click(object sender, EventArgs e)
+        {
+            HidepSideInfer();
+        }
+
+        private void ibtnMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
 
 		public void showDialog(Form dialog)
 		{

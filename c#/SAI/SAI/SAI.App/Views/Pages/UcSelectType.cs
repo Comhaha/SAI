@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Forms.Dialogs;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -23,6 +24,10 @@ namespace SAI.SAI.App.Views.Pages
 			this.mainView = view;
 			presenter = new UcShowDialogPresenter(this);
 		}
+
+        private void UcSelectType_Load(object sender, EventArgs e)
+        {
+        }
 
         private void ibtnImage_Click(object sender, EventArgs e)
         {
@@ -58,5 +63,5 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
 		}
-	}
+    }
 }
