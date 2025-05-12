@@ -67,6 +67,8 @@ local.properties
 *.vsidx
 *.htm
 **/.vshistory/
+**/.vs/
+**/.vs/**
 c#/SAI/.vs/
 c#/SAI/SAI/SAI.App/.vs/
 c#/SAI/packages/
