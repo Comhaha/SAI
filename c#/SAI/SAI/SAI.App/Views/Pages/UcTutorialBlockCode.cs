@@ -10,6 +10,7 @@ using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Interop;
+using Guna.UI2.WinForms;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -24,8 +25,7 @@ namespace SAI.SAI.App.Views.Pages
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
 		private JsBridge jsBridge;
-
-		public UcTutorialBlockCode(IMainView view)
+		
         private TodoManager todoManager;
         // todo 위에서부터 index 0~2번 입니다.
         // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
@@ -372,6 +372,7 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		private void UcTutorialBlockCode_Load(object sender, EventArgs e)
+		{ 
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
