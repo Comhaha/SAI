@@ -17,10 +17,7 @@ public class WebClientConfig {
     @Value("${openai.api-key}")
     private String openAiApiKey;
 
-    /**
-     * OpenAI 전용 WebClient – Authorization 헤더와 기본 타임아웃까지 세팅
-     */
-    @Bean("openAiWebClient")
+    @Bean
     public WebClient openAiWebClient() {
 
         // 20 MB까지 버퍼(이미지 base64 포함 시 여유 있게)
@@ -35,4 +32,28 @@ public class WebClientConfig {
             .exchangeStrategies(strategies)
             .build();
     }
+
+    @Value("${notion.api.url}")
+    private String notionApiUrl;
+
+    @Value("${notion.api.version}")
+    private String notionVersion;
+
+    @Bean
+    public WebClient notionWebClient() {
+        ExchangeStrategies strategies = ExchangeStrategies.builder()
+            .codecs(cfg -> cfg.defaultCodecs().maxInMemorySize(5 * 1024 * 1024))
+            .build();
+
+        return WebClient.builder()
+            .baseUrl(notionApiUrl)
+            .defaultHeader("Notion-Version", notionVersion)
+            .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+            .exchangeStrategies(strategies)
+            // 타임아웃 설정 - Notion API는 가끔 느릴 수 있음
+            .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(5 * 1024 * 1024))
+            .build();
+    }
+
+
 }

@@ -57,15 +57,19 @@
     <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="Clipper2" Version="1.4.0" />
+    <PackageReference Include="jacobslusser.ScintillaNET" Version="3.6.3" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +79,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -131,6 +136,18 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelSelect.Designer.cs">
+      <DependentUpon>DialogModelSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.Designer.cs">
+      <DependentUpon>DialogNotion.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,16 +161,30 @@
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\TrainsitionPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IPageTransitionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+    <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.Designer.cs">
+      <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -173,11 +204,32 @@
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.cs">
+    <Compile Include="SAI.App\Views\Pages\UcCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.Designer.cs">
-      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Pages\UcCode.Designer.cs">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.Designer.cs">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcLabelGuide.Designer.cs">
+      <DependentUpon>UcLabelGuide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.Designer.cs">
+      <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -208,17 +260,32 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelSelect.resx">
+      <DependentUpon>DialogModelSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
+      <DependentUpon>UcLabelGuide.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcPraticeBlockCode.resx">
-      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockCode.resx">
+      <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcSelectType.resx">
       <DependentUpon>UcSelectType.cs</DependentUpon>
@@ -308,6 +375,75 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <Content Include="Blockly\custom_blocks.js" />
+    <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\btn_selectinferimage_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_selectinferimage.png" />
+    <None Include="SAI.App\Resources\Images\btn_download_aimodel_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_download_aimodel.png" />
+    <None Include="SAI.App\Resources\Images\btn_goNotion_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_goNotion.png" />
+    <None Include="SAI.App\Resources\Images\btn_aifeedback.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial.png" />
+    <None Include="SAI.App\Resources\Images\p_memo.png" />
+    <None Include="SAI.App\Resources\Images\btn_info.png" />
+    <None Include="SAI.App\Resources\Images\img_bounding_example.png" />
+    <None Include="SAI.App\Resources\Images\p_sideinfer_accuracy.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_infer_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_infer.png" />
+    <None Include="SAI.App\Resources\Images\p_side_infer.png" />
+    <None Include="SAI.App\Resources\Images\완료.png" />
+    <None Include="SAI.App\Resources\Images\도구창.png" />
+    <None Include="SAI.App\Resources\Images\visibility_off.png" />
+    <None Include="SAI.App\Resources\Images\replay1.png" />
+    <None Include="SAI.App\Resources\Images\replay.png" />
+    <None Include="SAI.App\Resources\Images\ph_polygon-thin.png" />
+    <None Include="SAI.App\Resources\Images\ic_pre.png" />
+    <None Include="SAI.App\Resources\Images\ic_next.png" />
+    <None Include="SAI.App\Resources\Images\ic_home.png" />
+    <None Include="SAI.App\Resources\Images\Frame.png" />
+    <None Include="SAI.App\Resources\Images\delete.png" />
+    <None Include="SAI.App\Resources\Images\check_box_outline_blank.png" />
+    <None Include="SAI.App\Resources\Images\back_hand.png" />
+    <None Include="Resources\1.jpg.bmp" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\dog.bmp" />
+    <None Include="Resources\annotation 모달.png" />
+    <None Include="Resources\내부 박스.png" />
+    <None Include="Resources\Frame＿blue.png" />
+    <None Include="Resources\Frame_green.png" />
+    <None Include="Resources\Frame_red.png" />
+    <None Include="Resources\6.jpg" />
+    <None Include="Resources\도구창_short.png" />
+    <None Include="Resources\정확도 프레임.png" />
+    <None Include="Resources\Line 227.png" />
+    <None Include="Resources\클래스, todolist.png" />
+    <None Include="Resources\Frame 1000004304.png" />
+    <None Include="Resources\도구창.png" />
+    <None Include="Resources\확대 축소.png" />
+    <None Include="Resources\banana.jpg" />
+    <None Include="Resources\strawberry-1.jpg" />
+    <None Include="Resources\strawberry-2.jpg" />
+    <None Include="Resources\prairie-1025229_1280.jpg" />
+    <None Include="Resources\raven-2162966_1280.jpg" />
+    <None Include="Resources\sparrow-6300790_1280.jpg" />
+    <None Include="Resources\apple-2788616_1280.jpg" />
+    <None Include="Resources\apple-3313209_1280.jpg" />
+    <None Include="Resources\chipmunk-4642839_1280.jpg" />
+    <None Include="Resources\animal-4544725_1280.jpg" />
+    <None Include="Resources\squirrel-5506514_1280.jpg" />
+    <Content Include="SAI.App\Resources\Images\1.jpg" />
+    <Content Include="SAI.App\Resources\Images\2.jpg" />
+    <Content Include="SAI.App\Resources\Images\3.jpg" />
+    <Content Include="SAI.App\Resources\Images\4.jpg" />
+    <Content Include="SAI.App\Resources\Images\5.jpg" />
+    <Content Include="SAI.App\Resources\Images\6.jpg" />
+    <Content Include="SAI.App\Resources\Images\7.jpg" />
+    <Content Include="SAI.App\Resources\Images\8.jpg" />
+    <Content Include="SAI.App\Resources\Images\9.jpg" />
     <None Include="SAI.App\Resources\Images\p_todolist.png" />
     <None Include="SAI.App\Resources\Images\p_blocklist_tutorial.png" />
     <None Include="SAI.App\Resources\Images\p_topbar.png" />

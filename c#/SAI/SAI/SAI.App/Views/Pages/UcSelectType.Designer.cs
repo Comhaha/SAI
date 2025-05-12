@@ -107,7 +107,7 @@
             // lblTitle
             // 
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Noto Sans KR Medium", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblTitle.Font = new System.Drawing.Font("Noto Sans KR", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblTitle.Location = new System.Drawing.Point(131, 69);
             this.lblTitle.Name = "lblTitle";

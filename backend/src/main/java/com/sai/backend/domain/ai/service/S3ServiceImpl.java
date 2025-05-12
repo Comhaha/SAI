@@ -22,7 +22,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 public class S3ServiceImpl implements S3Service {
 
     private static final long MAX_SIZE = 4_000_000;          // 4 MB
-    private static final Duration URL_TTL = Duration.ofMinutes(3);
+    private static final Duration URL_TTL = Duration.ofMinutes(10);
 
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
