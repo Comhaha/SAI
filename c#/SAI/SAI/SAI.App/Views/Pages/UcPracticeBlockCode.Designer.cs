@@ -1,7 +1,7 @@
 ﻿
 namespace SAI.SAI.App.Views.Pages
 {
-    partial class UcPraticeBlockCode
+    partial class UcPracticeBlockCode
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -29,19 +29,19 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcPraticeBlockCode));
-            this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcPracticeBlockCode));
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
-            this.webBrowserBlock = new CefSharp.WinForms.ChromiumWebBrowser();
+            this.webViewBlock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2ImageButton();
             this.btnPreBlock = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -57,21 +57,32 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnDownloadAIModel = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnGoNotion = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnAiFeedback = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnInfoGraph = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnInfoThreshold = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pInferAccuracy = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnSelectInferImage = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.lblInferGraph = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblInfer = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
             this.pZoomCode.SuspendLayout();
             this.pBlock.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewBlock)).BeginInit();
             this.pTopBlock.SuspendLayout();
             this.pZoomBlock.SuspendLayout();
+            this.pSideInfer.SuspendLayout();
+            this.pInferAccuracy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.lblTitle, "lblTitle");
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
             // 
             // pMain
             // 
@@ -94,11 +105,26 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
+            this.pCode.Controls.Add(this.ibtnCloseInfer);
             this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Controls.Add(this.ibtnCopy);
-            this.pCode.Controls.Add(this.panel1);
+            this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.pZoomCode);
             this.pCode.Name = "pCode";
+            // 
+            // ibtnCloseInfer
+            // 
+            this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
+            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
+            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCloseInfer.ImageRotate = 0F;
+            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
+            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
+            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
+            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
             // 
             // webViewCode
             // 
@@ -125,13 +151,13 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
             this.ibtnCopy.Click += new System.EventHandler(this.ibtnCopy_Click);
             // 
-            // panel1
+            // pTopCode
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel1.Name = "panel1";
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pTopCode, "pTopCode");
+            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pTopCode.Name = "pTopCode";
+            this.pTopCode.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // pZoomCode
             // 
@@ -188,17 +214,20 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pBlock, "pBlock");
-            this.pBlock.Controls.Add(this.webBrowserBlock);
+            this.pBlock.Controls.Add(this.webViewBlock);
             this.pBlock.Controls.Add(this.pTopBlock);
             this.pBlock.Controls.Add(this.pZoomBlock);
             this.pBlock.Name = "pBlock";
             this.pBlock.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
-            // webBrowserBlock
+            // webViewBlock
             // 
-            this.webBrowserBlock.ActivateBrowserOnCreation = false;
-            resources.ApplyResources(this.webBrowserBlock, "webBrowserBlock");
-            this.webBrowserBlock.Name = "webBrowserBlock";
+            this.webViewBlock.AllowExternalDrop = true;
+            this.webViewBlock.CreationProperties = null;
+            this.webViewBlock.DefaultBackgroundColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.webViewBlock, "webViewBlock");
+            this.webViewBlock.Name = "webViewBlock";
+            this.webViewBlock.ZoomFactor = 1D;
             // 
             // pTopBlock
             // 
@@ -339,6 +368,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnMemo.ImageSize = new System.Drawing.Size(56, 56);
             this.ibtnMemo.Name = "ibtnMemo";
             this.ibtnMemo.PressedState.ImageSize = new System.Drawing.Size(56, 56);
+            this.ibtnMemo.Click += new System.EventHandler(this.ibtnMemo_Click);
             // 
             // ibtnDone
             // 
@@ -379,42 +409,187 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnHome, "ibtnHome");
             this.ibtnHome.Name = "ibtnHome";
             this.ibtnHome.PressedState.ImageSize = new System.Drawing.Size(39, 39);
-            this.ibtnHome.Click += new System.EventHandler(this.guna2ImageButton1_Click_1);
+            this.ibtnHome.Click += new System.EventHandler(this.ibtnHome_Click);
             // 
             // panel2
             // 
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
             // 
-            // UcPraticeBlockCode
+            // lblTitle
+            // 
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblTitle, "lblTitle");
+            this.lblTitle.Name = "lblTitle";
+            // 
+            // pSideInfer
+            // 
+            resources.ApplyResources(this.pSideInfer, "pSideInfer");
+            this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
+            this.pSideInfer.Controls.Add(this.ibtnGoNotion);
+            this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
+            this.pSideInfer.Controls.Add(this.ibtnInfoGraph);
+            this.pSideInfer.Controls.Add(this.ibtnInfoThreshold);
+            this.pSideInfer.Controls.Add(this.pInferAccuracy);
+            this.pSideInfer.Controls.Add(this.lblInferGraph);
+            this.pSideInfer.Controls.Add(this.lblThreshold);
+            this.pSideInfer.Controls.Add(this.lblInfer);
+            this.pSideInfer.Name = "pSideInfer";
+            this.pSideInfer.Paint += new System.Windows.Forms.PaintEventHandler(this.pInferContent_Paint);
+            // 
+            // ibtnDownloadAIModel
+            // 
+            this.ibtnDownloadAIModel.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnDownloadAIModel.HoverState.Image = global::SAI.Properties.Resources.btn_download_aimodel_hover;
+            this.ibtnDownloadAIModel.HoverState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnDownloadAIModel.Image = global::SAI.Properties.Resources.btn_download_aimodel;
+            this.ibtnDownloadAIModel.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnDownloadAIModel.ImageRotate = 0F;
+            this.ibtnDownloadAIModel.ImageSize = new System.Drawing.Size(160, 50);
+            resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
+            this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
+            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            // 
+            // ibtnGoNotion
+            // 
+            this.ibtnGoNotion.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnGoNotion.HoverState.Image = global::SAI.Properties.Resources.btn_goNotion_hover;
+            this.ibtnGoNotion.HoverState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnGoNotion.Image = global::SAI.Properties.Resources.btn_goNotion;
+            this.ibtnGoNotion.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnGoNotion.ImageRotate = 0F;
+            this.ibtnGoNotion.ImageSize = new System.Drawing.Size(160, 50);
+            resources.ApplyResources(this.ibtnGoNotion, "ibtnGoNotion");
+            this.ibtnGoNotion.Name = "ibtnGoNotion";
+            this.ibtnGoNotion.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            // 
+            // ibtnAiFeedback
+            // 
+            this.ibtnAiFeedback.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnAiFeedback.HoverState.Image = global::SAI.Properties.Resources.btn_aifeedback;
+            this.ibtnAiFeedback.HoverState.ImageSize = new System.Drawing.Size(347, 90);
+            this.ibtnAiFeedback.Image = global::SAI.Properties.Resources.btn_aifeedback;
+            this.ibtnAiFeedback.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnAiFeedback.ImageRotate = 0F;
+            this.ibtnAiFeedback.ImageSize = new System.Drawing.Size(347, 90);
+            resources.ApplyResources(this.ibtnAiFeedback, "ibtnAiFeedback");
+            this.ibtnAiFeedback.Name = "ibtnAiFeedback";
+            this.ibtnAiFeedback.PressedState.ImageSize = new System.Drawing.Size(347, 90);
+            // 
+            // ibtnInfoGraph
+            // 
+            this.ibtnInfoGraph.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnInfoGraph.HoverState.ImageSize = new System.Drawing.Size(17, 17);
+            this.ibtnInfoGraph.Image = global::SAI.Properties.Resources.btn_info;
+            this.ibtnInfoGraph.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnInfoGraph.ImageRotate = 0F;
+            this.ibtnInfoGraph.ImageSize = new System.Drawing.Size(17, 17);
+            resources.ApplyResources(this.ibtnInfoGraph, "ibtnInfoGraph");
+            this.ibtnInfoGraph.Name = "ibtnInfoGraph";
+            this.ibtnInfoGraph.PressedState.ImageSize = new System.Drawing.Size(17, 17);
+            // 
+            // ibtnInfoThreshold
+            // 
+            this.ibtnInfoThreshold.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnInfoThreshold.HoverState.ImageSize = new System.Drawing.Size(12, 12);
+            this.ibtnInfoThreshold.Image = global::SAI.Properties.Resources.btn_info;
+            this.ibtnInfoThreshold.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnInfoThreshold.ImageRotate = 0F;
+            this.ibtnInfoThreshold.ImageSize = new System.Drawing.Size(12, 12);
+            resources.ApplyResources(this.ibtnInfoThreshold, "ibtnInfoThreshold");
+            this.ibtnInfoThreshold.Name = "ibtnInfoThreshold";
+            this.ibtnInfoThreshold.PressedState.ImageSize = new System.Drawing.Size(12, 12);
+            // 
+            // pInferAccuracy
+            // 
+            this.pInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            resources.ApplyResources(this.pInferAccuracy, "pInferAccuracy");
+            this.pInferAccuracy.Controls.Add(this.ibtnSelectInferImage);
+            this.pInferAccuracy.Controls.Add(this.pboxInferAccuracy);
+            this.pInferAccuracy.Name = "pInferAccuracy";
+            // 
+            // ibtnSelectInferImage
+            // 
+            this.ibtnSelectInferImage.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnSelectInferImage.HoverState.Image = global::SAI.Properties.Resources.btn_selectinferimage_hover;
+            this.ibtnSelectInferImage.HoverState.ImageSize = new System.Drawing.Size(144, 36);
+            this.ibtnSelectInferImage.Image = global::SAI.Properties.Resources.btn_selectinferimage;
+            this.ibtnSelectInferImage.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnSelectInferImage.ImageRotate = 0F;
+            this.ibtnSelectInferImage.ImageSize = new System.Drawing.Size(144, 36);
+            resources.ApplyResources(this.ibtnSelectInferImage, "ibtnSelectInferImage");
+            this.ibtnSelectInferImage.Name = "ibtnSelectInferImage";
+            this.ibtnSelectInferImage.PressedState.ImageSize = new System.Drawing.Size(144, 36);
+            // 
+            // pboxInferAccuracy
+            // 
+            this.pboxInferAccuracy.Image = global::SAI.Properties.Resources.img_bounding_example;
+            this.pboxInferAccuracy.ImageRotate = 0F;
+            resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.Name = "pboxInferAccuracy";
+            this.pboxInferAccuracy.TabStop = false;
+            // 
+            // lblInferGraph
+            // 
+            this.lblInferGraph.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblInferGraph, "lblInferGraph");
+            this.lblInferGraph.Name = "lblInferGraph";
+            // 
+            // lblThreshold
+            // 
+            this.lblThreshold.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblThreshold, "lblThreshold");
+            this.lblThreshold.Name = "lblThreshold";
+            this.lblThreshold.Click += new System.EventHandler(this.lblThreshold_Click);
+            // 
+            // lblInfer
+            // 
+            this.lblInfer.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblInfer, "lblInfer");
+            this.lblInfer.Name = "lblInfer";
+            // 
+            // pMemo
+            // 
+            this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
+            resources.ApplyResources(this.pMemo, "pMemo");
+            this.pMemo.Name = "pMemo";
+            // 
+            // UcPracticeBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.pMemo);
+            this.Controls.Add(this.pSideInfer);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.ibtnMemo);
             this.Controls.Add(this.ibtnDone);
             this.Controls.Add(this.ibtnInfer);
             this.Controls.Add(this.ibtnHome);
-            this.Controls.Add(this.lblTitle);
             this.DoubleBuffered = true;
-            this.Name = "UcPraticeBlockCode";
+            this.Name = "UcPracticeBlockCode";
             this.Load += new System.EventHandler(this.UcPraticeBlockCode_Load);
             this.pMain.ResumeLayout(false);
             this.pCode.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).EndInit();
             this.pZoomCode.ResumeLayout(false);
             this.pBlock.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webViewBlock)).EndInit();
             this.pTopBlock.ResumeLayout(false);
             this.pZoomBlock.ResumeLayout(false);
+            this.pSideInfer.ResumeLayout(false);
+            this.pSideInfer.PerformLayout();
+            this.pInferAccuracy.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblTitle;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnHome;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnInfer;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnDone;
@@ -426,7 +601,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pMain;
         private Guna.UI2.WinForms.Guna2Panel pBlockList;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCopy;
-        private CefSharp.WinForms.ChromiumWebBrowser webBrowserBlock;
         private System.Windows.Forms.Panel pTopBlock;
         private Guna.UI2.WinForms.Guna2ImageButton btnRunModel;
         private Guna.UI2.WinForms.Guna2ImageButton btnPreBlock;
@@ -434,12 +608,28 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton btnNextBlock;
         private Guna.UI2.WinForms.Guna2Panel pBlock;
         private Guna.UI2.WinForms.Guna2Panel pCode;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pTopCode;
         private Guna.UI2.WinForms.Guna2Panel pZoomCode;
         private Guna.UI2.WinForms.Guna2TextBox tboxZoomCode;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnMinusCode;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnPlusCode;
         private System.Windows.Forms.Panel panel2;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewCode;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webViewBlock;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblTitle;
+        private Guna.UI2.WinForms.Guna2Panel pSideInfer;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnCloseInfer;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblThreshold;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblInfer;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblInferGraph;
+        private Guna.UI2.WinForms.Guna2Panel pInferAccuracy;
+        private Guna.UI2.WinForms.Guna2PictureBox pboxInferAccuracy;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoThreshold;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoGraph;
+        private Guna.UI2.WinForms.Guna2Panel pMemo;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnAiFeedback;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnGoNotion;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnDownloadAIModel;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnSelectInferImage;
     }
 }

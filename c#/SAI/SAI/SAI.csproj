@@ -131,6 +131,18 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelSelect.Designer.cs">
+      <DependentUpon>DialogModelSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.Designer.cs">
+      <DependentUpon>DialogNotion.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,7 +158,9 @@
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\TrainsitionPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IPageTransitionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
@@ -160,6 +174,9 @@
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -185,11 +202,8 @@
     <Compile Include="SAI.App\Views\Pages\UcLabelGuide.Designer.cs">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.Designer.cs">
-      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.Designer.cs">
+      <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -220,6 +234,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelSelect.resx">
+      <DependentUpon>DialogModelSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,8 +249,8 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcPraticeBlockCode.resx">
-      <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockCode.resx">
+      <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcSelectType.resx">
       <DependentUpon>UcSelectType.cs</DependentUpon>
@@ -325,6 +342,24 @@
     </BootstrapperPackage>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\btn_selectinferimage_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_selectinferimage.png" />
+    <None Include="SAI.App\Resources\Images\btn_download_aimodel_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_download_aimodel.png" />
+    <None Include="SAI.App\Resources\Images\btn_goNotion_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_goNotion.png" />
+    <None Include="SAI.App\Resources\Images\btn_aifeedback.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial.png" />
+    <None Include="SAI.App\Resources\Images\p_memo.png" />
+    <None Include="SAI.App\Resources\Images\btn_info.png" />
+    <None Include="SAI.App\Resources\Images\img_bounding_example.png" />
+    <None Include="SAI.App\Resources\Images\p_sideinfer_accuracy.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_infer_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_infer.png" />
+    <None Include="SAI.App\Resources\Images\p_side_infer.png" />
     <None Include="SAI.App\Resources\Images\완료.png" />
     <None Include="SAI.App\Resources\Images\도구창.png" />
     <None Include="SAI.App\Resources\Images\visibility_off.png" />
