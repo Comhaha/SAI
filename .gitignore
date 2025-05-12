@@ -67,6 +67,8 @@ c#/SAI/SAI/bin/
 c#/SAI/SAI/obj/
 .vs
 **/.vshistory
+c#/SAI/SAI/.vs/
+/c\#/SAI/SAI/.vs
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json

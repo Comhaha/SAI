@@ -953,6 +953,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap Frame_10788 {
+            get {
+                object obj = ResourceManager.GetObject("Frame_10788", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap Frame_10789 {
+            get {
+                object obj = ResourceManager.GetObject("Frame_10789", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap Frame＿blue {
             get {
                 object obj = ResourceManager.GetObject("Frame＿blue", resourceCulture);
@@ -1213,6 +1233,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap tutorialBg {
+            get {
+                object obj = ResourceManager.GetObject("tutorialBg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap visibility_off {
             get {
                 object obj = ResourceManager.GetObject("visibility_off", resourceCulture);
@@ -1253,6 +1283,146 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap 도구창２ {
+            get {
+                object obj = ResourceManager.GetObject("도구창２", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_Editor {
+            get {
+                object obj = ResourceManager.GetObject("라벨링_가이드_Editor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_todolist {
+            get {
+                object obj = ResourceManager.GetObject("라벨링_가이드_todolist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_순서 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링 가이드 순서", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_정확도_프레임 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링_가이드_정확도_프레임", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_클래스_목록 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링_가이드_클래스_목록", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드0 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링_가이드0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_1 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_2 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_3 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_4 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_5 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_6 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링가이드_7 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링가이드_7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap 완료 {
             get {
                 object obj = ResourceManager.GetObject("완료", resourceCulture);
@@ -1263,9 +1433,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 정확도_프레임 {
+        internal static System.Drawing.Bitmap 전체가이드1 {
             get {
-                object obj = ResourceManager.GetObject("정확도_프레임", resourceCulture);
+                object obj = ResourceManager.GetObject("전체가이드1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1273,9 +1443,19 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 클래스__todolist {
+        internal static System.Drawing.Bitmap 전체가이드2 {
             get {
-                object obj = ResourceManager.GetObject("클래스__todolist", resourceCulture);
+                object obj = ResourceManager.GetObject("전체가이드2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 전체가이드3 {
+            get {
+                object obj = ResourceManager.GetObject("전체가이드3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

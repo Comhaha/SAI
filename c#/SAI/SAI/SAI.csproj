@@ -148,6 +148,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.Designer.cs">
+      <DependentUpon>TutorialGuideForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,9 +192,10 @@
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IUcSelectTypeView.cs" />
     <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
+    <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.Designer.cs">
+    <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.Designer.cs">
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
@@ -251,6 +258,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.resx">
+      <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.resx">
       <DependentUpon>DialogCompleteTutorial.cs</DependentUpon>
     </EmbeddedResource>
@@ -277,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\TutorialGuideForm.resx">
+      <DependentUpon>TutorialGuideForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelSelect.resx">
       <DependentUpon>DialogModelSelect.cs</DependentUpon>
@@ -434,11 +447,7 @@
     <None Include="Resources\Frame_red.png" />
     <None Include="Resources\6.jpg" />
     <None Include="Resources\도구창_short.png" />
-    <None Include="Resources\정확도 프레임.png" />
     <None Include="Resources\Line 227.png" />
-    <None Include="Resources\클래스, todolist.png" />
-    <None Include="Resources\Frame 1000004304.png" />
-    <None Include="Resources\도구창.png" />
     <None Include="Resources\확대 축소.png" />
     <None Include="Resources\banana.jpg" />
     <None Include="Resources\strawberry-1.jpg" />
@@ -451,6 +460,31 @@
     <None Include="Resources\chipmunk-4642839_1280.jpg" />
     <None Include="Resources\animal-4544725_1280.jpg" />
     <None Include="Resources\squirrel-5506514_1280.jpg" />
+    <None Include="Resources\Frame 10789.png" />
+    <None Include="Resources\Frame 10788.png" />
+    <None Include="Resources\전체 가이드1.png" />
+    <None Include="Resources\전체가이드2.png" />
+    <None Include="Resources\전체가이드3.png" />
+    <None Include="Resources\도구창.png" />
+    <None Include="Resources\블록선택창.png" />
+    <None Include="Resources\라벨링 가이드 Editor.png" />
+    <None Include="Resources\라벨링 가이드 todolist.png" />
+    <None Include="Resources\라벨링 가이드 정확도 프레임.png" />
+    <None Include="Resources\라벨링 가이드 클래스 목록.png" />
+    <None Include="Resources\라벨링 가이드0.png" />
+    <None Include="Resources\라벨링가이드 1.png" />
+    <None Include="Resources\라벨링가이드 2.png" />
+    <None Include="Resources\라벨링가이드 3.png" />
+    <None Include="Resources\라벨링가이드 4.png" />
+    <None Include="Resources\라벨링가이드 5.png" />
+    <None Include="Resources\라벨링가이드 6.png" />
+    <None Include="Resources\라벨링가이드 7.png" />
+    <None Include="Resources\도구창２.png" />
+    <None Include="Resources\스크린샷 2025-05-12 154049.png" />
+    <None Include="Resources\img_background.png" />
+    <None Include="Resources\tutorialBg.png" />
+    <None Include="Resources\Frame 1000004323.png" />
+    <None Include="Resources\Frame 1000004304.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
