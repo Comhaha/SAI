@@ -82,6 +82,10 @@ namespace SAI.SAI.App.Views.Pages
             this.lblInferGraph = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblInfer = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
+            this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.ibtnCloseMemo = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnQuestionMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pMain.SuspendLayout();
             this.pToDoList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo2Done)).BeginInit();
@@ -101,6 +105,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
+            this.pMemo.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -179,7 +184,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pboxTodo1, "pboxTodo1");
             this.pboxTodo1.Name = "pboxTodo1";
             this.pboxTodo1.TabStop = false;
-            this.pboxTodo1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // pboxTodo0
             // 
@@ -465,6 +469,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnMemo.ImageSize = new System.Drawing.Size(56, 56);
             this.ibtnMemo.Name = "ibtnMemo";
             this.ibtnMemo.PressedState.ImageSize = new System.Drawing.Size(56, 56);
+            this.ibtnMemo.Click += new System.EventHandler(this.ibtnMemo_Click);
             // 
             // ibtnDone
             // 
@@ -679,12 +684,66 @@ namespace SAI.SAI.App.Views.Pages
             this.lblInfer.ForeColor = System.Drawing.Color.Black;
             this.lblInfer.Name = "lblInfer";
             // 
+            // pMemo
+            // 
+            this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
+            resources.ApplyResources(this.pMemo, "pMemo");
+            this.pMemo.Controls.Add(this.tboxMemo);
+            this.pMemo.Controls.Add(this.ibtnCloseMemo);
+            this.pMemo.Controls.Add(this.ibtnQuestionMemo);
+            this.pMemo.Name = "pMemo";
+            // 
+            // tboxMemo
+            // 
+            this.tboxMemo.BorderColor = System.Drawing.Color.Transparent;
+            this.tboxMemo.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tboxMemo.DefaultText = "";
+            this.tboxMemo.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tboxMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tboxMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxMemo.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxMemo.FillColor = System.Drawing.Color.Transparent;
+            this.tboxMemo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            resources.ApplyResources(this.tboxMemo, "tboxMemo");
+            this.tboxMemo.ForeColor = System.Drawing.Color.Black;
+            this.tboxMemo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxMemo.Name = "tboxMemo";
+            this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
+            this.tboxMemo.PlaceholderText = "";
+            this.tboxMemo.SelectedText = "";
+            // 
+            // ibtnCloseMemo
+            // 
+            this.ibtnCloseMemo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCloseMemo.HoverState.ImageSize = new System.Drawing.Size(31, 31);
+            this.ibtnCloseMemo.Image = global::SAI.Properties.Resources.btn_close1;
+            this.ibtnCloseMemo.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCloseMemo.ImageRotate = 0F;
+            this.ibtnCloseMemo.ImageSize = new System.Drawing.Size(29, 29);
+            resources.ApplyResources(this.ibtnCloseMemo, "ibtnCloseMemo");
+            this.ibtnCloseMemo.Name = "ibtnCloseMemo";
+            this.ibtnCloseMemo.PressedState.ImageSize = new System.Drawing.Size(31, 31);
+            this.ibtnCloseMemo.Click += new System.EventHandler(this.ibtnCloseMemo_Click);
+            // 
+            // ibtnQuestionMemo
+            // 
+            this.ibtnQuestionMemo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnQuestionMemo.HoverState.ImageSize = new System.Drawing.Size(31, 31);
+            this.ibtnQuestionMemo.Image = global::SAI.Properties.Resources.btn_question_memo;
+            this.ibtnQuestionMemo.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnQuestionMemo.ImageRotate = 0F;
+            this.ibtnQuestionMemo.ImageSize = new System.Drawing.Size(29, 29);
+            resources.ApplyResources(this.ibtnQuestionMemo, "ibtnQuestionMemo");
+            this.ibtnQuestionMemo.Name = "ibtnQuestionMemo";
+            this.ibtnQuestionMemo.PressedState.ImageSize = new System.Drawing.Size(31, 31);
+            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.pMemo);
             this.Controls.Add(this.pSideInfer);
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.ibtnMemo);
@@ -716,6 +775,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.PerformLayout();
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
+            this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -774,5 +834,9 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2PictureBox pboxTodo0Done;
         private Guna.UI2.WinForms.Guna2PictureBox pboxTodo1Done;
         private Guna.UI2.WinForms.Guna2PictureBox pboxTodo2Done;
+        private Guna.UI2.WinForms.Guna2Panel pMemo;
+        private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnCloseMemo;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnQuestionMemo;
     }
 }

@@ -148,7 +148,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="pMain.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -220,7 +220,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="pToDoList.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1386,7 +1386,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnMemo.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="ibtnDone.Location" type="System.Drawing.Point, System.Drawing">
     <value>988, 18</value>
@@ -1407,7 +1407,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnDone.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="ibtnInfer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -1431,7 +1431,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnInfer.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 18</value>
@@ -1455,7 +1455,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnHome.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1644,7 +1644,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="ibtnTest.Location" type="System.Drawing.Point, System.Drawing">
     <value>113, 1050</value>
@@ -2013,6 +2013,99 @@
   </data>
   <data name="&gt;&gt;lblInfer.ZOrder" xml:space="preserve">
     <value>11</value>
+  </data>
+  <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="tboxMemo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 6pt</value>
+  </data>
+  <data name="tboxMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 49</value>
+  </data>
+  <data name="tboxMemo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="tboxMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>323, 247</value>
+  </data>
+  <data name="tboxMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tboxMemo.Name" xml:space="preserve">
+    <value>tboxMemo</value>
+  </data>
+  <data name="&gt;&gt;tboxMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;tboxMemo.Parent" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ibtnCloseMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 21</value>
+  </data>
+  <data name="ibtnCloseMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 23</value>
+  </data>
+  <data name="ibtnCloseMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;ibtnCloseMemo.Name" xml:space="preserve">
+    <value>ibtnCloseMemo</value>
+  </data>
+  <data name="&gt;&gt;ibtnCloseMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;ibtnCloseMemo.Parent" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;ibtnCloseMemo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ibtnQuestionMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 21</value>
+  </data>
+  <data name="ibtnQuestionMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 23</value>
+  </data>
+  <data name="ibtnQuestionMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ibtnQuestionMemo.Name" xml:space="preserve">
+    <value>ibtnQuestionMemo</value>
+  </data>
+  <data name="&gt;&gt;ibtnQuestionMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;ibtnQuestionMemo.Parent" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;ibtnQuestionMemo.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>94, 312</value>
+  </data>
+  <data name="pMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>354, 311</value>
+  </data>
+  <data name="pMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;pMemo.Name" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;pMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pMemo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -16,6 +16,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
+        private bool isMemoPanelVisible = false;
 
         public UcTutorialBlockCode()
         {
@@ -31,8 +32,10 @@ namespace SAI.SAI.App.Views.Pages
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
             pboxInferAccuracy.Visible = false;
+            pMemo.Visible = false;
 
             SetupThresholdControls();
+            MemoUtils.ApplyStyle(tboxMemo);
         }
         private void UcTutorialBlockCode_Load(object sender, EventArgs e)
         {
@@ -234,10 +237,16 @@ namespace SAI.SAI.App.Views.Pages
             HidepSideInfer();
         }
 
-        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        private void ibtnMemo_Click(object sender, EventArgs e)
         {
-
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
         }
 
+        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
+        }
     }
 }
