@@ -29,6 +29,14 @@ namespace SAI.SAI.App.Views.Pages
         private List<Tuple<Rectangle, string>> boundingBoxes = new List<Tuple<Rectangle, string>>();
         private Point rectStartPoint;
 
+        // 바운딩 박스 편집 관련 변수
+        private bool isEditingBoundingBox = false;
+        private int selectedBoxIndex = -1;
+        private Rectangle editingRect = Rectangle.Empty;
+        private bool isBoundingBoxDragging = false;
+        private int dragHandleIndex = -1; // 0: 좌상, 1: 우상, 2: 좌하, 3: 우하, 4: 중앙(이동)
+        private const int HandleSize = 10; // 핸들 크기
+
         // 이미지별 라벨링 데이터 저장
         private Dictionary<int, string> imageClassifications = new Dictionary<int, string>();
 
@@ -79,6 +87,10 @@ namespace SAI.SAI.App.Views.Pages
         private float zoomFactor = 1.0f;
         private Size originalImageSize;
 
+        // 도구 설명 툴팁 관련 변수
+        private Guna.UI2.WinForms.Guna2Panel tooltipPanel;
+        private Guna.UI2.WinForms.Guna2HtmlLabel tooltipLabel;
+        private System.Windows.Forms.Timer tooltipTimer;
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,16 +136,16 @@ namespace SAI.SAI.App.Views.Pages
             groundTruthBoundingBoxes[3] = ParseBoundingBoxFromJson(
                 "{\"label\":\"cat\",\"x\":230,\"y\":79,\"width\":307,\"height\":305}");
             groundTruthBoundingBoxes[4] = ParseBoundingBoxFromJson(
-                "{\"label\":\"cat\",\"x\":198,\"y\":109,\"width\":222,\"height\":364}");
+                "{\"label\":\"dog\",\"x\":247,\"y\":58,\"width\":251,\"height\":265}");
             groundTruthBoundingBoxes[5] = ParseBoundingBoxFromJson(
-                "{\"label\":\"dog\",\"x\":198,\"y\":37,\"width\":237,\"height\":275}");
+                "{\"label\":\"dog\",\"x\":534,\"y\":211,\"width\":690,\"height\":470}");
             // 세그멘테이션 정답 데이터(폴리곤)
             groundTruthPolygons[6] = ParsePolygonFromJson(
-                "{\"label\":\"cat\",\"points\":[{\"x\":89,\"y\":98},{\"x\":124,\"y\":146},{\"x\":149,\"y\":175},{\"x\":154,\"y\":212},{\"x\":159,\"y\":235},{\"x\":145,\"y\":310},{\"x\":161,\"y\":333},{\"x\":190,\"y\":344},{\"x\":191,\"y\":373},{\"x\":191,\"y\":400},{\"x\":204,\"y\":413},{\"x\":311,\"y\":414},{\"x\":447,\"y\":408},{\"x\":471,\"y\":379},{\"x\":585,\"y\":370},{\"x\":625,\"y\":367},{\"x\":637,\"y\":336},{\"x\":634,\"y\":314},{\"x\":453,\"y\":270},{\"x\":425,\"y\":245},{\"x\":343,\"y\":226},{\"x\":334,\"y\":201},{\"x\":340,\"y\":157},{\"x\":326,\"y\":94},{\"x\":314,\"y\":28},{\"x\":291,\"y\":9},{\"x\":270,\"y\":44},{\"x\":254,\"y\":72},{\"x\":218,\"y\":77},{\"x\":182,\"y\":104}]}");
+                "{\"label\":\"apple\",\"points\":[{\"x\":362,\"y\":171},{\"x\":237,\"y\":293},{\"x\":204,\"y\":417},{\"x\":250,\"y\":591},{\"x\":329,\"y\":653},{\"x\":435,\"y\":687},{\"x\":547,\"y\":720},{\"x\":692,\"y\":683},{\"x\":782,\"y\":605},{\"x\":824,\"y\":536},{\"x\":829,\"y\":456},{\"x\":840,\"y\":394},{\"x\":804,\"y\":263},{\"x\":767,\"y\":206},{\"x\":657,\"y\":139},{\"x\":552,\"y\":123},{\"x\":457,\"y\":139},{\"x\":400,\"y\":153}]}");
             groundTruthPolygons[7] = ParsePolygonFromJson(
-                "{\"label\":\"dog\",\"points\":[{\"x\":273,\"y\":61},{\"x\":247,\"y\":105},{\"x\":247,\"y\":152},{\"x\":264,\"y\":183},{\"x\":249,\"y\":213},{\"x\":255,\"y\":251},{\"x\":269,\"y\":303},{\"x\":295,\"y\":315},{\"x\":320,\"y\":308},{\"x\":335,\"y\":326},{\"x\":382,\"y\":314},{\"x\":382,\"y\":299},{\"x\":422,\"y\":299},{\"x\":439,\"y\":327},{\"x\":473,\"y\":325},{\"x\":479,\"y\":272},{\"x\":481,\"y\":194},{\"x\":496,\"y\":182},{\"x\":501,\"y\":128},{\"x\":479,\"y\":111},{\"x\":443,\"y\":99},{\"x\":393,\"y\":94},{\"x\":354,\"y\":127},{\"x\":342,\"y\":158},{\"x\":301,\"y\":156},{\"x\":274,\"y\":127},{\"x\":294,\"y\":54}]}");
+                "{\"label\":\"strawberry\",\"points\":[{\"x\":294,\"y\":424},{\"x\":160,\"y\":646},{\"x\":147,\"y\":703},{\"x\":127,\"y\":763},{\"x\":178,\"y\":795},{\"x\":224,\"y\":758},{\"x\":259,\"y\":742},{\"x\":448,\"y\":472},{\"x\":530,\"y\":431},{\"x\":424,\"y\":621},{\"x\":371,\"y\":804},{\"x\":446,\"y\":814},{\"x\":521,\"y\":749},{\"x\":591,\"y\":660},{\"x\":558,\"y\":747},{\"x\":604,\"y\":788},{\"x\":738,\"y\":724},{\"x\":822,\"y\":614},{\"x\":782,\"y\":699},{\"x\":840,\"y\":722},{\"x\":906,\"y\":667},{\"x\":945,\"y\":667},{\"x\":965,\"y\":628},{\"x\":998,\"y\":596},{\"x\":1053,\"y\":483},{\"x\":1066,\"y\":389},{\"x\":1035,\"y\":282},{\"x\":987,\"y\":222},{\"x\":939,\"y\":126},{\"x\":873,\"y\":75},{\"x\":785,\"y\":61},{\"x\":730,\"y\":16},{\"x\":655,\"y\":43},{\"x\":620,\"y\":89},{\"x\":650,\"y\":121},{\"x\":602,\"y\":183},{\"x\":582,\"y\":126},{\"x\":543,\"y\":105},{\"x\":501,\"y\":114},{\"x\":468,\"y\":137}]}");
             groundTruthPolygons[8] = ParsePolygonFromJson(
-                "{\"label\":\"dog\",\"points\":[{\"x\":163,\"y\":213},{\"x\":162,\"y\":248},{\"x\":186,\"y\":277},{\"x\":181,\"y\":322},{\"x\":236,\"y\":356},{\"x\":270,\"y\":338},{\"x\":294,\"y\":312},{\"x\":331,\"y\":343},{\"x\":366,\"y\":329},{\"x\":343,\"y\":279},{\"x\":371,\"y\":270},{\"x\":417,\"y\":305},{\"x\":454,\"y\":292},{\"x\":447,\"y\":270},{\"x\":414,\"y\":253},{\"x\":399,\"y\":227},{\"x\":406,\"y\":172},{\"x\":417,\"y\":116},{\"x\":381,\"y\":83},{\"x\":333,\"y\":66},{\"x\":288,\"y\":78},{\"x\":262,\"y\":97},{\"x\":243,\"y\":132},{\"x\":251,\"y\":163},{\"x\":213,\"y\":206},{\"x\":196,\"y\":229},{\"x\":192,\"y\":245}]}");
+                "{\"label\":\"banana\",\"points\":[{\"x\":404,\"y\":399},{\"x\":404,\"y\":463},{\"x\":424,\"y\":528},{\"x\":448,\"y\":606},{\"x\":567,\"y\":642},{\"x\":653,\"y\":665},{\"x\":716,\"y\":647},{\"x\":771,\"y\":640},{\"x\":824,\"y\":661},{\"x\":956,\"y\":583},{\"x\":967,\"y\":534},{\"x\":945,\"y\":488},{\"x\":895,\"y\":424},{\"x\":853,\"y\":362},{\"x\":798,\"y\":291},{\"x\":736,\"y\":245},{\"x\":668,\"y\":213},{\"x\":620,\"y\":204},{\"x\":567,\"y\":199},{\"x\":479,\"y\":252},{\"x\":439,\"y\":286},{\"x\":413,\"y\":348}]}");
         }
         // 정확도 계산 버튼 추가 메서드 (임시
         private void RegisterAccuracyButton()
@@ -189,6 +201,9 @@ namespace SAI.SAI.App.Views.Pages
             ZoomInBtn.Click += ZoomInBtn_Click;
             ZoomOutBtn.Click += ZoomOutBtn_Click;
             this.MouseWheel += UcLabelGuide_MouseWheel;
+            
+            // 툴팁 패널 초기화
+            InitializeTooltipPanel();
         }
 
         /// <summary>
@@ -254,6 +269,27 @@ namespace SAI.SAI.App.Views.Pages
             // 버튼 이벤트 등록
             nextBtn.Click += (s, e) => ShowNextImage();
             preBtn.Click += (s, e) => ShowPreviousImage();
+            
+            // 버튼 클릭 시 손 도구 해제
+            nextBtn.Click += (s, e) => {
+                if (isHandToolActive)
+                {
+                    isHandToolActive = false;
+                    isEditingPolygon = false;
+                    isEditingBoundingBox = false;
+                    UpdateToolVisualState();
+                }
+            };
+            
+            preBtn.Click += (s, e) => {
+                if (isHandToolActive)
+                {
+                    isHandToolActive = false;
+                    isEditingPolygon = false;
+                    isEditingBoundingBox = false;
+                    UpdateToolVisualState();
+                }
+            };
 
             // 이미지가 라운드 밖으로 나가지 않도록 설정
             imageContainer.Paint += ImageContainer_Paint;
@@ -375,9 +411,36 @@ namespace SAI.SAI.App.Views.Pages
 
             // 라벨 지우기
             toolDelete.Click += toolDelete_Click;
+            // 라벨 지우기 버튼 클릭 시 손 도구 비활성화
+            toolDelete.Click += (s, e) => {
+                if (isHandToolActive)
+                {
+                    isHandToolActive = false;
+                    isEditingPolygon = false;
+                    isEditingBoundingBox = false;
+                    selectedPolygonIndex = -1;
+                    selectedBoxIndex = -1;
+                    UpdateToolVisualState();
+                }
+            };
 
             // 바운딩 박스 및 세그멘테이션 가시성 토글
             toolVisible.Click += toolVisible_Click;
+            // 가시성 토글 버튼 클릭 시 손 도구 비활성화
+            toolVisible.Click += (s, e) => {
+                if (isHandToolActive)
+                {
+                    isHandToolActive = false;
+                    isEditingPolygon = false;
+                    isEditingBoundingBox = false;
+                    selectedPolygonIndex = -1;
+                    selectedBoxIndex = -1;
+                    UpdateToolVisualState();
+                }
+            };
+            
+            // 툴팁 이벤트 등록
+            RegisterTooltipEvents();
         }
 
         /// <summary>
@@ -540,6 +603,10 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
+        //////////////////////////////////////////////////////////////////////////////
+        ////// 줌 기능 관련 이벤트 핸들러
+        //////////////////////////////////////////////////////////////////////////////
+        
         private void SetupZoomFunctionality()
         {
             // 원본 이미지 크기 저장
@@ -680,24 +747,64 @@ namespace SAI.SAI.App.Views.Pages
                 isSquareToolActive = false;
                 isPolygonToolActive = false; // 폴리곤 도구 비활성화
 
-                // 손 도구가 활성화되면 폴리곤 편집 모드 설정
-                if (isHandToolActive && currentLevel.Text == "Segmentation" &&
-                    imagePolygons.ContainsKey(currentImageIndex) &&
-                    imagePolygons[currentImageIndex].Count > 0)
+                // 손 도구가 활성화되면 현재 모드에 따라 적절한 편집 모드 설정
+                if (isHandToolActive) 
                 {
-                    isEditingPolygon = true;
+                    if (currentLevel.Text == "Segmentation" &&
+                        imagePolygons.ContainsKey(currentImageIndex) &&
+                        imagePolygons[currentImageIndex].Count > 0)
+                    {
+                        // 세그멘테이션 모드에서는 폴리곤 편집 모드 활성화
+                        isEditingPolygon = true;
+                        isEditingBoundingBox = false;
 
-                    // 기존에 저장된 폴리곤의 점들을 편집용으로 복사
-                    var existingPolygon = imagePolygons[currentImageIndex][0]; // 첫 번째 폴리곤만 편집 가능
-                    selectedPolygonIndex = 0;
+                        // 기존에 저장된 폴리곤의 점들을 편집용으로 복사
+                        var existingPolygon = imagePolygons[currentImageIndex][0]; // 첫 번째 폴리곤만 편집 가능
+                        selectedPolygonIndex = 0;
 
-                    // 이미지 좌표를 화면 좌표로 변환
-                    editingPolygonPoints = ConvertPointsToDisplayCoordinates(existingPolygon.Item1);
+                        // 이미지 좌표를 화면 좌표로 변환
+                        editingPolygonPoints = ConvertPointsToDisplayCoordinates(existingPolygon.Item1);
+                    }
+                    else if (currentLevel.Text == "Bounding Box" &&
+                             imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                             imageBoundingBoxes[currentImageIndex].Count > 0)
+                    {
+                        // 바운딩 박스 모드에서는 바운딩 박스 편집 모드 활성화
+                        isEditingBoundingBox = true;
+                        isEditingPolygon = false;
+
+                        // 기존에 저장된 바운딩 박스를 편집용으로 복사
+                        var existingBox = imageBoundingBoxes[currentImageIndex][0]; // 첫 번째 바운딩 박스만 편집 가능
+                        selectedBoxIndex = 0;
+
+                        // 이미지 좌표를 화면 좌표로 변환
+                        float scaleX = pictureBoxImage.ClientSize.Width / (float)pictureBoxImage.BackgroundImage.Width;
+                        float scaleY = pictureBoxImage.ClientSize.Height / (float)pictureBoxImage.BackgroundImage.Height;
+
+                        editingRect = new Rectangle(
+                            (int)(existingBox.Item1.X * scaleX),
+                            (int)(existingBox.Item1.Y * scaleY),
+                            (int)(existingBox.Item1.Width * scaleX),
+                            (int)(existingBox.Item1.Height * scaleY)
+                        );
+                    }
+                    else
+                    {
+                        // 그 외의 경우는 편집 모드 비활성화
+                        isEditingPolygon = false;
+                        isEditingBoundingBox = false;
+                        selectedPolygonIndex = -1;
+                        selectedBoxIndex = -1;
+                        editingPolygonPoints.Clear();
+                    }
                 }
                 else
                 {
+                    // 손 도구가 비활성화되면 모든 편집 모드 비활성화
                     isEditingPolygon = false;
+                    isEditingBoundingBox = false;
                     selectedPolygonIndex = -1;
+                    selectedBoxIndex = -1;
                     editingPolygonPoints.Clear();
                 }
 
@@ -723,9 +830,14 @@ namespace SAI.SAI.App.Views.Pages
                     }
 
                     // 도구 상태 변경
-                    isHandToolActive = false;
+                    isHandToolActive = false; // 손 도구 비활성화
                     isSquareToolActive = true;
                     isPolygonToolActive = false;
+                    
+                    // 바운딩 박스 편집 모드 해제
+                    isEditingBoundingBox = false;
+                    selectedBoxIndex = -1;
+                    editingRect = Rectangle.Empty;
 
                     UpdateToolVisualState();
                     pictureBoxImage.Cursor = Cursors.Cross;
@@ -755,11 +867,16 @@ namespace SAI.SAI.App.Views.Pages
                     }
 
                     // 모든 도구 상태 비활성화
-                    isHandToolActive = false;
+                    isHandToolActive = false; // 손 도구 비활성화
                     isSquareToolActive = false;
 
                     // 폴리곤 도구 활성화 상태 토글
                     isPolygonToolActive = !isPolygonToolActive;
+                    
+                    // 폴리곤 편집 모드 해제
+                    isEditingPolygon = false;
+                    selectedPolygonIndex = -1;
+                    editingPolygonPoints.Clear();
 
                     UpdateToolVisualState();
                     pictureBoxImage.Cursor = isPolygonToolActive ? Cursors.Cross : Cursors.Default;
@@ -800,10 +917,15 @@ namespace SAI.SAI.App.Views.Pages
             isSquareToolActive = false;
             isDragging = false;
             isEditingPolygon = false;
+            isEditingBoundingBox = false;
+            isBoundingBoxDragging = false;
             isPolygonPointDragging = false;
             selectedPolygonIndex = -1;
+            selectedBoxIndex = -1;
             dragPointIndex = -1;
+            dragHandleIndex = -1;
             currentRect = Rectangle.Empty;
+            editingRect = Rectangle.Empty;
             polygonPoints.Clear();
             editingPolygonPoints.Clear();
 
@@ -1282,19 +1404,39 @@ namespace SAI.SAI.App.Views.Pages
                         {
                             // 일반 드래그 모드 시작
                             isDragging = true;
-                            //startPoint = e.Location;
                             startPoint = pictureBoxImage.PointToScreen(e.Location);
-
                         }
+                    }
+                }
+                else if (isEditingBoundingBox)
+                {
+                    // 바운딩 박스 핸들 클릭 확인
+                    dragHandleIndex = GetHandleAtPosition(e.Location);
+                    if (dragHandleIndex >= 0)
+                    {
+                        // 핸들을 클릭했으면 크기 조정 모드 시작
+                        isBoundingBoxDragging = true;
+                        pictureBoxImage.Cursor = GetResizeCursor(dragHandleIndex);
+                    }
+                    else if (editingRect.Contains(e.Location))
+                    {
+                        // 바운딩 박스 내부를 클릭했으면 이동 모드 시작
+                        isBoundingBoxDragging = true;
+                        dragHandleIndex = 4; // 중앙(이동) 모드
+                        pictureBoxImage.Cursor = Cursors.SizeAll;
+                    }
+                    else
+                    {
+                        // 일반 드래그 모드 시작
+                        isDragging = true;
+                        startPoint = pictureBoxImage.PointToScreen(e.Location);
                     }
                 }
                 else
                 {
                     // 일반 드래그 모드 시작
                     isDragging = true;
-                    //startPoint = e.Location;
                     startPoint = pictureBoxImage.PointToScreen(e.Location);
-
                 }
             }
             else if (isSquareToolActive && e.Button == MouseButtons.Left)
@@ -1317,14 +1459,12 @@ namespace SAI.SAI.App.Views.Pages
                 editingPolygonPoints[dragPointIndex] = e.Location;
                 pictureBoxImage.Invalidate();
             }
-            //else if (isDragging)
-            //{
-            //    // 이미지 드래그 시 이동 로직을 수정
-            //    pictureBoxImage.Left += e.X - startPoint.X;
-            //    pictureBoxImage.Top += e.Y - startPoint.Y;
-            //    // 시작 위치 업데이트 (연속 드래그를 부드럽게 처리하기 위해)
-            //    startPoint = e.Location;
-            //}
+            else if (isBoundingBoxDragging && dragHandleIndex >= 0 && isEditingBoundingBox)
+            {
+                // 바운딩 박스 편집 모드
+                UpdateEditingRect(e.Location, dragHandleIndex);
+                pictureBoxImage.Invalidate();
+            }
             else if (isDragging)
             {
                 // 현재 마우스 위치를 스크린 좌표로 변환
@@ -1349,6 +1489,23 @@ namespace SAI.SAI.App.Views.Pages
 
                 currentRect = new Rectangle(x, y, width, height);
                 pictureBoxImage.Invalidate();
+            }
+            else if (isEditingBoundingBox)
+            {
+                // 바운딩 박스 편집 모드에서 마우스 호버링 처리
+                int handleIndex = GetHandleAtPosition(e.Location);
+                if (handleIndex >= 0)
+                {
+                    pictureBoxImage.Cursor = GetResizeCursor(handleIndex);
+                }
+                else if (editingRect.Contains(e.Location))
+                {
+                    pictureBoxImage.Cursor = Cursors.SizeAll;
+                }
+                else
+                {
+                    pictureBoxImage.Cursor = Cursors.Hand;
+                }
             }
         }
 
@@ -1381,6 +1538,50 @@ namespace SAI.SAI.App.Views.Pages
 
                         // 폴리곤 수정 후 정확도 즉시 계산 및 표시
                         if (currentLevel.Text == "Segmentation")
+                        {
+                            CalculateAndDisplayAccuracy();
+                        }
+                    }
+                }
+                else if (isBoundingBoxDragging)
+                {
+                    // 바운딩 박스 드래그 종료
+                    isBoundingBoxDragging = false;
+                    dragHandleIndex = -1;
+                    pictureBoxImage.Cursor = Cursors.Hand;
+
+                    // 수정된 바운딩 박스 저장
+                    if (isEditingBoundingBox && selectedBoxIndex >= 0 &&
+                        imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                        selectedBoxIndex < imageBoundingBoxes[currentImageIndex].Count)
+                    {
+                        // 화면 좌표를 이미지 좌표로 변환
+                        Rectangle imageRect = ConvertToImageCoordinates(editingRect);
+
+                        // 이전 상태 저장 (히스토리용)
+                        List<Tuple<Rectangle, string>> previousBoxes = null;
+                        if (imageBoundingBoxes.ContainsKey(currentImageIndex))
+                        {
+                            previousBoxes = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex]);
+                        }
+
+                        // 기존 라벨 유지하면서 좌표만 업데이트
+                        string label = imageBoundingBoxes[currentImageIndex][selectedBoxIndex].Item2;
+                        imageBoundingBoxes[currentImageIndex][selectedBoxIndex] =
+                            new Tuple<Rectangle, string>(imageRect, label);
+
+                        // 히스토리에 작업 추가
+                        var action = new ActionState
+                        {
+                            Type = ActionState.ActionType.BoundingBox,
+                            ImageIndex = currentImageIndex,
+                            BeforeState = previousBoxes,
+                            AfterState = new List<Tuple<Rectangle, string>>(imageBoundingBoxes[currentImageIndex])
+                        };
+                        AddToHistory(action);
+
+                        // 바운딩 박스 수정 후 정확도 즉시 계산 및 표시
+                        if (currentLevel.Text == "Bounding Box")
                         {
                             CalculateAndDisplayAccuracy();
                         }
@@ -1610,6 +1811,71 @@ namespace SAI.SAI.App.Views.Pages
                                 e.Graphics.DrawString(box.Item2, font, brush,
                                     displayRect.X,
                                     displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 편집 중인 바운딩 박스 그리기
+            if (isEditingBoundingBox && !editingRect.IsEmpty)
+            {
+                using (Pen pen = new Pen(Color.Orange, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, editingRect);
+
+                    // 핸들 그리기 (4개 코너)
+                    using (SolidBrush handleBrush = new SolidBrush(Color.Orange))
+                    {
+                        // 좌상단
+                        e.Graphics.FillRectangle(handleBrush, 
+                            editingRect.X - HandleSize / 2, 
+                            editingRect.Y - HandleSize / 2, 
+                            HandleSize, HandleSize);
+
+                        // 우상단
+                        e.Graphics.FillRectangle(handleBrush, 
+                            editingRect.Right - HandleSize / 2, 
+                            editingRect.Y - HandleSize / 2, 
+                            HandleSize, HandleSize);
+
+                        // 좌하단
+                        e.Graphics.FillRectangle(handleBrush, 
+                            editingRect.X - HandleSize / 2, 
+                            editingRect.Bottom - HandleSize / 2, 
+                            HandleSize, HandleSize);
+
+                        // 우하단
+                        e.Graphics.FillRectangle(handleBrush, 
+                            editingRect.Right - HandleSize / 2, 
+                            editingRect.Bottom - HandleSize / 2, 
+                            HandleSize, HandleSize);
+                    }
+
+                    // 라벨 텍스트 그리기
+                    if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                        selectedBoxIndex >= 0 &&
+                        selectedBoxIndex < imageBoundingBoxes[currentImageIndex].Count)
+                    {
+                        string label = imageBoundingBoxes[currentImageIndex][selectedBoxIndex].Item2;
+                        if (!string.IsNullOrEmpty(label))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.Orange))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                SizeF textSize = e.Graphics.MeasureString(label, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    editingRect.X,
+                                    editingRect.Y > textSize.Height ? editingRect.Y - textSize.Height : editingRect.Y,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(label, font, brush,
+                                    editingRect.X,
+                                    editingRect.Y > textSize.Height ? editingRect.Y - textSize.Height : editingRect.Y);
                             }
                         }
                     }
@@ -2906,24 +3172,37 @@ namespace SAI.SAI.App.Views.Pages
         private void toolUndo_Click(object sender, EventArgs e)
         {
             Undo();
+            
+            // 손 도구가 활성화된 상태였다면 비활성화
+            if (isHandToolActive)
+            {
+                isHandToolActive = false;
+                isEditingPolygon = false;
+                isEditingBoundingBox = false;
+                selectedPolygonIndex = -1;
+                selectedBoxIndex = -1;
+                UpdateToolVisualState();
+            }
         }
 
         private void toolRedo_Click(object sender, EventArgs e)
         {
             Redo();
+            
+            // 손 도구가 활성화된 상태였다면 비활성화
+            if (isHandToolActive)
+            {
+                isHandToolActive = false;
+                isEditingPolygon = false;
+                isEditingBoundingBox = false;
+                selectedPolygonIndex = -1;
+                selectedBoxIndex = -1;
+                UpdateToolVisualState();
+            }
         }
 
         private void toolDelete_Click(object sender, EventArgs e)
         {
-            //// 사용자에게 모든 라벨을 지울 것인지 확인
-            //DialogResult result = MessageBox.Show("현재 이미지의 모든 라벨을 지우시겠습니까?",
-            //                                     "라벨 지우기",
-            //                                     MessageBoxButtons.YesNo,
-            //                                     MessageBoxIcon.Question);
-
-            //if (result != DialogResult.Yes)
-            //    return;
-
             try
             {
 
@@ -3135,5 +3414,252 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        // 툴팁 패널 초기화 메서드
+        private void InitializeTooltipPanel()
+        {
+            // 툴팁 패널 생성
+            tooltipPanel = new Guna.UI2.WinForms.Guna2Panel();
+            tooltipPanel.BackColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            tooltipPanel.FillColor = System.Drawing.Color.FromArgb(50, 50, 50);
+            tooltipPanel.BorderRadius = 10;
+            tooltipPanel.Padding = new Padding(10);
+            tooltipPanel.Visible = false;
+            tooltipPanel.AutoSize = true;
+            tooltipPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tooltipPanel.MinimumSize = new Size(150, 0);
+            tooltipPanel.MaximumSize = new Size(250, 0);
+            
+            // 툴팁 레이블 생성
+            tooltipLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            tooltipLabel.ForeColor = System.Drawing.Color.White;
+            tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 9F);
+            tooltipLabel.AutoSize = true;
+            tooltipLabel.MaximumSize = new Size(230, 0);
+            tooltipLabel.TextAlignment = ContentAlignment.MiddleLeft;
+            
+            // 패널에 레이블 추가
+            tooltipPanel.Controls.Add(tooltipLabel);
+            
+            // 부모 컨트롤에 툴팁 패널 추가
+            this.Controls.Add(tooltipPanel);
+            tooltipPanel.BringToFront();
+            
+            // 툴팁 타이머 초기화
+            tooltipTimer = new System.Windows.Forms.Timer();
+            tooltipTimer.Interval = 300;
+            tooltipTimer.Tick += TooltipTimer_Tick;
+        }
+        
+        // 툴팁 타이머 이벤트 핸들러
+        private void TooltipTimer_Tick(object sender, EventArgs e)
+        {
+            tooltipTimer.Stop();
+            tooltipPanel.Visible = true;
+        }
+        
+        // 툴팁 이벤트 등록
+        private void RegisterTooltipEvents()
+        {
+            // 각 도구 버튼에 툴팁 이벤트 등록
+            RegisterTooltip(toolHand, "손 도구를 활성화하여 이미지를 드래그하거나 폴리곤 꼭지점을 편집할 수 있습니다.");
+            RegisterTooltip(toolLabelingSquare, "사각형 도구를 활성화하여 객체 주위에 바운딩 박스를 그릴 수 있습니다.");
+            RegisterTooltip(toolLabelingPolygon, "폴리곤 도구를 활성화하여 객체의 세밀한 윤곽을 그릴 수 있습니다.");
+            RegisterTooltip(toolDelete, "현재 이미지의 모든 라벨을 지웁니다.");
+            RegisterTooltip(toolUndo, "마지막 작업을 취소합니다.");
+            RegisterTooltip(toolRedo, "취소된 작업을 다시 실행합니다.");
+            RegisterTooltip(toolVisible, "라벨을 표시하거나 숨깁니다.");
+            RegisterTooltip(ZoomInBtn, "이미지를 확대합니다.");
+            RegisterTooltip(ZoomOutBtn, "이미지를 축소합니다.");
+            RegisterTooltip(nextBtn, "다음 이미지로 이동합니다.");
+            RegisterTooltip(preBtn, "이전 이미지로 이동합니다.");
+            RegisterTooltip(exportBtn, "현재 이미지의 라벨링 데이터를 내보냅니다.");
+            RegisterTooltip(accuracyBtn, "현재 이미지의 라벨링 정확도를 계산합니다.");
+        }
+        
+        // 컨트롤에 툴팁 이벤트 등록
+        private void RegisterTooltip(Control control, string tooltipText)
+        {
+            if (control != null)
+            {
+                control.MouseEnter += (s, e) => 
+                {
+                    tooltipLabel.Text = tooltipText;
+                    
+                    // 툴팁 위치 계산 (마우스 좌측에 표시)
+                    Point mousePos = this.PointToClient(Cursor.Position);
+                    int xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
+                    int yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
+                    
+                    // 화면 경계를 넘어가지 않도록 조정
+                    if (mousePos.X + xOffset < 0)
+                    {
+                        xOffset = 10; // 마우스 우측에 표시
+                    }
+                    
+                    tooltipPanel.Location = new Point(mousePos.X + xOffset, mousePos.Y + yOffset);
+                    
+                    // 타이머 시작 (지연 표시)
+                    tooltipTimer.Start();
+                };
+                
+                control.MouseLeave += (s, e) => 
+                {
+                    tooltipTimer.Stop();
+                    tooltipPanel.Visible = false;
+                };
+                
+                // 부모 컨트롤의 MouseMove 이벤트 캡처하여 툴팁 위치 업데이트
+                this.MouseMove += (s, e) => 
+                {
+                    if (tooltipPanel.Visible)
+                    {
+                        Point mousePos = this.PointToClient(Cursor.Position);
+                        int xOffset = -tooltipPanel.Width - 10;
+                        int yOffset = -(tooltipPanel.Height / 2);
+                        
+                        if (mousePos.X + xOffset < 0)
+                        {
+                            xOffset = 10;
+                        }
+                        
+                        tooltipPanel.Location = new Point(mousePos.X + xOffset, mousePos.Y + yOffset);
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// 특정 위치에 있는 바운딩 박스 핸들의 인덱스 반환
+        /// </summary>
+        private int GetHandleAtPosition(Point point)
+        {
+            if (editingRect.IsEmpty) return -1;
+
+            // 좌상단 핸들 (0)
+            Rectangle handleRect = new Rectangle(
+                editingRect.X - HandleSize / 2,
+                editingRect.Y - HandleSize / 2,
+                HandleSize, HandleSize);
+            if (handleRect.Contains(point)) return 0;
+
+            // 우상단 핸들 (1)
+            handleRect = new Rectangle(
+                editingRect.Right - HandleSize / 2,
+                editingRect.Y - HandleSize / 2,
+                HandleSize, HandleSize);
+            if (handleRect.Contains(point)) return 1;
+
+            // 좌하단 핸들 (2)
+            handleRect = new Rectangle(
+                editingRect.X - HandleSize / 2,
+                editingRect.Bottom - HandleSize / 2,
+                HandleSize, HandleSize);
+            if (handleRect.Contains(point)) return 2;
+
+            // 우하단 핸들 (3)
+            handleRect = new Rectangle(
+                editingRect.Right - HandleSize / 2,
+                editingRect.Bottom - HandleSize / 2,
+                HandleSize, HandleSize);
+            if (handleRect.Contains(point)) return 3;
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 핸들 인덱스에 따른 커서 반환
+        /// </summary>
+        private Cursor GetResizeCursor(int handleIndex)
+        {
+            switch (handleIndex)
+            {
+                case 0: // 좌상단
+                    return Cursors.SizeNWSE;
+                case 1: // 우상단
+                    return Cursors.SizeNESW;
+                case 2: // 좌하단
+                    return Cursors.SizeNESW;
+                case 3: // 우하단
+                    return Cursors.SizeNWSE;
+                case 4: // 중앙(이동)
+                    return Cursors.SizeAll;
+                default:
+                    return Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// 마우스 위치에 따라 바운딩 박스 업데이트
+        /// </summary>
+        private void UpdateEditingRect(Point mousePos, int handleIndex)
+        {
+            switch (handleIndex)
+            {
+                case 0: // 좌상단
+                    editingRect = new Rectangle(
+                        mousePos.X,
+                        mousePos.Y,
+                        editingRect.Right - mousePos.X,
+                        editingRect.Bottom - mousePos.Y);
+                    break;
+                case 1: // 우상단
+                    editingRect = new Rectangle(
+                        editingRect.X,
+                        mousePos.Y,
+                        mousePos.X - editingRect.X,
+                        editingRect.Bottom - mousePos.Y);
+                    break;
+                case 2: // 좌하단
+                    editingRect = new Rectangle(
+                        mousePos.X,
+                        editingRect.Y,
+                        editingRect.Right - mousePos.X,
+                        mousePos.Y - editingRect.Y);
+                    break;
+                case 3: // 우하단
+                    editingRect = new Rectangle(
+                        editingRect.X,
+                        editingRect.Y,
+                        mousePos.X - editingRect.X,
+                        mousePos.Y - editingRect.Y);
+                    break;
+                case 4: // 중앙(이동)
+                    int width = editingRect.Width;
+                    int height = editingRect.Height;
+                    editingRect = new Rectangle(
+                        mousePos.X - width / 2,
+                        mousePos.Y - height / 2,
+                        width,
+                        height);
+                    break;
+            }
+
+            // 음수 크기 처리
+            if (editingRect.Width < 0)
+            {
+                editingRect = new Rectangle(
+                    editingRect.Right,
+                    editingRect.Y,
+                    -editingRect.Width,
+                    editingRect.Height);
+            }
+            if (editingRect.Height < 0)
+            {
+                editingRect = new Rectangle(
+                    editingRect.X,
+                    editingRect.Bottom,
+                    editingRect.Width,
+                    -editingRect.Height);
+            }
+
+            // 최소 크기 제한
+            if (editingRect.Width < 10) editingRect.Width = 10;
+            if (editingRect.Height < 10) editingRect.Height = 10;
+        }
     }
 }

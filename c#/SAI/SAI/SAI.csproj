@@ -210,6 +210,17 @@
     <None Include="Resources\Frame 1000004304.png" />
     <None Include="Resources\도구창.png" />
     <None Include="Resources\확대 축소.png" />
+    <None Include="Resources\banana.jpg" />
+    <None Include="Resources\strawberry-1.jpg" />
+    <None Include="Resources\strawberry-2.jpg" />
+    <None Include="Resources\prairie-1025229_1280.jpg" />
+    <None Include="Resources\raven-2162966_1280.jpg" />
+    <None Include="Resources\sparrow-6300790_1280.jpg" />
+    <None Include="Resources\apple-2788616_1280.jpg" />
+    <None Include="Resources\apple-3313209_1280.jpg" />
+    <None Include="Resources\chipmunk-4642839_1280.jpg" />
+    <None Include="Resources\animal-4544725_1280.jpg" />
+    <None Include="Resources\squirrel-5506514_1280.jpg" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
