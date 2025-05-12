@@ -37,6 +37,13 @@ venv/
 .venv/
 .ipynb_checkpoints
 
+# /Python/ 하위 전체 무시
+/Python/*
+
+# /Python/script/ 폴더는 예외 처리
+!/Python/script/
+!/Python/script/**
+
 # Java
 *.class
 *.jar
