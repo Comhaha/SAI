@@ -16,21 +16,22 @@ using System.Text.RegularExpressions;
 
 namespace SAI
 {
-    public partial class MainForm : Form, IMainView
+    public partial class MainForm : Form, IMainView, IPageTransitionView
     {
 		private MainPresenter presenter;
+        //private TransitionPresenter transitionPresenter;
 
-		public MainForm()
+        public MainForm()
         {
             InitializeComponent();
 
 			presenter = new MainPresenter(this);
+            //transitionPresenter = new TransitionPresenter(this);
 
-			Size = new Size(1280, 720);
+            Size = new Size(1280, 720);
 			MaximizeBox = false;
 			MaximumSize = new Size(1280, 720);
 			MinimumSize = new Size(1280, 720);
-
 
         }
 
@@ -50,11 +51,11 @@ namespace SAI
             guna2Panel1.BringToFront();
         }
 
-        public void ShowHomePage()
+        public void ShowPage(UserControl page)
         {
-            var selectTypePage = new UcSelectType(); 
-            //selectTypePage.HomeButtonClicked += (s, e) => presenter.OnHomeButtonClicked();
-            LoadPage(selectTypePage);
+            guna2Panel1.Controls.Clear();
+            page.Dock = DockStyle.Fill;
+            guna2Panel1.Controls.Add(page);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e) { }

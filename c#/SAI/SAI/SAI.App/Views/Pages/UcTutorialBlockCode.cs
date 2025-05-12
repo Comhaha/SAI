@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
@@ -164,6 +165,11 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void webView21_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ibtnDone_Click(object sender, EventArgs e)
         {
 
         }
