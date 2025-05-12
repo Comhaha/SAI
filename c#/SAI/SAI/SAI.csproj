@@ -221,6 +221,7 @@
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
       <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -276,6 +277,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
       <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>
     </EmbeddedResource>
