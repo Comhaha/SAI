@@ -484,51 +484,6 @@
   <data name="도구창２" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\도구창２.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="라벨링_가이드0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링 가이드0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링_가이드_Editor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링 가이드 Editor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링_가이드_todolist" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링 가이드 todolist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링_가이드_정확도_프레임" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링 가이드 정확도 프레임.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링_가이드_클래스_목록" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링 가이드 클래스 목록.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="라벨링가이드_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\라벨링가이드 7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="전체가이드1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\전체 가이드1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="전체가이드2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\전체가이드2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="전체가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\전체가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="img_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -538,7 +493,46 @@
   <data name="Frame_1000004304" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Frame 1000004304.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="라벨링 가이드 순서" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Frame 1000004323.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_goLabeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_goNotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_goLabelingClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_goLabelingClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_goLabelingHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_goLabelingHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체튜토리얼가이드1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체튜토리얼가이드1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체튜토리얼가이드2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체튜토리얼가이드2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체튜토리얼가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체튜토리얼가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
