@@ -773,36 +773,6 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_celebration {
-            get {
-                object obj = ResourceManager.GetObject("icon_celebration", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_check_good {
-            get {
-                object obj = ResourceManager.GetObject("icon_check_good", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_warning {
-            get {
-                object obj = ResourceManager.GetObject("icon_warning", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
         internal static System.Drawing.Bitmap check_box_outline_blank {
             get {
                 object obj = ResourceManager.GetObject("check_box_outline_blank", resourceCulture);
@@ -903,9 +873,49 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_celebration {
+            get {
+                object obj = ResourceManager.GetObject("icon_celebration", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_check_good {
+            get {
+                object obj = ResourceManager.GetObject("icon_check_good", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_warning {
+            get {
+                object obj = ResourceManager.GetObject("icon_warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap img_background {
             get {
                 object obj = ResourceManager.GetObject("img_background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_frame_shadow {
+            get {
+                object obj = ResourceManager.GetObject("img_frame_shadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -920,10 +930,42 @@ namespace SAI.Properties {
             }
         }
         
-
-        internal static System.Drawing.Bitmap img_frame_shadow {
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_block {
             get {
-                object obj = ResourceManager.GetObject("img_frame_shadow", resourceCulture);
+                object obj = ResourceManager.GetObject("p_block", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_blocklist_tutorial {
+            get {
+                object obj = ResourceManager.GetObject("p_blocklist_tutorial", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_todolist {
+            get {
+                object obj = ResourceManager.GetObject("p_todolist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_topbar {
+            get {
+                object obj = ResourceManager.GetObject("p_topbar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -937,12 +979,6 @@ namespace SAI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        internal static System.Drawing.Bitmap p_block {
-            get {
-                object obj = ResourceManager.GetObject("p_block", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
         
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
@@ -953,12 +989,6 @@ namespace SAI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        internal static System.Drawing.Bitmap p_blocklist_tutorial {
-            get {
-                object obj = ResourceManager.GetObject("p_blocklist_tutorial", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
         
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
@@ -966,12 +996,6 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap replay1 {
             get {
                 object obj = ResourceManager.GetObject("replay1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        internal static System.Drawing.Bitmap p_todolist {
-            get {
-                object obj = ResourceManager.GetObject("p_todolist", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1082,13 +1106,6 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap 확대_축소 {
             get {
                 object obj = ResourceManager.GetObject("확대_축소", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap p_topbar {
-            get {
-                object obj = ResourceManager.GetObject("p_topbar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
