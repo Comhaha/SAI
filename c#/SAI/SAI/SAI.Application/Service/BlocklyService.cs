@@ -1,46 +1,57 @@
-﻿using System;
+﻿using SAI.SAI.App.Models;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Models;
 
 namespace SAI.SAI.Application.Service
 {
-    public class BlocklyService
-    {
-        private readonly string tutorialPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\tutorial_script.py";
-        private readonly string trainPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\train_script.py";
+	public class BlocklyService
+	{
+		private readonly string baseDir;
+		private readonly string tutorialPath;
+		private readonly string trainPath;
 
-        // 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드
-        public void SaveCodeToFileInTutorial()
-        {
-            var model = BlocklyModel.Instance;
-            var path = tutorialPath;
+		public BlocklyService()
+		{
+			baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			tutorialPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\python\\tutorial_script.py"));
+			trainPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\python\\train_script.py"));
+		}
 
-            try
-            {
-                File.WriteAllText(path, model.code, Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"코드 저장 중 오류 발생: {ex.Message}");
-            }
-        }
+		// 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드  
+		public void SaveCodeToFileInTutorial()
+		{
+			var model = BlocklyModel.Instance;
+			var path = tutorialPath;
 
-        // 실습에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드
-        public void SaveCodeToFileInTrain()
-        {
-            var model = BlocklyModel.Instance;
-            var path = trainPath;
+			try
+			{
+				File.WriteAllText(path, model.blockAllCode, Encoding.UTF8);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"코드 저장 중 오류 발생: {ex.Message}");
+			}
+		}
 
-            try
-            {
-                File.WriteAllText(path, model.code, Encoding.UTF8);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"코드 저장 중 오류 발생: {ex.Message}");
-            }
-        }
-    }
+		// 실습에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드  
+		public void SaveCodeToFileInTrain()
+		{
+			var model = BlocklyModel.Instance;
+			var path = trainPath;
+
+			try
+			{
+				File.WriteAllText(path, model.blockAllCode, Encoding.UTF8);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"코드 저장 중 오류 발생: {ex.Message}");
+			}
+		}
+	}
 }

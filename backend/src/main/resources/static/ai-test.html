@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI 피드백 테스트</title>
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 16px}
+    h1{margin-top:0}
+    textarea{width:100%;height:150px;margin-bottom:12px}
+    input[type=file]{margin:8px 0 20px}
+    input[type=text]{width:100%;padding:6px 8px;margin:6px 0 12px}
+    #result{white-space:pre-wrap;border:1px solid #ccc;border-radius:4px;padding:12px}
+    button{padding:8px 16px;margin-right:6px;font-size:16px;cursor:pointer}
+  </style>
+</head>
+<body>
+<h1>AI 피드백 실시간 테스트</h1>
+
+<!-- 🔑 토큰 영역 -->
+<label>API 토큰</label>
+<input type="text" id="tokenInput" placeholder="여기에 직접 입력하거나 버튼으로 가져오기">
+<button id="getToken">현재 토큰 가져오기</button>
+
+<hr>
+
+<label>Python 코드</label>
+<textarea id="code" placeholder="print(&quot;hello&quot;)"></textarea>
+
+<label>학습/실행 로그</label>
+<textarea id="log"  placeholder="Epoch 1/10 ..."></textarea>
+
+<label>추론 결과 이미지 (PNG/JPEG, 4 MB 이하)</label><br>
+<input type="file" id="img" accept="image/*">
+
+<br>
+<button id="run">피드백 요청</button>
+
+<h2>결과</h2>
+<div id="result"> </div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const backend = location.origin;   // 같은 호스트/포트
+
+  /* ---------- 토큰 함수 ---------- */
+
+  // (A) /api/token → 현재 토큰 가져오기
+  async function fetchTokenFromServer(){
+    const res = await fetch(backend + "/api/token");
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const j = await res.json();
+    return j.result.token;
+  }
+
+  // (B) 입력 칸이 비어 있으면 서버에서 가져오기
+  async function resolveToken(){
+    const manual = $("tokenInput").value.trim();
+    return manual || fetchTokenFromServer();
+  }
+
+  /* 버튼: 현재 토큰 가져오기 */
+  $("getToken").onclick = async ()=>{
+    $("result").textContent = "⏳ 토큰 가져오는 중…";
+    try{
+      const t = await fetchTokenFromServer();
+      $("tokenInput").value = t;
+      $("result").textContent = "✅ 토큰 입력란에 채워졌습니다.";
+    }catch(e){
+      $("result").textContent = "❌ 토큰 가져오기 실패: " + e;
+    }
+  };
+
+  /* ---------- Multipart FormData ---------- */
+  function makeFormData(){
+    const fd = new FormData();
+    fd.append("code", $("code").value);
+    fd.append("log",  $("log").value);
+    const file = $("img").files[0];
+    if(!file) throw new Error("이미지를 선택하세요");
+    fd.append("image", file);
+    return fd;
+  }
+
+  /* ---------- 피드백 요청 ---------- */
+  $("run").onclick = async ()=>{
+    $("result").textContent = "⏳ 요청 중…";
+    try{
+      const token = await resolveToken();
+
+      const res = await fetch(backend + "/api/ai/feedback",{
+        method:"POST",
+        headers:{ "Authorization": "Bearer " + token },
+        body: makeFormData()
+      });
+
+      if(!res.ok){
+        const txt = await res.text();
+        throw new Error("HTTP "+res.status+" – "+txt);
+      }
+      const js = await res.json();
+      $("result").textContent = js.result?.feedback ?? "피드백 필드 없음";
+    }catch(e){
+      $("result").textContent = "❌ 오류: " + e;
+    }
+  };
+</script>
+</body>
+</html>

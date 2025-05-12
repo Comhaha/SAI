@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
+    <script src="TrainBlocks.js"></script>
+</head>
+<body>
+    <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
+    <xml id="toolbox" style="display: none">
+        <block type="start"></block>
+        <block type="pipInstall"></block>
+        <block type="loadModel"></block>
+        <block type="loadDataset"></block>
+        <block type="machineLearning"></block>
+        <block type="resultGraph"></block>
+        <block type="imgPath"></block>
+        <block type="modelInference"></block>
+        <block type="visualizeResult"></block>
+    </xml>
+
+    <div id="customAlert" style="
+        display: none;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        padding: 20px;
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 8px;
+        z-index: 9999;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        <p id="customAlertText"></p>
+        <button onclick="closeCustomAlert()">확인</button>
+    </div>
+
+    <script>
+
+
+		console.log("HTML 로딩 완료");
+
+        const workspace = Blockly.inject('blocklyDiv', {
+            toolbox: null
+            //toolbox: document.getElementById('toolbox')
+        });
+
+		Blockly.Tooltip.HOVER_MS = 100; // 툴팁 지연 시간 설정
+
+        function showCustomAlert(text) {
+            document.getElementById('customAlertText').innerText = text;
+            document.getElementById('customAlert').style.display = 'block';
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
+
+        function addBlock(type) {
+            const block = workspace.newBlock(type);
+            block.initSvg();
+            block.render();
+        }
+
+		function sendCode(code) {
+			window.chrome.webview.postMessage({
+				type: "blockCode",
+				code: code
+			});
+		}
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+            workspace.addChangeListener((event) => {
+                if (
+                    event.type === Blockly.Events.BLOCK_CREATE ||
+                    event.type === Blockly.Events.BLOCK_DELETE ||
+                    event.type === Blockly.Events.BLOCK_CHANGE ||
+                    event.type === Blockly.Events.BLOCK_MOVE
+                ) {
+                    // 안전하게 확인
+                    if (Blockly.Python && Blockly.Python.workspaceToCode) {
+                        const code = Blockly.Python.workspaceToCode(workspace);
+						sendCode(code);
+                    } else {
+                        showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
+                    }
+                }
+            });
+        });
+
+
+		// 나만의 필드 타입(모델 선택 버튼)
+		class FieldFilePicker extends Blockly.Field {
+			static fromJson(options) {
+				return new FieldFilePicker(options['value']);
+			}
+
+			showEditor_() {
+				// C#에게 파일 열라고 요청
+				const blockId = this.sourceBlock_.id;
+				window.chrome.webview.postMessage({
+					type: "openFile",
+					blockId: blockId
+				});
+			}
+
+			// C#에서 경로가 돌아오면 이 값을 필드에 설정
+			setImagePath(path) {
+				this.setValue(path);
+			}
+		}
+		Blockly.fieldRegistry.register('field_filepicker', FieldFilePicker);
+
+		// JS가 메시지 수신 (C# → JS)
+		window.addEventListener("message", (event) => {
+			const { blockId, filePath } = event.data;
+			const block = Blockly.getMainWorkspace().getBlockById(blockId);
+			if (!block) return;
+
+			const fields = block.inputList.flatMap(input => input.fieldRow);
+			const filePickerField = fields.find(f => f instanceof FieldFilePicker);
+
+			if (filePickerField) {
+				filePickerField.setImagePath(filePath);
+			}
+		});
+    </script>
+
+</body>
+</html>

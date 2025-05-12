@@ -48,6 +48,7 @@ dependencies {
     implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'

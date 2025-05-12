@@ -72,7 +72,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/download/**").permitAll()
+                .requestMatchers("/api/download/**", "/api/notion/**").permitAll()
                 .requestMatchers("/api/ai/**").authenticated()
                 .anyRequest().permitAll())
             .addFilterBefore(apiTokenFilter,
