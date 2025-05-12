@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace SAI.SAI.Application.Service
 {
     public class PythonService
-    {
+    {   
+        // 모드에 따라 구분 (튜토리얼, 실습)
         public enum Mode
         {
             Tutorial,
@@ -24,20 +25,24 @@ namespace SAI.SAI.Application.Service
         {
             try
             {
+                // baseDir : "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\bin\Debug"
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 Console.WriteLine($"Base Directory: {baseDir}");
                 onOutput?.Invoke($"Base Directory: {baseDir}");
-
+                
+                // python 3.9 가상환경 경로
                 string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
                 Console.WriteLine($"Python Executable Path: {pythonExe}");
                 onOutput?.Invoke($"Python Executable Path: {pythonExe}");
 
+                // 학습 스크립트 경로 
                 string scriptPath = mode == Mode.Tutorial
-                    ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\test_script.py"))
-                    : Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\yolo_practice.py"));
+                    ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py")) // 튜토리얼 모드
+                    : Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_train_script.py")); // 실습 모드
                 Console.WriteLine($"Script Path: {scriptPath}");
                 onOutput?.Invoke($"Script Path: {scriptPath}");
 
+                // 학습 스크립트 없을 때 에러 
                 if (!File.Exists(scriptPath))
                 {
                     string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {scriptPath}";
@@ -45,7 +50,7 @@ namespace SAI.SAI.Application.Service
                     onError?.Invoke(errorMsg);
                     return;
                 }
-
+                // 가상환경 없을 때 에러
                 if (!File.Exists(pythonExe))
                 {
                     string errorMsg = $"파이썬 실행 파일을 찾을 수 없습니다: {pythonExe}";
@@ -54,6 +59,7 @@ namespace SAI.SAI.Application.Service
                     return;
                 }
 
+                // 진행률
                 var psi = new ProcessStartInfo
                 {
                     FileName = pythonExe,
