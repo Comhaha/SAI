@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Presenters
 {
-	internal class DialogModelSelectPresenter
+	internal class DialogLoadPagePresenter
 	{
 		private readonly IMainView mainView;
-		public DialogModelSelectPresenter(IMainView view)
+		public DialogLoadPagePresenter(IMainView view)
 		{
 			this.mainView = view;
 		}
@@ -26,6 +26,11 @@ namespace SAI.SAI.App.Presenters
 		public void clickTrain()
 		{
 			mainView.LoadPage(new UcPracticeBlockCode());
+		}
+
+		public void clickGoTutorialBlockCode()
+		{
+			mainView.LoadPage(new UcTutorialBlockCode());
 		}
 	}
 }
