@@ -1,7 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Interfaces;
 
-namespace SAI.Views.Pages
+namespace SAI.SAI.App.Views.Pages
+
 {
     public partial class UcTutorialGuide : UserControl
     {
@@ -101,9 +110,9 @@ namespace SAI.Views.Pages
             
             // 1. 배경 이미지 설정
             if (pageIndex < 3) // 전체 튜토리얼 (1~3)
-                this.BackgroundImage = (Image)global::SAI.Properties.Resources.ResourceManager.GetObject($"전체튜토리얼가이드{pageIndex + 1}");
+                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"전체튜토리얼가이드{pageIndex + 1}");
             else // 라벨링 가이드 (1~8)
-                this.BackgroundImage = (Image)global::SAI.Properties.Resources.ResourceManager.GetObject($"라벨링가이드{pageIndex - 2}");
+                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"라벨링가이드{pageIndex - 2}");
             
             // 2. 기본 버튼 상태 초기화
             preBtn.Visible = false;
@@ -188,11 +197,12 @@ namespace SAI.Views.Pages
             try
             {
                 // 상위 폼을 찾는 더 안전한 방법
-                Form mainForm = this.FindForm();
+                var mainView = this.FindForm() as IMainView;
+                var mainForm = this.FindForm();
                 if (mainForm != null)
                 {
                     mainForm.Controls.Clear();
-                    mainForm.Controls.Add(new SAI.App.Views.Pages.UcLabelGuide());
+                    mainForm.Controls.Add(new UcLabelGuide(mainView));
                 }
                 else
                 {

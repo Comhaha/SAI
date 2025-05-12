@@ -1,4 +1,4 @@
-﻿namespace SAI.Views.Pages
+﻿namespace SAI.SAI.App.Views.Pages
 {
     partial class UcTutorialGuide
     {
@@ -47,10 +47,11 @@
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
-            this.nextBtn.Location = new System.Drawing.Point(1020, 339);
+            this.nextBtn.Location = new System.Drawing.Point(1166, 424);
+            this.nextBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.nextBtn.Size = new System.Drawing.Size(41, 41);
+            this.nextBtn.Size = new System.Drawing.Size(47, 51);
             this.nextBtn.TabIndex = 0;
             // 
             // preBtn
@@ -65,10 +66,11 @@
             this.preBtn.FillColor = System.Drawing.Color.Transparent;
             this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.preBtn.ForeColor = System.Drawing.Color.White;
-            this.preBtn.Location = new System.Drawing.Point(221, 339);
+            this.preBtn.Location = new System.Drawing.Point(253, 424);
+            this.preBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.preBtn.Name = "preBtn";
             this.preBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.preBtn.Size = new System.Drawing.Size(41, 41);
+            this.preBtn.Size = new System.Drawing.Size(47, 51);
             this.preBtn.TabIndex = 1;
             // 
             // goLabelingBtn
@@ -87,11 +89,12 @@
             this.goLabelingBtn.HoverState.Image = global::SAI.Properties.Resources.btn_goLabelingHover;
             this.goLabelingBtn.Image = global::SAI.Properties.Resources.btn_goLabeling;
             this.goLabelingBtn.ImageSize = new System.Drawing.Size(212, 46);
-            this.goLabelingBtn.Location = new System.Drawing.Point(847, 530);
+            this.goLabelingBtn.Location = new System.Drawing.Point(968, 662);
+            this.goLabelingBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goLabelingBtn.Name = "goLabelingBtn";
             this.goLabelingBtn.PressedColor = System.Drawing.Color.Transparent;
             this.goLabelingBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.goLabelingBtn.Size = new System.Drawing.Size(214, 46);
+            this.goLabelingBtn.Size = new System.Drawing.Size(245, 58);
             this.goLabelingBtn.TabIndex = 2;
             this.goLabelingBtn.Visible = false;
             // 
@@ -108,9 +111,10 @@
             this.exit.FillColor = System.Drawing.Color.Transparent;
             this.exit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.exit.ForeColor = System.Drawing.Color.Transparent;
-            this.exit.Location = new System.Drawing.Point(865, 28);
+            this.exit.Location = new System.Drawing.Point(989, 35);
+            this.exit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(40, 40);
+            this.exit.Size = new System.Drawing.Size(46, 50);
             this.exit.TabIndex = 4;
             // 
             // goToLabeling
@@ -126,15 +130,15 @@
             this.goToLabeling.FillColor = System.Drawing.Color.Transparent;
             this.goToLabeling.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.goToLabeling.ForeColor = System.Drawing.Color.Transparent;
-            this.goToLabeling.Location = new System.Drawing.Point(1035, 133);
+            this.goToLabeling.Location = new System.Drawing.Point(1183, 166);
+            this.goToLabeling.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goToLabeling.Name = "goToLabeling";
-            this.goToLabeling.Size = new System.Drawing.Size(30, 30);
+            this.goToLabeling.Size = new System.Drawing.Size(34, 38);
             this.goToLabeling.TabIndex = 5;
             // 
             // UcTutorialGuide
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.전체튜토리얼가이드1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.goToLabeling);
@@ -145,7 +149,7 @@
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UcTutorialGuide";
-            this.Size = new System.Drawing.Size(1280, 720);
+            this.Size = new System.Drawing.Size(1463, 900);
             this.Load += new System.EventHandler(this.UcTutorialGuide_Load);
             this.ResumeLayout(false);
 

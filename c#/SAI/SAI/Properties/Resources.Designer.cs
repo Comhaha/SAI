@@ -1293,7 +1293,7 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap  btnVisualizeResult {
+        internal static System.Drawing.Bitmap btnVisualizeResult {
             get {
                 object obj = ResourceManager.GetObject("btnVisualizeResult", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1836,6 +1836,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap 도구창２ {
             get {
                 object obj = ResourceManager.GetObject("도구창２", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap 라벨링_가이드_순서 {
+            get {
+                object obj = ResourceManager.GetObject("라벨링 가이드 순서", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
