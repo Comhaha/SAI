@@ -31,6 +31,9 @@ namespace SAI
 			Size = new Size(1280, 720);
 			MinimumSize = new Size(1280, 720);
 			AutoScaleMode = AutoScaleMode.None;
+			guna2DragControl1.TargetControl = titlebar;
+			guna2DragControl1.TransparentWhileDrag = false;
+			guna2DragControl1.UseTransparentDrag = false;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -43,6 +46,7 @@ namespace SAI
 		public void LoadPage(UserControl page)
 		{
 			page.Size = new Size(1280, 720);
+			guna2Panel1.Location = new Point(0, 30);
 			guna2Panel1.Controls.Clear();
 			guna2Panel1.BackColor = Color.Transparent;
 			guna2Panel1.Controls.Add(page);
@@ -53,6 +57,43 @@ namespace SAI
 		{
 			var model = MainModel.Instance;
 			model.DontShowDeleteModelDialog = check;
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			using (var dialog = new DialogConfirmExit())
+			{
+				dialog.ShowDialog();
+			}
+		}
+
+		private void btnFullScreen_Click(object sender, EventArgs e)
+		{
+			if(this.WindowState == FormWindowState.Maximized)
+			{
+				// 원래 사이즈로
+				this.WindowState = FormWindowState.Normal;
+				this.Size = new Size(1280, 720);
+			}
+			else
+			{
+				// 최대화
+				this.WindowState = FormWindowState.Maximized;
+			}
+		}
+
+		private void btnMinScreen_Click(object sender, EventArgs e)
+		{
+			// 최소화
+			this.WindowState = FormWindowState.Minimized;
+		}
+
+		private void btnSetting_Click(object sender, EventArgs e)
+		{
+			using(var dialog = new DialogSetting())
+			{
+				dialog.ShowDialog();
+			}
 		}
 	}
 }

@@ -6,28 +6,34 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 
 {
     public partial class UcTutorialGuide : UserControl
-    {
-        private int currentPage = 0;
+	{
+		private readonly IMainView mainView;
+
+		private int currentPage = 0;
         private int totalPages = 11; // 전체 튜토리얼 3장 + 라벨링 튜토리얼 8장
         
         // 각 페이지별 버튼 위치 저장용 리스트
         private List<Point> prevButtonPositions = new List<Point>();
         private List<Point> nextButtonPositions = new List<Point>();
         
-        public UcTutorialGuide()
+        public UcTutorialGuide(IMainView view)
         {
             InitializeComponent();
             SetupButtonPositions();
             SetupButtonEvents();
             InitializeProgressIndicators();
-        }
+
+			this.mainView = view;
+		}
 
         private void UcTutorialGuide_Load(object sender, EventArgs e)
         {
@@ -110,9 +116,9 @@ namespace SAI.SAI.App.Views.Pages
             
             // 1. 배경 이미지 설정
             if (pageIndex < 3) // 전체 튜토리얼 (1~3)
-                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"전체튜토리얼가이드{pageIndex + 1}");
+                this.BackgroundImage = Properties.Resources.ResourceManager.GetObject($"전체튜토리얼가이드{pageIndex + 1}") as System.Drawing.Image;
             else // 라벨링 가이드 (1~8)
-                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"라벨링가이드{pageIndex - 2}");
+                this.BackgroundImage = Properties.Resources.ResourceManager.GetObject($"라벨링가이드{pageIndex - 2}") as System.Drawing.Image;
             
             // 2. 기본 버튼 상태 초기화
             preBtn.Visible = false;
@@ -194,26 +200,8 @@ namespace SAI.SAI.App.Views.Pages
 
         private void exit_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // 상위 폼을 찾는 더 안전한 방법
-                var mainView = this.FindForm() as IMainView;
-                var mainForm = this.FindForm();
-                if (mainForm != null)
-                {
-                    mainForm.Controls.Clear();
-                    mainForm.Controls.Add(new UcLabelGuide(mainView));
-                }
-                else
-                {
-                    MessageBox.Show("폼을 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("오류 발생: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+            mainView.LoadPage(new UcLabelGuide(mainView));
+		}
 
         private void LabelingTutorialPanel0_Paint(object sender, PaintEventArgs e)
         {
@@ -239,5 +227,11 @@ namespace SAI.SAI.App.Views.Pages
         {
 
         }
-    }
+
+		public void showDialog(Form dialog)
+		{
+			dialog.Owner = mainView as Form;
+			dialog.ShowDialog();
+		}
+	}
 }

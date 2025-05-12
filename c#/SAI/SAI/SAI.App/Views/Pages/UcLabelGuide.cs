@@ -19,7 +19,6 @@ namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcLabelGuide : UserControl, IUcShowDialogView
     {
-        private UcShowDialogPresenter ucShowDialogPresenter;
         private readonly IMainView mainView;
 
 		// 기본 도구 상태 및 이미지 관련
@@ -108,7 +107,6 @@ namespace SAI.SAI.App.Views.Pages
         {
 			InitializeComponent();
             this.mainView = view;
-			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
 			LoadImages(); // 이미지 로드
 
@@ -3654,13 +3652,13 @@ namespace SAI.SAI.App.Views.Pages
         // 버튼 클릭 이벤트 - 튜토리얼 블록 코딩으로 넘어가기 전 다이얼로그를 띄움
 		private void guna2Panel1_Click(object sender, EventArgs e)
 		{
-            ucShowDialogPresenter.clickGoTutorialBlockCode();
+            showDialog(new DialogConfirmGoTutorialBlockCode());
 		}
 
 		// 블록 코딩으로 넘어가는 다이얼로그를 띄우는 메서드
 		public void showDialog(Form dialog)
 		{
-            dialog.Owner = mainView as Form;
+			dialog.Owner = mainView as Form;
             dialog.ShowDialog();
 		}
 	}

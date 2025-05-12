@@ -160,6 +160,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.Designer.cs">
+      <DependentUpon>DialogSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,7 +196,6 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
-    <Compile Include="SAI.App\Models\UcSelectTypeModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
@@ -388,6 +393,23 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_tutorial_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_train_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_select_model.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_select_model_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_tutorial.png" />
+    <None Include="SAI.App\Resources\Images\btn_train.png" />
+    <None Include="SAI.App\Resources\Images\selectYolo.png" />
+    <None Include="SAI.App\Resources\Images\selectEfficient.png" />
+    <None Include="SAI.App\Resources\Images\selectFaster.png" />
+    <None Include="SAI.App\Resources\Images\selectModel.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_minscreen.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_fullscreen.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_close.png" />
+    <None Include="SAI.App\Resources\Images\titlebar.png" />
+    <None Include="SAI.App\Resources\Images\pSelectTypeTitle1.png" />
+    <None Include="SAI.App\Resources\Images\pSelectTypeTitle.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step4.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step3.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step2.png" />
