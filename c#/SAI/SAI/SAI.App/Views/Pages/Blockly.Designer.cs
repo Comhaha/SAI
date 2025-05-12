@@ -165,7 +165,7 @@
 			this.webView21.Location = new System.Drawing.Point(325, 33);
 			this.webView21.Margin = new System.Windows.Forms.Padding(0);
 			this.webView21.Name = "webView21";
-			this.webView21.Size = new System.Drawing.Size(919, 626);
+			this.webView21.Size = new System.Drawing.Size(478, 626);
 			this.webView21.TabIndex = 9;
 			this.webView21.TabStop = false;
 			this.webView21.ZoomFactor = 1D;

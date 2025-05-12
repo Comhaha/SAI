@@ -442,7 +442,7 @@ namespace SAI.SAI.App.Views.Pages
 		// blockly 웹뷰 확대 조절 함수
 		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
 		{
-			//webView21.ZoomFactor = 0.7;
-		}
+			webView21.ZoomFactor = 0.7;
+        }
 	}
 }

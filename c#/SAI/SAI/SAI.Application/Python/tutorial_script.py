@@ -4,10 +4,8 @@
 
 
 
-
 # 패키지 설치
 !pip install ultralytics
-
 
 
 # 모델 불러오기
@@ -17,10 +15,8 @@ model = YOLO("yolov8n.pt")   # YOLOv8 모델 불러오기
 print("✅ YOLOv8 설치 및 (yolov8n.pt) 모델 로드 완료!")')
 
 
-
 # 데이터 불러오기
 # 코드로 서버에 있는 데이터 땡겨오게 하기
-
 
 
 # 모델 학습하기
@@ -33,22 +29,18 @@ model.train(
 )
 
 
-
 # 학습 결과 그래프 출력
 from IPython.display import Image, display
 
 display(Image(filename = 'runs/detect/train/results.png'))
 
 
-
-img_path ='파일 선택'))
-
+img_path ='C:/Users/SSAFY/Pictures/Screenshots/스크린샷 2025-01-10 133531.png'))
 
 
 # 추론 실행
 model = YOLO("/home/.../best.pt")
 results = model.predict(source=img_path, save=False, show=False, conf=0.25)
-
 
 
 # 결과 시각화

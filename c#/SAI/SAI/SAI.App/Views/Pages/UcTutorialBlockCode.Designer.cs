@@ -85,7 +85,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.lblTitle.BackColor = System.Drawing.Color.Transparent;
 			resources.ApplyResources(this.lblTitle, "lblTitle");
 			this.lblTitle.Name = "lblTitle";
-			this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
 			// 
 			// pMain
 			// 
@@ -107,7 +106,7 @@ namespace SAI.SAI.App.Views.Pages
 			// 
 			// pToDoList
 			// 
-			this.pToDoList.BackgroundImage = global::SAI.Properties.Resources.p_todolist;
+			this.pToDoList.BackgroundImage = global::SAI.Properties.Resources.p_todolist_step1;
 			resources.ApplyResources(this.pToDoList, "pToDoList");
 			this.pToDoList.Name = "pToDoList";
 			// 
@@ -266,7 +265,6 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.webViewCode, "webViewCode");
 			this.webViewCode.Name = "webViewCode";
 			this.webViewCode.ZoomFactor = 1D;
-			this.webViewCode.Click += new System.EventHandler(this.webView21_Click_1);
 			// 
 			// ibtnCopy
 			// 
@@ -359,7 +357,9 @@ namespace SAI.SAI.App.Views.Pages
 			this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.webViewblock, "webViewblock");
 			this.webViewblock.Name = "webViewblock";
-			this.webViewblock.ZoomFactor = 1D;
+			this.webViewblock.TabStop = false;
+			this.webViewblock.ZoomFactor = 0.7D;
+			this.webViewblock.ZoomFactorChanged += new System.EventHandler<System.EventArgs>(this.webViewblock_ZoomFactorChanged);
 			// 
 			// pTopBlock
 			// 
@@ -384,6 +384,7 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.ibtnRunModel, "ibtnRunModel");
 			this.ibtnRunModel.Name = "ibtnRunModel";
 			this.ibtnRunModel.PressedState.ImageSize = new System.Drawing.Size(10, 12);
+			this.ibtnRunModel.Click += new System.EventHandler(this.ibtnRunModel_Click);
 			// 
 			// ibtnPreBlock
 			// 

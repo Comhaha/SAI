@@ -364,6 +364,10 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\p_todolist_step4.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_step3.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_step2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_step1.png" />
     <None Include="SAI.App\Resources\Images\btnVisualizeResultClicked.png" />
     <None Include="SAI.App\Resources\Images\btnVisualizeResult.png" />
     <None Include="SAI.App\Resources\Images\btnModelInferenceClicked.png" />

@@ -102,6 +102,7 @@ namespace SAI.SAI.App.Views.Pages
 				setButtonInVisible(btnVisualizeResult);
 				labelBlockTitle.Text = "실행하기";
 				labelBlockContent.Text = "실행 버튼을 클릭하여\r\n모델을 학습시켜보세요.\r\n";
+				pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
 			};
 			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 		}
@@ -365,38 +366,7 @@ namespace SAI.SAI.App.Views.Pages
         {
         }
 
-
-        private void leftPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void baseFramePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void leftPanel_Paint_1(object sender, PaintEventArgs e)
-        {
-            
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void pnl_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2ImageButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Button1_Click_1(object sender, EventArgs e)
         {
 
         }
@@ -411,42 +381,7 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
-        private void lblTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pLeft_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2ShadowPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlToolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void pCenter_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void ibtnPlusBlock_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -461,26 +396,12 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
-        private void pTopRight_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void pMain_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void pBlockList_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         private void ibtnCopy_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pTopCode_Paint(object sender, PaintEventArgs e)
         {
 
         }
@@ -490,22 +411,7 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
-        private void webView21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pCode_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void webView21_Click_1(object sender, EventArgs e)
         {
 
         }
@@ -513,6 +419,13 @@ namespace SAI.SAI.App.Views.Pages
         private void ibtnDone_Click(object sender, EventArgs e)
         {
 			ucShowDialogPresenter.clickGoTrain();
+		}
+
+		private void ibtnRunModel_Click(object sender, EventArgs e)
+		{
+			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
+			labelBlockTitle.Text = "추론 결과 확인하기";
+			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
 		}
 
 		public void showDialog(Form dialog)
@@ -609,6 +522,8 @@ namespace SAI.SAI.App.Views.Pages
 		private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
 		{
 			webViewblock.ZoomFactor = 0.7;
-        }
+		}
+
+
 	}
 }
