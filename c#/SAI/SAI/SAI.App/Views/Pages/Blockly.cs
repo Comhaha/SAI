@@ -23,8 +23,9 @@ namespace SAI.SAI.App.Views.Pages
 {
 	public partial class Blockly : UserControl, IBlocklyView
 	{
-		private BlocklyPresenter presenter;
+		private BlocklyPresenter blocklyPresenter;
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
 		private JsBridge jsBridge;
 
         // UcCode를 UcTabCodeContainer로 교체
@@ -40,79 +41,86 @@ namespace SAI.SAI.App.Views.Pages
         private int modelTabCount = 0; // 모델 탭 카운터 추가
         private bool isDoubleClickProcessing = false; // 더블클릭 처리 중 플래그 추가
 
-        //public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-
         public Blockly()
         {
-            InitializeComponent();
-            Console.WriteLine("[DEBUG] Blockly: 생성자 시작");
+			blocklyPresenter = new BlocklyPresenter(this);
+			InitializeComponent();
 
             // 코드박스 초기화 - presenter 초기화 전에 수행
             InitializeCodeContainer();
-            Console.WriteLine("[DEBUG] Blockly: 코드 컨테이너 초기화 완료");
-            
-            // 프레젠터 생성 - codeBoxPresenter 전달
-            Console.WriteLine("[DEBUG] Blockly: presenter 초기화 완료");
 
             // 백그라운드 색깔&이미지
             BackColor = Color.Transparent;
             BackgroundImage = Properties.Resources.img_background;
             Size = new Size(1280, 720);
 
-            // JSBridge를 Presenter와 연결하여 메시지 전달 - 블록 클릭 이벤트 처리 추가
-            var bridge = new JsBridge(message =>
-            {
-                // 블록 클릭/더블클릭 이벤트 처리
-                if (message != null && message.Contains("blocklyEvent") && message.Contains("blockId"))
-                {
-                    try
-                    {
-                        if (message.Contains("\"eventType\":\"click\"") ||
-                            message.Contains("\"eventType\": \"click\""))
-                        {
-                            int idxStart = message.IndexOf("\"blockId\":") + 11;
-                            if (idxStart > 10) // 값이 있을 경우
-                            {
-                                int idxEnd = message.IndexOf("\"", idxStart);
-                                if (idxEnd > idxStart)
-                                {
-                                    string blockId = message.Substring(idxStart, idxEnd - idxStart);
-                                    HandleBlockClick(blockId);
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] Blockly: 블록 클릭 처리 중 오류 - {ex.Message}");
-                    }
-                }
+            // ------ 혜정언니꺼. 이 코드는 없어도 될 거 같아. jsbridge는는 건드리지 말 것. --------------------
+            // // JSBridge를 Presenter와 연결하여 메시지 전달 - 블록 클릭 이벤트 처리 추가
+            // var bridge = new JsBridge(message =>
+            // {
+            //     // 블록 클릭/더블클릭 이벤트 처리
+            //     if (message != null && message.Contains("blocklyEvent") && message.Contains("blockId"))
+            //     {
+            //         try
+            //         {
+            //             if (message.Contains("\"eventType\":\"click\"") ||
+            //                 message.Contains("\"eventType\": \"click\""))
+            //             {
+            //                 int idxStart = message.IndexOf("\"blockId\":") + 11;
+            //                 if (idxStart > 10) // 값이 있을 경우
+            //                 {
+            //                     int idxEnd = message.IndexOf("\"", idxStart);
+            //                     if (idxEnd > idxStart)
+            //                     {
+            //                         string blockId = message.Substring(idxStart, idxEnd - idxStart);
+            //                         HandleBlockClick(blockId);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //         catch (Exception ex)
+            //         {
+            //             Console.WriteLine($"[ERROR] Blockly: 블록 클릭 처리 중 오류 - {ex.Message}");
+            //         }
+            //     }
 
-                // 더블클릭 중이 아닌 경우에만 원래 메시지 처리
-                if (!isDoubleClickProcessing)
-                {
-                    presenter.HandleJsMessage(message);
-                }
-            });
+            //     // 더블클릭 중이 아닌 경우에만 원래 메시지 처리
+            //     if (!isDoubleClickProcessing)
+            //     {
+            //         presenter.HandleJsMessage(message);
+            //     }
+            // });
 
-			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
+            // -----------------------------------------------------------------------
+
+            InitializeWebView2();
+
 			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
 			btnStart.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+			btnStart.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("start"));
 			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+			btnPip.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadModel.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadModel"));
 			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnLoadDataset.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 			btnMachineLearning.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
+			btnMachineLearning.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
 			btnResultGraph.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+			btnResultGraph.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
 			btnImgPath.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+			btnImgPath.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("imgPath"));
 			btnModelInference.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+			btnModelInference.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("modelInference"));
 			btnVisualizeResult.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
+			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 		}
 
 		private async void InitializeWebView2()
 		{
-			jsBridge = new JsBridge(message =>
+			jsBridge = new JsBridge((message, type) =>
 			{
-				presenter.HandleJsMessage(message);
+				blocklyPresenter.HandleJsMessage(message, type);
 			});
 
 			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -158,9 +166,14 @@ namespace SAI.SAI.App.Views.Pages
 								}
 								break;
 
+							case "blockAllCode":
+								string blockAllCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockAllCode, type);
+								break;
+
 							case "blockCode":
-								string code = root.GetProperty("code").GetString();
-								jsBridge.receiveFromJs(code);
+								string blockCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockCode, type);
 								break;
 						}
 					}
@@ -171,8 +184,7 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-
-			webView21.ZoomFactor = 0.9; // 줌 비율 설정
+			webView21.ZoomFactor = 0.7; // 줌 비율 설정
 
 			await webView21.EnsureCoreWebView2Async();
 			webView21.Source = new Uri(uri);
@@ -183,6 +195,14 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			webView21.ExecuteScriptAsync($"addBlock('{blockType}')");
 		}
+
+		// 개별 블록 코드를 받아오기위한 JS 코드 호출 함수
+		public void getPythonCodeByType(string blockType)
+		{
+			webView21.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
+		}
+
+        // ---------- 혜정언니꺼 develop에 있던 코드-------------------------------
         // Blockly에 블록 클릭 리스너 추가
         private void AddBlockClickListener()
         {
@@ -220,11 +240,7 @@ namespace SAI.SAI.App.Views.Pages
                         }
                     } catch(err) {
                         console.error('Error in block click listener: ' + err);
-                    }
-                ";
-
-                //chromiumWebBrowser1.ExecuteScriptAsync(script);
-                Console.WriteLine("[DEBUG] Blockly: 블록 클릭 리스너 추가됨");
+                    }";
             }
             catch (Exception ex)
             {
@@ -367,41 +383,6 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 코드를 richText와 메인 코드 탭에 출력 (전체 코드 뷰)
-        public void ShowGeneratedCode(string code)
-        {
-            try
-            {
-                Console.WriteLine($"[DEBUG] Blockly: ShowGeneratedCode 호출됨 ({code?.Length ?? 0}자)");
-
-                if (InvokeRequired)
-                {
-                    BeginInvoke(new Action(() => ShowGeneratedCode(code)));
-                    return;
-                }
-
-                richTextBox1.Text = code; // 원본 유지
-                Console.WriteLine("[DEBUG] Blockly: richTextBox1에 코드 설정 완료");
-
-                // 메인 코드 탭("전체 코드")에 코드 표시
-                if (codeContainer != null)
-                {
-                    Console.WriteLine("[DEBUG] Blockly: codeContainer.UpdateMainCode 시도");
-                    codeContainer.UpdateMainCode(code);
-                    Console.WriteLine("[DEBUG] Blockly: codeContainer.UpdateMainCode 완료");
-                }
-                else
-                {
-                    Console.WriteLine("[ERROR] Blockly: codeContainer가 null입니다!");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] Blockly: 코드 표시 오류 - {ex.Message}");
-                Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-            }
-        }
-
         // 새 코드 탭 추가 (사용자가 호출하는 메서드)
         public UcCode AddCodeTab(string title)
         {
@@ -430,60 +411,37 @@ namespace SAI.SAI.App.Views.Pages
 
             return null;
         }
+        // ---------------------------------------------------------
 
-        private void chromiumWebBrowser1_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
-        {
-            if (!e.IsLoading)
-                Console.WriteLine("[DEBUG] Blockly: 웹뷰 로드 완료");
-        }
-
-        private void Blockly_Load(object sender, EventArgs e)
-        {
-            Console.WriteLine("[DEBUG] Blockly: Blockly_Load 이벤트 발생");
-        }
-
-        private void btnHello_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("[DEBUG] Blockly: btnHello_Click 이벤트 발생");
-        }
-
-        private void btnPip_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("[DEBUG] Blockly: btnPip_Click 이벤트 발생");
-        }
-
-        private void richTextBox1_TextChanged_1(object sender, EventArgs e)
-        {
-            // 로그 메시지는 많아지므로 주석 처리
-            // Console.WriteLine("[DEBUG] Blockly: richTextBox1_TextChanged_1 이벤트 발생");
-        }
+        // 다이얼로그 확인용 함수(delete)
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
 
-			using (var dialog = new DialogQuitTrain())
+			//using (var dialog = new DialogQuitTrain())
 			//using (var dialog = new DialogHomeFromTrain())
 			//using (var dialog = new DialogComfirmTrain())
 			//using (var dialog = new DialogHomeFromLabeling())
 			//using (var dialog = new DialogCompleteTutorial())
 			//using (var dialog = new DialogCompleteLabeling())
 			//using (var dialog = new DialogConfirmExit())
-			{
-				dialog.ShowDialog();
-			}
-
-			//var model = MainModel.Instance;
-			//using (var dialog = new DialogDeleteModel())
 			//{
-			//	if (!model.DontShowDeleteModelDialog)
-			//	{
-			//		dialog.ShowDialog();
-			//	}
+			//	dialog.ShowDialog();
 			//}
+
+			var model = MainModel.Instance;
+			using (var dialog = new DialogDeleteModel())
+			{
+				if (!model.DontShowDeleteModelDialog)
+				{
+					dialog.ShowDialog();
+				}
+			}
 		}
 
+		// blockly 웹뷰 확대 조절 함수
 		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
 		{
-			webView21.ZoomFactor = 0.9; // 줌 비율 설정
+			webView21.ZoomFactor = 0.7;
 		}
 	}
 }

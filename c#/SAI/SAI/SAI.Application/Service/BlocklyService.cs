@@ -30,7 +30,7 @@ namespace SAI.SAI.Application.Service
 
 			try
 			{
-				File.WriteAllText(path, model.code, Encoding.UTF8);
+				File.WriteAllText(path, model.blockAllCode, Encoding.UTF8);
 			}
 			catch (Exception ex)
 			{
@@ -46,7 +46,7 @@ namespace SAI.SAI.Application.Service
 
 			try
 			{
-				File.WriteAllText(path, model.code, Encoding.UTF8);
+				File.WriteAllText(path, model.blockAllCode, Encoding.UTF8);
 			}
 			catch (Exception ex)
 			{
