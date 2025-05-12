@@ -58,7 +58,10 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblBlockTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblBlockDescription = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain.SuspendLayout();
+            this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
             this.pZoomCode.SuspendLayout();
@@ -103,6 +106,8 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_blocklist_tutorial;
             resources.ApplyResources(this.pBlockList, "pBlockList");
+            this.pBlockList.Controls.Add(this.lblBlockDescription);
+            this.pBlockList.Controls.Add(this.lblBlockTitle);
             this.pBlockList.Name = "pBlockList";
             // 
             // pCode
@@ -392,6 +397,20 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
             // 
+            // lblBlockTitle
+            // 
+            this.lblBlockTitle.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.lblBlockTitle, "lblBlockTitle");
+            this.lblBlockTitle.ForeColor = System.Drawing.Color.Black;
+            this.lblBlockTitle.Name = "lblBlockTitle";
+            // 
+            // lblBlockDescription
+            // 
+            resources.ApplyResources(this.lblBlockDescription, "lblBlockDescription");
+            this.lblBlockDescription.BackColor = System.Drawing.Color.Transparent;
+            this.lblBlockDescription.ForeColor = System.Drawing.Color.Black;
+            this.lblBlockDescription.Name = "lblBlockDescription";
+            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -408,6 +427,8 @@ namespace SAI.SAI.App.Views.Pages
             this.Name = "UcTutorialBlockCode";
             this.Load += new System.EventHandler(this.UcTutorialBlockCode_Load);
             this.pMain.ResumeLayout(false);
+            this.pBlockList.ResumeLayout(false);
+            this.pBlockList.PerformLayout();
             this.pCode.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).EndInit();
             this.pZoomCode.ResumeLayout(false);
@@ -449,5 +470,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pBlockList;
         private Guna.UI2.WinForms.Guna2Panel pToDoList;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockDescription;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockTitle;
     }
 }

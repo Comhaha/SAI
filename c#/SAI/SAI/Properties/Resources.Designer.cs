@@ -463,6 +463,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_close1 {
+            get {
+                object obj = ResourceManager.GetObject("btn_close1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_copy {
             get {
                 object obj = ResourceManager.GetObject("btn_copy", resourceCulture);
@@ -816,6 +826,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_question {
             get {
                 object obj = ResourceManager.GetObject("btn_question", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_question_memo {
+            get {
+                object obj = ResourceManager.GetObject("btn_question_memo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1206,6 +1226,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap strawberry_1 {
             get {
                 object obj = ResourceManager.GetObject("strawberry_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap tbox_threshold {
+            get {
+                object obj = ResourceManager.GetObject("tbox_threshold", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

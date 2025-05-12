@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Common;
+
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -15,6 +17,8 @@ namespace SAI.SAI.App.Views.Pages
         private int originalCodePanelWidth;
         private int originalCodePanelLeft;
         private bool isMemoPanelVisible = false;
+
+        private double currentThreshold = 0.5; // 기본값 0.5
         public UcPracticeBlockCode()
         {
             InitializeComponent();
@@ -37,6 +41,15 @@ namespace SAI.SAI.App.Views.Pages
             // 코드 패널의 초기 위치와 크기 저장
             originalCodePanelWidth = pCode.Width;
             originalCodePanelLeft = pCode.Left;
+
+            tboxMemo.FillColor = ColorTranslator.FromHtml("#F7FFB8");
+            tboxMemo.BorderColor = ColorTranslator.FromHtml("#F7FFB8");
+            tboxMemo.FocusedState.BorderColor = ColorTranslator.FromHtml("#F7FFB8");
+            tboxMemo.HoverState.BorderColor = ColorTranslator.FromHtml("#F7FFB8");
+            tboxMemo.DisabledState.BorderColor = ColorTranslator.FromHtml("#F7FFB8");
+            SetupThresholdControls();
+            ScrollUtils.AdjustPanelScroll(pSideInfer);
+
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
@@ -60,6 +73,92 @@ namespace SAI.SAI.App.Views.Pages
             isInferPanelVisible = false;
         }
 
+        private void SetupThresholdControls()
+        {
+            // TrackBar 설정 (0.01 ~ 1.00, 100단계로 나누어 0.01 단위로 조절)
+            tbarThreshold.Minimum = 1;  // 0.01
+            tbarThreshold.Maximum = 100; // 1.00
+            tbarThreshold.Value = 50;   // 0.50 (기본값)
+
+            // TrackBar 값 변경 이벤트 처리
+            tbarThreshold.ValueChanged += TbarThreshold_ValueChanged;
+
+            // 텍스트박스 설정
+            tboxThreshold.Text = "0.50";
+            tboxThreshold.TextAlign = HorizontalAlignment.Center;
+            tboxThreshold.KeyPress += TboxThreshold_KeyPress;
+            tboxThreshold.Leave += TboxThreshold_Leave;
+
+            // 현재 임계값 설정
+            currentThreshold = 0.5;
+        }
+
+        private void TbarThreshold_ValueChanged(object sender, EventArgs e)
+        {
+            // TrackBar 값을 0.01 ~ 1.00 범위로 변환
+            currentThreshold = tbarThreshold.Value / 100.0;
+
+            // 텍스트박스에 값 표시 (소수점 둘째자리까지)
+            tboxThreshold.Text = currentThreshold.ToString("0.00");
+
+            // 여기에 임계값이 변경되었을 때 수행할 작업 추가
+            // 예: UpdateModelThreshold(currentThreshold);
+        }
+
+        private void TboxThreshold_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // 숫자, 백스페이스, 소수점만 입력 허용
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // 소수점은 한 번만 입력 가능
+            if (e.KeyChar == '.' && tboxThreshold.Text.Contains("."))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Enter 키 처리
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                UpdateThresholdFromTextBox();
+                e.Handled = true;
+            }
+        }
+
+        private void TboxThreshold_Leave(object sender, EventArgs e)
+        {
+            UpdateThresholdFromTextBox();
+        }
+
+        private void UpdateThresholdFromTextBox()
+        {
+            if (double.TryParse(tboxThreshold.Text, out double value))
+            {
+                // 값의 범위 제한 (0.01 ~ 1.00)
+                value = Math.Max(0.01, Math.Min(1.00, value));
+
+                // 값 설정
+                currentThreshold = value;
+                tboxThreshold.Text = value.ToString("0.00");
+
+                // TrackBar 값 업데이트 (중복 이벤트 방지를 위해 이벤트 핸들러 일시 제거)
+                tbarThreshold.ValueChanged -= TbarThreshold_ValueChanged;
+                tbarThreshold.Value = (int)(value * 100);
+                tbarThreshold.ValueChanged += TbarThreshold_ValueChanged;
+
+                // 여기에 임계값이 변경되었을 때 수행할 작업 추가
+                // 예: UpdateModelThreshold(currentThreshold);
+            }
+            else
+            {
+                // 잘못된 입력일 경우 현재 값으로 복원
+                tboxThreshold.Text = currentThreshold.ToString("0.00");
+            }
+        }
 
         private void leftPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -236,6 +335,12 @@ namespace SAI.SAI.App.Views.Pages
         private void lblThreshold_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
         }
     }
 }
