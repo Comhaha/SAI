@@ -58,12 +58,15 @@ local.properties
 *.stackdump
 *.dbmdl
 *.vsidx
+**/.vshistory/
 c#/SAI/.vs/
 c#/SAI/SAI/SAI.App/.vs/
 c#/SAI/packages/
 c#/SAI/SAI/package.config
 c#/SAI/SAI/bin/
 c#/SAI/SAI/obj/
+.vs
+**/.vshistory
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json
@@ -89,3 +92,6 @@ coverage.xml
 *.swp
 .history/
 .idea/httpRequests
+
+c
+c-journal
