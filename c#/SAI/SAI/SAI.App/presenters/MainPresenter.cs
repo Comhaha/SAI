@@ -24,9 +24,10 @@ namespace SAI.SAI.App.Presenters
 		// 앱 실행 시 초기 페이지 로드
 		public void Initialize()
 		{
-			var homePage = new YoloTutorial(); // View 생성
-			//var homePage = new Blockly(); // View 생성
-			mainView.LoadPage(homePage); // 메인 폼에 삽입
+			var homePage = new UcSelectType(mainView);
+            //var homePage = new YoloTutorial(); // View 생성
+            //var homePage = new Blockly(); // View 생성
+            mainView.LoadPage(homePage); // 메인 폼에 삽입
 										 //mainView.LoadPage((UserControl)yoloTutorialView);
 		}
 
