@@ -14,14 +14,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Text.RegularExpressions;
 using SAI.SAI.App.Models;
 
-
 namespace SAI
 {
+
     public partial class MainForm : Form, IMainView
     {
-		private MainPresenter presenter;
-
-		public MainForm()
+        private MainPresenter presenter;
+        public MainForm()
         {
             InitializeComponent();
 

@@ -149,6 +149,13 @@
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+
+    <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.Designer.cs">
+      <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,6 +180,11 @@
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcLabelGuide.Designer.cs">
+      <DependentUpon>UcLabelGuide.cs</DependentUpon>
     <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -214,6 +226,8 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
+      <DependentUpon>UcLabelGuide.cs</DependentUpon>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -310,6 +324,55 @@
     </BootstrapperPackage>
     <Content Include="Blockly\custom_blocks.js" />
     <Content Include="Blockly\index.html" />
+    <None Include="SAI.App\Resources\Images\완료.png" />
+    <None Include="SAI.App\Resources\Images\도구창.png" />
+    <None Include="SAI.App\Resources\Images\visibility_off.png" />
+    <None Include="SAI.App\Resources\Images\replay1.png" />
+    <None Include="SAI.App\Resources\Images\replay.png" />
+    <None Include="SAI.App\Resources\Images\ph_polygon-thin.png" />
+    <None Include="SAI.App\Resources\Images\ic_pre.png" />
+    <None Include="SAI.App\Resources\Images\ic_next.png" />
+    <None Include="SAI.App\Resources\Images\ic_home.png" />
+    <None Include="SAI.App\Resources\Images\Frame.png" />
+    <None Include="SAI.App\Resources\Images\delete.png" />
+    <None Include="SAI.App\Resources\Images\check_box_outline_blank.png" />
+    <None Include="SAI.App\Resources\Images\back_hand.png" />
+    <None Include="Resources\1.jpg.bmp" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\dog.bmp" />
+    <None Include="Resources\annotation 모달.png" />
+    <None Include="Resources\내부 박스.png" />
+    <None Include="Resources\Frame＿blue.png" />
+    <None Include="Resources\Frame_green.png" />
+    <None Include="Resources\Frame_red.png" />
+    <None Include="Resources\6.jpg" />
+    <None Include="Resources\도구창_short.png" />
+    <None Include="Resources\정확도 프레임.png" />
+    <None Include="Resources\Line 227.png" />
+    <None Include="Resources\클래스, todolist.png" />
+    <None Include="Resources\Frame 1000004304.png" />
+    <None Include="Resources\도구창.png" />
+    <None Include="Resources\확대 축소.png" />
+    <None Include="Resources\banana.jpg" />
+    <None Include="Resources\strawberry-1.jpg" />
+    <None Include="Resources\strawberry-2.jpg" />
+    <None Include="Resources\prairie-1025229_1280.jpg" />
+    <None Include="Resources\raven-2162966_1280.jpg" />
+    <None Include="Resources\sparrow-6300790_1280.jpg" />
+    <None Include="Resources\apple-2788616_1280.jpg" />
+    <None Include="Resources\apple-3313209_1280.jpg" />
+    <None Include="Resources\chipmunk-4642839_1280.jpg" />
+    <None Include="Resources\animal-4544725_1280.jpg" />
+    <None Include="Resources\squirrel-5506514_1280.jpg" />
+    <Content Include="SAI.App\Resources\Images\1.jpg" />
+    <Content Include="SAI.App\Resources\Images\2.jpg" />
+    <Content Include="SAI.App\Resources\Images\3.jpg" />
+    <Content Include="SAI.App\Resources\Images\4.jpg" />
+    <Content Include="SAI.App\Resources\Images\5.jpg" />
+    <Content Include="SAI.App\Resources\Images\6.jpg" />
+    <Content Include="SAI.App\Resources\Images\7.jpg" />
+    <Content Include="SAI.App\Resources\Images\8.jpg" />
+    <Content Include="SAI.App\Resources\Images\9.jpg" />
     <None Include="SAI.App\Resources\Images\p_todolist.png" />
     <None Include="SAI.App\Resources\Images\p_blocklist_tutorial.png" />
     <None Include="SAI.App\Resources\Images\p_topbar.png" />
