@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Text.RegularExpressions;
 using SAI.SAI.App.Models;
+using SAI.SAI.App.Forms.Dialogs;
 
 namespace SAI
 {
@@ -29,6 +30,7 @@ namespace SAI
 			// 사이즈 고정
 			Size = new Size(1280, 720);
 			MinimumSize = new Size(1280, 720);
+			AutoScaleMode = AutoScaleMode.None;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)

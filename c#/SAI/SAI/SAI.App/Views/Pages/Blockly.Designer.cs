@@ -162,10 +162,10 @@
 			this.webView21.CreationProperties = null;
 			this.webView21.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-			this.webView21.Location = new System.Drawing.Point(362, 33);
+			this.webView21.Location = new System.Drawing.Point(325, 33);
 			this.webView21.Margin = new System.Windows.Forms.Padding(0);
 			this.webView21.Name = "webView21";
-			this.webView21.Size = new System.Drawing.Size(447, 626);
+			this.webView21.Size = new System.Drawing.Size(478, 626);
 			this.webView21.TabIndex = 9;
 			this.webView21.TabStop = false;
 			this.webView21.ZoomFactor = 1D;
@@ -217,10 +217,10 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+			this.Controls.Add(this.webView21);
 			this.Controls.Add(this.btnVisualizeResult);
 			this.Controls.Add(this.btnModelInference);
 			this.Controls.Add(this.btnImgPath);
-			this.Controls.Add(this.webView21);
 			this.Controls.Add(this.btnResultGraph);
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.btnMachineLearning);

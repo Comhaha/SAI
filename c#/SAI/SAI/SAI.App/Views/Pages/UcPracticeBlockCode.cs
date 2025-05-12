@@ -1,27 +1,43 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.Application.Interop;
+using System.Text.Json;
+using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Forms.Dialogs;
+
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView
 	{
+		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
 		private readonly IMainView mainView;
 
 		public event EventHandler HomeButtonClicked;
 
-        private bool isInferPanelVisible = false;
+		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
+		private JsBridge jsBridge;
+
+		private bool isInferPanelVisible = false;
         private int inferPanelWidth = 420; 
         private int originalCodePanelWidth;
         private int originalCodePanelLeft;
         private bool isMemoPanelVisible = false;
+
+        private double currentThreshold = 0.5; // threshold 기본값 0.5
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
+			blocklyPresenter = new BlocklyPresenter(this);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -41,17 +57,14 @@ namespace SAI.SAI.App.Views.Pages
             // 추론사이드패널에서 '이미지 불러오기' 버튼 누르고 'pboxInferAccuracy'에 이미지 띄우고
             // pboxInferAccuracy.Visible = true 해주시면 됩니다.
 
-            // 코드 패널의 초기 위치와 크기 저장
-            originalCodePanelWidth = pCode.Width;
-            originalCodePanelLeft = pCode.Left;
+            MemoUtils.ApplyStyle(tboxMemo);
+            SetupThresholdControls();
+            ScrollUtils.AdjustPanelScroll(pSideInfer);
+
+			InitializeWebView2();
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
-            // 추론 패널 초기화
-            pSideInfer.Width = inferPanelWidth;
-            pSideInfer.Left = pCode.Right - inferPanelWidth;
-            pSideInfer.Top = pCode.Top;
-            pSideInfer.Height = pCode.Height;
         }
         private void ShowpSIdeInfer()
         {
@@ -67,6 +80,13 @@ namespace SAI.SAI.App.Views.Pages
             isInferPanelVisible = false;
         }
 
+        private void SetupThresholdControls()
+        {
+            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            {
+                currentThreshold = newValue;
+            });
+        }
 
         private void leftPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -245,6 +265,19 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        {
+            isMemoPanelVisible = !isMemoPanelVisible;
+            pMemo.Visible = isMemoPanelVisible;
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
 		private void ibtnDone_Click(object sender, EventArgs e)
 		{
 			ucShowDialogPresenter.clickFinish();
@@ -254,6 +287,97 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
+		}
+
+		private async void InitializeWebView2()
+		{
+			jsBridge = new JsBridge((message, type) =>
+			{
+				blocklyPresenter.HandleJsMessage(message, type);
+			});
+
+			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TrainBlockly.html"));
+			string uri = new Uri(localPath).AbsoluteUri;
+
+			webViewBlock.WebMessageReceived += async (s, e) =>
+			{
+				try
+				{
+					// 먼저 시도: 객체 기반 JSON 메시지 처리
+					var doc = JsonDocument.Parse(e.WebMessageAsJson);
+					var root = doc.RootElement;
+
+					if (root.ValueKind == JsonValueKind.Object &&
+						root.TryGetProperty("type", out var typeElem))
+					{
+						string type = typeElem.GetString();
+
+						switch (type)
+						{
+							case "openFile":
+								using (OpenFileDialog dialog = new OpenFileDialog())
+								{
+									dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+									dialog.Multiselect = false;
+									string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
+									if (dialog.ShowDialog() == DialogResult.OK)
+									{
+										string filePath = dialog.FileName.Replace("\\", "/");
+										string escapedFilePath = JsonSerializer.Serialize(filePath);
+										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+
+										string json = $@"{{
+											""blockId"": {escapedBlockId},
+											""filePath"": {escapedFilePath}
+										}}";
+
+										await webViewBlock.ExecuteScriptAsync(
+											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
+										);
+									}
+								}
+								break;
+
+							case "blockAllCode":
+								string blockAllCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockAllCode, type);
+								break;
+
+							case "blockCode":
+								string blockCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockCode, type);
+								break;
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
+				}
+			};
+
+			webViewBlock.ZoomFactor = 0.7; // 줌 비율 설정
+
+			await webViewBlock.EnsureCoreWebView2Async();
+			webViewBlock.Source = new Uri(uri);
+		}
+
+		// Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위) : 블록 생성
+		public void addBlock(string blockType)
+		{
+			webViewBlock.ExecuteScriptAsync($"addBlock('{blockType}')");
+		}
+
+		// 개별 블록 코드를 받아오기위한 JS 코드 호출 함수
+		public void getPythonCodeByType(string blockType)
+		{
+			webViewBlock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
+		}
+
+        private void webViewBlock_ZoomFactorChanged(object sender, EventArgs e)
+		{
+			//webViewBlock.ZoomFactor = 0.7;
 		}
 	}
 }

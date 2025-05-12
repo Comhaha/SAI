@@ -25,6 +25,7 @@ namespace SAI.SAI.App.Presenters
 		public void Initialize()
 		{
 			var homePage = new YoloTutorial(); // View 생성
+			//var homePage = new Blockly(); // View 생성
 			mainView.LoadPage(homePage); // 메인 폼에 삽입
 										 //mainView.LoadPage((UserControl)yoloTutorialView);
 		}
