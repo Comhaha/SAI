@@ -188,6 +188,7 @@ namespace SAI.SAI.App.Views.Pages
 
 			await webView21.EnsureCoreWebView2Async();
 			webView21.Source = new Uri(uri);
+            webView21.BringToFront();
 		}
 
 		// Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위) : 블록 생성
@@ -442,6 +443,6 @@ namespace SAI.SAI.App.Views.Pages
 		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
 		{
 			webView21.ZoomFactor = 0.7;
-		}
+        }
 	}
 }

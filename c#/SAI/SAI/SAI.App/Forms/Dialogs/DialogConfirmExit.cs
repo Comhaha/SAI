@@ -87,5 +87,5 @@ namespace SAI.SAI.App.Forms.Dialogs
 				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel;
 			};
 		}
-	}
+    }
 }

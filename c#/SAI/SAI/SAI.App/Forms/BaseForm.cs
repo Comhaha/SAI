@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace SAI.SAI.App.Forms
 {
@@ -15,22 +15,22 @@ namespace SAI.SAI.App.Forms
 
             this.StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1280, 720);
-			MaximizeBox = false;
+            MaximizeBox = false;
             MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
-			this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             // 폼 사이즈 고정 설정
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimizeBox = true;  
+            this.MinimizeBox = true;
             this.ControlBox = true;
-            this.ShowIcon = true;    
+            this.ShowIcon = true;
 
             // 사이즈 고정
             this.MinimumSize = new Size(1280, 720);
             this.MaximumSize = new Size(1280, 720);
-            
+
             InitializeBackgroundImage();
         }
 

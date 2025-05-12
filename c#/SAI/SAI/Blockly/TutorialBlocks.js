@@ -5,7 +5,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "시작", // 블록에 표시되는 문구
         "nextStatement": null,
         "colour": 0,
-        "tooltip": "관련 패키지(ultralytics)를 설치합니다.",
+        "tooltip": "시작 블록과 연결되어있는 블록이 실행됩니다.",
         "helpUrl": ""
     }
 ]);
@@ -49,9 +49,6 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
                 ]
             }
         ],
@@ -104,27 +101,20 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "epochs",
                 "options": [
                     ["50", "50"],
-                    ["100", "100"],
-                    ["150", "150"],
-                    ["200", "200"]
                 ]
             },
             {
                 "type": "field_dropdown",
                 "name": "imgsz",
                 "options": [
-                    ["512", "512"],
                     ["640", "640"],
-                    ["960", "960"],
-                    ["1024", "1024"],
-                    ["1280", "1280"]
                 ]
             }
         ],
         "previousStatement": null,  
         "nextStatement": null,
         "colour": 200,
-        "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 딸기와 바나나 데이터셋이 제공됩니다.",
+        "tooltip": "모델 학습을 진행합니다.\nepochs, imgsz를 조절할 수 있습니다.",
         "helpUrl": ""
     }
 ]);
@@ -221,7 +211,7 @@ Blockly.defineBlocksWithJsonArray([
         "previousStatement": null,
         "nextStatement": null,
         "colour": 120,
-        "tooltip": "학습한 결과를 시각화합니다.\n",
+        "tooltip": "추론 결과를 시각화합니다.\n입력한 이미지를 모델이 어떻게 판단했는지 확인합니다.",
         "helpUrl": ""
     }
 ]);
