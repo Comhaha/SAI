@@ -37,6 +37,26 @@ venv/
 .venv/
 .ipynb_checkpoints
 
+# /Python/ 하위 전체 무시
+SAI.Application/Python/*
+SAI.Application/Python/**
+
+# /Python/script/ 폴더는 예외 처리
+!SAI.Application/Python/scripts/
+!SAI.Application/Python/scripts/*.py
+
+# 학습 결과 무시
+SAI.Application/Python/runs/
+SAI.Application/Python/runs/**
+
+# 모델, 결과, 캐시 무시
+*.pt
+*.pth
+*.zip
+*.log
+*.onnx
+
+
 # Java
 *.class
 *.jar
@@ -58,7 +78,10 @@ local.properties
 *.stackdump
 *.dbmdl
 *.vsidx
+*.htm
 **/.vshistory/
+**/.vs/
+**/.vs/**
 c#/SAI/.vs/
 c#/SAI/SAI/SAI.App/.vs/
 c#/SAI/packages/
