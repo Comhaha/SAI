@@ -157,9 +157,6 @@
   <data name="btn_infer_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_infer_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="img_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\img_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ph_polygon_thin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\ph_polygon-thin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -439,20 +436,11 @@
   <data name="btn_selectinferimage_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_selectinferimage_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Frame_1000004304" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Frame 1000004304.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Line_227" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Line 227.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="도구창_short" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\도구창_short.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="정확도_프레임" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\정확도 프레임.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="클래스__todolist" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\클래스, todolist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="확대_축소" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\확대 축소.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -486,5 +474,71 @@
   </data>
   <data name="squirrel_5506514_1280" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\squirrel-5506514_1280.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Frame_10788" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Frame 10788.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Frame_10789" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Frame 10789.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="도구창２" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\도구창２.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링_가이드0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링 가이드0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링_가이드_Editor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링 가이드 Editor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링_가이드_todolist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링 가이드 todolist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링_가이드_정확도_프레임" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링 가이드 정확도 프레임.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링_가이드_클래스_목록" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링 가이드 클래스 목록.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링가이드_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\라벨링가이드 7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체가이드1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체 가이드1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체가이드2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체가이드2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tutorialBg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tutorialBg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Frame_1000004304" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Frame 1000004304.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="라벨링 가이드 순서" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Frame 1000004323.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
