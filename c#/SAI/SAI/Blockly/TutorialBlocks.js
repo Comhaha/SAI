@@ -49,9 +49,6 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
                 ]
             }
         ],
@@ -104,20 +101,13 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "epochs",
                 "options": [
                     ["50", "50"],
-                    ["100", "100"],
-                    ["150", "150"],
-                    ["200", "200"]
                 ]
             },
             {
                 "type": "field_dropdown",
                 "name": "imgsz",
                 "options": [
-                    ["512", "512"],
                     ["640", "640"],
-                    ["960", "960"],
-                    ["1024", "1024"],
-                    ["1280", "1280"]
                 ]
             }
         ],

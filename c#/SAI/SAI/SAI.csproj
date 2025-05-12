@@ -364,6 +364,12 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btnLoadModelClicked.png" />
+    <None Include="SAI.App\Resources\Images\btnLoadModel.png" />
+    <None Include="SAI.App\Resources\Images\btnPipInstallClicked.png" />
+    <None Include="SAI.App\Resources\Images\btnPipInstall.png" />
+    <None Include="SAI.App\Resources\Images\btnBlockStartClicked.png" />
+    <None Include="SAI.App\Resources\Images\btnBlockStart.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_white_649.282.png" />
     <None Include="SAI.App\Resources\Images\bg_yellow_btn_close_clicked.png" />
     <None Include="SAI.App\Resources\Images\bg_yellow_btn_close.png" />

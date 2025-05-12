@@ -1,23 +1,34 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Text.Json;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.Application.Interop;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView
 	{
+		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
 		private readonly IMainView mainView;
 
 		public event EventHandler HomeButtonClicked;
-        public UcTutorialBlockCode(IMainView view)
+
+		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
+		private JsBridge jsBridge;
+
+		public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
+			blocklyPresenter = new BlocklyPresenter(this);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -28,8 +39,125 @@ namespace SAI.SAI.App.Views.Pages
             ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
-        }
-        private void UcTutorialBlockCode_Load(object sender, EventArgs e)
+
+			InitializeWebView2();
+
+            // 블록 시작만 보이고 나머지는 안 보이게 초기화.
+            InitializeBlockButton();
+			setBtnBlockStart();
+
+
+			// 블록 버튼 클릭 이벤트 처리
+			btnBlockStart.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+				setBtnPip();
+			};
+			btnBlockStart.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("start"));
+			btnPip.Click += (s, e) =>
+			{
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+				setBtnLoadModel();
+			};
+			btnPip.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadModel.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+		}
+
+		private void setButtonVisible(Guna2Button button)
+		{
+			button.Visible = true;
+		}
+		private void setButtonInVisible(Guna2Button button)
+		{
+			button.Visible = false;
+		}
+
+		private void InitializeBlockButton()
+		{
+			btnBlockStart.Visible = false;
+			btnPip.Visible = false;
+			btnLoadModel.Visible = false;
+		}
+
+		private void setBtnBlockStart()
+		{
+			setButtonVisible(btnBlockStart);
+			// 시작 블럭
+			btnBlockStart.BackColor = Color.Transparent;
+			btnBlockStart.PressedColor = Color.Transparent;
+			btnBlockStart.CheckedState.FillColor = Color.Transparent;
+			btnBlockStart.DisabledState.FillColor = Color.Transparent;
+			btnBlockStart.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnBlockStart.MouseEnter += (s, e) =>
+			{
+				btnBlockStart.BackColor = Color.Transparent;
+				btnBlockStart.BackgroundImage = Properties.Resources.btnBlockStartClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnBlockStart.MouseLeave += (s, e) =>
+			{
+				btnBlockStart.BackgroundImage = Properties.Resources.btnBlockStart;
+			};
+
+			labelBlockTitle.Text = "시작";
+			labelBlockContent.Text = "실행 버튼을 누르면 시작 블록에\r\n붙어있는 블록이 실행됩니다.\r\n";
+		}
+
+		private void setBtnPip()
+		{
+			setButtonVisible(btnPip);
+			setButtonInVisible(btnBlockStart);
+			// 패키지 설치 블럭			
+			btnPip.BackColor = Color.Transparent;
+			btnPip.PressedColor = Color.Transparent;
+			btnPip.CheckedState.FillColor = Color.Transparent;
+			btnPip.DisabledState.FillColor = Color.Transparent;
+			btnPip.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnPip.MouseEnter += (s, e) =>
+			{
+				btnPip.BackColor = Color.Transparent;
+				btnPip.BackgroundImage = Properties.Resources.btnPipInstallClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnPip.MouseLeave += (s, e) =>
+			{
+				btnPip.BackgroundImage = Properties.Resources.btnPipInstall;
+			};
+
+			labelBlockTitle.Text = "패키지 설치하기";
+			labelBlockContent.Text = "관련 패키지(ultralytics)를 설치\r\n합니다.\r\n";
+		}
+
+		private void setBtnLoadModel()
+		{
+			setButtonVisible(btnLoadModel);
+			setButtonInVisible(btnPip);
+			// 패키지 설치 블럭			
+			btnLoadModel.BackColor = Color.Transparent;
+			btnLoadModel.PressedColor = Color.Transparent;
+			btnLoadModel.CheckedState.FillColor = Color.Transparent;
+			btnLoadModel.DisabledState.FillColor = Color.Transparent;
+			btnLoadModel.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnLoadModel.MouseEnter += (s, e) =>
+			{
+				btnLoadModel.BackColor = Color.Transparent;
+				btnLoadModel.BackgroundImage = Properties.Resources.btnLoadModelClicked;
+			};
+			// btnClose 마우스 떠날때
+			btnLoadModel.MouseLeave += (s, e) =>
+			{
+				btnLoadModel.BackgroundImage = Properties.Resources.btnLoadModel;
+			};
+
+			labelBlockTitle.Text = "모델 불러오기";
+			labelBlockContent.Text = "YOLO 모델의 나노 버전을 불러\r\n오는 블록입니다.\r\n";
+		}
+
+		private void UcTutorialBlockCode_Load(object sender, EventArgs e)
         {
         }
 
@@ -188,5 +316,95 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
 		}
+
+		private async void InitializeWebView2()
+		{
+			jsBridge = new JsBridge((message, type) =>
+			{
+				blocklyPresenter.HandleJsMessage(message, type);
+			});
+
+			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TutorialBlockly.html"));
+			string uri = new Uri(localPath).AbsoluteUri;
+
+			webViewblock.WebMessageReceived += async (s, e) =>
+			{
+				try
+				{
+					// 먼저 시도: 객체 기반 JSON 메시지 처리
+					var doc = JsonDocument.Parse(e.WebMessageAsJson);
+					var root = doc.RootElement;
+
+					if (root.ValueKind == JsonValueKind.Object &&
+						root.TryGetProperty("type", out var typeElem))
+					{
+						string type = typeElem.GetString();
+
+						switch (type)
+						{
+							case "openFile":
+								using (OpenFileDialog dialog = new OpenFileDialog())
+								{
+									dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+									dialog.Multiselect = false;
+									string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
+									if (dialog.ShowDialog() == DialogResult.OK)
+									{
+										string filePath = dialog.FileName.Replace("\\", "/");
+										string escapedFilePath = JsonSerializer.Serialize(filePath);
+										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+
+										string json = $@"{{
+											""blockId"": {escapedBlockId},
+											""filePath"": {escapedFilePath}
+										}}";
+
+										await webViewblock.ExecuteScriptAsync(
+											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
+										);
+									}
+								}
+								break;
+
+							case "blockAllCode":
+								string blockAllCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockAllCode, type);
+								break;
+
+							case "blockCode":
+								string blockCode = root.GetProperty("code").GetString();
+								jsBridge.receiveMessageFromJs(blockCode, type);
+								break;
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
+				}
+			};
+
+			webViewblock.ZoomFactor = 0.7; // 줌 비율 설정
+
+			await webViewblock.EnsureCoreWebView2Async();
+			webViewblock.Source = new Uri(uri);
+		}
+
+		public void addBlock(string blockType)
+		{
+			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
+		}
+
+		public void getPythonCodeByType(string blockType)
+		{
+			webViewblock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
+		}
+
+		// blockly 웹뷰 확대 조절 함수
+		private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
+		{
+			webViewblock.ZoomFactor = 0.7;
+        }
 	}
 }
