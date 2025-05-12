@@ -78,6 +78,7 @@
             this.ibtnGoPractice.PressedState.ImageSize = new System.Drawing.Size(115, 41);
             this.ibtnGoPractice.Size = new System.Drawing.Size(115, 41);
             this.ibtnGoPractice.TabIndex = 1;
+            this.ibtnGoPractice.Click += new System.EventHandler(this.ibtnGoPractice_Click);
             // 
             // ibtnGoTutorial
             // 
@@ -93,6 +94,7 @@
             this.ibtnGoTutorial.PressedState.ImageSize = new System.Drawing.Size(115, 41);
             this.ibtnGoTutorial.Size = new System.Drawing.Size(115, 41);
             this.ibtnGoTutorial.TabIndex = 0;
+            this.ibtnGoTutorial.Click += new System.EventHandler(this.ibtnGoTutorial_Click);
             // 
             // pTitleBar
             // 

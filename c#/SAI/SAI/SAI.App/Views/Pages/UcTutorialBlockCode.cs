@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Drawing;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl
-    {
-        public event EventHandler HomeButtonClicked;
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView
+	{
+		private UcShowDialogPresenter ucShowDialogPresenter;
+		private readonly IMainView mainView;
 
+		public event EventHandler HomeButtonClicked;
         private TodoManager todoManager;
         // todo 위에서부터 index 0~2번 입니다.
         // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
@@ -18,11 +23,14 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-
-        public UcTutorialBlockCode()
+        public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
-            ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+
+			this.mainView = view;
+			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -230,8 +238,8 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnDone_Click(object sender, EventArgs e)
         {
-
-        }
+			ucShowDialogPresenter.clickGoTrain();
+		}
 
         private void ibtnCloseInfer_Click(object sender, EventArgs e)
         {
@@ -257,5 +265,11 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
-    }
+
+		public void showDialog(Form dialog)
+		{
+			dialog.Owner = mainView as Form;
+			dialog.ShowDialog();
+		}
+	}
 }

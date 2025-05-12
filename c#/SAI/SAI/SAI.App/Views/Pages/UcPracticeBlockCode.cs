@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Forms.Dialogs;
@@ -9,19 +10,26 @@ using SAI.SAI.App.Forms.Dialogs;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl
-    {
-        public event EventHandler HomeButtonClicked;
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView
+	{
+		private UcShowDialogPresenter ucShowDialogPresenter;
+		private readonly IMainView mainView;
+
+		public event EventHandler HomeButtonClicked;
 
         private bool isInferPanelVisible = false;
         private bool isMemoPanelVisible = false;
 
         private double currentThreshold = 0.5; // threshold 기본값 0.5
-        public UcPracticeBlockCode()
+
+        public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
-            ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+			this.mainView = view;
+			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -256,5 +264,15 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
+		private void ibtnDone_Click(object sender, EventArgs e)
+		{
+			ucShowDialogPresenter.clickFinish();
+		}
+
+		public void showDialog(Form dialog)
+		{
+			dialog.Owner = mainView as Form;
+			dialog.ShowDialog();
+		}
     }
 }

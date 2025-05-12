@@ -10,14 +10,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clipper2Lib;
+using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models.Events;
+using SAI.SAI.App.Presenters;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcLabelGuide : UserControl
+    public partial class UcLabelGuide : UserControl, IUcShowDialogView
     {
+        private UcShowDialogPresenter ucShowDialogPresenter;
+        private readonly IMainView mainView;
 
-        // 기본 도구 상태 및 이미지 관련
-        private bool isDragging = false;
+		// 기본 도구 상태 및 이미지 관련
+		private bool isDragging = false;
         private Point startPoint = new Point(0, 0);
         private bool isHandToolActive = false;
         private List<Image> images = new List<Image>();
@@ -57,16 +63,10 @@ namespace SAI.SAI.App.Views.Pages
         private List<Point> editingPolygonPoints = new List<Point>();
         private bool isPolygonPointDragging = false;
 
-        // 라벨링 데이터 내보내기 변수
-        private Guna.UI2.WinForms.Guna2Button exportBtn;
-
         // 정답 데이터 저장용 변수
         private Dictionary<int, string> groundTruthClassifications = new Dictionary<int, string>();
         private Dictionary<int, Tuple<Rectangle, string>> groundTruthBoundingBoxes = new Dictionary<int, Tuple<Rectangle, string>>();
         private Dictionary<int, Tuple<List<Point>, string>> groundTruthPolygons = new Dictionary<int, Tuple<List<Point>, string>>();
-
-        // 정확도 표시용 버튼
-        private Guna.UI2.WinForms.Guna2Button accuracyBtn;
 
         // 이미지별 정확도 저장을 위한 변수 
         private Dictionary<int, double> imageAccuracies = new Dictionary<int, double>();
@@ -91,25 +91,33 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel tooltipPanel;
         private Guna.UI2.WinForms.Guna2HtmlLabel tooltipLabel;
         private System.Windows.Forms.Timer tooltipTimer;
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /// <summary>
-        /// 초기 생성자
-        /// </summary>
-        public UcLabelGuide()
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		/// <summary>
+		/// 초기 생성자
+		/// </summary>
+		/// 
+
+		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
+
+		public UcLabelGuide(IMainView view)
         {
-            InitializeComponent();
-            LoadImages(); // 이미지 로드
+			InitializeComponent();
+            this.mainView = view;
+			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+			LoadImages(); // 이미지 로드
 
             // 초기 설정
             SetupInitialConfig();
             RegisterExport();
             InitializeGroundTruthData(); // 정답 데이터 초기화
             InitializeProgressIndicators(); // 진행 상태 표시기 초기화
-            RegisterAccuracyButton(); // 정확도 계산 버튼 등록
+            //RegisterAccuracyButton(); // 정확도 계산 버튼 등록
             SetupZoomFunctionality(); // 줌 기능 설정
 
             // 이벤트 핸들러 등록
@@ -129,7 +137,13 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2CircleButton10.PressedColor = Color.Transparent;
         }
 
-        // 정답 데이터 초기화 메서드 (변경 필요)
+        private void ShowTutorial()
+        {
+            TutorialGuideForm tutorialForm = new TutorialGuideForm(this);
+            tutorialForm.Show(this); // 모달리스 형태로 표시
+        }
+        
+        // 정답 데이터 초기화 메서드 
         private void InitializeGroundTruthData()
         {
             // 바운딩 박스 정답 데이터
@@ -147,45 +161,24 @@ namespace SAI.SAI.App.Views.Pages
             groundTruthPolygons[8] = ParsePolygonFromJson(
                 "{\"label\":\"banana\",\"points\":[{\"x\":404,\"y\":399},{\"x\":404,\"y\":463},{\"x\":424,\"y\":528},{\"x\":448,\"y\":606},{\"x\":567,\"y\":642},{\"x\":653,\"y\":665},{\"x\":716,\"y\":647},{\"x\":771,\"y\":640},{\"x\":824,\"y\":661},{\"x\":956,\"y\":583},{\"x\":967,\"y\":534},{\"x\":945,\"y\":488},{\"x\":895,\"y\":424},{\"x\":853,\"y\":362},{\"x\":798,\"y\":291},{\"x\":736,\"y\":245},{\"x\":668,\"y\":213},{\"x\":620,\"y\":204},{\"x\":567,\"y\":199},{\"x\":479,\"y\":252},{\"x\":439,\"y\":286},{\"x\":413,\"y\":348}]}");
         }
-        // 정확도 계산 버튼 추가 메서드 (임시
-        private void RegisterAccuracyButton()
-        {
-            // 정확도 계산 버튼
-            this.accuracyBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.accuracyBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.accuracyBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.accuracyBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.accuracyBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.accuracyBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(133)))), ((int)(((byte)(55)))));
-            this.accuracyBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
-            this.accuracyBtn.ForeColor = System.Drawing.Color.White;
-            this.accuracyBtn.Location = new System.Drawing.Point(870, 830);
-            this.accuracyBtn.Name = "accuracyBtn";
-            this.accuracyBtn.Size = new System.Drawing.Size(138, 35);
-            this.accuracyBtn.TabIndex = 15;
-            this.accuracyBtn.Text = "정확도 계산";
-            this.imageContainer.Controls.Add(this.accuracyBtn);
 
-            // 클릭 이벤트 추가
-            accuracyBtn.Click += AccuracyBtn_Click;
-        }
         private void RegisterExport()
         {
-            // 좌표 내보내기 버튼 임시
-            this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
-            this.exportBtn.ForeColor = System.Drawing.Color.White;
-            this.exportBtn.Location = new System.Drawing.Point(0, 0);
-            this.exportBtn.Name = "exportBtn";
-            this.exportBtn.Size = new System.Drawing.Size(138, 35);
-            this.exportBtn.TabIndex = 14;
-            this.exportBtn.Text = "좌표 내보내기";
-            this.imageContainer.Controls.Add(this.exportBtn);
+            //// 좌표 내보내기 버튼 임시
+            //this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
+            //this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            //this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            //this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            //this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            //this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            //this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
+            //this.exportBtn.ForeColor = System.Drawing.Color.White;
+            //this.exportBtn.Location = new System.Drawing.Point(0, 0);
+            //this.exportBtn.Name = "exportBtn";
+            //this.exportBtn.Size = new System.Drawing.Size(138, 35);
+            //this.exportBtn.TabIndex = 14;
+            //this.exportBtn.Text = "좌표 내보내기";
+            //this.imageContainer.Controls.Add(this.exportBtn);
         }
 
         /// <summary>
@@ -298,85 +291,85 @@ namespace SAI.SAI.App.Views.Pages
             imageContainer.SizeChanged += (s, e) => SetRoundedRegion();
             pictureBoxImage.SizeChanged += (s, e) => SetRoundedRegion();
 
-            // 좌표 내보내기 버튼 클릭 이벤트 등록
-            exportBtn.Click += ExportBtn_Click;
+            //// 좌표 내보내기 버튼 클릭 이벤트 등록
+            //exportBtn.Click += ExportBtn_Click;
         }
 
-        /// <summary>
-        /// 좌표 내보내기 버튼 클릭 이벤트 핸들러 (임시)
-        /// </summary>
-        private void ExportBtn_Click(object sender, EventArgs e)
-        {
-            // 현재 이미지의 라벨링 모드에 따라 적절한 데이터 내보내기
-            string jsonData = "";
+        ///// <summary>
+        ///// 좌표 내보내기 버튼 클릭 이벤트 핸들러 (임시)
+        ///// </summary>
+        //private void ExportBtn_Click(object sender, EventArgs e)
+        //{
+        //    // 현재 이미지의 라벨링 모드에 따라 적절한 데이터 내보내기
+        //    string jsonData = "";
 
-            if (currentLevel.Text == "Bounding Box")
-            {
-                // 현재 이미지의 바운딩 박스 정보 가져오기
-                jsonData = ExportBoundingBoxCoordinates(currentImageIndex);
-                MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "바운딩 박스 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (currentLevel.Text == "Segmentation")
-            {
-                // 현재 이미지의 폴리곤 정보 가져오기
-                jsonData = ExportPolygonCoordinates(currentImageIndex);
-                MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "세그멘테이션 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    if (currentLevel.Text == "Bounding Box")
+        //    {
+        //        // 현재 이미지의 바운딩 박스 정보 가져오기
+        //        jsonData = ExportBoundingBoxCoordinates(currentImageIndex);
+        //        MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "바운딩 박스 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    else if (currentLevel.Text == "Segmentation")
+        //    {
+        //        // 현재 이미지의 폴리곤 정보 가져오기
+        //        jsonData = ExportPolygonCoordinates(currentImageIndex);
+        //        MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "세그멘테이션 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
-            }
+        //    }
 
-            // 모든 이미지의 좌표 정보를 출력할지 물어보기
-            if (DialogResult.Yes == MessageBox.Show("모든 이미지의 좌표 정보도 확인하시겠습니까?", "추가 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-            {
-                StringBuilder allCoords = new StringBuilder();
+        //    // 모든 이미지의 좌표 정보를 출력할지 물어보기
+        //    if (DialogResult.Yes == MessageBox.Show("모든 이미지의 좌표 정보도 확인하시겠습니까?", "추가 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+        //    {
+        //        StringBuilder allCoords = new StringBuilder();
 
-                for (int i = 0; i < images.Count; i++)
-                {
-                    string imageType = "";
-                    string coords = "{}";
+        //        for (int i = 0; i < images.Count; i++)
+        //        {
+        //            string imageType = "";
+        //            string coords = "{}";
 
-                    // 이미지 타입에 따른 좌표 추출
-                    if (i < 3) // Classification (0-2 인덱스)
-                    {
-                        imageType = "분류";
-                        if (imageClassifications.ContainsKey(i))
-                        {
-                            string label = imageClassifications[i];
-                            coords = $"{{\"label\":\"{label}\"}}";
-                        }
-                    }
-                    else if (i < 6) // Bounding Box (3-5 인덱스)
-                    {
-                        imageType = "바운딩 박스";
-                        coords = ExportBoundingBoxCoordinates(i);
-                    }
-                    else // Segmentation (6-8 인덱스)
-                    {
-                        imageType = "세그멘테이션";
-                        coords = ExportPolygonCoordinates(i);
-                    }
+        //            // 이미지 타입에 따른 좌표 추출
+        //            if (i < 3) // Classification (0-2 인덱스)
+        //            {
+        //                imageType = "분류";
+        //                if (imageClassifications.ContainsKey(i))
+        //                {
+        //                    string label = imageClassifications[i];
+        //                    coords = $"{{\"label\":\"{label}\"}}";
+        //                }
+        //            }
+        //            else if (i < 6) // Bounding Box (3-5 인덱스)
+        //            {
+        //                imageType = "바운딩 박스";
+        //                coords = ExportBoundingBoxCoordinates(i);
+        //            }
+        //            else // Segmentation (6-8 인덱스)
+        //            {
+        //                imageType = "세그멘테이션";
+        //                coords = ExportPolygonCoordinates(i);
+        //            }
 
-                    allCoords.AppendLine($"이미지 {i + 1} ({imageType}): {coords}");
-                }
+        //            allCoords.AppendLine($"이미지 {i + 1} ({imageType}): {coords}");
+        //        }
 
-                // 결과를 대화상자로 표시
-                using (Form dialog = new Form())
-                {
-                    dialog.Text = "모든 이미지 좌표 정보";
-                    dialog.Size = new Size(600, 400);
-                    dialog.StartPosition = FormStartPosition.CenterParent;
+        //        // 결과를 대화상자로 표시
+        //        using (Form dialog = new Form())
+        //        {
+        //            dialog.Text = "모든 이미지 좌표 정보";
+        //            dialog.Size = new Size(600, 400);
+        //            dialog.StartPosition = FormStartPosition.CenterParent;
 
-                    TextBox textBox = new TextBox();
-                    textBox.Multiline = true;
-                    textBox.ScrollBars = ScrollBars.Both;
-                    textBox.Dock = DockStyle.Fill;
-                    textBox.ReadOnly = true;
-                    textBox.Text = allCoords.ToString();
+        //            TextBox textBox = new TextBox();
+        //            textBox.Multiline = true;
+        //            textBox.ScrollBars = ScrollBars.Both;
+        //            textBox.Dock = DockStyle.Fill;
+        //            textBox.ReadOnly = true;
+        //            textBox.Text = allCoords.ToString();
 
-                    dialog.Controls.Add(textBox);
-                    dialog.ShowDialog();
-                }
-            }
-        }
+        //            dialog.Controls.Add(textBox);
+        //            dialog.ShowDialog();
+        //        }
+        //    }
+        //}
         /// <summary>
         /// 마우스 관련 이벤트 핸들러 등록
         /// </summary>
@@ -1224,7 +1217,6 @@ namespace SAI.SAI.App.Views.Pages
                 }
                 else
                 {
-                    accuracyBtn.Text = "Accuracy";
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
@@ -2095,33 +2087,33 @@ namespace SAI.SAI.App.Views.Pages
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 바운딩 박스 좌표를 JSON 형태로 내보내기
 
-        private string ExportBoundingBoxCoordinates(int imageIndex)
-        {
-            if (imageBoundingBoxes.ContainsKey(imageIndex) &&
-                imageBoundingBoxes[imageIndex].Count > 0)
-            {
-                var box = imageBoundingBoxes[imageIndex][0];
-                return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
-            }
-            return "{}";
-        }
+        //private string ExportBoundingBoxCoordinates(int imageIndex)
+        //{
+        //    if (imageBoundingBoxes.ContainsKey(imageIndex) &&
+        //        imageBoundingBoxes[imageIndex].Count > 0)
+        //    {
+        //        var box = imageBoundingBoxes[imageIndex][0];
+        //        return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
+        //    }
+        //    return "{}";
+        //}
 
-        // 폴리곤 좌표를 JSON 형태로 내보내기
-        private string ExportPolygonCoordinates(int imageIndex)
-        {
-            if (imagePolygons.ContainsKey(imageIndex) &&
-                imagePolygons[imageIndex].Count > 0)
-            {
-                var polygon = imagePolygons[imageIndex][0];
+        //// 폴리곤 좌표를 JSON 형태로 내보내기
+        //private string ExportPolygonCoordinates(int imageIndex)
+        //{
+        //    if (imagePolygons.ContainsKey(imageIndex) &&
+        //        imagePolygons[imageIndex].Count > 0)
+        //    {
+        //        var polygon = imagePolygons[imageIndex][0];
 
-                // 점들의 좌표를 배열로 변환
-                var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
-                string pointsJson = string.Join(",", points);
+        //        // 점들의 좌표를 배열로 변환
+        //        var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
+        //        string pointsJson = string.Join(",", points);
 
-                return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
-            }
-            return "{}";
-        }
+        //        return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
+        //    }
+        //    return "{}";
+        //}
 
         /// <summary>
         /// 현재 이미지 인덱스에 해당하는 바운딩 박스 목록을 가져옴
@@ -2271,7 +2263,7 @@ namespace SAI.SAI.App.Views.Pages
             return new Tuple<List<Point>, string>(points, label);
         }
 
-        // 정확도 계산 버튼 클릭 이벤트 핸들러
+        // 정확도 계산 버튼 클릭 이벤트 핸들러 (임시 삭제하고 싶어)
         private void AccuracyBtn_Click(object sender, EventArgs e)
         {
             if (currentLevel.Text == "Bounding Box")
@@ -3033,7 +3025,6 @@ namespace SAI.SAI.App.Views.Pages
                         AddFullImageBoundingBox(annotationText);
 
                         imageAccuracies[currentImageIndex] = 100.0;
-                        accuracyBtn.Text = "Accuracy: 100%";
 
                         UpdateNavigationButtonState();
                     }
@@ -3477,8 +3468,6 @@ namespace SAI.SAI.App.Views.Pages
             RegisterTooltip(ZoomOutBtn, "이미지를 축소합니다.");
             RegisterTooltip(nextBtn, "다음 이미지로 이동합니다.");
             RegisterTooltip(preBtn, "이전 이미지로 이동합니다.");
-            RegisterTooltip(exportBtn, "현재 이미지의 라벨링 데이터를 내보냅니다.");
-            RegisterTooltip(accuracyBtn, "현재 이미지의 라벨링 정확도를 계산합니다.");
         }
         
         // 컨트롤에 툴팁 이벤트 등록
@@ -3661,5 +3650,18 @@ namespace SAI.SAI.App.Views.Pages
             if (editingRect.Width < 10) editingRect.Width = 10;
             if (editingRect.Height < 10) editingRect.Height = 10;
         }
-    }
+
+        // 버튼 클릭 이벤트 - 튜토리얼 블록 코딩으로 넘어가기 전 다이얼로그를 띄움
+		private void guna2Panel1_Click(object sender, EventArgs e)
+		{
+            ucShowDialogPresenter.clickGoTutorialBlockCode();
+		}
+
+		// 블록 코딩으로 넘어가는 다이얼로그를 띄우는 메서드
+		public void showDialog(Form dialog)
+		{
+            dialog.Owner = mainView as Form;
+            dialog.ShowDialog();
+		}
+	}
 }

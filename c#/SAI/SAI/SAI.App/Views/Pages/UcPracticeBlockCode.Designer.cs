@@ -59,6 +59,9 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
+            this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
+            this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
             this.ibtnTest = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnDownloadAIModel = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnGoNotion = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -75,9 +78,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnCloseMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnQuestionMemo = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
-            this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
-            this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
@@ -87,10 +87,10 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopBlock.SuspendLayout();
             this.pZoomBlock.SuspendLayout();
             this.pSideInfer.SuspendLayout();
+            this.pThreshold.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.pMemo.SuspendLayout();
-            this.pThreshold.SuspendLayout();
             this.SuspendLayout();
             // 
             // pMain
@@ -391,6 +391,7 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnDone, "ibtnDone");
             this.ibtnDone.Name = "ibtnDone";
             this.ibtnDone.PressedState.ImageSize = new System.Drawing.Size(154, 39);
+            this.ibtnDone.Click += new System.EventHandler(this.ibtnDone_Click);
             // 
             // ibtnInfer
             // 
@@ -449,6 +450,37 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
             this.pSideInfer.Paint += new System.Windows.Forms.PaintEventHandler(this.pInferContent_Paint);
+            // 
+            // pThreshold
+            // 
+            this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
+            resources.ApplyResources(this.pThreshold, "pThreshold");
+            this.pThreshold.Controls.Add(this.tboxThreshold);
+            this.pThreshold.Name = "pThreshold";
+            // 
+            // tboxThreshold
+            // 
+            resources.ApplyResources(this.tboxThreshold, "tboxThreshold");
+            this.tboxThreshold.BorderColor = System.Drawing.Color.Transparent;
+            this.tboxThreshold.BorderThickness = 0;
+            this.tboxThreshold.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tboxThreshold.DefaultText = "";
+            this.tboxThreshold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tboxThreshold.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tboxThreshold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.ForeColor = System.Drawing.Color.Black;
+            this.tboxThreshold.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.Name = "tboxThreshold";
+            this.tboxThreshold.PlaceholderText = "";
+            this.tboxThreshold.SelectedText = "";
+            // 
+            // tbarThreshold
+            // 
+            resources.ApplyResources(this.tbarThreshold, "tbarThreshold");
+            this.tbarThreshold.Name = "tbarThreshold";
+            this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
             // 
             // ibtnTest
             // 
@@ -628,37 +660,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnQuestionMemo.Name = "ibtnQuestionMemo";
             this.ibtnQuestionMemo.PressedState.ImageSize = new System.Drawing.Size(31, 31);
             // 
-            // pThreshold
-            // 
-            this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
-            resources.ApplyResources(this.pThreshold, "pThreshold");
-            this.pThreshold.Controls.Add(this.tboxThreshold);
-            this.pThreshold.Name = "pThreshold";
-            // 
-            // tboxThreshold
-            // 
-            resources.ApplyResources(this.tboxThreshold, "tboxThreshold");
-            this.tboxThreshold.BorderColor = System.Drawing.Color.Transparent;
-            this.tboxThreshold.BorderThickness = 0;
-            this.tboxThreshold.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tboxThreshold.DefaultText = "";
-            this.tboxThreshold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.tboxThreshold.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.tboxThreshold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tboxThreshold.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tboxThreshold.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tboxThreshold.ForeColor = System.Drawing.Color.Black;
-            this.tboxThreshold.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tboxThreshold.Name = "tboxThreshold";
-            this.tboxThreshold.PlaceholderText = "";
-            this.tboxThreshold.SelectedText = "";
-            // 
-            // tbarThreshold
-            // 
-            resources.ApplyResources(this.tbarThreshold, "tbarThreshold");
-            this.tbarThreshold.Name = "tbarThreshold";
-            this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
-            // 
             // UcPracticeBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -686,10 +687,10 @@ namespace SAI.SAI.App.Views.Pages
             this.pZoomBlock.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
             this.pSideInfer.PerformLayout();
+            this.pThreshold.ResumeLayout(false);
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.pMemo.ResumeLayout(false);
-            this.pThreshold.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

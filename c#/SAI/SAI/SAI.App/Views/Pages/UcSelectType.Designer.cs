@@ -53,6 +53,7 @@
             this.ibtnAudio.PressedState.ImageSize = new System.Drawing.Size(217, 261);
             this.ibtnAudio.Size = new System.Drawing.Size(217, 261);
             this.ibtnAudio.TabIndex = 0;
+            this.ibtnAudio.Click += new System.EventHandler(this.ibtnAudio_Click);
             // 
             // ibtnImage
             // 
@@ -69,7 +70,7 @@
             this.ibtnImage.PressedState.ImageSize = new System.Drawing.Size(217, 261);
             this.ibtnImage.Size = new System.Drawing.Size(217, 261);
             this.ibtnImage.TabIndex = 1;
-            this.ibtnImage.Click += new System.EventHandler(this.guna2ImageButton1_Click);
+            this.ibtnImage.Click += new System.EventHandler(this.ibtnImage_Click);
             // 
             // ibtnPose
             // 
@@ -86,6 +87,7 @@
             this.ibtnPose.PressedState.ImageSize = new System.Drawing.Size(217, 261);
             this.ibtnPose.Size = new System.Drawing.Size(217, 261);
             this.ibtnPose.TabIndex = 2;
+            this.ibtnPose.Click += new System.EventHandler(this.ibtnPose_Click);
             // 
             // ibtnNext
             // 
@@ -113,7 +115,6 @@
             this.lblTitle.Size = new System.Drawing.Size(553, 64);
             this.lblTitle.TabIndex = 5;
             this.lblTitle.Text = "학습 데이터 종류를 선택하세요";
-            this.lblTitle.Click += new System.EventHandler(this.guna2HtmlLabel2_Click);
             // 
             // lblImage
             // 
@@ -134,7 +135,6 @@
             this.lblAudio.Size = new System.Drawing.Size(90, 48);
             this.lblAudio.TabIndex = 7;
             this.lblAudio.Text = "오디오";
-            this.lblAudio.Click += new System.EventHandler(this.guna2HtmlLabel1_Click);
             // 
             // lblPose
             // 

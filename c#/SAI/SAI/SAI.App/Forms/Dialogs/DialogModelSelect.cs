@@ -1,4 +1,9 @@
-﻿using System;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
@@ -7,7 +12,8 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
     public partial class DialogModelSelect : Form
     {
-        public DialogModelSelect()
+        private DialogLoadPagePresenter presenter;
+		public DialogModelSelect()
         {
             InitializeComponent();
 
@@ -84,5 +90,25 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.Close();
         }
 
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+
+			var view = this.Owner as IMainView;
+			presenter = new DialogLoadPagePresenter(view);
+		}
+
+		private void ibtnGoTutorial_Click(object sender, EventArgs e)
+		{
+            presenter.clickTutorial();
+			this.Close();
+		}
+
+		private void ibtnGoPractice_Click(object sender, EventArgs e)
+		{
+			presenter.clickTrainAtModelSelect();
+			this.Close();
+		}
     }
+
 }
