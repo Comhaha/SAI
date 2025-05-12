@@ -24,5 +24,10 @@ namespace SAI.SAI.App.Presenters
 			var blockly = new Blockly(); // View 생성
 			mainView.LoadPage(blockly); // 메인 폼에 삽입
 		}
+
+		public void DialogDeleteModelEvent(bool check)
+		{
+			mainView.CheckedDialogDeleteModel(check);
+		}
 	}
 }

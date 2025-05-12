@@ -11,10 +11,18 @@ namespace SAI.SAI.Application.Service
 {
 	public class BlocklyService
 	{
-		private readonly string tutorialPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\tutorial_script.py";
-		private readonly string trainPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\SAI.Application\\python\\train_script.py";
+		private readonly string baseDir;
+		private readonly string tutorialPath;
+		private readonly string trainPath;
 
-		// 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드
+		public BlocklyService()
+		{
+			baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			tutorialPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\python\\tutorial_script.py"));
+			trainPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\python\\train_script.py"));
+		}
+
+		// 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드  
 		public void SaveCodeToFileInTutorial()
 		{
 			var model = BlocklyModel.Instance;
@@ -30,7 +38,7 @@ namespace SAI.SAI.Application.Service
 			}
 		}
 
-		// 실습에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드
+		// 실습에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드  
 		public void SaveCodeToFileInTrain()
 		{
 			var model = BlocklyModel.Instance;
