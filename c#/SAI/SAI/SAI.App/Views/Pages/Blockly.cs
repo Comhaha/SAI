@@ -144,25 +144,25 @@ namespace SAI.SAI.App.Views.Pages
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
 
-			using (var dialog = new DialogQuitTrain())
+			//using (var dialog = new DialogQuitTrain())
 			//using (var dialog = new DialogHomeFromTrain())
 			//using (var dialog = new DialogComfirmTrain())
 			//using (var dialog = new DialogHomeFromLabeling())
 			//using (var dialog = new DialogCompleteTutorial())
 			//using (var dialog = new DialogCompleteLabeling())
 			//using (var dialog = new DialogConfirmExit())
-			{
-				dialog.ShowDialog();
-			}
-
-			//var model = MainModel.Instance;
-			//using (var dialog = new DialogDeleteModel())
 			//{
-			//	if (!model.DontShowDeleteModelDialog)
-			//	{
-			//		dialog.ShowDialog();
-			//	}
+			//	dialog.ShowDialog();
 			//}
+
+			var model = MainModel.Instance;
+			using (var dialog = new DialogDeleteModel())
+			{
+				if (!model.DontShowDeleteModelDialog)
+				{
+					dialog.ShowDialog();
+				}
+			}
 		}
 
 		private void webView21_ZoomFactorChanged(object sender, EventArgs e)

@@ -308,8 +308,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <Content Include="Blockly\custom_blocks.js" />
-    <Content Include="Blockly\index.html" />
     <None Include="SAI.App\Resources\Images\p_todolist.png" />
     <None Include="SAI.App\Resources\Images\p_blocklist_tutorial.png" />
     <None Include="SAI.App\Resources\Images\p_topbar.png" />
