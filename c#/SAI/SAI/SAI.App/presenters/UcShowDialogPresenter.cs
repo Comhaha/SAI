@@ -34,11 +34,6 @@ namespace SAI.SAI.App.Presenters
 			}
 		}
 
-		public void clickGoTutorialBlockCode()
-		{
-			view.showDialog(new DialogConfirmGoTutorialBlockCode());
-		}
-
 		public void clickGoTrain()
 		{
 			view.showDialog(new DialogComfirmGoTrain());

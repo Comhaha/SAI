@@ -1,5 +1,6 @@
 ﻿using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,22 +15,22 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogConfirmGoTutorialBlockCode : Form
 	{
-		private DialogLoadPagePresenter presenter;
+		private IMainView mainView;
 		public DialogConfirmGoTutorialBlockCode()
 		{
 			InitializeComponent();
 		}
+
 		protected override void OnShown(EventArgs e)
 		{
 			base.OnShown(e);
-
 			var view = this.Owner as IMainView;
-			presenter = new DialogLoadPagePresenter(view);
+			this.mainView = view;
 		}
 
 		private void guna2Button1_Click(object sender, EventArgs e)
 		{
-			presenter.clickGoTutorialBlockCode();
+			mainView.LoadPage(new UcTutorialBlockCode(mainView));
 			this.Close();
 		}
 	}
