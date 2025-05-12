@@ -57,15 +57,19 @@
     <PackageReference Include="Guna.Charts.WinForms" Version="1.1.0" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="Clipper2" Version="1.4.0" />
+    <PackageReference Include="jacobslusser.ScintillaNET" Version="3.6.3" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +79,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -156,6 +161,9 @@
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Presenters\TrainsitionPresenter.cs" />
@@ -196,6 +204,23 @@
     <Compile Include="SAI.App\Views\Pages\UcTutorialGuide.Designer.cs">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCode.Designer.cs">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTab.Designer.cs">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -243,6 +268,14 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
+      <DependentUpon>UcCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
+      <DependentUpon>UcTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
+      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>
     </EmbeddedResource>
