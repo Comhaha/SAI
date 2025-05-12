@@ -27,10 +27,6 @@ namespace SAI.SAI.App.Views.Pages
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 		private JsBridge jsBridge;
 
-		public Blockly()
-		{
-			InitializeComponent();
-
         // UcCode를 UcTabCodeContainer로 교체
         private UcTabCodeContainer codeContainer;
         // 기본 탭의 코드 에디터 참조 유지
@@ -44,7 +40,7 @@ namespace SAI.SAI.App.Views.Pages
         private int modelTabCount = 0; // 모델 탭 카운터 추가
         private bool isDoubleClickProcessing = false; // 더블클릭 처리 중 플래그 추가
 
-        public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+        //public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 
         public Blockly()
         {
@@ -227,7 +223,7 @@ namespace SAI.SAI.App.Views.Pages
                     }
                 ";
 
-                chromiumWebBrowser1.ExecuteScriptAsync(script);
+                //chromiumWebBrowser1.ExecuteScriptAsync(script);
                 Console.WriteLine("[DEBUG] Blockly: 블록 클릭 리스너 추가됨");
             }
             catch (Exception ex)
@@ -371,28 +367,6 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위) : 블록 생성
-        public void addBlock(string blockType)
-        {
-            // 더블클릭 처리 중이 아닐 때만 실행
-            if (!isDoubleClickProcessing)
-            {
-                try
-                {
-                    Console.WriteLine($"[DEBUG] Blockly: addBlock 호출됨 - {blockType}");
-                    chromiumWebBrowser1.ExecuteScriptAsync($"addBlock('{blockType}')");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"[ERROR] Blockly: 블록 추가 중 오류 - {ex.Message}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("[INFO] 더블클릭 처리 중이어서 블록 생성 스킵");
-            }
-        }
-
         // 코드를 richText와 메인 코드 탭에 출력 (전체 코드 뷰)
         public void ShowGeneratedCode(string code)
         {
@@ -457,14 +431,6 @@ namespace SAI.SAI.App.Views.Pages
             return null;
         }
 
-        private void btnDialog_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new DialogConfirmExit())
-            {
-                dialog.ShowDialog();
-            }
-        }
-
         private void chromiumWebBrowser1_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
             if (!e.IsLoading)
@@ -491,7 +457,6 @@ namespace SAI.SAI.App.Views.Pages
             // 로그 메시지는 많아지므로 주석 처리
             // Console.WriteLine("[DEBUG] Blockly: richTextBox1_TextChanged_1 이벤트 발생");
         }
-    }
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
 
