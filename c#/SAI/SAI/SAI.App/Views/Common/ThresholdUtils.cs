@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Common
 {
-    internal class ThresholdUtil
+    internal class ThresholdUtils
     {
         public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged)
         {
@@ -61,7 +61,7 @@ namespace SAI.SAI.App.Views.Common
                 currentThreshold = value;
                 textBox.Text = value.ToString("0.00");
 
-                trackBar.ValueChanged -= null; // 이벤트 중복 방지용 (주의: 여기는 의미 없음. 필요시 추적 제거 구현해야 함)
+                trackBar.ValueChanged -= null;
                 trackBar.Value = (int)(value * 100);
                 onThresholdChanged?.Invoke(currentThreshold);
             }

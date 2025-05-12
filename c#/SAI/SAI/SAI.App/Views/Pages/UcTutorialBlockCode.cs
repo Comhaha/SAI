@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
-using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Views.Common;
-using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcTutorialBlockCode : UserControl
     {
         public event EventHandler HomeButtonClicked;
+
+        private TodoManager todoManager;
+        // todo 위에서부터 index 0~2번 입니다.
+        // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
+        // 자동으로 pboxTodo1 이 Visible = false되고, pboxTodo1Done.Visible = true 됩니다.
 
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
@@ -34,11 +36,19 @@ namespace SAI.SAI.App.Views.Pages
         }
         private void UcTutorialBlockCode_Load(object sender, EventArgs e)
         {
+            todoManager = new TodoManager(
+                    (pboxTodo0, pboxTodo0Done),
+                    (pboxTodo1, pboxTodo1Done),
+                    (pboxTodo2, pboxTodo2Done)
+                );
+
+            // 초기 상태 모두 진행 중으로 설정
+            todoManager.SetAllStatus(new bool[] { true, true, true });
         }
 
         private void SetupThresholdControls()
         {
-            ThresholdUtil.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
             {
                 currentThreshold = newValue;
             });
@@ -55,6 +65,12 @@ namespace SAI.SAI.App.Views.Pages
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
             isInferPanelVisible = false;
+        }
+
+        // 다른 클래스에서도 사용 가능
+        public void MarkTodoAsDone(int index)
+        {
+            todoManager.SetTodoStatus(index, false); // false면 완료 상태
         }
 
         private void leftPanel_Paint(object sender, PaintEventArgs e)
@@ -217,5 +233,11 @@ namespace SAI.SAI.App.Views.Pages
         {
             HidepSideInfer();
         }
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

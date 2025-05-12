@@ -59,7 +59,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void SetupThresholdControls()
         {
-            ThresholdUtil.Setup(tbarThreshold, tboxThreshold, (newValue) =>
+            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
             {
                 currentThreshold = newValue;
             });

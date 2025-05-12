@@ -165,7 +165,8 @@
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
-    <Compile Include="SAI.App\Views\Common\ThresholdUtil.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\TodoManager.cs" />
     <Compile Include="SAI.App\Views\Pages\AnnotationEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,6 +295,12 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\lbl_todo3_finish.png" />
+    <None Include="SAI.App\Resources\Images\lbl_todo2_finish.png" />
+    <None Include="SAI.App\Resources\Images\lbl_todo1_finish.png" />
+    <None Include="SAI.App\Resources\Images\lbl_todo3.png" />
+    <None Include="SAI.App\Resources\Images\lbl_todo2.png" />
+    <None Include="SAI.App\Resources\Images\lbl_todo1.png" />
     <None Include="SAI.App\Resources\Images\btn_question_memo.png" />
     <None Include="SAI.App\Resources\Images\tbox_threshold.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_white_649.282.png" />
