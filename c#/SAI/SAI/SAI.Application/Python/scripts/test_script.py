@@ -13,7 +13,7 @@ import io
 from datetime import datetime
 import cv2
 
-PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
+PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python\scripts"
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
