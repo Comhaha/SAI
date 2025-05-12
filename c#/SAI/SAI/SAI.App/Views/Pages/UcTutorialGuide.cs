@@ -1,23 +1,218 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Interfaces;
 
-namespace SAI.Views.Pages
+namespace SAI.SAI.App.Views.Pages
+
 {
     public partial class UcTutorialGuide : UserControl
     {
+        private int currentPage = 0;
+        private int totalPages = 11; // 전체 튜토리얼 3장 + 라벨링 튜토리얼 8장
+        
+        // 각 페이지별 버튼 위치 저장용 리스트
+        private List<Point> prevButtonPositions = new List<Point>();
+        private List<Point> nextButtonPositions = new List<Point>();
+        
         public UcTutorialGuide()
         {
             InitializeComponent();
+            SetupButtonPositions();
+            SetupButtonEvents();
+            InitializeProgressIndicators();
         }
 
         private void UcTutorialGuide_Load(object sender, EventArgs e)
         {
+            // 초기 페이지 설정
+            UpdatePage(0);
+        }
+        
+        private void SetupButtonEvents()
+        {
+            // 버튼 이벤트 핸들러 연결
+            preBtn.Click += PreBtn_Click;
+            nextBtn.Click += NextBtn_Click;
+            goLabelingBtn.Click += goLabelingBtn_Click;
+            goToLabeling.Click += goToLabeling_Click;
+            exit.Click += exit_Click;
+        }
+        private void InitializeProgressIndicators()
+        {
+
+            this.goLabelingBtn.CheckedState.FillColor = Color.Transparent;
+            this.goLabelingBtn.PressedColor = Color.Transparent;
+            this.goLabelingBtn.HoverState.FillColor = Color.Transparent;
+            goLabelingBtn.Visible = false;
 
         }
 
-        private void wholeTutorialNextBtn_Click(object sender, EventArgs e)
+        private void SetupButtonPositions()
         {
+            // 전체 튜토리얼 가이드 1
+            prevButtonPositions.Add(new Point(221, 339)); // 첫 페이지 이전 버튼 위치
+            nextButtonPositions.Add(new Point(1020, 339)); // 첫 페이지 다음 버튼 위치
+            
+            // 전체 튜토리얼 가이드 2
+            prevButtonPositions.Add(new Point(221, 339));
+            nextButtonPositions.Add(new Point(1020, 339));
+            
+            // 전체 튜토리얼 가이드 3
+            prevButtonPositions.Add(new Point(221, 339));
+            nextButtonPositions.Add(new Point(1020, 339));
 
+            // 라벨링 가이드 1
+            prevButtonPositions.Add(new Point(180, 387));
+            nextButtonPositions.Add(new Point(830, 410));
+            
+            // 라벨링 가이드 2
+            prevButtonPositions.Add(new Point(774, 224));
+            nextButtonPositions.Add(new Point(820, 224));
+            
+            // 라벨링 가이드 3
+            prevButtonPositions.Add(new Point(933, 262));
+            nextButtonPositions.Add(new Point(979, 262));
+            
+            // 라벨링 가이드 4
+            prevButtonPositions.Add(new Point(758, 240));
+            nextButtonPositions.Add(new Point(804, 240));
+            
+            // 라벨링 가이드 5
+            prevButtonPositions.Add(new Point(864, 403));
+            nextButtonPositions.Add(new Point(910, 404));
+            
+            // 라벨링 가이드 6
+            prevButtonPositions.Add(new Point(800, 620));
+            nextButtonPositions.Add(new Point(846, 620));
+            
+            // 라벨링 가이드 7
+            prevButtonPositions.Add(new Point(970, 490));
+            nextButtonPositions.Add(new Point(1016, 490));
+            
+            // 라벨링 가이드 8
+            prevButtonPositions.Add(new Point(1057, 226));
+            nextButtonPositions.Add(new Point(1093, 216));
+        }
+
+        private void UpdatePage(int pageIndex)
+        {
+            if (pageIndex < 0 || pageIndex >= totalPages)
+                return;
+        
+            currentPage = pageIndex;
+            
+            // 1. 배경 이미지 설정
+            if (pageIndex < 3) // 전체 튜토리얼 (1~3)
+                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"전체튜토리얼가이드{pageIndex + 1}");
+            else // 라벨링 가이드 (1~8)
+                this.BackgroundImage = (Image)Properties.Resources.ResourceManager.GetObject($"라벨링가이드{pageIndex - 2}");
+            
+            // 2. 기본 버튼 상태 초기화
+            preBtn.Visible = false;
+            nextBtn.Visible = false;
+            goLabelingBtn.Visible = false;
+            
+            // 3. 페이지 구분에 따른 버튼 처리
+            bool isWholeTutorial = (currentPage < 3);
+            
+            // goToLabeling 버튼은 전체 튜토리얼에서만 표시하고 위치 고정
+            goToLabeling.Location = new Point(1033, 130);
+            goToLabeling.Visible = isWholeTutorial;
+            
+            // exit 버튼은 라벨링 가이드에서만 표시하고 위치 고정
+            exit.Location = new Point(1200, 20);
+            exit.Visible = !isWholeTutorial;
+            
+            // 4. 페이지별 버튼 설정
+            switch (currentPage)
+            {
+                case 0: // 첫 페이지
+                    nextBtn.Location = nextButtonPositions[0];
+                    nextBtn.Visible = true;
+                    break;
+                
+                case 2: // 전체 튜토리얼 마지막
+                    preBtn.Location = prevButtonPositions[2];
+                    preBtn.Visible = true;
+                    goLabelingBtn.Location = new Point(847, 530);
+                    goLabelingBtn.Visible = true;
+                    break;
+                
+                case 3: // 라벨링 첫 페이지
+                    nextBtn.Location = nextButtonPositions[3];
+                    nextBtn.Visible = true;
+                    nextBtn.Size = new Size(33, 33);
+                    preBtn.Size = new Size(33, 33);
+                    break;
+                
+                case 10: // 마지막 페이지
+                    preBtn.Location = prevButtonPositions[10];
+                    preBtn.Visible = true;
+                    break;
+                
+                default: // 중간 페이지들
+                    preBtn.Location = prevButtonPositions[currentPage];
+                    nextBtn.Location = nextButtonPositions[currentPage];
+                    preBtn.Visible = true;
+                    nextBtn.Visible = true;
+                    break;
+            }
+        }
+
+        private void PreBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 0)
+            {
+                UpdatePage(currentPage - 1);
+            }
+        }
+
+        private void NextBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages - 1)
+            {
+                UpdatePage(currentPage + 1);
+            }
+        }
+
+        private void goLabelingBtn_Click(object sender, EventArgs e)
+        {
+            UpdatePage(3); // 라벨링 튜토리얼 첫 페이지(4번째)로 이동
+        }
+
+        private void goToLabeling_Click(object sender, EventArgs e)
+        {
+            UpdatePage(3); // 라벨링 가이드 첫 페이지로 이동
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 상위 폼을 찾는 더 안전한 방법
+                var mainView = this.FindForm() as IMainView;
+                var mainForm = this.FindForm();
+                if (mainForm != null)
+                {
+                    mainForm.Controls.Clear();
+                    mainForm.Controls.Add(new UcLabelGuide(mainView));
+                }
+                else
+                {
+                    MessageBox.Show("폼을 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LabelingTutorialPanel0_Paint(object sender, PaintEventArgs e)
@@ -36,6 +231,11 @@ namespace SAI.Views.Pages
         }
 
         private void giudeOpacityPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2CircleButton1_Click(object sender, EventArgs e)
         {
 
         }

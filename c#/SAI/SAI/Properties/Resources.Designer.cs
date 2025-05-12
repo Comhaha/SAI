@@ -683,6 +683,36 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_goLabeling {
+            get {
+                object obj = ResourceManager.GetObject("btn_goLabeling", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_goLabelingClick {
+            get {
+                object obj = ResourceManager.GetObject("btn_goLabelingClick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_goLabelingHover {
+            get {
+                object obj = ResourceManager.GetObject("btn_goLabelingHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_goNotion {
             get {
                 object obj = ResourceManager.GetObject("btn_goNotion", resourceCulture);
@@ -1263,7 +1293,7 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap  btnVisualizeResult {
+        internal static System.Drawing.Bitmap btnVisualizeResult {
             get {
                 object obj = ResourceManager.GetObject("btnVisualizeResult", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1813,26 +1843,6 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링_가이드_Editor {
-            get {
-                object obj = ResourceManager.GetObject("라벨링_가이드_Editor", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap 라벨링_가이드_todolist {
-            get {
-                object obj = ResourceManager.GetObject("라벨링_가이드_todolist", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
         internal static System.Drawing.Bitmap 라벨링_가이드_순서 {
             get {
                 object obj = ResourceManager.GetObject("라벨링 가이드 순서", resourceCulture);
@@ -1843,9 +1853,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링_가이드_정확도_프레임 {
+        internal static System.Drawing.Bitmap 라벨링가이드1 {
             get {
-                object obj = ResourceManager.GetObject("라벨링_가이드_정확도_프레임", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1853,9 +1863,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링_가이드_클래스_목록 {
+        internal static System.Drawing.Bitmap 라벨링가이드2 {
             get {
-                object obj = ResourceManager.GetObject("라벨링_가이드_클래스_목록", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1863,9 +1873,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링_가이드0 {
+        internal static System.Drawing.Bitmap 라벨링가이드3 {
             get {
-                object obj = ResourceManager.GetObject("라벨링_가이드0", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1873,9 +1883,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_1 {
+        internal static System.Drawing.Bitmap 라벨링가이드4 {
             get {
-                object obj = ResourceManager.GetObject("라벨링가이드_1", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1883,9 +1893,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_2 {
+        internal static System.Drawing.Bitmap 라벨링가이드5 {
             get {
-                object obj = ResourceManager.GetObject("라벨링가이드_2", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1893,9 +1903,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_3 {
+        internal static System.Drawing.Bitmap 라벨링가이드6 {
             get {
-                object obj = ResourceManager.GetObject("라벨링가이드_3", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1903,9 +1913,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_4 {
+        internal static System.Drawing.Bitmap 라벨링가이드7 {
             get {
-                object obj = ResourceManager.GetObject("라벨링가이드_4", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드7", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1913,29 +1923,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_5 {
+        internal static System.Drawing.Bitmap 라벨링가이드8 {
             get {
-                object obj = ResourceManager.GetObject("라벨링가이드_5", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_6 {
-            get {
-                object obj = ResourceManager.GetObject("라벨링가이드_6", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap 라벨링가이드_7 {
-            get {
-                object obj = ResourceManager.GetObject("라벨링가이드_7", resourceCulture);
+                object obj = ResourceManager.GetObject("라벨링가이드8", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1953,9 +1943,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 전체가이드1 {
+        internal static System.Drawing.Bitmap 전체튜토리얼가이드1 {
             get {
-                object obj = ResourceManager.GetObject("전체가이드1", resourceCulture);
+                object obj = ResourceManager.GetObject("전체튜토리얼가이드1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1963,9 +1953,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 전체가이드2 {
+        internal static System.Drawing.Bitmap 전체튜토리얼가이드2 {
             get {
-                object obj = ResourceManager.GetObject("전체가이드2", resourceCulture);
+                object obj = ResourceManager.GetObject("전체튜토리얼가이드2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1973,9 +1963,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap 전체가이드3 {
+        internal static System.Drawing.Bitmap 전체튜토리얼가이드3 {
             get {
-                object obj = ResourceManager.GetObject("전체가이드3", resourceCulture);
+                object obj = ResourceManager.GetObject("전체튜토리얼가이드3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
