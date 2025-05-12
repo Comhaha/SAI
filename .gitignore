@@ -47,6 +47,7 @@ SAI.Application/Python/**
 
 # 학습 결과 무시
 SAI.Application/Python/runs/
+SAI.Application/Python/runs/**
 
 # 모델, 결과, 캐시 무시
 *.pt
