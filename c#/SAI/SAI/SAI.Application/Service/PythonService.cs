@@ -25,27 +25,32 @@ namespace SAI.SAI.Application.Service
             try
             {
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                Console.WriteLine($"Base Directory: {baseDir}");
                 onOutput?.Invoke($"Base Directory: {baseDir}");
 
                 string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
+                Console.WriteLine($"Python Executable Path: {pythonExe}");
                 onOutput?.Invoke($"Python Executable Path: {pythonExe}");
 
                 string scriptPath = mode == Mode.Tutorial
                     ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\test_script.py"))
                     : Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\yolo_practice.py"));
+                Console.WriteLine($"Script Path: {scriptPath}");
                 onOutput?.Invoke($"Script Path: {scriptPath}");
-
-
 
                 if (!File.Exists(scriptPath))
                 {
-                    onError?.Invoke($"스크립트 파일을 찾을 수 없습니다: {scriptPath}");
+                    string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {scriptPath}";
+                    Console.WriteLine(errorMsg);
+                    onError?.Invoke(errorMsg);
                     return;
                 }
 
                 if (!File.Exists(pythonExe))
                 {
-                    onError?.Invoke($"파이썬 실행 파일을 찾을 수 없습니다: {pythonExe}");
+                    string errorMsg = $"파이썬 실행 파일을 찾을 수 없습니다: {pythonExe}";
+                    Console.WriteLine(errorMsg);
+                    onError?.Invoke(errorMsg);
                     return;
                 }
 
@@ -57,7 +62,7 @@ namespace SAI.SAI.Application.Service
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    CreateNoWindow = true
+                    CreateNoWindow = false
                 };
 
                 var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
