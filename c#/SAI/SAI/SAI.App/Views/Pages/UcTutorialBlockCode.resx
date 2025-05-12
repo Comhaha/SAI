@@ -119,17 +119,17 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblTitle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 22.125pt, style=Bold</value>
+    <value>Noto Sans KR Medium, 15pt, style=Bold</value>
   </data>
   <data name="lblTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 5</value>
+    <value>190, 18</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>374, 87</value>
+    <value>257, 60</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
@@ -252,7 +252,7 @@
   <data name="&gt;&gt;ibtnCopy.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="panel1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pTopCode.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAUcAAAAvCAYAAABwmQjoAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAACk9JREFUeF7tXU1zFccVvWCN3rMeigFJSDJSohgldpQPghWSOE45gg2woVyV0iZQ
@@ -302,34 +302,34 @@
         zZwH8BOxtDUw6uF/AHivVkafJOXeAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="panel1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="pTopCode.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="pTopCode.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="pTopCode.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="pTopCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 3, 3</value>
   </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="pTopCode.Size" type="System.Drawing.Size, System.Drawing">
     <value>319, 39</value>
   </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+  <data name="pTopCode.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
+  <data name="&gt;&gt;pTopCode.Name" xml:space="preserve">
+    <value>pTopCode</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+  <data name="&gt;&gt;pTopCode.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;pTopCode.Parent" xml:space="preserve">
     <value>pCode</value>
   </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;pTopCode.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="tboxZoomCode.Font" type="System.Drawing.Font, System.Drawing">
@@ -449,31 +449,28 @@
   <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="webBrowserBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="webViewblock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="webBrowserBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="webViewblock.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 39</value>
   </data>
-  <data name="webBrowserBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="webViewblock.Size" type="System.Drawing.Size, System.Drawing">
     <value>319, 479</value>
   </data>
-  <data name="webBrowserBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="webViewblock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="webBrowserBlock.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;webViewblock.Name" xml:space="preserve">
+    <value>webViewblock</value>
   </data>
-  <data name="&gt;&gt;webBrowserBlock.Name" xml:space="preserve">
-    <value>webBrowserBlock</value>
+  <data name="&gt;&gt;webViewblock.Type" xml:space="preserve">
+    <value>Microsoft.Web.WebView2.WinForms.WebView2, Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e</value>
   </data>
-  <data name="&gt;&gt;webBrowserBlock.Type" xml:space="preserve">
-    <value>CefSharp.WinForms.ChromiumWebBrowser, CefSharp.WinForms, Version=135.0.220.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138</value>
-  </data>
-  <data name="&gt;&gt;webBrowserBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;webViewblock.Parent" xml:space="preserve">
     <value>pBlock</value>
   </data>
-  <data name="&gt;&gt;webBrowserBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -529,88 +526,88 @@
   <data name="pTopBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnRunModel.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 9</value>
   </data>
-  <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnRunModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>10, 12</value>
   </data>
-  <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnRunModel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
-    <value>btnRunModel</value>
+  <data name="&gt;&gt;ibtnRunModel.Name" xml:space="preserve">
+    <value>ibtnRunModel</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnRunModel.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnRunModel.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnRunModel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 13</value>
   </data>
-  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 10</value>
   </data>
-  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnPreBlock.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
+  <data name="&gt;&gt;ibtnPreBlock.Name" xml:space="preserve">
+    <value>ibtnPreBlock</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="btnTrashBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnTrashBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 9</value>
   </data>
-  <data name="btnTrashBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnTrashBlock.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 14</value>
   </data>
-  <data name="btnTrashBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnTrashBlock.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;btnTrashBlock.Name" xml:space="preserve">
-    <value>btnTrashBlock</value>
+  <data name="&gt;&gt;ibtnTrashBlock.Name" xml:space="preserve">
+    <value>ibtnTrashBlock</value>
   </data>
-  <data name="&gt;&gt;btnTrashBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnTrashBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnTrashBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnTrashBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnTrashBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnTrashBlock.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="btnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>48, 13</value>
   </data>
-  <data name="btnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 10</value>
   </data>
-  <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnNextBlock.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
-    <value>btnNextBlock</value>
+  <data name="&gt;&gt;ibtnNextBlock.Name" xml:space="preserve">
+    <value>ibtnNextBlock</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">

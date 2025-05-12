@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>다운로드 테스트</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+    label { display:block; margin: 12px 0 4px; }
+    input { width: 100%; padding: 8px; }
+    button { margin-top: 16px; padding: 10px 16px; }
+    #log { margin-top: 24px; white-space: pre-wrap; font-size: 0.9rem; color:#555; }
+  </style>
+</head>
+<body>
+<h2>📥 S3 파일 다운로드 테스트</h2>
+
+<label>Bucket</label>
+<input id="bucket" placeholder="ex) my-bucket" />
+
+<label>Object Key</label>
+<input id="key" placeholder="ex) path/to/report.pdf" />
+
+<button id="btn">Download</button>
+
+<div id="log"></div>
+
+<script type="module">
+  const btn    = document.getElementById('btn');
+  const logBox = document.getElementById('log');
+
+  function log(msg){ logBox.textContent = msg; }
+
+  btn.addEventListener('click', async () => {
+    const bucket = document.getElementById('bucket').value.trim();
+    const key    = document.getElementById('key').value.trim();
+    if(!bucket || !key){ return alert('Bucket 과 Object Key 를 입력하세요.'); }
+
+    const apiUrl = `/api/download`;
+    log(`⏳ 요청:  ${apiUrl}`);
+
+    try{
+      const res  = await fetch(apiUrl);
+      const json = await res.json();
+      const url  = json.result;
+
+      log(`✅ presigned URL 수신 완료 → 브라우저 이동`);
+      window.location.href = url;          // 실제 다운로드 실행
+    }catch(e){
+      console.error(e);
+      log(`❌ 오류: ${e.message}`);
+      alert('다운로드 실패');
+    }
+  });
+</script>
+</body>
+</html>
