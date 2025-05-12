@@ -17,20 +17,8 @@
 
         private void InitializeComponent()
         {
-			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
 			this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.guna2Panel1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// guna2Panel1
-			// 
-			this.guna2Panel1.Controls.Add(this.guna2HtmlLabel1);
-			this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
-			this.guna2Panel1.Margin = new System.Windows.Forms.Padding(2);
-			this.guna2Panel1.Name = "guna2Panel1";
-			this.guna2Panel1.Size = new System.Drawing.Size(1272, 683);
-			this.guna2Panel1.TabIndex = 4;
 			// 
 			// guna2HtmlLabel1
 			// 
@@ -53,8 +41,6 @@
 			this.Name = "MainForm";
 			this.Text = "메인페이지";
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.guna2Panel1.ResumeLayout(false);
-			this.guna2Panel1.PerformLayout();
 			this.ResumeLayout(false);
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.YoloRun = new Guna.UI2.WinForms.Guna2Button();
@@ -62,16 +48,16 @@
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // guna2Panel1
+            // guna2Panel2
             // 
             this.guna2Panel1.Controls.Add(this.logOutput);
             this.guna2Panel1.Controls.Add(this.YoloRun);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.guna2Panel1.Name = "guna2Panel1";
+            this.guna2Panel1.Name = "guna2Panel2";
             this.guna2Panel1.Size = new System.Drawing.Size(2496, 1440);
-            this.guna2Panel1.TabIndex = 4;
+            this.guna2Panel1.TabIndex = 5;
             // 
             // YoloRun
             // 
@@ -130,8 +116,8 @@
 
         }
 
-        #endregion
-		private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+		#endregion
+		private Guna.UI2.WinForms.Guna2Panel guna2Panel1;   
 		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
         private Guna.UI2.WinForms.Guna2Button YoloRun;
         private Guna.UI2.WinForms.Guna2TextBox logOutput;
