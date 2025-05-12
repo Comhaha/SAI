@@ -5,7 +5,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "시작", // 블록에 표시되는 문구
         "nextStatement": null,
         "colour": 0,
-        "tooltip": "관련 패키지(ultralytics)를 설치합니다.",
+        "tooltip": "시작 블록과 연결되어있는 블록이 실행됩니다.",
         "helpUrl": ""
     }
 ]);
@@ -38,7 +38,7 @@ Blockly.Python.forBlock['pipInstall'] = function (block) {
     );
 };
 
-// 2. 모델 불러오기
+// 2-1. 일반적인 모델 불러오기
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "loadModel", // 블록 타입
@@ -64,6 +64,71 @@ Blockly.defineBlocksWithJsonArray([
 ]);
 
 Blockly.Python.forBlock['loadModel'] = function (block) {
+    const modelFile = block.getFieldValue('MODEL_VERSION');
+    return (
+        `# 모델 불러오기\n` +
+        `from ultralytics import YOLO\n\n` +
+        `model = YOLO("${modelFile}")   # YOLOv8 모델 불러오기\n` +
+        `print("✅ YOLOv8 설치 및 (${modelFile}) 모델 로드 완료!")')\n\n\n`
+    );
+};
+
+// 2-2. 레이어 수정하는 모델 불러오기
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "loadModelWithLayer", // 블록 타입
+        "message0": "Yolov8 %1 모델 불러오기", // 블록에 표시되는 문구
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "MODEL_VERSION",
+                "options": [
+                    ["Nano", "yolov8n.pt"],
+                    ["Small", "yolov8s.pt"],
+                    ["Medium", "yolov8m.pt"],
+                    ["Large", "yolov8l.pt"]
+                ]
+            },
+            {
+                "type": "field_dropdown",
+                "name": "Conv",
+                "options": [
+                    ["Nano", "yolov8n.pt"],
+                    ["Small", "yolov8s.pt"],
+                    ["Medium", "yolov8m.pt"],
+                    ["Large", "yolov8l.pt"]
+                ]
+            },
+            {
+                "type": "field_dropdown",
+                "name": "C2f",
+                "options": [
+                    ["Nano", "yolov8n.pt"],
+                    ["Small", "yolov8s.pt"],
+                    ["Medium", "yolov8m.pt"],
+                    ["Large", "yolov8l.pt"]
+                ]
+            },
+            {
+                "type": "field_dropdown",
+                "name": "MODEL_VERSION",
+                "options": [
+                    ["Nano", "yolov8n.pt"],
+                    ["Small", "yolov8s.pt"],
+                    ["Medium", "yolov8m.pt"],
+                    ["Large", "yolov8l.pt"]
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 100,
+        "tooltip": "YOLOv8 모델을 불러옵니다.\nYOLOv8의 나노버전부터 Large버전까지 제공됩니다.",
+        "helpUrl": ""
+    }
+]);
+
+Blockly.Python.forBlock['loadModelWithLayer'] = function (block) {
     const modelFile = block.getFieldValue('MODEL_VERSION');
     return (
         `# 모델 불러오기\n` +

@@ -5,7 +5,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "시작", // 블록에 표시되는 문구
         "nextStatement": null,
         "colour": 0,
-        "tooltip": "관련 패키지(ultralytics)를 설치합니다.",
+        "tooltip": "시작 블록과 연결되어있는 블록이 실행됩니다.",
         "helpUrl": ""
     }
 ]);
