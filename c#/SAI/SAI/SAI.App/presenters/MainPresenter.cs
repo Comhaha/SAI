@@ -21,9 +21,10 @@ namespace SAI.SAI.App.Presenters
 		// 앱 실행 시 초기 페이지 로드
 		public void Initialize()
 		{
-			var blockly = new Blockly(); // View 생성
-			mainView.LoadPage(blockly); // 메인 폼에 삽입
-		}
+			//var blockly = new Blockly(); // View 생성
+			//mainView.LoadPage(blockly); // 메인 폼에 삽입
+			mainView.LoadPage(new UcLabelGuide()); // 메인 폼에 삽입
+        }
 
 		public void DialogDeleteModelEvent(bool check)
 		{
