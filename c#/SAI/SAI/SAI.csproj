@@ -67,6 +67,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
+    <Compile Include="SAI.Application\Service\PythonService.cs" />
     <Compile Include="SAI.App\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,8 +93,10 @@
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IYoloTutorialView.cs" />
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,6 +127,12 @@
     <Compile Include="SAI.App\Views\Pages\UcPraticeBlockCode.Designer.cs">
       <DependentUpon>UcPraticeBlockCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\YoloTutorial.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\YoloTutorial.Designer.cs">
+      <DependentUpon>YoloTutorial.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -152,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialGuide.resx">
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
+      <DependentUpon>YoloTutorial.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

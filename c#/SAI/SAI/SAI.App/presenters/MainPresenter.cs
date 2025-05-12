@@ -1,4 +1,6 @@
 ﻿using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
+using SAI.SAI.App.Presenters;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -16,6 +18,9 @@ namespace SAI.SAI.App.Presenters
         {
             //var blockly = new Blockly(); // View 생성
             //mainView.LoadPage(blockly); // 메인 폼에 삽입
+            var yolorun = new YoloTutorial();
+            var yoloPresenter = new YoloTutorialPresenter(yolorun);
+            mainView.LoadPage(yolorun);
         }
     }
 }
