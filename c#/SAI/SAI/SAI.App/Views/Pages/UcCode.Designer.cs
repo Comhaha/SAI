@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-<<<<<<< Updated upstream
             this.SuspendLayout();
             // 
-=======
             this.scintilla1 = new ScintillaNET.Scintilla();
             this.SuspendLayout();
             // 
@@ -43,32 +41,22 @@
             this.scintilla1.Size = new System.Drawing.Size(320, 518);
             this.scintilla1.TabIndex = 0;
             this.scintilla1.Text = "scintilla1";
-            this.scintilla1.Click += new System.EventHandler(this.scintilla1_Click);
             // 
->>>>>>> Stashed changes
             // UcCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< Updated upstream
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "UcCode";
             this.Size = new System.Drawing.Size(320, 479);
             this.Load += new System.EventHandler(this.UcCode_Load);
-=======
             this.Controls.Add(this.scintilla1);
             this.Name = "UcCode";
             this.Size = new System.Drawing.Size(320, 518);
->>>>>>> Stashed changes
             this.ResumeLayout(false);
 
         }
 
         #endregion
-<<<<<<< Updated upstream
-=======
-
-        private ScintillaNET.Scintilla scintilla1;
->>>>>>> Stashed changes
     }
 }

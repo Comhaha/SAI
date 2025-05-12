@@ -20,7 +20,6 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
-<<<<<<< Updated upstream
     public partial class Blockly : UserControl, IBlocklyView
     {
         private BlocklyPresenter presenter;
@@ -30,19 +29,6 @@ namespace SAI.SAI.App.Views.Pages
         // 기본 탭의 코드 에디터 참조 유지
         private UcCode mainCodeEditor;
         private CodePresenter codeBoxPresenter;
-=======
-	public partial class Blockly : UserControl, IBlocklyView
-	{
-		private BlocklyPresenter presenter; //원본
-		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-		public Blockly()
-		{
-			InitializeComponent();
-			InitializeCodeBox();
-
-			// 프레젠터 생성
-			presenter = new BlocklyPresenter(this);//원본
->>>>>>> Stashed changes
 
         // 블록 클릭 추적을 위한 변수
         private string lastClickedBlockId = null;
@@ -51,33 +37,18 @@ namespace SAI.SAI.App.Views.Pages
         private int modelTabCount = 0; // 모델 탭 카운터 추가
         private bool isDoubleClickProcessing = false; // 더블클릭 처리 중 플래그 추가
 
-<<<<<<< Updated upstream
         public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-=======
-			// JSBridge를 Presenter와 연결하여 메시지 전달
-			var bridge = new JsBridge(message =>
-			{
-				presenter.HandleJsMessage(message);//원본 
-			});
->>>>>>> Stashed changes
 
         public Blockly()
         {
             InitializeComponent();
             Console.WriteLine("[DEBUG] Blockly: 생성자 시작");
 
-<<<<<<< Updated upstream
             // 코드박스 초기화 - presenter 초기화 전에 수행
             InitializeCodeContainer();
             Console.WriteLine("[DEBUG] Blockly: 코드 컨테이너 초기화 완료");
-=======
-			// 웹뷰랑 연결
-			string localPath = "C:\\Users\\SSAFY\\Desktop\\open_0507_pjt\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html";
-			chromiumWebBrowser1.Load(new Uri(localPath).AbsoluteUri);
->>>>>>> Stashed changes
-
+            
             // 프레젠터 생성 - codeBoxPresenter 전달
-            presenter = new BlocklyPresenter(this, codeBoxPresenter);
             Console.WriteLine("[DEBUG] Blockly: presenter 초기화 완료");
 
             // 백그라운드 색깔&이미지
@@ -125,7 +96,6 @@ namespace SAI.SAI.App.Views.Pages
             chromiumWebBrowser1.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
             chromiumWebBrowser1.JavascriptObjectRepository.Register("cefCustom", bridge, isAsync: false, options: BindingOptions.DefaultBinder);
 
-<<<<<<< Updated upstream
             // 웹뷰랑 연결
             string localPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html"; // 원본 유지
             try
@@ -446,49 +416,15 @@ namespace SAI.SAI.App.Views.Pages
         private void Blockly_Load(object sender, EventArgs e)
         {
             Console.WriteLine("[DEBUG] Blockly: Blockly_Load 이벤트 발생");
-=======
-		private void btnDialog_Click(object sender, EventArgs e)
-		{
-			using (var dialog = new DialogConfirmExit())
-			{
-				dialog.ShowDialog();
-			}
-		}
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
->>>>>>> Stashed changes
         }
 
         private void btnHello_Click(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
             Console.WriteLine("[DEBUG] Blockly: btnHello_Click 이벤트 발생");
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            // 로그 메시지는 많아지므로 주석 처리
-            // Console.WriteLine("[DEBUG] Blockly: richTextBox1_TextChanged 이벤트 발생");
-=======
-
-        }
-
-        private void chromiumWebBrowser1_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
-        {
-
-        }
-
-        private void Blockly_Load(object sender, EventArgs e)
-        {
-
->>>>>>> Stashed changes
         }
 
         private void btnPip_Click(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
             Console.WriteLine("[DEBUG] Blockly: btnPip_Click 이벤트 발생");
         }
 
@@ -499,9 +435,3 @@ namespace SAI.SAI.App.Views.Pages
         }
     }
 }
-=======
-
-        }
-    }
-}
->>>>>>> Stashed changes

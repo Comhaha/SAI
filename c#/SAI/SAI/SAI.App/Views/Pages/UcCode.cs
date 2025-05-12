@@ -1,5 +1,4 @@
 ﻿using System;
-<<<<<<< Updated upstream
 using System.Drawing;
 using System.Windows.Forms;
 using SAI.SAI.App.Views.Interfaces;
@@ -393,120 +392,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             // 하이라이트 기능 비활성화됨 - 아무 작업 안함
             Console.WriteLine($"[INFO] UcCode: 하이라이트 기능이 비활성화되어 있습니다.");
-=======
-using System.Windows.Forms;
-using ScintillaNET;
-using System.Drawing;
 
-namespace SAI.SAI.App.Views.Pages
-{
-    public partial class UcCode : UserControl
-    {
-        public UcCode()
-        {
-            InitializeComponent();
-            SetupPythonEditor();
-        }
-
-        private void SetupPythonEditor()
-        {
-            try
-            {
-                // 기존 scintilla1 컨트롤을 Python 에디터로 설정
-
-                // Python 언어 설정
-                scintilla1.Lexer = Lexer.Python;
-
-                // 기본 스타일 설정
-                scintilla1.StyleResetDefault();
-                scintilla1.Styles[Style.Default].Font = "Consolas";
-                scintilla1.Styles[Style.Default].Size = 10;
-
-                // 여백 설정 (라인 번호용)
-                scintilla1.Margins[0].Type = MarginType.Number;
-                scintilla1.Margins[0].Width = 30;
-
-                // Python 구문 하이라이팅 설정
-                scintilla1.Styles[Style.Python.Default].ForeColor = Color.Black;
-                scintilla1.Styles[Style.Python.Comment].ForeColor = Color.Green;
-                scintilla1.Styles[Style.Python.CommentLine].ForeColor = Color.Green;
-                scintilla1.Styles[Style.Python.CommentBlock].ForeColor = Color.Green;
-                scintilla1.Styles[Style.Python.Number].ForeColor = Color.BlueViolet;
-                scintilla1.Styles[Style.Python.String].ForeColor = Color.Brown;
-                scintilla1.Styles[Style.Python.Character].ForeColor = Color.Brown;
-                scintilla1.Styles[Style.Python.Word].ForeColor = Color.Blue;
-                scintilla1.Styles[Style.Python.Word2].ForeColor = Color.Purple;
-                scintilla1.Styles[Style.Python.Triple].ForeColor = Color.DarkGreen;
-                scintilla1.Styles[Style.Python.TripleDouble].ForeColor = Color.DarkGreen;
-                scintilla1.Styles[Style.Python.ClassName].ForeColor = Color.DarkBlue;
-                scintilla1.Styles[Style.Python.DefName].ForeColor = Color.DarkOrange;
-                scintilla1.Styles[Style.Python.Operator].ForeColor = Color.DarkGray;
-
-                // Python 키워드 설정
-                scintilla1.SetKeywords(0, "and as assert break class continue def del elif else except exec finally " +
-                                     "for from global if import in is lambda not or pass print raise return " +
-                                     "try while with yield");
-
-                // Python 내장 함수 및 객체 키워드
-                scintilla1.SetKeywords(1, "self None True False abs all any ascii bin bool bytearray bytes callable chr " +
-                                     "classmethod compile complex delattr dict dir divmod enumerate eval filter " +
-                                     "float format frozenset getattr globals hasattr hash help hex id input int " +
-                                     "isinstance issubclass iter len list locals map max memoryview min next object " +
-                                     "oct open ord pow property range repr reversed round set setattr slice " +
-                                     "sorted staticmethod str sum super tuple type vars zip __import__");
-
-                // 자동 들여쓰기 설정
-                scintilla1.IndentWidth = 4;
-                scintilla1.UseTabs = false; // Python에서는 공백 사용을 권장
-                scintilla1.TabWidth = 4;
-
-                // 코드 접기 설정
-                scintilla1.SetProperty("fold", "1");
-                scintilla1.SetProperty("fold.compact", "1");
-                scintilla1.SetProperty("fold.comment", "1");
-
-                // 현재 라인 하이라이트
-                scintilla1.CaretLineVisible = true;
-                scintilla1.CaretLineBackColor = Color.LightGray;
-
-                // 샘플 Python 코드 설정
-                scintilla1.Text = "# Python 예제 코드\n\ndef hello_world():\n    print(\"안녕하세요, 세계!\")\n\n" +
-                               "class ExampleClass:\n    def __init__(self, value=0):\n        self.value = value\n\n" +
-                               "    def get_value(self):\n        return self.value\n\n" +
-                               "    def set_value(self, value):\n        self.value = value\n\n" +
-                               "# 함수 호출\nhello_world()\n\n" +
-                               "# 클래스 인스턴스 생성\nexample = ExampleClass(42)\n" +
-                               "print(f\"값: {example.get_value()}\")";
-
-                // 메시지 출력 (디버깅용)
-                Console.WriteLine("Python 에디터 설정 완료");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Python 에디터 설정 중 오류 발생: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Console.WriteLine("오류: " + ex.ToString());
-            }
-        }
-
-        // Python 코드 설정 메서드
-        public void SetPythonCode(string code)
-        {
-            if (scintilla1 != null)
-            {
-                scintilla1.Text = code;
-            }
-        }
-
-        // Python 코드 가져오기 메서드
-        public string GetPythonCode()
-        {
-            return scintilla1?.Text ?? string.Empty;
-        }
-
-        private void scintilla1_Click(object sender, EventArgs e)
-        {
-            // 필요한 코드 추가
->>>>>>> Stashed changes
         }
     }
 }
