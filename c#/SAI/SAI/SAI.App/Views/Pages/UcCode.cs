@@ -392,7 +392,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             // 하이라이트 기능 비활성화됨 - 아무 작업 안함
             Console.WriteLine($"[INFO] UcCode: 하이라이트 기능이 비활성화되어 있습니다.");
-
         }
     }
 }

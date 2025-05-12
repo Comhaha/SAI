@@ -30,18 +30,6 @@
         {
             this.SuspendLayout();
             // 
-            this.scintilla1 = new ScintillaNET.Scintilla();
-            this.SuspendLayout();
-            // 
-            // scintilla1
-            // 
-            this.scintilla1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scintilla1.Location = new System.Drawing.Point(0, 0);
-            this.scintilla1.Name = "scintilla1";
-            this.scintilla1.Size = new System.Drawing.Size(320, 518);
-            this.scintilla1.TabIndex = 0;
-            this.scintilla1.Text = "scintilla1";
-            // 
             // UcCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -50,9 +38,6 @@
             this.Name = "UcCode";
             this.Size = new System.Drawing.Size(320, 479);
             this.Load += new System.EventHandler(this.UcCode_Load);
-            this.Controls.Add(this.scintilla1);
-            this.Name = "UcCode";
-            this.Size = new System.Drawing.Size(320, 518);
             this.ResumeLayout(false);
 
         }
