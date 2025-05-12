@@ -33,7 +33,7 @@ namespace SAI.SAI.App.Presenters
 			view.addBlock(e.BlockType);
 		}
 
-		// JS에서 receiveFromJs() 호출해서 코드 전달했을 때 presenter가 view와 service에게 전달해주기 위한 메소드
+		// presenter가 view와 service에게 전달해주기 위한 메소드
 		public void HandleJsMessage(string code)
 		{
 			// 메시지를 View로 전달해서 RichTextBox에 출력

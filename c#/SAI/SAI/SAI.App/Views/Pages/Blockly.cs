@@ -11,10 +11,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -22,6 +24,8 @@ namespace SAI.SAI.App.Views.Pages
 	{
 		private BlocklyPresenter presenter;
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+		private JsBridge jsBridge;
+
 		public Blockly()
 		{
 			InitializeComponent();
@@ -34,31 +38,95 @@ namespace SAI.SAI.App.Views.Pages
 			BackgroundImage = Properties.Resources.img_background;
 			Size = new Size(1280, 720);
 
-			// JSBridge를 Presenter와 연결하여 메시지 전달
-			var bridge = new JsBridge(message =>
+			InitializeWebView2();
+
+			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
+			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
+			btnStart.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
+			btnLoadModel.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
+			btnLoadDataset.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
+			btnMachineLearning.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
+			btnResultGraph.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
+			btnImgPath.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
+			btnModelInference.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
+			btnVisualizeResult.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
+		}
+
+		private async void InitializeWebView2()
+		{
+			jsBridge = new JsBridge(message =>
 			{
 				presenter.HandleJsMessage(message);
 			});
 
-			// JS 객체 등록
-			chromiumWebBrowser1.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
-			chromiumWebBrowser1.JavascriptObjectRepository.Register("cefCustom", bridge, isAsync: false, options: BindingOptions.DefaultBinder);
+			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TutorialBlockly.html"));
+			string uri = new Uri(localPath).AbsoluteUri;
 
-			// 웹뷰랑 연결
-			string localPath = "C:\\S12P31D201\\c#\\SAI\\SAI\\Blockly\\index.html";
-			chromiumWebBrowser1.Load(new Uri(localPath).AbsoluteUri);
+			webView21.WebMessageReceived += async (s, e) =>
+			{
+				try
+				{
+					// 먼저 시도: 객체 기반 JSON 메시지 처리
+					var doc = JsonDocument.Parse(e.WebMessageAsJson);
+					var root = doc.RootElement;
 
-			// btnPip 클릭시 presenter에게 이벤트 발생했다고 호출
-			// 버튼클릭이벤트(Blockly에서 이벤트 발생, 전달값 BlockType(string))
-			btnPip.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
-			btnHello.Click += (s, e) => AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("hello"));
+					if (root.ValueKind == JsonValueKind.Object &&
+						root.TryGetProperty("type", out var typeElem))
+					{
+						string type = typeElem.GetString();
+
+						switch (type)
+						{
+							case "openFile":
+								using (OpenFileDialog dialog = new OpenFileDialog())
+								{
+									dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+									dialog.Multiselect = false;
+									string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
+									if (dialog.ShowDialog() == DialogResult.OK)
+									{
+										string filePath = dialog.FileName.Replace("\\", "/");
+										string escapedFilePath = JsonSerializer.Serialize(filePath);
+										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+
+										string json = $@"{{
+											""blockId"": {escapedBlockId},
+											""filePath"": {escapedFilePath}
+										}}";
+
+										await webView21.ExecuteScriptAsync(
+											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
+										);
+									}
+								}
+								break;
+
+							case "blockCode":
+								string code = root.GetProperty("code").GetString();
+								jsBridge.receiveFromJs(code);
+								break;
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
+				}
+			};
+
+
+			webView21.ZoomFactor = 0.9; // 줌 비율 설정
+
+			await webView21.EnsureCoreWebView2Async();
+			webView21.Source = new Uri(uri);
 		}
-
 
 		// Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위) : 블록 생성
 		public void addBlock(string blockType)
 		{
-			chromiumWebBrowser1.ExecuteScriptAsync($"addBlock('{blockType}')");
+			webView21.ExecuteScriptAsync($"addBlock('{blockType}')");
 		}
 
 		// 코드를 richText에 출력
@@ -75,10 +143,31 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void btnDialog_Click(object sender, EventArgs e)
 		{
-			using (var dialog = new DialogConfirmExit())
+
+			using (var dialog = new DialogQuitTrain())
+			//using (var dialog = new DialogHomeFromTrain())
+			//using (var dialog = new DialogComfirmTrain())
+			//using (var dialog = new DialogHomeFromLabeling())
+			//using (var dialog = new DialogCompleteTutorial())
+			//using (var dialog = new DialogCompleteLabeling())
+			//using (var dialog = new DialogConfirmExit())
 			{
 				dialog.ShowDialog();
 			}
+
+			//var model = MainModel.Instance;
+			//using (var dialog = new DialogDeleteModel())
+			//{
+			//	if (!model.DontShowDeleteModelDialog)
+			//	{
+			//		dialog.ShowDialog();
+			//	}
+			//}
+		}
+
+		private void webView21_ZoomFactorChanged(object sender, EventArgs e)
+		{
+			webView21.ZoomFactor = 0.9; // 줌 비율 설정
 		}
 	}
 }
