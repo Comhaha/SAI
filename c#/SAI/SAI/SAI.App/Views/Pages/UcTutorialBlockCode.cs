@@ -45,7 +45,7 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
-			ibtnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
+			btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -655,7 +655,6 @@ namespace SAI.SAI.App.Views.Pages
 				ibtnPreBlock.Visible = false;
 			}
 		}
-	}
         private void pSideInfer_Paint(object sender, PaintEventArgs e)
         {
 
