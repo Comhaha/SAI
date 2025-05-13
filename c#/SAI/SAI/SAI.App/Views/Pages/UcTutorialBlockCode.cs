@@ -643,6 +643,14 @@ namespace SAI.SAI.App.Views.Pages
 			webViewblock.ZoomFactor = 0.7;
 		}
 
+        private void guna2Panel1_Paint_1(object sender, PaintEventArgs e)
+        {
 
-	}
+        }
+
+        private void pSideInfer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+    }
 }
