@@ -28,8 +28,8 @@ namespace SAI
 			presenter = new MainPresenter(this);
 
 			// 사이즈 고정
-			Size = new Size(1280, 720);
-			MinimumSize = new Size(1280, 720);
+			Size = new Size(1280, 750);
+			MinimumSize = new Size(1280, 750);
 			AutoScaleMode = AutoScaleMode.None;
 			guna2DragControl1.TargetControl = titlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
@@ -41,7 +41,7 @@ namespace SAI
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
 			int maxWidth = 1280;
-			int maxHeight = 720;
+			int maxHeight = 750;
 
 			// 현재 폼의 너비와 높이
 			int formWidth = this.ClientSize.Width;
@@ -52,7 +52,7 @@ namespace SAI
 			float scaleY = (float)formHeight / maxHeight;
 			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
 
-			// 확대된 크기 계산 (최대 1280x720)
+			// 확대된 크기 계산 (최대 1280 x 720)
 			int newWidth = (int)(maxWidth * scale);
 			int newHeight = (int)(maxHeight * scale);
 
@@ -64,8 +64,8 @@ namespace SAI
 			int y = (formHeight - newHeight) / 2;
 
 			// 위치와 크기 조정
-			guna2Panel1.Location = new Point(x, y + 30); // titlebar 때문에 y는 약간 내림
-			guna2Panel1.Size = new Size(newWidth, newHeight - 30);
+			mainPanel.Location = new Point(x, y + 30); // titlebar 때문에 y는 약간 내림
+			mainPanel.Size = new Size(newWidth, newHeight - 30);
 
 			titlebar.Location = new Point(0, 0);
 			titlebar.Size = new Size(formWidth, 30); // 타이틀바는 항상 높이 30
@@ -82,10 +82,10 @@ namespace SAI
 		public void LoadPage(UserControl page)
 		{
 			page.Size = new Size(1280, 720);
-			guna2Panel1.Controls.Clear();
-			guna2Panel1.BackColor = Color.Transparent;
-			guna2Panel1.Controls.Add(page);
-			guna2Panel1.BringToFront();
+			mainPanel.Controls.Clear();
+			mainPanel.BackColor = Color.Transparent;
+			mainPanel.Controls.Add(page);
+			mainPanel.BringToFront();
 		}
 
 		public void CheckedDialogDeleteModel(bool check)
@@ -108,7 +108,7 @@ namespace SAI
 			{
 				// 원래 사이즈로
 				this.WindowState = FormWindowState.Normal;
-				this.Size = new Size(1280, 720);
+				this.Size = new Size(1280, 750);
 			}
 			else
 			{
