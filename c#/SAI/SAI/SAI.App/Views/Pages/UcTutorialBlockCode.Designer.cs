@@ -854,6 +854,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
+            this.tboxMemo.TextChanged += new System.EventHandler(this.tboxMemo_TextChanged);
             // 
             // ibtnCloseMemo
             // 
