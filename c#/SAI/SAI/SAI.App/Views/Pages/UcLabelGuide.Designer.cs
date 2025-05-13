@@ -417,7 +417,7 @@
             this.accuracyPanel.FillColor = System.Drawing.Color.Transparent;
             this.accuracyPanel.Location = new System.Drawing.Point(0, 89);
             this.accuracyPanel.Name = "accuracyPanel";
-            this.accuracyPanel.Size = new System.Drawing.Size(158, 54);
+            this.accuracyPanel.Size = new System.Drawing.Size(201, 54);
             this.accuracyPanel.TabIndex = 14;
             this.accuracyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.accuracyPanel_Paint);
             // 
@@ -428,7 +428,7 @@
             this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.accuracyLabel.Location = new System.Drawing.Point(7, 13);
             this.accuracyLabel.Name = "accuracyLabel";
-            this.accuracyLabel.Size = new System.Drawing.Size(148, 31);
+            this.accuracyLabel.Size = new System.Drawing.Size(194, 31);
             this.accuracyLabel.TabIndex = 13;
             this.accuracyLabel.Text = "정확도 예시";
             // 
@@ -500,9 +500,9 @@
             this.ZoomOutBtn.FillColor = System.Drawing.Color.Transparent;
             this.ZoomOutBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ZoomOutBtn.ForeColor = System.Drawing.Color.Transparent;
-            this.ZoomOutBtn.Location = new System.Drawing.Point(0, 56);
+            this.ZoomOutBtn.Location = new System.Drawing.Point(3, 66);
             this.ZoomOutBtn.Name = "ZoomOutBtn";
-            this.ZoomOutBtn.Size = new System.Drawing.Size(26, 28);
+            this.ZoomOutBtn.Size = new System.Drawing.Size(26, 30);
             this.ZoomOutBtn.TabIndex = 10;
             this.ZoomOutBtn.Text = "guna2Button2";
             // 
@@ -557,14 +557,16 @@
             // 
             this.toolRedo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolRedo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolRedo.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolRedo.HoverState.Image = global::SAI.Properties.Resources.toolRedoHover;
+            this.toolRedo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolRedo.Image = global::SAI.Properties.Resources.replay;
             this.toolRedo.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolRedo.ImageRotate = 0F;
             this.toolRedo.ImageSize = new System.Drawing.Size(20, 20);
             this.toolRedo.Location = new System.Drawing.Point(5, 187);
             this.toolRedo.Name = "toolRedo";
-            this.toolRedo.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolRedo.PressedState.Image = global::SAI.Properties.Resources.toolRedoClick;
+            this.toolRedo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolRedo.Size = new System.Drawing.Size(20, 20);
             this.toolRedo.TabIndex = 15;
             // 
@@ -572,29 +574,33 @@
             // 
             this.toolUndo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolUndo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolUndo.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolUndo.HoverState.Image = global::SAI.Properties.Resources.toolUndoHover;
+            this.toolUndo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolUndo.Image = global::SAI.Properties.Resources.replay1;
             this.toolUndo.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolUndo.ImageRotate = 0F;
             this.toolUndo.ImageSize = new System.Drawing.Size(20, 20);
             this.toolUndo.Location = new System.Drawing.Point(4, 147);
             this.toolUndo.Name = "toolUndo";
-            this.toolUndo.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolUndo.PressedState.Image = global::SAI.Properties.Resources.toolUndoClick;
+            this.toolUndo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolUndo.Size = new System.Drawing.Size(20, 20);
             this.toolUndo.TabIndex = 14;
             // 
             // toolVisible
             // 
-            this.toolVisible.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolVisible.CheckedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolVisible.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolVisible.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolVisible.HoverState.Image = global::SAI.Properties.Resources.toolVHover;
+            this.toolVisible.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolVisible.Image = global::SAI.Properties.Resources.visibility_off;
             this.toolVisible.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolVisible.ImageRotate = 0F;
             this.toolVisible.ImageSize = new System.Drawing.Size(20, 20);
             this.toolVisible.Location = new System.Drawing.Point(5, 279);
             this.toolVisible.Name = "toolVisible";
-            this.toolVisible.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolVisible.PressedState.Image = global::SAI.Properties.Resources.toolVClick;
+            this.toolVisible.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolVisible.Size = new System.Drawing.Size(20, 20);
             this.toolVisible.TabIndex = 13;
             // 
@@ -602,14 +608,16 @@
             // 
             this.toolLabelingSquare.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolLabelingSquare.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolLabelingSquare.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingSquare.HoverState.Image = global::SAI.Properties.Resources.toolLabelHover;
+            this.toolLabelingSquare.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingSquare.Image = global::SAI.Properties.Resources.check_box_outline_blank;
             this.toolLabelingSquare.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolLabelingSquare.ImageRotate = 0F;
             this.toolLabelingSquare.ImageSize = new System.Drawing.Size(20, 20);
             this.toolLabelingSquare.Location = new System.Drawing.Point(5, 61);
             this.toolLabelingSquare.Name = "toolLabelingSquare";
-            this.toolLabelingSquare.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingSquare.PressedState.Image = global::SAI.Properties.Resources.toolLabelClick;
+            this.toolLabelingSquare.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingSquare.Size = new System.Drawing.Size(20, 20);
             this.toolLabelingSquare.TabIndex = 12;
             // 
@@ -617,14 +625,16 @@
             // 
             this.toolDelete.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolDelete.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolDelete.HoverState.Image = global::SAI.Properties.Resources.toolDelHover;
+            this.toolDelete.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolDelete.Image = global::SAI.Properties.Resources.delete;
             this.toolDelete.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolDelete.ImageRotate = 0F;
             this.toolDelete.ImageSize = new System.Drawing.Size(16, 16);
             this.toolDelete.Location = new System.Drawing.Point(5, 240);
             this.toolDelete.Name = "toolDelete";
-            this.toolDelete.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolDelete.PressedState.Image = global::SAI.Properties.Resources.toolDelClick;
+            this.toolDelete.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolDelete.Size = new System.Drawing.Size(20, 20);
             this.toolDelete.TabIndex = 11;
             // 
@@ -632,14 +642,16 @@
             // 
             this.toolLabelingPolygon.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolLabelingPolygon.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolLabelingPolygon.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingPolygon.HoverState.Image = global::SAI.Properties.Resources.toolPolHover;
+            this.toolLabelingPolygon.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingPolygon.Image = global::SAI.Properties.Resources.ph_polygon_thin;
             this.toolLabelingPolygon.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolLabelingPolygon.ImageRotate = 0F;
             this.toolLabelingPolygon.ImageSize = new System.Drawing.Size(20, 20);
             this.toolLabelingPolygon.Location = new System.Drawing.Point(5, 96);
             this.toolLabelingPolygon.Name = "toolLabelingPolygon";
-            this.toolLabelingPolygon.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingPolygon.PressedState.Image = global::SAI.Properties.Resources.toolPolClick;
+            this.toolLabelingPolygon.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingPolygon.Size = new System.Drawing.Size(20, 20);
             this.toolLabelingPolygon.TabIndex = 10;
             // 
@@ -647,14 +659,16 @@
             // 
             this.toolHand.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolHand.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolHand.HoverState.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolHand.HoverState.Image = global::SAI.Properties.Resources.toolHandHover;
+            this.toolHand.HoverState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolHand.Image = global::SAI.Properties.Resources.back_hand;
             this.toolHand.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolHand.ImageRotate = 0F;
             this.toolHand.ImageSize = new System.Drawing.Size(20, 20);
             this.toolHand.Location = new System.Drawing.Point(5, 25);
             this.toolHand.Name = "toolHand";
-            this.toolHand.PressedState.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolHand.PressedState.Image = global::SAI.Properties.Resources.toolHandClick;
+            this.toolHand.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolHand.Size = new System.Drawing.Size(20, 20);
             this.toolHand.TabIndex = 0;
             // 
@@ -758,7 +772,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel currentLevel;
         private Guna.UI2.WinForms.Guna2GradientPanel toolZoom;
         private Guna.UI2.WinForms.Guna2HtmlLabel ZoomCurrent;
-        private Guna.UI2.WinForms.Guna2Button ZoomOutBtn;
         private Guna.UI2.WinForms.Guna2Button ZoomInBtn;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
         private Guna.UI2.WinForms.Guna2GradientPanel toolBox;
@@ -775,5 +788,6 @@
         private Guna.UI2.WinForms.Guna2CircleButton classBtn;
         private Guna.UI2.WinForms.Guna2Panel showLevel1;
         private Guna.UI2.WinForms.Guna2Panel totalLevelpanel;
+        private Guna.UI2.WinForms.Guna2Button ZoomOutBtn;
     }
 }

@@ -38,7 +38,6 @@
             // nextBtn
             // 
             this.nextBtn.BackColor = System.Drawing.Color.Transparent;
-            this.nextBtn.BackgroundImage = global::SAI.Properties.Resources.ic_next;
             this.nextBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.nextBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.nextBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -47,17 +46,20 @@
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
-            this.nextBtn.Location = new System.Drawing.Point(1166, 424);
+            this.nextBtn.HoverState.CustomBorderColor = System.Drawing.Color.Silver;
+            this.nextBtn.HoverState.FillColor = System.Drawing.Color.Silver;
+            this.nextBtn.Image = global::SAI.Properties.Resources.NoCircleArrowR;
+            this.nextBtn.ImageSize = new System.Drawing.Size(70, 70);
+            this.nextBtn.Location = new System.Drawing.Point(1143, 424);
             this.nextBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.nextBtn.Size = new System.Drawing.Size(47, 51);
+            this.nextBtn.Size = new System.Drawing.Size(70, 70);
             this.nextBtn.TabIndex = 0;
             // 
             // preBtn
             // 
             this.preBtn.BackColor = System.Drawing.Color.Transparent;
-            this.preBtn.BackgroundImage = global::SAI.Properties.Resources.ic_pre;
             this.preBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.preBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.preBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -66,11 +68,15 @@
             this.preBtn.FillColor = System.Drawing.Color.Transparent;
             this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.preBtn.ForeColor = System.Drawing.Color.White;
-            this.preBtn.Location = new System.Drawing.Point(253, 424);
+            this.preBtn.HoverState.CustomBorderColor = System.Drawing.Color.Silver;
+            this.preBtn.HoverState.FillColor = System.Drawing.Color.Silver;
+            this.preBtn.Image = global::SAI.Properties.Resources.NoCircleArrowL;
+            this.preBtn.ImageSize = new System.Drawing.Size(70, 70);
+            this.preBtn.Location = new System.Drawing.Point(244, 424);
             this.preBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.preBtn.Name = "preBtn";
             this.preBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.preBtn.Size = new System.Drawing.Size(47, 51);
+            this.preBtn.Size = new System.Drawing.Size(70, 70);
             this.preBtn.TabIndex = 1;
             // 
             // goLabelingBtn
@@ -101,7 +107,7 @@
             // exit
             // 
             this.exit.BackColor = System.Drawing.Color.Transparent;
-            this.exit.BackgroundImage = global::SAI.Properties.Resources.btn_close;
+            this.exit.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
             this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.exit.BorderColor = System.Drawing.Color.Transparent;
             this.exit.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -111,16 +117,16 @@
             this.exit.FillColor = System.Drawing.Color.Transparent;
             this.exit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.exit.ForeColor = System.Drawing.Color.Transparent;
-            this.exit.Location = new System.Drawing.Point(989, 35);
+            this.exit.Location = new System.Drawing.Point(1388, 35);
             this.exit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(46, 50);
+            this.exit.Size = new System.Drawing.Size(25, 25);
             this.exit.TabIndex = 4;
             // 
             // goToLabeling
             // 
             this.goToLabeling.BackColor = System.Drawing.Color.Transparent;
-            this.goToLabeling.BackgroundImage = global::SAI.Properties.Resources.btn_close;
+            this.goToLabeling.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
             this.goToLabeling.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.goToLabeling.BorderColor = System.Drawing.Color.Transparent;
             this.goToLabeling.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -130,10 +136,10 @@
             this.goToLabeling.FillColor = System.Drawing.Color.Transparent;
             this.goToLabeling.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.goToLabeling.ForeColor = System.Drawing.Color.Transparent;
-            this.goToLabeling.Location = new System.Drawing.Point(1183, 166);
+            this.goToLabeling.Location = new System.Drawing.Point(1188, 173);
             this.goToLabeling.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goToLabeling.Name = "goToLabeling";
-            this.goToLabeling.Size = new System.Drawing.Size(34, 38);
+            this.goToLabeling.Size = new System.Drawing.Size(23, 23);
             this.goToLabeling.TabIndex = 5;
             // 
             // UcTutorialGuide
