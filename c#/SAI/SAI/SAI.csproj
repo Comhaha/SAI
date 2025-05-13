@@ -396,6 +396,8 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_ok_clicked.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_prepare.png" />
     <None Include="SAI.App\Resources\Images\btn_yellow_ok.png" />
     <None Include="SAI.App\Resources\Images\bg_yellow_titlebar_labeling.png" />
     <None Include="SAI.App\Resources\Images\btn_tutorial_clicked.png" />
@@ -631,6 +633,7 @@
     <None Include="SAI.App\Resources\Images\bg_gray_titlebar.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_white_580.246.png" />
     <None Include="SAI.App\Resources\Images\bg_comfirm_go_tutorial_block.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_prepare.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
