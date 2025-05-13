@@ -1426,7 +1426,9 @@
   <data name="&gt;&gt;ibtnPlusBlock.Parent" xml:space="preserve">
     <value>pZoomBlock</value>
   </data>
-  <data name="&gt;&gt;ibtnPlusBlock.ZOrder" xml:space="preserve">
+	<data name="ibtnPlusBlock.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>379, 32</value>
   </data>

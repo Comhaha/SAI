@@ -37,8 +37,7 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-        private MemoPresenter memoPresenter;
-        public UcTutorialBlockCode(IMainView view)
+		private MemoPresenter memoPresenter;
 
 
 		private int undoCount = 0;
