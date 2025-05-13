@@ -117,6 +117,34 @@
 			workspace.undo(true);
         }
 
+		function registerDoubleClickEvent(block) {
+			if (!block.svgGroup_ || block.svgGroup_.dataset.dblclickBound) return;
+
+			block.svgGroup_.addEventListener('dblclick', () => {
+				try {
+					const code = Blockly.Python.blockToCode(block);
+					const json = {
+						type: "blockDoubleClick",
+						code: code,
+					};
+					window.chrome.webview.postMessage(json);
+				} catch (e) {
+					showCustomAlert('블록 코드를 생성하는 중 오류가 발생했습니다.');
+					console.error(e);
+				}
+			});
+
+			// 중복 방지 플래그
+			block.svgGroup_.dataset.dblclickBound = true;
+        }
+
+		function bindDoubleClickEventsToAllBlocks() {
+			const blocks = workspace.getAllBlocks(false);
+			for (let block of blocks) {
+				registerDoubleClickEvent(block);
+			}
+		}
+
 		// 블록 생성 시 Python 코드 생성
         window.addEventListener('DOMContentLoaded', () => {
             workspace.addChangeListener((event) => {
@@ -126,6 +154,8 @@
                     event.type === Blockly.Events.BLOCK_CHANGE ||
                     event.type === Blockly.Events.BLOCK_MOVE
                 ) {
+					bindDoubleClickEventsToAllBlocks(); // 더블클릭 리스너 바인딩
+
                     // 안전하게 확인
                     if (Blockly.Python && Blockly.Python.workspaceToCode) {
                         const code = Blockly.Python.workspaceToCode(workspace);

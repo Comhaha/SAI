@@ -424,6 +424,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnRunModel.FillColor = System.Drawing.Color.Transparent;
 			this.btnRunModel.ForeColor = System.Drawing.Color.White;
 			this.btnRunModel.Name = "btnRunModel";
+			this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
 			// 
 			// ibtnPreBlock
 			// 
