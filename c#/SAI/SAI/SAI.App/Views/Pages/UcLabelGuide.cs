@@ -131,14 +131,13 @@ namespace SAI.SAI.App.Views.Pages
 
             // 다음/이전 버튼은 기본 비활성화
             UpdateNavigationButtonState();
-            this.guna2CircleButton10.CheckedState.FillColor = Color.Transparent;
-            this.guna2CircleButton10.PressedColor = Color.Transparent;
-        }
 
-        private void ShowTutorial()
-        {
-            TutorialGuideForm tutorialForm = new TutorialGuideForm(this);
-            tutorialForm.Show(this); // 모달리스 형태로 표시
+            this.classBtn.CheckedState.FillColor = Color.Transparent;
+            this.classBtn.PressedColor = Color.Transparent;
+            classBtn.Visible = false; // 분류 버튼 숨김
+            
+            // class2 초기 상태에 따라 classBtn 가시성 설정
+            UpdateClassButtonVisibility();
         }
         
         // 정답 데이터 초기화 메서드 
@@ -1307,6 +1306,8 @@ namespace SAI.SAI.App.Views.Pages
                 class2.Text = imagePolygons[currentImageIndex][0].Item2;
             }
 
+            // classBtn 가시성 업데이트
+            UpdateClassButtonVisibility();
 
             // 이미지 갱신하여 바운딩 박스 표시
             pictureBoxImage.Invalidate();
@@ -2168,6 +2169,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // class2 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
                     class2.Text = annotationText;
+                    
+                    // classBtn 가시성 업데이트
+                    UpdateClassButtonVisibility();
 
                     // 기존 바운딩 박스 모두 제거 (라벨링은 항상 하나만)
                     CurrentBoundingBoxes.Clear();
@@ -2259,114 +2263,6 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             return new Tuple<List<Point>, string>(points, label);
-        }
-
-        // 정확도 계산 버튼 클릭 이벤트 핸들러 (임시 삭제하고 싶어)
-        private void AccuracyBtn_Click(object sender, EventArgs e)
-        {
-            if (currentLevel.Text == "Bounding Box")
-            {
-                // 바운딩 박스 정확도 계산
-                if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
-                    groundTruthBoundingBoxes.ContainsKey(currentImageIndex))
-                {
-                    var userBox = imageBoundingBoxes[currentImageIndex][0];
-                    var groundTruthBox = groundTruthBoundingBoxes[currentImageIndex];
-
-                    double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
-                    double labelAccuracy = (userBox.Item2 == groundTruthBox.Item2) ? 100.0 : 0.0;
-
-                    // 전체 정확도 = iou 100퍼센트
-                    double accuracy = iou*100;
-
-                    MessageBox.Show(
-                                  $"IoU: {accuracy:F2}%\n" +
-                                  $"라벨 일치: {(userBox.Item2 == groundTruthBox.Item2 ? "예" : "아니오")}",
-                                  "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // 정확도 표시
-                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
-
-                    // 정확도 저장
-                    imageAccuracies[currentImageIndex] = accuracy;
-                }
-                else
-                {
-                    MessageBox.Show("정확도를 계산할 바운딩 박스가 없거나 정답 데이터가 없습니다.",
-                                  "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else if (currentLevel.Text == "Segmentation")
-            {
-                // 세그멘테이션 정확도 계산
-                if (imagePolygons.ContainsKey(currentImageIndex) &&
-                    groundTruthPolygons.ContainsKey(currentImageIndex))
-                {
-                    var userPolygon = imagePolygons[currentImageIndex][0];
-                    var groundTruthPolygon = groundTruthPolygons[currentImageIndex];
-
-                    double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
-                    double labelAccuracy = (userPolygon.Item2 == groundTruthPolygon.Item2) ? 100.0 : 0.0;
-
-                    // 전체 정확도 = IoA 75% + 레이블 일치 25%
-                    double accuracy = ioa * 100;
-
-                    MessageBox.Show(
-                                  $"IoA: {accuracy:F2}%\n" +
-                                  $"라벨 일치: {(userPolygon.Item2 == groundTruthPolygon.Item2 ? "예" : "아니오")}",
-                                  "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // 정확도 표시
-                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
-                    
-                    // 정확도 저장
-                    imageAccuracies[currentImageIndex] = accuracy;
-                }
-                else
-                {
-                    MessageBox.Show("정확도를 계산할 폴리곤이 없거나 정답 데이터가 없습니다.",
-                                  "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else if (currentLevel.Text == "Classification")
-            {
-                // 분류 정확도 계산
-                if (imageClassifications.ContainsKey(currentImageIndex))
-                {
-                    string userLabel = imageClassifications[currentImageIndex];
-                    double accuracy = 0.0;
-                    // Classification은 정답 데이터가 없어도 라벨링만으로 100% 처리
-                    if (groundTruthClassifications.ContainsKey(currentImageIndex))
-                    {
-                        string gtLabel = groundTruthClassifications[currentImageIndex];
-                        accuracy = (userLabel == gtLabel) ? 100.0 : 0.0;
-
-                        MessageBox.Show($"분류 정확도: {accuracy:F2}%\n" +
-                                      $"사용자 라벨: {userLabel}\n" +
-                                      $"정답 라벨: {gtLabel}",
-                                      "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        // Classification의 경우 라벨만 있으면 100% 처리
-                        accuracy = 100.0;
-                        MessageBox.Show($"라벨링 성공: {userLabel}", "정확도 결과", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
-                    // 정확도 표시
-                    accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
-
-                    // 정확도 저장
-                    imageAccuracies[currentImageIndex] = accuracy;
-                }
-                else
-                {
-                    MessageBox.Show("라벨링 정보가 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            // 네비게이션 버튼 상태 업데이트
-            UpdateNavigationButtonState();
         }
 
         // IoU (Intersection over Union) 계산 메서드 (바운딩 박스용)
@@ -2718,6 +2614,9 @@ namespace SAI.SAI.App.Views.Pages
                         List<Point> savedPolygonPoints = new List<Point>(polygonPoints);
 
                         class2.Text = annotationText;
+                        
+                        // classBtn 가시성 업데이트
+                        UpdateClassButtonVisibility();
 
                         // 기존 폴리곤 데이터 삭제
                         if (imagePolygons.ContainsKey(currentImageIndex))
@@ -2988,6 +2887,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // class2 라벨 업데이트
                     class2.Text = annotationText;
+                    
+                    // classBtn 가시성 업데이트
+                    UpdateClassButtonVisibility();
 
                     // 라벨링 단계에 따라 다른 작업 수행
                     if (currentLevel.Text == "Segmentation")
@@ -3024,7 +2926,6 @@ namespace SAI.SAI.App.Views.Pages
 
                         imageAccuracies[currentImageIndex] = 100.0;
 
-                        UpdateNavigationButtonState();
                     }
 
                     else if (currentLevel.Text == "Bounding Box")
@@ -3053,6 +2954,7 @@ namespace SAI.SAI.App.Views.Pages
                         };
                         AddToHistory(action);
                     }
+                    UpdateNavigationButtonState();
                 };
 
                 if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
@@ -3209,6 +3111,9 @@ namespace SAI.SAI.App.Views.Pages
                         imageBoundingBoxes[currentImageIndex].Clear();
                         // class2 라벨 지우기
                         class2.Text = "";
+                        
+                        // classBtn 가시성 업데이트
+                        UpdateClassButtonVisibility();
 
                         // 히스토리에 작업 추가
                         var action = new ActionState
@@ -3259,6 +3164,9 @@ namespace SAI.SAI.App.Views.Pages
 
                         // class2 라벨 지우기
                         class2.Text = "";
+                        
+                        // classBtn 가시성 업데이트
+                        UpdateClassButtonVisibility();
 
                         // 히스토리에 작업 추가
                         var action = new ActionState
@@ -3279,6 +3187,28 @@ namespace SAI.SAI.App.Views.Pages
                         // 화면 갱신
                         pictureBoxImage.Invalidate();
 
+                        // 네비게이션 버튼 상태 업데이트
+                        UpdateNavigationButtonState();
+                    }
+                }
+                else if (currentLevel.Text == "Classification") 
+                {
+                    // 분류 라벨 삭제
+                    if (imageClassifications.ContainsKey(currentImageIndex))
+                    {
+                        imageClassifications.Remove(currentImageIndex);
+                        class2.Text = "";
+                        
+                        // classBtn 가시성 업데이트
+                        UpdateClassButtonVisibility();
+                        
+                        // 정확도 초기화
+                        if (imageAccuracies.ContainsKey(currentImageIndex))
+                            imageAccuracies[currentImageIndex] = 0;
+                        
+                        // 화면 갱신
+                        pictureBoxImage.Invalidate();
+                        
                         // 네비게이션 버튼 상태 업데이트
                         UpdateNavigationButtonState();
                     }
@@ -3661,5 +3591,14 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
             dialog.ShowDialog();
 		}
+
+        /// <summary>
+        /// class2.Text 값에 따라 classBtn 가시성을 업데이트하는 메서드
+        /// </summary>
+        private void UpdateClassButtonVisibility()
+        {
+            // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
+            classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
+        }
 	}
 }
