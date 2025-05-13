@@ -136,6 +136,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.Designer.cs">
+      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -313,6 +319,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogPrepare.resx">
+      <DependentUpon>DialogPrepare.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogQuitTrain.resx">
       <DependentUpon>DialogQuitTrain.cs</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogSetting.resx">
+      <DependentUpon>DialogSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\TutorialGuideForm.resx">
       <DependentUpon>TutorialGuideForm.cs</DependentUpon>
@@ -395,6 +407,21 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_save_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_clicked_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_save.png" />
+    <None Include="SAI.App\Resources\Images\pbox_setting.png" />
+    <None Include="SAI.App\Resources\Images\p_titlebar_setting.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_home_from_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_delete_model.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_confirm_exit.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_complete_tutorial.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_complete_labeling.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_comfirm_go_train.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_ok_clicked.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_prepare.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_ok.png" />
+    <None Include="SAI.App\Resources\Images\bg_yellow_titlebar_labeling.png" />
     <None Include="SAI.App\Resources\Images\btnRunModel_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_tutorial_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_train_clicked.png" />
@@ -640,6 +667,17 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_white_notion.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_white_selectmodel.png" />
     <None Include="SAI.App\Resources\Images\bg_gray_titlebar.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_white_580.246.png" />
+    <None Include="SAI.App\Resources\Images\bg_comfirm_go_tutorial_block.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_prepare.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_comfirm_go_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_complete_labeling.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_complete_tutorial.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_confirm_exit.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_delete_model.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_home_from_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_quit_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_setting.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
