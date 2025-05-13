@@ -183,17 +183,17 @@
 <table>
   <tr>
     <!-- 1 -->
-    <td align="center" width="180">
+    <td align="center" width="260">
       <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ebc5118139ebdecb3f59ae732f3213d/%EC%A0%95%EC%9C%A0%EC%A7%84.png" width="100"><br>
       <a href="https://github.com/breadbirds"><strong>정유진</strong></a>
     </td>
     <!-- 2 -->
-    <td align="center" width="180">
+    <td align="center" width="260">
       <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cb66373687b47ae6e04f15a4490b9ef/%EA%B6%8C%EB%8F%99%ED%98%84.png" width="100"><br>
       <strong>권동현</strong>
     </td>
     <!-- 3 -->
-    <td align="center" width="180">
+    <td align="center" width="260">
       <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6428dd61a1f361ad6eb05efc7cfbc5ae/%EA%B9%80%EC%A0%95%EC%96%B8.png" width="100"><br>
       <strong>김정언</strong>
     </td>
