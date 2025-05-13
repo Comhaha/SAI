@@ -916,7 +916,115 @@
   <data name="btn_save_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_save_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_train1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_tutorial1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_tutorial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_1_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 1-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_2_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 2-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_3_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 3-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_4_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 4-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_5_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 5-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_6_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 6-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_7_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 7-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_8_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 8-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_9_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 9-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnRunModel_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnRunModel_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnClose3030" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnClose3030.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_0단계_라벨링" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\0단계 라벨링.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowHoverL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowHoverR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowClickL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowClickL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowClickR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowClickR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolDelClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolDelClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolDelHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolDelHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolHandClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolHandClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolHandHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolHandHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolLabelClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolLabelClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolLabelHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolLabelHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolPolClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolPolClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolPolHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolPolHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolRedoClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolRedoClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolRedoHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolRedoHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolUndoClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolUndoClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolUndoHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolUndoHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolVClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolVClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolVHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolVHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

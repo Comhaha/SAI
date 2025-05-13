@@ -299,27 +299,6 @@ namespace SAI.SAI.App.Views.Pages
             nextBtn.Click += (s, e) => ShowNextImage();
             preBtn.Click += (s, e) => ShowPreviousImage();
             
-            // 버튼 클릭 시 손 도구 해제
-            nextBtn.Click += (s, e) => {
-                if (isHandToolActive)
-                {
-                    // isHandToolActive = false;
-                    isEditingPolygon = false;
-                    isEditingBoundingBox = false;
-                    UpdateToolVisualState();
-                }
-            };
-            
-            preBtn.Click += (s, e) => {
-                if (isHandToolActive)
-                {
-                    // isHandToolActive = false;
-                    isEditingPolygon = false;
-                    isEditingBoundingBox = false;
-                    UpdateToolVisualState();
-                }
-            };
-
             // 이미지가 라운드 밖으로 나가지 않도록 설정
             imageContainer.Paint += ImageContainer_Paint;
 
@@ -331,81 +310,7 @@ namespace SAI.SAI.App.Views.Pages
             //exportBtn.Click += ExportBtn_Click;
         }
 
-        ///// <summary>
-        ///// 좌표 내보내기 버튼 클릭 이벤트 핸들러 (임시)
-        ///// </summary>
-        //private void ExportBtn_Click(object sender, EventArgs e)
-        //{
-        //    // 현재 이미지의 라벨링 모드에 따라 적절한 데이터 내보내기
-        //    string jsonData = "";
 
-        //    if (currentLevel.Text == "Bounding Box")
-        //    {
-        //        // 현재 이미지의 바운딩 박스 정보 가져오기
-        //        jsonData = ExportBoundingBoxCoordinates(currentImageIndex);
-        //        MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "바운딩 박스 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    else if (currentLevel.Text == "Segmentation")
-        //    {
-        //        // 현재 이미지의 폴리곤 정보 가져오기
-        //        jsonData = ExportPolygonCoordinates(currentImageIndex);
-        //        MessageBox.Show($"현재 이미지 좌표 정보:\n{jsonData}", "세그멘테이션 좌표", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
-        //    }
-
-        //    // 모든 이미지의 좌표 정보를 출력할지 물어보기
-        //    if (DialogResult.Yes == MessageBox.Show("모든 이미지의 좌표 정보도 확인하시겠습니까?", "추가 확인", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-        //    {
-        //        StringBuilder allCoords = new StringBuilder();
-
-        //        for (int i = 0; i < images.Count; i++)
-        //        {
-        //            string imageType = "";
-        //            string coords = "{}";
-
-        //            // 이미지 타입에 따른 좌표 추출
-        //            if (i < 3) // Classification (0-2 인덱스)
-        //            {
-        //                imageType = "분류";
-        //                if (imageClassifications.ContainsKey(i))
-        //                {
-        //                    string label = imageClassifications[i];
-        //                    coords = $"{{\"label\":\"{label}\"}}";
-        //                }
-        //            }
-        //            else if (i < 6) // Bounding Box (3-5 인덱스)
-        //            {
-        //                imageType = "바운딩 박스";
-        //                coords = ExportBoundingBoxCoordinates(i);
-        //            }
-        //            else // Segmentation (6-8 인덱스)
-        //            {
-        //                imageType = "세그멘테이션";
-        //                coords = ExportPolygonCoordinates(i);
-        //            }
-
-        //            allCoords.AppendLine($"이미지 {i + 1} ({imageType}): {coords}");
-        //        }
-
-        //        // 결과를 대화상자로 표시
-        //        using (Form dialog = new Form())
-        //        {
-        //            dialog.Text = "모든 이미지 좌표 정보";
-        //            dialog.Size = new Size(600, 400);
-        //            dialog.StartPosition = FormStartPosition.CenterParent;
-
-        //            TextBox textBox = new TextBox();
-        //            textBox.Multiline = true;
-        //            textBox.ScrollBars = ScrollBars.Both;
-        //            textBox.Dock = DockStyle.Fill;
-        //            textBox.ReadOnly = true;
-        //            textBox.Text = allCoords.ToString();
-
-        //            dialog.Controls.Add(textBox);
-        //            dialog.ShowDialog();
-        //        }
-        //    }
-        //}
         /// <summary>
         /// 마우스 관련 이벤트 핸들러 등록
         /// </summary>
@@ -531,7 +436,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel.Text == "Classification" && currentAccuracy >= 1)
+            if (currentLevel.Text == "Classification" && currentAccuracy >= 0)
             {
                 //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
@@ -564,11 +469,13 @@ namespace SAI.SAI.App.Views.Pages
             if (currentImageIndex == 0)
             {
                 preBtn.Enabled = false;
+                preBtn.Visible = false;
                 preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
             }
             else
             {
                 preBtn.Enabled = true;
+                preBtn.Visible = true;
                 preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
             }
 
@@ -977,9 +884,12 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void UpdateToolVisualState()
         {
-            toolHand.BackColor = isHandToolActive ? Color.LightGray : Color.Transparent;
-            toolLabelingSquare.BackColor = isSquareToolActive ? Color.LightGray : Color.Transparent;
-            toolLabelingPolygon.BackColor = isPolygonToolActive ? Color.LightGray : Color.Transparent;
+            // BackColor 대신 Image 속성 사용하여 활성화 상태 표시
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
+            
+            // 마우스 커서 설정
             pictureBoxImage.Cursor = isHandToolActive ? Cursors.Hand : Cursors.Default;
         }
 
@@ -988,33 +898,55 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void ResetToolState()
         {
-            // 도구 상태 초기화
-            isHandToolActive = false;
-            isSquareToolActive = false;
+            // 드래깅 상태 초기화
             isDragging = false;
-            isEditingPolygon = false;
-            isEditingBoundingBox = false;
             isBoundingBoxDragging = false;
             isPolygonPointDragging = false;
-            selectedPolygonIndex = -1;
+            
+            // 편집 모드 초기화
+            isEditingBoundingBox = false;
+            isEditingPolygon = false;
             selectedBoxIndex = -1;
-            dragPointIndex = -1;
-            dragHandleIndex = -1;
+            selectedPolygonIndex = -1;
+            
+            // 그리기 상태 초기화
             currentRect = Rectangle.Empty;
             editingRect = Rectangle.Empty;
             polygonPoints.Clear();
             editingPolygonPoints.Clear();
-
+            
             // 호버링 상태 초기화
             hoveredPoint = null;
 
-            // 도구 버튼 시각적 상태 초기화
-            toolHand.BackColor = Color.Transparent;
-            toolLabelingSquare.BackColor = Color.Transparent;
-            toolLabelingPolygon.BackColor = Color.Transparent;
-
-            // 마우스 커서 기본값으로 설정
-            pictureBoxImage.Cursor = Cursors.Default;
+            // 이미지 인덱스에 따라 적절한 도구 활성화
+            int imageIndex = currentImageIndex + 1; // 1부터 시작하는 인덱스
+            
+            if (imageIndex >= 1 && imageIndex <= 3) {
+                // Classification 모드 (이미지 1-3)
+                isHandToolActive = true;
+                isSquareToolActive = false;
+                isPolygonToolActive = false;
+                pictureBoxImage.Cursor = Cursors.Hand;
+            } 
+            else if (imageIndex >= 4 && imageIndex <= 6) {
+                // Bounding Box 모드 (이미지 4-6)
+                isHandToolActive = false;
+                isSquareToolActive = true;
+                isPolygonToolActive = false;
+                pictureBoxImage.Cursor = Cursors.Cross;
+            }
+            else if (imageIndex >= 7 && imageIndex <= 9) {
+                // Segmentation 모드 (이미지 7-9)
+                isHandToolActive = false;
+                isSquareToolActive = false;
+                isPolygonToolActive = true;
+                pictureBoxImage.Cursor = Cursors.Cross;
+            }
+            
+            // 도구 버튼 시각적 상태 업데이트
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
         }
 
         // ActionState 클래스 추가
@@ -1213,7 +1145,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = false;  // 버튼 비활성화
-                    toolVisible.BackColor = Color.Transparent;
+                    toolVisible.Image = Properties.Resources.visibility_off;
                     toolVisible.Text = "라벨 숨기기";
                 }
             }
@@ -1224,11 +1156,15 @@ namespace SAI.SAI.App.Views.Pages
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
 
+                // Bounding Box 단계에서는 사각형 도구를 기본으로 활성화
+                isSquareToolActive = true;
+                pictureBoxImage.Cursor = Cursors.Cross;
+
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.BackColor = isBoundingBoxVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
@@ -1239,22 +1175,23 @@ namespace SAI.SAI.App.Views.Pages
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
 
+                // Segmentation 단계에서는 폴리곤 도구를 기본으로 활성화
+                isPolygonToolActive = true;
+                pictureBoxImage.Cursor = Cursors.Cross;
+
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.BackColor = isSegmentationVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
 
             // 도구 버튼 상태 업데이트
-            if (toolHand != null)
-                toolHand.BackColor = isHandToolActive ? Color.LightGray : Color.Transparent;
-            if (toolLabelingSquare != null)
-                toolLabelingSquare.BackColor = isSquareToolActive ? Color.LightGray : Color.Transparent;
-            if (toolLabelingPolygon != null)
-                toolLabelingPolygon.BackColor = isPolygonToolActive ? Color.LightGray : Color.Transparent;
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
 
             LoadclassImage(); // 이미지 라벨링 불러오기
         }
@@ -1318,25 +1255,19 @@ namespace SAI.SAI.App.Views.Pages
         private void ShowNextImage()
         {
             if (images.Count > 0)
-            {
-                if (currentImageIndex == 8)
-                {
-                    nextBtn.Enabled = false; // 마지막 이미지일 경우 다음 버튼 비활성화
-                    nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
-                    return;
-                }
-                
+            {   
                 currentImageIndex = currentImageIndex + 1; // 다음 이미지로 이동
 
-                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
                 if (currentImageIndex == 8)
                 {
                     nextBtn.Enabled = false;
+                    nextBtn.Visible = false; // 마지막 이미지일 경우 다음 버튼 비활성화
                     nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
                 }
                 else
                 {
                     nextBtn.Enabled = true;
+                    nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                     nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
                 }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
@@ -1377,12 +1308,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             if (images.Count > 0)
             {
-                if (currentImageIndex == 0)
-                {
-                    preBtn.Enabled = false; // 첫 번째 이미지일 경우 이전 버튼 비활성화
-                    preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
-                    return;
-                }
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
                 
@@ -1400,6 +1325,7 @@ namespace SAI.SAI.App.Views.Pages
                 
                 // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
                 nextBtn.Enabled = true;
+                nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                 nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
                 
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
@@ -1859,7 +1785,7 @@ namespace SAI.SAI.App.Views.Pages
                 OpenAnnotationEditor(class2.Text);
             }
             else if ((currentLevel.Text == "Bounding Box" || currentLevel.Text == "Segmentation") &&
-                      !isSquareToolActive) // 바운딩 박스 그리기 도구가 활성화되지 않았을 때만
+                     !isSquareToolActive && !isEditingBoundingBox) // 바운딩 박스 편집 모드에서는 annotation editor 열지 않음
             {
                 // 클릭한 위치가 기존 바운딩 박스 내부인지 확인
                 if (IsClickInsideBoundingBox(clickPoint, out Tuple<Rectangle, string> box))
@@ -1938,7 +1864,8 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
-            if (isBoundingBoxVisible && imageBoundingBoxes.ContainsKey(currentImageIndex))
+            // 편집 모드일 때는 기존 박스를 표시하지 않음
+            if (isBoundingBoxVisible && imageBoundingBoxes.ContainsKey(currentImageIndex) && !isEditingBoundingBox)
             {
                 foreach (var box in imageBoundingBoxes[currentImageIndex])
                 {
@@ -3435,7 +3362,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 바운딩 박스 가시성 토글
                     isBoundingBoxVisible = !isBoundingBoxVisible;
                     // 시각적 피드백 제공
-                    toolVisible.BackColor = isBoundingBoxVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel.Text == "Segmentation")
@@ -3443,7 +3370,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 세그멘테이션 가시성 토글
                     isSegmentationVisible = !isSegmentationVisible;
                     // 시각적 피드백 제공
-                    toolVisible.BackColor = isSegmentationVisible ? Color.Transparent : Color.LightGray;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel.Text == "Classification")
@@ -3453,7 +3380,7 @@ namespace SAI.SAI.App.Views.Pages
                     isSegmentationVisible = true;
 
                     // 버튼을 활성화된 상태로 유지
-                    toolVisible.BackColor = Color.Transparent;
+                    toolVisible.Image = Properties.Resources.visibility_off;
                     toolVisible.Text = "라벨 숨기기";
 
                     // 메시지 표시 (선택 사항)
