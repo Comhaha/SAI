@@ -47,7 +47,10 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
-			btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
+                                                 // 메모 텍스트 변경 이벤트 핸들러 연결
+            tboxMemo.TextChanged += tboxMemo_TextChanged;
+
+            btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -712,14 +715,19 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-       private void tboxMemo_TextChanged(object sender, EventArgs e)
-{
-    // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
-    if (memoPresenter != null)
-    {
-        memoPresenter.SaveMemoText(tboxMemo.Text);
-    }
-}
+        private void tboxMemo_TextChanged(object sender, EventArgs e)
+        {
+            // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
+            if (memoPresenter != null)
+            {
+                memoPresenter.SaveMemoText(tboxMemo.Text);
+            }
+        }
+
+        private void pMemo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 	
 }
