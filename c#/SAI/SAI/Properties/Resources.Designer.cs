@@ -63,6 +63,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap _0단계_라벨링 {
+            get {
+                object obj = ResourceManager.GetObject("_0단계_라벨링", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap _1 {
             get {
                 object obj = ResourceManager.GetObject("1", resourceCulture);
@@ -1443,9 +1453,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap class_BoundingBox {
+        internal static System.Drawing.Bitmap class1 {
             get {
-                object obj = ResourceManager.GetObject("class_BoundingBox", resourceCulture);
+                object obj = ResourceManager.GetObject("class1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1453,9 +1463,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap class_Classification {
+        internal static System.Drawing.Bitmap class2 {
             get {
-                object obj = ResourceManager.GetObject("class_Classification", resourceCulture);
+                object obj = ResourceManager.GetObject("class2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1463,9 +1473,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap class_Segmentation {
+        internal static System.Drawing.Bitmap class3 {
             get {
-                object obj = ResourceManager.GetObject("class_Segmentation", resourceCulture);
+                object obj = ResourceManager.GetObject("class3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1476,16 +1486,6 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap Frame {
-            get {
-                object obj = ResourceManager.GetObject("Frame", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

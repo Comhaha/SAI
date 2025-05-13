@@ -27,6 +27,8 @@ namespace SAI.SAI.App.Views.Pages
         private bool isHandToolActive = false;
         private List<Image> images = new List<Image>();
         private int currentImageIndex = 0;
+        private List<Image> levelImages = new List<Image>();
+        private List<Image> classImages = new List<Image>();
 
         // 사각형 그리기 관련 변수
         private bool isSquareToolActive = false;
@@ -90,6 +92,9 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel tooltipPanel;
         private Guna.UI2.WinForms.Guna2HtmlLabel tooltipLabel;
         private System.Windows.Forms.Timer tooltipTimer;
+
+        // 클래스 멤버 변수에 완료 다이얼로그 표시 여부 추가
+        private bool isCompletionDialogShown = false;
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +199,7 @@ namespace SAI.SAI.App.Views.Pages
             
             // 툴팁 패널 초기화
             InitializeTooltipPanel();
+
         }
 
         /// <summary>
@@ -244,6 +250,39 @@ namespace SAI.SAI.App.Views.Pages
                 MessageBox.Show("이미지를 불러올 수 없습니다. 경로를 확인하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        ///
+        /// classification, bounding box, segmentation에 따라 이미지 라벨링 불러오기
+        /// 
+        private void LoadImageLabels()
+        {
+            // 기본값은 빈 문자열로 설정
+            class2.Text = "";
+
+            // Classification 라벨 불러오기
+            if (imageClassifications.ContainsKey(currentImageIndex))
+            {
+                class2.Text = imageClassifications[currentImageIndex];
+            }
+            // Bounding Box 라벨 불러오기
+            else if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
+                     imageBoundingBoxes[currentImageIndex].Count > 0)
+            {
+                class2.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
+            }
+            // Segmentation 라벨 불러오기 (구현되어 있다면)
+            else if (imagePolygons.ContainsKey(currentImageIndex) &&
+                     imagePolygons[currentImageIndex].Count > 0)
+            {
+                class2.Text = imagePolygons[currentImageIndex][0].Item2;
+            }
+
+            // classBtn 가시성 업데이트
+            UpdateClassButtonVisibility();
+
+            // 이미지 갱신하여 바운딩 박스 표시
+            pictureBoxImage.Invalidate();
+        }
+
 
         /// <summary>
         /// 컨트롤 이벤트 등록
@@ -492,7 +531,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel.Text == "Classification" && currentAccuracy >= 0)
+            if (currentLevel.Text == "Classification" && currentAccuracy >= 1)
             {
                 //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
@@ -501,12 +540,17 @@ namespace SAI.SAI.App.Views.Pages
                 imagePassedStatus[currentImageIndex] = true;
                 UpdateProgressIndicator(currentImageIndex, true);
             }
-            else if (currentAccuracy >= 50)
+            else if (currentAccuracy >= 50 && currentImageIndex != 8)
             {
-                //nextBtn.Enabled = currentAccuracy >= 90.0;임시
+                //nextBtn.Enabled = currentAccuracy >= 90.0; 임시 50
                 nextBtn.Enabled = true;
 
                 // 이미지를 통과 상태로 설정
+                imagePassedStatus[currentImageIndex] = true;
+                UpdateProgressIndicator(currentImageIndex, true);
+            }
+            else if (currentAccuracy >= 50 && currentImageIndex == 8)
+            {
                 imagePassedStatus[currentImageIndex] = true;
                 UpdateProgressIndicator(currentImageIndex, true);
             }
@@ -517,16 +561,55 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 첫 번째 이미지일 경우 이전 버튼 비활성
-            preBtn.Enabled = currentImageIndex > 0;
-
             if (currentImageIndex == 0)
             {
                 preBtn.Enabled = false;
+                preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
+            }
+            else
+            {
+                preBtn.Enabled = true;
+                preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
             }
 
             // 버튼 시각적 업데이트
             nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
-            preBtn.FillColor = preBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
+            
+            // 모든 이미지가 완료되었는지 확인
+            CheckAllImagesCompleted();
+        }
+
+        /// <summary>
+        /// 모든 이미지의 라벨링이 완료되었는지 확인하고, 완료되었으면 완료 다이얼로그를 표시
+        /// </summary>
+        private void CheckAllImagesCompleted()
+        {
+            // 모든 이미지가 통과 상태인지 확인
+            bool allCompleted = true;
+            
+            for (int i = 0; i < images.Count; i++)
+            {
+                if (!imagePassedStatus.ContainsKey(i) || !imagePassedStatus[i])
+                {
+                    allCompleted = false;
+                    break;
+                }
+            }
+            
+            // 모든 이미지가 완료된 경우 완료 다이얼로그 표시
+            if (allCompleted)
+            {
+                // 이미 대화상자가 표시된 경우 중복 표시 방지
+                if (!isCompletionDialogShown)
+                {
+                    isCompletionDialogShown = true;
+                    
+                    // 완료 다이얼로그 표시
+                    DialogCompleteLabeling completeDialog = new DialogCompleteLabeling();
+                    completeDialog.Owner = this.FindForm();
+                    completeDialog.ShowDialog();
+                }
+            }
         }
 
         // 진행 상태 표시기를 업데이트하는 메서드
@@ -563,6 +646,9 @@ namespace SAI.SAI.App.Views.Pages
                     progressControl.BorderThickness = 1;
                 }
             }
+            
+            // 완료 다이얼로그 표시 여부 초기화
+            isCompletionDialogShown = false;
         }
 
         // 이미지 인덱스에 맞는 progress 버튼을 반환하는 헬퍼 메서드
@@ -1114,7 +1200,6 @@ namespace SAI.SAI.App.Views.Pages
                 toolBox.Visible = false; // Classification 단계에서는 도구창 숨김
                 accuracyPanel.Visible = false; // 정확도 패널 숨김
                 //accuracyLabel.Visible = false; // 정확도 숨김
-                levelColor.FillColor = Color.FromArgb(216, 121, 89);
 
                 // Classification 단계에서는 손 도구를 기본으로 활성화
                 isHandToolActive = true;
@@ -1138,7 +1223,6 @@ namespace SAI.SAI.App.Views.Pages
                 toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
-                levelColor.FillColor = Color.FromArgb(89, 139,246); ; // Bounding Box 단계에서는 레벨 색상 파란색으로 설정
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
@@ -1154,7 +1238,6 @@ namespace SAI.SAI.App.Views.Pages
                 toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
-                levelColor.FillColor = Color.FromArgb(83, 163, 69); // Segmentation 단계에서는 레벨 색상 초록색으로 설정
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
@@ -1172,6 +1255,8 @@ namespace SAI.SAI.App.Views.Pages
                 toolLabelingSquare.BackColor = isSquareToolActive ? Color.LightGray : Color.Transparent;
             if (toolLabelingPolygon != null)
                 toolLabelingPolygon.BackColor = isPolygonToolActive ? Color.LightGray : Color.Transparent;
+
+            LoadclassImage(); // 이미지 라벨링 불러오기
         }
 
         /// <summary>
@@ -1179,8 +1264,52 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void UpdateShowLevel()
         {
-            // 현재 이미지 인덱스는 0부터 시작하므로 1을 더해 표시
-            showLevel.Text = $"{currentImageIndex + 1}/{images.Count}";
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string folderPath = Path.Combine(baseDir, "Resources", "Images");
+
+            // 디렉터리가 존재하는지 확인
+            if (!Directory.Exists(folderPath))
+            {
+                // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\Resources"));
+
+                if (Directory.Exists(devPath))
+                {
+                    folderPath = devPath;
+                }
+                else
+                {
+                    MessageBox.Show($"이미지 폴더를 찾을 수 없습니다.\n시도한 경로:\n1. {folderPath}\n2. {devPath}",
+                                   "경로 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // 또는 기본 이미지 사용 등의 대체 전략
+                }
+            }
+
+            // 레벨 이미지가 비어있는 경우에만 로드
+            if (levelImages.Count == 0)
+            {
+                for (int i = 1; i <= 9; i++)
+                {
+                    string filePath = Path.Combine(folderPath, $"level {i}-9.png");
+                    if (File.Exists(filePath))
+                    {
+                        levelImages.Add(Image.FromFile(filePath));
+                    }
+                }
+            }
+
+            // 이미지가 로드되었고 유효한 인덱스인 경우에만 배경 이미지 설정
+            if (levelImages.Count > 0)
+            {
+                // 현재 이미지 인덱스를 사용하여 적절한 레벨 이미지 인덱스 계산
+                int levelIndex = currentImageIndex;
+                
+                // 인덱스가 범위를 벗어나지 않도록 확인
+                if (levelIndex >= 0 && levelIndex < levelImages.Count)
+                {
+                    showLevel1.BackgroundImage = levelImages[levelIndex];
+                }
+            }
         }
 
         /// <summary>
@@ -1196,10 +1325,20 @@ namespace SAI.SAI.App.Views.Pages
                     nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
                     return;
                 }
-                preBtn.Enabled = true;
-                preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
-
+                
                 currentImageIndex = currentImageIndex + 1; // 다음 이미지로 이동
+
+                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                if (currentImageIndex == 8)
+                {
+                    nextBtn.Enabled = false;
+                    nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
+                }
+                else
+                {
+                    nextBtn.Enabled = true;
+                    nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
+                }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
@@ -1244,10 +1383,25 @@ namespace SAI.SAI.App.Views.Pages
                     preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
                     return;
                 }
+                
+                currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
+                
+                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                if (currentImageIndex == 0)
+                {
+                    preBtn.Enabled = false;
+                    preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
+                }
+                else
+                {
+                    preBtn.Enabled = true;
+                    preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
+                }
+                
+                // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
                 nextBtn.Enabled = true;
                 nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
-
-                currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
+                
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
@@ -1283,34 +1437,58 @@ namespace SAI.SAI.App.Views.Pages
         /// <summary>
         /// 현재 이미지에 대한 라벨 정보를 불러옴
         /// </summary>
-        private void LoadImageLabels()
+        private void LoadclassImage()
         {
-            // 기본값은 빈 문자열로 설정
-            class2.Text = "";
-
-            // Classification 라벨 불러오기
-            if (imageClassifications.ContainsKey(currentImageIndex))
+            try
             {
-                class2.Text = imageClassifications[currentImageIndex];
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\Resources"));
+
+                // classImages가 비어있는 경우에만 로드
+                if (classImages.Count == 0)
+                {
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        string filePath = Path.Combine(devPath, $"class{i}.png");
+                        if (File.Exists(filePath))
+                        {
+                            classImages.Add(Image.FromFile(filePath));
+                        }
+                        else
+                        {
+                            // 파일이 없는 경우 로그 출력
+                            Console.WriteLine($"파일을 찾을 수 없음: {filePath}");
+                        }
+                    }
+                }
+
+                // 이미지가 로드되었고 유효한 배열인지 확인
+                if (classImages.Count >= 3)
+                {
+                    // currentLevel에 따라 배경 이미지 설정
+                    if (currentLevel.Text == "Classification")
+                    {
+                        levelPanel.BackgroundImage = classImages[0]; // class1.png
+                    }
+                    else if (currentLevel.Text == "Bounding Box")
+                    {
+                        levelPanel.BackgroundImage = classImages[1]; // class2.png
+                    }
+                    else if (currentLevel.Text == "Segmentation")
+                    {
+                        levelPanel.BackgroundImage = classImages[2]; // class3.png
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"classImages 배열이 비어있거나 크기가 충분하지 않음. 현재 크기: {classImages.Count}");
+                }
             }
-            // Bounding Box 라벨 불러오기
-            else if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
-                     imageBoundingBoxes[currentImageIndex].Count > 0)
+            catch (Exception ex)
             {
-                class2.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
-            }
-            // Segmentation 라벨 불러오기 (구현되어 있다면)
-            else if (imagePolygons.ContainsKey(currentImageIndex) &&
-                     imagePolygons[currentImageIndex].Count > 0)
-            {
-                class2.Text = imagePolygons[currentImageIndex][0].Item2;
+                Console.WriteLine($"LoadclassImage 에러: {ex.Message}");
             }
 
-            // classBtn 가시성 업데이트
-            UpdateClassButtonVisibility();
-
-            // 이미지 갱신하여 바운딩 박스 표시
-            pictureBoxImage.Invalidate();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3600,5 +3778,10 @@ namespace SAI.SAI.App.Views.Pages
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
         }
-	}
+
+        private void progress8_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

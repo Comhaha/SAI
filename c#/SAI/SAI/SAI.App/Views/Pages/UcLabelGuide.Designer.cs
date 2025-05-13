@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcLabelGuide));
             this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.totalLevelHtml = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.showLevel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.progress8 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.progress5 = new Guna.UI2.WinForms.Guna2CircleButton();
@@ -51,7 +52,6 @@
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.levelColor = new Guna.UI2.WinForms.Guna2Panel();
             this.currentLevel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.toolZoom = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.ZoomCurrent = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -68,8 +68,8 @@
             this.toolHand = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
@@ -94,34 +94,11 @@
             this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
             this.guna2CircleButton1.Image = global::SAI.Properties.Resources.ic_home;
             this.guna2CircleButton1.ImageSize = new System.Drawing.Size(39, 39);
-            this.guna2CircleButton1.Location = new System.Drawing.Point(134, 46);
+            this.guna2CircleButton1.Location = new System.Drawing.Point(134, 37);
             this.guna2CircleButton1.Name = "guna2CircleButton1";
             this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CircleButton1.Size = new System.Drawing.Size(39, 39);
             this.guna2CircleButton1.TabIndex = 0;
-            // 
-            // totalLevelHtml
-            // 
-            this.totalLevelHtml.BackColor = System.Drawing.Color.Transparent;
-            this.totalLevelHtml.Font = new System.Drawing.Font("Noto Sans KR Medium", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.totalLevelHtml.Location = new System.Drawing.Point(187, 50);
-            this.totalLevelHtml.Margin = new System.Windows.Forms.Padding(0);
-            this.totalLevelHtml.Name = "totalLevelHtml";
-            this.totalLevelHtml.Size = new System.Drawing.Size(138, 38);
-            this.totalLevelHtml.TabIndex = 1;
-            this.totalLevelHtml.Text = "0단계 라벨링";
-            this.totalLevelHtml.Click += new System.EventHandler(this.guna2HtmlLabel1_Click_4);
-            // 
-            // showLevel
-            // 
-            this.showLevel.BackColor = System.Drawing.Color.Transparent;
-            this.showLevel.Font = new System.Drawing.Font("Noto Sans KR Medium", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.showLevel.Location = new System.Drawing.Point(620, 44);
-            this.showLevel.Name = "showLevel";
-            this.showLevel.Size = new System.Drawing.Size(49, 46);
-            this.showLevel.TabIndex = 2;
-            this.showLevel.Text = "1/9";
-            this.showLevel.Click += new System.EventHandler(this.guna2HtmlLabel2_Click);
             // 
             // nextBtn
             // 
@@ -178,7 +155,7 @@
             this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel1.BackgroundImage = global::SAI.Properties.Resources.완료;
             this.guna2Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2Panel1.Location = new System.Drawing.Point(957, 44);
+            this.guna2Panel1.Location = new System.Drawing.Point(964, 36);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(209, 39);
             this.guna2Panel1.TabIndex = 8;
@@ -217,6 +194,37 @@
             this.leftPanel.Size = new System.Drawing.Size(234, 464);
             this.leftPanel.TabIndex = 4;
             this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
+            // 
+            // class2
+            // 
+            this.class2.BackColor = System.Drawing.Color.Transparent;
+            this.class2.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.class2.Location = new System.Drawing.Point(30, 49);
+            this.class2.Name = "class2";
+            this.class2.Size = new System.Drawing.Size(98, 31);
+            this.class2.TabIndex = 14;
+            this.class2.Text = "라벨링 예시";
+            this.class2.Click += new System.EventHandler(this.class2_Click);
+            // 
+            // classBtn
+            // 
+            this.classBtn.BorderThickness = 1;
+            this.classBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.classBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.classBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.classBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.classBtn.FillColor = System.Drawing.Color.Transparent;
+            this.classBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.classBtn.ForeColor = System.Drawing.Color.White;
+            this.classBtn.HoverState.BorderColor = System.Drawing.Color.DimGray;
+            this.classBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.classBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
+            this.classBtn.HoverState.ForeColor = System.Drawing.Color.Transparent;
+            this.classBtn.Location = new System.Drawing.Point(4, 58);
+            this.classBtn.Name = "classBtn";
+            this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.classBtn.Size = new System.Drawing.Size(16, 16);
+            this.classBtn.TabIndex = 12;
             // 
             // guna2CustomGradientPanel1
             // 
@@ -415,43 +423,31 @@
             // 
             // accuracyLabel
             // 
+            this.accuracyLabel.AutoSize = false;
             this.accuracyLabel.BackColor = System.Drawing.Color.Transparent;
             this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.accuracyLabel.Location = new System.Drawing.Point(30, 14);
+            this.accuracyLabel.Location = new System.Drawing.Point(7, 13);
             this.accuracyLabel.Name = "accuracyLabel";
-            this.accuracyLabel.Size = new System.Drawing.Size(98, 31);
+            this.accuracyLabel.Size = new System.Drawing.Size(148, 31);
             this.accuracyLabel.TabIndex = 13;
             this.accuracyLabel.Text = "정확도 예시";
             // 
             // levelPanel
             // 
             this.levelPanel.BackColor = System.Drawing.Color.Transparent;
-            this.levelPanel.BorderColor = System.Drawing.Color.Black;
+            this.levelPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("levelPanel.BackgroundImage")));
+            this.levelPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.levelPanel.BorderColor = System.Drawing.Color.Transparent;
             this.levelPanel.BorderThickness = 1;
-            this.levelPanel.Controls.Add(this.levelColor);
             this.levelPanel.Controls.Add(this.currentLevel);
             this.levelPanel.CustomizableEdges.BottomLeft = false;
             this.levelPanel.CustomizableEdges.TopLeft = false;
-            this.levelPanel.FillColor = System.Drawing.SystemColors.Info;
-            this.levelPanel.Location = new System.Drawing.Point(0, 16);
+            this.levelPanel.FillColor = System.Drawing.Color.Transparent;
+            this.levelPanel.Location = new System.Drawing.Point(1, 16);
             this.levelPanel.Name = "levelPanel";
             this.levelPanel.Size = new System.Drawing.Size(227, 65);
             this.levelPanel.TabIndex = 13;
             this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
-            // 
-            // levelColor
-            // 
-            this.levelColor.BorderColor = System.Drawing.Color.Transparent;
-            this.levelColor.BorderThickness = 1;
-            this.levelColor.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.levelColor.CustomizableEdges.BottomLeft = false;
-            this.levelColor.CustomizableEdges.TopLeft = false;
-            this.levelColor.FillColor = System.Drawing.Color.RosyBrown;
-            this.levelColor.Location = new System.Drawing.Point(193, 1);
-            this.levelColor.Name = "levelColor";
-            this.levelColor.Size = new System.Drawing.Size(33, 63);
-            this.levelColor.TabIndex = 11;
-            this.levelColor.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel4_Paint);
             // 
             // currentLevel
             // 
@@ -459,9 +455,10 @@
             this.currentLevel.Font = new System.Drawing.Font("Noto Sans KR Medium", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.currentLevel.Location = new System.Drawing.Point(30, 17);
             this.currentLevel.Name = "currentLevel";
-            this.currentLevel.Size = new System.Drawing.Size(101, 38);
+            this.currentLevel.Size = new System.Drawing.Size(3, 2);
             this.currentLevel.TabIndex = 10;
-            this.currentLevel.Text = "단계 예시";
+            this.currentLevel.Text = null;
+            this.currentLevel.Visible = false;
             this.currentLevel.Click += new System.EventHandler(this.currentLevel_Click_1);
             // 
             // toolZoom
@@ -685,47 +682,36 @@
             this.pictureBoxImage.WaitOnLoad = true;
             this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click_1);
             // 
-            // class2
+            // showLevel1
             // 
-            this.class2.BackColor = System.Drawing.Color.Transparent;
-            this.class2.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.class2.Location = new System.Drawing.Point(30, 49);
-            this.class2.Name = "class2";
-            this.class2.Size = new System.Drawing.Size(98, 31);
-            this.class2.TabIndex = 14;
-            this.class2.Text = "라벨링 예시";
-            this.class2.Click += new System.EventHandler(this.class2_Click);
+            this.showLevel1.BackColor = System.Drawing.Color.Transparent;
+            this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_9;
+            this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.showLevel1.Location = new System.Drawing.Point(624, 44);
+            this.showLevel1.Name = "showLevel1";
+            this.showLevel1.Size = new System.Drawing.Size(40, 27);
+            this.showLevel1.TabIndex = 0;
             // 
-            // classBtn
+            // totalLevelpanel
             // 
-            this.classBtn.BorderThickness = 1;
-            this.classBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.classBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.classBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.classBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.classBtn.FillColor = System.Drawing.Color.Transparent;
-            this.classBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.classBtn.ForeColor = System.Drawing.Color.White;
-            this.classBtn.HoverState.BorderColor = System.Drawing.Color.DimGray;
-            this.classBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.classBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.classBtn.HoverState.ForeColor = System.Drawing.Color.Transparent;
-            this.classBtn.Location = new System.Drawing.Point(4, 58);
-            this.classBtn.Name = "classBtn";
-            this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.classBtn.Size = new System.Drawing.Size(16, 16);
-            this.classBtn.TabIndex = 12;
+            this.totalLevelpanel.BackColor = System.Drawing.Color.Transparent;
+            this.totalLevelpanel.BackgroundImage = global::SAI.Properties.Resources._0단계_라벨링;
+            this.totalLevelpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.totalLevelpanel.Location = new System.Drawing.Point(179, 39);
+            this.totalLevelpanel.Name = "totalLevelpanel";
+            this.totalLevelpanel.Size = new System.Drawing.Size(130, 35);
+            this.totalLevelpanel.TabIndex = 9;
             // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+            this.Controls.Add(this.totalLevelpanel);
+            this.Controls.Add(this.showLevel1);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.preBtn);
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.mainpanel);
-            this.Controls.Add(this.showLevel);
-            this.Controls.Add(this.totalLevelHtml);
             this.Controls.Add(this.guna2CircleButton1);
             this.Name = "UcLabelGuide";
             this.Size = new System.Drawing.Size(1280, 720);
@@ -735,7 +721,6 @@
             this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.imageContainer.ResumeLayout(false);
             this.accuracyPanel.ResumeLayout(false);
-            this.accuracyPanel.PerformLayout();
             this.levelPanel.ResumeLayout(false);
             this.levelPanel.PerformLayout();
             this.toolZoom.ResumeLayout(false);
@@ -744,15 +729,12 @@
             this.toolBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel totalLevelHtml;
-        private Guna.UI2.WinForms.Guna2HtmlLabel showLevel;
         private Guna.UI2.WinForms.Guna2CircleButton nextBtn;
         private Guna.UI2.WinForms.Guna2CircleButton preBtn;
         private Guna.UI2.WinForms.Guna2HtmlLabel class1;
@@ -773,7 +755,6 @@
         private Guna.UI2.WinForms.Guna2Panel accuracyPanel;
         private Guna.UI2.WinForms.Guna2HtmlLabel accuracyLabel;
         private Guna.UI2.WinForms.Guna2Panel levelPanel;
-        private Guna.UI2.WinForms.Guna2Panel levelColor;
         private Guna.UI2.WinForms.Guna2HtmlLabel currentLevel;
         private Guna.UI2.WinForms.Guna2GradientPanel toolZoom;
         private Guna.UI2.WinForms.Guna2HtmlLabel ZoomCurrent;
@@ -792,5 +773,7 @@
         private Guna.UI2.WinForms.Guna2PictureBox pictureBoxImage;
         private Guna.UI2.WinForms.Guna2HtmlLabel class2;
         private Guna.UI2.WinForms.Guna2CircleButton classBtn;
+        private Guna.UI2.WinForms.Guna2Panel showLevel1;
+        private Guna.UI2.WinForms.Guna2Panel totalLevelpanel;
     }
 }

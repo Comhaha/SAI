@@ -367,9 +367,6 @@
   <data name="strawberry_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\strawberry-1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Frame" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\Frame.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="btn_learnmodel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_learnmodel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -748,15 +745,6 @@
   <data name="btn_tutorial1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_tutorial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="class_BoundingBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\class BoundingBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="class_Classification" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\class Classification.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="class_Segmentation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\class Segmentation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="level_1_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level 1-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -783,5 +771,17 @@
   </data>
   <data name="level_9_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level 9-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_0단계_라벨링" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\0단계 라벨링.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
