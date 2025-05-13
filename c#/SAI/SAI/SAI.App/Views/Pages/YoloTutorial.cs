@@ -7,22 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class YoloTutorial : UserControl, IYoloTutorialView
     {
+        private YoloTutorialPresenter presenter;
+
         public YoloTutorial()
         {
+            presenter = new YoloTutorialPresenter(this);
             InitializeComponent();
             YoloTutorialRun.Click += (s, e) => RunButtonClicked?.Invoke(this, e);
+            logOutput.Visible = false; // 초기에는 로그 숨기기
         }
 
         public event EventHandler RunButtonClicked;
 
         private void YoloTutorial_Load(object sender, EventArgs e)
         {
+            // 초기화 로직이 필요한 경우 여기에 추가
         }
 
         public void ShowErrorMessage(string message) {

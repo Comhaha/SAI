@@ -28,10 +28,16 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.BackColor = Color.Green;           // 투명 처리할 색
             this.TransparencyKey = Color.Green;
 
-			btnTrain.Visible = false; // 처음에는 Train 버튼 안보이게
-			btnTutorial.Visible = false; // 처음에는 Tutorial 버튼 안보이게
+			string clicked = "btnYolo";
+			clicked = "btnYolo";
+			btnYolo.BackgroundImage = Properties.Resources.btn_yolo_clicked;
+			btnEfficient.BackgroundImage = Properties.Resources.btn_efficientdet;
+			btnFaster.BackgroundImage = Properties.Resources.btn_faster;
 
-			string clicked = "";
+			this.BackgroundImage = Properties.Resources.selectYolo;
+			btnTutorial.Visible = true;
+			btnTrain.Visible = true;
+
 
 			// btnYolo
 			btnYolo.BackColor = Color.Transparent;

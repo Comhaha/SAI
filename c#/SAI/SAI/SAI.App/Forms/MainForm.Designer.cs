@@ -19,7 +19,7 @@
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+			this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
 			this.titlebar = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
 			this.btnMinScreen = new Guna.UI2.WinForms.Guna2Button();
@@ -29,16 +29,22 @@
 			this.titlebar.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// guna2Panel1
+			// mainPanel
 			// 
-			this.guna2Panel1.Location = new System.Drawing.Point(0, 30);
-			this.guna2Panel1.Margin = new System.Windows.Forms.Padding(2);
-			this.guna2Panel1.Name = "guna2Panel1";
-			this.guna2Panel1.Size = new System.Drawing.Size(1280, 720);
-			this.guna2Panel1.TabIndex = 5;
+			this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.mainPanel.Location = new System.Drawing.Point(0, 30);
+			this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
+			this.mainPanel.MinimumSize = new System.Drawing.Size(1280, 720);
+			this.mainPanel.Name = "mainPanel";
+			this.mainPanel.Size = new System.Drawing.Size(1280, 720);
+			this.mainPanel.TabIndex = 5;
 			// 
 			// titlebar
 			// 
+			this.titlebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.titlebar.BackColor = System.Drawing.Color.Transparent;
 			this.titlebar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("titlebar.BackgroundImage")));
 			this.titlebar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -53,6 +59,7 @@
 			// 
 			// btnSetting
 			// 
+			this.btnSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSetting.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_setting;
 			this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -71,6 +78,7 @@
 			// 
 			// btnMinScreen
 			// 
+			this.btnMinScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnMinScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_minscreen;
 			this.btnMinScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnMinScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -88,6 +96,7 @@
 			// 
 			// btnFullScreen
 			// 
+			this.btnFullScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFullScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_fullscreen;
 			this.btnFullScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnFullScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -105,6 +114,7 @@
 			// 
 			// btnClose
 			// 
+			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_close;
 			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -128,9 +138,11 @@
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(1280, 750);
 			this.Controls.Add(this.titlebar);
-			this.Controls.Add(this.guna2Panel1);
+			this.Controls.Add(this.mainPanel);
+			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.MinimumSize = new System.Drawing.Size(1280, 750);
@@ -143,7 +155,7 @@
         }
 
 		#endregion
-		private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+		private Guna.UI2.WinForms.Guna2Panel mainPanel;
 		private Guna.UI2.WinForms.Guna2Panel titlebar;
 		private Guna.UI2.WinForms.Guna2Button btnFullScreen;
 		private Guna.UI2.WinForms.Guna2Button btnClose;
