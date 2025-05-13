@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using ScintillaNET;
 
@@ -10,6 +11,7 @@ namespace SAI.SAI.App.Views.Pages
     {
         private Scintilla scintilla1;
         private bool accumulateCode = false; // 코드 누적 여부 (기본값: 누적하지 않음)
+        private string lastAddedCode = string.Empty; // 마지막으로 추가된 코드 저장
 
         public UcCode()
         {
@@ -32,7 +34,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 기본 설정
                 scintilla1.StyleResetDefault();
                 scintilla1.Styles[Style.Default].Font = "Consolas";
-                scintilla1.Styles[Style.Default].Size = 10;
+                scintilla1.Styles[Style.Default].Size = 6;
                 scintilla1.Styles[Style.Default].BackColor = Color.FromArgb(255, 255, 255);
                 scintilla1.Styles[Style.Default].ForeColor = Color.Black; // 기본 텍스트 색상: 검정
 
@@ -77,16 +79,6 @@ namespace SAI.SAI.App.Views.Pages
                 // 기타 스타일
                 scintilla1.Styles[11].ForeColor = Color.Blue; // 식별자
 
-                // 모든 인디케이터 비활성화 (0-31)
-                for (int i = 0; i < 32; i++)
-                {
-                    scintilla1.Indicators[i].Style = IndicatorStyle.Hidden;
-                    scintilla1.Indicators[i].ForeColor = Color.Transparent;
-                    scintilla1.Indicators[i].Alpha = 0;
-                    scintilla1.Indicators[i].OutlineAlpha = 0;
-                    scintilla1.Indicators[i].Under = true;
-                }
-
                 // 여백 스타일 설정 (추가)
                 scintilla1.SetWhitespaceForeColor(true, Color.FromArgb(255, 255, 255));
                 scintilla1.SetWhitespaceBackColor(true, Color.FromArgb(255, 255, 255));
@@ -122,7 +114,7 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine("[INFO] UcCode: 대체 TextBox가 Controls에 추가됨");
         }
 
-        // 기본 업데이트 메서드 - 하이라이트 없이 코드만 업데이트
+        // 기본 업데이트 메서드 - 코드만 업데이트
         public void UpdateCode(string code)
         {
             try
@@ -153,12 +145,15 @@ namespace SAI.SAI.App.Views.Pages
                 // 새 코드 추가
                 scintilla1.Text = code ?? string.Empty;
 
-                // 모든 하이라이트 강제 제거
-                ForceRemoveAllHighlights();
+                // 마지막으로 추가된 코드 저장
+                lastAddedCode = code ?? string.Empty;
 
                 // 읽기 전용 복원
                 if (wasReadOnly)
                     scintilla1.ReadOnly = true;
+
+                // 항상 전체 코드 하이라이트
+                HighlightBlockByComment(null);
 
                 // 마지막 라인으로 스크롤
                 scintilla1.GotoPosition(scintilla1.TextLength);
@@ -171,56 +166,22 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 모든 하이라이트 강제 제거 - 더 적극적인 방법 사용
-        private void ForceRemoveAllHighlights()
+        // 하이라이트 제거 메서드
+        public void ClearHighlight()
         {
             try
             {
                 if (scintilla1 == null)
                     return;
 
-                // 모든 인디케이터 범위 제거 (0-31)
-                for (int i = 0; i < 32; i++)
-                {
-                    scintilla1.IndicatorCurrent = i;
-                    scintilla1.IndicatorClearRange(0, scintilla1.TextLength);
-                }
-
                 // 선택 영역 제거
                 scintilla1.SetSelection(scintilla1.CurrentPosition, scintilla1.CurrentPosition);
 
-                // 스타일 초기화 강제 적용
-                scintilla1.StyleClearAll();
+                // 선택 색상 초기화
+                scintilla1.SetSelectionBackColor(false, Color.White);
+                scintilla1.SetSelectionForeColor(false, Color.Black);
 
-                // 파이썬 구문 강조 다시 적용
-                scintilla1.Lexer = Lexer.Python;
-                scintilla1.SetKeywords(0,
-                    "and as assert break class continue def del elif else except " +
-                    "False finally for from global if import in is lambda None " +
-                    "not or pass print raise return True try while with yield");
-
-                // 스타일 재설정
-                // 주석
-                scintilla1.Styles[1].ForeColor = Color.Green; // 주석
-                scintilla1.Styles[12].ForeColor = Color.Green; // 블록 주석
-
-                // 숫자 및 문자열
-                scintilla1.Styles[2].ForeColor = Color.LightBlue; // 숫자
-                scintilla1.Styles[3].ForeColor = Color.FromArgb(214, 157, 133); // 문자열
-                scintilla1.Styles[7].ForeColor = Color.FromArgb(214, 157, 133); // 문자
-
-                // 키워드 및 연산자
-                scintilla1.Styles[5].ForeColor = Color.FromArgb(86, 156, 214); // 키워드
-                scintilla1.Styles[10].ForeColor = Color.Blue; // 연산자
-
-                // 기타 스타일
-                scintilla1.Styles[11].ForeColor = Color.Blue; // 식별자
-
-                // 라인 번호 스타일 복원 - 더 어두운 색상으로
-                scintilla1.Styles[Style.LineNumber].BackColor = Color.FromArgb(255, 255, 255);
-                scintilla1.Styles[Style.LineNumber].ForeColor = Color.Green;
-
-                // 코드 다시 렌더링 강제화
+                // 화면 갱신
                 scintilla1.Refresh();
             }
             catch (Exception ex)
@@ -229,28 +190,204 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 하이라이트 제거 메서드 - 강제 제거 호출
-        public void ClearHighlight()
-        {
-            ForceRemoveAllHighlights();
-        }
-
-        // 특정 텍스트에 하이라이트 적용 - 빈 메서드로 대체 (아무 작업 안함)
-        public void HighlightText(string text)
-        {
-            // 하이라이트 기능 비활성화됨 - 아무 작업 안함
-            Console.WriteLine($"[INFO] UcCode: 하이라이트 기능이 비활성화되어 있습니다.");
-        }
-
-        // 선택한 줄에 하이라이트 적용 - 빈 메서드로 대체 (아무 작업 안함)
+        // 선택한 줄에 하이라이트 적용
         public void HighlightLine(int lineIndex)
         {
-            // 하이라이트 기능 비활성화됨 - 아무 작업 안함
-            Console.WriteLine($"[INFO] UcCode: 하이라이트 기능이 비활성화되어 있습니다.");
+            try
+            {
+                if (scintilla1 == null)
+                    return;
+
+                // 라인 인덱스 유효성 검사
+                if (lineIndex < 0)
+                    lineIndex = 0;
+
+                if (scintilla1.Lines.Count == 0)
+                    return;
+
+                if (lineIndex >= scintilla1.Lines.Count)
+                    lineIndex = 0;
+
+                Console.WriteLine($"[DEBUG] 하이라이트: 선택 방식 시도, 라인 {lineIndex}");
+
+                // 라인 정보 가져오기
+                int lineStart = scintilla1.Lines[lineIndex].Position;
+                int lineLength = scintilla1.Lines[lineIndex].Length;
+
+                // 해당 라인으로 스크롤
+                scintilla1.GotoPosition(lineStart);
+
+                // 선택 색상 설정
+                scintilla1.SetSelectionBackColor(true, Color.Red);
+                scintilla1.SetSelectionForeColor(true, Color.White);
+
+                // 해당 라인 선택
+                scintilla1.SelectionStart = lineStart;
+                scintilla1.SelectionEnd = lineStart + lineLength;
+
+                Console.WriteLine($"[DEBUG] 선택 완료: 시작={lineStart}, 끝={lineStart + lineLength}");
+
+                // 스타일 강제 적용
+                scintilla1.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 라인 하이라이트 오류: {ex.Message}");
+            }
         }
 
-        // Text 속성 - 하이라이트 없이 텍스트만 설정
-        // new 키워드 추가하여 경고 제거
+        // 블록 하이라이트 함수 - 개선된 버전
+        public void HighlightBlockByComment(string comment)
+        {
+            try
+            {
+                Console.WriteLine($"[DEBUG] 코드 하이라이트 시도");
+
+                if (scintilla1 == null || string.IsNullOrEmpty(scintilla1.Text))
+                    return;
+
+                // 하이라이트 적용 전에 기존 선택 지우기
+                ClearHighlight();
+
+                // comment가 null이거나 비어있으면 전체 코드 하이라이트
+                if (string.IsNullOrEmpty(comment))
+                {
+                    // 전체 코드 하이라이트
+                    Console.WriteLine($"[DEBUG] 전체 코드 하이라이트 적용 시도");
+
+                    // 선택 스타일 설정 (검정색 배경, 흰색 텍스트)
+                    scintilla1.SetSelectionBackColor(true, Color.Black); // 검정색 배경
+                    scintilla1.SetSelectionForeColor(true, Color.White); // 흰색 텍스트
+
+                    // 전체 코드 선택
+                    scintilla1.SelectionStart = 0;
+                    scintilla1.SelectionEnd = scintilla1.TextLength;
+
+                    // 스크롤 시작 부분으로 이동
+                    scintilla1.GotoPosition(0);
+                    scintilla1.ScrollCaret();
+
+                    Console.WriteLine($"[DEBUG] 전체 코드 하이라이트 완료: {scintilla1.TextLength}자");
+                    return;
+                }
+
+                // 주석 기반 블록 하이라이트
+                string cleanComment = comment.Replace("#", "").Trim();
+
+                // 주요 블록 주석 패턴
+                string[] possibleKeywords = new string[] {
+                    "패키지 설치", "모델 불러오기", "데이터 불러오기",
+                    "모델 학습", "학습 결과", "이미지 경로", "추론 실행", "결과 시각화"
+                };
+
+                // 가장 가능성 높은 키워드 찾기
+                string targetKeyword = "";
+                foreach (string keyword in possibleKeywords)
+                {
+                    if (cleanComment.Contains(keyword))
+                    {
+                        targetKeyword = keyword;
+                        break;
+                    }
+                }
+
+                // 키워드가 없으면 원본 주석 사용
+                if (string.IsNullOrEmpty(targetKeyword))
+                {
+                    targetKeyword = cleanComment;
+                }
+
+                Console.WriteLine($"[DEBUG] 검색할 키워드: '{targetKeyword}'");
+
+                // 모든 라인을 순회하며 주석 검색
+                int startLine = -1;
+
+                // 주석 찾기
+                for (int i = 0; i < scintilla1.Lines.Count; i++)
+                {
+                    string line = scintilla1.Lines[i].Text.Trim();
+                    if (line.StartsWith("#") && line.Contains(targetKeyword))
+                    {
+                        startLine = i;
+                        Console.WriteLine($"[DEBUG] 주석 찾음: 라인 {i}, 내용: '{line}'");
+                        break;
+                    }
+                }
+
+                int endLine = -1;
+
+                // 시작 라인을 찾은 경우에만 끝 라인 찾기
+                if (startLine >= 0)
+                {
+                    // 해당 블록의 끝 찾기
+                    for (int i = startLine + 1; i < scintilla1.Lines.Count; i++)
+                    {
+                        string line = scintilla1.Lines[i].Text.Trim();
+
+                        // 빈 줄이 나오면 블록 경계로 간주
+                        if (string.IsNullOrWhiteSpace(line))
+                        {
+                            endLine = i - 1;
+                            break;
+                        }
+
+                        // 새로운 주석(#으로 시작)을 만나면 블록 끝으로 간주
+                        if (line.StartsWith("#") && i > startLine + 1)
+                        {
+                            endLine = i - 1;
+                            break;
+                        }
+
+                        // 마지막 라인인 경우
+                        if (i == scintilla1.Lines.Count - 1)
+                        {
+                            endLine = i;
+                        }
+                    }
+                }
+                else
+                {
+                    // 주석을 찾지 못한 경우 첫 번째 라인부터 시작
+                    startLine = 0;
+                    endLine = Math.Min(5, scintilla1.Lines.Count - 1);
+                }
+
+                Console.WriteLine($"[DEBUG] 블록 범위: 시작 라인 {startLine}, 끝 라인 {endLine}");
+
+                // 블록 선택
+                if (startLine >= 0 && endLine >= startLine)
+                {
+                    int blockStart = scintilla1.Lines[startLine].Position;
+                    int blockEnd = scintilla1.Lines[endLine].EndPosition;
+
+                    // 선택 스타일 설정
+                    scintilla1.SetSelectionBackColor(true, Color.FromArgb(180, 60, 60)); // 진한 빨간색 배경
+                    scintilla1.SetSelectionForeColor(true, Color.White); // 흰색 텍스트
+
+                    // 블록 선택
+                    scintilla1.SelectionStart = blockStart;
+                    scintilla1.SelectionEnd = blockEnd;
+
+                    // 해당 위치로 스크롤
+                    scintilla1.GotoPosition(blockStart);
+                    scintilla1.ScrollCaret();
+
+                    Console.WriteLine($"[DEBUG] 블록 선택 완료: 시작 위치 {blockStart}, 끝 위치 {blockEnd}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 블록 하이라이트 중 오류: {ex.Message}");
+                try
+                {
+                    // 오류 발생시 첫 번째 라인 하이라이트
+                    HighlightLine(0);
+                }
+                catch { } // 추가 오류 무시
+            }
+        }
+
+        // Text 속성
         public new string Text
         {
             get { return scintilla1?.Text ?? string.Empty; }
@@ -267,12 +404,15 @@ namespace SAI.SAI.App.Views.Pages
 
                         scintilla1.Text = value ?? string.Empty;
 
-                        // 모든 하이라이트 강제 제거
-                        ForceRemoveAllHighlights();
+                        // 마지막으로 추가된 코드 저장
+                        lastAddedCode = value ?? string.Empty;
 
                         // 읽기 전용 복원
                         if (wasReadOnly)
                             scintilla1.ReadOnly = true;
+
+                        // 전체 코드 하이라이트
+                        HighlightBlockByComment(null);
                     }
                 }
                 catch (Exception ex)
@@ -289,7 +429,7 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine($"[INFO] UcCode: 코드 누적 모드 설정 - {(accumulate ? "활성화" : "비활성화")}");
         }
 
-        // AppendCode 메서드 추가 - BlocklyPresenter에서 호출
+        // AppendCode 메서드
         public void AppendCode(string code, string blockId = null)
         {
             try
@@ -334,15 +474,15 @@ namespace SAI.SAI.App.Views.Pages
                     scintilla1.Text = code;
                 }
 
-                // 모든 하이라이트 강제 제거
-                ForceRemoveAllHighlights();
-
-                // 마지막 라인으로 스크롤
-                scintilla1.GotoPosition(scintilla1.TextLength);
+                // 마지막으로 추가된 코드 저장
+                lastAddedCode = code;
 
                 // 읽기 전용 복원
                 if (wasReadOnly)
                     scintilla1.ReadOnly = true;
+
+                // 항상 전체 코드 하이라이트
+                HighlightBlockByComment(null);
 
                 Console.WriteLine("[DEBUG] UcCode: 코드 추가 완료");
             }
@@ -356,7 +496,6 @@ namespace SAI.SAI.App.Views.Pages
         private void UcCode_Load(object sender, EventArgs e)
         {
             Console.WriteLine("[DEBUG] UcCode: UcCode_Load 이벤트 발생");
-            // 필요한 초기화 코드 추가
         }
 
         // 모든 코드 지우기
@@ -373,8 +512,11 @@ namespace SAI.SAI.App.Views.Pages
 
                 scintilla1.Text = string.Empty;
 
-                // 모든 하이라이트 강제 제거
-                ForceRemoveAllHighlights();
+                // 마지막 코드 초기화
+                lastAddedCode = string.Empty;
+
+                // 하이라이트도 제거
+                ClearHighlight();
 
                 if (wasReadOnly)
                     scintilla1.ReadOnly = true;
@@ -387,11 +529,20 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 추가: 블록 ID 기반 하이라이트 함수 (비활성화됨)
-        public void HighlightBlockByComments(string blockId)
+        protected override void OnLoad(EventArgs e)
         {
-            // 하이라이트 기능 비활성화됨 - 아무 작업 안함
-            Console.WriteLine($"[INFO] UcCode: 하이라이트 기능이 비활성화되어 있습니다.");
+            base.OnLoad(e);
+            if (scintilla1 != null)
+            {
+                scintilla1.Text = "테스트 코드\nprint('Hello')";
+                scintilla1.SetSelectionBackColor(true, Color.Red);
+                scintilla1.SetSelectionForeColor(true, Color.White);
+                scintilla1.SelectionStart = 0;
+                scintilla1.SelectionEnd = scintilla1.TextLength;
+                scintilla1.GotoPosition(0);
+                scintilla1.ScrollCaret();
+                scintilla1.Refresh();
+            }
         }
     }
 }

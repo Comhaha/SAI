@@ -392,14 +392,11 @@
   <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="webViewBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
   <data name="webViewBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 39</value>
+    <value>3, 37</value>
   </data>
   <data name="webViewBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 479</value>
+    <value>302, 460</value>
   </data>
   <data name="webViewBlock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -579,99 +576,6 @@
   </data>
   <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="tboxZoomBlock.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="tboxZoomBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 27</value>
-  </data>
-  <data name="tboxZoomBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="tboxZoomBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 30</value>
-  </data>
-  <data name="tboxZoomBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomBlock.Name" xml:space="preserve">
-    <value>tboxZoomBlock</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomBlock.Parent" xml:space="preserve">
-    <value>pZoomBlock</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomBlock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ibtnMinusBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 57</value>
-  </data>
-  <data name="ibtnMinusBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>26, 24</value>
-  </data>
-  <data name="ibtnMinusBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusBlock.Name" xml:space="preserve">
-    <value>ibtnMinusBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusBlock.Parent" xml:space="preserve">
-    <value>pZoomBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ibtnPlusBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ibtnPlusBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 24</value>
-  </data>
-  <data name="ibtnPlusBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusBlock.Name" xml:space="preserve">
-    <value>ibtnPlusBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusBlock.Parent" xml:space="preserve">
-    <value>pZoomBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pZoomBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 410</value>
-  </data>
-  <data name="pZoomBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="pZoomBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 87</value>
-  </data>
-  <data name="pZoomBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pZoomBlock.Name" xml:space="preserve">
-    <value>pZoomBlock</value>
-  </data>
-  <data name="&gt;&gt;pZoomBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pZoomBlock.Parent" xml:space="preserve">
-    <value>pBlock</value>
-  </data>
-  <data name="&gt;&gt;pZoomBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>379, 32</value>
@@ -854,7 +758,7 @@
     <value>198, 16</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 41</value>
+    <value>37, 27</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1154,7 +1058,7 @@
     <value>35, 368</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 41</value>
+    <value>171, 27</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1181,7 +1085,7 @@
     <value>44, 81</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 26</value>
+    <value>58, 17</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1208,7 +1112,7 @@
     <value>40, 36</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 41</value>
+    <value>76, 27</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

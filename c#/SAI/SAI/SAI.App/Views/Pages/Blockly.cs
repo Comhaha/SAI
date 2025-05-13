@@ -444,5 +444,10 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			webView21.ZoomFactor = 0.7;
         }
-	}
+
+        private void Blockly_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

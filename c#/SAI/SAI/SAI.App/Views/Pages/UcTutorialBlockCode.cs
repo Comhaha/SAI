@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -11,11 +11,13 @@ using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView
 	{
+		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
 		private readonly IMainView mainView;
@@ -23,8 +25,9 @@ namespace SAI.SAI.App.Views.Pages
 		public event EventHandler HomeButtonClicked;
 
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
-		private JsBridge jsBridge;
+        public event EventHandler RunButtonClicked;
+
+        private JsBridge jsBridge;
 		
         private TodoManager todoManager;
         // todo 위에서부터 index 0~2번 입니다.
@@ -34,27 +37,54 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-        public UcTutorialBlockCode(IMainView view)
-        {
-            InitializeComponent();
+		private MemoPresenter memoPresenter;
+
+
+		private int undoCount = 0;
+		public UcTutorialBlockCode(IMainView view)
+		{
+			InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
+			yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
+			btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
+			undoCount = 0;
+			ibtnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+
 			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
-            ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
-            ibtnInfer.BackColor = Color.Transparent;    
-            ibtnMemo.BackColor = Color.Transparent;
+			ibtnHome.BackColor = Color.Transparent;
+			ibtnDone.BackColor = Color.Transparent;
+			ibtnInfer.BackColor = Color.Transparent;
+			ibtnMemo.BackColor = Color.Transparent;
 
 			InitializeWebView2();
 
-            // 블록 시작만 보이고 나머지는 안 보이게 초기화.
-            InitializeBlockButton();
+			// 블록 시작만 보이고 나머지는 안 보이게 초기화.
+			InitializeBlockButton();
 			setBtnBlockStart();
 
+			// btnRunModel
+			btnRunModel.BackColor = Color.Transparent;
+			btnRunModel.PressedColor = Color.Transparent;
+			btnRunModel.CheckedState.FillColor = Color.Transparent;
+			btnRunModel.DisabledState.FillColor = Color.Transparent;
+			btnRunModel.HoverState.FillColor = Color.Transparent;
+			// btnRunModel 마우스 입력 될 때
+			btnRunModel.MouseEnter += (s, e) =>
+			{
+				btnRunModel.BackColor = Color.Transparent;
+				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
+			};
+			// btnRunModel 마우스 떠날때
+			btnRunModel.MouseLeave += (s, e) =>
+			{
+				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+			};
 
 			// 블록 버튼 클릭 이벤트 처리
 			btnBlockStart.Click += (s, e) =>
@@ -62,49 +92,41 @@ namespace SAI.SAI.App.Views.Pages
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
 			};
-			btnBlockStart.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("start"));
 			btnPip.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 				setBtnLoadModel();
 			};
-			btnPip.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 			btnLoadModel.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadModel"));
 				setBtnLoadDataset();
 			};
-			btnLoadModel.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadModel"));
 			btnLoadDataset.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 				setBtnMachineLearning();
 			};
-			btnLoadDataset.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("loadDataset"));
 			btnMachineLearning.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
 				setBtnResultGraph();
 			};
-			btnMachineLearning.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("machineLearning"));
 			btnResultGraph.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
 				setBtnImgPath();
 			};
-			btnResultGraph.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("resultGraph"));
 			btnImgPath.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("imgPath"));
 				setBtnModelInference();
 			};
-			btnImgPath.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("imgPath"));
 			btnModelInference.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("modelInference"));
 				setBtnVisualizeResult();
 			};
-			btnModelInference.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("modelInference"));
 			btnVisualizeResult.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
@@ -113,10 +135,33 @@ namespace SAI.SAI.App.Views.Pages
 				labelBlockContent.Text = "실행 버튼을 클릭하여\r\n모델을 학습시켜보세요.\r\n";
 				pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
 			};
-			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
-		}
 
-		private void setButtonVisible(Guna2Button button)
+            var codeContainer = new UcTabCodeContainer();
+            codeContainer.Dock = DockStyle.Fill;
+            guna2Panel1.Controls.Add(codeContainer);
+
+            // CodePresenter 생성 및 BlocklyPresenter에 설정
+            try
+            {
+                var mainEditor = codeContainer.GetMainCodeEditor();
+                if (mainEditor != null)
+                {
+                    var codePresenter = new CodePresenter(mainEditor);
+                    blocklyPresenter.SetCodePresenter(codePresenter);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                }
+                else
+                {
+                    Console.WriteLine("[WARNING] UcTutorialBlockCode: mainEditor가 null입니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+            }
+        }
+
+        private void setButtonVisible(Guna2Button button)
 		{
 			button.Visible = true;
 		}
@@ -410,31 +455,6 @@ namespace SAI.SAI.App.Views.Pages
             todoManager.SetTodoStatus(index, false); // false면 완료 상태
         }
 
-        private void leftPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void baseFramePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void leftPanel_Paint_1(object sender, PaintEventArgs e)
-        {
-            
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnl_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
         {
             HomeButtonClicked?.Invoke(this, EventArgs.Empty); // Presenter에게 알림
@@ -452,48 +472,20 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void ibtnPlusBlock_Click(object sender, EventArgs e)
-        {
-
-        }
-
+		// JS 함수 호출 = 블럭 모두 삭제
         private void btnTrashBlock_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void pTopCenter_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ibtnCopy_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+			webViewblock.ExecuteScriptAsync($"clear()");
+		}
 
         private void ibtnDone_Click(object sender, EventArgs e)
         {
 			ucShowDialogPresenter.clickGoTrain();
 		}
 
-		private void ibtnRunModel_Click(object sender, EventArgs e)
+		private void btnRunModel_Click(object sender, EventArgs e)
 		{
+
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 			labelBlockTitle.Text = "추론 결과 확인하기";
 			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
@@ -529,6 +521,7 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.ShowDialog();
 		}
 
+		// webview에 blockly tutorial html 붙이기
 		private async void InitializeWebView2()
 		{
 			jsBridge = new JsBridge((message, type) =>
@@ -588,6 +581,11 @@ namespace SAI.SAI.App.Views.Pages
 								string blockCode = root.GetProperty("code").GetString();
 								jsBridge.receiveMessageFromJs(blockCode, type);
 								break;
+
+							case "blockDoubleClick":
+								string eventCode = root.GetProperty("code").GetString();
+								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
 						}
 					}
 				}
@@ -597,17 +595,19 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-			webViewblock.ZoomFactor = 0.7; // 줌 비율 설정
+			webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
 			webViewblock.Source = new Uri(uri);
 		}
 
+		// JS 함수 호출 = 블럭 넣기
 		public void addBlock(string blockType)
 		{
 			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
 		}
 
+		// JS 함수호출 = 하나의 블럭의 코드 가져오기
 		public void getPythonCodeByType(string blockType)
 		{
 			webViewblock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
@@ -616,9 +616,110 @@ namespace SAI.SAI.App.Views.Pages
 		// blockly 웹뷰 확대 조절 함수
 		private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
 		{
-			webViewblock.ZoomFactor = 0.7;
+			webViewblock.ZoomFactor = 0.5;
 		}
 
+		// JS 함수 호출 = 다시 실행하기
+		private void ibtnNextBlock_Click(object sender, EventArgs e)
+		{
+			undoCount--;
+			webViewblock.ExecuteScriptAsync($"redo()");
 
-	}
+			if(undoCount == 0)
+			{
+				ibtnNextBlock.Visible = false;
+				ibtnPreBlock.Visible = true;
+			}
+			else
+			{
+				ibtnNextBlock.Visible = true;
+				ibtnPreBlock.Visible = true;
+			}
+		}
+
+		// JS 함수 호출 = 되돌리기
+		private void ibtnPreBlock_Click(object sender, EventArgs e)
+		{
+			if(undoCount <= 10)
+			{
+				undoCount++;
+				webViewblock.ExecuteScriptAsync($"undo()");
+				ibtnNextBlock.Visible = true;
+				ibtnPreBlock.Visible = true;
+			}
+			else
+			{
+				ibtnNextBlock.Visible = true;
+				ibtnPreBlock.Visible = false;
+			}
+		}
+        private void pSideInfer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void AppendLog(string text)
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(() => AppendLog(text)));
+            //}
+            //else
+            //{
+            //    logOutput.AppendText(text + Environment.NewLine);
+            //    logOutput.SelectionStart = logOutput.Text.Length;
+            //    logOutput.ScrollToCaret();
+            //}
+            Console.WriteLine($"[YOLO Tutorial] {text}");
+        }
+
+        public void ClearLog()
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(ClearLog));
+            //}
+            //else
+            //{
+            //    logOutput.Clear();
+            //}
+            
+            // 콘솔 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Console.WriteLine("\n" + new string('-', 50) + "\n");
+        }
+
+        public void SetLogVisible(bool visible)
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(() => SetLogVisible(visible)));
+            //}
+            //else
+            //{
+            //    logOutput.Visible = visible;
+            //}
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+       private void tboxMemo_TextChanged(object sender, EventArgs e)
+{
+    // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
+    if (memoPresenter != null)
+    {
+        memoPresenter.SaveMemoText(tboxMemo.Text);
+    }
+}
+    }
+	
 }

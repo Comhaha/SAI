@@ -7,7 +7,7 @@
     <script src="TutorialBlocks.js"></script>
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 97vh; width: 97vw; "></div>
+    <div id="blocklyDiv" style="height: 96vh; width: 96vw; "></div>
     <xml id="toolbox" style="display: none">
         <block type="start"></block>
         <block type="pipInstall"></block>
@@ -38,13 +38,32 @@
     </div>
 
     <script>
-        const workspace = Blockly.inject('blocklyDiv', {
-            scrollbars: true,
-            toolbox: null,
-            //toolbox: document.getElementById('toolbox')
-        });
+        //const workspace = Blockly.inject('blocklyDiv', {
+        //    toolbox: null,
+        //    //toolbox: document.getElementById('toolbox')
+        //});
+		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
-        Blockly.Tooltip.HOVER_MS = 100; // 툴팁 지연 시간 설정
+		const workspace = Blockly.inject('blocklyDiv', {
+			toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
+			//scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
+			trashcan: false,
+			zoom: {
+				controls: true,
+				wheel: true,
+				startScale: 2.0,
+				maxScale: 4,
+				minScale: 1,
+				scaleSpeed: 1.2,
+				pinch: true
+			},
+			renderer: 'geras', // 또는 'zelos', 'thrasos' 등 (기본: 'geras')
+            move: {
+                scrollbars: true,
+				drag: true,
+				wheel: true
+			}
+		});
 
         function showCustomAlert(text) {
             document.getElementById('customAlertText').innerText = text;
@@ -54,7 +73,7 @@
         function closeCustomAlert() {
             document.getElementById('customAlert').style.display = 'none';
         }
-
+        
         function addBlock(type) {
             const block = workspace.newBlock(type);
             block.initSvg();
@@ -69,6 +88,7 @@
 			});
         }
 
+        // 하나의 블럭 코드 가져오기
 		function getPythonCodeByType(blockType) {
 			const blocks = workspace.getAllBlocks();
 			for (let block of blocks) {
@@ -79,6 +99,49 @@
 					});
                     break;
 				}
+			}
+        }
+
+        // 모든 블럭 삭제
+        function clear() {
+			workspace.clear();
+        }
+
+        // 이전 상태로 되돌리기(ctrl+z)
+        function undo() {
+			workspace.undo(false);
+        }
+
+        // 이전 상태 다시 실행하기(ctrl+y)
+        function redo() {
+			workspace.undo(true);
+        }
+
+		function registerDoubleClickEvent(block) {
+			if (!block.svgGroup_ || block.svgGroup_.dataset.dblclickBound) return;
+
+			block.svgGroup_.addEventListener('dblclick', () => {
+				try {
+					const code = Blockly.Python.blockToCode(block);
+					const json = {
+						type: "blockDoubleClick",
+						code: code,
+					};
+					window.chrome.webview.postMessage(json);
+				} catch (e) {
+					showCustomAlert('블록 코드를 생성하는 중 오류가 발생했습니다.');
+					console.error(e);
+				}
+			});
+
+			// 중복 방지 플래그
+			block.svgGroup_.dataset.dblclickBound = true;
+        }
+
+		function bindDoubleClickEventsToAllBlocks() {
+			const blocks = workspace.getAllBlocks(false);
+			for (let block of blocks) {
+				registerDoubleClickEvent(block);
 			}
 		}
 
@@ -91,6 +154,8 @@
                     event.type === Blockly.Events.BLOCK_CHANGE ||
                     event.type === Blockly.Events.BLOCK_MOVE
                 ) {
+					bindDoubleClickEventsToAllBlocks(); // 더블클릭 리스너 바인딩
+
                     // 안전하게 확인
                     if (Blockly.Python && Blockly.Python.workspaceToCode) {
                         const code = Blockly.Python.workspaceToCode(workspace);

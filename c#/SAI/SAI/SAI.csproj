@@ -198,11 +198,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Models\MemoModel.cs" />
     <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
@@ -420,6 +422,7 @@
     <None Include="SAI.App\Resources\Images\bg_titlebar_prepare.png" />
     <None Include="SAI.App\Resources\Images\btn_yellow_ok.png" />
     <None Include="SAI.App\Resources\Images\bg_yellow_titlebar_labeling.png" />
+    <None Include="SAI.App\Resources\Images\btnRunModel_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_tutorial_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_train_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_close_select_model.png" />
@@ -608,6 +611,19 @@
     <None Include="Resources\btn_goLabelingClick.png" />
     <None Include="Resources\btn_goLabelingHover.png" />
     <None Include="Resources\btn_goNotion.png" />
+    <None Include="Resources\level 1-9.png" />
+    <None Include="Resources\level 2-9.png" />
+    <None Include="Resources\level 3-9.png" />
+    <None Include="Resources\level 4-9.png" />
+    <None Include="Resources\level 5-9.png" />
+    <None Include="Resources\level 6-9.png" />
+    <None Include="Resources\level 7-9.png" />
+    <None Include="Resources\level 8-9.png" />
+    <None Include="Resources\level 9-9.png" />
+    <None Include="Resources\0단계 라벨링.png" />
+    <None Include="Resources\class1.png" />
+    <None Include="Resources\class2.png" />
+    <None Include="Resources\class3.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
