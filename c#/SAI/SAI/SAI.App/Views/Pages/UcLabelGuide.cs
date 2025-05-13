@@ -1785,7 +1785,7 @@ namespace SAI.SAI.App.Views.Pages
                 OpenAnnotationEditor(class2.Text);
             }
             else if ((currentLevel.Text == "Bounding Box" || currentLevel.Text == "Segmentation") &&
-                      !isSquareToolActive) // 바운딩 박스 그리기 도구가 활성화되지 않았을 때만
+                     !isSquareToolActive && !isEditingBoundingBox) // 바운딩 박스 편집 모드에서는 annotation editor 열지 않음
             {
                 // 클릭한 위치가 기존 바운딩 박스 내부인지 확인
                 if (IsClickInsideBoundingBox(clickPoint, out Tuple<Rectangle, string> box))
