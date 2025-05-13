@@ -34,7 +34,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 기본 설정
                 scintilla1.StyleResetDefault();
                 scintilla1.Styles[Style.Default].Font = "Consolas";
-                scintilla1.Styles[Style.Default].Size = 10;
+                scintilla1.Styles[Style.Default].Size = 6;
                 scintilla1.Styles[Style.Default].BackColor = Color.FromArgb(255, 255, 255);
                 scintilla1.Styles[Style.Default].ForeColor = Color.Black; // 기본 텍스트 색상: 검정
 
