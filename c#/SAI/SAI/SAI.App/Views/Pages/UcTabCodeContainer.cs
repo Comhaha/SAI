@@ -24,7 +24,41 @@ namespace SAI.SAI.App.Views.Pages
             // Load 이벤트 핸들러 명시적 등록
             this.Load += new EventHandler(UcTabCodeContainer_Load);
 
+            // 둥근 모서리를 위한 설정
+            this.ResizeRedraw = true;
+
             SetupUI();
+
+
+            // 둥근 모서리 적용
+            ApplyRoundedCorners(19.45f);
+        }
+
+        // 둥근 모서리를 적용하는 메서드 추가
+        private void ApplyRoundedCorners(float radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+
+            // 상단 모서리만 둥글게 처리
+            path.AddArc(0, 0, radius * 2, radius * 2, 180, 90); // 왼쪽 상단
+            path.AddArc(this.Width - radius * 2, 0, radius * 2, radius * 2, 270, 90); // 오른쪽 상단
+
+            // 나머지 부분은 직선으로
+            path.AddLine(this.Width, radius, this.Width, this.Height); // 오른쪽 면
+            path.AddLine(this.Width, this.Height, 0, this.Height); // 하단 면
+            path.AddLine(0, this.Height, 0, radius); // 왼쪽 면
+
+            // 경로 닫기
+            path.CloseAllFigures();
+
+            this.Region = new Region(path);
+        }
+
+        // 크기가 변경될 때 둥근 모서리를 다시 적용
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            ApplyRoundedCorners(19.45f);
         }
 
         // Load 이벤트 핸들러 추가
@@ -61,7 +95,7 @@ namespace SAI.SAI.App.Views.Pages
             AddCodeTab("전체 코드", true, true);
 
             // "모델생성" 탭 기본 추가 - 일반 탭으로 설정 (삭제 가능)
-            AddCodeTab("모델생성");
+            //AddCodeTab("모델생성");
 
             // 기본 탭("전체 코드")에서 코드 내용을 "모델생성" 탭으로 복사
             try

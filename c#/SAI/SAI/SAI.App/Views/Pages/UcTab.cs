@@ -51,18 +51,29 @@ namespace SAI.SAI.App.Views.Pages
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // 배경 그리기
-            using (SolidBrush backBrush = new SolidBrush(BackColor))
+            // 이 부분이 변경됨 - 기존 직사각형 배경 대신 둥근 모서리 배경 그리기
+            using (GraphicsPath backgroundPath = new GraphicsPath())
             {
-                g.FillRectangle(backBrush, ClientRectangle);
-            }
+                // 전체 배경에 상단 모서리만 둥글게 처리
+                backgroundPath.AddArc(0, 0, cornerRadius * 2, cornerRadius * 2, 180, 90); // 왼쪽 상단
+                backgroundPath.AddArc(Width - (cornerRadius * 2), 0, cornerRadius * 2, cornerRadius * 2, 270, 90); // 오른쪽 상단
+                backgroundPath.AddLine(Width, cornerRadius, Width, Height); // 오른쪽 면
+                backgroundPath.AddLine(Width, Height, 0, Height); // 하단 면
+                backgroundPath.AddLine(0, Height, 0, cornerRadius); // 왼쪽 면
+                backgroundPath.CloseFigure();
 
-            // 전체 탭 영역에 검은색 테두리 그리기
-            using (Pen borderPen = new Pen(Color.Black, 1))
-            {
-                g.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
-            }
+                // 배경 채우기
+                using (SolidBrush backBrush = new SolidBrush(BackColor))
+                {
+                    g.FillPath(backBrush, backgroundPath);
+                }
 
+                // 배경 테두리 그리기
+                using (Pen borderPen = new Pen(Color.Black, 1))
+                {
+                    g.DrawPath(borderPen, backgroundPath);
+                }
+            }
             // 선택된 탭 표시선
             using (Pen linePen = new Pen(Color.FromArgb(0, 122, 204), 2))
             {
