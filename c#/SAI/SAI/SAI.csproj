@@ -136,6 +136,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.Designer.cs">
+      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
     </Compile>
