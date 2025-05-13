@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -429,6 +429,8 @@
   <data name="&gt;&gt;pBlockList.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+=======
+>>>>>>> c#/SAI/SAI/SAI.App/Views/Pages/UcTutorialBlockCode.resx
   <data name="btnVisualizeResult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -930,66 +932,6 @@
   <data name="&gt;&gt;pTopCode.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;tboxZoomCode.Name" xml:space="preserve">
-    <value>tboxZoomCode</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Name" xml:space="preserve">
-    <value>ibtnMinusCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Name" xml:space="preserve">
-    <value>ibtnPlusCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pZoomCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 410</value>
-  </data>
-  <data name="pZoomCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="pZoomCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 87</value>
-  </data>
-  <data name="pZoomCode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Name" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="tboxZoomCode.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
@@ -1120,10 +1062,10 @@
     <value>4</value>
   </data>
   <data name="webViewblock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 37</value>
+    <value>4, 37</value>
   </data>
   <data name="webViewblock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 475</value>
+    <value>302, 460</value>
   </data>
   <data name="webViewblock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1268,25 +1210,31 @@
   <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="ibtnRunModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>282, 9</value>
+  <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
   </data>
-  <data name="ibtnRunModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>10, 12</value>
+  <data name="btnRunModel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
   </data>
-  <data name="ibtnRunModel.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 7</value>
+  </data>
+  <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;ibtnRunModel.Name" xml:space="preserve">
-    <value>ibtnRunModel</value>
+  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
+    <value>btnRunModel</value>
   </data>
-  <data name="&gt;&gt;ibtnRunModel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;ibtnRunModel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;ibtnRunModel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="ibtnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
@@ -1479,6 +1427,46 @@
     <value>pZoomBlock</value>
   </data>
   <data name="&gt;&gt;ibtnPlusBlock.ZOrder" xml:space="preserve">
+  <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>379, 32</value>
+  </data>
+  <data name="pBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>319, 518</value>
+  </data>
+  <data name="pBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Name" xml:space="preserve">
+    <value>pBlock</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Parent" xml:space="preserve">
+    <value>pMain</value>
+  </data>
+  <data name="&gt;&gt;pBlock.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="pMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 64</value>
+  </data>
+  <data name="pMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1064, 583</value>
+  </data>
+  <data name="pMain.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;pMain.Name" xml:space="preserve">
+    <value>pMain</value>
+  </data>
+  <data name="&gt;&gt;pMain.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="pboxTodo2Done.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
