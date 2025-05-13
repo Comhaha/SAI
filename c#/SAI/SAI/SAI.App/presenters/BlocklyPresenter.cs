@@ -109,12 +109,13 @@ namespace SAI.SAI.App.Presenters
 			// blockAllCode 초기화
 			blocklyModel.blockAllCode = "";
 		}
-        // 혜정 추가
+
         public void SetCodePresenter(CodePresenter presenter)
         {
             this.codeBoxPresenter = presenter;
             Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter가 설정되었습니다.");
         }
+
         // presenter가 view와 service에게 전달해주기 위한 메소드
         public void HandleJsMessage(string code, string type)
 		{
@@ -122,45 +123,6 @@ namespace SAI.SAI.App.Presenters
 			{
 				blocklyModel.blockAllCode = code;
 				blocklyService.SaveCodeToFileInTutorial();
-
-         
-                //--------혜정언니 꺼 develop에 있던 코드 ----------------------------
-                // 추가: CodePresenter가 있으면 코드 업데이트 - UcCode에 코드 표시
-                if (codeBoxPresenter != null)
-                {
-                    try
-                    {
-                        Console.WriteLine($"[DEBUG] BlocklyPresenter: CodePresenter로 코드 전달 시도 ({code?.Length ?? 0}자)");
-
-                        // 수정: UcCode 인스턴스를 찾아 AppendCode 메서드 호출 (각 라인별 하이라이트 적용)
-                        var ucCode = ((Control)view).Controls.OfType<UcCode>().FirstOrDefault();
-                        if (ucCode != null)
-                        {
-                            // 수정: 코드 누적하지 않도록 설정 (매번 새로운 코드로 대체)
-                            ucCode.SetAccumulateMode(false);
-
-                            // AppendCode 메서드 호출 (코드 덮어쓰기 및 라인별 하이라이트)
-                            ucCode.AppendCode(code);
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: AppendCode 호출 완료");
-                        }
-                        else
-                        {
-                            // UcCode를 찾을 수 없는 경우 기존 방식으로 폴백
-                            codeBoxPresenter.UpdateCode(code);
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: UpdateCode 호출 완료 (폴백)");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] BlocklyPresenter: CodePresenter 업데이트 오류 - {ex.Message}");
-                        Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("[WARNING] BlocklyPresenter: codeBoxPresenter가 null입니다!");
-                }
-                // -----------------------------------------
 			}
 			else if(type == "blockCode")
 			{
