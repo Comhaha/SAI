@@ -38,13 +38,33 @@
     </div>
 
     <script>
-        const workspace = Blockly.inject('blocklyDiv', {
-            scrollbars: true,
-            toolbox: null,
-            //toolbox: document.getElementById('toolbox')
-        });
+        //const workspace = Blockly.inject('blocklyDiv', {
+        //    toolbox: null,
+        //    //toolbox: document.getElementById('toolbox')
+        //});
+		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
-        Blockly.Tooltip.HOVER_MS = 100; // 툴팁 지연 시간 설정
+		const workspace = Blockly.inject('blocklyDiv', {
+			toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
+			scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
+			trashcan: false,
+			zoom: {
+				controls: true,
+				wheel: true,
+				startScale: 1.0,
+				maxScale: 3,
+				minScale: 0.3,
+				scaleSpeed: 1.2,
+				pinch: true
+			},
+			renderer: 'geras', // 또는 'zelos', 'thrasos' 등 (기본: 'geras')
+			move: {
+				scrollbars: true,
+				drag: true,
+				wheel: true
+			}
+		});
+
 
         function showCustomAlert(text) {
             document.getElementById('customAlertText').innerText = text;
