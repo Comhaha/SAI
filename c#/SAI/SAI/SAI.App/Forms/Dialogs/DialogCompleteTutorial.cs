@@ -68,5 +68,5 @@ namespace SAI.SAI.App.Forms.Dialogs
 				btnLearnModel.BackgroundImage = Properties.Resources.btn_gotrain;
 			};
 		}
-	}
+    }
 }
