@@ -34,9 +34,9 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-        public UcTutorialBlockCode(IMainView view)
-        {
-            InitializeComponent();
+		public UcTutorialBlockCode(IMainView view)
+		{
+			InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
 
 			this.mainView = view;
@@ -44,15 +44,15 @@ namespace SAI.SAI.App.Views.Pages
 
 			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
-            ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
-            ibtnInfer.BackColor = Color.Transparent;    
-            ibtnMemo.BackColor = Color.Transparent;
+			ibtnHome.BackColor = Color.Transparent;
+			ibtnDone.BackColor = Color.Transparent;
+			ibtnInfer.BackColor = Color.Transparent;
+			ibtnMemo.BackColor = Color.Transparent;
 
 			InitializeWebView2();
 
-            // 블록 시작만 보이고 나머지는 안 보이게 초기화.
-            InitializeBlockButton();
+			// 블록 시작만 보이고 나머지는 안 보이게 초기화.
+			InitializeBlockButton();
 			setBtnBlockStart();
 
 
@@ -114,7 +114,31 @@ namespace SAI.SAI.App.Views.Pages
 				pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
 			};
 			btnVisualizeResult.DoubleClick += (s, e) => AddBlockButtonDoubleClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
-		}
+
+            var codeContainer = new UcTabCodeContainer();
+            codeContainer.Dock = DockStyle.Fill;
+            guna2Panel1.Controls.Add(codeContainer);
+
+            // CodePresenter 생성 및 BlocklyPresenter에 설정
+            try
+            {
+                var mainEditor = codeContainer.GetMainCodeEditor();
+                if (mainEditor != null)
+                {
+                    var codePresenter = new CodePresenter(mainEditor);
+                    blocklyPresenter.SetCodePresenter(codePresenter);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                }
+                else
+                {
+                    Console.WriteLine("[WARNING] UcTutorialBlockCode: mainEditor가 null입니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+            }
+        }
 
 		private void setButtonVisible(Guna2Button button)
 		{
