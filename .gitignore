@@ -39,20 +39,20 @@ venv/
 .ipynb_checkpoints
 
 # /Python/ 하위 전체 무시
-c#/SAI/SAI/SAI.Application/Python/*
-c#/SAI/SAI/SAI.Application/Python/**
+app/SAI/SAI/SAI.Application/Python/*
+app/SAI/SAI/SAI.Application/Python/**
 
 # /Python/script/ 폴더는 예외 처리
-!c#/SAI/SAI/SAI.Application/Python/scripts/
-!c#/SAI/SAI/SAI.Application/Python/scripts/**
+!app/SAI/SAI/SAI.Application/Python/scripts/
+!app/SAI/SAI/SAI.Application/Python/scripts/**
 
 # 학습 결과 무시
-c#/SAI/SAI/SAI.Application/Python/runs/
-c#/SAI/SAI/SAI.Application/Python/runs/**/*
+app/SAI/SAI/SAI.Application/Python/runs/
+app/SAI/SAI/SAI.Application/Python/runs/**/*
 
 # scripts 폴더 내의 특정 파일 다시 무시
-c#/SAI/SAI/SAI.Application/Python/scripts/train_script.py
-c#/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
+app/SAI/SAI/SAI.Application/Python/scripts/train_script.py
+app/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
 
 # 모델, 결과, 캐시 무시
 *.pt
@@ -87,16 +87,18 @@ local.properties
 **/.vshistory/
 **/.vs/
 **/.vs/**
-c#/SAI/.vs/
-c#/SAI/SAI/SAI.App/.vs/
-c#/SAI/packages/
-c#/SAI/SAI/package.config
-c#/SAI/SAI/bin/
-c#/SAI/SAI/obj/
+.vs/
+/.vs/
+app/SAI/.vs/
+app/SAI/SAI/SAI.App/.vs/
+app/SAI/packages/
+app/SAI/SAI/package.config
+app/SAI/SAI/bin/
+app/SAI/SAI/obj/
 .vs
 **/.vshistory
-c#/SAI/SAI/.vs/
-/c\#/SAI/SAI/.vs
+app/SAI/SAI/.vs/
+/app/SAI/SAI/.vs
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json
