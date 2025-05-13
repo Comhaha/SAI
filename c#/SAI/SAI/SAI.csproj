@@ -160,6 +160,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogConfirmExit.Designer.cs">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.Designer.cs">
+      <DependentUpon>DialogSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,7 +196,6 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
-    <Compile Include="SAI.App\Models\UcSelectTypeModel.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
@@ -388,6 +393,23 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_tutorial_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_train_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_select_model.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_select_model_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_tutorial.png" />
+    <None Include="SAI.App\Resources\Images\btn_train.png" />
+    <None Include="SAI.App\Resources\Images\selectYolo.png" />
+    <None Include="SAI.App\Resources\Images\selectEfficient.png" />
+    <None Include="SAI.App\Resources\Images\selectFaster.png" />
+    <None Include="SAI.App\Resources\Images\selectModel.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_minscreen.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_fullscreen.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_close.png" />
+    <None Include="SAI.App\Resources\Images\titlebar.png" />
+    <None Include="SAI.App\Resources\Images\pSelectTypeTitle1.png" />
+    <None Include="SAI.App\Resources\Images\pSelectTypeTitle.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step4.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step3.png" />
     <None Include="SAI.App\Resources\Images\p_todolist_step2.png" />
@@ -538,29 +560,27 @@
     <None Include="Resources\squirrel-5506514_1280.jpg" />
     <None Include="Resources\Frame 10789.png" />
     <None Include="Resources\Frame 10788.png" />
-    <None Include="Resources\전체 가이드1.png" />
-    <None Include="Resources\전체가이드2.png" />
-    <None Include="Resources\전체가이드3.png" />
     <None Include="Resources\도구창.png" />
-    <None Include="Resources\블록선택창.png" />
-    <None Include="Resources\라벨링 가이드 Editor.png" />
-    <None Include="Resources\라벨링 가이드 todolist.png" />
-    <None Include="Resources\라벨링 가이드 정확도 프레임.png" />
-    <None Include="Resources\라벨링 가이드 클래스 목록.png" />
-    <None Include="Resources\라벨링 가이드0.png" />
-    <None Include="Resources\라벨링가이드 1.png" />
-    <None Include="Resources\라벨링가이드 2.png" />
-    <None Include="Resources\라벨링가이드 3.png" />
-    <None Include="Resources\라벨링가이드 4.png" />
-    <None Include="Resources\라벨링가이드 5.png" />
-    <None Include="Resources\라벨링가이드 6.png" />
-    <None Include="Resources\라벨링가이드 7.png" />
     <None Include="Resources\도구창２.png" />
     <None Include="Resources\스크린샷 2025-05-12 154049.png" />
     <None Include="Resources\img_background.png" />
     <None Include="Resources\tutorialBg.png" />
     <None Include="Resources\Frame 1000004323.png" />
     <None Include="Resources\Frame 1000004304.png" />
+    <None Include="Resources\라벨링가이드1.png" />
+    <None Include="Resources\라벨링가이드2.png" />
+    <None Include="Resources\라벨링가이드3.png" />
+    <None Include="Resources\라벨링가이드4.png" />
+    <None Include="Resources\라벨링가이드5.png" />
+    <None Include="Resources\라벨링가이드6.png" />
+    <None Include="Resources\라벨링가이드7.png" />
+    <None Include="Resources\라벨링가이드8.png" />
+    <None Include="Resources\전체튜토리얼가이드1.png" />
+    <None Include="Resources\전체튜토리얼가이드2.png" />
+    <None Include="Resources\전체튜토리얼가이드3.png" />
+    <None Include="Resources\btn_goLabelingClick.png" />
+    <None Include="Resources\btn_goLabelingHover.png" />
+    <None Include="Resources\btn_goNotion.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

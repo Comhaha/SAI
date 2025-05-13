@@ -28,153 +28,94 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ibtnAudio = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ibtnImage = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ibtnPose = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ibtnNext = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblImage = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblAudio = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblPose = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.SuspendLayout();
-            // 
-            // ibtnAudio
-            // 
-            this.ibtnAudio.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnAudio.HoverState.Image = global::SAI.Properties.Resources.btn_audio_hover;
-            this.ibtnAudio.HoverState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnAudio.Image = global::SAI.Properties.Resources.btn_audio;
-            this.ibtnAudio.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnAudio.ImageRotate = 0F;
-            this.ibtnAudio.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnAudio.IndicateFocus = true;
-            this.ibtnAudio.Location = new System.Drawing.Point(517, 156);
-            this.ibtnAudio.Name = "ibtnAudio";
-            this.ibtnAudio.PressedState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnAudio.Size = new System.Drawing.Size(217, 261);
-            this.ibtnAudio.TabIndex = 0;
-            this.ibtnAudio.Click += new System.EventHandler(this.ibtnAudio_Click);
-            // 
-            // ibtnImage
-            // 
-            this.ibtnImage.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnImage.HoverState.Image = global::SAI.Properties.Resources.btn_image_hover;
-            this.ibtnImage.HoverState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnImage.Image = global::SAI.Properties.Resources.btn_image;
-            this.ibtnImage.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnImage.ImageRotate = 0F;
-            this.ibtnImage.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnImage.IndicateFocus = true;
-            this.ibtnImage.Location = new System.Drawing.Point(202, 156);
-            this.ibtnImage.Name = "ibtnImage";
-            this.ibtnImage.PressedState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnImage.Size = new System.Drawing.Size(217, 261);
-            this.ibtnImage.TabIndex = 1;
-            this.ibtnImage.Click += new System.EventHandler(this.ibtnImage_Click);
-            // 
-            // ibtnPose
-            // 
-            this.ibtnPose.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnPose.HoverState.Image = global::SAI.Properties.Resources.btn_pose_hover;
-            this.ibtnPose.HoverState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnPose.Image = global::SAI.Properties.Resources.btn_pose;
-            this.ibtnPose.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnPose.ImageRotate = 0F;
-            this.ibtnPose.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnPose.IndicateFocus = true;
-            this.ibtnPose.Location = new System.Drawing.Point(833, 156);
-            this.ibtnPose.Name = "ibtnPose";
-            this.ibtnPose.PressedState.ImageSize = new System.Drawing.Size(217, 261);
-            this.ibtnPose.Size = new System.Drawing.Size(217, 261);
-            this.ibtnPose.TabIndex = 2;
-            this.ibtnPose.Click += new System.EventHandler(this.ibtnPose_Click);
-            // 
-            // ibtnNext
-            // 
-            this.ibtnNext.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnNext.HoverState.Image = global::SAI.Properties.Resources.btn_next_select_hover;
-            this.ibtnNext.HoverState.ImageSize = new System.Drawing.Size(213, 69);
-            this.ibtnNext.Image = global::SAI.Properties.Resources.btn_next_select;
-            this.ibtnNext.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnNext.ImageRotate = 0F;
-            this.ibtnNext.ImageSize = new System.Drawing.Size(213, 69);
-            this.ibtnNext.Location = new System.Drawing.Point(517, 533);
-            this.ibtnNext.Name = "ibtnNext";
-            this.ibtnNext.PressedState.ImageSize = new System.Drawing.Size(213, 69);
-            this.ibtnNext.Size = new System.Drawing.Size(213, 69);
-            this.ibtnNext.TabIndex = 3;
-            this.ibtnNext.Click += new System.EventHandler(this.ibtnNext_Click);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Noto Sans KR", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblTitle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblTitle.Location = new System.Drawing.Point(360, 58);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(553, 64);
-            this.lblTitle.TabIndex = 5;
-            this.lblTitle.Text = "학습 데이터 종류를 선택하세요";
-            // 
-            // lblImage
-            // 
-            this.lblImage.BackColor = System.Drawing.Color.Transparent;
-            this.lblImage.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblImage.Location = new System.Drawing.Point(275, 437);
-            this.lblImage.Name = "lblImage";
-            this.lblImage.Size = new System.Drawing.Size(90, 48);
-            this.lblImage.TabIndex = 6;
-            this.lblImage.Text = "이미지";
-            // 
-            // lblAudio
-            // 
-            this.lblAudio.BackColor = System.Drawing.Color.Transparent;
-            this.lblAudio.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblAudio.Location = new System.Drawing.Point(572, 437);
-            this.lblAudio.Name = "lblAudio";
-            this.lblAudio.Size = new System.Drawing.Size(90, 48);
-            this.lblAudio.TabIndex = 7;
-            this.lblAudio.Text = "오디오";
-            // 
-            // lblPose
-            // 
-            this.lblPose.BackColor = System.Drawing.Color.Transparent;
-            this.lblPose.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblPose.Location = new System.Drawing.Point(914, 437);
-            this.lblPose.Name = "lblPose";
-            this.lblPose.Size = new System.Drawing.Size(61, 48);
-            this.lblPose.TabIndex = 8;
-            this.lblPose.Text = "포즈";
-            // 
-            // UcSelectType
-            // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
-            this.Controls.Add(this.lblPose);
-            this.Controls.Add(this.lblAudio);
-            this.Controls.Add(this.lblImage);
-            this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.ibtnNext);
-            this.Controls.Add(this.ibtnPose);
-            this.Controls.Add(this.ibtnImage);
-            this.Controls.Add(this.ibtnAudio);
-            this.Name = "UcSelectType";
-            this.Size = new System.Drawing.Size(1280, 720);
-            this.Load += new System.EventHandler(this.UcSelectType_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
+			this.btnImage = new Guna.UI2.WinForms.Guna2Button();
+			this.btnAudio = new Guna.UI2.WinForms.Guna2Button();
+			this.btnPose = new Guna.UI2.WinForms.Guna2Button();
+			this.SuspendLayout();
+			// 
+			// pTitle
+			// 
+			this.pTitle.BackColor = System.Drawing.Color.Transparent;
+			this.pTitle.BackgroundImage = global::SAI.Properties.Resources.pSelectTypeTitle1;
+			this.pTitle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.pTitle.Location = new System.Drawing.Point(382, 60);
+			this.pTitle.Name = "pTitle";
+			this.pTitle.Size = new System.Drawing.Size(515, 57);
+			this.pTitle.TabIndex = 9;
+			// 
+			// btnImage
+			// 
+			this.btnImage.BackColor = System.Drawing.Color.Transparent;
+			this.btnImage.BackgroundImage = global::SAI.Properties.Resources.btn_image;
+			this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnImage.FillColor = System.Drawing.Color.Transparent;
+			this.btnImage.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnImage.ForeColor = System.Drawing.Color.White;
+			this.btnImage.Location = new System.Drawing.Point(218, 200);
+			this.btnImage.Name = "btnImage";
+			this.btnImage.Size = new System.Drawing.Size(209, 321);
+			this.btnImage.TabIndex = 0;
+			this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
+			// 
+			// btnAudio
+			// 
+			this.btnAudio.BackColor = System.Drawing.Color.Transparent;
+			this.btnAudio.BackgroundImage = global::SAI.Properties.Resources.btn_audio;
+			this.btnAudio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnAudio.FillColor = System.Drawing.Color.Transparent;
+			this.btnAudio.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnAudio.ForeColor = System.Drawing.Color.White;
+			this.btnAudio.Location = new System.Drawing.Point(535, 200);
+			this.btnAudio.Name = "btnAudio";
+			this.btnAudio.Size = new System.Drawing.Size(209, 321);
+			this.btnAudio.TabIndex = 10;
+			this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
+			// 
+			// btnPose
+			// 
+			this.btnPose.BackColor = System.Drawing.Color.Transparent;
+			this.btnPose.BackgroundImage = global::SAI.Properties.Resources.btn_pose;
+			this.btnPose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnPose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnPose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnPose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnPose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnPose.FillColor = System.Drawing.Color.Transparent;
+			this.btnPose.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnPose.ForeColor = System.Drawing.Color.White;
+			this.btnPose.Location = new System.Drawing.Point(852, 200);
+			this.btnPose.Name = "btnPose";
+			this.btnPose.Size = new System.Drawing.Size(209, 321);
+			this.btnPose.TabIndex = 11;
+			this.btnPose.Click += new System.EventHandler(this.btnPose_Click);
+			// 
+			// UcSelectType
+			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
+			this.Controls.Add(this.btnPose);
+			this.Controls.Add(this.btnAudio);
+			this.Controls.Add(this.btnImage);
+			this.Controls.Add(this.pTitle);
+			this.Name = "UcSelectType";
+			this.Size = new System.Drawing.Size(1280, 720);
+			this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnAudio;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnImage;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnPose;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnNext;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblTitle;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblImage;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblAudio;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblPose;
-    }
+		private Guna.UI2.WinForms.Guna2Panel pTitle;
+		private Guna.UI2.WinForms.Guna2Button btnImage;
+		private Guna.UI2.WinForms.Guna2Button btnAudio;
+		private Guna.UI2.WinForms.Guna2Button btnPose;
+	}
 }

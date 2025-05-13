@@ -1,6 +1,5 @@
 ﻿using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Pages;
-using SAI.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace SAI.SAI.App.Presenters
 
 		public void clickTutorial()
 		{			
-			mainView.LoadPage(new UcLabelGuide(mainView ));			
+			mainView.LoadPage(new UcTutorialGuide(mainView));			
 		}
 
 		public void clickTrainAtModelSelect()

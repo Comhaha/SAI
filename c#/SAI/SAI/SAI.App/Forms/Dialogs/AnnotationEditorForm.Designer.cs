@@ -46,6 +46,7 @@
             this.annotationText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.annotationText.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.annotationText.Location = new System.Drawing.Point(28, 64);
+            this.annotationText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.annotationText.Name = "annotationText";
             this.annotationText.PlaceholderText = "";
             this.annotationText.SelectedText = "";
@@ -90,6 +91,7 @@
             this.xBtn.BackColor = System.Drawing.Color.Transparent;
             this.xBtn.BackgroundImage = global::SAI.Properties.Resources.btn_close;
             this.xBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.xBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.xBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.xBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.xBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -111,6 +113,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.BackgroundImage = global::SAI.Properties.Resources.annotation_모달;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.xBtn;
             this.ClientSize = new System.Drawing.Size(320, 179);
             this.Controls.Add(this.xBtn);

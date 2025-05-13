@@ -1,4 +1,4 @@
-﻿namespace SAI.Views.Pages
+﻿namespace SAI.SAI.App.Views.Pages
 {
     partial class UcTutorialGuide
     {
@@ -28,108 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialGuide));
-            this.wholeTutorialPanel = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            this.LabelingTutorialPanel0 = new Guna.UI2.WinForms.Guna2Panel();
-            this.wholeTutorialCancleBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.wholeTutorialNextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.wholeTutorialPreBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.giudeOpacityPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelingTutorialContent1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.LabelingTutorialPanel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelingTutorialContent2 = new Guna.UI2.WinForms.Guna2Panel();
-            this.LabelingTutorialPanel2 = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelingTutorialContent3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.wholeTutorialPanel.SuspendLayout();
-            this.giudeOpacityPanel.SuspendLayout();
-            this.labelingTutorialContent2.SuspendLayout();
-            this.LabelingTutorialPanel2.SuspendLayout();
+            this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.goLabelingBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.exit = new Guna.UI2.WinForms.Guna2Button();
+            this.goToLabeling = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
-            // 
-            // wholeTutorialPanel
-            // 
-            this.wholeTutorialPanel.BackColor = System.Drawing.Color.Transparent;
-            this.wholeTutorialPanel.BackgroundImage = global::SAI.Properties.Resources.전체가이드1;
-            this.wholeTutorialPanel.Controls.Add(this.LabelingTutorialPanel0);
-            this.wholeTutorialPanel.Controls.Add(this.wholeTutorialCancleBtn);
-            this.wholeTutorialPanel.Controls.Add(this.wholeTutorialNextBtn);
-            this.wholeTutorialPanel.Controls.Add(this.wholeTutorialPreBtn);
-            this.wholeTutorialPanel.Controls.Add(this.nextBtn);
-            this.wholeTutorialPanel.FillColor = System.Drawing.Color.Transparent;
-            this.wholeTutorialPanel.FillColor2 = System.Drawing.Color.Transparent;
-            this.wholeTutorialPanel.FillColor3 = System.Drawing.Color.Transparent;
-            this.wholeTutorialPanel.FillColor4 = System.Drawing.Color.Transparent;
-            this.wholeTutorialPanel.Location = new System.Drawing.Point(196, 123);
-            this.wholeTutorialPanel.Name = "wholeTutorialPanel";
-            this.wholeTutorialPanel.Size = new System.Drawing.Size(890, 468);
-            this.wholeTutorialPanel.TabIndex = 0;
-            // 
-            // LabelingTutorialPanel0
-            // 
-            this.LabelingTutorialPanel0.BackgroundImage = global::SAI.Properties.Resources.라벨링_가이드0;
-            this.LabelingTutorialPanel0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LabelingTutorialPanel0.Location = new System.Drawing.Point(253, 158);
-            this.LabelingTutorialPanel0.Name = "LabelingTutorialPanel0";
-            this.LabelingTutorialPanel0.Size = new System.Drawing.Size(480, 207);
-            this.LabelingTutorialPanel0.TabIndex = 3;
-            this.LabelingTutorialPanel0.Paint += new System.Windows.Forms.PaintEventHandler(this.LabelingTutorialPanel0_Paint);
-            // 
-            // wholeTutorialCancleBtn
-            // 
-            this.wholeTutorialCancleBtn.BackgroundImage = global::SAI.Properties.Resources.btn_close;
-            this.wholeTutorialCancleBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wholeTutorialCancleBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialCancleBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialCancleBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.wholeTutorialCancleBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.wholeTutorialCancleBtn.FillColor = System.Drawing.Color.Transparent;
-            this.wholeTutorialCancleBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.wholeTutorialCancleBtn.ForeColor = System.Drawing.Color.White;
-            this.wholeTutorialCancleBtn.Location = new System.Drawing.Point(856, 14);
-            this.wholeTutorialCancleBtn.Name = "wholeTutorialCancleBtn";
-            this.wholeTutorialCancleBtn.Size = new System.Drawing.Size(10, 10);
-            this.wholeTutorialCancleBtn.TabIndex = 0;
-            // 
-            // wholeTutorialNextBtn
-            // 
-            this.wholeTutorialNextBtn.BackgroundImage = global::SAI.Properties.Resources.ic_next;
-            this.wholeTutorialNextBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wholeTutorialNextBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialNextBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialNextBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.wholeTutorialNextBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.wholeTutorialNextBtn.FillColor = System.Drawing.Color.Transparent;
-            this.wholeTutorialNextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.wholeTutorialNextBtn.ForeColor = System.Drawing.Color.White;
-            this.wholeTutorialNextBtn.ImageSize = new System.Drawing.Size(39, 39);
-            this.wholeTutorialNextBtn.Location = new System.Drawing.Point(831, 214);
-            this.wholeTutorialNextBtn.Name = "wholeTutorialNextBtn";
-            this.wholeTutorialNextBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.wholeTutorialNextBtn.Size = new System.Drawing.Size(39, 39);
-            this.wholeTutorialNextBtn.TabIndex = 2;
-            this.wholeTutorialNextBtn.Click += new System.EventHandler(this.wholeTutorialNextBtn_Click);
-            // 
-            // wholeTutorialPreBtn
-            // 
-            this.wholeTutorialPreBtn.BackgroundImage = global::SAI.Properties.Resources.ic_pre;
-            this.wholeTutorialPreBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wholeTutorialPreBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialPreBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.wholeTutorialPreBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.wholeTutorialPreBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.wholeTutorialPreBtn.FillColor = System.Drawing.Color.Transparent;
-            this.wholeTutorialPreBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.wholeTutorialPreBtn.ForeColor = System.Drawing.Color.White;
-            this.wholeTutorialPreBtn.Location = new System.Drawing.Point(25, 214);
-            this.wholeTutorialPreBtn.Name = "wholeTutorialPreBtn";
-            this.wholeTutorialPreBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.wholeTutorialPreBtn.Size = new System.Drawing.Size(39, 39);
-            this.wholeTutorialPreBtn.TabIndex = 1;
             // 
             // nextBtn
             // 
+            this.nextBtn.BackColor = System.Drawing.Color.Transparent;
+            this.nextBtn.BackgroundImage = global::SAI.Properties.Resources.ic_next;
+            this.nextBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.nextBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.nextBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.nextBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -137,119 +47,120 @@
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
-            this.nextBtn.Location = new System.Drawing.Point(0, 0);
+            this.nextBtn.Location = new System.Drawing.Point(1166, 424);
+            this.nextBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.nextBtn.Size = new System.Drawing.Size(148, 148);
+            this.nextBtn.Size = new System.Drawing.Size(47, 51);
             this.nextBtn.TabIndex = 0;
-            this.nextBtn.Text = "guna2CircleButton1";
             // 
-            // giudeOpacityPanel
+            // preBtn
             // 
-            this.giudeOpacityPanel.BackColor = System.Drawing.Color.Transparent;
-            this.giudeOpacityPanel.Controls.Add(this.LabelingTutorialPanel2);
-            this.giudeOpacityPanel.Controls.Add(this.labelingTutorialContent2);
-            this.giudeOpacityPanel.Controls.Add(this.LabelingTutorialPanel1);
-            this.giudeOpacityPanel.Controls.Add(this.labelingTutorialContent1);
-            this.giudeOpacityPanel.Controls.Add(this.wholeTutorialPanel);
-            this.giudeOpacityPanel.Location = new System.Drawing.Point(0, 2);
-            this.giudeOpacityPanel.Name = "giudeOpacityPanel";
-            this.giudeOpacityPanel.Size = new System.Drawing.Size(1290, 717);
-            this.giudeOpacityPanel.TabIndex = 0;
-            this.giudeOpacityPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.giudeOpacityPanel_Paint);
+            this.preBtn.BackColor = System.Drawing.Color.Transparent;
+            this.preBtn.BackgroundImage = global::SAI.Properties.Resources.ic_pre;
+            this.preBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.preBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.preBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.preBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.preBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.preBtn.FillColor = System.Drawing.Color.Transparent;
+            this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.preBtn.ForeColor = System.Drawing.Color.White;
+            this.preBtn.Location = new System.Drawing.Point(253, 424);
+            this.preBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.preBtn.Name = "preBtn";
+            this.preBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.preBtn.Size = new System.Drawing.Size(47, 51);
+            this.preBtn.TabIndex = 1;
             // 
-            // labelingTutorialContent1
+            // goLabelingBtn
             // 
-            this.labelingTutorialContent1.BackgroundImage = global::SAI.Properties.Resources.라벨링_가이드_순서;
-            this.labelingTutorialContent1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.labelingTutorialContent1.Location = new System.Drawing.Point(582, 35);
-            this.labelingTutorialContent1.Name = "labelingTutorialContent1";
-            this.labelingTutorialContent1.Size = new System.Drawing.Size(116, 55);
-            this.labelingTutorialContent1.TabIndex = 1;
+            this.goLabelingBtn.BackColor = System.Drawing.Color.Transparent;
+            this.goLabelingBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.goLabelingBtn.BorderColor = System.Drawing.Color.Transparent;
+            this.goLabelingBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.goLabelingBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.goLabelingBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.goLabelingBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.goLabelingBtn.FillColor = System.Drawing.Color.Transparent;
+            this.goLabelingBtn.FocusedColor = System.Drawing.Color.Transparent;
+            this.goLabelingBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.goLabelingBtn.ForeColor = System.Drawing.Color.White;
+            this.goLabelingBtn.HoverState.Image = global::SAI.Properties.Resources.btn_goLabelingHover;
+            this.goLabelingBtn.Image = global::SAI.Properties.Resources.btn_goLabeling;
+            this.goLabelingBtn.ImageSize = new System.Drawing.Size(212, 46);
+            this.goLabelingBtn.Location = new System.Drawing.Point(968, 662);
+            this.goLabelingBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.goLabelingBtn.Name = "goLabelingBtn";
+            this.goLabelingBtn.PressedColor = System.Drawing.Color.Transparent;
+            this.goLabelingBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.goLabelingBtn.Size = new System.Drawing.Size(245, 58);
+            this.goLabelingBtn.TabIndex = 2;
+            this.goLabelingBtn.Visible = false;
             // 
-            // LabelingTutorialPanel1
+            // exit
             // 
-            this.LabelingTutorialPanel1.BackgroundImage = global::SAI.Properties.Resources.라벨링가이드_1;
-            this.LabelingTutorialPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LabelingTutorialPanel1.Location = new System.Drawing.Point(395, 110);
-            this.LabelingTutorialPanel1.Name = "LabelingTutorialPanel1";
-            this.LabelingTutorialPanel1.Size = new System.Drawing.Size(490, 186);
-            this.LabelingTutorialPanel1.TabIndex = 4;
+            this.exit.BackColor = System.Drawing.Color.Transparent;
+            this.exit.BackgroundImage = global::SAI.Properties.Resources.btn_close;
+            this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exit.BorderColor = System.Drawing.Color.Transparent;
+            this.exit.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.exit.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.exit.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.exit.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.exit.FillColor = System.Drawing.Color.Transparent;
+            this.exit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.exit.ForeColor = System.Drawing.Color.Transparent;
+            this.exit.Location = new System.Drawing.Point(989, 35);
+            this.exit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.exit.Name = "exit";
+            this.exit.Size = new System.Drawing.Size(46, 50);
+            this.exit.TabIndex = 4;
             // 
-            // labelingTutorialContent2
+            // goToLabeling
             // 
-            this.labelingTutorialContent2.BackgroundImage = global::SAI.Properties.Resources.라벨링_가이드_클래스_목록;
-            this.labelingTutorialContent2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.labelingTutorialContent2.Controls.Add(this.labelingTutorialContent3);
-            this.labelingTutorialContent2.Location = new System.Drawing.Point(115, 104);
-            this.labelingTutorialContent2.Name = "labelingTutorialContent2";
-            this.labelingTutorialContent2.Size = new System.Drawing.Size(274, 189);
-            this.labelingTutorialContent2.TabIndex = 2;
-            this.labelingTutorialContent2.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
-            // 
-            // LabelingTutorialPanel2
-            // 
-            this.LabelingTutorialPanel2.BackgroundImage = global::SAI.Properties.Resources.라벨링가이드_2;
-            this.LabelingTutorialPanel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LabelingTutorialPanel2.Controls.Add(this.guna2Panel1);
-            this.LabelingTutorialPanel2.Location = new System.Drawing.Point(415, 104);
-            this.LabelingTutorialPanel2.Name = "LabelingTutorialPanel2";
-            this.LabelingTutorialPanel2.Size = new System.Drawing.Size(446, 216);
-            this.LabelingTutorialPanel2.TabIndex = 5;
-            // 
-            // labelingTutorialContent3
-            // 
-            this.labelingTutorialContent3.BackgroundImage = global::SAI.Properties.Resources.라벨링_가이드_Editor;
-            this.labelingTutorialContent3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.labelingTutorialContent3.Location = new System.Drawing.Point(37, 162);
-            this.labelingTutorialContent3.Name = "labelingTutorialContent3";
-            this.labelingTutorialContent3.Size = new System.Drawing.Size(320, 179);
-            this.labelingTutorialContent3.TabIndex = 3;
-            this.labelingTutorialContent3.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint_1);
-            // 
-            // guna2Panel1
-            // 
-            this.guna2Panel1.BackgroundImage = global::SAI.Properties.Resources.라벨링가이드_3;
-            this.guna2Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2Panel1.Location = new System.Drawing.Point(82, 168);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(470, 216);
-            this.guna2Panel1.TabIndex = 4;
+            this.goToLabeling.BackColor = System.Drawing.Color.Transparent;
+            this.goToLabeling.BackgroundImage = global::SAI.Properties.Resources.btn_close;
+            this.goToLabeling.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.goToLabeling.BorderColor = System.Drawing.Color.Transparent;
+            this.goToLabeling.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.goToLabeling.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.goToLabeling.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.goToLabeling.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.goToLabeling.FillColor = System.Drawing.Color.Transparent;
+            this.goToLabeling.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.goToLabeling.ForeColor = System.Drawing.Color.Transparent;
+            this.goToLabeling.Location = new System.Drawing.Point(1183, 166);
+            this.goToLabeling.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.goToLabeling.Name = "goToLabeling";
+            this.goToLabeling.Size = new System.Drawing.Size(34, 38);
+            this.goToLabeling.TabIndex = 5;
             // 
             // UcTutorialGuide
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::SAI.Properties.Resources.전체튜토리얼가이드1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.giudeOpacityPanel);
+            this.Controls.Add(this.goToLabeling);
+            this.Controls.Add(this.exit);
+            this.Controls.Add(this.goLabelingBtn);
+            this.Controls.Add(this.preBtn);
+            this.Controls.Add(this.nextBtn);
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UcTutorialGuide";
-            this.Size = new System.Drawing.Size(1280, 720);
+            this.Size = new System.Drawing.Size(1463, 900);
             this.Load += new System.EventHandler(this.UcTutorialGuide_Load);
-            this.wholeTutorialPanel.ResumeLayout(false);
-            this.giudeOpacityPanel.ResumeLayout(false);
-            this.labelingTutorialContent2.ResumeLayout(false);
-            this.LabelingTutorialPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2CustomGradientPanel wholeTutorialPanel;
-        private Guna.UI2.WinForms.Guna2Button wholeTutorialCancleBtn;
-        private Guna.UI2.WinForms.Guna2CircleButton wholeTutorialNextBtn;
-        private Guna.UI2.WinForms.Guna2CircleButton wholeTutorialPreBtn;
         private Guna.UI2.WinForms.Guna2CircleButton nextBtn;
-        private Guna.UI2.WinForms.Guna2Panel giudeOpacityPanel;
-        private Guna.UI2.WinForms.Guna2Panel labelingTutorialContent1;
-        private Guna.UI2.WinForms.Guna2Panel LabelingTutorialPanel0;
-        private Guna.UI2.WinForms.Guna2Panel LabelingTutorialPanel1;
-        private Guna.UI2.WinForms.Guna2Panel labelingTutorialContent2;
-        private Guna.UI2.WinForms.Guna2Panel LabelingTutorialPanel2;
-        private Guna.UI2.WinForms.Guna2Panel labelingTutorialContent3;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2CircleButton preBtn;
+        private Guna.UI2.WinForms.Guna2CircleButton goLabelingBtn;
+        private Guna.UI2.WinForms.Guna2Button exit;
+        private Guna.UI2.WinForms.Guna2Button goToLabeling;
     }
 }
