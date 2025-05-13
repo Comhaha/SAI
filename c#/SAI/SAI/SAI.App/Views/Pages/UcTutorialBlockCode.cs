@@ -14,8 +14,9 @@ using Guna.UI2.WinForms;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView
 	{
+		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
 		private readonly IMainView mainView;
@@ -24,7 +25,9 @@ namespace SAI.SAI.App.Views.Pages
 
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
-		private JsBridge jsBridge;
+        public event EventHandler RunButtonClicked;
+
+        private JsBridge jsBridge;
 		
         private TodoManager todoManager;
         // todo 위에서부터 index 0~2번 입니다.
@@ -38,6 +41,9 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
+			yoloTutorialPresenter = new YoloTutorialPresenter(this);
+
+			ibtnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -518,6 +524,7 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void ibtnRunModel_Click(object sender, EventArgs e)
 		{
+			// 유진 run 코드 작성하기
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 			labelBlockTitle.Text = "추론 결과 확인하기";
 			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
@@ -651,6 +658,56 @@ namespace SAI.SAI.App.Views.Pages
         private void pSideInfer_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        public void AppendLog(string text)
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(() => AppendLog(text)));
+            //}
+            //else
+            //{
+            //    logOutput.AppendText(text + Environment.NewLine);
+            //    logOutput.SelectionStart = logOutput.Text.Length;
+            //    logOutput.ScrollToCaret();
+            //}
+        }
+
+        public void ClearLog()
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(ClearLog));
+            //}
+            //else
+            //{
+            //    logOutput.Clear();
+            //}
+        }
+
+        public void SetLogVisible(bool visible)
+        {
+            //if (logOutput.InvokeRequired)
+            //{
+            //    logOutput.Invoke(new MethodInvoker(() => SetLogVisible(visible)));
+            //}
+            //else
+            //{
+            //    logOutput.Visible = visible;
+            //}
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
