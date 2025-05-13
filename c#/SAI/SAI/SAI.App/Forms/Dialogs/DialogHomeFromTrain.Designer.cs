@@ -119,6 +119,7 @@
             this.MaximizeBox = false;
             this.Name = "DialogHomeFromTrain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "X";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DialogHomeFromTrain_Load);
             this.panelTitleBar.ResumeLayout(false);

@@ -343,6 +343,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_dialog_setting {
+            get {
+                object obj = ResourceManager.GetObject("bg_dialog_setting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_dialog_white {
             get {
                 object obj = ResourceManager.GetObject("bg_dialog_white", resourceCulture);
@@ -1243,6 +1253,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_save {
+            get {
+                object obj = ResourceManager.GetObject("btn_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_save_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_save_clicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_selectinferimage {
             get {
                 object obj = ResourceManager.GetObject("btn_selectinferimage", resourceCulture);
@@ -1973,6 +2003,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap p_titlebar_setting {
+            get {
+                object obj = ResourceManager.GetObject("p_titlebar_setting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap p_todolist {
             get {
                 object obj = ResourceManager.GetObject("p_todolist", resourceCulture);
@@ -2026,6 +2066,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap p_topbar {
             get {
                 object obj = ResourceManager.GetObject("p_topbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap pbox_setting {
+            get {
+                object obj = ResourceManager.GetObject("pbox_setting", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -323,6 +323,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogConfirmExit.resx">
       <DependentUpon>DialogConfirmExit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogSetting.resx">
+      <DependentUpon>DialogSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\TutorialGuideForm.resx">
       <DependentUpon>TutorialGuideForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -396,6 +399,11 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_save_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_clicked_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_save.png" />
+    <None Include="SAI.App\Resources\Images\pbox_setting.png" />
+    <None Include="SAI.App\Resources\Images\p_titlebar_setting.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_home_from_train.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_delete_model.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_confirm_exit.png" />
@@ -646,6 +654,8 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_confirm_exit.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_delete_model.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_home_from_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_quit_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_setting.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
