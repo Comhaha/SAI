@@ -8,7 +8,6 @@
 !pip install ultralytics
 
 
-
 # 모델 불러오기
 from ultralytics import YOLO
 

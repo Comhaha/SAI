@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,7 +56,16 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnLearnModel.CheckedState.FillColor = Color.Transparent;
 			btnLearnModel.HoverState.FillColor = Color.Transparent;
 			btnLearnModel.BackColor = Color.Transparent;
-			btnLearnModel.Click += (s, e) => { System.Windows.Forms.Application.Exit(); }; // <- 여기 페이지 이동으로 수정!!!!!!!
+			btnLearnModel.Click += (s, e) => {
+				var mainView = this.Owner as IMainView;
+				var mainForm = this.Owner as MainForm;
+				if (mainForm != null)
+				{
+					// mainForm의 LoadPage 메서드를 호출하여 페이지를 변경
+					 mainForm.LoadPage(new UcTutorialBlockCode(mainView));
+					this.Close();
+				}
+			}; // <- 여기 페이지 이동으로 수정!!!!!!!
 			// btnOk 마우스 입력 될 때
 			btnLearnModel.MouseEnter += (s, e) =>
 			{
