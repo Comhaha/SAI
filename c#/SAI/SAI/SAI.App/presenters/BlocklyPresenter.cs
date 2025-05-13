@@ -147,6 +147,7 @@ namespace SAI.SAI.App.Presenters
             this.codeBoxPresenter = presenter;
             Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter가 설정되었습니다.");
         }
+
         // presenter가 view와 service에게 전달해주기 위한 메소드
         public void HandleJsMessage(string code, string type)
         {
