@@ -29,37 +29,20 @@
 		private void InitializeComponent()
 		{
             this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            this.panelIcon = new Guna.UI2.WinForms.Guna2Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelContent = new System.Windows.Forms.Label();
             this.btnLearnModel = new Guna.UI2.WinForms.Guna2Button();
             this.panelTitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTitleBar
             // 
-            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_blue_titlebar_629;
+            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_complete_tutorial;
             this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelTitleBar.Controls.Add(this.labelTitle);
             this.panelTitleBar.Controls.Add(this.btnClose);
             this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
             this.panelTitleBar.Name = "panelTitleBar";
             this.panelTitleBar.Size = new System.Drawing.Size(629, 40);
             this.panelTitleBar.TabIndex = 0;
-            // 
-            // labelTitle
-            // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.BackColor = System.Drawing.Color.Transparent;
-            this.labelTitle.Font = new System.Drawing.Font("Noto Sans KR", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.labelTitle.Location = new System.Drawing.Point(25, 8);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(181, 40);
-            this.labelTitle.TabIndex = 1;
-            this.labelTitle.Text = "튜토리얼 완료";
             // 
             // btnClose
             // 
@@ -83,39 +66,6 @@
             this.btnClose.Size = new System.Drawing.Size(60, 40);
             this.btnClose.TabIndex = 1;
             // 
-            // panelIcon
-            // 
-            this.panelIcon.BackColor = System.Drawing.Color.Transparent;
-            this.panelIcon.BackgroundImage = global::SAI.Properties.Resources.icon_check_good;
-            this.panelIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelIcon.Location = new System.Drawing.Point(35, 74);
-            this.panelIcon.Name = "panelIcon";
-            this.panelIcon.Size = new System.Drawing.Size(25, 30);
-            this.panelIcon.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Noto Sans KR Medium", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.label1.Location = new System.Drawing.Point(66, 70);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(550, 54);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "ToDoList를 모두 완수하였습니다.";
-            // 
-            // labelContent
-            // 
-            this.labelContent.AutoSize = true;
-            this.labelContent.BackColor = System.Drawing.Color.Transparent;
-            this.labelContent.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelContent.Location = new System.Drawing.Point(69, 114);
-            this.labelContent.Name = "labelContent";
-            this.labelContent.Size = new System.Drawing.Size(748, 92);
-            this.labelContent.TabIndex = 3;
-            this.labelContent.Text = "모델 학습 단계의 TO DO LIST를 모두 완수하였습니다.\r\n[실습하러 가기] 버튼을 누르면 다음 단계로 이동합니다. ";
-            // 
             // btnLearnModel
             // 
             this.btnLearnModel.BackColor = System.Drawing.Color.Transparent;
@@ -138,13 +88,10 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Gray;
-            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_white_629_282;
+            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_complete_tutorial;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(629, 282);
             this.Controls.Add(this.btnLearnModel);
-            this.Controls.Add(this.labelContent);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.panelIcon);
             this.Controls.Add(this.panelTitleBar);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -153,9 +100,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.TopMost = true;
             this.panelTitleBar.ResumeLayout(false);
-            this.panelTitleBar.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
@@ -163,10 +108,6 @@
 
 		private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
 		private Guna.UI2.WinForms.Guna2Button btnClose;
-		private System.Windows.Forms.Label labelTitle;
-		private Guna.UI2.WinForms.Guna2Panel panelIcon;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label labelContent;
 		private Guna.UI2.WinForms.Guna2Button btnLearnModel;
 	}
 }

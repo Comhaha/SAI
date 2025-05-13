@@ -28,155 +28,126 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
-			this.labelTitle = new System.Windows.Forms.Label();
-			this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-			this.panelIcon = new Guna.UI2.WinForms.Guna2Panel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.labelContent = new System.Windows.Forms.Label();
-			this.btnOk = new Guna.UI2.WinForms.Guna2Button();
-			this.btnCancel = new Guna.UI2.WinForms.Guna2Button();
-			this.panelTitleBar.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// panelTitleBar
-			// 
-			this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_blue_titlebar_449;
-			this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.panelTitleBar.Controls.Add(this.labelTitle);
-			this.panelTitleBar.Controls.Add(this.btnClose);
-			this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
-			this.panelTitleBar.Name = "panelTitleBar";
-			this.panelTitleBar.Size = new System.Drawing.Size(499, 40);
-			this.panelTitleBar.TabIndex = 0;
-			// 
-			// labelTitle
-			// 
-			this.labelTitle.AutoSize = true;
-			this.labelTitle.BackColor = System.Drawing.Color.Transparent;
-			this.labelTitle.Font = new System.Drawing.Font("Noto Sans KR", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.labelTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-			this.labelTitle.Location = new System.Drawing.Point(25, 8);
-			this.labelTitle.Name = "labelTitle";
-			this.labelTitle.Size = new System.Drawing.Size(44, 25);
-			this.labelTitle.TabIndex = 1;
-			this.labelTitle.Text = "확인";
-			// 
-			// btnClose
-			// 
-			this.btnClose.BackColor = System.Drawing.Color.Transparent;
-			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_blue_btn_close;
-			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnClose.BorderColor = System.Drawing.Color.Transparent;
-			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnClose.FillColor = System.Drawing.Color.Transparent;
-			this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnClose.ForeColor = System.Drawing.Color.White;
-			this.btnClose.Image = global::SAI.Properties.Resources.btn_close;
-			this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
-			this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
-			this.btnClose.Location = new System.Drawing.Point(439, 0);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(60, 40);
-			this.btnClose.TabIndex = 1;
-			// 
-			// panelIcon
-			// 
-			this.panelIcon.BackColor = System.Drawing.Color.Transparent;
-			this.panelIcon.BackgroundImage = global::SAI.Properties.Resources.btn_question;
-			this.panelIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.panelIcon.Location = new System.Drawing.Point(39, 77);
-			this.panelIcon.Name = "panelIcon";
-			this.panelIcon.Size = new System.Drawing.Size(23, 23);
-			this.panelIcon.TabIndex = 1;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.BackColor = System.Drawing.Color.Transparent;
-			this.label1.Font = new System.Drawing.Font("Noto Sans KR Medium", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-			this.label1.Location = new System.Drawing.Point(66, 70);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(298, 34);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "실습으로 이동하시겠습니까?";
-			// 
-			// labelContent
-			// 
-			this.labelContent.AutoSize = true;
-			this.labelContent.BackColor = System.Drawing.Color.Transparent;
-			this.labelContent.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.labelContent.Location = new System.Drawing.Point(69, 114);
-			this.labelContent.Name = "labelContent";
-			this.labelContent.Size = new System.Drawing.Size(337, 29);
-			this.labelContent.TabIndex = 3;
-			this.labelContent.Text = "[OK]버튼 클릭 시 실습으로 이동합니다.";
-			// 
-			// btnOk
-			// 
-			this.btnOk.BackColor = System.Drawing.Color.Transparent;
-			this.btnOk.BackgroundImage = global::SAI.Properties.Resources.btn_blue_ok;
-			this.btnOk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnOk.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnOk.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnOk.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnOk.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnOk.FillColor = System.Drawing.Color.Transparent;
-			this.btnOk.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnOk.ForeColor = System.Drawing.Color.White;
-			this.btnOk.Location = new System.Drawing.Point(359, 173);
-			this.btnOk.Margin = new System.Windows.Forms.Padding(4);
-			this.btnOk.Name = "btnOk";
-			this.btnOk.Size = new System.Drawing.Size(100, 40);
-			this.btnOk.TabIndex = 4;
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.BackColor = System.Drawing.Color.Transparent;
-			this.btnCancel.BackgroundImage = global::SAI.Properties.Resources.btn_white_cancel;
-			this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnCancel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnCancel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnCancel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnCancel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnCancel.FillColor = System.Drawing.Color.Transparent;
-			this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnCancel.ForeColor = System.Drawing.Color.White;
-			this.btnCancel.ImageSize = new System.Drawing.Size(110, 42);
-			this.btnCancel.Location = new System.Drawing.Point(249, 173);
-			this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(100, 40);
-			this.btnCancel.TabIndex = 5;
-			// 
-			// DialogComfirmTrain
-			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.BackColor = System.Drawing.Color.Gray;
-			this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_white_449_253;
-			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(499, 253);
-			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnOk);
-			this.Controls.Add(this.labelContent);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.panelIcon);
-			this.Controls.Add(this.panelTitleBar);
-			this.DoubleBuffered = true;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.MaximizeBox = false;
-			this.Name = "DialogComfirmTrain";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.TopMost = true;
-			this.panelTitleBar.ResumeLayout(false);
-			this.panelTitleBar.PerformLayout();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelContent = new System.Windows.Forms.Label();
+            this.btnOk = new Guna.UI2.WinForms.Guna2Button();
+            this.btnCancel = new Guna.UI2.WinForms.Guna2Button();
+            this.panelTitleBar.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelTitleBar
+            // 
+            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_comfirm_go_train;
+            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelTitleBar.Controls.Add(this.btnClose);
+            this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.panelTitleBar.Name = "panelTitleBar";
+            this.panelTitleBar.Size = new System.Drawing.Size(499, 40);
+            this.panelTitleBar.TabIndex = 0;
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_blue_btn_close;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Image = global::SAI.Properties.Resources.btn_close;
+            this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
+            this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
+            this.btnClose.Location = new System.Drawing.Point(439, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(60, 40);
+            this.btnClose.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Noto Sans KR Medium", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.label1.Location = new System.Drawing.Point(66, 70);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 54);
+            this.label1.TabIndex = 2;
+            // 
+            // labelContent
+            // 
+            this.labelContent.AutoSize = true;
+            this.labelContent.BackColor = System.Drawing.Color.Transparent;
+            this.labelContent.Font = new System.Drawing.Font("Noto Sans KR", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelContent.Location = new System.Drawing.Point(69, 114);
+            this.labelContent.Name = "labelContent";
+            this.labelContent.Size = new System.Drawing.Size(0, 46);
+            this.labelContent.TabIndex = 3;
+            // 
+            // btnOk
+            // 
+            this.btnOk.BackColor = System.Drawing.Color.Transparent;
+            this.btnOk.BackgroundImage = global::SAI.Properties.Resources.btn_blue_ok;
+            this.btnOk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnOk.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnOk.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnOk.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnOk.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnOk.FillColor = System.Drawing.Color.Transparent;
+            this.btnOk.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnOk.ForeColor = System.Drawing.Color.White;
+            this.btnOk.Location = new System.Drawing.Point(359, 173);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(100, 40);
+            this.btnOk.TabIndex = 4;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancel.BackgroundImage = global::SAI.Properties.Resources.btn_white_cancel;
+            this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCancel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCancel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCancel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCancel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCancel.FillColor = System.Drawing.Color.Transparent;
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.ImageSize = new System.Drawing.Size(110, 42);
+            this.btnCancel.Location = new System.Drawing.Point(249, 173);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 40);
+            this.btnCancel.TabIndex = 5;
+            // 
+            // DialogComfirmGoTrain
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.Gray;
+            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_comfirm_go_train;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(499, 253);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.labelContent);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panelTitleBar);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.Name = "DialogComfirmGoTrain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.TopMost = true;
+            this.panelTitleBar.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -184,8 +155,6 @@
 
 		private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
 		private Guna.UI2.WinForms.Guna2Button btnClose;
-		private System.Windows.Forms.Label labelTitle;
-		private Guna.UI2.WinForms.Guna2Panel panelIcon;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label labelContent;
 		private Guna.UI2.WinForms.Guna2Button btnOk;
