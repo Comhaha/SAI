@@ -34,7 +34,43 @@ namespace SAI
 			guna2DragControl1.TargetControl = titlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
 			guna2DragControl1.UseTransparentDrag = false;
+
+			this.Resize += MainForm_Resize;
 		}
+
+		private void MainForm_Resize(object sender, EventArgs e)
+		{
+			int maxWidth = 1280;
+			int maxHeight = 720;
+
+			// 현재 폼의 너비와 높이
+			int formWidth = this.ClientSize.Width;
+			int formHeight = this.ClientSize.Height;
+
+			// 비율 계산 (비율 유지한 채 확대)
+			float scaleX = (float)formWidth / maxWidth;
+			float scaleY = (float)formHeight / maxHeight;
+			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
+
+			// 확대된 크기 계산 (최대 1280x720)
+			int newWidth = (int)(maxWidth * scale);
+			int newHeight = (int)(maxHeight * scale);
+
+			newWidth = Math.Min(newWidth, maxWidth);
+			newHeight = Math.Min(newHeight, maxHeight);
+
+			// 중앙 정렬 위치 계산
+			int x = (formWidth - newWidth) / 2;
+			int y = (formHeight - newHeight) / 2;
+
+			// 위치와 크기 조정
+			guna2Panel1.Location = new Point(x, y + 30); // titlebar 때문에 y는 약간 내림
+			guna2Panel1.Size = new Size(newWidth, newHeight - 30);
+
+			titlebar.Location = new Point(0, 0);
+			titlebar.Size = new Size(formWidth, 30); // 타이틀바는 항상 높이 30
+		}
+
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
@@ -46,7 +82,6 @@ namespace SAI
 		public void LoadPage(UserControl page)
 		{
 			page.Size = new Size(1280, 720);
-			guna2Panel1.Location = new Point(0, 30);
 			guna2Panel1.Controls.Clear();
 			guna2Panel1.BackColor = Color.Transparent;
 			guna2Panel1.Controls.Add(page);

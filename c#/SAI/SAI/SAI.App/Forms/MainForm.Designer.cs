@@ -39,6 +39,8 @@
 			// 
 			// titlebar
 			// 
+			this.titlebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.titlebar.BackColor = System.Drawing.Color.Transparent;
 			this.titlebar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("titlebar.BackgroundImage")));
 			this.titlebar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -53,6 +55,7 @@
 			// 
 			// btnSetting
 			// 
+			this.btnSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSetting.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_setting;
 			this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -71,6 +74,7 @@
 			// 
 			// btnMinScreen
 			// 
+			this.btnMinScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnMinScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_minscreen;
 			this.btnMinScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnMinScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -88,6 +92,7 @@
 			// 
 			// btnFullScreen
 			// 
+			this.btnFullScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnFullScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_fullscreen;
 			this.btnFullScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnFullScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -105,6 +110,7 @@
 			// 
 			// btnClose
 			// 
+			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_close;
 			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -128,9 +134,11 @@
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(1280, 750);
 			this.Controls.Add(this.titlebar);
 			this.Controls.Add(this.guna2Panel1);
+			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.MinimumSize = new System.Drawing.Size(1280, 750);
