@@ -6,6 +6,15 @@ import subprocess
 import platform
 import re
 import os
+import io
+
+# 표준 출력 스트림 설정
+try:
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+except Exception as e:
+    # 이미 설정되어 있거나 닫혀있는 경우 무시
+    pass
 
 def detect_cuda():
     """시스템의 CUDA 버전 감지"""

@@ -12,10 +12,16 @@ import glob
 import io
 from datetime import datetime
 
+# 표준 출력 스트림 설정
+try:
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+except Exception as e:
+    # 이미 설정되어 있거나 닫혀있는 경우 무시
+    pass
 
 PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # 로깅 설정 - 시간 포맷 변경 및 상세 정보 표시
 logging.basicConfig(
@@ -29,25 +35,27 @@ logger = logging.getLogger(__name__)
 # 진행 상황 표시 함수
 def show_progress(message, start_time=None, progress=None):
     """진행 상황 및 경과 시간 표시"""
-    elapsed_str = ""
-    if start_time:
-        elapsed = time.time() - start_time
-        minutes, seconds = divmod(elapsed, 60)
-        elapsed_str = f"[{int(minutes):02d}:{int(seconds):02d}] "
+    try:
+        elapsed_str = ""
+        if start_time:
+            elapsed = time.time() - start_time
+            minutes, seconds = divmod(elapsed, 60)
+            elapsed_str = f"[{int(minutes):02d}:{int(seconds):02d}] "
+            
+        progress_str = ""
+        if progress is not None:
+            progress_str = f"[{progress:.1f}%] "
         
-    progress_str = ""
-    if progress is not None:
-        progress_str = f"[{progress:.1f}%] "
-    
-    full_message = f"{elapsed_str}{progress_str}{message}"
-    logger.info(full_message)
-    
-    # C# 애플리케이션에서 쉽게 파싱할 수 있는 태그 추가
-    if progress is not None:
-        print(f"PROGRESS:{progress:.1f}:{message}")
-    else:
-        print(f"PROGRESS::{message}")
-    sys.stdout.flush()  # 즉시 출력
+        full_message = f"{elapsed_str}{progress_str}{message}"
+        logger.info(full_message)
+        
+        # C# 애플리케이션에서 쉽게 파싱할 수 있는 태그 추가
+        if progress is not None:
+            print(f"PROGRESS:{progress:.1f}:{message}", flush=True)
+        else:
+            print(f"PROGRESS::{message}", flush=True)
+    except Exception as e:
+        logger.error(f"show_progress 오류: {e}")
 
 # pip 설치 진행률 추적 클래스
 class PipProgressTracker:
