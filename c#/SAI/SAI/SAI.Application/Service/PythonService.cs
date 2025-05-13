@@ -68,7 +68,9 @@ namespace SAI.SAI.Application.Service
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    CreateNoWindow = false
+                    CreateNoWindow = false,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8
                 };
 
                 var process = new Process { StartInfo = psi, EnableRaisingEvents = true };

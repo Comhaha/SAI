@@ -12,6 +12,7 @@ using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Models;
+using System.Diagnostics;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -151,16 +152,16 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     var codePresenter = new CodePresenter(mainEditor);
                     blocklyPresenter.SetCodePresenter(codePresenter);
-                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                    Debug.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
                 }
                 else
                 {
-                    Console.WriteLine("[WARNING] UcTutorialBlockCode: mainEditor가 null입니다");
+                    Debug.WriteLine("[WARNING] UcTutorialBlockCode: mainEditor가 null입니다");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+                Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
             }
         }
 
@@ -663,44 +664,18 @@ namespace SAI.SAI.App.Views.Pages
 
         public void AppendLog(string text)
         {
-            //if (logOutput.InvokeRequired)
-            //{
-            //    logOutput.Invoke(new MethodInvoker(() => AppendLog(text)));
-            //}
-            //else
-            //{
-            //    logOutput.AppendText(text + Environment.NewLine);
-            //    logOutput.SelectionStart = logOutput.Text.Length;
-            //    logOutput.ScrollToCaret();
-            //}
-            Console.WriteLine($"[YOLO Tutorial] {text}");
+            Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
 
         public void ClearLog()
         {
-            //if (logOutput.InvokeRequired)
-            //{
-            //    logOutput.Invoke(new MethodInvoker(ClearLog));
-            //}
-            //else
-            //{
-            //    logOutput.Clear();
-            //}
-            
-            // 콘솔 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
-            Console.WriteLine("\n" + new string('-', 50) + "\n");
+            // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Debug.WriteLine("\n" + new string('-', 50) + "\n");
         }
 
         public void SetLogVisible(bool visible)
         {
-            //if (logOutput.InvokeRequired)
-            //{
-            //    logOutput.Invoke(new MethodInvoker(() => SetLogVisible(visible)));
-            //}
-            //else
-            //{
-            //    logOutput.Visible = visible;
-            //}
+            // Debug 출력에서는 가시성 설정이 필요 없으므로 빈 메서드로 둡니다
         }
 
         public void ShowErrorMessage(string message)
