@@ -265,7 +265,7 @@ namespace SAI.SAI.App.Views.Pages
             nextBtn.Click += (s, e) => {
                 if (isHandToolActive)
                 {
-                    isHandToolActive = false;
+                    // isHandToolActive = false;
                     isEditingPolygon = false;
                     isEditingBoundingBox = false;
                     UpdateToolVisualState();
@@ -275,7 +275,7 @@ namespace SAI.SAI.App.Views.Pages
             preBtn.Click += (s, e) => {
                 if (isHandToolActive)
                 {
-                    isHandToolActive = false;
+                    // isHandToolActive = false;
                     isEditingPolygon = false;
                     isEditingBoundingBox = false;
                     UpdateToolVisualState();
