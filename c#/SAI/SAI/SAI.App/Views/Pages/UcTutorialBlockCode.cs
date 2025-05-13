@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -11,6 +11,7 @@ using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -36,6 +37,9 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
+        private MemoPresenter memoPresenter;
+        public UcTutorialBlockCode(IMainView view)
+
 
 		private int undoCount = 0;
 		public UcTutorialBlockCode(IMainView view)
@@ -43,7 +47,7 @@ namespace SAI.SAI.App.Views.Pages
 			InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
-
+            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 			btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
@@ -158,7 +162,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-		private void setButtonVisible(Guna2Button button)
+        private void setButtonVisible(Guna2Button button)
 		{
 			button.Visible = true;
 		}
@@ -708,5 +712,15 @@ namespace SAI.SAI.App.Views.Pages
                 MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-	}
+
+       private void tboxMemo_TextChanged(object sender, EventArgs e)
+{
+    // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
+    if (memoPresenter != null)
+    {
+        memoPresenter.SaveMemoText(tboxMemo.Text);
+    }
+}
+    }
+	
 }
