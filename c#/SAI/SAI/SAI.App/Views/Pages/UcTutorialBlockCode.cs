@@ -524,7 +524,7 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void ibtnRunModel_Click(object sender, EventArgs e)
 		{
-			// 유진 run 코드 작성하기
+
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 			labelBlockTitle.Text = "추론 결과 확인하기";
 			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
@@ -672,6 +672,7 @@ namespace SAI.SAI.App.Views.Pages
             //    logOutput.SelectionStart = logOutput.Text.Length;
             //    logOutput.ScrollToCaret();
             //}
+            Console.WriteLine($"[YOLO Tutorial] {text}");
         }
 
         public void ClearLog()
@@ -684,6 +685,9 @@ namespace SAI.SAI.App.Views.Pages
             //{
             //    logOutput.Clear();
             //}
+            
+            // 콘솔 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Console.WriteLine("\n" + new string('-', 50) + "\n");
         }
 
         public void SetLogVisible(bool visible)
