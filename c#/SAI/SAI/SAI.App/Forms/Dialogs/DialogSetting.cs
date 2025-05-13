@@ -15,6 +15,56 @@ namespace SAI.SAI.App.Forms.Dialogs
 		public DialogSetting()
 		{
 			InitializeComponent();
-		}
-	}
+
+            // 부모 기준 중앙
+            this.StartPosition = FormStartPosition.CenterParent;
+            // 기존 타이틀바 삭제
+            this.FormBorderStyle = FormBorderStyle.None;
+            // 떴을 때 이 다이얼로그가 가장 위에 있고 다이얼로그를 끄기 전에는 다른 건 못 누르게!
+            this.TopMost = true;
+
+            // 배경을 투명하게 하기 위해서
+            this.BackColor = Color.Gray;           // 투명 처리할 색
+            this.TransparencyKey = Color.Gray;
+
+            // btnClose
+            btnClose.BackColor = Color.Transparent;
+            btnClose.PressedColor = Color.Transparent;
+            btnClose.CheckedState.FillColor = Color.Transparent;
+            btnClose.DisabledState.FillColor = Color.Transparent;
+            btnClose.HoverState.FillColor = Color.Transparent;
+            btnClose.Click += (s, e) => { this.Close(); };
+            // btnClose 마우스 입력 될 때
+            btnClose.MouseEnter += (s, e) =>
+            {
+                btnClose.BackColor = Color.Transparent;
+                btnClose.BackgroundImage = Properties.Resources.btn_close_select_model_clicked;
+            };
+            // btnClose 마우스 떠날때
+            btnClose.MouseLeave += (s, e) =>
+            {
+                btnClose.BackgroundImage = Properties.Resources.btn_close_select_model;
+            };
+
+            // btnSave
+            btnSave.BackColor = Color.Transparent;
+            btnSave.PressedColor = Color.Transparent;
+            btnSave.CheckedState.FillColor = Color.Transparent;
+            btnSave.DisabledState.FillColor = Color.Transparent;
+            btnSave.HoverState.FillColor = Color.Transparent;
+            btnSave.Click += (s, e) => { this.Close(); };
+            // btnClose 마우스 입력 될 때
+            btnSave.MouseEnter += (s, e) =>
+            {
+                btnSave.BackColor = Color.Transparent;
+                btnSave.BackgroundImage = Properties.Resources.btn_save_clicked;
+            };
+            // btnClose 마우스 떠날때
+            btnSave.MouseLeave += (s, e) =>
+            {
+                btnSave.BackgroundImage = Properties.Resources.btn_save;
+            };
+
+        }
+    }
 }
