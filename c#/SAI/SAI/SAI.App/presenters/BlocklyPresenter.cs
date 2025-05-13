@@ -27,7 +27,6 @@ namespace SAI.SAI.App.Presenters
             this.blocklyService = new BlocklyService();
             this.blocklyModel = BlocklyModel.Instance;
             this.view.AddBlockButtonClicked += OnAddBlockButtonClicked;
-            this.view.AddBlockButtonDoubleClicked += OnAddBlockDoubleClicked;
 
             // 블록 하나의 코드가 변경되면 실행되는 이벤트
             blocklyModel.BlockCodeChanged += (newCode) =>
@@ -123,16 +122,13 @@ namespace SAI.SAI.App.Presenters
             };
         }
 
-
-
-        private void OnAddBlockDoubleClicked(object sender, BlockEventArgs e)
+        public void OnAddBlockDoubleClicked(string code)
         {
-            view.getPythonCodeByType(e.BlockType);
             // blockCode 초기화
             blocklyModel.blockCode = "";
-            
-
+            blocklyModel.blockCode = code;
         }
+
         // 버튼 클릭시 호출되는 이벤트 메소드 -> view에게 전달
         private void OnAddBlockButtonClicked(object sender, BlockEventArgs e)
         {

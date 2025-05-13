@@ -13,9 +13,6 @@ namespace SAI.SAI.App.Views.Interfaces
 		// 버튼이 클릭되었다는 이벤트
 		event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 
-		// 버튼이 더블 클릭되었다는 이벤트
-		event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
-
 		// 블록을 추가하는 JS 함수를 실행
 		void addBlock(string blockType);
 
