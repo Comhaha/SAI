@@ -319,6 +319,12 @@ namespace SAI.SAI.App.Views.Pages
             popupCloseBtn.Click += (s, e) => toastPopupPanel.Visible = false;
             toastPopupPanel.Click += (s, e) => toastPopupPanel.Visible = false;
 
+            // 홈으로 돌아가기
+            homeBtn.Click += (s, e) =>
+            {
+                var dialog = new DialogHomeFromTrain();
+                dialog.ShowDialog(this);
+            };
             //// 좌표 내보내기 버튼 클릭 이벤트 등록
             //exportBtn.Click += ExportBtn_Click;
         }

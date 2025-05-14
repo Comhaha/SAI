@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcLabelGuide));
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.homeBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -50,6 +49,7 @@
             this.progress0 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
@@ -74,8 +74,8 @@
             this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
             this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
+            this.goModel = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
@@ -88,24 +88,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
-            // guna2CircleButton1
+            // homeBtn
             // 
-            this.guna2CircleButton1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.White;
-            this.guna2CircleButton1.Image = global::SAI.Properties.Resources.ic_home;
-            this.guna2CircleButton1.ImageSize = new System.Drawing.Size(39, 39);
-            this.guna2CircleButton1.Location = new System.Drawing.Point(134, 37);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(39, 39);
-            this.guna2CircleButton1.TabIndex = 0;
+            this.homeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.homeBtn.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.homeBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.homeBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.homeBtn.FillColor = System.Drawing.Color.Transparent;
+            this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.homeBtn.ForeColor = System.Drawing.Color.White;
+            this.homeBtn.HoverState.Image = global::SAI.Properties.Resources.btn_home_hover;
+            this.homeBtn.Image = global::SAI.Properties.Resources.ic_home;
+            this.homeBtn.ImageSize = new System.Drawing.Size(39, 39);
+            this.homeBtn.Location = new System.Drawing.Point(134, 36);
+            this.homeBtn.Name = "homeBtn";
+            this.homeBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.homeBtn.Size = new System.Drawing.Size(39, 39);
+            this.homeBtn.TabIndex = 0;
             // 
             // nextBtn
             // 
@@ -156,18 +157,6 @@
             this.class1.Size = new System.Drawing.Size(98, 31);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
-            // 
-            // guna2Panel1
-            // 
-            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel1.BackgroundImage = global::SAI.Properties.Resources.완료;
-            this.guna2Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.guna2Panel1.Location = new System.Drawing.Point(964, 36);
-            this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(209, 39);
-            this.guna2Panel1.TabIndex = 8;
-            this.guna2Panel1.Click += new System.EventHandler(this.guna2Panel1_Click);
-            this.guna2Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
             // 
             // mainpanel
             // 
@@ -425,6 +414,24 @@
             this.toastPopupPanel.Size = new System.Drawing.Size(379, 100);
             this.toastPopupPanel.TabIndex = 15;
             this.toastPopupPanel.Visible = false;
+            // 
+            // popupCloseBtn
+            // 
+            this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
+            this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.popupCloseBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
+            this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
+            this.popupCloseBtn.Location = new System.Drawing.Point(344, 12);
+            this.popupCloseBtn.Name = "popupCloseBtn";
+            this.popupCloseBtn.Size = new System.Drawing.Size(15, 15);
+            this.popupCloseBtn.TabIndex = 0;
+            this.popupCloseBtn.Text = "guna2Button1";
             // 
             // accuracyPanel
             // 
@@ -751,7 +758,7 @@
             this.showLevel1.BackColor = System.Drawing.Color.Transparent;
             this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_9;
             this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.showLevel1.Location = new System.Drawing.Point(624, 44);
+            this.showLevel1.Location = new System.Drawing.Point(624, 42);
             this.showLevel1.Name = "showLevel1";
             this.showLevel1.Size = new System.Drawing.Size(40, 27);
             this.showLevel1.TabIndex = 0;
@@ -761,28 +768,10 @@
             this.totalLevelpanel.BackColor = System.Drawing.Color.Transparent;
             this.totalLevelpanel.BackgroundImage = global::SAI.Properties.Resources._0단계_라벨링;
             this.totalLevelpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.totalLevelpanel.Location = new System.Drawing.Point(179, 39);
+            this.totalLevelpanel.Location = new System.Drawing.Point(179, 38);
             this.totalLevelpanel.Name = "totalLevelpanel";
             this.totalLevelpanel.Size = new System.Drawing.Size(130, 35);
             this.totalLevelpanel.TabIndex = 9;
-            // 
-            // popupCloseBtn
-            // 
-            this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
-            this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.popupCloseBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.popupCloseBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.popupCloseBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
-            this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
-            this.popupCloseBtn.Location = new System.Drawing.Point(344, 12);
-            this.popupCloseBtn.Name = "popupCloseBtn";
-            this.popupCloseBtn.Size = new System.Drawing.Size(15, 15);
-            this.popupCloseBtn.TabIndex = 0;
-            this.popupCloseBtn.Text = "guna2Button1";
             // 
             // nextBtnVisible
             // 
@@ -792,17 +781,29 @@
             this.nextBtnVisible.Size = new System.Drawing.Size(68, 69);
             this.nextBtnVisible.TabIndex = 10;
             // 
+            // goModel
+            // 
+            this.goModel.BackColor = System.Drawing.Color.Transparent;
+            this.goModel.BackgroundImage = global::SAI.Properties.Resources.완료;
+            this.goModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.goModel.Location = new System.Drawing.Point(993, 37);
+            this.goModel.Name = "goModel";
+            this.goModel.Size = new System.Drawing.Size(167, 35);
+            this.goModel.TabIndex = 8;
+            this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
+            this.goModel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
+            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             this.Controls.Add(this.totalLevelpanel);
             this.Controls.Add(this.showLevel1);
-            this.Controls.Add(this.guna2Panel1);
+            this.Controls.Add(this.goModel);
             this.Controls.Add(this.preBtn);
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.mainpanel);
-            this.Controls.Add(this.guna2CircleButton1);
+            this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.nextBtnVisible);
             this.Name = "UcLabelGuide";
             this.Size = new System.Drawing.Size(1280, 720);
@@ -826,11 +827,10 @@
 
         #endregion
 
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
+        private Guna.UI2.WinForms.Guna2CircleButton homeBtn;
         private Guna.UI2.WinForms.Guna2CircleButton nextBtn;
         private Guna.UI2.WinForms.Guna2CircleButton preBtn;
         private Guna.UI2.WinForms.Guna2HtmlLabel class1;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Panel mainpanel;
         private Guna.UI2.WinForms.Guna2GradientPanel leftPanel;
         private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
@@ -873,5 +873,6 @@
         private Guna.UI2.WinForms.Guna2Panel toastPopupPanel;
         private Guna.UI2.WinForms.Guna2Button popupCloseBtn;
         private Guna.UI2.WinForms.Guna2Panel nextBtnVisible;
+        private Guna.UI2.WinForms.Guna2Panel goModel;
     }
 }
