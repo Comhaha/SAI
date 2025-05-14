@@ -57,14 +57,17 @@ namespace SAI.SAI.App.Views.Pages
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
 			undoCount = 0;
-			ibtnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
-
-			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
 
 			ibtnHome.BackColor = Color.Transparent;
 			ibtnDone.BackColor = Color.Transparent;
 			ibtnInfer.BackColor = Color.Transparent;
 			ibtnMemo.BackColor = Color.Transparent;
+
+            // 홈페이지로 이동
+            ibtnHome.Click += (s, e) => {
+                mainView.LoadPage(new UcSelectType(mainView));
+            };
 
             // ToolTip 설정
             ToolTip toolTip = new ToolTip();
@@ -96,26 +99,80 @@ namespace SAI.SAI.App.Views.Pages
 			InitializeBlockButton();
 			setBtnBlockStart();
 
-			// btnRunModel
-			btnRunModel.BackColor = Color.Transparent;
-			btnRunModel.PressedColor = Color.Transparent;
-			btnRunModel.CheckedState.FillColor = Color.Transparent;
-			btnRunModel.DisabledState.FillColor = Color.Transparent;
-			btnRunModel.HoverState.FillColor = Color.Transparent;
-			// btnRunModel 마우스 입력 될 때
-			btnRunModel.MouseEnter += (s, e) =>
+            // btnRunModel
+            SetupButton(btnRunModel);
+            btnRunModel.MouseEnter += (s, e) =>
 			{
 				btnRunModel.BackColor = Color.Transparent;
 				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
 			};
-			// btnRunModel 마우스 떠날때
 			btnRunModel.MouseLeave += (s, e) =>
 			{
 				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
 			};
 
-			// 블록 버튼 클릭 이벤트 처리
-			btnBlockStart.Click += (s, e) =>
+            // btnNextBlock
+            SetupButton(btnNextBlock);
+            btnNextBlock.MouseEnter += (s, e) =>
+            {
+                btnNextBlock.BackColor = Color.Transparent;
+                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block_clicked;
+            };
+            btnNextBlock.MouseLeave += (s, e) =>
+            {
+                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block1;
+            };
+
+            // btnPreBlock
+            SetupButton(btnPreBlock);
+            btnPreBlock.MouseEnter += (s, e) =>
+            {
+                btnPreBlock.BackColor = Color.Transparent;
+                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block_clicked;
+            };
+            btnPreBlock.MouseLeave += (s, e) =>
+            {
+                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block1;
+            };
+
+            // btnTrash
+            SetupButton(btnTrash);
+            btnTrash.MouseEnter += (s, e) =>
+            {
+                btnTrash.BackColor = Color.Transparent;
+                btnTrash.BackgroundImage = Properties.Resources.btn_trash_clicked;
+            };
+            btnTrash.MouseLeave += (s, e) =>
+            {
+                btnTrash.BackgroundImage = Properties.Resources.btn_trash_block;
+            };
+
+            // btnQuestionMemo
+            SetupButton(btnQuestionMemo);
+            btnQuestionMemo.MouseEnter += (s, e) =>
+            {
+                btnQuestionMemo.BackColor = Color.Transparent;
+                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo_clicked;
+            };
+            btnQuestionMemo.MouseLeave += (s, e) =>
+            {
+                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo;
+            };
+
+            // btnCloseMemo
+            SetupButton(btnCloseMemo);
+            btnCloseMemo.MouseEnter += (s, e) =>
+            {
+                btnCloseMemo.BackColor = Color.Transparent;
+                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25_clicked;
+            };
+            btnCloseMemo.MouseLeave += (s, e) =>
+            {
+                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25;
+            };
+
+            // 블록 버튼 클릭 이벤트 처리
+            btnBlockStart.Click += (s, e) =>
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
@@ -187,6 +244,14 @@ namespace SAI.SAI.App.Views.Pages
             {
                 Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
             }
+        }
+        void SetupButton(Guna.UI2.WinForms.Guna2Button btn)
+        {
+            btn.BackColor = Color.Transparent;
+            btn.PressedColor = Color.Transparent;
+            btn.CheckedState.FillColor = Color.Transparent;
+            btn.DisabledState.FillColor = Color.Transparent;
+            btn.HoverState.FillColor = Color.Transparent;
         }
 
         private void setButtonVisible(Guna2Button button)
@@ -528,7 +593,7 @@ namespace SAI.SAI.App.Views.Pages
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        private void btnCloseMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
@@ -647,37 +712,37 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		// JS 함수 호출 = 다시 실행하기
-		private void ibtnNextBlock_Click(object sender, EventArgs e)
+		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
 			undoCount--;
 			webViewblock.ExecuteScriptAsync($"redo()");
 
 			if(undoCount == 0)
 			{
-				ibtnNextBlock.Visible = false;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
 			}
 			else
 			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
 			}
 		}
 
 		// JS 함수 호출 = 되돌리기
-		private void ibtnPreBlock_Click(object sender, EventArgs e)
+		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
 			if(undoCount <= 10)
 			{
 				undoCount++;
 				webViewblock.ExecuteScriptAsync($"undo()");
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
 			}
 			else
 			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = false;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = false;
 			}
 		}
 

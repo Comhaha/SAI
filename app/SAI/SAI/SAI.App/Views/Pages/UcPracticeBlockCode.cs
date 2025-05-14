@@ -42,10 +42,12 @@ namespace SAI.SAI.App.Views.Pages
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
-			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+            // 홈페이지 이동
+            ibtnHome.Click += (s, e) => {
+                mainView.LoadPage(new UcSelectType(mainView));
+            };
 
             ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
 
@@ -86,9 +88,89 @@ namespace SAI.SAI.App.Views.Pages
                 e.ToolTipSize = new Size(size.Width + 8, size.Height + 4);
             };
             toolTip.SetToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+
+            // btnRunModel
+            SetupButton(btnRunModel);
+            btnRunModel.MouseEnter += (s, e) =>
+            {
+                btnRunModel.BackColor = Color.Transparent;
+                btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
+            };
+            btnRunModel.MouseLeave += (s, e) =>
+            {
+                btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            };
+
+            // btnNextBlock
+            SetupButton(btnNextBlock);
+            btnNextBlock.MouseEnter += (s, e) =>
+            {
+                btnNextBlock.BackColor = Color.Transparent;
+                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block_clicked;
+            };
+            btnNextBlock.MouseLeave += (s, e) =>
+            {
+                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block1;
+            };
+
+            // btnPreBlock
+            SetupButton(btnPreBlock);
+            btnPreBlock.MouseEnter += (s, e) =>
+            {
+                btnPreBlock.BackColor = Color.Transparent;
+                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block_clicked;
+            };
+            btnPreBlock.MouseLeave += (s, e) =>
+            {
+                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block1;
+            };
+
+            // btnTrash
+            SetupButton(btnTrash);
+            btnTrash.MouseEnter += (s, e) =>
+            {
+                btnTrash.BackColor = Color.Transparent;
+                btnTrash.BackgroundImage = Properties.Resources.btn_trash_clicked;
+            };
+            btnTrash.MouseLeave += (s, e) =>
+            {
+                btnTrash.BackgroundImage = Properties.Resources.btn_trash_block;
+            };
+
+            // btnQuestionMemo
+            SetupButton(btnQuestionMemo);
+            btnQuestionMemo.MouseEnter += (s, e) =>
+            {
+                btnQuestionMemo.BackColor = Color.Transparent;
+                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo_clicked;
+            };
+            btnQuestionMemo.MouseLeave += (s, e) =>
+            {
+                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo;
+            };
+
+            // btnCloseMemo
+            SetupButton(btnCloseMemo);
+            btnCloseMemo.MouseEnter += (s, e) =>
+            {
+                btnCloseMemo.BackColor = Color.Transparent;
+                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25_clicked;
+            };
+            btnCloseMemo.MouseLeave += (s, e) =>
+            {
+                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25;
+            };
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
+        }
+        void SetupButton(Guna.UI2.WinForms.Guna2Button btn)
+        {
+            btn.BackColor = Color.Transparent;
+            btn.PressedColor = Color.Transparent;
+            btn.CheckedState.FillColor = Color.Transparent;
+            btn.DisabledState.FillColor = Color.Transparent;
+            btn.HoverState.FillColor = Color.Transparent;
         }
         private void ShowpSIdeInfer()
         {
@@ -140,7 +222,7 @@ namespace SAI.SAI.App.Views.Pages
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        private void btnCloseMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;

@@ -836,6 +836,81 @@
   <data name="pTopBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="btnPreBlock.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 7</value>
+  </data>
+  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
+    <value>btnPreBlock</value>
+  </data>
+  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
+    <value>pTopBlock</value>
+  </data>
+  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnNextBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnNextBlock.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>49, 7</value>
+  </data>
+  <data name="btnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
+    <value>btnNextBlock</value>
+  </data>
+  <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
+    <value>pTopBlock</value>
+  </data>
+  <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnTrash.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnTrash.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 7</value>
+  </data>
+  <data name="btnTrash.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnTrash.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnTrash.Name" xml:space="preserve">
+    <value>btnTrash</value>
+  </data>
+  <data name="&gt;&gt;btnTrash.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnTrash.Parent" xml:space="preserve">
+    <value>pTopBlock</value>
+  </data>
+  <data name="&gt;&gt;btnTrash.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -861,69 +936,6 @@
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ibtnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 13</value>
-  </data>
-  <data name="ibtnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 10</value>
-  </data>
-  <data name="ibtnPreBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Name" xml:space="preserve">
-    <value>ibtnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ibtnTrashBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 9</value>
-  </data>
-  <data name="ibtnTrashBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>13, 14</value>
-  </data>
-  <data name="ibtnTrashBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;ibtnTrashBlock.Name" xml:space="preserve">
-    <value>ibtnTrashBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnTrashBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnTrashBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnTrashBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="ibtnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>48, 13</value>
-  </data>
-  <data name="ibtnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 10</value>
-  </data>
-  <data name="ibtnNextBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Name" xml:space="preserve">
-    <value>ibtnNextBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1687,6 +1699,57 @@
   <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="btnCloseMemo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnCloseMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>309, 14</value>
+  </data>
+  <data name="btnCloseMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 25</value>
+  </data>
+  <data name="btnCloseMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnCloseMemo.Name" xml:space="preserve">
+    <value>btnCloseMemo</value>
+  </data>
+  <data name="&gt;&gt;btnCloseMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnCloseMemo.Parent" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;btnCloseMemo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnQuestionMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnQuestionMemo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnQuestionMemo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 13</value>
+  </data>
+  <data name="btnQuestionMemo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 30</value>
+  </data>
+  <data name="btnQuestionMemo.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;btnQuestionMemo.Name" xml:space="preserve">
+    <value>btnQuestionMemo</value>
+  </data>
+  <data name="&gt;&gt;btnQuestionMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnQuestionMemo.Parent" xml:space="preserve">
+    <value>pMemo</value>
+  </data>
+  <data name="&gt;&gt;btnQuestionMemo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="tboxMemo.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR, 6pt</value>
   </data>
@@ -1712,48 +1775,6 @@
     <value>pMemo</value>
   </data>
   <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ibtnCloseMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 21</value>
-  </data>
-  <data name="ibtnCloseMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 23</value>
-  </data>
-  <data name="ibtnCloseMemo.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Name" xml:space="preserve">
-    <value>ibtnCloseMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ibtnQuestionMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 21</value>
-  </data>
-  <data name="ibtnQuestionMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 23</value>
-  </data>
-  <data name="ibtnQuestionMemo.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Name" xml:space="preserve">
-    <value>ibtnQuestionMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
