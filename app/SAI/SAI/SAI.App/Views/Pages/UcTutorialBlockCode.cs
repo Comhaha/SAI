@@ -498,7 +498,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             HidepSideInfer();
         }
-
         private void ibtnMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
@@ -657,10 +656,6 @@ namespace SAI.SAI.App.Views.Pages
 				ibtnPreBlock.Visible = false;
 			}
 		}
-        private void pSideInfer_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         public void AppendLog(string text)
         {
@@ -698,11 +693,5 @@ namespace SAI.SAI.App.Views.Pages
                 memoPresenter.SaveMemoText(tboxMemo.Text);
             }
         }
-
-        private void pMemo_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
-	
 }

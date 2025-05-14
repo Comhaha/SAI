@@ -34,6 +34,7 @@ namespace SAI.SAI.App.Views.Pages
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
             this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
@@ -48,7 +49,6 @@ namespace SAI.SAI.App.Views.Pages
             this.labelBlockTitle = new System.Windows.Forms.Label();
             this.btnBlockStart = new Guna.UI2.WinForms.Guna2Button();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
-            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
@@ -78,7 +78,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
-            this.ibtnTest = new Guna.UI2.WinForms.Guna2ImageButton();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
             this.ibtnDownloadAIModel = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnGoNotion = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -96,6 +95,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCloseMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnQuestionMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pMain.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
             this.pZoomCode.SuspendLayout();
@@ -141,8 +141,22 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // guna2Panel1
             // 
+            this.guna2Panel1.Controls.Add(this.ibtnCloseInfer);
             resources.ApplyResources(this.guna2Panel1, "guna2Panel1");
             this.guna2Panel1.Name = "guna2Panel1";
+            // 
+            // ibtnCloseInfer
+            // 
+            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
+            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
+            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCloseInfer.ImageRotate = 0F;
+            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
+            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
+            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
+            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
             // 
             // pToDoList
             // 
@@ -291,25 +305,10 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
-            this.pCode.Controls.Add(this.ibtnCloseInfer);
             this.pCode.Controls.Add(this.ibtnCopy);
             this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.pZoomCode);
             this.pCode.Name = "pCode";
-            // 
-            // ibtnCloseInfer
-            // 
-            this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
-            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
-            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
-            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnCloseInfer.ImageRotate = 0F;
-            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
-            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
-            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
-            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
-            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
             // 
             // ibtnCopy
             // 
@@ -593,7 +592,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
             this.pSideInfer.Controls.Add(this.pThreshold);
-            this.pSideInfer.Controls.Add(this.ibtnTest);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
             this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
             this.pSideInfer.Controls.Add(this.ibtnGoNotion);
@@ -630,19 +628,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxThreshold.Name = "tboxThreshold";
             this.tboxThreshold.PlaceholderText = "";
             this.tboxThreshold.SelectedText = "";
-            // 
-            // ibtnTest
-            // 
-            this.ibtnTest.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnTest.HoverState.Image = global::SAI.Properties.Resources.btn_goNotion_hover;
-            this.ibtnTest.HoverState.ImageSize = new System.Drawing.Size(160, 50);
-            this.ibtnTest.Image = global::SAI.Properties.Resources.btn_goNotion;
-            this.ibtnTest.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnTest.ImageRotate = 0F;
-            this.ibtnTest.ImageSize = new System.Drawing.Size(160, 50);
-            resources.ApplyResources(this.ibtnTest, "ibtnTest");
-            this.ibtnTest.Name = "ibtnTest";
-            this.ibtnTest.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             // 
             // tbarThreshold
             // 
@@ -771,7 +756,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.Controls.Add(this.ibtnCloseMemo);
             this.pMemo.Controls.Add(this.ibtnQuestionMemo);
             this.pMemo.Name = "pMemo";
-            this.pMemo.Paint += new System.Windows.Forms.PaintEventHandler(this.pMemo_Paint);
             // 
             // tboxMemo
             // 
@@ -835,6 +819,7 @@ namespace SAI.SAI.App.Views.Pages
             this.Name = "UcTutorialBlockCode";
             this.Load += new System.EventHandler(this.UcTutorialBlockCode_Load);
             this.pMain.ResumeLayout(false);
+            this.guna2Panel1.ResumeLayout(false);
             this.pBlockList.ResumeLayout(false);
             this.pCode.ResumeLayout(false);
             this.pZoomCode.ResumeLayout(false);
@@ -896,7 +881,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockDescription;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockTitle;
         private Guna.UI2.WinForms.Guna2Panel pSideInfer;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnTest;
         private Guna.UI2.WinForms.Guna2TextBox tboxThreshold;
         private Guna.UI2.WinForms.Guna2TrackBar tbarThreshold;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnDownloadAIModel;
@@ -924,5 +908,5 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
-	}
+    }
 }
