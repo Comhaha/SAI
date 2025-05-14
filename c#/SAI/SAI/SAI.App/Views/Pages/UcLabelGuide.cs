@@ -1195,6 +1195,10 @@ namespace SAI.SAI.App.Views.Pages
                 isSquareToolActive = true;
                 pictureBoxImage.Cursor = Cursors.Cross;
 
+                // Bounding Box 단계에서는 폴리곤을 비활성 및 squre 활성
+                toolLabelingPolygon.Visible = false;
+                toolLabelingSquare.Visible = true;
+
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
                 {
@@ -1213,6 +1217,10 @@ namespace SAI.SAI.App.Views.Pages
                 // Segmentation 단계에서는 폴리곤 도구를 기본으로 활성화
                 isPolygonToolActive = true;
                 pictureBoxImage.Cursor = Cursors.Cross;
+
+                // Segmentation 단계에서는 사각형 도구를 비활성 및 polygon 활성
+                toolLabelingSquare.Visible = false;
+                toolLabelingPolygon.Visible = true;
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
