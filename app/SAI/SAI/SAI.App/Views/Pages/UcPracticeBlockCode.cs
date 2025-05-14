@@ -65,112 +65,18 @@ namespace SAI.SAI.App.Views.Pages
 
 			InitializeWebView2();
 
-            // ToolTip 설정
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutoPopDelay = 3000;
-            toolTip.InitialDelay = 300;
-            toolTip.ReshowDelay = 300;
-            toolTip.ShowAlways = true;
-            toolTip.OwnerDraw = true;
-            toolTip.Draw += (s, e) =>
-            {
-                Font notoSans = new Font("Noto Sans KR", 9); // 원하는 폰트
-                e.DrawBackground();                       
-                e.DrawBorder();                              
-                e.Graphics.DrawString(e.ToolTipText, notoSans, Brushes.Black, new PointF(2, 2)); // 텍스트 직접 그리기
-            };
-            // 크기 조절
-            toolTip.Popup += (s, e) =>
-            {
-                Font notoSans = new Font("Noto Sans KR", 9);
-                string text = toolTip.GetToolTip(pboxGraphe);
-                Size size = TextRenderer.MeasureText(text, notoSans);
-                e.ToolTipSize = new Size(size.Width + 8, size.Height + 4);
-            };
-            toolTip.SetToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
 
-            // btnRunModel
-            SetupButton(btnRunModel);
-            btnRunModel.MouseEnter += (s, e) =>
-            {
-                btnRunModel.BackColor = Color.Transparent;
-                btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
-            };
-            btnRunModel.MouseLeave += (s, e) =>
-            {
-                btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
-            };
+            ButtonUtils.SetupButton(btnRunModel,"btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
+            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
+            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
+            ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
+            ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
 
-            // btnNextBlock
-            SetupButton(btnNextBlock);
-            btnNextBlock.MouseEnter += (s, e) =>
-            {
-                btnNextBlock.BackColor = Color.Transparent;
-                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block_clicked;
-            };
-            btnNextBlock.MouseLeave += (s, e) =>
-            {
-                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block1;
-            };
-
-            // btnPreBlock
-            SetupButton(btnPreBlock);
-            btnPreBlock.MouseEnter += (s, e) =>
-            {
-                btnPreBlock.BackColor = Color.Transparent;
-                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block_clicked;
-            };
-            btnPreBlock.MouseLeave += (s, e) =>
-            {
-                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block1;
-            };
-
-            // btnTrash
-            SetupButton(btnTrash);
-            btnTrash.MouseEnter += (s, e) =>
-            {
-                btnTrash.BackColor = Color.Transparent;
-                btnTrash.BackgroundImage = Properties.Resources.btn_trash_clicked;
-            };
-            btnTrash.MouseLeave += (s, e) =>
-            {
-                btnTrash.BackgroundImage = Properties.Resources.btn_trash_block;
-            };
-
-            // btnQuestionMemo
-            SetupButton(btnQuestionMemo);
-            btnQuestionMemo.MouseEnter += (s, e) =>
-            {
-                btnQuestionMemo.BackColor = Color.Transparent;
-                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo_clicked;
-            };
-            btnQuestionMemo.MouseLeave += (s, e) =>
-            {
-                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo;
-            };
-
-            // btnCloseMemo
-            SetupButton(btnCloseMemo);
-            btnCloseMemo.MouseEnter += (s, e) =>
-            {
-                btnCloseMemo.BackColor = Color.Transparent;
-                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25_clicked;
-            };
-            btnCloseMemo.MouseLeave += (s, e) =>
-            {
-                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25;
-            };
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
-        }
-        void SetupButton(Guna.UI2.WinForms.Guna2Button btn)
-        {
-            btn.BackColor = Color.Transparent;
-            btn.PressedColor = Color.Transparent;
-            btn.CheckedState.FillColor = Color.Transparent;
-            btn.DisabledState.FillColor = Color.Transparent;
-            btn.HoverState.FillColor = Color.Transparent;
         }
         private void ShowpSIdeInfer()
         {

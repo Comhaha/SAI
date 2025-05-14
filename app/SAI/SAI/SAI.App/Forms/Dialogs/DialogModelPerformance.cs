@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -16,36 +17,10 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             InitializeComponent();
 
-            // 부모 기준 중앙
-            this.StartPosition = FormStartPosition.CenterParent;
-            // 기존 타이틀바 삭제
-            this.FormBorderStyle = FormBorderStyle.None;
-            // 떴을 때 이 다이얼로그가 가장 위에 있고 다이얼로그를 끄기 전에는 다른 건 못 누르게!
-            this.TopMost = true;
+            DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            // 배경을 투명하게 하기 위해서
-            this.BackColor = Color.Gray;          
-            this.TransparencyKey = Color.Gray;
-
-            // btnClose
-            btnClose.BackColor = Color.Transparent;
-            btnClose.PressedColor = Color.Transparent;
-            btnClose.CheckedState.FillColor = Color.Transparent;
-            btnClose.DisabledState.FillColor = Color.Transparent;
-            btnClose.HoverState.FillColor = Color.Transparent;
+            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
             btnClose.Click += (s, e) => { this.Close(); };
-   
-            btnClose.MouseEnter += (s, e) =>
-            {
-                btnClose.BackColor = Color.Transparent;
-                btnClose.BackgroundImage = Properties.Resources.btn_close_white_clicked;
-            };
-
-            btnClose.MouseLeave += (s, e) =>
-            {
-                btnClose.BackgroundImage = Properties.Resources.btn_close_white;
-            };
-
 
         }
     }

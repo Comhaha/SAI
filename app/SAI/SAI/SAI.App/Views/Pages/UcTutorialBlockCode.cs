@@ -29,11 +29,6 @@ namespace SAI.SAI.App.Views.Pages
         public event EventHandler RunButtonClicked;
 
         private JsBridge jsBridge;
-		
-        private TodoManager todoManager;
-        // todo 위에서부터 index 0~2번 입니다.
-        // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
-        // 자동으로 pboxTodo1 이 Visible = false되고, pboxTodo1Done.Visible = true 됩니다.
 
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
@@ -69,107 +64,20 @@ namespace SAI.SAI.App.Views.Pages
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
-            // ToolTip 설정
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutoPopDelay = 3000;
-            toolTip.InitialDelay = 300;
-            toolTip.ReshowDelay = 300;
-            toolTip.ShowAlways = true;
-            toolTip.OwnerDraw = true;
-            toolTip.Draw += (s, e) =>
-            {
-                Font notoSans = new Font("Noto Sans KR", 9); // 원하는 폰트
-                e.DrawBackground();
-                e.DrawBorder();
-                e.Graphics.DrawString(e.ToolTipText, notoSans, Brushes.Black, new PointF(2, 2)); // 텍스트 직접 그리기
-            };
-            // 크기 조절
-            toolTip.Popup += (s, e) =>
-            {
-                Font notoSans = new Font("Noto Sans KR", 9);
-                string text = toolTip.GetToolTip(pboxGraphe);
-                Size size = TextRenderer.MeasureText(text, notoSans);
-                e.ToolTipSize = new Size(size.Width + 8, size.Height + 4);
-            };
-            toolTip.SetToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+
+            ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
+            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
+            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
+            ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
+            ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
 
             InitializeWebView2();
 
 			// 블록 시작만 보이고 나머지는 안 보이게 초기화.
 			InitializeBlockButton();
 			setBtnBlockStart();
-
-            // btnRunModel
-            SetupButton(btnRunModel);
-            btnRunModel.MouseEnter += (s, e) =>
-			{
-				btnRunModel.BackColor = Color.Transparent;
-				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
-			};
-			btnRunModel.MouseLeave += (s, e) =>
-			{
-				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
-			};
-
-            // btnNextBlock
-            SetupButton(btnNextBlock);
-            btnNextBlock.MouseEnter += (s, e) =>
-            {
-                btnNextBlock.BackColor = Color.Transparent;
-                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block_clicked;
-            };
-            btnNextBlock.MouseLeave += (s, e) =>
-            {
-                btnNextBlock.BackgroundImage = Properties.Resources.btn_next_block1;
-            };
-
-            // btnPreBlock
-            SetupButton(btnPreBlock);
-            btnPreBlock.MouseEnter += (s, e) =>
-            {
-                btnPreBlock.BackColor = Color.Transparent;
-                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block_clicked;
-            };
-            btnPreBlock.MouseLeave += (s, e) =>
-            {
-                btnPreBlock.BackgroundImage = Properties.Resources.btn_pre_block1;
-            };
-
-            // btnTrash
-            SetupButton(btnTrash);
-            btnTrash.MouseEnter += (s, e) =>
-            {
-                btnTrash.BackColor = Color.Transparent;
-                btnTrash.BackgroundImage = Properties.Resources.btn_trash_clicked;
-            };
-            btnTrash.MouseLeave += (s, e) =>
-            {
-                btnTrash.BackgroundImage = Properties.Resources.btn_trash_block;
-            };
-
-            // btnQuestionMemo
-            SetupButton(btnQuestionMemo);
-            btnQuestionMemo.MouseEnter += (s, e) =>
-            {
-                btnQuestionMemo.BackColor = Color.Transparent;
-                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo_clicked;
-            };
-            btnQuestionMemo.MouseLeave += (s, e) =>
-            {
-                btnQuestionMemo.BackgroundImage = Properties.Resources.btn_question_memo;
-            };
-
-            // btnCloseMemo
-            SetupButton(btnCloseMemo);
-            btnCloseMemo.MouseEnter += (s, e) =>
-            {
-                btnCloseMemo.BackColor = Color.Transparent;
-                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25_clicked;
-            };
-            btnCloseMemo.MouseLeave += (s, e) =>
-            {
-                btnCloseMemo.BackgroundImage = Properties.Resources.btn_close_25;
-            };
 
             // 블록 버튼 클릭 이벤트 처리
             btnBlockStart.Click += (s, e) =>
@@ -244,14 +152,6 @@ namespace SAI.SAI.App.Views.Pages
             {
                 Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
             }
-        }
-        void SetupButton(Guna.UI2.WinForms.Guna2Button btn)
-        {
-            btn.BackColor = Color.Transparent;
-            btn.PressedColor = Color.Transparent;
-            btn.CheckedState.FillColor = Color.Transparent;
-            btn.DisabledState.FillColor = Color.Transparent;
-            btn.HoverState.FillColor = Color.Transparent;
         }
 
         private void setButtonVisible(Guna2Button button)
@@ -541,13 +441,6 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             isInferPanelVisible = false;
         }
-
-        // 다른 클래스에서도 사용 가능
-        public void MarkTodoAsDone(int index)
-        {
-            todoManager.SetTodoStatus(index, false); // false면 완료 상태
-        }
-
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
         {
             HomeButtonClicked?.Invoke(this, EventArgs.Empty); // Presenter에게 알림
