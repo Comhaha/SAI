@@ -204,11 +204,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-<<<<<<< HEAD:c#/SAI/SAI/SAI.csproj
     <Compile Include="SAI.App\Models\NotionModel.cs" />
-=======
     <Compile Include="SAI.App\Models\MemoModel.cs" />
->>>>>>> bcf498bec0108b590718c991e8774aa5ab57266b:app/SAI/SAI/SAI.csproj
     <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
