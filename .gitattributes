@@ -4,12 +4,30 @@
 # 운영체제에 따라 적절한 eol 적용
 *.sh text eol=lf
 *.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
 
 # 문서 & 설정파일
 *.md text eol=lf
 *.json text eol=lf
 *.yml text eol=lf
+*.yaml text eol=lf
+pnpm-lock.yaml text eol=lf -diff
+package-lock.json text eol=lf -diff
+yarn.lock text eol=lf -diff
 *.xml text eol=lf
+*.txt text eol=lf
+*.ini text eol=lf
+*.config text eol=crlf
+*.pubxml text eol=crlf
+*.targets text eol=crlf
+*.props text eol=crlf
+*.ruleset text eol=crlf
+*.settings text eol=crlf
+*.resx text eol=crlf
+*.nuspec text eol=crlf
+*.vsixmanifest text eol=crlf
+*.DotSettings text eol=crlf
 
 # 코드 파일 (Linux 스타일)
 *.html text eol=lf
@@ -21,12 +39,67 @@
 *.java text eol=lf
 *.kt text eol=lf
 *.gradle text eol=lf
+*.sql text eol=lf
+*.php text eol=lf
+*.rb text eol=lf
 
 # C#/Windows 프로젝트 전용
 *.cs text eol=crlf
+*.Designer.cs text eol=crlf diff=csharp
 *.csproj text eol=crlf
 *.sln text eol=crlf
-*.config text eol=crlf
+*.cshtml text eol=crlf
+*.xaml text eol=crlf
+*.xaml.cs text eol=crlf
+*.aspx text eol=crlf
+*.ascx text eol=crlf
+*.asax text eol=crlf
+*.master text eol=crlf
+*.vb text eol=crlf
+*.vbproj text eol=crlf
+*.fs text eol=crlf
+*.fsproj text eol=crlf
+*.dbproj text eol=crlf
+*.vcxproj text eol=crlf
+*.wixproj text eol=crlf
+*.btproj text eol=crlf
+*.ccproj text eol=crlf
+*.shproj text eol=crlf
+*.sqlproj text eol=crlf
 
 # 바이너리 (Git이 텍스트로 다루지 않게)
 *.vsidx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.bmp binary
+*.tif binary
+*.tiff binary
+*.exe binary
+*.dll binary
+*.pdb binary
+*.zip binary
+*.7z binary
+*.tar binary
+*.gz binary
+*.rar binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+*.pdf binary
+*.suo binary
+*.snk binary
+*.resources binary
+*.pfx binary
+*.dll.config binary
+*.vspscc binary
+*.vsp binary
+*.rdl.data binary
+*.mdf binary
+*.ldf binary
+*.nupkg binary
