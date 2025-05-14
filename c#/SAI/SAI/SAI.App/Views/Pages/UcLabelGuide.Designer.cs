@@ -52,6 +52,9 @@
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.questBoxPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.questClassificationPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.questSegPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.currentLevel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.toolZoom = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.ZoomCurrent = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -439,6 +442,9 @@
             this.levelPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.levelPanel.BorderColor = System.Drawing.Color.Transparent;
             this.levelPanel.BorderThickness = 1;
+            this.levelPanel.Controls.Add(this.questBoxPanel);
+            this.levelPanel.Controls.Add(this.questClassificationPanel);
+            this.levelPanel.Controls.Add(this.questSegPanel);
             this.levelPanel.Controls.Add(this.currentLevel);
             this.levelPanel.CustomizableEdges.BottomLeft = false;
             this.levelPanel.CustomizableEdges.TopLeft = false;
@@ -448,6 +454,33 @@
             this.levelPanel.Size = new System.Drawing.Size(227, 65);
             this.levelPanel.TabIndex = 13;
             this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
+            // 
+            // questBoxPanel
+            // 
+            this.questBoxPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questBoxPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questBoxPanel.Location = new System.Drawing.Point(170, 25);
+            this.questBoxPanel.Name = "questBoxPanel";
+            this.questBoxPanel.Size = new System.Drawing.Size(20, 20);
+            this.questBoxPanel.TabIndex = 16;
+            // 
+            // questClassificationPanel
+            // 
+            this.questClassificationPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questClassificationPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questClassificationPanel.Location = new System.Drawing.Point(170, 25);
+            this.questClassificationPanel.Name = "questClassificationPanel";
+            this.questClassificationPanel.Size = new System.Drawing.Size(20, 20);
+            this.questClassificationPanel.TabIndex = 15;
+            // 
+            // questSegPanel
+            // 
+            this.questSegPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questSegPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questSegPanel.Location = new System.Drawing.Point(170, 25);
+            this.questSegPanel.Name = "questSegPanel";
+            this.questSegPanel.Size = new System.Drawing.Size(20, 20);
+            this.questSegPanel.TabIndex = 16;
             // 
             // currentLevel
             // 
@@ -789,5 +822,8 @@
         private Guna.UI2.WinForms.Guna2Panel showLevel1;
         private Guna.UI2.WinForms.Guna2Panel totalLevelpanel;
         private Guna.UI2.WinForms.Guna2Button ZoomOutBtn;
+        private Guna.UI2.WinForms.Guna2Panel questClassificationPanel;
+        private Guna.UI2.WinForms.Guna2Panel questBoxPanel;
+        private Guna.UI2.WinForms.Guna2Panel questSegPanel;
     }
 }

@@ -87,7 +87,10 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지 상태 코드 저장을 위한 변수 (임시)
         // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
         private Dictionary<int, int> imageStatusCode = new Dictionary<int, int>();
-
+        // 토스트 메시지 관련 변수
+        private System.Windows.Forms.Timer toastTimer;
+        private Guna.UI2.WinForms.Guna2Panel toastPanel;
+        private Guna.UI2.WinForms.Guna2HtmlLabel toastLabel;
 
         // 줌 기능을 위한 변수
         private float zoomFactor = 1.0f;
@@ -127,6 +130,7 @@ namespace SAI.SAI.App.Views.Pages
             InitializeProgressIndicators(); // 진행 상태 표시기 초기화
             //RegisterAccuracyButton(); // 정확도 계산 버튼 등록
             SetupZoomFunctionality(); // 줌 기능 설정
+            InitializeToastPanel(); // 토스트 패널 초기화
 
             // 이벤트 핸들러 등록
             RegisterControlEvents();
@@ -472,6 +476,9 @@ namespace SAI.SAI.App.Views.Pages
                 // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
+                // 라벨링 실패 시 토스트 메시지 표시
+                string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
+                ShowToast(message);
             }
             else
             {
@@ -497,7 +504,8 @@ namespace SAI.SAI.App.Views.Pages
 
             // 버튼 시각적 업데이트
             nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
-            
+            // 도움 버튼 시각적 업데이트
+            UpdateQuestionButton();
             // 모든 이미지가 완료되었는지 확인
             CheckAllImagesCompleted();
         }
@@ -512,7 +520,7 @@ namespace SAI.SAI.App.Views.Pages
             
             for (int i = 0; i < images.Count; i++)
             {
-                if (!imageStatusCode.ContainsKey(i) || imageStatusCode[i] == -1)
+                if (!imageStatusCode.ContainsKey(i) || imageStatusCode[i] == -1 || imageStatusCode[i] == 0)
                 {
                     allCompleted = false;
                     break;
@@ -1442,6 +1450,31 @@ namespace SAI.SAI.App.Views.Pages
                 Console.WriteLine($"LoadclassImage 에러: {ex.Message}");
             }
 
+        }
+
+        /// <summary>
+        /// 단계에 따른 도움버튼 가시성 변경
+        /// </summary>
+        private void UpdateQuestionButton()
+        {
+            if (currentLevel.Text == "Classification")
+            {
+                questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
+                questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
+                questClassificationPanel.Visible = true; // Classification 도움말 버튼 표시
+            }
+            else if (currentLevel.Text == "Bounding Box")
+            {
+                questBoxPanel.Visible = true;
+                questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
+                questClassificationPanel.Visible = false; // Classification 도움말 버튼 숨김
+            }
+            else if (currentLevel.Text == "Segmentation")
+            {
+                questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
+                questSegPanel.Visible = true; // Segmentation 도움말 버튼 표시
+                questClassificationPanel.Visible = false; // Classification 도움말 버튼 숨김
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3116,6 +3149,13 @@ namespace SAI.SAI.App.Views.Pages
 
                         accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
+
+                        // 정확도가 50% 미만이면 토스트 메시지 표시
+                        if (accuracy > 0 && accuracy < 50)
+                        {
+                            string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
+                            ShowToast(message);
+                        }
                     }
                     else
                     {
@@ -3138,6 +3178,13 @@ namespace SAI.SAI.App.Views.Pages
 
                         accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
+
+                        // 정확도가 50% 미만이면 토스트 메시지 표시
+                        if (accuracy > 0 && accuracy < 50)
+                        {
+                            string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
+                            ShowToast(message);
+                        }
                     }
                     else
                     {
@@ -3512,6 +3559,65 @@ namespace SAI.SAI.App.Views.Pages
             tooltipTimer.Stop();
             tooltipPanel.Visible = true;
         }
+        private void InitializeToastPanel()
+        {
+            // 토스트 패널 생성
+            toastPanel = new Guna.UI2.WinForms.Guna2Panel();
+            toastPanel.BackColor = System.Drawing.Color.FromArgb(255, 70, 70);
+            toastPanel.FillColor = System.Drawing.Color.FromArgb(255, 70, 70);
+            toastPanel.BorderRadius = 10;
+            toastPanel.Padding = new Padding(15);
+            toastPanel.Visible = false;
+            toastPanel.AutoSize = false;
+            toastPanel.Width = 250;
+            toastPanel.Height = 50;
+            toastPanel.Location = new Point(
+                (this.Width - toastPanel.Width) / 2,
+                50
+            );
+            // 토스트 레이블 생성
+            toastLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            toastLabel.ForeColor = System.Drawing.Color.White;
+            toastLabel.Font = new System.Drawing.Font("Noto Sans KR", 10F, FontStyle.Bold);
+            toastLabel.AutoSize = true;
+            toastLabel.MaximumSize = new Size(230, 0);
+            toastLabel.TextAlignment = ContentAlignment.MiddleCenter;
+            toastLabel.Dock = DockStyle.Fill;
+
+            // 패널에 레이블 추가
+            toastPanel.Controls.Add(toastLabel);
+
+            // 부모 컨트롤에 토스트 패널 추가
+            this.Controls.Add(toastPanel);
+            toastPanel.BringToFront();
+
+            // 토스트 타이머 초기화
+            toastTimer = new System.Windows.Forms.Timer();
+            toastTimer.Interval = 3000;
+            toastTimer.Tick += (s,e) => {
+                toastTimer.Stop();
+                toastPanel.Visible = false;
+            };
+            
+        }
+
+        // 토스트 메시지 표시 메서드
+        private void ShowToast(string message)
+        {
+            // 기존 타이머 중지
+            toastTimer.Stop();
+            // 메시지 설정
+            toastLabel.Text = message;
+            // 패널 위치 설정 (화면 중앙 상단)
+            toastPanel.Location = new Point(
+                (this.Width - toastPanel.Width) / 2,
+                50
+            );
+            // 패널 표시
+            toastPanel.Visible = true;
+            // 타이머 시작
+            toastTimer.Start();
+        }
         
         // 툴팁 이벤트 등록
         private void RegisterTooltipEvents()
@@ -3528,6 +3634,9 @@ namespace SAI.SAI.App.Views.Pages
             RegisterTooltip(ZoomOutBtn, "이미지를 축소합니다.");
             RegisterTooltip(nextBtn, "다음 이미지로 이동합니다.");
             RegisterTooltip(preBtn, "이전 이미지로 이동합니다.");
+            RegisterTooltip(questClassificationPanel, "이미지를 클릭하여 class를 분류합니다.");
+            RegisterTooltip(questBoxPanel, "바운딩 박스를 통해 객체를 라벨링합니다.");
+            RegisterTooltip(questSegPanel, "폴리곤을 통해 객체의 세밀한 윤곽을 라벨링합니다.");
         }
         
         // 컨트롤에 툴팁 이벤트 등록
@@ -3538,12 +3647,21 @@ namespace SAI.SAI.App.Views.Pages
                 control.MouseEnter += (s, e) => 
                 {
                     tooltipLabel.Text = tooltipText;
-                    
+                    int xOffset = 0;
+                    int yOffset = 0;
                     // 툴팁 위치 계산 (마우스 좌측에 표시)
                     Point mousePos = this.PointToClient(Cursor.Position);
-                    int xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
-                    int yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
-                    
+                    if (control == questClassificationPanel || control == questBoxPanel || control == questSegPanel)
+                    {
+                        xOffset = 20; // 마우스 우측에 20픽셀 간격으로 표시
+                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
+                    }
+                    else
+                    {
+                        xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
+                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
+                    }
+
                     // 화면 경계를 넘어가지 않도록 조정
                     if (mousePos.X + xOffset < 0)
                     {
