@@ -569,7 +569,6 @@
     <None Include="Resources\1.jpg.bmp" />
     <None Include="Resources\Image1.bmp" />
     <None Include="Resources\dog.bmp" />
-    <None Include="Resources\annotation 모달.png" />
     <None Include="Resources\내부 박스.png" />
     <None Include="Resources\Frame＿blue.png" />
     <None Include="Resources\Frame_green.png" />
@@ -648,6 +647,11 @@
     <None Include="Resources\NoCircleArrowR.png" />
     <None Include="Resources\toastPopupF.png" />
     <None Include="Resources\toastPopupS.png" />
+    <None Include="Resources\annotation 모달.png" />
+    <None Include="Resources\btn_cancel_click.png" />
+    <None Include="Resources\btn_close_click.png" />
+    <None Include="Resources\btn_save_click.png" />
+    <None Include="Resources\btn_close_pink.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

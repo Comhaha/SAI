@@ -928,6 +928,18 @@
   <data name="toolVHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toolVHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_cancel_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_cancel_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_close_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_pink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_close_pink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_save_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_save_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="toastPopupF" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toastPopupF.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

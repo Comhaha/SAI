@@ -3602,6 +3602,7 @@ namespace SAI.SAI.App.Views.Pages
             RegisterTooltip(questClassificationPanel, "이미지를 클릭하여 class를 분류합니다.");
             RegisterTooltip(questBoxPanel, "바운딩 박스를 통해 객체를 라벨링합니다.");
             RegisterTooltip(questSegPanel, "폴리곤을 통해 객체의 세밀한 윤곽을 라벨링합니다.");
+            RegisterTooltip(nextBtnVisible, "라벨링 정확도가 90% 이상인 경우 활성화됩니다");
         }
         
         // 컨트롤에 툴팁 이벤트 등록

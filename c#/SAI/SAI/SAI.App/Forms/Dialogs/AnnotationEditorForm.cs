@@ -119,6 +119,11 @@ namespace SAI.SAI.App.Forms.Dialogs
                 dragging = false;
             }
         }
+
+        private void annotationText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         // ------------------------------------
     }
 }

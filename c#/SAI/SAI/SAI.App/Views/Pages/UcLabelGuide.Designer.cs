@@ -75,6 +75,7 @@
             this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
@@ -415,7 +416,7 @@
             // 
             // toastPopupPanel
             // 
-            this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_quit_train;
+            this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.toastPopupS;
             this.toastPopupPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toastPopupPanel.Controls.Add(this.popupCloseBtn);
             this.toastPopupPanel.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -777,11 +778,19 @@
             this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
             this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
-            this.popupCloseBtn.Location = new System.Drawing.Point(352, 11);
+            this.popupCloseBtn.Location = new System.Drawing.Point(344, 12);
             this.popupCloseBtn.Name = "popupCloseBtn";
             this.popupCloseBtn.Size = new System.Drawing.Size(15, 15);
             this.popupCloseBtn.TabIndex = 0;
             this.popupCloseBtn.Text = "guna2Button1";
+            // 
+            // nextBtnVisible
+            // 
+            this.nextBtnVisible.BackColor = System.Drawing.Color.Transparent;
+            this.nextBtnVisible.Location = new System.Drawing.Point(1195, 326);
+            this.nextBtnVisible.Name = "nextBtnVisible";
+            this.nextBtnVisible.Size = new System.Drawing.Size(68, 69);
+            this.nextBtnVisible.TabIndex = 10;
             // 
             // UcLabelGuide
             // 
@@ -794,6 +803,7 @@
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.mainpanel);
             this.Controls.Add(this.guna2CircleButton1);
+            this.Controls.Add(this.nextBtnVisible);
             this.Name = "UcLabelGuide";
             this.Size = new System.Drawing.Size(1280, 720);
             this.mainpanel.ResumeLayout(false);
@@ -862,5 +872,6 @@
         private Guna.UI2.WinForms.Guna2Panel questSegPanel;
         private Guna.UI2.WinForms.Guna2Panel toastPopupPanel;
         private Guna.UI2.WinForms.Guna2Button popupCloseBtn;
+        private Guna.UI2.WinForms.Guna2Panel nextBtnVisible;
     }
 }
