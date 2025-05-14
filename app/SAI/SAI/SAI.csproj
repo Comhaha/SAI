@@ -100,6 +100,7 @@
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.Application\Service\NotionService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />
+    <Compile Include="SAI.Application\Service\SettingService.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,12 +211,14 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
+    <Compile Include="SAI.App\Models\SettingModel.cs" />
     <Compile Include="SAI.App\Presenters\AiFeedbackPresenter.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\SettingPresenter.cs" />
     <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiFeedbackView.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\INotionPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ThresholdUtils.cs" />
@@ -417,6 +421,10 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_light_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark.png" />
+    <None Include="SAI.App\Resources\Images\btn_light.png" />
     <None Include="SAI.App\Resources\Images\btn_save_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_close_clicked_setting.png" />
     <None Include="SAI.App\Resources\Images\btn_save.png" />

@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
+using System.Web.UI.WebControls;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-	public partial class DialogSetting : Form
+	public partial class DialogSetting : Form, ISettingView
 	{
-		public DialogSetting()
-		{
-			InitializeComponent();
+
+        private readonly SettingPresenter presenter;
+        private bool isLightTheme;
+        private bool originalTheme;
+        private string originalPath;
+
+        public DialogSetting()
+        {
+            InitializeComponent();
+            presenter = new SettingPresenter(this);
 
             // 부모 기준 중앙
             this.StartPosition = FormStartPosition.CenterParent;
@@ -27,44 +32,110 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.BackColor = Color.Gray;           // 투명 처리할 색
             this.TransparencyKey = Color.Gray;
 
-            // btnClose
-            btnClose.BackColor = Color.Transparent;
-            btnClose.PressedColor = Color.Transparent;
-            btnClose.CheckedState.FillColor = Color.Transparent;
-            btnClose.DisabledState.FillColor = Color.Transparent;
-            btnClose.HoverState.FillColor = Color.Transparent;
-            btnClose.Click += (s, e) => { this.Close(); };
-            // btnClose 마우스 입력 될 때
+            SetupButton(btnClose);
+            SetupButton(btnSave);
+            SetupButton(btnLight);
+            SetupButton(btnDark);
+
             btnClose.MouseEnter += (s, e) =>
             {
                 btnClose.BackColor = Color.Transparent;
                 btnClose.BackgroundImage = Properties.Resources.btn_close_select_model_clicked;
             };
-            // btnClose 마우스 떠날때
+
             btnClose.MouseLeave += (s, e) =>
             {
                 btnClose.BackgroundImage = Properties.Resources.btn_close_select_model;
             };
 
-            // btnSave
-            btnSave.BackColor = Color.Transparent;
-            btnSave.PressedColor = Color.Transparent;
-            btnSave.CheckedState.FillColor = Color.Transparent;
-            btnSave.DisabledState.FillColor = Color.Transparent;
-            btnSave.HoverState.FillColor = Color.Transparent;
-            btnSave.Click += (s, e) => { this.Close(); };
-            // btnClose 마우스 입력 될 때
             btnSave.MouseEnter += (s, e) =>
             {
                 btnSave.BackColor = Color.Transparent;
                 btnSave.BackgroundImage = Properties.Resources.btn_save_clicked;
             };
-            // btnClose 마우스 떠날때
+
             btnSave.MouseLeave += (s, e) =>
             {
                 btnSave.BackgroundImage = Properties.Resources.btn_save;
             };
 
+            presenter.OnViewLoaded();
+
+            // 백업값 저장
+            originalTheme = isLightTheme;
+            originalPath = tboxPath.Text;
+
+            btnClose.Click += (s, e) =>
+            {
+                // 원래 상태 복원
+                presenter.OnThemeChanged(originalTheme);
+                presenter.OnPathChanged(originalPath);
+                SetTheme(originalTheme);
+                SetPath(originalPath);  
+
+                presenter.OnCancel();
+            };
+
+            btnSave.Click += (s, e) => presenter.OnSave();
+
+            btnLight.Click += (s, e) =>
+            {
+                isLightTheme = true;
+                UpdateThemeButtonUI();
+                presenter.OnThemeChanged(true);
+            };
+
+            btnDark.Click += (s, e) =>
+            {
+                isLightTheme = false;
+                UpdateThemeButtonUI();
+                presenter.OnThemeChanged(false);
+            };
+
+            tboxPath.Click += (s, e) =>
+            {
+                using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        tboxPath.Text = dlg.SelectedPath;
+                        presenter.OnPathChanged(dlg.SelectedPath);
+                    }
+                }
+            };
         }
+
+        void SetupButton(Guna.UI2.WinForms.Guna2Button btn)
+            {
+                btn.BackColor = Color.Transparent;
+                btn.PressedColor = Color.Transparent;
+                btn.CheckedState.FillColor = Color.Transparent;
+                btn.DisabledState.FillColor = Color.Transparent;
+                btn.HoverState.FillColor = Color.Transparent;
+            }
+
+        private void UpdateThemeButtonUI()
+        {
+            btnLight.BackgroundImage = isLightTheme ? Properties.Resources.btn_light_clicked : Properties.Resources.btn_light;
+            btnDark.BackgroundImage = isLightTheme ? Properties.Resources.btn_dark : Properties.Resources.btn_dark_clicked;
+        }
+
+        // ISettingView 구현
+        public void SetTheme(bool isLight)
+        {
+            isLightTheme = isLight;
+            UpdateThemeButtonUI();
+        }
+
+        public void SetPath(string path)
+        {
+            tboxPath.Text = path;
+        }
+
+        public bool IsLightThemeSelected() => isLightTheme;
+
+        public string GetSelectedPath() => tboxPath.Text;
+
+        public void CloseDialog() => this.Close();
     }
 }
