@@ -49,6 +49,7 @@
             this.progress1 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.progress0 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
@@ -73,10 +74,12 @@
             this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
             this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
             this.imageContainer.SuspendLayout();
+            this.toastPopupPanel.SuspendLayout();
             this.accuracyPanel.SuspendLayout();
             this.levelPanel.SuspendLayout();
             this.toolZoom.SuspendLayout();
@@ -393,6 +396,7 @@
             // 
             this.imageContainer.BackColor = System.Drawing.Color.Transparent;
             this.imageContainer.BorderColor = System.Drawing.Color.Transparent;
+            this.imageContainer.Controls.Add(this.toastPopupPanel);
             this.imageContainer.Controls.Add(this.accuracyPanel);
             this.imageContainer.Controls.Add(this.levelPanel);
             this.imageContainer.Controls.Add(this.toolZoom);
@@ -408,6 +412,18 @@
             this.imageContainer.Size = new System.Drawing.Size(788, 583);
             this.imageContainer.TabIndex = 3;
             this.imageContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
+            // 
+            // toastPopupPanel
+            // 
+            this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_quit_train;
+            this.toastPopupPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toastPopupPanel.Controls.Add(this.popupCloseBtn);
+            this.toastPopupPanel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toastPopupPanel.Location = new System.Drawing.Point(254, 1);
+            this.toastPopupPanel.Name = "toastPopupPanel";
+            this.toastPopupPanel.Size = new System.Drawing.Size(379, 100);
+            this.toastPopupPanel.TabIndex = 15;
+            this.toastPopupPanel.Visible = false;
             // 
             // accuracyPanel
             // 
@@ -749,6 +765,24 @@
             this.totalLevelpanel.Size = new System.Drawing.Size(130, 35);
             this.totalLevelpanel.TabIndex = 9;
             // 
+            // popupCloseBtn
+            // 
+            this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
+            this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.popupCloseBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
+            this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
+            this.popupCloseBtn.Location = new System.Drawing.Point(352, 11);
+            this.popupCloseBtn.Name = "popupCloseBtn";
+            this.popupCloseBtn.Size = new System.Drawing.Size(15, 15);
+            this.popupCloseBtn.TabIndex = 0;
+            this.popupCloseBtn.Text = "guna2Button1";
+            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -767,6 +801,7 @@
             this.leftPanel.PerformLayout();
             this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.imageContainer.ResumeLayout(false);
+            this.toastPopupPanel.ResumeLayout(false);
             this.accuracyPanel.ResumeLayout(false);
             this.levelPanel.ResumeLayout(false);
             this.levelPanel.PerformLayout();
@@ -825,5 +860,7 @@
         private Guna.UI2.WinForms.Guna2Panel questClassificationPanel;
         private Guna.UI2.WinForms.Guna2Panel questBoxPanel;
         private Guna.UI2.WinForms.Guna2Panel questSegPanel;
+        private Guna.UI2.WinForms.Guna2Panel toastPopupPanel;
+        private Guna.UI2.WinForms.Guna2Button popupCloseBtn;
     }
 }

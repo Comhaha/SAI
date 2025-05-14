@@ -315,6 +315,10 @@ namespace SAI.SAI.App.Views.Pages
             imageContainer.SizeChanged += (s, e) => SetRoundedRegion();
             pictureBoxImage.SizeChanged += (s, e) => SetRoundedRegion();
 
+            // popup 닫기
+            popupCloseBtn.Click += (s, e) => toastPopupPanel.Visible = false;
+            toastPopupPanel.Click += (s, e) => toastPopupPanel.Visible = false;
+
             //// 좌표 내보내기 버튼 클릭 이벤트 등록
             //exportBtn.Click += ExportBtn_Click;
         }
@@ -476,9 +480,6 @@ namespace SAI.SAI.App.Views.Pages
                 // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
-                // 라벨링 실패 시 토스트 메시지 표시
-                string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
-                ShowToast(message);
             }
             else
             {
@@ -559,11 +560,13 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     // imageStatusCode[imageIndex] = 1;
                     progressControl.FillColor = Color.Green;
+                    ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
                 }
                 else if (passed == -1)
                 {
                     // imageStatusCode[imageIndex] = -1;
                     progressControl.FillColor = Color.Red;
+                    ShowToast(false); // 실패 시 빨간색 토스트 메시지 표시
                 }
                 else
                 {
@@ -3157,13 +3160,6 @@ namespace SAI.SAI.App.Views.Pages
 
                         accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
-
-                        // 정확도가 50% 미만이면 토스트 메시지 표시
-                        if (accuracy > 0 && accuracy < 50)
-                        {
-                            string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
-                            ShowToast(message);
-                        }
                     }
                     else
                     {
@@ -3186,13 +3182,6 @@ namespace SAI.SAI.App.Views.Pages
 
                         accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
-
-                        // 정확도가 50% 미만이면 토스트 메시지 표시
-                        if (accuracy > 0 && accuracy < 50)
-                        {
-                            string message = "라벨링 정확도가 낮습니다. 좀 더 정확하게 라벨링해 주세요!";
-                            ShowToast(message);
-                        }
                     }
                     else
                     {
@@ -3570,34 +3559,7 @@ namespace SAI.SAI.App.Views.Pages
         private void InitializeToastPanel()
         {
             // 토스트 패널 생성
-            toastPanel = new Guna.UI2.WinForms.Guna2Panel();
-            toastPanel.BackColor = System.Drawing.Color.FromArgb(255, 70, 70);
-            toastPanel.FillColor = System.Drawing.Color.FromArgb(255, 70, 70);
-            toastPanel.BorderRadius = 10;
-            toastPanel.Padding = new Padding(15);
-            toastPanel.Visible = false;
-            toastPanel.AutoSize = false;
-            toastPanel.Width = 250;
-            toastPanel.Height = 50;
-            toastPanel.Location = new Point(
-                (this.Width - toastPanel.Width) / 2,
-                50
-            );
-            // 토스트 레이블 생성
-            toastLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            toastLabel.ForeColor = System.Drawing.Color.White;
-            toastLabel.Font = new System.Drawing.Font("Noto Sans KR", 10F, FontStyle.Bold);
-            toastLabel.AutoSize = true;
-            toastLabel.MaximumSize = new Size(230, 0);
-            toastLabel.TextAlignment = ContentAlignment.MiddleCenter;
-            toastLabel.Dock = DockStyle.Fill;
-
-            // 패널에 레이블 추가
-            toastPanel.Controls.Add(toastLabel);
-
-            // 부모 컨트롤에 토스트 패널 추가
-            this.Controls.Add(toastPanel);
-            toastPanel.BringToFront();
+            toastPanel = toastPopupPanel;
 
             // 토스트 타이머 초기화
             toastTimer = new System.Windows.Forms.Timer();
@@ -3610,17 +3572,12 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 토스트 메시지 표시 메서드
-        private void ShowToast(string message)
+        private void ShowToast(bool isSuccess)
         {
             // 기존 타이머 중지
             toastTimer.Stop();
             // 메시지 설정
-            toastLabel.Text = message;
-            // 패널 위치 설정 (화면 중앙 상단)
-            toastPanel.Location = new Point(
-                (this.Width - toastPanel.Width) / 2,
-                50
-            );
+            toastPanel.BackgroundImage = isSuccess ? Properties.Resources.toastPopupS : Properties.Resources.toastPopupF;
             // 패널 표시
             toastPanel.Visible = true;
             // 타이머 시작
@@ -3857,11 +3814,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
-        }
-
-        private void progress8_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
