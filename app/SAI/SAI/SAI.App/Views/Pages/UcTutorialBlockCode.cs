@@ -98,11 +98,12 @@ namespace SAI.SAI.App.Views.Pages
 			// 블록 버튼 클릭 이벤트 처리
 			btnBlockStart.Click += (s, e) =>
 			{
-				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+                Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
+                AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
 			};
 			btnPip.Click += (s, e) =>
-			{
+			{Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: pipInstall");
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 				setBtnLoadModel();
 			};
@@ -149,15 +150,15 @@ namespace SAI.SAI.App.Views.Pages
             codeContainer.Dock = DockStyle.Fill;
             guna2Panel1.Controls.Add(codeContainer);
 
+            // 기존 CodePresenter 관련 코드가 있던 부분을 대체합니다
             // CodePresenter 생성 및 BlocklyPresenter에 설정
             try
             {
                 var mainEditor = codeContainer.GetMainCodeEditor();
                 if (mainEditor != null)
                 {
-                    var codePresenter = new CodePresenter(mainEditor);
-                    blocklyPresenter.SetCodePresenter(codePresenter);
-                    Debug.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                    blocklyPresenter.SetCodeView(mainEditor);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: ICodeView 설정 완료");
                 }
                 else
                 {
@@ -166,9 +167,10 @@ namespace SAI.SAI.App.Views.Pages
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
             }
         }
+        
 
         private void setButtonVisible(Guna2Button button)
 		{
