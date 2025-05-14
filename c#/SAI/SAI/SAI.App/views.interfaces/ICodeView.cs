@@ -3,5 +3,6 @@
     public interface ICodeView
     {
         void UpdateCode(string code);
+        void HighlightCodeSegment(string codeSegment);
     }
 }
