@@ -84,6 +84,11 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지 통과 여부 저장을 위한 변수
         private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
 
+        // 이미지 상태 코드 저장을 위한 변수 (임시)
+        // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
+        private Dictionary<int, int> imageStatusCode = new Dictionary<int, int>();
+
+
         // 줌 기능을 위한 변수
         private float zoomFactor = 1.0f;
         private Size originalImageSize;
@@ -441,9 +446,10 @@ namespace SAI.SAI.App.Views.Pages
                 //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
 
-                // 이미지를 통과 상태로 설정
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // 이미지를 통과 상태로 설정 (초록불)
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex != 8)
             {
@@ -451,18 +457,28 @@ namespace SAI.SAI.App.Views.Pages
                 nextBtn.Enabled = true;
 
                 // 이미지를 통과 상태로 설정
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex == 8)
             {
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
+            }
+            else if (0 < currentAccuracy && currentAccuracy < 50)
+            {
+                // imagePassedStatus[currentImageIndex] = false;
+                imageStatusCode[currentImageIndex] = -1;
+                UpdateProgressIndicator(currentImageIndex, -1);
             }
             else
             {
                 // 아직 통과하지 못한 상태면 노란색으로 표시
-                UpdateProgressIndicator(currentImageIndex, false);
+                // imagePassedStatus[currentImageIndex] = false;
+                imageStatusCode[currentImageIndex] = 0;
+                UpdateProgressIndicator(currentImageIndex, 0);
             }
 
             // 첫 번째 이미지일 경우 이전 버튼 비활성
@@ -496,7 +512,7 @@ namespace SAI.SAI.App.Views.Pages
             
             for (int i = 0; i < images.Count; i++)
             {
-                if (!imagePassedStatus.ContainsKey(i) || !imagePassedStatus[i])
+                if (!imageStatusCode.ContainsKey(i) || imageStatusCode[i] == -1)
                 {
                     allCompleted = false;
                     break;
@@ -520,20 +536,31 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 진행 상태 표시기를 업데이트하는 메서드
-        private void UpdateProgressIndicator(int imageIndex, bool passed)
+        private void UpdateProgressIndicator(int imageIndex, int passed)
         {
             // 이미지 인덱스에 맞는 progress 버튼 찾기
             var progressControl = GetProgressControl(imageIndex);
 
             if (progressControl != null)
             {
-                // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
-                progressControl.FillColor = passed ? Color.Green : Color.Yellow;
+                // // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
+                // progressControl.FillColor = passed == 1 ? Color.Green : Color.Yellow;
 
                 // 이미지를 통과했으면 통과 상태 기록
-                if (passed)
+                if (passed == 1)
                 {
-                    imagePassedStatus[imageIndex] = true;
+                    // imageStatusCode[imageIndex] = 1;
+                    progressControl.FillColor = Color.Green;
+                }
+                else if (passed == -1)
+                {
+                    // imageStatusCode[imageIndex] = -1;
+                    progressControl.FillColor = Color.Red;
+                }
+                else
+                {
+                    // imageStatusCode[imageIndex] = 0;
+                    progressControl.FillColor = Color.Yellow;
                 }
             }
         }
@@ -1287,17 +1314,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    //nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, true);
-                }
-                else
-                {
-                    // 통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
 
@@ -1345,17 +1372,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    //nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, true);
-                }
-                else
-                {
-                    // 통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
         
