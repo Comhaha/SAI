@@ -76,6 +76,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -109,6 +110,7 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo0)).BeginInit();
             this.pSideInfer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).BeginInit();
             this.pThreshold.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
@@ -591,6 +593,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pboxGraphe);
             this.pSideInfer.Controls.Add(this.pThreshold);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
             this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
@@ -603,6 +606,15 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblThreshold);
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // pboxGraphe
+            // 
+            this.pboxGraphe.ErrorImage = global::SAI.Properties.Resources._1;
+            resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
+            this.pboxGraphe.ImageRotate = 0F;
+            this.pboxGraphe.Name = "pboxGraphe";
+            this.pboxGraphe.TabStop = false;
+            this.pboxGraphe.Click += new System.EventHandler(this.pboxGraphe_Click);
             // 
             // pThreshold
             // 
@@ -674,6 +686,7 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnAiFeedback, "ibtnAiFeedback");
             this.ibtnAiFeedback.Name = "ibtnAiFeedback";
             this.ibtnAiFeedback.PressedState.ImageSize = new System.Drawing.Size(347, 90);
+            this.ibtnAiFeedback.Click += new System.EventHandler(this.ibtnAiFeedback_Click);
             // 
             // ibtnInfoGraph
             // 
@@ -834,6 +847,7 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo0)).EndInit();
             this.pSideInfer.ResumeLayout(false);
             this.pSideInfer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).EndInit();
             this.pThreshold.ResumeLayout(false);
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
@@ -908,5 +922,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
+        private Guna.UI2.WinForms.Guna2PictureBox pboxGraphe;
     }
 }

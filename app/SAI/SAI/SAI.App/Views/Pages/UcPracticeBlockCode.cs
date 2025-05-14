@@ -62,6 +62,30 @@ namespace SAI.SAI.App.Views.Pages
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
 			InitializeWebView2();
+
+            // ToolTip 설정
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 3000;
+            toolTip.InitialDelay = 300;
+            toolTip.ReshowDelay = 300;
+            toolTip.ShowAlways = true;
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += (s, e) =>
+            {
+                Font notoSans = new Font("Noto Sans KR", 9); // 원하는 폰트
+                e.DrawBackground();                       
+                e.DrawBorder();                              
+                e.Graphics.DrawString(e.ToolTipText, notoSans, Brushes.Black, new PointF(2, 2)); // 텍스트 직접 그리기
+            };
+            // 크기 조절
+            toolTip.Popup += (s, e) =>
+            {
+                Font notoSans = new Font("Noto Sans KR", 9);
+                string text = toolTip.GetToolTip(pboxGraphe);
+                Size size = TextRenderer.MeasureText(text, notoSans);
+                e.ToolTipSize = new Size(size.Width + 8, size.Height + 4);
+            };
+            toolTip.SetToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
         {
@@ -234,6 +258,14 @@ namespace SAI.SAI.App.Views.Pages
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
             using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void pboxGraphe_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogModelPerformance())
             {
                 dialog.ShowDialog();
             }

@@ -330,6 +330,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
+      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
@@ -421,6 +424,9 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_close_white_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_white.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_modelPerformance.png" />
     <None Include="SAI.App\Resources\Images\btn_light_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_dark_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_dark.png" />

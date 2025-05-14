@@ -29,8 +29,36 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.TopMost = true;
 
             // 배경을 투명하게 하기 위해서
-            this.BackColor = Color.Gray;           // 투명 처리할 색
+            this.BackColor = Color.Gray;  
             this.TransparencyKey = Color.Gray;
+
+            // ToolTip 설정 (제대로 안됨)
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 3000;
+            toolTip.InitialDelay = 300;
+            toolTip.ReshowDelay = 300;
+            toolTip.ShowAlways = true;
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += (s, e) =>
+            {
+                Font notoSans = new Font("Noto Sans KR", 9);
+                Color bgColor = ColorTranslator.FromHtml("#EAEAEA");
+                using (SolidBrush bgBrush = new SolidBrush(bgColor))
+                {
+                    e.Graphics.FillRectangle(bgBrush, e.Bounds);
+                }
+                e.DrawBackground();
+                e.DrawBorder();
+                e.Graphics.DrawString(e.ToolTipText, notoSans, Brushes.Black, new PointF(2, 2));
+            };
+            toolTip.Popup += (s, e) =>
+            {
+                Font notoSans = new Font("Noto Sans KR", 9);
+                string text = "모델 저장 경로를 변경하려면 클릭하세요.";
+                Size size = TextRenderer.MeasureText(text, notoSans);
+                e.ToolTipSize = new Size(size.Width + 8, size.Height + 4);
+            };
+            toolTip.SetToolTip(tboxPath, "모델 저장 경로를 변경하려면 클릭하세요.");
 
             SetupButton(btnClose);
             SetupButton(btnSave);
