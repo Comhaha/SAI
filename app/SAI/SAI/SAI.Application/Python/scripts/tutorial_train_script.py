@@ -20,9 +20,10 @@ except Exception as e:
     # 이미 설정되어 있거나 닫혀있는 경우 무시
     pass
 
-# PYTHON_DIR을 base_dir로 변경
-base_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python"
-
+# base_dir을 스크립트 실행 기준으로 설정
+# 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(f"Base directory: {base_dir}")
 
 # 로깅 설정 - 시간 포맷 변경 및 상세 정보 표시
 logging.basicConfig(
@@ -180,16 +181,11 @@ def install_torch_cuda():
         return False, "cpu"
 
 def download_dataset_with_progress(start_time):
-    """Roboflow 데이터셋 다운로드 및 진행률 표시"""
-    # 데이터셋 저장 경로 설정
-    dataset_dir = os.path.join(base_dir, "dataset")
+    """서버에서 데이터셋 다운로드 및 진행률 표시"""
+    # 데이터셋 저장 경로 설정, 덮어쓰기 
+    dataset_dir = os.path.join(base_dir, "dataset", "tutorial_dataset")
     os.makedirs(dataset_dir, exist_ok=True)
     show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 70)
-
-    # tutorial_dataset 폴더 생성
-    tutorial_dataset_dir = os.path.join(dataset_dir, "tutorial_dataset")
-    os.makedirs(tutorial_dataset_dir, exist_ok=True)
-    show_progress(f"튜토리얼 데이터셋 경로: {tutorial_dataset_dir}", start_time, 70)
 
     # ZIP 파일 경로 정의
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
@@ -204,7 +200,7 @@ def download_dataset_with_progress(start_time):
                 
                 # 압축 해제 진행률 표시
                 for i, file in enumerate(file_list):
-                    zip_ref.extract(file, tutorial_dataset_dir)  # tutorial_dataset 폴더에 압축 해제
+                    zip_ref.extract(file, dataset_dir)  # tutorial_dataset 폴더에 압축 해제
                     if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
                         extract_progress = 92 + (i / total_files) * 8  # 92% ~ 100% 범위
                         show_progress(f"압축 해제 중: {i+1}/{total_files} 파일", start_time, extract_progress)
@@ -222,11 +218,9 @@ def download_dataset_with_progress(start_time):
     else:
         show_progress("다운로드된 ZIP 파일을 찾을 수 없습니다.", start_time, 95)
     
-    # 데이터셋 경로 변경: tutorial_dataset 내부의 dataset 폴더 사용
-    tutorial_dataset_dataset_dir = os.path.join(tutorial_dataset_dir, "dataset")
-    
-    # 반환 값 변경: dataset 하위 폴더를 location으로 반환
-    return type('obj', (), {'location': tutorial_dataset_dataset_dir})
+    # 데이터셋 경로
+    # 
+    return type('obj', (), {'location': dataset_dir})
 
 def find_yaml_file(dataset_dir, start_time):
     """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
@@ -236,7 +230,7 @@ def find_yaml_file(dataset_dir, start_time):
     yaml_path = os.path.join(dataset_dir, "data.yaml")
     
     # data.yaml 파일이 있는지 확인
-    if os.path.exists(yaml_path):
+    if (os.path.exists(yaml_path)):
         show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
         return yaml_path
     
@@ -479,9 +473,9 @@ def main():
     model_elapsed = time.time() - model_start_time
     show_progress(f"YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)", total_start_time, 100)
     
-    # 5. Roboflow에서 데이터셋 다운로드
+    # 5. 서버에서 데이터셋 다운로드
     data_start_time = time.time()
-    show_progress("Roboflow에서 데이터셋 다운로드 중... (5/7)", total_start_time, 0)
+    show_progress("서버에서 데이터셋 다운로드 중... (5/7)", total_start_time, 0)
     dataset = download_dataset_with_progress(data_start_time)
     data_elapsed = time.time() - data_start_time
     show_progress(f"데이터셋 준비 완료 (총 소요 시간: {int(data_elapsed)}초)", total_start_time, 100)

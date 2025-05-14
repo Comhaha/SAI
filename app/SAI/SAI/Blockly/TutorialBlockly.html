@@ -82,6 +82,10 @@
 
 		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
         function sendCode(code) {
+            console.log("[DEBUG] JavaScript: 블록 코드 생성");
+            console.log("[DEBUG] 생성된 코드 길이:", code.length);
+            console.log("[DEBUG] 생성된 코드 내용:\n", code);
+            
 			window.chrome.webview.postMessage({
 				type: "blockAllCode",
 				code: code
