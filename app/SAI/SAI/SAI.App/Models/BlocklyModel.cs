@@ -20,6 +20,9 @@ namespace SAI.SAI.App.Models
 		// 개별 블록 코드
 		private string _blockCode;
 
+		// 이미지 경로
+		private string _imgPath;
+
 		// private 생성자 -> 외부에서 생성 못하게.
 		private BlocklyModel()
 		{
@@ -66,5 +69,16 @@ namespace SAI.SAI.App.Models
 		}
 
 
+		public string imgPath
+		{
+			get => _imgPath;
+			set
+			{
+				if (_imgPath != value)
+				{
+					_imgPath = value;
+				}
+			}
+		}
 	}
 }

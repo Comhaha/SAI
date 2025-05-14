@@ -14,7 +14,7 @@ Blockly.Python.forBlock['start'] = function (block) {
     return (
         `# ================================================\n` +
         `# 🔷 SAI AI 블록 코딩 튜토리얼 🔷\n` +
-        `# ================================================\n\n\n\n`
+        `# ================================================\n\n\n`
     );
 };
 
@@ -178,6 +178,7 @@ Blockly.defineBlocksWithJsonArray([
 Blockly.Python.forBlock['imgPath'] = function (block) {
     const filePath = block.getFieldValue('FILE_PATH');
     return (
+        `# 이미지 경로 지정하기\n` +
         `img_path ='${filePath}'))\n\n\n`
     );
 };
@@ -197,7 +198,7 @@ Blockly.defineBlocksWithJsonArray([
 
 Blockly.Python.forBlock['modelInference'] = function (block) {
     return (
-        `# 추론 실행\n` +
+        `# 추론 실행하기\n` +
         `model = YOLO("/home/.../best.pt")\n` +
         `results = model.predict(source=img_path, save=False, show=False, conf=0.25)\n\n\n`
     );
@@ -218,13 +219,15 @@ Blockly.defineBlocksWithJsonArray([
 
 Blockly.Python.forBlock['visualizeResult'] = function (block) {
     return (
-        `# 결과 시각화\n` +
+        `# 결과 시각화하기\n` +
         `import cv2\n` +
         `import matplotlib.pyplot as plt\n\n` +
         `# bounding box 그려진 이미지 추출 (BGR)\n` +
-        `result_img = results[0].plot()\n` +
+        `result_img = results[0].plot()\n\n` +
+        `# matplotlib용 RGB로 변환\n` +
         `result_img = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)   # matplotlib용 RGB로 변환\n\n` +
-        `plt.imshow(result_img) # 출력\n` +
+        `# 출력\n` +
+        `plt.imshow(result_img)\n` +
         `plt.axis("off")\n` +
         `plt.title("YOLOv8 Prediction")\n` +
         `plt.show()\n\n\n`
