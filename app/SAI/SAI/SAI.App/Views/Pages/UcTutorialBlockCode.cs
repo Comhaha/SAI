@@ -21,6 +21,9 @@ namespace SAI.SAI.App.Views.Pages
 		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
+		
+		private BlocklyModel blocklyModel;
+
 		private readonly IMainView mainView;
 
 		public event EventHandler HomeButtonClicked;
@@ -48,8 +51,10 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
-                                                 // 메모 텍스트 변경 이벤트 핸들러 연결
-            tboxMemo.TextChanged += tboxMemo_TextChanged;
+
+			blocklyModel = BlocklyModel.Instance;
+
+			tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
@@ -563,6 +568,8 @@ namespace SAI.SAI.App.Views.Pages
 										string filePath = dialog.FileName.Replace("\\", "/");
 										string escapedFilePath = JsonSerializer.Serialize(filePath);
 										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+
+										blocklyModel.imgPath = filePath;
 
 										string json = $@"{{
 											""blockId"": {escapedBlockId},
