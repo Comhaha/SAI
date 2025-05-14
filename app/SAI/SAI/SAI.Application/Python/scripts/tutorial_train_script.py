@@ -415,8 +415,6 @@ def run_inference(model_path, image_path, start_time, conf_threshold=0.25, show=
     except Exception as e:
         show_progress(f"추론 오류: {e}", start_time, 100)
         return None
-    
-
 
 def main():
     """메인 실행 함수"""
@@ -435,10 +433,6 @@ def main():
     # ultralytics 설치
     show_progress("ultralytics 패키지 설치 중...", package_start_time, 0)
     install_packages_with_progress("ultralytics", package_start_time)
-    
-    # roboflow 설치
-    show_progress("roboflow 패키지 설치 중...", package_start_time, 50)
-    install_packages_with_progress("roboflow", package_start_time)
 
     # OpenCV 설치 추가
     show_progress("opencv-python 패키지 설치 중...", package_start_time, 0)
