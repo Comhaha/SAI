@@ -8,17 +8,19 @@
 </head>
 <body>
     <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
-    <xml id="toolbox" style="display: none">
-        <block type="start"></block>
-        <block type="pipInstall"></block>
-        <block type="loadModel"></block>
-        <block type="loadDataset"></block>
-        <block type="machineLearning"></block>
-        <block type="resultGraph"></block>
-        <block type="imgPath"></block>
-        <block type="modelInference"></block>
-        <block type="visualizeResult"></block>
-    </xml>
+	<xml id="toolbox" style="display: none">
+		<block type="start"></block>
+		<block type="pipInstall"></block>
+		<block type="loadModel"></block>
+		<block type="loadModelWithLayer"></block>
+		<block type="layer"></block>
+		<block type="loadDataset"></block>
+		<block type="machineLearning"></block>
+		<block type="resultGraph"></block>
+		<block type="imgPath"></block>
+		<block type="modelInference"></block>
+		<block type="visualizeResult"></block>
+	</xml>
 
     <div id="customAlert" style="
         display: none;
@@ -41,8 +43,9 @@
 		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
 		const workspace = Blockly.inject('blocklyDiv', {
+			//toolbox: document.getElementById('toolbox'),
 			toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
-			//scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
+			scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
 			trashcan: false,
 			zoom: {
 				controls: true,
@@ -112,33 +115,35 @@
 			workspace.undo(true);
 		}
 
-		// 더블 클릭 이벤트 처리
-		function registerDoubleClickEvent(block) {
-			if (!block.svgGroup_ || block.svgGroup_.dataset.dblclickBound) return;
+		// 더블 클릭 이벤트 등록 및 이벤트 처리
+		function registerDoubleClickEventRecursively(block) {
+			if (!block) return;
 
-			block.svgGroup_.addEventListener('dblclick', () => {
-				try {
-					const code = Blockly.Python.blockToCode(block);
-					const json = {
-						type: "blockDoubleClick",
-						code: code,
-					};
-					window.chrome.webview.postMessage(json);
-				} catch (e) {
-					showCustomAlert('블록 코드를 생성하는 중 오류가 발생했습니다.');
-					console.error(e);
-				}
-			});
+			// 현재 블록에 이벤트 등록
+			if (block.svgGroup_ && !block.svgGroup_.dataset.dblclickBound) {
+				block.svgGroup_.addEventListener('dblclick', (event) => {
+					// 이벤트 전파 중단
+					event.stopPropagation();
 
-			// 중복 방지 플래그
-			block.svgGroup_.dataset.dblclickBound = true;
-		}
+					try {
+						// 현재 블록의 코드만 생성
+						let code = '';
+						if (Blockly.Python && Blockly.Python.forBlock[block.type]) {
+							code = Blockly.Python.forBlock[block.type](block);
+						}
 
-		// 모든 블록에 더블 클릭 이벤트 등록
-		function bindDoubleClickEventsToAllBlocks() {
-			const blocks = workspace.getAllBlocks(false);
-			for (let block of blocks) {
-				registerDoubleClickEvent(block);
+						const json = {
+							type: "blockDoubleClick",
+							code: code,
+						};
+						window.chrome.webview.postMessage(json);
+					} catch (e) {
+						showCustomAlert('블록 코드를 생성하는 중 오류가 발생했습니다.');
+						console.error(e);
+					}
+				});
+
+				block.svgGroup_.dataset.dblclickBound = true; // 더블클릭 이벤트가 중복 등록되지 않도록 방지
 			}
 		}
 
@@ -151,7 +156,10 @@
 					event.type === Blockly.Events.BLOCK_CHANGE ||
 					event.type === Blockly.Events.BLOCK_MOVE
 				) {
-					bindDoubleClickEventsToAllBlocks(); // 더블클릭 리스너 바인딩
+					const allBlocks = workspace.getAllBlocks(false);
+					for (const block of allBlocks) {
+						registerDoubleClickEventRecursively(block);
+					}
 
 					// 안전하게 확인
 					if (Blockly.Python && Blockly.Python.workspaceToCode) {

@@ -55,7 +55,7 @@ Blockly.defineBlocksWithJsonArray([
         "previousStatement": null,
         "nextStatement": null,
         "colour": 100,
-        "tooltip": "YOLOv8 모델을 불러옵니다.\nYOLOv8의 나노버전부터 Large버전까지 제공됩니다.",
+        "tooltip": "YOLOv8 모델을 불러옵니다.\nYOLOv8의 나노버전부터 Large버전까지 제공됩니다.\n튜토리얼에서는 나노버전으로 진행합니다.\n",
         "helpUrl": ""
     }
 ]);
@@ -66,7 +66,7 @@ Blockly.Python.forBlock['loadModel'] = function (block) {
         `# 모델 불러오기\n` +
         `from ultralytics import YOLO\n\n` +
         `model = YOLO("${modelFile}")   # YOLOv8 모델 불러오기\n` +
-        `print("✅ YOLOv8 설치 및 (${modelFile}) 모델 로드 완료!")')\n\n\n`
+        `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")')\n\n\n`
     );
 };
 
@@ -123,7 +123,7 @@ Blockly.Python.forBlock['machineLearning'] = function (block) {
     const epochs = block.getFieldValue('epochs');
     const imgsz = block.getFieldValue('imgsz');
     return (
-        `# 모델 학습하기\n` +
+        `# 모델 학습\n` +
         `model.train(\n` +
         `   data="/home/j-k12d201/yolo8/bottle-2/data.yaml",    # 데이터셋의 정보를 담고 있는 YAML 파일 경로를 지정\n` +
         `   "epochs": ${epochs},    # 학습 데이터를 몇 번 반복해서 학습할지를 결정\n` +
@@ -178,7 +178,7 @@ Blockly.defineBlocksWithJsonArray([
 Blockly.Python.forBlock['imgPath'] = function (block) {
     const filePath = block.getFieldValue('FILE_PATH');
     return (
-        `# 이미지 경로 지정하기\n` +
+        `# 이미지 경로 지정\n` +
         `img_path ='${filePath}'))\n\n\n`
     );
 };
@@ -187,7 +187,17 @@ Blockly.Python.forBlock['imgPath'] = function (block) {
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "modelInference", // 블록 타입
-        "message0": "추론 실행하기", // 블록에 표시되는 문구
+        "message0": "추론 실행하기\n threshold: %1", // 블록에 표시되는 문구
+        "args0": [
+            {
+                "type": "field_number",
+                "name": "THRESHOLD",
+                "value": 0.25,
+                "min": 0,
+                "max": 1,
+                "precision": 0.01
+            }
+        ],
         "previousStatement": null,
         "nextStatement": null,
         "colour": 350,
@@ -197,10 +207,11 @@ Blockly.defineBlocksWithJsonArray([
 ]);
 
 Blockly.Python.forBlock['modelInference'] = function (block) {
+    const threshold = block.getFieldValue('THRESHOLD');
     return (
-        `# 추론 실행하기\n` +
+        `# 추론 실행\n` +
         `model = YOLO("/home/.../best.pt")\n` +
-        `results = model.predict(source=img_path, save=False, show=False, conf=0.25)\n\n\n`
+        `results = model.predict(source=img_path, save=False, show=False, conf=${threshold})\n\n\n`
     );
 };
 
@@ -219,7 +230,7 @@ Blockly.defineBlocksWithJsonArray([
 
 Blockly.Python.forBlock['visualizeResult'] = function (block) {
     return (
-        `# 결과 시각화하기\n` +
+        `# 결과 시각화\n` +
         `import cv2\n` +
         `import matplotlib.pyplot as plt\n\n` +
         `# bounding box 그려진 이미지 추출 (BGR)\n` +
