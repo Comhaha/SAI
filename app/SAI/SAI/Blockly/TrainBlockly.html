@@ -43,8 +43,8 @@
 		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
 		const workspace = Blockly.inject('blocklyDiv', {
-			toolbox: document.getElementById('toolbox'),
-			//toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
+			//toolbox: document.getElementById('toolbox'),
+			toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
 			scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
 			trashcan: false,
 			zoom: {

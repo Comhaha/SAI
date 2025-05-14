@@ -1533,6 +1533,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btnAccordionClosed {
+            get {
+                object obj = ResourceManager.GetObject("btnAccordionClosed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnAccordionShow {
+            get {
+                object obj = ResourceManager.GetObject("btnAccordionShow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btnBlockStart {
             get {
                 object obj = ResourceManager.GetObject("btnBlockStart", resourceCulture);
@@ -1583,6 +1603,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btnLayer {
+            get {
+                object obj = ResourceManager.GetObject("btnLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnLayerClicked {
+            get {
+                object obj = ResourceManager.GetObject("btnLayerClicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btnLoadDataset {
             get {
                 object obj = ResourceManager.GetObject("btnLoadDataset", resourceCulture);
@@ -1623,6 +1663,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btnLoadModelWithLayer {
+            get {
+                object obj = ResourceManager.GetObject("btnLoadModelWithLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnLoadModelWithLayerClicked {
+            get {
+                object obj = ResourceManager.GetObject("btnLoadModelWithLayerClicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btnMachineLearning {
             get {
                 object obj = ResourceManager.GetObject("btnMachineLearning", resourceCulture);
@@ -1653,9 +1713,49 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btnModelInference1 {
+            get {
+                object obj = ResourceManager.GetObject("btnModelInference1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnModelInference2 {
+            get {
+                object obj = ResourceManager.GetObject("btnModelInference2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btnModelInferenceClicked {
             get {
                 object obj = ResourceManager.GetObject("btnModelInferenceClicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnModelInferenceClicked1 {
+            get {
+                object obj = ResourceManager.GetObject("btnModelInferenceClicked1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btnModelInferenceClicked2 {
+            get {
+                object obj = ResourceManager.GetObject("btnModelInferenceClicked2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2626,6 +2726,96 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap tutorialBg {
             get {
                 object obj = ResourceManager.GetObject("tutorialBg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockImgPath {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockImgPath", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockLearning {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockLearning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockLoadData {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockLoadData", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockLoadModel {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockLoadModel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockModelInference {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockModelInference", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockPip {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockPip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockResultCheck {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockResultCheck", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockResultVisualize {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockResultVisualize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap txtBlockStart {
+            get {
+                object obj = ResourceManager.GetObject("txtBlockStart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
