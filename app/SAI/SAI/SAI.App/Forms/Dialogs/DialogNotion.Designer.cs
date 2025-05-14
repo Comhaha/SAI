@@ -39,6 +39,9 @@
             this.tboxSecretKey = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnEnter = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.authButton = new System.Windows.Forms.Button();
+            this.exportNotionButton = new System.Windows.Forms.Button();
             this.pTitleBar.SuspendLayout();
             this.pInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2)).BeginInit();
@@ -108,7 +111,7 @@
             this.webView2.AllowExternalDrop = true;
             this.webView2.CreationProperties = null;
             this.webView2.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView2.Location = new System.Drawing.Point(0, 0);
+            this.webView2.Location = new System.Drawing.Point(0, -3);
             this.webView2.Name = "webView2";
             this.webView2.Size = new System.Drawing.Size(980, 433);
             this.webView2.TabIndex = 2;
@@ -163,6 +166,7 @@
             this.ibtnEnter.PressedState.ImageSize = new System.Drawing.Size(53, 25);
             this.ibtnEnter.Size = new System.Drawing.Size(53, 25);
             this.ibtnEnter.TabIndex = 4;
+            this.ibtnEnter.Click += new System.EventHandler(this.ibtnEnter_Click);
             // 
             // guna2Panel1
             // 
@@ -174,12 +178,44 @@
             this.guna2Panel1.Size = new System.Drawing.Size(152, 25);
             this.guna2Panel1.TabIndex = 5;
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(376, 59);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(167, 21);
+            this.progressBar.TabIndex = 6;
+            // 
+            // authButton
+            // 
+            this.authButton.Location = new System.Drawing.Point(857, 57);
+            this.authButton.Name = "authButton";
+            this.authButton.Size = new System.Drawing.Size(168, 34);
+            this.authButton.TabIndex = 7;
+            this.authButton.Text = "인증하기";
+            this.authButton.UseVisualStyleBackColor = true;
+            this.authButton.Visible = false;
+            this.authButton.Click += new System.EventHandler(this.authButton_Click);
+            // 
+            // exportNotionButton
+            // 
+            this.exportNotionButton.Location = new System.Drawing.Point(857, 59);
+            this.exportNotionButton.Name = "exportNotionButton";
+            this.exportNotionButton.Size = new System.Drawing.Size(168, 34);
+            this.exportNotionButton.TabIndex = 8;
+            this.exportNotionButton.Text = "내보내기";
+            this.exportNotionButton.UseVisualStyleBackColor = true;
+            this.exportNotionButton.Visible = false;
+            this.exportNotionButton.Click += new System.EventHandler(this.exportNotionButton_Click);
+            // 
             // DialogNotion
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1060, 583);
+            this.Controls.Add(this.exportNotionButton);
+            this.Controls.Add(this.authButton);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.ibtnEnter);
             this.Controls.Add(this.lblCode);
@@ -191,6 +227,7 @@
             this.Name = "DialogNotion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.DialogNotion_Load);
             this.pTitleBar.ResumeLayout(false);
             this.pTitleBar.PerformLayout();
             this.pInfo.ResumeLayout(false);
@@ -214,5 +251,8 @@
         private Guna.UI2.WinForms.Guna2TextBox tboxSecretKey;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnEnter;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button authButton;
+        private System.Windows.Forms.Button exportNotionButton;
     }
 }
