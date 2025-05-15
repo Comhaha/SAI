@@ -294,20 +294,8 @@
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTab.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.Designer.cs">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTab.Designer.cs">
-      <DependentUpon>UcTab.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
-      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
       <SubType>UserControl</SubType>
@@ -385,12 +373,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockList.resx">
       <DependentUpon>UcPracticeBlockList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
-      <DependentUpon>UcTab.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
-      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>

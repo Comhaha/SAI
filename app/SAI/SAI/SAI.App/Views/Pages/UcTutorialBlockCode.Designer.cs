@@ -33,7 +33,6 @@ namespace SAI.SAI.App.Views.Pages
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
@@ -101,7 +100,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.pMain.SuspendLayout();
-            this.guna2Panel1.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
             this.pZoomCode.SuspendLayout();
@@ -145,13 +143,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMain.ShadowDecoration.BorderRadius = 32;
             this.pMain.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(0, 0, 6, 6);
             this.pMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pMain_Paint);
-            // 
-            // guna2Panel1
-            // 
-            this.guna2Panel1.Controls.Add(this.btnCopy);
-            this.guna2Panel1.Controls.Add(this.ibtnCloseInfer);
-            resources.ApplyResources(this.guna2Panel1, "guna2Panel1");
-            this.guna2Panel1.Name = "guna2Panel1";
             // 
             // btnCopy
             // 
@@ -900,7 +891,6 @@ namespace SAI.SAI.App.Views.Pages
             this.Name = "UcTutorialBlockCode";
             this.Load += new System.EventHandler(this.UcTutorialBlockCode_Load);
             this.pMain.ResumeLayout(false);
-            this.guna2Panel1.ResumeLayout(false);
             this.pBlockList.ResumeLayout(false);
             this.pCode.ResumeLayout(false);
             this.pZoomCode.ResumeLayout(false);
@@ -979,7 +969,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private SAI.App.Views.Pages.UcCode ucCode1;
-    }
         private Guna.UI2.WinForms.Guna2PictureBox pboxGraphe;
         private Guna.UI2.WinForms.Guna2Button btnTrash;
         private Guna.UI2.WinForms.Guna2Button btnNextBlock;
