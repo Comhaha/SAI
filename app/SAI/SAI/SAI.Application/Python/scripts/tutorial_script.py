@@ -4,7 +4,6 @@
 
 
 
-
 # 패키지 설치
 !pip install ultralytics
 
@@ -14,7 +13,7 @@
 from ultralytics import YOLO
 
 model = YOLO("yolov8n.pt")   # YOLOv8 모델 불러오기
-print("✅ YOLOv8 설치 및 (yolov8n.pt) 모델 로드 완료!")')
+print("✅ YOLOv8 설치 및 yolov8n.pt 모델 로드 완료!")')
 
 
 
@@ -23,7 +22,7 @@ print("✅ YOLOv8 설치 및 (yolov8n.pt) 모델 로드 완료!")')
 
 
 
-# 모델 학습하기
+# 모델 학습
 model.train(
    data="/home/j-k12d201/yolo8/bottle-2/data.yaml",    # 데이터셋의 정보를 담고 있는 YAML 파일 경로를 지정
    "epochs": 50,    # 학습 데이터를 몇 번 반복해서 학습할지를 결정
@@ -41,6 +40,7 @@ display(Image(filename = 'runs/detect/train/results.png'))
 
 
 
+# 이미지 경로 지정
 img_path ='파일 선택'))
 
 
@@ -57,9 +57,12 @@ import matplotlib.pyplot as plt
 
 # bounding box 그려진 이미지 추출 (BGR)
 result_img = results[0].plot()
+
+# matplotlib용 RGB로 변환
 result_img = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)   # matplotlib용 RGB로 변환
 
-plt.imshow(result_img) # 출력
+# 출력
+plt.imshow(result_img)
 plt.axis("off")
 plt.title("YOLOv8 Prediction")
 plt.show()

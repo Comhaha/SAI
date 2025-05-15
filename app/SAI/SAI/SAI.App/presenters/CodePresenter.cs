@@ -115,18 +115,18 @@ namespace SAI.SAI.App.Presenters
                     if (foundKeyword != null)
                     {
                         Console.WriteLine($"[DEBUG] 키워드 찾음: {foundKeyword}");
-                        ucCode.HighlightBlockByComment(commentLine);
+                        //ucCode.HighlightBlockByComment(commentLine);
                     }
                     else
                     {
                         Console.WriteLine("[DEBUG] 키워드를 찾지 못함, 전체 코드 하이라이트");
-                        ucCode.HighlightBlockByComment(null);
+                        //ucCode.HighlightBlockByComment(null);
                     }
                 }
                 else
                 {
                     Console.WriteLine("[DEBUG] 주석을 찾지 못함, 전체 코드 하이라이트");
-                    ucCode.HighlightBlockByComment(null);
+                    //ucCode.HighlightBlockByComment(null);
                 }
             }
             catch (Exception ex)
