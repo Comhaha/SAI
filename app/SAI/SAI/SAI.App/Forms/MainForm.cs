@@ -25,7 +25,9 @@ namespace SAI
 		{
 			InitializeComponent();
 
-			presenter = new MainPresenter(this);
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            presenter = new MainPresenter(this);
 
 			// 사이즈 고정
 			Size = new Size(1280, 750);

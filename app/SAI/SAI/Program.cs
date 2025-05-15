@@ -1,10 +1,7 @@
 ﻿using CefSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Forms;
 
 namespace SAI
 {
@@ -20,7 +17,14 @@ namespace SAI
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+
+            // 스플래시 화면 먼저 실행
+            using (var splash = new SplashForm())
+            {
+                splash.ShowDialog();
+            }
+
+            Application.Run(new MainForm());
 		}
 	}
 }
