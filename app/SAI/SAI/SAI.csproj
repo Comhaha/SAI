@@ -277,11 +277,11 @@
     <Compile Include="SAI.App\Views\Pages\UcCode.Designer.cs">
       <DependentUpon>UcCode.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UserBlockGuide.cs">
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UserBlockGuide.Designer.cs">
-      <DependentUpon>UserBlockGuide.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.Designer.cs">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.cs">
       <SubType>UserControl</SubType>
@@ -397,8 +397,8 @@
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <EmbeddedResource Include="SAI.App\Views\Pages\UserBlockGuide.resx">
-      <DependentUpon>UserBlockGuide.cs</DependentUpon>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
@@ -436,6 +436,12 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide.png" />
     <None Include="SAI.App\Resources\Images\btn_info_17.png" />
     <None Include="SAI.App\Resources\Images\btn_info_12.png" />
     <None Include="SAI.App\Resources\Images\btn_close_25_clicked.png" />

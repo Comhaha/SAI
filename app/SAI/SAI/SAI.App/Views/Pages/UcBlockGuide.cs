@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UserBlockGuide : UserControl
+    public partial class UcBlockGuide : UserControl
     {
-        public UserBlockGuide()
+        public UcBlockGuide()
         {
             InitializeComponent();
+
         }
     }
 }
