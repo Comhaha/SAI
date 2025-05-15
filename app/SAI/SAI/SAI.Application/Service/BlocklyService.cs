@@ -30,10 +30,17 @@ namespace SAI.SAI.Application.Service
 
 			try
 			{
+				Console.WriteLine($"[DEBUG] BlocklyService: 파일 저장 시작");
+				Console.WriteLine($"[DEBUG] 저장 경로: {path}");
+				Console.WriteLine($"[DEBUG] 저장할 코드 길이: {model.blockAllCode?.Length ?? 0}자");
+				Console.WriteLine($"[DEBUG] 저장할 코드 내용:\n{model.blockAllCode}");
+				
 				File.WriteAllText(path, model.blockAllCode, Encoding.UTF8);
+				Console.WriteLine("[DEBUG] BlocklyService: 파일 저장 완료");
 			}
 			catch (Exception ex)
 			{
+				Console.WriteLine($"[ERROR] BlocklyService: 파일 저장 중 오류 발생 - {ex.Message}");
 				MessageBox.Show($"코드 저장 중 오류 발생: {ex.Message}");
 			}
 		}

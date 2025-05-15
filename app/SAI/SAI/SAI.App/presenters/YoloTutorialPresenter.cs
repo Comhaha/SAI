@@ -38,7 +38,7 @@ namespace SAI.SAI.App.Presenters
                         PythonService.Mode.Tutorial,
                         onOutput: text => 
                         {
-                            Console.WriteLine($"Python Output: {text}"); // 디버그용 콘솔 출력
+                            Console.WriteLine($"Python Output: {text}"); // 디버그용 콘솔 출력  
                             _view.AppendLog(text);
                         },
                         onError: err => 
