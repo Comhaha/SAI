@@ -7,7 +7,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 0,
         "tooltip": "시작 블록과 연결되어있는 블록이 실행됩니다.",
         "helpUrl": ""
-        ,"deletable": false
     }
 ]);
 
@@ -29,7 +28,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 50,
         "tooltip": "관련 패키지(ultralytics)를 설치합니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -47,7 +45,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "Yolov8 %1 모델 불러오기", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_custom_dropdown",
+                "type": "field_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
@@ -59,7 +57,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 100,
         "tooltip": "YOLOv8 모델을 불러옵니다.\nYOLOv8의 나노버전부터 Large버전까지 제공됩니다.\n튜토리얼에서는 나노버전으로 진행합니다.\n",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -83,7 +80,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 150,
         "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 딸기와 바나나 데이터셋이 제공됩니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -101,14 +97,14 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "모델 학습하기\nepochs: %1\nimgsz: %2", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_custom_dropdown",
+                "type": "field_dropdown",
                 "name": "epochs",
                 "options": [
                     ["50", "50"],
                 ]
             },
             {
-                "type": "field_custom_dropdown",
+                "type": "field_dropdown",
                 "name": "imgsz",
                 "options": [
                     ["640", "640"],
@@ -120,7 +116,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 200,
         "tooltip": "모델 학습을 진행합니다.\nepochs, imgsz를 조절할 수 있습니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -149,7 +144,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 250,
         "tooltip": "학습 결과 그래프를 출력합니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -178,7 +172,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 300,
         "tooltip": "추론을 위한 이미지 한 장을 불러옵니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -210,7 +203,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 350,
         "tooltip": "학습한 모델의 추론을 실행합니다.\n",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 
@@ -233,7 +225,6 @@ Blockly.defineBlocksWithJsonArray([
         "colour": 120,
         "tooltip": "추론 결과를 시각화합니다.\n입력한 이미지를 모델이 어떻게 판단했는지 확인합니다.",
         "helpUrl": ""
-        , "deletable": false
     }
 ]);
 

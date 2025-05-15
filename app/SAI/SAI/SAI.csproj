@@ -449,6 +449,7 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+<<<<<<< HEAD
     <None Include="SAI.App\Resources\Images\btn_close_guide_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_close_guide.png" />
     <None Include="SAI.App\Resources\Images\btn_next_guide_clicked.png" />
@@ -481,6 +482,8 @@
     <None Include="SAI.App\Resources\Images\lbl_load_model.png" />
     <None Include="SAI.App\Resources\Images\lbl_load_dataset.png" />
     <None Include="SAI.App\Resources\Images\lbl_img_path.png" />
+=======
+>>>>>>> parent of d86ad6a (Merge branch 'feature/ui-screenMagnification-S12P31D201-168' into 'develop')
     <None Include="SAI.App\Resources\Images\btnLayerClicked.png" />
     <None Include="SAI.App\Resources\Images\btnLayer.png" />
     <None Include="SAI.App\Resources\Images\btnLoadModelWithLayerClicked.png" />
