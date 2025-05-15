@@ -10,4 +10,5 @@ public interface TokenService {
     TokenResponseDto getRedisToken();
     TokenResponseDto reloadToken();
     Boolean isValid(String token);
+    String getTokenRemainingTime();
 }
