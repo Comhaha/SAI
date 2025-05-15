@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SAI.SAI.Application.Service
 {
     public class PythonService
-    {   
+    {
         // 모드에 따라 구분 (튜토리얼, 실습)
         public enum Mode
         {
@@ -29,11 +29,15 @@ namespace SAI.SAI.Application.Service
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 Console.WriteLine($"Base Directory: {baseDir}");
                 onOutput?.Invoke($"Base Directory: {baseDir}");
-                
-                // python 3.9 가상환경 경로
-                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
+
+                // python 3.9 임베디드 경로
+                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
                 Console.WriteLine($"Python Executable Path: {pythonExe}");
                 onOutput?.Invoke($"Python Executable Path: {pythonExe}");
+
+                // 가상환경 경로
+                var pythonDir = Path.GetDirectoryName(pythonExe);
+                var pythonScriptsDir = Path.Combine(pythonDir, "Scripts");
 
                 // 학습 스크립트 경로 
                 string scriptPath = mode == Mode.Tutorial
@@ -50,6 +54,7 @@ namespace SAI.SAI.Application.Service
                     onError?.Invoke(errorMsg);
                     return;
                 }
+
                 // 가상환경 없을 때 에러
                 if (!File.Exists(pythonExe))
                 {
@@ -59,7 +64,7 @@ namespace SAI.SAI.Application.Service
                     return;
                 }
 
-                // 진행률
+                // 실행 설정
                 var psi = new ProcessStartInfo
                 {
                     FileName = pythonExe,
@@ -73,10 +78,16 @@ namespace SAI.SAI.Application.Service
                     StandardErrorEncoding = Encoding.UTF8
                 };
 
+                // 환경 변수 설정
+                psi.EnvironmentVariables["PATH"] =
+                    pythonDir + ";" +
+                    pythonScriptsDir + ";" +
+                    Environment.GetEnvironmentVariable("PATH");
+                psi.EnvironmentVariables["PYTHONPATH"] = Path.GetDirectoryName(scriptPath);
+
                 var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
                 process.OutputDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onOutput?.Invoke(e.Data); };
                 process.ErrorDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onError?.Invoke(e.Data); };
-
                 process.Start();
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();

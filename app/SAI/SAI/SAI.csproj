@@ -100,7 +100,6 @@
     <Compile Include="SAI.Application\Service\AiFeedbackService.cs" />
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />
-    <Compile Include="SAI.Application\Service\SettingService.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,13 +210,11 @@
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
-    <Compile Include="SAI.App\Models\SettingModel.cs" />
     <Compile Include="SAI.App\Presenters\AiFeedbackPresenter.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
-    <Compile Include="SAI.App\Presenters\SettingPresenter.cs" />
     <Compile Include="SAI.App\Presenters\AiNotionPresenter.cs" />
     <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
@@ -228,9 +225,6 @@
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
-    <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
-    <Compile Include="SAI.App\Views\Common\ButtonUtils.cs" />
-    <Compile Include="SAI.App\Views\Common\DialogUtils.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
@@ -244,7 +238,6 @@
     <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.Designer.cs">
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Common\ToolTipUtils.cs" />
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -283,12 +276,6 @@
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcCode.Designer.cs">
       <DependentUpon>UcCode.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.Designer.cs">
-      <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.cs">
       <SubType>UserControl</SubType>
@@ -334,9 +321,6 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
-      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
@@ -378,11 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockCode.resx">
       <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcSelectType.resx">
       <DependentUpon>UcSelectType.cs</DependentUpon>
@@ -391,9 +373,6 @@
       <DependentUpon>UcTutorialGuide.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
-      <DependentUpon>UcBlockGuide.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
     </EmbeddedResource>
@@ -430,27 +409,6 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
-    <None Include="SAI.App\Resources\Images\btn_close_guide_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_close_guide.png" />
-    <None Include="SAI.App\Resources\Images\btn_next_guide_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_next_guide.png" />
-    <None Include="SAI.App\Resources\Images\btn_pre_guide_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_pre_guide.png" />
-    <None Include="SAI.App\Resources\Images\btn_info_17.png" />
-    <None Include="SAI.App\Resources\Images\btn_info_12.png" />
-    <None Include="SAI.App\Resources\Images\btn_close_25_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_close_25.png" />
-    <None Include="SAI.App\Resources\Images\btn_question_memo_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_trash_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_pre_block_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_next_block_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_close_white_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_close_white.png" />
-    <None Include="SAI.App\Resources\Images\bg_titlebar_modelPerformance.png" />
-    <None Include="SAI.App\Resources\Images\btn_light_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_dark_clicked.png" />
-    <None Include="SAI.App\Resources\Images\btn_dark.png" />
-    <None Include="SAI.App\Resources\Images\btn_light.png" />
     <None Include="SAI.App\Resources\Images\lbl_report.png" />
     <None Include="SAI.App\Resources\Images\lbl_visualize_result.png" />
     <None Include="SAI.App\Resources\Images\lbl_start.png" />
@@ -611,6 +569,10 @@
     <None Include="SAI.App\Resources\Images\btn_goNotion_hover.png" />
     <None Include="SAI.App\Resources\Images\btn_goNotion.png" />
     <None Include="SAI.App\Resources\Images\btn_aifeedback.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gopractice.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial_hover.png" />
+    <None Include="SAI.App\Resources\Images\btn_gotutorial.png" />
     <None Include="SAI.App\Resources\Images\p_memo.png" />
     <None Include="SAI.App\Resources\Images\btn_info.png" />
     <None Include="SAI.App\Resources\Images\img_bounding_example.png" />
