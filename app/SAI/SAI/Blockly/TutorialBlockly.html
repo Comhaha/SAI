@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
-    <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
-    <script src="TutorialBlocks.js"></script>
+	<meta charset="utf-8">
+	<script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
+	<script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
+	<script src="TutorialBlocks.js"></script>
 </head>
 <body>
     <div id="blocklyDiv" style="height: 96vh; width: 96vw; "></div>
@@ -72,13 +72,32 @@
 
         function closeCustomAlert() {
             document.getElementById('customAlert').style.display = 'none';
-        }
+		}
         
-        function addBlock(type) {
-            const block = workspace.newBlock(type);
-            block.initSvg();
-            block.render();
-        }
+		function addBlock(type) {
+			const block = workspace.newBlock(type);
+			block.setDeletable(false); // 블록 삭제 가능
+			block.initSvg();
+			block.render();
+
+			if (lastCreatedBlockId) {
+				const lastBlock = workspace.getBlockById(lastCreatedBlockId);
+				if (lastBlock) {
+					const pos = lastBlock.getRelativeToSurfaceXY();
+					const height = lastBlock.getHeightWidth().height;
+					block.moveBy(pos.x, pos.y + height + 10);  // 마지막 생성 블럭 바로 아래에 위치
+
+					// 2️⃣ 연결 (선택 사항)
+					if (lastBlock.nextConnection && block.previousConnection) {
+						lastBlock.nextConnection.connect(block.previousConnection);
+					}
+
+					// 3️⃣ 필요 시 강제 렌더링 한 번 더
+					block.render();
+					return;
+				}
+			}
+		}
 
 		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
         function sendCode(code) {
@@ -100,11 +119,6 @@
                     break;
 				}
 			}
-        }
-
-        // 모든 블럭 삭제
-        function clear() {
-			workspace.clear();
         }
 
         // 이전 상태로 되돌리기(ctrl+z)
@@ -150,30 +164,89 @@
 		}
 
 
+		function extractBlockTree(block) {
+			const blockInfo = { type: block.type };
+
+			// 만약 loadModelWithLayer라면 LAYERS 안쪽도 순회
+			if (block.type === "loadModelWithLayer") {
+				const layerBlock = block.getInputTargetBlock("LAYERS");
+				const children = [];
+				let currentLayer = layerBlock;
+				while (currentLayer) {
+					children.push({ type: currentLayer.type });
+					currentLayer = currentLayer.getNextBlock();
+				}
+				if (children.length > 0) {
+					blockInfo.children = children;
+				}
+			}
+
+			return blockInfo;
+		}
+
+		// 시작 블럭에 붙어있는 하위 블럭 타입 가져오기
+		function getConnectedBlockTypesFromStart() {
+			const allBlocks = workspace.getAllBlocks(false); // <-- shadow 블럭 제외
+			const startBlock = allBlocks.find(block => block.type === 'start');
+
+			if (!startBlock) return [];
+
+			const types = [];
+			let currentBlock = startBlock;
+
+			while (currentBlock) {
+				const blockInfo = extractBlockTree(currentBlock);
+				types.push(blockInfo);
+				currentBlock = currentBlock.getNextBlock();
+			}
+
+			return types;
+		}
+
+		// C#에게 블록 타입 배열 전송
+		function sendBlockTypesToCSharp() {
+			const types = getConnectedBlockTypesFromStart();
+			if (types.length > 0) {
+				window.chrome.webview.postMessage({ type: 'blockTypes', types: types });
+			}
+		}
+
+		// 가장 마지막으로 생성된 블럭
+		let lastCreatedBlockId = null;
+
 		// 블록 생성 시 Python 코드 생성
-        window.addEventListener('DOMContentLoaded', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			workspace.addChangeListener((event) => {
-                if (
-                    event.type === Blockly.Events.BLOCK_CREATE ||
-                    event.type === Blockly.Events.BLOCK_DELETE ||
-                    event.type === Blockly.Events.BLOCK_CHANGE ||
-                    event.type === Blockly.Events.BLOCK_MOVE
-                ) {
+				if (event.type === Blockly.Events.BLOCK_CREATE) {
+					// 여러 개가 생성될 수 있으므로 마지막 ID만 저장
+					const ids = event.ids;
+					lastCreatedBlockId = ids[ids.length - 1];
+				}
+
+				if (
+					event.type === Blockly.Events.BLOCK_CREATE ||
+					event.type === Blockly.Events.BLOCK_DELETE ||
+					event.type === Blockly.Events.BLOCK_CHANGE ||
+					event.type === Blockly.Events.BLOCK_MOVE
+				) {
 					const allBlocks = workspace.getAllBlocks(false);
 					for (const block of allBlocks) {
 						registerDoubleClickEventRecursively(block);
 					}
 
-                    // 안전하게 확인
-                    if (Blockly.Python && Blockly.Python.workspaceToCode) {
+					// 안전하게 확인
+					if (Blockly.Python && Blockly.Python.workspaceToCode) {
 						const code = Blockly.Python.workspaceToCode(workspace);
 						sendCode(code);
-                    } else {
-                        showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
-                    }
-                }
-            });
-        });
+					} else {
+						showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
+					}
+
+					// 블록 타입 배열 전송
+					sendBlockTypesToCSharp();
+				}
+			});
+		});
 
 		// 나만의 필드 타입(모델 선택 버튼)
 		class FieldFilePicker extends Blockly.Field {
@@ -210,6 +283,39 @@
 				filePickerField.setImagePath(filePath);
 			}
 		});
+
+		// 나만의 필드 타입(드롭다운)
+		class CustomDropdown extends Blockly.FieldDropdown {
+			showEditor_() {
+				super.showEditor_();
+
+				setTimeout(() => {
+					// 1️⃣ 드롭다운 텍스트 스타일 적용
+					const items = document.querySelectorAll('.blocklyDropDownDiv .goog-menuitem-content');
+					items.forEach(item => {
+						item.style.fontSize = '24px';
+						item.style.fontFamily = 'Noto Sans KR, sans-serif';
+					});
+
+					// 2️⃣ 체크 표시 강제 확대
+					const checkmarks = document.querySelectorAll('.blocklyDropDownDiv .goog-menuitem-checkbox');
+					checkmarks.forEach(check => {
+						check.style.transform = 'scale(2.0)';
+						check.style.transformOrigin = 'center';
+						check.style.marginTop = '5px';
+					});
+
+					// 3️⃣ 메뉴 항목 레이아웃 정리
+					const menuItems = document.querySelectorAll('.blocklyDropDownDiv .goog-menuitem');
+					menuItems.forEach(menu => {
+						menu.style.display = 'flex';
+						menu.style.alignItems = 'center';
+					});
+				}, 0);
+			}
+		}
+
+		Blockly.fieldRegistry.register('field_custom_dropdown', CustomDropdown);
 
     </script>
 

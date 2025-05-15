@@ -10,6 +10,9 @@ using SAI.SAI.Application.Interop;
 using System.Text.Json;
 using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models;
+using static SAI.SAI.App.Models.BlocklyModel;
+using System.Collections.Generic;
 
 
 namespace SAI.SAI.App.Views.Pages
@@ -18,12 +21,15 @@ namespace SAI.SAI.App.Views.Pages
 	{
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
-		private readonly IMainView mainView;
+		
+        private readonly IMainView mainView;
+
+        private BlocklyModel blocklyModel;
 
 		public event EventHandler HomeButtonClicked;
 
 		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
+		public event EventHandler AddBlockButtonDoubleClicked;
 		private JsBridge jsBridge;
 
 		private bool isInferPanelVisible = false;
@@ -34,18 +40,20 @@ namespace SAI.SAI.App.Views.Pages
 
         private double currentThreshold = 0.5; // threshold 기본값 0.5
 
-        public UcPracticeBlockCode(IMainView view)
+		private int undoCount = 0; // 뒤로가기 카운트
+
+		public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
-			blocklyPresenter = new BlocklyPresenter(this);
 
-			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
-			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+            // 홈페이지 이동
+            ibtnHome.Click += (s, e) => {
+                mainView.LoadPage(new UcSelectType(mainView));
+            };
 
             ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
 
@@ -61,11 +69,92 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
+            // 정언이가 선언
+			//생성자---------------
+			blocklyPresenter = new BlocklyPresenter(this);
+            this.mainView = view;
+            blocklyModel = BlocklyModel.Instance;
 			InitializeWebView2();
-        }
-        private void UcPraticeBlockCode_Load(object sender, EventArgs e)
-        {
-        }
+
+            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(btnInfoThreshold,
+              "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+
+            ToolTipUtils.CustomToolTip(btnInfoGraph,
+              "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
+            ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
+
+            ButtonUtils.SetupButton(btnRunModel,"btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
+            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
+            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
+            ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
+            ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
+            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
+			undoCount = 0;
+			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+			// btnRunModel---------------
+			btnRunModel.BackColor = Color.Transparent;
+			btnRunModel.PressedColor = Color.Transparent;
+			btnRunModel.CheckedState.FillColor = Color.Transparent;
+			btnRunModel.DisabledState.FillColor = Color.Transparent;
+			btnRunModel.HoverState.FillColor = Color.Transparent;
+			// btnRunModel 마우스 입력 될 때
+			btnRunModel.MouseEnter += (s, e) =>
+			{
+				btnRunModel.BackColor = Color.Transparent;
+				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
+			};
+			// btnRunModel 마우스 떠날때
+			btnRunModel.MouseLeave += (s, e) =>
+			{
+				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+			};
+			// 스크롤바 설정-------------------
+			var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+			pSelectBlock.Controls.Add(ucPracticeBlockList);
+			pSelectBlock.AutoScroll = false;
+			ucPracticeBlockList.AutoScroll = false;
+			pSelectBlockvScrollBar.Scroll += (s, e) =>
+			{
+				if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤바 안 보이면 무시
+
+				ucPracticeBlockList.content.Top = -pSelectBlockvScrollBar.Value;
+			};
+			pSelectBlockvScrollBar.Maximum = ucPracticeBlockList.content.Height - pSelectBlockvScrollBar.Height;
+			ucPracticeBlockList.SizeChanged += (s,e) =>
+			{
+				int contentHeight = ucPracticeBlockList.content.Height;
+				int viewportHeight = pSelectBlock.Size.Height;
+
+				int newMax = contentHeight - viewportHeight;
+				if(newMax <= 0)
+				{
+					pSelectBlockvScrollBar.Visible = false;
+					pSelectBlockvScrollBar.Maximum = 0;
+					pSelectBlockvScrollBar.Value = 0;
+					ucPracticeBlockList.content.Top = 0;
+				}
+				else
+				{
+					pSelectBlockvScrollBar.Visible = true;
+					pSelectBlockvScrollBar.Maximum = newMax;
+				}
+			};
+			pSelectBlock.MouseEnter += (s, e) => pSelectBlock.Focus();
+			// 마우스 휠 이벤트 수동 처리
+			pSelectBlock.MouseWheel += (s, e) =>
+			{
+				if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤 안 보이면 스킵
+
+				int newValue = pSelectBlockvScrollBar.Value - e.Delta / 5; // 120 → 한 칸, 반전 여부 조절 가능
+				newValue = Math.Max(pSelectBlockvScrollBar.Minimum, Math.Min(pSelectBlockvScrollBar.Maximum, newValue));
+				pSelectBlockvScrollBar.Value = newValue;
+			};
+		}
+        
         private void ShowpSIdeInfer()
         {
             pSideInfer.Visible = true;
@@ -88,41 +177,6 @@ namespace SAI.SAI.App.Views.Pages
             });
         }
 
-        private void leftPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void baseFramePanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void leftPanel_Paint_1(object sender, PaintEventArgs e)
-        {
-            
-        }
-
-        private void guna2Button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnl_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2ImageButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2Button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void ibtnHome_Click(object sender, EventArgs e)
         {
             HomeButtonClicked?.Invoke(this, EventArgs.Empty); // Presenter에게 알림
@@ -139,116 +193,6 @@ namespace SAI.SAI.App.Views.Pages
                 HidepSideInfer();
             }
         }
-
-        private void lblTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pLeft_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2ShadowPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlToolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void pCenter_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ibtnPlusBlock_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnTrashBlock_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pTopCenter_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pTopRight_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pBlockList_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void ibtnCopy_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pTopCode_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void webView21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pCode_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void webView21_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void webBrowserBlock_LoadingStateChanged(object sender, CefSharp.LoadingStateChangedEventArgs e)
-        {
-
-        }
-
-        private void pInferContent_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void ibtnCloseInfer_Click(object sender, EventArgs e)
         {
             HidepSideInfer();
@@ -260,12 +204,7 @@ namespace SAI.SAI.App.Views.Pages
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void lblThreshold_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        private void btnCloseMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
@@ -289,6 +228,7 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.ShowDialog();
 		}
 
+		// webview에 blockly tutorial html 붙이기
 		private async void InitializeWebView2()
 		{
 			jsBridge = new JsBridge((message, type) =>
@@ -300,7 +240,7 @@ namespace SAI.SAI.App.Views.Pages
 			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TrainBlockly.html"));
 			string uri = new Uri(localPath).AbsoluteUri;
 
-			webViewBlock.WebMessageReceived += async (s, e) =>
+			webViewblock.WebMessageReceived += async (s, e) =>
 			{
 				try
 				{
@@ -327,12 +267,14 @@ namespace SAI.SAI.App.Views.Pages
 										string escapedFilePath = JsonSerializer.Serialize(filePath);
 										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
 
+										blocklyModel.imgPath = filePath;
+
 										string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
 										}}";
 
-										await webViewBlock.ExecuteScriptAsync(
+										await webViewblock.ExecuteScriptAsync(
 											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
 										);
 									}
@@ -348,6 +290,17 @@ namespace SAI.SAI.App.Views.Pages
 								string blockCode = root.GetProperty("code").GetString();
 								jsBridge.receiveMessageFromJs(blockCode, type);
 								break;
+
+							case "blockDoubleClick":
+								string eventCode = root.GetProperty("code").GetString();
+								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
+								break;
 						}
 					}
 				}
@@ -357,27 +310,85 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-			webViewBlock.ZoomFactor = 0.7; // 줌 비율 설정
+			webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
-			await webViewBlock.EnsureCoreWebView2Async();
-			webViewBlock.Source = new Uri(uri);
+			await webViewblock.EnsureCoreWebView2Async();
+			webViewblock.Source = new Uri(uri);
 		}
 
-		// Presenter가 호출할 메서드(UI에 있는 웹뷰에 명령을 내리는 UI 행위) : 블록 생성
+		// JS 함수 호출 = 블럭 넣기
 		public void addBlock(string blockType)
 		{
-			webViewBlock.ExecuteScriptAsync($"addBlock('{blockType}')");
+			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
 		}
 
-		// 개별 블록 코드를 받아오기위한 JS 코드 호출 함수
+		// JS 함수호출 = 하나의 블럭의 코드 가져오기
 		public void getPythonCodeByType(string blockType)
 		{
-			webViewBlock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
+			webViewblock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
 		}
 
-        private void webViewBlock_ZoomFactorChanged(object sender, EventArgs e)
+		// blockly 웹뷰 확대 조절 함수
+		private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
 		{
-			//webViewBlock.ZoomFactor = 0.7;
+			webViewblock.ZoomFactor = 0.5;
 		}
-	}
+
+		// JS 함수 호출 = 다시 실행하기
+		private void ibtnNextBlock_Click(object sender, EventArgs e)
+		{
+			undoCount--;
+			webViewblock.ExecuteScriptAsync($"redo()");
+
+			if (undoCount == 0)
+			{
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+		}
+
+		// JS 함수 호출 = 되돌리기
+		private void ibtnPreBlock_Click(object sender, EventArgs e)
+		{
+			if (undoCount <= 10)
+			{
+				undoCount++;
+				webViewblock.ExecuteScriptAsync($"undo()");
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = false;
+			}
+		}
+
+		// JS 함수 호출 - 블럭 모두 삭제
+		private void btnTrashBlock_Click(object sender, EventArgs e)
+		{
+			webViewblock.ExecuteScriptAsync($"clear()");
+		}
+
+        private void ibtnAiFeedback_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void pboxGraphe_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogModelPerformance())
+            {
+                dialog.ShowDialog();
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -17,16 +18,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             InitializeComponent();
 
-            // 부모 기준 중앙
-            this.StartPosition = FormStartPosition.CenterParent;
-            // 기존 타이틀바 삭제
-            this.FormBorderStyle = FormBorderStyle.None;
-            // 떴을 때 이 다이얼로그가 가장 위에 있고 다이얼로그를 끄기 전에는 다른 건 못 누르게!
-            this.TopMost = true;
-
-            // 배경을 투명하게 하기 위해서
-            this.BackColor = Color.Green;           // 투명 처리할 색
-            this.TransparencyKey = Color.Green;
+			DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
 			string clicked = "btnYolo";
 			clicked = "btnYolo";
@@ -179,8 +171,23 @@ namespace SAI.SAI.App.Forms.Dialogs
 				btnTutorial.BackgroundImage = Properties.Resources.btn_tutorial;
 			};
 
-			// btnTrain
-			btnTrain.BackColor = Color.Transparent;
+            // btnTutorial 클릭 이벤트
+            btnTutorial.Click += (s, e) =>
+            {
+                if (clicked == "btnYolo")
+                {
+                    presenter.clickTutorial();
+                    this.Close();
+                }
+                else
+                {
+                    var prepareDialog = new DialogPrepare();
+                    prepareDialog.ShowDialog(this);
+                }
+            };
+
+            // btnTrain
+            btnTrain.BackColor = Color.Transparent;
 			btnTrain.PressedColor = Color.Transparent;
 			btnTrain.CheckedState.FillColor = Color.Transparent;
 			btnTrain.DisabledState.FillColor = Color.Transparent;
@@ -196,7 +203,22 @@ namespace SAI.SAI.App.Forms.Dialogs
 			{
 				btnTrain.BackgroundImage = Properties.Resources.btn_train;
 			};
-		}
+
+            // btnTrain 클릭 이벤트
+            btnTrain.Click += (s, e) =>
+            {
+                if (clicked == "btnYolo")
+                {
+                    presenter.clickTrainAtModelSelect();
+                    this.Close();
+                }
+                else
+                {
+                    var prepareDialog = new DialogPrepare();
+                    prepareDialog.ShowDialog(this);
+                }
+            };
+        }
 
 		protected override void OnShown(EventArgs e)
 		{
@@ -204,18 +226,6 @@ namespace SAI.SAI.App.Forms.Dialogs
 
 			var view = this.Owner as IMainView;
 			presenter = new DialogLoadPagePresenter(view);
-		}
-
-		private void btnTrain_Click(object sender, EventArgs e)
-		{
-			presenter.clickTrainAtModelSelect();
-			this.Close();
-		}
-
-		private void btnTutorial_Click(object sender, EventArgs e)
-		{
-			presenter.clickTutorial();
-			this.Close();
 		}
 	}
 
