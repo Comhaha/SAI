@@ -150,30 +150,80 @@
 		}
 
 
+		function extractBlockTree(block) {
+			const blockInfo = { type: block.type };
+
+			// 만약 loadModelWithLayer라면 LAYERS 안쪽도 순회
+			if (block.type === "loadModelWithLayer") {
+				const layerBlock = block.getInputTargetBlock("LAYERS");
+				const children = [];
+				let currentLayer = layerBlock;
+				while (currentLayer) {
+					children.push({ type: currentLayer.type });
+					currentLayer = currentLayer.getNextBlock();
+				}
+				if (children.length > 0) {
+					blockInfo.children = children;
+				}
+			}
+
+			return blockInfo;
+		}
+
+		// 시작 블럭에 붙어있는 하위 블럭 타입 가져오기
+		function getConnectedBlockTypesFromStart() {
+			const allBlocks = workspace.getAllBlocks(false); // <-- shadow 블럭 제외
+			const startBlock = allBlocks.find(block => block.type === 'start');
+
+			if (!startBlock) return [];
+
+			const types = [];
+			let currentBlock = startBlock;
+
+			while (currentBlock) {
+				const blockInfo = extractBlockTree(currentBlock);
+				types.push(blockInfo);
+				currentBlock = currentBlock.getNextBlock();
+			}
+
+			return types;
+		}
+
+		// C#에게 블록 타입 배열 전송
+		function sendBlockTypesToCSharp() {
+			const types = getConnectedBlockTypesFromStart();
+			if (types.length > 0) {
+				window.chrome.webview.postMessage({ type: 'blockTypes', types: types });
+			}
+		}
+
 		// 블록 생성 시 Python 코드 생성
-        window.addEventListener('DOMContentLoaded', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			workspace.addChangeListener((event) => {
-                if (
-                    event.type === Blockly.Events.BLOCK_CREATE ||
-                    event.type === Blockly.Events.BLOCK_DELETE ||
-                    event.type === Blockly.Events.BLOCK_CHANGE ||
-                    event.type === Blockly.Events.BLOCK_MOVE
-                ) {
+				if (
+					event.type === Blockly.Events.BLOCK_CREATE ||
+					event.type === Blockly.Events.BLOCK_DELETE ||
+					event.type === Blockly.Events.BLOCK_CHANGE ||
+					event.type === Blockly.Events.BLOCK_MOVE
+				) {
 					const allBlocks = workspace.getAllBlocks(false);
 					for (const block of allBlocks) {
 						registerDoubleClickEventRecursively(block);
 					}
 
-                    // 안전하게 확인
-                    if (Blockly.Python && Blockly.Python.workspaceToCode) {
+					// 안전하게 확인
+					if (Blockly.Python && Blockly.Python.workspaceToCode) {
 						const code = Blockly.Python.workspaceToCode(workspace);
 						sendCode(code);
-                    } else {
-                        showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
-                    }
-                }
-            });
-        });
+					} else {
+						showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
+					}
+
+					// 블록 타입 배열 전송
+					sendBlockTypesToCSharp();
+				}
+			});
+		});
 
 		// 나만의 필드 타입(모델 선택 버튼)
 		class FieldFilePicker extends Blockly.Field {

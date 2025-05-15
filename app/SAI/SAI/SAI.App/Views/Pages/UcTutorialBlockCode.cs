@@ -13,6 +13,8 @@ using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Models;
 using System.Diagnostics;
+using static SAI.SAI.App.Models.BlocklyModel;
+using System.Collections.Generic;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -598,6 +600,11 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockDoubleClick":
 								string eventCode = root.GetProperty("code").GetString();
 								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
 						}
 					}
