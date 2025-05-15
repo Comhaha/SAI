@@ -36,20 +36,22 @@ public class TokenRotationScheduler {
             scheduledTask.cancel(false);
         }
 
-        PeriodicTrigger trigger = new PeriodicTrigger(ROTATION_PERIOD_MS, TimeUnit.MILLISECONDS);
-        trigger.setFixedRate(true);
-
-        scheduledTask = taskScheduler.schedule(() -> {
+        scheduledTask = taskScheduler.scheduleAtFixedRate(() -> {
             log.info("[Token] 3시간 주기 자동 재발급 시작");
-            tokenService.reloadToken();
-        }, trigger);
+            tokenService.scheduleReloadToken(); // 자동 재발급 메서드 호출
+        }, ROTATION_PERIOD_MS);
 
         log.info("[Token] 스케줄링 재시작 - 다음 토큰 재발급: 3시간 후");
     }
 
     @EventListener
     public void handleTokenReloaded(TokenReloadedEvent event) {
-        log.info("[Token] 수동 토큰 재발급 이벤트 수신 - 스케줄 초기화");
-        scheduleTokenRotation();
+        // 수동 재발급인 경우에만 스케줄 리셋
+        if (event.isManual()) {
+            log.info("[Token] 수동 토큰 재발급 이벤트 수신 - 스케줄 타이머 리셋");
+            scheduleTokenRotation();
+        } else {
+            log.info("[Token] 자동 토큰 재발급 완료");
+        }
     }
 }

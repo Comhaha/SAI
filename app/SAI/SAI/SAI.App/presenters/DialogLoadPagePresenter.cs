@@ -41,5 +41,5 @@ namespace SAI.SAI.App.Presenters
 		{
 			mainView.LoadPage(new UcSelectType(mainView));
 		}
-	}
+    }
 }

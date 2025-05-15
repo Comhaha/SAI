@@ -121,17 +121,23 @@
   <data name="p_blocklist_tutorial" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\p_blocklist_tutorial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_go_pratice_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_go_pratice_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_faster_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_faster_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="lbl_model_inference" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_model_inference.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="txtBlockImgPath" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\txtBlockImgPath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_light_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_light_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NoCircleArrowHoverR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoCircleArrowHoverR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_gopractice" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_gopractice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_question" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_question.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,6 +181,9 @@
   <data name="ic_home" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\ic_home.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="NoCircleArrowHoverL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="txtBlockLearning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\txtBlockLearning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -183,6 +192,12 @@
   </data>
   <data name="replay1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\replay1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_block1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_pre_block_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_pre_block_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnLoadModelWithLayer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnLoadModelWithLayer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,6 +229,12 @@
   <data name="ic_next" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\ic_next.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnResultGraph" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnResultGraph.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="전체튜토리얼가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\전체튜토리얼가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tbox_threshold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\tbox_threshold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -226,8 +247,8 @@
   <data name="btn_gotrain_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_gotrain_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_gopractice_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_gopractice_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_image_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_image_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_dialog_prepare" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_prepare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,6 +259,9 @@
   <data name="lbl_todo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_todo3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\7.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_infer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_infer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -247,8 +271,11 @@
   <data name="btn_faster" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_faster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_go_pratice_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_go_pratice_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_efficientdet_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_efficientdet_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_titlebar_delete_model" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_titlebar_delete_model.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lbl_run" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_run.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -259,6 +286,9 @@
   <data name="도구창_short" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\도구창_short.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_pose" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_pose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="라벨링가이드8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\라벨링가이드8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -267,6 +297,12 @@
   </data>
   <data name="lbl_todo1_finish" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_todo1_finish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_comfirm_go_tutorial_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_comfirm_go_tutorial_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnImgPath" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnImgPath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_next_select" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_next_select.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -289,11 +325,23 @@
   <data name="ic_pre" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\ic_pre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnVisualizeResult" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnVisualizeResult.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_train1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_titlebar_close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_titlebar_close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NoCircleArrowClickL" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoCircleArrowClickL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_info_17" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_info_17.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnResultGraphClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnResultGraphClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -306,6 +354,9 @@
   </data>
   <data name="bg_dialog_confirm_exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_confirm_exit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_titlebar_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_titlebar_setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lbl_todo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_todo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -334,6 +385,12 @@
   <data name="icon_check_good" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\icon_check_good.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bg_dialog_white_629.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_dialog_white_629.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_dialog_white_580.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_dialog_white_580.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnAccordionClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnAccordionClosed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -358,11 +415,11 @@
   <data name="_0단계_라벨링" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\0단계 라벨링.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_close_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="txtBlockResultCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\txtBlockResultCheck.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_gotutorial_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_gotutorial_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\4.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -409,6 +466,9 @@
   <data name="annotation_모달" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\annotation 모달.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnLoadModelClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnLoadModelClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="라벨링가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\라벨링가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -417,6 +477,12 @@
   </data>
   <data name="lbl_todo2_finish" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_todo2_finish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_pre_guide_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_pre_guide_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lbl_todo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\lbl_todo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_selectinferimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_selectinferimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -448,8 +514,17 @@
   <data name="btn_plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_audio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_audio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnPipInstall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnPipInstall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_red_ok_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_red_ok_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_pre_block1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_pre_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lbl_start" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_start.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -459,6 +534,12 @@
   </data>
   <data name="bg_titlebar_home_from_train" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_titlebar_home_from_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_dialog_white_649.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_dialog_white_649.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ph_polygon_thin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\ph_polygon-thin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_dialog_white_629.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white_629.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -478,6 +559,12 @@
   <data name="strawberry_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\strawberry-1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="p_todolist_step4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\p_todolist_step4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="check_box_outline_blank" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\check_box_outline_blank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="라벨링가이드1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\라벨링가이드1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -487,6 +574,9 @@
   <data name="btn_learnmodel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_learnmodel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_run_model" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_run_model.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NoCircleArrowL" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoCircleArrowL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -495,6 +585,9 @@
   </data>
   <data name="bg_blue_btn_close_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_blue_btn_close_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_trash_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_trash_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ph_polygon_thin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\ph_polygon-thin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -541,11 +634,17 @@
   <data name="bg_yellow_titlebar_labeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_yellow_titlebar_labeling.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pbox_setting1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\pbox_setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_tutorial_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_tutorial_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnImgPath" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnImgPath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="level_6_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\level 6-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_titlebar_delete_model" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_titlebar_delete_model.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -576,6 +675,12 @@
   </data>
   <data name="btn_copy_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_copy_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_titlebar_prepare" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_titlebar_prepare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_blue_ok" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_blue_ok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -613,14 +718,23 @@
   <data name="p_side_infer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\p_side_infer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="p_side_infer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\p_side_infer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_block2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="selectModel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\selectModel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnBlockStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnBlockStart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bg_dialog_white_600.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white_600.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnVisualizeResult" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnVisualizeResult.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_gotutorial" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_gotutorial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="toolDelClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toolDelClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -637,6 +751,15 @@
   <data name="bg_dialog_comfirm_go_train" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_comfirm_go_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_check_good" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\icon_check_good.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_block_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_block_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_dark_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_dark_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="level_7_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level 7-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -645,6 +768,9 @@
   </data>
   <data name="btn_learnmodel_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_learnmodel_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowHoverR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_efficientdet_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_efficientdet_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -676,8 +802,8 @@
   <data name="btn_yolo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_yolo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg_titlebar_prepare" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\bg_titlebar_prepare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_done" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_done.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NoCircleArrowR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NoCircleArrowR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -709,6 +835,9 @@
   <data name="btn_pre_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_pre_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_question_memo_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_question_memo_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="toastPopupS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toastPopupS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -717,6 +846,18 @@
   </data>
   <data name="txtBlockStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\txtBlockStart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolHandHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolHandHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_white_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_white_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_guide_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_guide_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="확대_축소" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\확대 축소.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_save_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_save_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -739,8 +880,8 @@
   <data name="btn_goLabeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_goNotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg_dialog_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\bg_dialog_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_yellow_ok_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_yellow_ok_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="p_todolist" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\p_todolist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -754,14 +895,17 @@
   <data name="bg_red_titlebar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_red_titlebar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="lbl_todo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\lbl_todo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_blue_ok" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_blue_ok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_btn_close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_btn_close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="toolDelHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toolDelHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolPolClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolPolClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_dialog_white_580.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white_580.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -775,14 +919,26 @@
   <data name="내부_박스" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\내부 박스.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="내부_박스" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\내부 박스.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_pose_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_pose_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="back_hand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\back_hand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_25_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_25_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="전체튜토리얼가이드3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\전체튜토리얼가이드3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_close_infer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_close_infer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_gray_titlebar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_gray_titlebar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="txtBlockLoadData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\txtBlockLoadData.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -808,8 +964,14 @@
   <data name="전체튜토리얼가이드2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\전체튜토리얼가이드2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\7.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="NoCircleArrowL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_yolo_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_yolo_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_titlebar_complete_labeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_titlebar_complete_labeling.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="p_todolist_step4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\p_todolist_step4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -817,11 +979,20 @@
   <data name="도구창２" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\도구창２.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnResultGraphClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btnResultGraphClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_efficientdet_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_efficientdet_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="level_9_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\level 9-9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_guide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_guide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="확대_축소" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\확대 축소.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -853,8 +1024,8 @@
   <data name="img_yolo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\img_yolo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg_dialog_white_649.282" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\bg_dialog_white_649.282.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="bg_dialog_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_dialog_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="라벨링가이드5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\라벨링가이드5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -867,6 +1038,12 @@
   </data>
   <data name="bg_dialog_white_580.246" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white_580.246.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\4.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pSelectTypeTitle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\pSelectTypeTitle1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnResultGraph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnResultGraph.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -886,6 +1063,15 @@
   <data name="btn_goLabelingClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_goLabelingClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_go_pratice" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_go_pratice.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnClose3030" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnClose3030.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolUndoClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolUndoClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BtnClose3030" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BtnClose3030.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -895,8 +1081,8 @@
   <data name="icon_warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\icon_warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_train1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_info_12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_info_12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnModelInferenceClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnModelInferenceClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -916,8 +1102,11 @@
   <data name="btn_cancel_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_cancel_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="back_hand" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\back_hand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_pre_guide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_pre_guide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_efficientdet_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_efficientdet_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="selectModel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\selectModel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -949,8 +1138,8 @@
   <data name="btn_close_infer_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_close_infer_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btnPipInstall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btnPipInstall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="NoCircleArrowR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnVisualizeResultClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnVisualizeResultClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -985,6 +1174,12 @@
   <data name="btn_titlebar_minscreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_titlebar_minscreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="toolLabelClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolLabelClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_white_cancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_white_cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnLoadModelClicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnLoadModelClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1000,11 +1195,17 @@
   <data name="apple_3313209_1280" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apple-3313209_1280.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_done" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\SAI.App\Resources\Images\btn_done.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolVClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolVClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_titlebar_modelPerformance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\bg_titlebar_modelPerformance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apple-2788616_1280.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_select" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_select.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnModelInferenceClicked1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnModelInferenceClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1014,6 +1215,15 @@
   </data>
   <data name="bg_dialog_quit_train" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_quit_train.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lbl_todo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\lbl_todo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_next_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_next_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_topbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\p_topbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bg_dialog_white_selectmodel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white_selectmodel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1032,6 +1242,12 @@
   </data>
   <data name="btn_memo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btn_memo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_guide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_guide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_guide_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\SAI.App\Resources\Images\btn_close_guide_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lbl_report" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\lbl_report.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
