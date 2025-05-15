@@ -673,6 +673,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_white_titlebar_notion1 {
+            get {
+                object obj = ResourceManager.GetObject("bg_white_titlebar_notion1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_yellow_btn_close {
             get {
                 object obj = ResourceManager.GetObject("bg_yellow_btn_close", resourceCulture);
@@ -736,6 +746,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_audio_hover {
             get {
                 object obj = ResourceManager.GetObject("btn_audio_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_auth {
+            get {
+                object obj = ResourceManager.GetObject("btn_auth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_auth_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_auth_clicked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
