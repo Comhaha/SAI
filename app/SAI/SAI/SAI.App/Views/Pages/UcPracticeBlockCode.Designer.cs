@@ -54,6 +54,7 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
@@ -64,7 +65,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnInfoGraph = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnInfoThreshold = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pInferAccuracy = new Guna.UI2.WinForms.Guna2Panel();
-            this.ibtnSelectInferImage = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
             this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.lblInferGraph = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -73,6 +74,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
@@ -357,6 +359,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Controls.Add(this.pboxGraphe);
             this.pSideInfer.Controls.Add(this.pThreshold);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
@@ -370,6 +373,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblThreshold);
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // pFake
+            // 
+            this.pFake.BorderColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pFake, "pFake");
+            this.pFake.Name = "pFake";
             // 
             // pboxGraphe
             // 
@@ -479,22 +488,21 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             resources.ApplyResources(this.pInferAccuracy, "pInferAccuracy");
-            this.pInferAccuracy.Controls.Add(this.ibtnSelectInferImage);
+            this.pInferAccuracy.Controls.Add(this.btnSelectInferImage);
             this.pInferAccuracy.Controls.Add(this.pboxInferAccuracy);
             this.pInferAccuracy.Name = "pInferAccuracy";
             // 
-            // ibtnSelectInferImage
+            // btnSelectInferImage
             // 
-            this.ibtnSelectInferImage.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnSelectInferImage.HoverState.Image = global::SAI.Properties.Resources.btn_selectinferimage_hover;
-            this.ibtnSelectInferImage.HoverState.ImageSize = new System.Drawing.Size(144, 36);
-            this.ibtnSelectInferImage.Image = global::SAI.Properties.Resources.btn_selectinferimage;
-            this.ibtnSelectInferImage.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnSelectInferImage.ImageRotate = 0F;
-            this.ibtnSelectInferImage.ImageSize = new System.Drawing.Size(144, 36);
-            resources.ApplyResources(this.ibtnSelectInferImage, "ibtnSelectInferImage");
-            this.ibtnSelectInferImage.Name = "ibtnSelectInferImage";
-            this.ibtnSelectInferImage.PressedState.ImageSize = new System.Drawing.Size(144, 36);
+            this.btnSelectInferImage.BackgroundImage = global::SAI.Properties.Resources.btn_selectinferimage;
+            resources.ApplyResources(this.btnSelectInferImage, "btnSelectInferImage");
+            this.btnSelectInferImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectInferImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectInferImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSelectInferImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSelectInferImage.FillColor = System.Drawing.Color.Transparent;
+            this.btnSelectInferImage.ForeColor = System.Drawing.Color.White;
+            this.btnSelectInferImage.Name = "btnSelectInferImage";
             // 
             // pboxInferAccuracy
             // 
@@ -578,12 +586,25 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
             // 
+            // btnCopy
+            // 
+            this.btnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
+            this.btnCopy.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCopy.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCopy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCopy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCopy.FillColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.btnCopy, "btnCopy");
+            this.btnCopy.ForeColor = System.Drawing.Color.White;
+            this.btnCopy.Name = "btnCopy";
+            // 
             // UcPracticeBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.pMemo);
             this.Controls.Add(this.pSideInfer);
             this.Controls.Add(this.lblTitle);
@@ -645,7 +666,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnAiFeedback;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnGoNotion;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnDownloadAIModel;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnSelectInferImage;
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
         private Guna.UI2.WinForms.Guna2TextBox tboxThreshold;
@@ -657,5 +677,8 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnPreBlock;
         private Guna.UI2.WinForms.Guna2Button btnCloseMemo;
         private Guna.UI2.WinForms.Guna2Button btnQuestionMemo;
+        private Guna.UI2.WinForms.Guna2Panel pFake;
+        private Guna.UI2.WinForms.Guna2Button btnSelectInferImage;
+        private Guna.UI2.WinForms.Guna2Button btnCopy;
     }
 }

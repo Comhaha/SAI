@@ -21,6 +21,8 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             ButtonUtils.SetupButton(btnCancel, "btn_white_cancel_clicked", "btn_white_cancel");
             btnCancel.Click += (s, e) => { this.Close(); };
+
+            ButtonUtils.SetupButton(btnOk, "btn_yellow_ok_clicked", "btn_yellow_ok");
         }
 
         protected override void OnShown(EventArgs e)

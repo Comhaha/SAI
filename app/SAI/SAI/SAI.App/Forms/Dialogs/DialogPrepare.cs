@@ -16,7 +16,9 @@ namespace SAI.SAI.App.Forms.Dialogs
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
             ButtonUtils.SetupButton(btnClose, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
+            btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(btnOk, "btn_yellow_ok_clicked", "btn_yellow_ok");
+            btnOk.Click += (s, e) => { this.Close(); };
         }
 
         protected override void OnShown(EventArgs e)

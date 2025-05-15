@@ -1033,26 +1033,6 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_gopractice {
-            get {
-                object obj = ResourceManager.GetObject("btn_gopractice", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_gopractice_hover {
-            get {
-                object obj = ResourceManager.GetObject("btn_gopractice_hover", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
         internal static System.Drawing.Bitmap btn_gotrain {
             get {
                 object obj = ResourceManager.GetObject("btn_gotrain", resourceCulture);
@@ -1066,26 +1046,6 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_gotrain_clicked {
             get {
                 object obj = ResourceManager.GetObject("btn_gotrain_clicked", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_gotutorial {
-            get {
-                object obj = ResourceManager.GetObject("btn_gotutorial", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_gotutorial_hover {
-            get {
-                object obj = ResourceManager.GetObject("btn_gotutorial_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

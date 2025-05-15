@@ -583,10 +583,6 @@
     <None Include="SAI.App\Resources\Images\btn_goNotion_hover.png" />
     <None Include="SAI.App\Resources\Images\btn_goNotion.png" />
     <None Include="SAI.App\Resources\Images\btn_aifeedback.png" />
-    <None Include="SAI.App\Resources\Images\btn_gopractice_hover.png" />
-    <None Include="SAI.App\Resources\Images\btn_gopractice.png" />
-    <None Include="SAI.App\Resources\Images\btn_gotutorial_hover.png" />
-    <None Include="SAI.App\Resources\Images\btn_gotutorial.png" />
     <None Include="SAI.App\Resources\Images\p_memo.png" />
     <None Include="SAI.App\Resources\Images\btn_info.png" />
     <None Include="SAI.App\Resources\Images\img_bounding_example.png" />

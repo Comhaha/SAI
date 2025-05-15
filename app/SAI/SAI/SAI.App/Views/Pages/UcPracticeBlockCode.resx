@@ -298,7 +298,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="ibtnCloseInfer.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -854,7 +854,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnMemo.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ibtnInfer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -878,7 +878,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnInfer.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 18</value>
@@ -902,7 +902,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnHome.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -944,13 +944,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="pSideInfer.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="pSideInfer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="&gt;&gt;pFake.Name" xml:space="preserve">
+    <value>pFake</value>
+  </data>
+  <data name="&gt;&gt;pFake.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pFake.Parent" xml:space="preserve">
+    <value>pSideInfer</value>
+  </data>
+  <data name="&gt;&gt;pFake.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;pboxGraphe.Name" xml:space="preserve">
     <value>pboxGraphe</value>
@@ -962,7 +974,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pboxGraphe.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;pThreshold.Name" xml:space="preserve">
     <value>pThreshold</value>
@@ -974,7 +986,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pThreshold.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;tbarThreshold.Name" xml:space="preserve">
     <value>tbarThreshold</value>
@@ -986,7 +998,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;tbarThreshold.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;ibtnDownloadAIModel.Name" xml:space="preserve">
     <value>ibtnDownloadAIModel</value>
@@ -998,7 +1010,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnDownloadAIModel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;ibtnGoNotion.Name" xml:space="preserve">
     <value>ibtnGoNotion</value>
@@ -1010,7 +1022,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnGoNotion.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;ibtnAiFeedback.Name" xml:space="preserve">
     <value>ibtnAiFeedback</value>
@@ -1022,7 +1034,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnAiFeedback.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;ibtnInfoGraph.Name" xml:space="preserve">
     <value>ibtnInfoGraph</value>
@@ -1034,7 +1046,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnInfoGraph.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;ibtnInfoThreshold.Name" xml:space="preserve">
     <value>ibtnInfoThreshold</value>
@@ -1046,7 +1058,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnInfoThreshold.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;pInferAccuracy.Name" xml:space="preserve">
     <value>pInferAccuracy</value>
@@ -1058,7 +1070,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pInferAccuracy.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;lblInferGraph.Name" xml:space="preserve">
     <value>lblInferGraph</value>
@@ -1070,7 +1082,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblInferGraph.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;lblThreshold.Name" xml:space="preserve">
     <value>lblThreshold</value>
@@ -1082,7 +1094,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblThreshold.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;lblInfer.Name" xml:space="preserve">
     <value>lblInfer</value>
@@ -1094,7 +1106,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblInfer.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="pSideInfer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -1118,7 +1130,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 910</value>
+  </data>
+  <data name="pFake.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 33</value>
+  </data>
+  <data name="pFake.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;pFake.Name" xml:space="preserve">
+    <value>pFake</value>
+  </data>
+  <data name="&gt;&gt;pFake.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pFake.Parent" xml:space="preserve">
+    <value>pSideInfer</value>
+  </data>
+  <data name="&gt;&gt;pFake.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="pboxGraphe.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 421</value>
@@ -1139,7 +1172,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pboxGraphe.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="pThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1175,7 +1208,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pThreshold.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="tboxThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1226,7 +1259,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;tbarThreshold.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="ibtnDownloadAIModel.Location" type="System.Drawing.Point, System.Drawing">
     <value>208, 852</value>
@@ -1250,7 +1283,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnDownloadAIModel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="ibtnGoNotion.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 852</value>
@@ -1274,7 +1307,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnGoNotion.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ibtnAiFeedback.Location" type="System.Drawing.Point, System.Drawing">
     <value>26, 732</value>
@@ -1295,7 +1328,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnAiFeedback.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="ibtnInfoGraph.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 377</value>
@@ -1316,7 +1349,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnInfoGraph.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="ibtnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>120, 88</value>
@@ -1337,21 +1370,21 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnInfoThreshold.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="pInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Name" xml:space="preserve">
-    <value>ibtnSelectInferImage</value>
+  <data name="&gt;&gt;btnSelectInferImage.Name" xml:space="preserve">
+    <value>btnSelectInferImage</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  <data name="&gt;&gt;btnSelectInferImage.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnSelectInferImage.Parent" xml:space="preserve">
     <value>pInferAccuracy</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnSelectInferImage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;pboxInferAccuracy.Name" xml:space="preserve">
@@ -1385,27 +1418,33 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pInferAccuracy.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
-  <data name="ibtnSelectInferImage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnSelectInferImage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnSelectInferImage.Location" type="System.Drawing.Point, System.Drawing">
     <value>92, 61</value>
   </data>
-  <data name="ibtnSelectInferImage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="btnSelectInferImage.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 36</value>
   </data>
-  <data name="ibtnSelectInferImage.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="btnSelectInferImage.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Name" xml:space="preserve">
-    <value>ibtnSelectInferImage</value>
+  <data name="&gt;&gt;btnSelectInferImage.Name" xml:space="preserve">
+    <value>btnSelectInferImage</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  <data name="&gt;&gt;btnSelectInferImage.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnSelectInferImage.Parent" xml:space="preserve">
     <value>pInferAccuracy</value>
   </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnSelectInferImage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="pboxInferAccuracy.Location" type="System.Drawing.Point, System.Drawing">
@@ -1454,7 +1493,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblInferGraph.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="lblThreshold.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR Medium, 9pt, style=Bold</value>
@@ -1481,7 +1520,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblThreshold.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="lblInfer.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
@@ -1508,7 +1547,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;lblInfer.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1568,7 +1607,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="btnQuestionMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1647,6 +1686,30 @@
   </data>
   <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="btnCopy.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>785, 28</value>
+  </data>
+  <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 29</value>
+  </data>
+  <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Name" xml:space="preserve">
+    <value>btnCopy</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

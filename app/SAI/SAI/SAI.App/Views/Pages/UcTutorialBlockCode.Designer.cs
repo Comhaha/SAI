@@ -76,6 +76,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
@@ -86,7 +87,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnInfoGraph = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnInfoThreshold = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pInferAccuracy = new Guna.UI2.WinForms.Guna2Panel();
-            this.ibtnSelectInferImage = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.lblInferGraph = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -95,6 +95,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
             this.pMain.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.pBlockList.SuspendLayout();
@@ -594,6 +595,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Controls.Add(this.pboxGraphe);
             this.pSideInfer.Controls.Add(this.pThreshold);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
@@ -607,6 +609,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblThreshold);
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // pFake
+            // 
+            this.pFake.BorderColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pFake, "pFake");
+            this.pFake.Name = "pFake";
             // 
             // pboxGraphe
             // 
@@ -717,22 +725,9 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             resources.ApplyResources(this.pInferAccuracy, "pInferAccuracy");
-            this.pInferAccuracy.Controls.Add(this.ibtnSelectInferImage);
+            this.pInferAccuracy.Controls.Add(this.btnSelectInferImage);
             this.pInferAccuracy.Controls.Add(this.pboxInferAccuracy);
             this.pInferAccuracy.Name = "pInferAccuracy";
-            // 
-            // ibtnSelectInferImage
-            // 
-            this.ibtnSelectInferImage.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnSelectInferImage.HoverState.Image = global::SAI.Properties.Resources.btn_selectinferimage_hover;
-            this.ibtnSelectInferImage.HoverState.ImageSize = new System.Drawing.Size(144, 36);
-            this.ibtnSelectInferImage.Image = global::SAI.Properties.Resources.btn_selectinferimage;
-            this.ibtnSelectInferImage.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnSelectInferImage.ImageRotate = 0F;
-            this.ibtnSelectInferImage.ImageSize = new System.Drawing.Size(144, 36);
-            resources.ApplyResources(this.ibtnSelectInferImage, "ibtnSelectInferImage");
-            this.ibtnSelectInferImage.Name = "ibtnSelectInferImage";
-            this.ibtnSelectInferImage.PressedState.ImageSize = new System.Drawing.Size(144, 36);
             // 
             // pboxInferAccuracy
             // 
@@ -817,6 +812,18 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
+            // 
+            // btnSelectInferImage
+            // 
+            this.btnSelectInferImage.BackgroundImage = global::SAI.Properties.Resources.btn_selectinferimage;
+            resources.ApplyResources(this.btnSelectInferImage, "btnSelectInferImage");
+            this.btnSelectInferImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectInferImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSelectInferImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSelectInferImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSelectInferImage.FillColor = System.Drawing.Color.Transparent;
+            this.btnSelectInferImage.ForeColor = System.Drawing.Color.White;
+            this.btnSelectInferImage.Name = "btnSelectInferImage";
             // 
             // UcTutorialBlockCode
             // 
@@ -904,7 +911,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoGraph;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnInfoThreshold;
         private Guna.UI2.WinForms.Guna2Panel pInferAccuracy;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnSelectInferImage;
         private Guna.UI2.WinForms.Guna2PictureBox pboxInferAccuracy;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblInferGraph;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblThreshold;
@@ -927,5 +933,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnPreBlock;
         private Guna.UI2.WinForms.Guna2Button btnQuestionMemo;
         private Guna.UI2.WinForms.Guna2Button btnCloseMemo;
+        private Guna.UI2.WinForms.Guna2Panel pFake;
+        private Guna.UI2.WinForms.Guna2Button btnSelectInferImage;
     }
 }

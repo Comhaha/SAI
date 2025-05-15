@@ -73,6 +73,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
+            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
 
         }
         private void UcPraticeBlockCode_Load(object sender, EventArgs e)
