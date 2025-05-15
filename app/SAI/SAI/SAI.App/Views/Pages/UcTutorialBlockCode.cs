@@ -15,6 +15,8 @@ using SAI.SAI.App.Models;
 using System.Diagnostics;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -42,6 +44,8 @@ namespace SAI.SAI.App.Views.Pages
 
 
 		private int undoCount = 0;
+		private ProgressDialog _progressDialog;
+
 		public UcTutorialBlockCode(IMainView view)
 		{
 			InitializeComponent();
@@ -496,11 +500,91 @@ namespace SAI.SAI.App.Views.Pages
 			ucShowDialogPresenter.clickGoTrain();
 		}
 
-		private void btnRunModel_Click(object sender, EventArgs e)
-		{
-			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
-			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-		}
+        // 학습 실행 버튼 클릭시
+        private async void btnRunModel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _progressDialog = new ProgressDialog();
+                _progressDialog.TopMost = true;
+                _progressDialog.Show();
+
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = "tutorial_train_script.py",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8
+                };
+
+                var process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
+
+                process.OutputDataReceived += (s, args) =>
+                {
+                    if (!string.IsNullOrEmpty(args.Data))
+                        UpdateProgress(args.Data);
+                };
+
+                process.ErrorDataReceived += (s, args) =>
+                {
+                    if (!string.IsNullOrEmpty(args.Data))
+                        UpdateProgress(args.Data);
+                };
+
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                // 🎯 프로세스 종료를 기다림
+                await Task.Run(() => process.WaitForExit());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"스크립트 실행 중 오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 🎯 Python 프로세스가 끝난 후 다이얼로그 닫기
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                {
+                    _progressDialog.Invoke(new Action(() =>
+                    {
+                        _progressDialog.Close();
+                        _progressDialog = null;
+                    }));
+                }
+            }
+        }
+
+
+
+
+        private void UpdateProgress(string output)
+        {
+            if (string.IsNullOrEmpty(output)) return;
+
+            if (output.StartsWith("PROGRESS:"))
+            {
+                var parts = output.Substring(9).Split(new[] { ':' }, 2);
+                if (parts.Length == 2)
+                {
+                    if (double.TryParse(parts[0], out double progress))
+                    {
+                        string message = parts[1];
+                        _progressDialog?.UpdateProgress(progress, message);
+
+                        // ❌ 여기선 닫지 말고, 프로세스 완전히 끝난 후 닫자
+                    }
+                }
+            }
+        }
+
+
+
         private void ibtnCloseInfer_Click(object sender, EventArgs e)
         {
             HidepSideInfer();

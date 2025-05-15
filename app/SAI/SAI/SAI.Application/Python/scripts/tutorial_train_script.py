@@ -699,6 +699,11 @@ def main():
     show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
     show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
 
+    print("PROGRESS:100:학습 완료", flush=True)
+
+    # 🚨 종료 디버깅용
+    input("❗Press any key to exit...")
+
     # 최신 결과 디렉토리에서 모델 경로 찾기
     results_dir = find_latest_results_dir()
     model_path = os.path.join(results_dir, "weights", "best.pt")
