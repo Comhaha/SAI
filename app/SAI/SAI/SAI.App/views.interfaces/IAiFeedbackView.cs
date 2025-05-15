@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
-    public interface IAiFeedbackView
+    public interface IAiFeedbackView : IAiBuzyAwareView
     {
         string CodeText { get; }
         string LogText { get; }
@@ -15,6 +15,5 @@ namespace SAI.SAI.App.Views.Interfaces
         event EventHandler SendRequested;
 
         void ShowSendResult(bool isSuccess, string feedbackId, string feedback);
-        void SetBusy(bool busy);
     }
 }
