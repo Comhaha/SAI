@@ -13,6 +13,8 @@ using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Models;
 using System.Diagnostics;
+using static SAI.SAI.App.Models.BlocklyModel;
+using System.Collections.Generic;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -21,6 +23,9 @@ namespace SAI.SAI.App.Views.Pages
 		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
+		
+		private BlocklyModel blocklyModel;
+
 		private readonly IMainView mainView;
 
 		public event EventHandler HomeButtonClicked;
@@ -43,8 +48,10 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
-                                                 // 메모 텍스트 변경 이벤트 핸들러 연결
-            tboxMemo.TextChanged += tboxMemo_TextChanged;
+
+			blocklyModel = BlocklyModel.Instance;
+
+			tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
@@ -52,7 +59,9 @@ namespace SAI.SAI.App.Views.Pages
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
 			undoCount = 0;
+
 			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+
 
 			ibtnHome.BackColor = Color.Transparent;
 			ibtnDone.BackColor = Color.Transparent;
@@ -90,11 +99,12 @@ namespace SAI.SAI.App.Views.Pages
             // 블록 버튼 클릭 이벤트 처리
             btnBlockStart.Click += (s, e) =>
 			{
-				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+                Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
+                AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
 			};
 			btnPip.Click += (s, e) =>
-			{
+			{Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: pipInstall");
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 				setBtnLoadModel();
 			};
@@ -132,24 +142,23 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("visualizeResult"));
 				setButtonInVisible(btnVisualizeResult);
-				labelBlockTitle.Text = "실행하기";
-				labelBlockContent.Text = "실행 버튼을 클릭하여\r\n모델을 학습시켜보세요.\r\n";
 				pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
+				pTxtDescription.BackgroundImage = Properties.Resources.lbl_run;
 			};
 
             var codeContainer = new UcTabCodeContainer();
             codeContainer.Dock = DockStyle.Fill;
             guna2Panel1.Controls.Add(codeContainer);
 
+            // 기존 CodePresenter 관련 코드가 있던 부분을 대체합니다
             // CodePresenter 생성 및 BlocklyPresenter에 설정
             try
             {
                 var mainEditor = codeContainer.GetMainCodeEditor();
                 if (mainEditor != null)
                 {
-                    var codePresenter = new CodePresenter(mainEditor);
-                    blocklyPresenter.SetCodePresenter(codePresenter);
-                    Debug.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                    blocklyPresenter.SetCodeView(mainEditor);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: ICodeView 설정 완료");
                 }
                 else
                 {
@@ -158,9 +167,10 @@ namespace SAI.SAI.App.Views.Pages
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
             }
         }
+        
 
         private void setButtonVisible(Guna2Button button)
 		{
@@ -187,6 +197,8 @@ namespace SAI.SAI.App.Views.Pages
 		private void setBtnBlockStart()
 		{
 			setButtonVisible(btnBlockStart);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_start;
 			// 시작 블럭
 			btnBlockStart.BackColor = Color.Transparent;
 			btnBlockStart.PressedColor = Color.Transparent;
@@ -204,15 +216,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnBlockStart.BackgroundImage = Properties.Resources.btnBlockStart;
 			};
-
-			labelBlockTitle.Text = "시작";
-			labelBlockContent.Text = "실행 버튼을 누르면 시작 블록에\r\n붙어있는 블록이 실행됩니다.\r\n";
 		}
 
 		private void setBtnPip()
 		{
 			setButtonVisible(btnPip);
 			setButtonInVisible(btnBlockStart);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_pip_install;
 			// 패키지 설치 블럭			
 			btnPip.BackColor = Color.Transparent;
 			btnPip.PressedColor = Color.Transparent;
@@ -230,15 +241,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnPip.BackgroundImage = Properties.Resources.btnPipInstall;
 			};
-
-			labelBlockTitle.Text = "패키지 설치하기";
-			labelBlockContent.Text = "관련 패키지(ultralytics)를 설치\r\n합니다.\r\n";
 		}
 
 		private void setBtnLoadModel()
 		{
 			setButtonVisible(btnLoadModel);
 			setButtonInVisible(btnPip);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_load_model;
 			// 패키지 설치 블럭			
 			btnLoadModel.BackColor = Color.Transparent;
 			btnLoadModel.PressedColor = Color.Transparent;
@@ -256,15 +266,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnLoadModel.BackgroundImage = Properties.Resources.btnLoadModel;
 			};
-
-			labelBlockTitle.Text = "모델 불러오기";
-			labelBlockContent.Text = "YOLO 모델의 나노 버전을 불러\r\n오는 블록입니다.\r\n";
 		}
 
 		private void setBtnLoadDataset()
 		{
 			setButtonVisible(btnLoadDataset);
 			setButtonInVisible(btnLoadModel);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_load_dataset;
 			// 패키지 설치 블럭			
 			btnLoadDataset.BackColor = Color.Transparent;
 			btnLoadDataset.PressedColor = Color.Transparent;
@@ -282,15 +291,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnLoadDataset.BackgroundImage = Properties.Resources.btnLoadDataset;
 			};
-
-			labelBlockTitle.Text = "데이터셋 불러오기";
-			labelBlockContent.Text = "데이터셋(딸기와 바나나)을 불러\r\n옵니다.\r\n";
 		}
 
 		private void setBtnMachineLearning()
 		{
 			setButtonVisible(btnMachineLearning);
 			setButtonInVisible(btnLoadDataset);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_machine_learning;
 			// 패키지 설치 블럭			
 			btnMachineLearning.BackColor = Color.Transparent;
 			btnMachineLearning.PressedColor = Color.Transparent;
@@ -308,15 +316,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnMachineLearning.BackgroundImage = Properties.Resources.btnMachineLearning;
 			};
-
-			labelBlockTitle.Text = "모델 학습하기";
-			labelBlockContent.Text = "모델 학습을 진행합니다. epoch,\r\nimgsz가 학습에 영향을 줍니다.\r\n";
 		}
 
 		private void setBtnResultGraph()
 		{
 			setButtonVisible(btnResultGraph);
 			setButtonInVisible(btnMachineLearning);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_result_graph;
 			// 패키지 설치 블럭			
 			btnResultGraph.BackColor = Color.Transparent;
 			btnResultGraph.PressedColor = Color.Transparent;
@@ -334,15 +341,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnResultGraph.BackgroundImage = Properties.Resources.btnResultGraph;
 			};
-
-			labelBlockTitle.Text = "학습 결과 그래프 출력하기";
-			labelBlockContent.Text = "학습 결과 그래프를 출력합니다.\r\n모델 학습률을 볼 수 있습니다.\r\n";
 		}
 
 		private void setBtnImgPath()
 		{
 			setButtonVisible(btnImgPath);
 			setButtonInVisible(btnResultGraph);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_img_path;
 			// 패키지 설치 블럭			
 			btnImgPath.BackColor = Color.Transparent;
 			btnImgPath.PressedColor = Color.Transparent;
@@ -360,15 +366,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnImgPath.BackgroundImage = Properties.Resources.btnImgPath;
 			};
-
-			labelBlockTitle.Text = "이미지 불러오기";
-			labelBlockContent.Text = "추론을 위한 이미지 1장을\r\n선택하여 불러옵니다.\r\n";
 		}
 
 		private void setBtnModelInference()
 		{
 			setButtonVisible(btnModelInference);
 			setButtonInVisible(btnImgPath);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_model_inference;
 			// 패키지 설치 블럭			
 			btnModelInference.BackColor = Color.Transparent;
 			btnModelInference.PressedColor = Color.Transparent;
@@ -386,15 +391,14 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnModelInference.BackgroundImage = Properties.Resources.btnModelInference;
 			};
-
-			labelBlockTitle.Text = "추론 실행하기\r\n";
-			labelBlockContent.Text = "불러온 이미지로 학습한 모델의\r\n추론을 실행합니다.\r\n";
 		}
 
 		private void setBtnVisualizeResult()
 		{
 			setButtonVisible(btnVisualizeResult);
 			setButtonInVisible(btnModelInference);
+
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_visualize_result;
 			// 패키지 설치 블럭			
 			btnVisualizeResult.BackColor = Color.Transparent;
 			btnVisualizeResult.PressedColor = Color.Transparent;
@@ -412,9 +416,6 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				btnVisualizeResult.BackgroundImage = Properties.Resources.btnVisualizeResult;
 			};
-
-			labelBlockTitle.Text = "추론 결과 시각화하기";
-			labelBlockContent.Text = "추론 결과를 시각화합니다. 모델\r\n이 판단한 결과를 볼 수 있습니다.\r\n";
 		}
 
 		private void UcTutorialBlockCode_Load(object sender, EventArgs e)
@@ -479,10 +480,8 @@ namespace SAI.SAI.App.Views.Pages
 
 		private void btnRunModel_Click(object sender, EventArgs e)
 		{
-
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-			labelBlockTitle.Text = "추론 결과 확인하기";
-			labelBlockContent.Text = "추론탭에서 결과를 확인하세요.\r\n성능 분석 보고서도 받아보세요.\r\n";
 		}
         private void ibtnCloseInfer_Click(object sender, EventArgs e)
         {
@@ -553,6 +552,8 @@ namespace SAI.SAI.App.Views.Pages
 										string escapedFilePath = JsonSerializer.Serialize(filePath);
 										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
 
+										blocklyModel.imgPath = filePath;
+
 										string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
@@ -578,6 +579,11 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockDoubleClick":
 								string eventCode = root.GetProperty("code").GetString();
 								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
 						}
 					}
@@ -617,7 +623,6 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			undoCount--;
 			webViewblock.ExecuteScriptAsync($"redo()");
-
 			if(undoCount == 0)
 			{
 				btnNextBlock.Visible = false;

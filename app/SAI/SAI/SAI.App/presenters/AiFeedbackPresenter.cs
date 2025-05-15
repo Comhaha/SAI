@@ -26,7 +26,7 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                _view.SetBusy(true);
+                _view.SetBusy(BusyContext.Feedback, true);
 
                 var dto = new AiFeedbackRequestDto
                 {
@@ -36,8 +36,16 @@ namespace SAI.SAI.App.Presenters
                 };
 
                 var result = await _service.SendAsync(dto);
-                NotionModel.Instance.RedirectUrl = result.result.redirectUrl;
-                _view.ShowSendResult(true, result.result.feedbackId, result.result.feedback);
+
+                if(result.isSuccess)
+                {
+                    NotionModel.Instance.RedirectUrl = result.result.redirectUrl;
+                    _view.ShowSendResult(true, result.result.feedbackId, result.result.feedback);
+                }
+                else
+                {
+                    _view.ShowSendResult(false, "", result.message);
+                }
             }
             catch (Exception ex)
             {
@@ -45,7 +53,7 @@ namespace SAI.SAI.App.Presenters
             }
             finally
             {
-                _view.SetBusy(false);
+                _view.SetBusy(BusyContext.Feedback, false);
             }
         }
 

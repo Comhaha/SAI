@@ -9,7 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Views.Pages; // 추가: UcCode 클래스 접근을 위해 추가
+using SAI.SAI.App.Views.Pages;
+using static SAI.SAI.App.Models.BlocklyModel; // 추가: UcCode 클래스 접근을 위해 추가
 
 namespace SAI.SAI.App.Presenters
 {
@@ -18,8 +19,7 @@ namespace SAI.SAI.App.Presenters
         private readonly IBlocklyView view;
         private BlocklyService blocklyService;
         private BlocklyModel blocklyModel;
-        // 유지: CodePresenter 변수 선언
-        private CodePresenter codeBoxPresenter;
+
 
         public BlocklyPresenter(IBlocklyView view)
         {
@@ -28,50 +28,53 @@ namespace SAI.SAI.App.Presenters
             this.blocklyModel = BlocklyModel.Instance;
             this.view.AddBlockButtonClicked += OnAddBlockButtonClicked;
 
-            // 블록 하나의 코드가 변경되면 실행되는 이벤트
+
             blocklyModel.BlockCodeChanged += (newCode) =>
             {
+                Console.WriteLine($"[DEBUG] BlockCodeChanged 이벤트 발생: 코드 길이 = {newCode?.Length ?? 0}자");
                 if (string.IsNullOrEmpty(newCode))
+                {
+                    Console.WriteLine("[DEBUG] 코드가 비어있어 무시됨");
                     return;
+                }
 
                 try
                 {
-                    Console.WriteLine($"[DEBUG] BlocklyPresenter: BlockCodeChanged 이벤트 발생 ({newCode?.Length ?? 0}자)");
+                    Console.WriteLine($"[DEBUG] BlockCodeChanged 이벤트 처리 시작");
 
-                    if (codeBoxPresenter != null)
+                    // codeView 확인
+                    if (codeView != null)
                     {
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter를 통해 코드 업데이트 시도");
-                        // CodePresenter를 통해 코드 업데이트
-                        codeBoxPresenter.UpdateCode(newCode);
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter 업데이트 완료");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter가 null, UcCode 직접 업데이트 시도");
-                        // CodePresenter가 없는 경우 직접 UcCode 업데이트
-                        var ucCode = ((Control)view).Controls.OfType<UcCode>().FirstOrDefault();
-                        if (ucCode != null)
+                        Console.WriteLine($"[DEBUG] codeView 타입: {codeView.GetType().FullName}");
+
+                        if (codeView is UcCode ucCode)
                         {
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: UcCode 찾음, 코드 업데이트 시도");
-                            ucCode.SetAccumulateMode(false);
-                            ucCode.UpdateCode(newCode);
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: UcCode 업데이트 완료");
+                            Console.WriteLine($"[DEBUG] UcCode로 캐스팅 성공, HighlightCodeSegment 호출 시도");
+
+                            // View에 표시된 코드 확인
+                            string viewText = ucCode.Text;
+                            Console.WriteLine($"[DEBUG] View에 표시된 코드 길이: {viewText?.Length ?? 0}자");
+
+                            // 코드 하이라이트 시도
+                            ucCode.HighlightCodeSegment(newCode);
+                            Console.WriteLine($"[DEBUG] HighlightCodeSegment 호출 완료");
                         }
                         else
                         {
-                            Console.WriteLine("[WARNING] BlocklyPresenter: UcCode를 찾을 수 없음");
-                            MessageBox.Show("코드 에디터를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            Console.WriteLine($"[WARNING] codeView를 UcCode로 캐스팅 실패");
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[ERROR] codeView가 null임");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[ERROR] BlocklyPresenter: 코드 업데이트 중 오류 - {ex.Message}");
+                    Console.WriteLine($"[ERROR] BlockCodeChanged 이벤트 처리 중 오류: {ex.Message}");
                     Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-                    MessageBox.Show($"오류 발생: {ex.Message}", "예외 발생", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
-
 
             // 전체 블록 코드가 변경되면 실행되는 이벤트
             // 혜정언니 여기를 작성하면 돼!
@@ -81,37 +84,17 @@ namespace SAI.SAI.App.Presenters
                 {
                     Console.WriteLine($"[DEBUG] BlocklyPresenter: 전체 코드가 변경됨 ({newAllCode?.Length ?? 0}자)");
 
-                    // 1. UcTabCodeContainer 먼저 찾기
-                    var tabCodeContainer = ((Control)view).Controls.OfType<UcTabCodeContainer>().FirstOrDefault();
-                    if (tabCodeContainer != null)
+                    // 여기도 중요! codeView 사용
+                    if (codeView != null)
                     {
-                        // "전체 코드" 탭과 "모델생성" 탭 모두 업데이트
-                        tabCodeContainer.UpdateMainCode(newAllCode);
-                        tabCodeContainer.UpdateModelCode(newAllCode);
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: UcTabCodeContainer 코드 업데이트 완료");
-                        return; // 업데이트 완료했으므로 종료
-                    }
-
-                    // 2. UcCode 인스턴스 찾기
-                    var ucCode = ((Control)view).Controls.OfType<UcCode>().FirstOrDefault();
-                    if (ucCode != null)
-                    {
-                        // 코드 누적하지 않도록 설정 (매번 새로운 코드로 대체)
-                        ucCode.SetAccumulateMode(false);
-                        ucCode.UpdateCode(newAllCode);
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: UcCode 직접 업데이트 완료");
-                        return; // 업데이트 완료했으므로 종료
-                    }
-
-                    // 3. CodePresenter 사용 (마지막 대안)
-                    if (codeBoxPresenter != null)
-                    {
-                        codeBoxPresenter.UpdateCode(newAllCode);
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter 업데이트 완료");
+                        Console.WriteLine("[DEBUG] BlocklyPresenter: codeView 사용, 코드 업데이트 시도");
+                        codeView.UpdateCode(newAllCode);
+                        Console.WriteLine("[DEBUG] BlocklyPresenter: codeView 업데이트 완료");
                     }
                     else
                     {
-                        Console.WriteLine("[WARNING] BlocklyPresenter: 코드를 표시할 수 있는 UI 요소가 없습니다!");
+                        Console.WriteLine("[WARNING] BlocklyPresenter: codeView가 null입니다");
+                        MessageBox.Show("코드 에디터를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (Exception ex)
@@ -137,11 +120,13 @@ namespace SAI.SAI.App.Presenters
             // blockAllCode 초기화
             blocklyModel.blockAllCode = "";
         }
-        // 혜정 추가
-        public void SetCodePresenter(CodePresenter presenter)
+
+        // 혜정 추가 ICodeView 설정 메서드
+        private ICodeView codeView;
+        public void SetCodeView(ICodeView codeView)
         {
-            this.codeBoxPresenter = presenter;
-            Console.WriteLine("[DEBUG] BlocklyPresenter: CodePresenter가 설정되었습니다.");
+            this.codeView = codeView;
+            Console.WriteLine("[DEBUG] BlocklyPresenter: ICodeView가 설정되었습니다.");
         }
 
         // presenter가 view와 service에게 전달해주기 위한 메소드
@@ -153,48 +138,56 @@ namespace SAI.SAI.App.Presenters
                 blocklyService.SaveCodeToFileInTutorial();
 
                 //--------혜정언니 꺼 develop에 있던 코드 ----------------------------
-                // 추가: CodePresenter가 있으면 코드 업데이트 - UcCode에 코드 표시
-                if (codeBoxPresenter != null)
-                {
-                    try
-                    {
-                        Console.WriteLine($"[DEBUG] BlocklyPresenter: CodePresenter로 코드 전달 시도 ({code?.Length ?? 0}자)");
-
-                        // 수정: UcCode 인스턴스를 찾아 AppendCode 메서드 호출 (각 라인별 하이라이트 적용)
-                        var ucCode = ((Control)view).Controls.OfType<UcCode>().FirstOrDefault();
-                        if (ucCode != null)
-                        {
-                            // 수정: 코드 누적하지 않도록 설정 (매번 새로운 코드로 대체)
-                            ucCode.SetAccumulateMode(false);
-
-                            // AppendCode 메서드 호출 (코드 덮어쓰기 및 라인별 하이라이트)
-                            ucCode.AppendCode(code);
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: AppendCode 호출 완료");
-                        }
-                        else
-                        {
-                            // UcCode를 찾을 수 없는 경우 기존 방식으로 폴백
-                            codeBoxPresenter.UpdateCode(code);
-                            Console.WriteLine("[DEBUG] BlocklyPresenter: UpdateCode 호출 완료 (폴백)");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] BlocklyPresenter: CodePresenter 업데이트 오류 - {ex.Message}");
-                        Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("[WARNING] BlocklyPresenter: codeBoxPresenter가 null입니다!");
-                }
-                // -----------------------------------------
+                // 여기도 codeView 사용
+                //if (codeView != null)
+                //{
+                //    try
+                //    {
+                //        Console.WriteLine($"[DEBUG] BlocklyPresenter: codeView로 전체 코드 전달 시도 ({code?.Length ?? 0}자)");
+                //        if (codeView is UcCode ucCode)
+                //        {
+                //            ucCode.SetAccumulateMode(false);
+                //        }
+                //        codeView.UpdateCode(code);
+                //        Console.WriteLine("[DEBUG] BlocklyPresenter: codeView로 코드 업데이트 완료");
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine($"[ERROR] BlocklyPresenter: codeView 업데이트 오류 - {ex.Message}");
+                //        Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
+                //    }
+                //}
+                //else
+                //{
+                //    Console.WriteLine("[WARNING] BlocklyPresenter: codeView가 null입니다");
+                //    MessageBox.Show("코드 에디터를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //}
             }
             else if (type == "blockCode")
             {
-                Console.WriteLine($"[DEBUG] 개별 블록 코드 변경 감지: {code?.Length ?? 0}자");//디버깅용 주석 한번 추가해봤음
+                Console.WriteLine($"[DEBUG] 개별 블록 코드 변경 감지: {code?.Length ?? 0}자");
                 blocklyModel.blockCode = code;
             }
+        }
+
+        public void setBlockTypes(List<BlockInfo> blockTypes)
+        {
+            blocklyModel.blockTypes = blockTypes;
+
+            // 잘 들어왔는지 확인용 <- (삭제요망)
+            //string message = "";
+            //foreach (var types in blocklyModel.blockTypes)
+            //{
+            //    message += "type: " + types.type + "\n";
+            //    if (types.children != null)
+            //    {
+            //        foreach (var children in types.children)
+            //        {
+            //            message += "children: " + children.type + "\n";
+            //        }
+            //    }
+            //}
+            //MessageBox.Show(message);
         }
     }
 }

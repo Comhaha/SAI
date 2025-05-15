@@ -36,6 +36,7 @@
             // 
             // annotationText
             // 
+            this.annotationText.BorderColor = System.Drawing.Color.Transparent;
             this.annotationText.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.annotationText.DefaultText = "";
             this.annotationText.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -45,13 +46,14 @@
             this.annotationText.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.annotationText.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.annotationText.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText.Location = new System.Drawing.Point(28, 64);
-            this.annotationText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.annotationText.Location = new System.Drawing.Point(30, 68);
+            this.annotationText.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.annotationText.Name = "annotationText";
             this.annotationText.PlaceholderText = "";
             this.annotationText.SelectedText = "";
-            this.annotationText.Size = new System.Drawing.Size(264, 36);
+            this.annotationText.Size = new System.Drawing.Size(320, 37);
             this.annotationText.TabIndex = 0;
+            this.annotationText.TextChanged += new System.EventHandler(this.annotationText_TextChanged);
             // 
             // saveBtn
             // 
@@ -65,7 +67,8 @@
             this.saveBtn.FillColor = System.Drawing.Color.Transparent;
             this.saveBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.saveBtn.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.saveBtn.Location = new System.Drawing.Point(211, 124);
+            this.saveBtn.Location = new System.Drawing.Point(269, 129);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(81, 31);
             this.saveBtn.TabIndex = 1;
@@ -81,7 +84,8 @@
             this.cancelBtn.FillColor = System.Drawing.Color.Transparent;
             this.cancelBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cancelBtn.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.cancelBtn.Location = new System.Drawing.Point(119, 124);
+            this.cancelBtn.Location = new System.Drawing.Point(176, 129);
+            this.cancelBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(81, 31);
             this.cancelBtn.TabIndex = 2;
@@ -89,7 +93,7 @@
             // xBtn
             // 
             this.xBtn.BackColor = System.Drawing.Color.Transparent;
-            this.xBtn.BackgroundImage = global::SAI.Properties.Resources.btn_close;
+            this.xBtn.BackgroundImage = global::SAI.Properties.Resources.btn_close_pink;
             this.xBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.xBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.xBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -101,27 +105,29 @@
             this.xBtn.ForeColor = System.Drawing.Color.White;
             this.xBtn.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.xBtn.ImageSize = new System.Drawing.Size(13, 13);
-            this.xBtn.Location = new System.Drawing.Point(293, 14);
+            this.xBtn.Location = new System.Drawing.Point(327, 0);
+            this.xBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xBtn.Name = "xBtn";
-            this.xBtn.Size = new System.Drawing.Size(13, 13);
+            this.xBtn.Size = new System.Drawing.Size(53, 40);
             this.xBtn.TabIndex = 3;
             // 
             // AnnotationEditorForm
             // 
             this.AcceptButton = this.saveBtn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.BackgroundImage = global::SAI.Properties.Resources.annotation_모달;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.xBtn;
-            this.ClientSize = new System.Drawing.Size(320, 179);
+            this.ClientSize = new System.Drawing.Size(380, 190);
             this.Controls.Add(this.xBtn);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.annotationText);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "AnnotationEditorForm";
             this.Text = "AnnotationEditorForm";
             this.TransparencyKey = System.Drawing.Color.DimGray;

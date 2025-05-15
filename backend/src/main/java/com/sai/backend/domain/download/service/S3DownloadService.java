@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface S3DownloadService {
     URL generatePresignedUrl();
+    URL generateTutorialDataPresignedUrl();
+    URL generatePracticePresignedUrl();
 }

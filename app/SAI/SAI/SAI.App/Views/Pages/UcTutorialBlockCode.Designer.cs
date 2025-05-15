@@ -46,8 +46,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnLoadDataset = new Guna.UI2.WinForms.Guna2Button();
             this.btnLoadModel = new Guna.UI2.WinForms.Guna2Button();
             this.btnPip = new Guna.UI2.WinForms.Guna2Button();
-            this.labelBlockContent = new System.Windows.Forms.Label();
-            this.labelBlockTitle = new System.Windows.Forms.Label();
             this.btnBlockStart = new Guna.UI2.WinForms.Guna2Button();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
             this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -63,6 +61,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
+            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo0Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -77,6 +76,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -96,7 +96,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
-            this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.pMain.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.pBlockList.SuspendLayout();
@@ -184,6 +183,7 @@ namespace SAI.SAI.App.Views.Pages
             // pBlockList
             // 
             this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_blocklist_tutorial;
+            this.pBlockList.Controls.Add(this.pTxtDescription);
             this.pBlockList.Controls.Add(this.btnVisualizeResult);
             this.pBlockList.Controls.Add(this.btnModelInference);
             this.pBlockList.Controls.Add(this.btnImgPath);
@@ -192,8 +192,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlockList.Controls.Add(this.btnLoadDataset);
             this.pBlockList.Controls.Add(this.btnLoadModel);
             this.pBlockList.Controls.Add(this.btnPip);
-            this.pBlockList.Controls.Add(this.labelBlockContent);
-            this.pBlockList.Controls.Add(this.labelBlockTitle);
             this.pBlockList.Controls.Add(this.btnBlockStart);
             resources.ApplyResources(this.pBlockList, "pBlockList");
             this.pBlockList.Name = "pBlockList";
@@ -293,18 +291,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnPip.FillColor = System.Drawing.Color.Transparent;
             this.btnPip.ForeColor = System.Drawing.Color.White;
             this.btnPip.Name = "btnPip";
-            // 
-            // labelBlockContent
-            // 
-            resources.ApplyResources(this.labelBlockContent, "labelBlockContent");
-            this.labelBlockContent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.labelBlockContent.Name = "labelBlockContent";
-            // 
-            // labelBlockTitle
-            // 
-            resources.ApplyResources(this.labelBlockTitle, "labelBlockTitle");
-            this.labelBlockTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.labelBlockTitle.Name = "labelBlockTitle";
             // 
             // btnBlockStart
             // 
@@ -482,6 +468,12 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.Name = "btnRunModel";
             this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
             // 
+            // pTxtDescription
+            // 
+            this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_img_path;
+            resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
+            this.pTxtDescription.Name = "pTxtDescription";
+            // 
             // pboxTodo2Done
             // 
             this.pboxTodo2Done.Image = global::SAI.Properties.Resources.lbl_todo3_finish;
@@ -623,6 +615,18 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblThreshold);
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // btnInfoGraph
+            // 
+            this.btnInfoGraph.BackgroundImage = global::SAI.Properties.Resources.btn_info_17;
+            resources.ApplyResources(this.btnInfoGraph, "btnInfoGraph");
+            this.btnInfoGraph.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnInfoGraph.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnInfoGraph.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnInfoGraph.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnInfoGraph.FillColor = System.Drawing.Color.Transparent;
+            this.btnInfoGraph.ForeColor = System.Drawing.Color.White;
+            this.btnInfoGraph.Name = "btnInfoGraph";
             // 
             // btnInfoThreshold
             // 
@@ -828,18 +832,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
             // 
-            // btnInfoGraph
-            // 
-            this.btnInfoGraph.BackgroundImage = global::SAI.Properties.Resources.btn_info_17;
-            resources.ApplyResources(this.btnInfoGraph, "btnInfoGraph");
-            this.btnInfoGraph.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnInfoGraph.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnInfoGraph.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnInfoGraph.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnInfoGraph.FillColor = System.Drawing.Color.Transparent;
-            this.btnInfoGraph.ForeColor = System.Drawing.Color.White;
-            this.btnInfoGraph.Name = "btnInfoGraph";
-            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -904,8 +896,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pToDoList;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
 		private Guna.UI2.WinForms.Guna2Button btnBlockStart;
-		private System.Windows.Forms.Label labelBlockTitle;
-		private System.Windows.Forms.Label labelBlockContent;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
 		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
 		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
@@ -914,7 +904,6 @@ namespace SAI.SAI.App.Views.Pages
 		private Guna.UI2.WinForms.Guna2Button btnImgPath;
 		private Guna.UI2.WinForms.Guna2Button btnModelInference;
 		private Guna.UI2.WinForms.Guna2Button btnVisualizeResult;
-        
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockDescription;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockTitle;
         private Guna.UI2.WinForms.Guna2Panel pSideInfer;
@@ -951,5 +940,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnCopy;
         private Guna.UI2.WinForms.Guna2Button btnInfoThreshold;
         private Guna.UI2.WinForms.Guna2Button btnInfoGraph;
-    }
+		private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
+	}
 }

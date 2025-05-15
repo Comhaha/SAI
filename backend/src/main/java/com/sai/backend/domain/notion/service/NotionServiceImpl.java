@@ -3,7 +3,6 @@ package com.sai.backend.domain.notion.service;
 import com.sai.backend.domain.ai.model.AiLog;
 import com.sai.backend.domain.ai.repository.mongo.AiFeedbackRepository;
 import com.sai.backend.domain.notion.dto.request.CallbackRequestDto;
-import com.sai.backend.domain.notion.dto.response.AuthCheckResponseDto;
 import com.sai.backend.domain.notion.dto.response.ExportResponseDto;
 import com.sai.backend.domain.notion.model.NotionAccessToken;
 import com.sai.backend.domain.notion.model.NotionStateToken;
@@ -52,41 +51,35 @@ public class NotionServiceImpl implements NotionService {
     private String redirectUri;
 
     @Override
-    public AuthCheckResponseDto checkAuthStatus(String uuid) {
-        log.info("Checking auth status for UUID: {}", uuid);
+    public String generateAuthUrl(String uuid) {
+        log.info("Generating auth URL for UUID: {}", uuid);
 
         // AiLog 확인
         AiLog ailog = aiFeedbackRepository.findById(uuid).orElse(null);
         if (ailog == null) {
             log.warn("AiLog not found for UUID: {}", uuid);
+            return null;
         }
 
-        // 기존 토큰 확인
+        // 기존 토큰이 있다면 삭제 (새로운 토큰 발급을 위해)
         NotionAccessToken existingToken = notionTokenRepository.findByUuid(uuid).orElse(null);
-
-        if (existingToken != null && !existingToken.isExpired()) {
-            // 이미 유효한 토큰이 있는 경우
-            log.info("Valid token found for UUID: {}, returning authenticated=true", uuid);
-            return AuthCheckResponseDto.builder()
-                .authenticated(true)
-                .build();
+        if (existingToken != null) {
+            log.info("Deleting existing token for UUID: {} to issue new token", uuid);
+            notionTokenRepository.delete(existingToken);
         }
 
-        // 이미 진행 중인 state 토큰이 있는지 확인
+        // 기존 state 토큰이 있다면 삭제
         NotionStateToken existingState = notionStateRepository.findByUuid(uuid).orElse(null);
-
-        String state;
         if (existingState != null) {
-            // 기존 state 재사용
-            state = existingState.getState();
-            log.info("Reusing existing state token: {} for UUID: {}", state, uuid);
-        } else {
-            // 새로운 state 생성
-            state = UUID.randomUUID().toString();
-            NotionStateToken stateToken = NotionStateToken.create(state, uuid, redirectUri);
-            notionStateRepository.save(stateToken);
-            log.info("Created new state token: {} for UUID: {}", state, uuid);
+            log.info("Deleting existing state token for UUID: {}", uuid);
+            notionStateRepository.delete(existingState);
         }
+
+        // 새로운 state 생성
+        String state = UUID.randomUUID().toString();
+        NotionStateToken stateToken = NotionStateToken.create(state, uuid, redirectUri);
+        notionStateRepository.save(stateToken);
+        log.info("Created new state token: {} for UUID: {}", state, uuid);
 
         // 인증 URL 생성
         String authUrl = String.format(
@@ -96,14 +89,11 @@ public class NotionServiceImpl implements NotionService {
             state
         );
 
-        return AuthCheckResponseDto.builder()
-            .authenticated(false)
-            .authUrl(authUrl)
-            .build();
+        return authUrl;
     }
 
     @Override
-    public String handleOAuthCallback(CallbackRequestDto dto) {
+    public ExportResponseDto handleOAuthCallback(CallbackRequestDto dto) {
         log.info("=== OAuth Callback 시작 ===");
         log.info("Received - code: {}, state: {}", dto.getCode(), dto.getState());
 
@@ -112,7 +102,10 @@ public class NotionServiceImpl implements NotionService {
 
         if (stateToken == null) {
             log.error("State token not found. State: {}", dto.getState());
-            throw new IllegalArgumentException("Invalid state token");
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("Invalid state token")
+                .build();
         }
 
         String uuid = stateToken.getUuid();
@@ -129,13 +122,10 @@ public class NotionServiceImpl implements NotionService {
             body.add("redirect_uri", redirectUri);
 
             log.info("Exchanging code for token...");
-            log.info("OAuth 토큰 엔드포인트: /v1/oauth/token");
-            log.info("Client ID: {}", clientId != null ? clientId.substring(0, 5) + "..." : "null");
-            log.info("Redirect URI: {}", redirectUri);
 
             Map<String, Object> response = notionWebClient
                 .post()
-                .uri("/v1/oauth/token")  // 올바른 Notion OAuth 엔드포인트
+                .uri("/v1/oauth/token")
                 .header("Authorization", "Basic " + encodedAuth)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromFormData(body))
@@ -158,7 +148,7 @@ public class NotionServiceImpl implements NotionService {
             String workspaceId = extractWorkspaceInfo(response, uuid, accessToken);
             log.info("추출된 워크스페이스 정보: workspaceId={}", workspaceId);
 
-            // 토큰 저장 - workspaceId도 함께 저장
+            // 토큰 저장
             NotionAccessToken.NotionAccessTokenBuilder tokenBuilder = NotionAccessToken.builder()
                 .uuid(uuid)
                 .response(response)
@@ -186,22 +176,77 @@ public class NotionServiceImpl implements NotionService {
             notionStateRepository.delete(stateToken);
             log.info("State token deleted: {}", dto.getState());
 
-            return "<html><body><h1>인증 성공</h1>"
-                + "<p>Notion 계정 연결이 완료되었습니다. 이제 내보내기를 진행할 수 있습니다.</p>"
-                + "<p>이 창을 닫고 애플리케이션으로 돌아가세요.</p>"
-                + "<script>window.close();</script>"
-                + "</body></html>";
+            // AiLog 조회하여 export 처리
+            AiLog aiLog = aiFeedbackRepository.findById(uuid).orElse(null);
+            if (aiLog != null) {
+                return processExportAndReturnResult(aiLog, notionToken);
+            } else {
+                return ExportResponseDto.builder()
+                    .success(false)
+                    .message("AI 로그를 찾을 수 없습니다.")
+                    .build();
+            }
 
         } catch (Exception e) {
             log.error("OAuth callback error", e);
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("OAuth 처리 중 오류가 발생했습니다: " + e.getMessage())
+                .build();
+        }
+    }
 
-            // 에러 응답 페이지 제공
-            return "<html><body><h1>인증 실패</h1>"
-                + "<p>Notion 계정 연결 중 오류가 발생했습니다.</p>"
-                + "<p>오류: " + e.getMessage() + "</p>"
-                + "<p>다시 시도해 주세요. 이 창을 닫고 애플리케이션으로 돌아가세요.</p>"
-                + "<script>setTimeout(function() { window.close(); }, 5000);</script>"
-                + "</body></html>";
+    /**
+     * Export 처리 후 ExportResponseDto 반환
+     */
+    private ExportResponseDto processExportAndReturnResult(AiLog aiLog, NotionAccessToken token) {
+        try {
+            // Export 처리 로직 (기존 exportToNotion 메서드 내용 활용)
+            String workspaceInfo = findObjectTypeViaSearch(token.getAccessToken(), token.getUuid());
+            ExportResponseDto exportResult = null;
+
+            if (workspaceInfo != null) {
+                log.info("workspcaceInfo: {} 찾음", workspaceInfo);
+                String[] parts = workspaceInfo.split(":");
+                if (parts.length == 2) {
+                    String objectType = parts[0];
+                    String targetObjectId = parts[1];
+
+                    if ("database".equals(objectType)) {
+                        exportResult = notionExportService.exportToDatabasePage(aiLog, token.getAccessToken(), targetObjectId);
+                    } else if ("page".equals(objectType)) {
+                        exportResult = notionExportService.exportToPageChild(aiLog, token.getAccessToken(), targetObjectId);
+                    }
+                }
+            } else {
+                //기본 처리
+                log.info("No workspace found for UUID: {} 못 찾음", token.getUuid());
+                String defaultPageId = notionExportService.findDefaultPageForExport(token.getAccessToken());
+                if (defaultPageId != null) {
+                    exportResult = notionExportService.exportToPageChild(aiLog, token.getAccessToken(), defaultPageId);
+                } else {
+                    exportResult = notionExportService.createStandalonePageFallback(aiLog, token.getAccessToken());
+                }
+            }
+
+            // Export 결과 반환
+            if (exportResult != null && exportResult.getSuccess()) {
+                log.info("Export 성공, 생성된 페이지 URL: {}", exportResult.getUrl());
+                return exportResult;
+            } else {
+                log.warn("Export 실패");
+                return ExportResponseDto.builder()
+                    .success(false)
+                    .message("Notion 내보내기에 실패했습니다.")
+                    .build();
+            }
+
+        } catch (Exception e) {
+            log.error("Export 처리 실패", e);
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("Export 처리 중 오류가 발생했습니다: " + e.getMessage())
+                .build();
         }
     }
 
@@ -280,71 +325,6 @@ public class NotionServiceImpl implements NotionService {
 
         // 기타 메타데이터
         log.info("OAuth 응답의 모든 키: {}", oauthResponse.keySet());
-    }
-
-    @Override
-    public ExportResponseDto exportToNotion(String uuid) {
-        try {
-            log.info("Starting export for UUID: {}", uuid);
-
-            // AiLog 조회
-            AiLog aiLog = aiFeedbackRepository.findById(uuid)
-                .orElseThrow(() -> new IllegalArgumentException("AI 로그를 찾을 수 없습니다: " + uuid));
-
-            // Notion 액세스 토큰 확인
-            NotionAccessToken token = notionTokenRepository.findByUuid(uuid).orElse(null);
-
-            if (token == null || token.isExpired()) {
-                log.warn("토큰이 없거나 만료됨. UUID: {}", uuid);
-                return ExportResponseDto.builder()
-                    .success(false)
-                    .message("Notion 인증이 필요합니다.")
-                    .build();
-            }
-
-            // /v1/search를 통해 저장된 페이지 정보 확인
-            String workspaceInfo = findObjectTypeViaSearch(token.getAccessToken(), uuid);
-            log.info("검색 결과 워크스페이스 정보: {}", workspaceInfo);
-
-            String targetObjectId = null;
-            String objectType = null;
-
-            if (workspaceInfo != null) {
-                String[] parts = workspaceInfo.split(":");
-                if (parts.length == 2) {
-                    objectType = parts[0]; // "database" 또는 "page"
-                    targetObjectId = parts[1]; // 실제 ID
-                    log.info("객체 타입: {}, 객체 ID: {}", objectType, targetObjectId);
-                }
-            }
-
-            // 객체 타입에 따라 다른 처리
-            if ("database".equals(objectType) && targetObjectId != null) {
-                log.info("데이터베이스에 페이지 추가");
-                return notionExportService.exportToDatabasePage(aiLog, token.getAccessToken(), targetObjectId);
-            } else if ("page".equals(objectType) && targetObjectId != null) {
-                log.info("페이지의 하위 페이지로 추가");
-                return notionExportService.exportToPageChild(aiLog, token.getAccessToken(), targetObjectId);
-            } else {
-                // 기본 처리: 사용자가 권한을 가진 첫 번째 페이지에 하위 페이지로 추가
-                log.info("기본 처리: 접근 가능한 첫 번째 페이지에 하위 페이지 추가");
-                String defaultPageId = notionExportService.findDefaultPageForExport(token.getAccessToken());
-
-                if (defaultPageId != null) {
-                    return notionExportService.exportToPageChild(aiLog, token.getAccessToken(), defaultPageId);
-                } else {
-                    // 마지막 수단: 새 페이지 생성
-                    return notionExportService.createStandalonePageFallback(aiLog, token.getAccessToken());
-                }
-            }
-
-        } catch (Exception e) {
-            log.error("Notion 내보내기 실패: {}", uuid, e);
-            return ExportResponseDto.builder()
-                .success(false)
-                .message("내보내기 중 오류가 발생했습니다: " + e.getMessage())
-                .build();
-        }
     }
 
     /**
@@ -445,3 +425,286 @@ public class NotionServiceImpl implements NotionService {
         return null;
     }
 }
+
+//리펙토링
+
+//    @Override
+//    public AuthCheckResponseDto checkAuthStatus(String uuid) {
+//        log.info("Checking auth status for UUID: {}", uuid);
+//
+//        // AiLog 확인
+//        AiLog ailog = aiFeedbackRepository.findById(uuid).orElse(null);
+//        if (ailog == null) {
+//            log.warn("AiLog not found for UUID: {}", uuid);
+//        }
+//
+//        // 기존 토큰 확인
+//        NotionAccessToken existingToken = notionTokenRepository.findByUuid(uuid).orElse(null);
+//
+//        if (existingToken != null && !existingToken.isExpired()) {
+//            // 이미 유효한 토큰이 있는 경우
+//            log.info("Valid token found for UUID: {}, returning authenticated=true", uuid);
+//            return AuthCheckResponseDto.builder()
+//                .authenticated(true)
+//                .build();
+//        }
+//
+//        // 이미 진행 중인 state 토큰이 있는지 확인
+//        NotionStateToken existingState = notionStateRepository.findByUuid(uuid).orElse(null);
+//
+//        String state;
+//        if (existingState != null) {
+//            // 기존 state 재사용
+//            state = existingState.getState();
+//            log.info("Reusing existing state token: {} for UUID: {}", state, uuid);
+//        } else {
+//            // 새로운 state 생성
+//            state = UUID.randomUUID().toString();
+//            NotionStateToken stateToken = NotionStateToken.create(state, uuid, redirectUri);
+//            notionStateRepository.save(stateToken);
+//            log.info("Created new state token: {} for UUID: {}", state, uuid);
+//        }
+//
+//        // 인증 URL 생성
+//        String authUrl = String.format(
+//            "https://api.notion.com/v1/oauth/authorize?client_id=%s&response_type=code&owner=user&redirect_uri=%s&state=%s",
+//            clientId,
+//            URLEncoder.encode(redirectUri, StandardCharsets.UTF_8),
+//            state
+//        );
+//
+//        return AuthCheckResponseDto.builder()
+//            .authenticated(false)
+//            .authUrl(authUrl)
+//            .build();
+//    }
+
+//@Override
+//public ExportResponseDto exportToNotion(String uuid) {
+//    try {
+//        log.info("Starting export for UUID: {}", uuid);
+//
+//        // AiLog 조회
+//        AiLog aiLog = aiFeedbackRepository.findById(uuid)
+//            .orElseThrow(() -> new IllegalArgumentException("AI 로그를 찾을 수 없습니다: " + uuid));
+//
+//        // Notion 액세스 토큰 확인
+//        NotionAccessToken token = notionTokenRepository.findByUuid(uuid).orElse(null);
+//
+//        if (token == null || token.isExpired()) {
+//            log.warn("토큰이 없거나 만료됨. UUID: {}", uuid);
+//            return ExportResponseDto.builder()
+//                .success(false)
+//                .message("Notion 인증이 필요합니다.")
+//                .build();
+//        }
+//
+//        // /v1/search를 통해 저장된 페이지 정보 확인
+//        String workspaceInfo = findObjectTypeViaSearch(token.getAccessToken(), uuid);
+//        log.info("검색 결과 워크스페이스 정보: {}", workspaceInfo);
+//
+//        String targetObjectId = null;
+//        String objectType = null;
+//
+//        if (workspaceInfo != null) {
+//            String[] parts = workspaceInfo.split(":");
+//            if (parts.length == 2) {
+//                objectType = parts[0]; // "database" 또는 "page"
+//                targetObjectId = parts[1]; // 실제 ID
+//                log.info("객체 타입: {}, 객체 ID: {}", objectType, targetObjectId);
+//            }
+//        }
+//
+//        // 객체 타입에 따라 다른 처리
+//        if ("database".equals(objectType) && targetObjectId != null) {
+//            log.info("데이터베이스에 페이지 추가");
+//            return notionExportService.exportToDatabasePage(aiLog, token.getAccessToken(), targetObjectId);
+//        } else if ("page".equals(objectType) && targetObjectId != null) {
+//            log.info("페이지의 하위 페이지로 추가");
+//            return notionExportService.exportToPageChild(aiLog, token.getAccessToken(), targetObjectId);
+//        } else {
+//            // 기본 처리: 사용자가 권한을 가진 첫 번째 페이지에 하위 페이지로 추가
+//            log.info("기본 처리: 접근 가능한 첫 번째 페이지에 하위 페이지 추가");
+//            String defaultPageId = notionExportService.findDefaultPageForExport(token.getAccessToken());
+//
+//            if (defaultPageId != null) {
+//                return notionExportService.exportToPageChild(aiLog, token.getAccessToken(), defaultPageId);
+//            } else {
+//                // 마지막 수단: 새 페이지 생성
+//                return notionExportService.createStandalonePageFallback(aiLog, token.getAccessToken());
+//            }
+//        }
+//
+//    } catch (Exception e) {
+//        log.error("Notion 내보내기 실패: {}", uuid, e);
+//        return ExportResponseDto.builder()
+//            .success(false)
+//            .message("내보내기 중 오류가 발생했습니다: " + e.getMessage())
+//            .build();
+//    }
+//}
+
+//    @Override
+//    public String handleOAuthCallback(CallbackRequestDto dto) {
+//        log.info("=== OAuth Callback 시작 ===");
+//        log.info("Received - code: {}, state: {}", dto.getCode(), dto.getState());
+//
+//        // State 토큰 조회
+//        NotionStateToken stateToken = notionStateRepository.findByState(dto.getState()).orElse(null);
+//
+//        // State 토큰이 없다면
+//        if (stateToken == null) {
+//            log.error("State token not found. State: {}", dto.getState());
+//            throw new IllegalArgumentException("Invalid state token");
+//        }
+//
+//        String uuid = stateToken.getUuid();
+//        log.info("State token found - UUID: {}", uuid);
+//
+//        try {
+//            // 코드를 액세스 토큰으로 교환
+//            String auth = clientId + ":" + clientSecret;
+//            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+//
+//            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+//            body.add("grant_type", "authorization_code");
+//            body.add("code", dto.getCode());
+//            body.add("redirect_uri", redirectUri);
+//
+//            log.info("Exchanging code for token...");
+//
+//            Map<String, Object> response = notionWebClient
+//                .post()
+//                .uri("/v1/oauth/token")  // 올바른 Notion OAuth 엔드포인트
+//                .header("Authorization", "Basic " + encodedAuth)
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//                .body(BodyInserters.fromFormData(body))
+//                .retrieve()
+//                .onStatus(httpStatus -> httpStatus.value() >= 400, clientResponse -> {
+//                    return clientResponse.bodyToMono(String.class)
+//                        .doOnNext(errorBody -> log.error("OAuth 토큰 교환 실패 - Status: {}, Body: {}",
+//                            clientResponse.statusCode(), errorBody))
+//                        .then(Mono.error(new RuntimeException("OAuth 토큰 교환 실패: " + clientResponse.statusCode())));
+//                })
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+//                .block();
+//
+//            // 액세스 토큰 저장
+//            String accessToken = (String) response.get("access_token");
+//            log.info("Access token received, storing for UUID: {}", uuid);
+//
+//            // OAuth 응답에서 워크스페이스 정보 추출
+//            log.info("OAuth 전체 응답: {}", response);
+//            String workspaceId = extractWorkspaceInfo(response, uuid, accessToken);
+//            log.info("추출된 워크스페이스 정보: workspaceId={}", workspaceId);
+//
+//            // 토큰 저장 - workspaceId도 함께 저장
+//            NotionAccessToken.NotionAccessTokenBuilder tokenBuilder = NotionAccessToken.builder()
+//                .uuid(uuid)
+//                .response(response)
+//                .accessToken(accessToken)
+//                .createdAt(LocalDateTime.now())
+//                .expiresAt(LocalDateTime.now().plusDays(30))
+//                .ttl(2592000L);
+//
+//            // OAuth 응답에서 duplicated_template_id 및 workspace_id 저장
+//            if (response.containsKey("duplicated_template_id")) {
+//                String duplicatedTemplateId = (String) response.get("duplicated_template_id");
+//                tokenBuilder.duplicatedTemplateId(duplicatedTemplateId);
+//                log.info("Duplicated Template ID 저장: {}", duplicatedTemplateId);
+//            }
+//
+//            if (workspaceId != null) {
+//                tokenBuilder.workspaceId(workspaceId);
+//                log.info("Workspace ID 저장: {}", workspaceId);
+//            }
+//
+//            NotionAccessToken notionToken = tokenBuilder.build();
+//            notionTokenRepository.save(notionToken);
+//
+//            // 상태 토큰 삭제
+//            notionStateRepository.delete(stateToken);
+//            log.info("State token deleted: {}", dto.getState());
+//
+//            // AiLog 조회하여 export 처리
+//            AiLog aiLog = aiFeedbackRepository.findById(uuid).orElse(null);
+//            if (aiLog != null) {
+//                String notionPageUrl = processExportAndGetUrl(aiLog, notionToken);
+//
+//                return generateSuccessPage(notionPageUrl);
+//            } else {
+//                return generateSuccessPage(null);
+//            }
+//
+//        } catch (Exception e) {
+//            log.error("OAuth callback error", e);
+//            return generateErrorPage(e.getMessage());
+//        }
+//    }
+
+//    /**
+//     * Export 처리 후 Notion URL 반환
+//     */
+//    private String processExportAndGetUrl(AiLog aiLog, NotionAccessToken token) {
+//        try {
+//            // Export 처리 로직 (기존 exportToNotion 메서드 내용 활용)
+//            String workspaceInfo = findObjectTypeViaSearch(token.getAccessToken(), token.getUuid());
+//
+//            if (workspaceInfo != null) {
+//                String[] parts = workspaceInfo.split(":");
+//                if (parts.length == 2) {
+//                    String objectType = parts[0];
+//                    String targetObjectId = parts[1];
+//
+//                    if ("database".equals(objectType)) {
+//                        notionExportService.exportToDatabasePage(aiLog, token.getAccessToken(), targetObjectId);
+//                    } else if ("page".equals(objectType)) {
+//                        notionExportService.exportToPageChild(aiLog, token.getAccessToken(), targetObjectId);
+//                    }
+//                }
+//            } else {
+//                // 기본 처리
+//                String defaultPageId = notionExportService.findDefaultPageForExport(token.getAccessToken());
+//                if (defaultPageId != null) {
+//                    notionExportService.exportToPageChild(aiLog, token.getAccessToken(), defaultPageId);
+//                } else {
+//                    notionExportService.createStandalonePageFallback(aiLog, token.getAccessToken());
+//                }
+//            }
+//
+//            // 워크스페이스 URL 반환 (실제 페이지 URL은 export 결과에 따라 달라질 수 있음)
+//            return "https://www.notion.so/";
+//
+//        } catch (Exception e) {
+//            log.error("Export 처리 실패", e);
+//            return null;
+//        }
+//    }
+
+//    /**
+//     * 성공 페이지 생성
+//     */
+//    private String generateSuccessPage(String notionPageUrl) {
+//        String redirectScript = notionPageUrl != null ?
+//            "<script>setTimeout(function() { window.location.href = '" + notionPageUrl + "'; }, 2000);</script>" :
+//            "<script>window.close();</script>";
+//
+//        return "<html><body><h1>Notion 내보내기 완료</h1>"
+//            + "<p>AI 분석 결과가 Notion에 성공적으로 저장되었습니다.</p>"
+//            + (notionPageUrl != null ?
+//            "<p><a href='" + notionPageUrl + "' target='_blank'>Notion에서 확인하기</a></p>" : "")
+//            + redirectScript
+//            + "</body></html>";
+//    }
+//
+//    /**
+//     * 에러 페이지 생성
+//     */
+//    private String generateErrorPage(String errorMessage) {
+//        return "<html><body><h1>인증 실패</h1>"
+//            + "<p>Notion 계정 연결 중 오류가 발생했습니다.</p>"
+//            + "<p>오류: " + errorMessage + "</p>"
+//            + "<p>다시 시도해 주세요. 이 창을 닫고 애플리케이션으로 돌아가세요.</p>"
+//            + "<script>setTimeout(function() { window.close(); }, 5000);</script>"
+//            + "</body></html>";
+//    }
