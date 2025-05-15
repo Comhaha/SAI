@@ -20,4 +20,7 @@ public interface TokenApi {
     @PostMapping("/check")
     ResponseEntity<BaseResponse<Boolean>> checkToken(
         @RequestHeader("Authorization") String authHeader);
+
+    @GetMapping("/time")
+    ResponseEntity<BaseResponse<String>> getTokenTime();
 }

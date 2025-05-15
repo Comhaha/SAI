@@ -10,4 +10,5 @@ import lombok.Setter;
 public class AiFeedbackResponseDto {
     private String feedbackId;
     private String feedback;
+    private String redirectUrl;
 }

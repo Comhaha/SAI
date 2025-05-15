@@ -11,6 +11,7 @@ import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class TokenServiceImpl implements TokenService {
     private final TokenUtil tokenUtil;
     private final JpaTokenRepository jpaTokenRepository;
     private final RedisTokenRepository redisTokenRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
@@ -67,6 +69,7 @@ public class TokenServiceImpl implements TokenService {
         jpaTokenRepository.save(token);
 
         replaceWithNewToken(redisToken);
+        eventPublisher.publishEvent(new TokenReloadedEvent());
 
         return new TokenResponseDto(redisToken.getToken());
     }
@@ -77,6 +80,22 @@ public class TokenServiceImpl implements TokenService {
         return redisTokenRepository.findById(KEY)
             .map(rt -> checkToken != null && checkToken.equals(rt.getToken()))
             .orElse(false);
+    }
+
+    @Override
+    public String getTokenRemainingTime() {
+        // Redis key의 TTL을 직접 조회
+        RedisToken redisToken = redisTokenRepository.findById(KEY)
+            .orElseGet(() -> createCurrentToken(null));
+        Long ttl = redisToken.getExpiration();
+
+        // TTL이 -1(무제한) 또는 -2(키 없음)인 경우 처리
+        if (ttl == null || ttl < 0) {
+            // Redis에서 토큰을 찾아서 expiration 값 확인
+            return "토큰 만료";
+        }
+
+        return formatTime(ttl);
     }
 
     /* ───────────── 내부 공통 로직 ───────────── */
@@ -100,5 +119,27 @@ public class TokenServiceImpl implements TokenService {
         return (header != null && header.startsWith(PREFIX))
             ? header.substring(PREFIX.length())
             : null;
+    }
+
+    private String formatTime(Long ttl) {
+        if (ttl == null || ttl < 0) {
+            return "토큰 만료";
+        }
+
+        long hours = ttl / 3600;
+        long minutes = (ttl % 3600) / 60;
+        long secs = ttl % 60;
+
+        StringBuilder sb = new StringBuilder();
+
+        if (hours > 0) sb.append(hours).append("시간 ");
+        if (minutes > 0) sb.append(minutes).append("분 ");
+        if (secs > 0) sb.append(secs).append("초");
+
+        return sb.toString();
+    }
+
+    public static class TokenReloadedEvent {
+        // 이벤트 클래스는 비어있어도 됨
     }
 }
