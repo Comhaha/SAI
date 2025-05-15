@@ -15,18 +15,20 @@ namespace SAI.SAI.Application.Service
     public class AiFeedbackService
     {
         private readonly HttpClient _http;
-        private readonly string token;
+        private readonly string _token;
+
         public AiFeedbackService(string baseAddress, string token)
         {
             _http = new HttpClient { BaseAddress = new Uri(baseAddress) };
-            this.token = token;
+            _token = token;
         }
 
         public async Task<BaseResponse<AiFeedbackResponseDto>> SendAsync(AiFeedbackRequestDto dto)
         {
 
             _http.DefaultRequestHeaders.Authorization =
-                 new AuthenticationHeaderValue("Bearer", token);
+                 new AuthenticationHeaderValue("Bearer", _token);
+
             using (var form = new MultipartFormDataContent())
             {
                 form.Add(new StringContent(dto.code, Encoding.UTF8), nameof(dto.code));
@@ -66,9 +68,6 @@ namespace SAI.SAI.Application.Service
             }
         }
 
-        public void Dispose()
-        {
-            _http.Dispose();
-        }
+        public void Dispose() => _http.Dispose();
     }
 }

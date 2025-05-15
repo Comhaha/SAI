@@ -41,7 +41,6 @@
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.authButton = new System.Windows.Forms.Button();
-            this.exportNotionButton = new System.Windows.Forms.Button();
             this.pTitleBar.SuspendLayout();
             this.pInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2)).BeginInit();
@@ -196,24 +195,12 @@
             this.authButton.Visible = false;
             this.authButton.Click += new System.EventHandler(this.authButton_Click);
             // 
-            // exportNotionButton
-            // 
-            this.exportNotionButton.Location = new System.Drawing.Point(857, 59);
-            this.exportNotionButton.Name = "exportNotionButton";
-            this.exportNotionButton.Size = new System.Drawing.Size(168, 34);
-            this.exportNotionButton.TabIndex = 8;
-            this.exportNotionButton.Text = "내보내기";
-            this.exportNotionButton.UseVisualStyleBackColor = true;
-            this.exportNotionButton.Visible = false;
-            this.exportNotionButton.Click += new System.EventHandler(this.exportNotionButton_Click);
-            // 
             // DialogNotion
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1060, 583);
-            this.Controls.Add(this.exportNotionButton);
             this.Controls.Add(this.authButton);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.guna2Panel1);
@@ -253,6 +240,5 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button authButton;
-        private System.Windows.Forms.Button exportNotionButton;
     }
 }
