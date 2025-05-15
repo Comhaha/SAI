@@ -3831,5 +3831,10 @@ namespace SAI.SAI.App.Views.Pages
         {
 
         }
+
+        private void accuracyLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

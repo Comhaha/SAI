@@ -142,9 +142,9 @@ namespace SAI.SAI.App.Views.Pages
             this.goToLabeling.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.goToLabeling.HoverState.FillColor = System.Drawing.Color.Transparent;
             this.goToLabeling.HoverState.Image = global::SAI.Properties.Resources.btn_close_whole_click;
-            this.goToLabeling.Image = global::SAI.Properties.Resources.btn_close_whole;
-            this.goToLabeling.ImageSize = new System.Drawing.Size(51, 39);
-            this.goToLabeling.Location = new System.Drawing.Point(1036, 127);
+            this.goToLabeling.Image = global::SAI.Properties.Resources.btn_close_whole_5;
+            this.goToLabeling.ImageSize = new System.Drawing.Size(51, 38);
+            this.goToLabeling.Location = new System.Drawing.Point(1035, 126);
             this.goToLabeling.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goToLabeling.Name = "goToLabeling";
             this.goToLabeling.PressedColor = System.Drawing.Color.Transparent;

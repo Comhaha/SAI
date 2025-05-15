@@ -50,16 +50,13 @@ namespace SAI.SAI.App.Views.Pages
             goLabelingBtn.Click += goLabelingBtn_Click;
             goToLabeling.Click += goToLabeling_Click;
             exit.Click += exit_Click;
-            
         }
         private void InitializeProgressIndicators()
-        {
-
+        { 
             this.goLabelingBtn.CheckedState.FillColor = Color.Transparent;
             this.goLabelingBtn.PressedColor = Color.Transparent;
             this.goLabelingBtn.HoverState.FillColor = Color.Transparent;
             goLabelingBtn.Visible = false;
-
         }
 
 
@@ -82,42 +79,42 @@ namespace SAI.SAI.App.Views.Pages
 
             // 라벨링 가이드 1
             prevButtonPositions.Add(new Point(175, 387));
-            nextButtonPositions.Add(new Point(825, 400));
+            nextButtonPositions.Add(new Point(831, 385));
             exitButtonPositions.Add(new Point(841, 260));
 
             // 라벨링 가이드 2
-            prevButtonPositions.Add(new Point(774, 234));
-            nextButtonPositions.Add(new Point(820, 234));
+            prevButtonPositions.Add(new Point(784, 226));
+            nextButtonPositions.Add(new Point(830, 226));
             exitButtonPositions.Add(new Point(840, 122));
 
             // 라벨링 가이드 3
-            prevButtonPositions.Add(new Point(939, 262));
-            nextButtonPositions.Add(new Point(985, 262));
+            prevButtonPositions.Add(new Point(955, 262));
+            nextButtonPositions.Add(new Point(1001, 262));
             exitButtonPositions.Add(new Point(1011, 134));
 
             // 라벨링 가이드 4
-            prevButtonPositions.Add(new Point(753, 240));
-            nextButtonPositions.Add(new Point(799, 240));
+            prevButtonPositions.Add(new Point(762, 237));
+            nextButtonPositions.Add(new Point(808, 237));
             exitButtonPositions.Add(new Point(817, 109));
 
             // 라벨링 가이드 5
-            prevButtonPositions.Add(new Point(864, 403));
-            nextButtonPositions.Add(new Point(910, 404));
+            prevButtonPositions.Add(new Point(879, 399));
+            nextButtonPositions.Add(new Point(925, 399));
             exitButtonPositions.Add(new Point(935, 267));
 
             // 라벨링 가이드 6
-            prevButtonPositions.Add(new Point(790, 620));
-            nextButtonPositions.Add(new Point(836, 620));
+            prevButtonPositions.Add(new Point(801, 615));
+            nextButtonPositions.Add(new Point(847, 615));
             exitButtonPositions.Add(new Point(857, 439));
 
             // 라벨링 가이드 7
-            prevButtonPositions.Add(new Point(970, 525));
-            nextButtonPositions.Add(new Point(1016, 525));
+            prevButtonPositions.Add(new Point(987, 525));
+            nextButtonPositions.Add(new Point(1033, 525));
             exitButtonPositions.Add(new Point(1050, 181));
 
             // 라벨링 가이드 8
-            prevButtonPositions.Add(new Point(1057, 226));
-            nextButtonPositions.Add(new Point(1093, 216));
+            prevButtonPositions.Add(new Point(1039, 219));
+            nextButtonPositions.Add(new Point(1093, 219));
             exitButtonPositions.Add(new Point(1102, 117));
         }
 

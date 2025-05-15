@@ -418,14 +418,18 @@
             // 
             // accuracyLabel
             // 
+            this.accuracyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.accuracyLabel.AutoSize = false;
             this.accuracyLabel.BackColor = System.Drawing.Color.Transparent;
-            this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.accuracyLabel.Location = new System.Drawing.Point(7, 13);
             this.accuracyLabel.Name = "accuracyLabel";
             this.accuracyLabel.Size = new System.Drawing.Size(194, 31);
             this.accuracyLabel.TabIndex = 13;
-            this.accuracyLabel.Text = "정확도 예시";
+            this.accuracyLabel.Text = "정확도 예시 : 100";
+            this.accuracyLabel.Click += new System.EventHandler(this.accuracyLabel_Click);
             // 
             // levelPanel
             // 
@@ -495,7 +499,7 @@
             // ZoomCurrent
             // 
             this.ZoomCurrent.BackColor = System.Drawing.Color.Transparent;
-            this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(2, 39);
             this.ZoomCurrent.Name = "ZoomCurrent";
             this.ZoomCurrent.Size = new System.Drawing.Size(26, 13);
