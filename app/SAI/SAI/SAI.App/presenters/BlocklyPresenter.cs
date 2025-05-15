@@ -224,10 +224,6 @@ namespace SAI.SAI.App.Presenters
         {
             if (type == "blockAllCode")
             {
-                Console.WriteLine($"[DEBUG] BlocklyPresenter: 전체 블록 코드 수신");
-                Console.WriteLine($"[DEBUG] 코드 길이: {code?.Length ?? 0}자");
-                Console.WriteLine($"[DEBUG] 코드 내용:\n{code}");
-                
                 blocklyModel.blockAllCode = code;
                 blocklyService.SaveCodeToFileInTutorial();
 
@@ -286,4 +282,3 @@ namespace SAI.SAI.App.Presenters
         }
     }
 }
-
