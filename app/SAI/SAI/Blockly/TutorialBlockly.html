@@ -75,9 +75,20 @@
         }
         
         function addBlock(type) {
-            const block = workspace.newBlock(type);
+			const block = workspace.newBlock(type);
+			block.setDeletable(false); // 블록 삭제 가능
             block.initSvg();
-            block.render();
+			block.render();
+
+			if (lastCreatedBlockId) {
+				const lastBlock = workspace.getBlockById(lastCreatedBlockId);
+				if (lastBlock) {
+					const pos = lastBlock.getRelativeToSurfaceXY();
+					const height = lastBlock.getHeightWidth().height;
+					block.moveBy(pos.x, pos.y + height + 10);  // 마지막 생성 블럭 바로 아래에 위치
+					return;
+				}
+			}
         }
 
 		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
