@@ -98,7 +98,6 @@
     <Compile Include="SAI.Application\Dto\BaseResponse.cs" />
     <Compile Include="SAI.Application\Service\AiFeedbackService.cs" />
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
-    <Compile Include="SAI.Application\Service\NotionService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.cs">
       <SubType>Form</SubType>
@@ -216,15 +215,17 @@
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\AiNotionPresenter.cs" />
     <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IAiBuzyAwareView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiFeedbackView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
-    <Compile Include="SAI.App\Views.Interfaces\INotionPresenter.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ThresholdUtils.cs" />
