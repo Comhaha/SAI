@@ -28,12 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            this.panelTitleBar.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelTitleBar
+            // 
+            this.panelTitleBar.BackColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_modelPerformance;
+            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelTitleBar.Controls.Add(this.btnClose);
+            this.panelTitleBar.ForeColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.panelTitleBar.Name = "panelTitleBar";
+            this.panelTitleBar.Size = new System.Drawing.Size(1060, 40);
+            this.panelTitleBar.TabIndex = 0;
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_close_white;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
+            this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
+            this.btnClose.Location = new System.Drawing.Point(1000, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(60, 40);
+            this.btnClose.TabIndex = 2;
+            // 
+            // DialogModelPerformance
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_white_notion;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1060, 536);
+            this.Controls.Add(this.panelTitleBar);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.Name = "DialogModelPerformance";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DialogModelGraphe";
+            this.TopMost = true;
+            this.panelTitleBar.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
     }
 }

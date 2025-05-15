@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/notion")
 public interface NotionApi {
 
-    @GetMapping("/auth/check")
-    ResponseEntity<BaseResponse<AuthCheckResponseDto>> checkAuthStatus(@RequestParam String uuid);
-
-    //Oauth 로그인 -> export
-    @PostMapping("/export")
-    ResponseEntity<BaseResponse<ExportResponseDto>> exportReport(@RequestBody ExportRequestDto requestDto);
+//    @GetMapping("/auth/check")
+//    ResponseEntity<BaseResponse<AuthCheckResponseDto>> checkAuthStatus(@RequestParam String uuid);
+//
+//    //Oauth 로그인 -> export
+//    @PostMapping("/export")
+//    ResponseEntity<BaseResponse<ExportResponseDto>> exportReport(@RequestBody ExportRequestDto requestDto);
 
     //Oauth 후 처리
+//    @GetMapping("/callback")
+//    ResponseEntity<BaseResponse<String>> handleCallback(@RequestParam String code, @RequestParam String state);
+
     @GetMapping("/callback")
-    ResponseEntity<BaseResponse<String>> handleCallback(@RequestParam String code, @RequestParam String state);
+    ResponseEntity<BaseResponse<ExportResponseDto>> handleCallback(@RequestParam String code, @RequestParam String state);
 }

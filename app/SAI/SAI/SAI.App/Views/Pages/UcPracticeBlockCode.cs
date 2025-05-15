@@ -48,11 +48,12 @@ namespace SAI.SAI.App.Views.Pages
 
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
-
-			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+            // 홈페이지 이동
+            ibtnHome.Click += (s, e) => {
+                mainView.LoadPage(new UcSelectType(mainView));
+            };
 
             ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
 
@@ -74,8 +75,26 @@ namespace SAI.SAI.App.Views.Pages
             this.mainView = view;
             blocklyModel = BlocklyModel.Instance;
 			InitializeWebView2();
+
+            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(btnInfoThreshold,
+              "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+
+            ToolTipUtils.CustomToolTip(btnInfoGraph,
+              "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
+            ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
+
+            ButtonUtils.SetupButton(btnRunModel,"btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
+            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
+            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
+            ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
+            ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
+            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
 			undoCount = 0;
-			ibtnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
 			// btnRunModel---------------
 			btnRunModel.BackColor = Color.Transparent;
 			btnRunModel.PressedColor = Color.Transparent;
@@ -135,10 +154,7 @@ namespace SAI.SAI.App.Views.Pages
 				pSelectBlockvScrollBar.Value = newValue;
 			};
 		}
-
-		private void UcPraticeBlockCode_Load(object sender, EventArgs e)
-        {
-        }
+        
         private void ShowpSIdeInfer()
         {
             pSideInfer.Visible = true;
@@ -188,12 +204,7 @@ namespace SAI.SAI.App.Views.Pages
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void lblThreshold_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        private void btnCloseMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
@@ -331,13 +342,13 @@ namespace SAI.SAI.App.Views.Pages
 
 			if (undoCount == 0)
 			{
-				ibtnNextBlock.Visible = false;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
 			}
 			else
 			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
 			}
 		}
 
@@ -348,13 +359,13 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				undoCount++;
 				webViewblock.ExecuteScriptAsync($"undo()");
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
 			}
 			else
 			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = false;
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = false;
 			}
 		}
 
@@ -363,5 +374,21 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			webViewblock.ExecuteScriptAsync($"clear()");
 		}
-	}
+
+        private void ibtnAiFeedback_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+        private void pboxGraphe_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogModelPerformance())
+            {
+                dialog.ShowDialog();
+            }
+        }
+    }
 }

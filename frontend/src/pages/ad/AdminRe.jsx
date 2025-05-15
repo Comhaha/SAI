@@ -35,7 +35,7 @@ function AdminRe() {
     apiClient.get('/api/token')
       .then(res => {
         if (res.data && res.data.result) {
-          setApiKey(res.data.result);
+          setApiKey(res.data.result.token);
         } else {
           navigate('/admin/login');
         }

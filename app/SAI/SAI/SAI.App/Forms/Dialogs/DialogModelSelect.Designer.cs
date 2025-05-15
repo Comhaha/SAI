@@ -52,7 +52,7 @@
             this.btnTutorial.Name = "btnTutorial";
             this.btnTutorial.Size = new System.Drawing.Size(114, 41);
             this.btnTutorial.TabIndex = 5;
-            this.btnTutorial.Click += new System.EventHandler(this.btnTutorial_Click);
+            //this.btnTutorial.Click += new System.EventHandler(this.btnTutorial_Click);
             // 
             // btnTrain
             // 
@@ -70,7 +70,7 @@
             this.btnTrain.Name = "btnTrain";
             this.btnTrain.Size = new System.Drawing.Size(114, 41);
             this.btnTrain.TabIndex = 6;
-            this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
+            //this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
             // 
             // btnYolo
             // 

@@ -35,4 +35,34 @@ public class S3DownLoadServiceImpl implements S3DownloadService{
 
         return  s3Presigner.presignGetObject(presign).url();
     }
+
+    @Override
+    public URL generateTutorialDataPresignedUrl() {
+        GetObjectRequest get = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key("datasets/tutorial.zip")
+            .build();
+
+        GetObjectPresignRequest presign = GetObjectPresignRequest.builder()
+            .signatureDuration(DOWNLOAD_DURATION)
+            .getObjectRequest(get)
+            .build();
+
+        return  s3Presigner.presignGetObject(presign).url();
+    }
+
+    @Override
+    public URL generatePracticePresignedUrl() {
+        GetObjectRequest get = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key("datasets/practice.zip")
+            .build();
+
+        GetObjectPresignRequest presign = GetObjectPresignRequest.builder()
+            .signatureDuration(DOWNLOAD_DURATION)
+            .getObjectRequest(get)
+            .build();
+
+        return  s3Presigner.presignGetObject(presign).url();
+    }
 }

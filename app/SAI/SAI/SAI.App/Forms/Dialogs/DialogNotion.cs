@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
+using SAI.SAI.App.Models;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
@@ -12,19 +18,25 @@ using static ScintillaNET.Style;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-    public partial class DialogNotion : Form, IAiFeedbackView
+    public partial class DialogNotion : Form, IAiFeedbackView, IAiNotionView
     {
         //webView2.Visible = false 되어 있어요. 로직 작성하실 때
         // secretkey 입력하고 맞으면 pInfo.Visible = false; webView2.Visible = true; 하고
-        private AiFeedbackPresenter _presenter;
+        private AiFeedbackPresenter _feedPresenter;
+        private AiNotionPresenter _notionPresenter;
+        private bool _webInit;
+
+        private const string redirectBase = "http://localhost:8080/api/notion/callback";
 
         public DialogNotion()
         {
             InitializeComponent();
             pInfo.BackColor = ColorTranslator.FromHtml("#1D1D1D");
+
+            InitWebOnce();
         }
 
-        //IAiFeedbackView
+        /* ---------------- IAiFeedbackView ---------------- */
         //경로 넣기
         public string CodeText => "print(\"hello world\")";
         public string LogText => "log";
@@ -33,7 +45,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         public event EventHandler SendRequested;
         private void ibtnEnter_Click(object sender, EventArgs e)
         {
-            
 
             string token = tboxSecretKey.Text;
 
@@ -43,78 +54,215 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            var service = new AiFeedbackService("https://k12d201.p.ssafy.io", token);
-            _presenter = new AiFeedbackPresenter(this, service);
+            var service = new AiFeedbackService("http://localhost:8080", token);
+            _feedPresenter = new AiFeedbackPresenter(this, service);
 
             SendRequested?.Invoke(this, new EventArgs());
-            
-        }
-
-        public void ShowSendResult(bool isSuccess, string feedbackId, string feedback)
-        {
-            if (isSuccess)
-            {
-                //피드백 결과 출력
-                ShowWebView2MarkDown(feedback);
-            }
-            else
-            {
-                MessageBox.Show(feedback);
-            }
-
-            
 
         }
 
-        private void ShowWebView2MarkDown(string feedback)
+        public void ShowSendResult(bool ok, string id, string md)
         {
-            string html = Markdig.Markdown.ToHtml(feedback);
+            if (!ok) { ShowError(md); return; }
 
-            string htmlPage = $@"
-<!doctype html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <style>
-        body {{
-            font-family: 'Segoe UI', sans-serif;
-            padding: 20px;
-            background-color: #1D1D1D;
-            color: white;
-        }}
-        h1, h2, h3 {{ color: #ffcc00; }}
-        pre, code {{ background: #2d2d2d; padding: 5px; border-radius: 4px; }}
-    </style>
-</head>
-<body>
-    {html}
-</body>
-</html>";
-            InitWebView();
-            webView2.NavigateToString(htmlPage);
+            string html = Markdig.Markdown.ToHtml(md);
+            ShowMarkdown(html);
+            ShowAuthButton(true);
+        }
+        /* -------------------------------------------------- */
 
-            lblInfo.Visible = false;
+        /* ---------------- IBusyAwareView  ---------------- */
+        public void SetBusy(BusyContext ctx, bool on)
+        {
+            switch (ctx)
+            {
+                case BusyContext.Feedback:
+                    progressBar.Visible = on;
+                    ibtnEnter.Enabled = !on;
+                    break;
+                case BusyContext.OAuth:
+                    authButton.Enabled = !on;
+                    break;
+            }
+        }
+        /* -------------------------------------------------- */
+
+        /* ---------------- IAiNotionView ------------------- */
+        public void ShowMarkdown(string html)
+        {
+            InitWebOnce();
+            webView2.NavigateToString(html);
             webView2.Visible = true;
-            //authButton.Visible = true;
+            lblInfo.Visible = false;
         }
 
-        public void SetBusy(bool b)
+        public void ShowAuthButton(bool on) => authButton.Visible = on;
+
+        public void ShowError(string msg)
         {
-            ibtnEnter.Enabled = !b;
-            progressBar.Visible = b;
-            progressBar.Style = b ? ProgressBarStyle.Marquee
-                                    : ProgressBarStyle.Continuous;
+            webView2.Visible = false;
+            lblInfo.Text = msg;
+            lblInfo.Visible = true;
         }
 
-        private async void InitWebView()
+        public void WebLoadUrl(string url)
         {
+            Console.WriteLine("Notion Oauth url : " + url );
+            InitWebOnce();
+            webView2.Source = new Uri(url);
+            webView2.Visible = true;
+        }
+
+        public event EventHandler AuthStartRequested;
+
+        private void authButton_Click(object s, EventArgs e)
+        {
+            _notionPresenter = new AiNotionPresenter(this, NotionModel.Instance.RedirectUrl, redirectBase);
+
+
+            AuthStartRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RegisterWebNavigation(Action<string> handler)
+        {
+            InitWebOnce();
+            webView2.CoreWebView2.NavigationStarting += (s, e) => handler(e.Uri);
+        }
+
+        public void RegisterWebResponse(Func<string, Task> onJsonReceived)
+        {
+            InitWebOnce();
+            webView2.CoreWebView2.WebResourceResponseReceived += async (s, e) =>
+            {
+                try
+                {
+                    Console.WriteLine($"[WebView2] 응답 수신됨 - 요청 URL: {e.Request.Uri}");
+                    if (!e.Request.Uri.StartsWith(redirectBase, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    string contentType = null;
+                    foreach (var h in e.Response.Headers)
+                    {
+                        Console.WriteLine($"[Header] {h.Key}: {h.Value}");
+
+                        if (h.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+                        {
+                            contentType = h.Value;
+                            break;
+                        }
+                    }
+
+                    if (contentType?.StartsWith("application/json") != true)
+                    {
+                        Console.WriteLine("[WebView2] JSON 응답이 아님. 처리 생략.");
+                        return;
+                    }
+
+                    Console.WriteLine("[WebView2] JSON 응답 감지됨. 스트림 읽기 시작...");
+
+                    var stream = await e.Response.GetContentAsync();
+                    if (stream == null)
+                    {
+                        Console.WriteLine("[WebView2] 응답 스트림 없음.");
+                        return;
+                    }
+
+                    string json;
+                    using (var sr = new StreamReader(stream, Encoding.UTF8, true))
+                        json = await sr.ReadToEndAsync();
+
+                    Console.WriteLine("[WebView2] JSON 응답 내용:\n" + json);
+
+                    await onJsonReceived(json);
+                }
+                catch (Exception ex)
+                {
+                    ShowError("JSON 응답 처리 중 오류: " + ex.Message);
+                    Console.WriteLine("[WebView2] JSON 처리 중 오류: " + ex.Message);
+                }
+            };
+        }
+
+        /* -------------------------------------------------- */
+
+        /* ---------------- WebView2 Init ------------------- */
+        private async void InitWebOnce()
+        {
+            if (_webInit) return;
+            _webInit = true;
+
             await webView2.EnsureCoreWebView2Async();
+
+            webView2.CoreWebView2.AddWebResourceRequestedFilter(
+        "${redirectBase}*",
+        CoreWebView2WebResourceContext.XmlHttpRequest);
+
         }
+        /* -------------------------------------------------- */
+
+        //        private void ShowWebView2MarkDown(string feedback)
+        //        {
+        //            string html = Markdig.Markdown.ToHtml(feedback);
+
+        //            string htmlPage = $@"
+        //<!doctype html>
+        //<html>
+        //<head>
+        //    <meta charset='utf-8'>
+        //    <style>
+        //        body {{
+        //            font-family: 'Segoe UI', sans-serif;
+        //            padding: 20px;
+        //            background-color: #1D1D1D;
+        //            color: white;
+        //        }}
+        //        h1, h2, h3 {{ color: #ffcc00; }}
+        //        pre, code {{ background: #2d2d2d; padding: 5px; border-radius: 4px; }}
+        //    </style>
+        //</head>
+        //<body>
+        //    {html}
+        //</body>
+        //</html>";
+        //            InitWebView();
+        //            webView2.NavigateToString(htmlPage);
+
+        //            lblInfo.Visible = false;
+        //            webView2.Visible = true;
+        //            authButton.Visible = true;
+        //        }
+
+        //public void SetBusy(bool b)
+        //{
+        //    ibtnEnter.Enabled = !b;
+        //    progressBar.Visible = b;
+        //    progressBar.Style = b ? ProgressBarStyle.Marquee
+        //                            : ProgressBarStyle.Continuous;
+        //}
+
+        //private async void InitWebView()
+        //{
+        //    await webView2.EnsureCoreWebView2Async();
+
+        //    webView2.CoreWebView2.NavigationStarting += (s, e) =>
+        //    {
+        //        if (e.Uri.StartsWith(redirectBase, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            var nvc = System.Web.HttpUtility.ParseQueryString(new Uri(e.Uri).Query);
+        //            bool ok = nvc["success"] == "1";
+        //            string url = nvc["url"];          // 성공 시 내보낸 페이지 URL
+        //            string msg = nvc["message"];      // 실패 시 메시지
+
+        //            _presenter.OnWebCallback(ok, ok ? url : msg);
+        //            e.Cancel = true;                  // 리디렉트 페이지 표시 안 함
+        //        }
+        //    };
+        //}
 
 
         private void DialogNotion_Load(object sender, EventArgs e)
         {
-            InitWebView();
+            
         }
 
         private void ibtnClose_Click(object sender, EventArgs e)
@@ -122,22 +270,5 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.Close();
         }
 
-        private void exportNotionButton_Click(object sender, EventArgs e)
-        {
-
-            exportNotionButton.Visible = false;
-        }
-
-        private void authButton_Click(object sender, EventArgs e)
-        {
-            //Notion으로 인증 처리
-
-            //WebView2에 바로 redirectUrl 연결
-            InitWebView();
-            
-
-            exportNotionButton.Visible = true;
-            authButton.Visible = false;
-        }
     }
 }

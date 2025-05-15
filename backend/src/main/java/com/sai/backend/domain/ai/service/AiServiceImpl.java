@@ -5,12 +5,12 @@ import com.sai.backend.domain.ai.dto.response.AiFeedbackResponseDto;
 
 import com.sai.backend.domain.ai.model.AiLog;
 import com.sai.backend.domain.ai.repository.mongo.AiFeedbackRepository;
+import com.sai.backend.domain.notion.service.NotionService;
 import java.util.List;
 import java.util.Map;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ public class AiServiceImpl implements AiService {
 
     private final WebClient openAiWebClient;
     private final S3Service s3Service;
+    private final NotionService notionService;
     private final AiFeedbackRepository aiFeedbackRepository;
 
     @Value("${openai.model}")
@@ -39,16 +40,34 @@ public class AiServiceImpl implements AiService {
             "messages", List.of(
                 Map.of("role", "system",
                     "content", """
-                            당신은 모델 평가 전문가야.
-                            ## 해야 할 일
-                            1. code와 주석을 보고 학습과정에 대한 log를 분석
-                            2. image_url에 있는 추론에 대한 결과 분석.
-                        
-                            ##  분석 결과
-                            1. 지금까지 작성된 코드는 어떤 방식으로 학습했는지
-                            2. 더 고도화할 수 있는지 피드백 해줘.
-                            3. 피드백 답변은 복사 붙여넣기 했을 때, 노션에 잘 정리 되는 형식으로 해줘.
+                            당신은 머신 러닝 모델 평가 전문가야.
+                            \s
+                             ## 분석 목표
+                             1. 제공된 코드와 학습 로그를 분석하여 모델의 학습 과정을 이해
+                             2. 결과 이미지를 분석하여 모델의 성능과 문제점 파악
+                             3. 구체적이고 실행 가능한 개선 방안 제시
+                            \s
+                             ## 분석 결과 형식
+                             분석 결과는 다음과 같은 구조로 제공해주세요:
+                            \s
+                             # 모델 분석 결과
+                            \s
+                             ## 현재 모델 현황
+                             - 모델 타입: [분석된 모델 타입]
+                             - 학습 방식: [학습 방법 설명]
+                             - 주요 특징: [코드에서 발견된 특징들]
+                            \s
+                             ## 성능 분석
+                             - 강점: [잘 수행된 부분]
+                             - 약점: [개선이 필요한 부분]
+                             - 결과 해석: [이미지 결과 분석]
+                            \s
+                             ## 개선 방안
+                             1. 즉시 적용 가능한 개선사항
+                             2. 중장기 개선 방안
+                             3. 추가 실험 제안
                         """),
+
                 Map.of("role", "user",
                     "content", List.of(
                         Map.of("type", "text",
@@ -73,7 +92,9 @@ public class AiServiceImpl implements AiService {
         AiLog log = new AiLog(feedbackId, dto.getCode(), dto.getLog(), dataUrl, feedback);
         aiFeedbackRepository.save(log);
 
-        return new AiFeedbackResponseDto(feedbackId, feedback);
+        String notionRedirectUrl = notionService.generateAuthUrl(feedbackId);
+
+        return new AiFeedbackResponseDto(feedbackId, feedback, notionRedirectUrl);
     }
 
 }
