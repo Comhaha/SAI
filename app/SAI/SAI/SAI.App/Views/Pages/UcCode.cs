@@ -7,7 +7,6 @@ using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using ScintillaNET;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -16,9 +15,6 @@ namespace SAI.SAI.App.Views.Pages
         private Scintilla scintilla1;
         private bool accumulateCode = false; // 코드 누적 여부 (기본값: 누적하지 않음)
         private string lastAddedCode = string.Empty; // 마지막으로 추가된 코드 저장
-
-        // 인디케이터 상수 정의
-        private const int HIGHLIGHT_INDICATOR = 0; // 하이라이트용 인디케이터
 
         public UcCode()
         {
@@ -82,13 +78,6 @@ namespace SAI.SAI.App.Views.Pages
                 // 여백 스타일 설정 (추가)
                 scintilla1.SetWhitespaceForeColor(true, Color.FromArgb(255, 255, 255));
                 scintilla1.SetWhitespaceBackColor(true, Color.FromArgb(255, 255, 255));
-
-                // 인디케이터 설정 (하이라이트용)
-                scintilla1.Indicators[HIGHLIGHT_INDICATOR].Style = IndicatorStyle.StraightBox;
-                scintilla1.Indicators[HIGHLIGHT_INDICATOR].ForeColor = Color.FromArgb(255, 100, 100); // 빨간색 배경
-                scintilla1.Indicators[HIGHLIGHT_INDICATOR].Alpha = 100; // 약간 투명하게
-                scintilla1.Indicators[HIGHLIGHT_INDICATOR].OutlineAlpha = 200; // 외곽선 투명도
-                scintilla1.Indicators[HIGHLIGHT_INDICATOR].Under = true; // 텍스트 아래에 표시
 
                 // 읽기 전용으로 시작 (필요에 따라 수정 가능)
                 scintilla1.ReadOnly = true;
@@ -154,9 +143,6 @@ namespace SAI.SAI.App.Views.Pages
                 // 마지막으로 추가된 코드 저장
                 lastAddedCode = code ?? string.Empty;
 
-                // 하이라이트 제거
-                ClearHighlight();
-
                 // 읽기 전용 복원
                 if (wasReadOnly)
                     scintilla1.ReadOnly = true;
@@ -172,7 +158,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 하이라이트 제거 메서드 - 인디케이터 사용
+        // 하이라이트 제거 메서드
         public void ClearHighlight()
         {
             try
@@ -180,11 +166,15 @@ namespace SAI.SAI.App.Views.Pages
                 if (scintilla1 == null)
                     return;
 
-                // 인디케이터 방식으로 하이라이트 제거
-                scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                scintilla1.IndicatorClearRange(0, scintilla1.TextLength);
+                // 선택 영역 제거
+                scintilla1.SetSelection(scintilla1.CurrentPosition, scintilla1.CurrentPosition);
 
-                Console.WriteLine("[DEBUG] UcCode: 모든 하이라이트 제거됨");
+                // 선택 색상 초기화
+                scintilla1.SetSelectionBackColor(false, Color.White);
+                scintilla1.SetSelectionForeColor(false, Color.Black);
+
+                // 화면 갱신
+                scintilla1.Refresh();
             }
             catch (Exception ex)
             {
@@ -192,68 +182,13 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 특정 키워드 패턴을 전체 코드에서 하이라이트 - 인디케이터 사용
-        public void HighlightKeywords(string[] keywords)
-        {
-            try
-            {
-                if (scintilla1 == null || keywords == null || keywords.Length == 0)
-                    return;
-
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new Action(() => HighlightKeywords(keywords)));
-                    return;
-                }
-
-                // 하이라이트 제거
-                ClearHighlight();
-
-                foreach (string keyword in keywords)
-                {
-                    if (string.IsNullOrEmpty(keyword))
-                        continue;
-
-                    int pos = 0;
-                    string text = scintilla1.Text;
-
-                    // 키워드 찾기
-                    while (pos < text.Length)
-                    {
-                        int start = text.IndexOf(keyword, pos);
-                        if (start == -1)
-                            break;
-
-                        // 인디케이터로 하이라이트 적용
-                        scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                        scintilla1.IndicatorFillRange(start, keyword.Length);
-
-                        // 다음 검색 위치 이동
-                        pos = start + keyword.Length;
-                    }
-                }
-
-                Console.WriteLine("[DEBUG] UcCode: 키워드 하이라이트 적용됨");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] 키워드 하이라이트 오류: {ex.Message}");
-            }
-        }
-
-        // 선택한 줄에 하이라이트 적용 - 인디케이터 사용
+        // 선택한 줄에 하이라이트 적용
         public void HighlightLine(int lineIndex)
         {
             try
             {
                 if (scintilla1 == null)
                     return;
-
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new Action(() => HighlightLine(lineIndex)));
-                    return;
-                }
 
                 // 라인 인덱스 유효성 검사
                 if (lineIndex < 0)
@@ -265,31 +200,27 @@ namespace SAI.SAI.App.Views.Pages
                 if (lineIndex >= scintilla1.Lines.Count)
                     lineIndex = 0;
 
-                Console.WriteLine($"[DEBUG] 하이라이트: 라인 {lineIndex} 선택");
-
-                // 하이라이트 제거
-                ClearHighlight();
+                Console.WriteLine($"[DEBUG] 하이라이트: 선택 방식 시도, 라인 {lineIndex}");
 
                 // 라인 정보 가져오기
                 int lineStart = scintilla1.Lines[lineIndex].Position;
                 int lineLength = scintilla1.Lines[lineIndex].Length;
 
-                // 인디케이터 적용
-                scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                scintilla1.IndicatorFillRange(lineStart, lineLength);
-
                 // 해당 라인으로 스크롤
                 scintilla1.GotoPosition(lineStart);
-                scintilla1.ScrollCaret();
 
-                // 화면 갱신
+                // 선택 색상 설정
+                scintilla1.SetSelectionBackColor(true, Color.Red);
+                scintilla1.SetSelectionForeColor(true, Color.White);
+
+                // 해당 라인 선택
+                scintilla1.SelectionStart = lineStart;
+                scintilla1.SelectionEnd = lineStart + lineLength;
+
+                Console.WriteLine($"[DEBUG] 선택 완료: 시작={lineStart}, 끝={lineStart + lineLength}");
+
+                // 스타일 강제 적용
                 scintilla1.Refresh();
-                this.Refresh();
-
-                // 포커스 설정
-                scintilla1.Focus();
-
-                Console.WriteLine($"[DEBUG] 선택 완료: 라인={lineIndex}, 위치={lineStart}, 길이={lineLength}");
             }
             catch (Exception ex)
             {
@@ -297,72 +228,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 지정된 라인 범위를 하이라이트하는 메서드 - 인디케이터 사용
-        public void HighlightLineRange(int startLineIndex, int endLineIndex)
-        {
-            try
-            {
-                if (scintilla1 == null)
-                    return;
-
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new Action(() => HighlightLineRange(startLineIndex, endLineIndex)));
-                    return;
-                }
-
-                // 라인 인덱스 유효성 검사
-                if (startLineIndex < 0)
-                    startLineIndex = 0;
-
-                if (scintilla1.Lines.Count == 0)
-                    return;
-
-                if (startLineIndex >= scintilla1.Lines.Count)
-                    startLineIndex = 0;
-
-                if (endLineIndex >= scintilla1.Lines.Count)
-                    endLineIndex = scintilla1.Lines.Count - 1;
-
-                if (endLineIndex < startLineIndex)
-                    endLineIndex = startLineIndex;
-
-                Console.WriteLine($"[DEBUG] 하이라이트: 라인 범위 선택, 시작: {startLineIndex}, 끝: {endLineIndex}");
-
-                // 하이라이트 적용 전에 기존 하이라이트 지우기
-                ClearHighlight();
-
-                // 시작 라인과 끝 라인 정보 가져오기
-                int startPos = scintilla1.Lines[startLineIndex].Position;
-                int endPos = scintilla1.Lines[endLineIndex].Position + scintilla1.Lines[endLineIndex].Length;
-                int length = endPos - startPos;
-
-                // 인디케이터 적용
-                scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                scintilla1.IndicatorFillRange(startPos, length);
-
-                // 해당 위치로 스크롤
-                scintilla1.GotoPosition(startPos);
-                scintilla1.ScrollCaret();
-
-                // 화면 갱신
-                scintilla1.Refresh();
-                this.Refresh();
-
-                // 포커스 설정
-                scintilla1.Focus();
-
-                Console.WriteLine($"[DEBUG] 선택 완료: 시작={startPos}, 끝={endPos}, 길이={length}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] 라인 범위 하이라이트 오류: {ex.Message}");
-                Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-            }
-        }
-
-        // 전체 코드에서 개별 코드 세그먼트를 찾아 하이라이트 - 인디케이터 사용
-        // UcCode.cs의 HighlightCodeSegment 메서드 수정:
+        // 새로운 메서드: 전체 코드에서 개별 코드 세그먼트를 찾아 하이라이트
         public void HighlightCodeSegment(string codeSegment)
         {
             try
@@ -375,177 +241,40 @@ namespace SAI.SAI.App.Views.Pages
                     return;
                 }
 
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new Action(() => HighlightCodeSegment(codeSegment)));
-                    return;
-                }
-
-                // 하이라이트 적용 전에 기존 하이라이트 지우기
+                // 하이라이트 적용 전에 기존 선택 지우기
                 ClearHighlight();
 
                 // 전체 코드에서 코드 세그먼트 문자열 검색
                 string fullCode = scintilla1.Text;
-
-                // 정확한 코드 세그먼트를 찾기 위해 여러 줄 바꿈 형식을 정규화
-                string normalizedFullCode = NormalizeLineEndings(fullCode);
-                string normalizedCodeSegment = NormalizeLineEndings(codeSegment);
-
-                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment);
+                int segmentIndex = fullCode.IndexOf(codeSegment);
 
                 if (segmentIndex >= 0)
                 {
                     Console.WriteLine($"[DEBUG] UcCode: 코드 세그먼트 직접 매칭 찾음 (위치: {segmentIndex})");
 
-                    // 인디케이터 적용
-                    scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                    scintilla1.IndicatorFillRange(segmentIndex, normalizedCodeSegment.Length);
+                    // 선택 스타일 설정
+                    scintilla1.SetSelectionBackColor(true, Color.FromArgb(180, 60, 60)); // 진한 빨간색 배경
+                    scintilla1.SetSelectionForeColor(true, Color.White); // 흰색 텍스트
+
+                    // 세그먼트 선택
+                    scintilla1.SelectionStart = segmentIndex;
+                    scintilla1.SelectionEnd = segmentIndex + codeSegment.Length;
 
                     // 해당 위치로 스크롤
                     scintilla1.GotoPosition(segmentIndex);
                     scintilla1.ScrollCaret();
 
-                    // 화면 갱신
-                    scintilla1.Refresh();
-                    this.Refresh();
-
-                    // 포커스 설정
-                    scintilla1.Focus();
-
                     Console.WriteLine("[DEBUG] UcCode: 코드 세그먼트 하이라이트 완료");
                 }
                 else
                 {
-                    Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함, 부분 매칭 시도");
-
-                    // 부분 매칭 시도
-                    FindAndHighlightText(codeSegment);
+                    Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함");
+                    // 코드 세그먼트를 찾지 못했을 때는 하이라이트 하지 않음
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] UcCode: 코드 세그먼트 하이라이트 중 오류 - {ex.Message}");
-                Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-            }
-        }
-
-        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 추가
-        private string NormalizeLineEndings(string text)
-        {
-            if (string.IsNullOrEmpty(text))
-                return text;
-
-            // 모든 줄 바꿈 문자를 \n으로 통일
-            return text.Replace("\r\n", "\n").Replace("\r", "\n");
-        }
-
-        // 새로운 메서드: Scintilla의 내장 검색 기능을 사용하여 텍스트를 찾고 하이라이트 - 인디케이터 사용
-        public void FindAndHighlightText(string searchText, bool caseSensitive = false)
-        {
-            try
-            {
-                Console.WriteLine($"[DEBUG] UcCode: FindAndHighlightText 호출됨 ({searchText?.Length ?? 0}자)");
-
-                if (scintilla1 == null || string.IsNullOrEmpty(scintilla1.Text) || string.IsNullOrEmpty(searchText))
-                {
-                    Console.WriteLine("[DEBUG] UcCode: 검색 불가능 - Scintilla null 또는 빈 텍스트");
-                    return;
-                }
-
-                if (this.InvokeRequired)
-                {
-                    this.BeginInvoke(new Action(() => FindAndHighlightText(searchText, caseSensitive)));
-                    return;
-                }
-
-                // 하이라이트 적용 전에 기존 하이라이트 지우기
-                ClearHighlight();
-
-                // 검색 범위 설정 (전체 문서)
-                scintilla1.TargetStart = 0;
-                scintilla1.TargetEnd = scintilla1.TextLength;
-
-                // 검색 옵션 설정
-                scintilla1.SearchFlags = caseSensitive ?
-                    ScintillaNET.SearchFlags.MatchCase :
-                    ScintillaNET.SearchFlags.None;
-
-                // 검색 수행
-                int pos = scintilla1.SearchInTarget(searchText);
-                if (pos >= 0)
-                {
-                    // 검색된 텍스트 위치 가져오기
-                    int startPos = scintilla1.TargetStart;
-                    int endPos = scintilla1.TargetEnd;
-                    int length = endPos - startPos;
-
-                    // 인디케이터 적용
-                    scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                    scintilla1.IndicatorFillRange(startPos, length);
-
-                    // 해당 위치로 스크롤
-                    scintilla1.GotoPosition(startPos);
-                    scintilla1.ScrollCaret();
-
-                    // 화면 갱신
-                    scintilla1.Refresh();
-                    this.Refresh();
-
-                    // 포커스 설정
-                    scintilla1.Focus();
-
-                    // 찾은 위치의 라인 번호 계산 (로깅용, +1은 1-기반 라인 번호를 위해)
-                    int line = scintilla1.LineFromPosition(startPos) + 1;
-                    Console.WriteLine($"[DEBUG] 검색 문자열 '{searchText.Substring(0, Math.Min(20, searchText.Length))}...' 발견: 라인 {line}, 위치 {startPos}~{endPos}");
-                    return;
-                }
-
-                // 정확한 문자열 매칭이 실패한 경우 줄별로 포함 여부 확인하는 대체 검색 방법
-                Console.WriteLine($"[DEBUG] 정확한 문자열 매칭 실패, 대체 검색 방법 시도");
-                string fullText = scintilla1.Text;
-                string[] lines = fullText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
-                // 각 줄에 대해 검색 텍스트의 일부가 포함되어 있는지 확인
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    string line = lines[i];
-
-                    // 텍스트의 처음 몇 단어만 검색 (주석의 경우 유용)
-                    string[] words = searchText.Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (words.Length > 0)
-                    {
-                        string firstFewWords = string.Join(" ", words.Take(Math.Min(3, words.Length))); // 처음 3단어
-                        if (line.Contains(firstFewWords))
-                        {
-                            int lineStartPos = scintilla1.Lines[i].Position;
-                            int lineLength = scintilla1.Lines[i].Length;
-
-                            // 인디케이터 적용
-                            scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                            scintilla1.IndicatorFillRange(lineStartPos, lineLength);
-
-                            // 해당 위치로 스크롤
-                            scintilla1.GotoPosition(lineStartPos);
-                            scintilla1.ScrollCaret();
-
-                            // 화면 갱신
-                            scintilla1.Refresh();
-                            this.Refresh();
-
-                            // 포커스 설정
-                            scintilla1.Focus();
-
-                            Console.WriteLine($"[DEBUG] 대체 검색 방법: 라인 {i + 1}에서 일부 텍스트 '{firstFewWords}' 발견");
-                            return;
-                        }
-                    }
-                }
-
-                Console.WriteLine($"[WARNING] 검색 문자열을 찾을 수 없습니다.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] UcCode: 문자열 검색 및 하이라이트 중 오류 - {ex.Message}");
                 Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
             }
         }
@@ -569,9 +298,6 @@ namespace SAI.SAI.App.Views.Pages
 
                         // 마지막으로 추가된 코드 저장
                         lastAddedCode = value ?? string.Empty;
-
-                        // 하이라이트 제거
-                        ClearHighlight();
 
                         // 읽기 전용 복원
                         if (wasReadOnly)
@@ -640,9 +366,6 @@ namespace SAI.SAI.App.Views.Pages
                 // 마지막으로 추가된 코드 저장
                 lastAddedCode = code;
 
-                // 하이라이트 제거
-                ClearHighlight();
-
                 // 읽기 전용 복원
                 if (wasReadOnly)
                     scintilla1.ReadOnly = true;
@@ -695,55 +418,16 @@ namespace SAI.SAI.App.Views.Pages
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Console.WriteLine("[DEBUG] UcCode.OnLoad 호출됨");
-
-            // 테스트 코드는 개발 중에만 필요하고 실제 사용 시에는 제거
-            // 개발 환경에서만 활성화하려면 DEBUG 조건부 컴파일 지시문 사용
-#if DEBUG
-            if (scintilla1 != null && string.IsNullOrEmpty(scintilla1.Text))
+            if (scintilla1 != null)
             {
-                scintilla1.Text = "# 코드가 여기에 표시됩니다";
+                scintilla1.Text = "테스트 코드\nprint('Hello')";
+                scintilla1.SetSelectionBackColor(true, Color.Red);
+                scintilla1.SetSelectionForeColor(true, Color.White);
+                scintilla1.SelectionStart = 0;
+                scintilla1.SelectionEnd = scintilla1.TextLength;
                 scintilla1.GotoPosition(0);
                 scintilla1.ScrollCaret();
                 scintilla1.Refresh();
-            }
-#endif
-        }
-
-        // 디버깅용 테스트 메서드 추가
-        public void TestHighlight()
-        {
-            try
-            {
-                if (scintilla1 == null || string.IsNullOrEmpty(scintilla1.Text))
-                    return;
-
-                // 하이라이트 제거
-                ClearHighlight();
-
-                // 10자 정도 하이라이트 설정
-                int length = Math.Min(10, scintilla1.TextLength);
-
-                // 인디케이터 적용
-                scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                scintilla1.IndicatorFillRange(0, length);
-
-                // 처음으로 스크롤
-                scintilla1.GotoPosition(0);
-                scintilla1.ScrollCaret();
-
-                // 화면 갱신
-                scintilla1.Refresh();
-                this.Refresh();
-
-                // 포커스 설정
-                scintilla1.Focus();
-
-                Console.WriteLine("[DEBUG] 테스트 하이라이트 적용됨");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] 테스트 하이라이트 중 오류: {ex.Message}");
             }
         }
     }
