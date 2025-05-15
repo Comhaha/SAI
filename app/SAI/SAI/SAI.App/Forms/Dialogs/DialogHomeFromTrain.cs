@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogHomeFromTrain : Form
 	{
+		private DialogLoadPagePresenter presenter;
+
 		public DialogHomeFromTrain()
 		{
 			InitializeComponent();
@@ -36,6 +40,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnClose.DisabledState.FillColor = Color.Transparent;
 			btnClose.HoverState.FillColor = Color.Transparent;
 			btnClose.Click += (s, e) => { this.Close(); };
+
 			// btnClose 마우스 입력 될 때
 			btnClose.MouseEnter += (s, e) =>
 			{
@@ -54,7 +59,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.CheckedState.FillColor = Color.Transparent;
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
-			btnOk.Click += (s, e) => { System.Windows.Forms.Application.Exit(); };
+			btnOk.Click += (s, e) =>
+			{
+				var view = this.Owner as IMainView;
+				presenter = new DialogLoadPagePresenter(view);
+				presenter.clickFinish();
+				this.Close();
+			};
 			// btnOk 마우스 입력 될 때
 			btnOk.MouseEnter += (s, e) =>
 			{
@@ -88,9 +99,10 @@ namespace SAI.SAI.App.Forms.Dialogs
 			};
 		}
 
-        private void DialogHomeFromTrain_Load(object sender, EventArgs e)
-        {
-
-        }
-    }
+		private void DialogHomeFromTrain_Load(object sender, EventArgs e)
+		{
+			var view = this.Owner as IMainView;
+			presenter = new DialogLoadPagePresenter(view);
+		}
+	}
 }
