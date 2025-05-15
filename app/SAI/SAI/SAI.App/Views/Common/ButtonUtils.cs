@@ -14,8 +14,11 @@ namespace SAI.SAI.App.Views.Common
             Image hoverImage = (Image)Properties.Resources.ResourceManager.GetObject(hoverImageName);
             Image defaultImage = (Image)Properties.Resources.ResourceManager.GetObject(defaultImageName);
 
-            if (hoverImage == null || defaultImage == null)
-                throw new ArgumentException("이미지 리소스 이름이 잘못되었습니다.");
+            if (hoverImage == null)
+                throw new ArgumentException($"'{hoverImageName}' 이미지 리소스를 찾을 수 없습니다.", nameof(hoverImageName));
+
+            if (defaultImage == null)
+                throw new ArgumentException($"'{defaultImageName}' 이미지 리소스를 찾을 수 없습니다.", nameof(defaultImageName));
 
             btn.MouseEnter += (s, e) => btn.BackgroundImage = hoverImage;
             btn.MouseLeave += (s, e) => btn.BackgroundImage = defaultImage;

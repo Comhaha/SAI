@@ -65,6 +65,12 @@ namespace SAI.SAI.App.Views.Pages
             };
 
             ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(btnInfoThreshold,
+  "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+
+            ToolTipUtils.CustomToolTip(btnInfoGraph,
+              "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
+            ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
 
             ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
             ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
@@ -73,6 +79,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
 
             InitializeWebView2();
 
