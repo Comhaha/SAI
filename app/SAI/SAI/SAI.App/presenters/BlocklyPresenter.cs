@@ -179,20 +179,20 @@ namespace SAI.SAI.App.Presenters
             blocklyModel.blockTypes = blockTypes;
 
             // 잘 들어왔는지 확인용 <- (삭제요망)
-   //         string message = "";
-   //         foreach(var types in blocklyModel.blockTypes)
-			//{
-			//	message += "type: " + types.type + "\n";
-			//	if (types.children != null)
-			//	{
-			//		foreach (var children in types.children)
-			//		{				
-   //     				message += "children: " + children.type + "\n";
-			//		}
-			//	}
-			//}
-			//MessageBox.Show(message);
-		}
+            //string message = "";
+            //foreach (var types in blocklyModel.blockTypes)
+            //{
+            //    message += "type: " + types.type + "\n";
+            //    if (types.children != null)
+            //    {
+            //        foreach (var children in types.children)
+            //        {
+            //            message += "children: " + children.type + "\n";
+            //        }
+            //    }
+            //}
+            //MessageBox.Show(message);
+        }
     }
 }
 

@@ -11,4 +11,10 @@ public interface DownloadApi {
 
     @GetMapping
     ResponseEntity<BaseResponse<URL>> redirectToPresignedUrl();
+
+    @GetMapping("/tutorial")
+    ResponseEntity<BaseResponse<URL>> redirectTutorialDataToPresignedUrl();
+
+    @GetMapping("/practice")
+    ResponseEntity<BaseResponse<URL>> redirectPracticeDataToPresignedUrl();
 }

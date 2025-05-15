@@ -56,6 +56,7 @@ public class NotionExportService {
                     .success(true)
                     .message("기존 데이터베이스에 페이지가 추가되었습니다.")
                     .status(true)
+                    .url(pageUrl)
                     .build();
             }
         } catch (Exception e) {
@@ -101,6 +102,7 @@ public class NotionExportService {
                     .success(true)
                     .message("기존 페이지의 하위 페이지로 추가되었습니다.")
                     .status(true)
+                    .url(pageUrl)
                     .build();
             }
         } catch (Exception e) {
@@ -159,6 +161,7 @@ public class NotionExportService {
                     .success(true)
                     .message("워크스페이스에 새 페이지로 내보내기가 완료되었습니다.")
                     .status(true)
+                    .url(pageUrl)
                     .build();
             }
         } catch (Exception e) {
