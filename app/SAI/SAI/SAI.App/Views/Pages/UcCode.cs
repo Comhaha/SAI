@@ -362,6 +362,7 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 전체 코드에서 개별 코드 세그먼트를 찾아 하이라이트 - 인디케이터 사용
+        // UcCode.cs의 HighlightCodeSegment 메서드 수정:
         public void HighlightCodeSegment(string codeSegment)
         {
             try
@@ -385,7 +386,12 @@ namespace SAI.SAI.App.Views.Pages
 
                 // 전체 코드에서 코드 세그먼트 문자열 검색
                 string fullCode = scintilla1.Text;
-                int segmentIndex = fullCode.IndexOf(codeSegment);
+
+                // 정확한 코드 세그먼트를 찾기 위해 여러 줄 바꿈 형식을 정규화
+                string normalizedFullCode = NormalizeLineEndings(fullCode);
+                string normalizedCodeSegment = NormalizeLineEndings(codeSegment);
+
+                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment);
 
                 if (segmentIndex >= 0)
                 {
@@ -393,7 +399,7 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 인디케이터 적용
                     scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
-                    scintilla1.IndicatorFillRange(segmentIndex, codeSegment.Length);
+                    scintilla1.IndicatorFillRange(segmentIndex, normalizedCodeSegment.Length);
 
                     // 해당 위치로 스크롤
                     scintilla1.GotoPosition(segmentIndex);
@@ -410,8 +416,10 @@ namespace SAI.SAI.App.Views.Pages
                 }
                 else
                 {
-                    Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함");
-                    // 코드 세그먼트를 찾지 못했을 때는 하이라이트 하지 않음
+                    Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함, 부분 매칭 시도");
+
+                    // 부분 매칭 시도
+                    FindAndHighlightText(codeSegment);
                 }
             }
             catch (Exception ex)
@@ -419,6 +427,16 @@ namespace SAI.SAI.App.Views.Pages
                 Console.WriteLine($"[ERROR] UcCode: 코드 세그먼트 하이라이트 중 오류 - {ex.Message}");
                 Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
             }
+        }
+
+        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 추가
+        private string NormalizeLineEndings(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            // 모든 줄 바꿈 문자를 \n으로 통일
+            return text.Replace("\r\n", "\n").Replace("\r", "\n");
         }
 
         // 새로운 메서드: Scintilla의 내장 검색 기능을 사용하여 텍스트를 찾고 하이라이트 - 인디케이터 사용
