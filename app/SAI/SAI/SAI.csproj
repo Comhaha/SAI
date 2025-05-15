@@ -428,6 +428,17 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\lbl_report.png" />
+    <None Include="SAI.App\Resources\Images\lbl_visualize_result.png" />
+    <None Include="SAI.App\Resources\Images\lbl_start.png" />
+    <None Include="SAI.App\Resources\Images\lbl_run.png" />
+    <None Include="SAI.App\Resources\Images\lbl_result_graph.png" />
+    <None Include="SAI.App\Resources\Images\lbl_pip_install.png" />
+    <None Include="SAI.App\Resources\Images\lbl_model_inference.png" />
+    <None Include="SAI.App\Resources\Images\lbl_machine_learning.png" />
+    <None Include="SAI.App\Resources\Images\lbl_load_model.png" />
+    <None Include="SAI.App\Resources\Images\lbl_load_dataset.png" />
+    <None Include="SAI.App\Resources\Images\lbl_img_path.png" />
     <None Include="SAI.App\Resources\Images\btnLayerClicked.png" />
     <None Include="SAI.App\Resources\Images\btnLayer.png" />
     <None Include="SAI.App\Resources\Images\btnLoadModelWithLayerClicked.png" />
