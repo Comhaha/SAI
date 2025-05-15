@@ -9,10 +9,9 @@ namespace SAI.SAI.App.Views.Pages
     public partial class UcBlockGuide : UserControl
     {
         private readonly IMainView mainView;
-        // 현재 이미지 인덱스
+        
         private int currentIndex = 0;
 
-        // 이미지 리소스 이름 배열
         private string[] imageNames = new string[]
         {
             "bg_blockGuide1",
@@ -30,10 +29,10 @@ namespace SAI.SAI.App.Views.Pages
             new Point(1201, 640), // 1번 next 버튼 위치
             new Point(812, 278), // 2번 
             new Point(1181, 451), // 3번 
-            new Point(855, 400), // 4번 
-            new Point(700, 352), // 5번 
-            new Point(750, 599), // 6번 
-            new Point(869, 191)  // 7번 
+            new Point(749, 346), // 4번 
+            new Point(746, 352), // 5번 
+            new Point(796, 599), // 6번 
+            new Point(915, 191)  // 7번 
         };
 
         private Point[] preButtonPositions = new Point[]
@@ -41,21 +40,21 @@ namespace SAI.SAI.App.Views.Pages
             new Point(1155, 640), // 1번 pre 버튼 위치
             new Point(766, 278), // 2번
             new Point(1135, 451), // 3번 
-            new Point(749, 346), // 4번
-            new Point(746, 352), // 5번 
-            new Point(796, 599), // 6번 
-            new Point(915, 191)  // 7번 
+            new Point(703, 346), // 4번
+            new Point(700, 352), // 5번 
+            new Point(750, 599), // 6번 
+            new Point(869, 191)  // 7번 
         };
 
         private Point[] closeButtonPositions = new Point[]
         {
-            new Point(1194, 370), // 1번 close 버튼 위치
-            new Point(805, 151), // 2번
-            new Point(1167, 151), // 3번
-            new Point(742, 151), // 4번
-            new Point(739, 152), // 5번
-            new Point(789, 472), // 6번
-            new Point(908, 67)  // 7번
+            new Point(1201, 375), // 1번 close 버튼 위치
+            new Point(812, 158), // 2번
+            new Point(1181, 158), // 3번
+            new Point(749, 158), // 4번
+            new Point(746, 159), // 5번
+            new Point(796, 479), // 6번
+            new Point(915, 74)  // 7번
         };
 
         public UcBlockGuide(IMainView view)
@@ -74,14 +73,13 @@ namespace SAI.SAI.App.Views.Pages
 
         private void SetupControl()
         {
-            // PictureBox 설정 수정
             pictureBox.Size = this.Size;
             pictureBox.Location = new Point(0, 0);  
             pictureBox.Dock = DockStyle.Fill; 
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.BackColor = Color.Transparent;
 
-            // 버튼들을 pictureBox 위로
+            // 버튼들 pictureBox 위로
             btnNext.Parent = pictureBox;
             btnPre.Parent = pictureBox;
             btnClose.Parent = pictureBox;
