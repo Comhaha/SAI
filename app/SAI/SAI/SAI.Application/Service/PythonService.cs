@@ -73,7 +73,7 @@ namespace SAI.SAI.Application.Service
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    CreateNoWindow = false,
+                    CreateNoWindow = true,
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardErrorEncoding = Encoding.UTF8
                 };
