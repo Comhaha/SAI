@@ -34,7 +34,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
 		private void guna2Button1_Click(object sender, EventArgs e)
 		{
-			mainView.LoadPage(new UcTutorialBlockCode(mainView));
+			mainView.LoadPage(new UcBlockGuide(mainView));
 			this.Close();
 		}
     }

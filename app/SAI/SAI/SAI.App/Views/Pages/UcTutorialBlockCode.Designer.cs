@@ -38,6 +38,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
+            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
             this.btnModelInference = new Guna.UI2.WinForms.Guna2Button();
             this.btnImgPath = new Guna.UI2.WinForms.Guna2Button();
@@ -61,7 +62,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
-            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo0Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -195,6 +195,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlockList.Controls.Add(this.btnBlockStart);
             resources.ApplyResources(this.pBlockList, "pBlockList");
             this.pBlockList.Name = "pBlockList";
+            // 
+            // pTxtDescription
+            // 
+            this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_img_path;
+            resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
+            this.pTxtDescription.Name = "pTxtDescription";
             // 
             // btnVisualizeResult
             // 
@@ -467,12 +473,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.ForeColor = System.Drawing.Color.White;
             this.btnRunModel.Name = "btnRunModel";
             this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
-            // 
-            // pTxtDescription
-            // 
-            this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_img_path;
-            resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
-            this.pTxtDescription.Name = "pTxtDescription";
             // 
             // pboxTodo2Done
             // 

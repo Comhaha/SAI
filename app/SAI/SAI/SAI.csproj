@@ -790,6 +790,13 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_home_from_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_quit_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_setting.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide1.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide2.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide3.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide4.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide5.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
