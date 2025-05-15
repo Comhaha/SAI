@@ -60,7 +60,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.pTopBlock = new System.Windows.Forms.Panel();
 			this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
 			this.ibtnPreBlock = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.ibtnTrashBlock = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.ibtnNextBlock = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -408,7 +407,6 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.pTopBlock, "pTopBlock");
 			this.pTopBlock.Controls.Add(this.btnRunModel);
 			this.pTopBlock.Controls.Add(this.ibtnPreBlock);
-			this.pTopBlock.Controls.Add(this.ibtnTrashBlock);
 			this.pTopBlock.Controls.Add(this.ibtnNextBlock);
 			this.pTopBlock.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.pTopBlock.Name = "pTopBlock";
@@ -438,19 +436,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.ibtnPreBlock.Name = "ibtnPreBlock";
 			this.ibtnPreBlock.PressedState.ImageSize = new System.Drawing.Size(15, 10);
 			this.ibtnPreBlock.Click += new System.EventHandler(this.ibtnPreBlock_Click);
-			// 
-			// ibtnTrashBlock
-			// 
-			this.ibtnTrashBlock.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.ibtnTrashBlock.HoverState.ImageSize = new System.Drawing.Size(13, 14);
-			this.ibtnTrashBlock.Image = global::SAI.Properties.Resources.btn_trash_block;
-			this.ibtnTrashBlock.ImageOffset = new System.Drawing.Point(0, 0);
-			this.ibtnTrashBlock.ImageRotate = 0F;
-			this.ibtnTrashBlock.ImageSize = new System.Drawing.Size(13, 14);
-			resources.ApplyResources(this.ibtnTrashBlock, "ibtnTrashBlock");
-			this.ibtnTrashBlock.Name = "ibtnTrashBlock";
-			this.ibtnTrashBlock.PressedState.ImageSize = new System.Drawing.Size(13, 14);
-			this.ibtnTrashBlock.Click += new System.EventHandler(this.btnTrashBlock_Click);
 			// 
 			// ibtnNextBlock
 			// 
@@ -868,7 +853,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCopy;
         private System.Windows.Forms.Panel pTopBlock;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnPreBlock;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnTrashBlock;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnNextBlock;
         private Guna.UI2.WinForms.Guna2Panel pBlock;
         private Guna.UI2.WinForms.Guna2Panel pCode;

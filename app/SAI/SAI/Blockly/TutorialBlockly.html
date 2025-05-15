@@ -75,7 +75,8 @@
         }
         
         function addBlock(type) {
-            const block = workspace.newBlock(type);
+			const block = workspace.newBlock(type);
+			block.setDeletable(false); // 블록 삭제 가능
             block.initSvg();
             block.render();
         }
@@ -100,11 +101,6 @@
                     break;
 				}
 			}
-        }
-
-        // 모든 블럭 삭제
-        function clear() {
-			workspace.clear();
         }
 
         // 이전 상태로 되돌리기(ctrl+z)

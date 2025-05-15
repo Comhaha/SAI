@@ -64,7 +64,6 @@ namespace SAI.SAI.App.Views.Pages
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
 			undoCount = 0;
-			ibtnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
 
 			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
 
@@ -644,17 +643,6 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			undoCount--;
 			webViewblock.ExecuteScriptAsync($"redo()");
-
-			if(undoCount == 0)
-			{
-				ibtnNextBlock.Visible = false;
-				ibtnPreBlock.Visible = true;
-			}
-			else
-			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
-			}
 		}
 
 		// JS 함수 호출 = 되돌리기
@@ -664,13 +652,6 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				undoCount++;
 				webViewblock.ExecuteScriptAsync($"undo()");
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = true;
-			}
-			else
-			{
-				ibtnNextBlock.Visible = true;
-				ibtnPreBlock.Visible = false;
 			}
 		}
         private void pSideInfer_Paint(object sender, PaintEventArgs e)
