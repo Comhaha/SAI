@@ -73,11 +73,22 @@
             document.getElementById('customAlert').style.display = 'none';
         }
 
-        function addBlock(type) {
-            const block = workspace.newBlock(type);
-            block.initSvg();
-            block.render();
-        }
+		function addBlock(type) {
+			const block = workspace.newBlock(type);
+			block.setDeletable(false); // 블록 삭제 가능
+			block.initSvg();
+			block.render();
+
+			if (lastCreatedBlockId) {
+				const lastBlock = workspace.getBlockById(lastCreatedBlockId);
+				if (lastBlock) {
+					const pos = lastBlock.getRelativeToSurfaceXY();
+					const height = lastBlock.getHeightWidth().height;
+					block.moveBy(pos.x, pos.y + height + 10);  // 마지막 생성 블럭 바로 아래에 위치
+					return;
+				}
+			}
+		}
 
 		function sendCode(code) {
 			window.chrome.webview.postMessage({
