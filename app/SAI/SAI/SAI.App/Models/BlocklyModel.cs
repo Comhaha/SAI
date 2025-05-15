@@ -20,6 +20,12 @@ namespace SAI.SAI.App.Models
 		// 개별 블록 코드
 		private string _blockCode;
 
+		// 이미지 경로
+		private string _imgPath;
+
+		// start 블럭에 붙어있는 모든 블럭들
+		private List<BlockInfo> _blockTypes;
+
 		// private 생성자 -> 외부에서 생성 못하게.
 		private BlocklyModel()
 		{
@@ -65,6 +71,35 @@ namespace SAI.SAI.App.Models
 			}
 		}
 
+
+		public string imgPath
+		{
+			get => _imgPath;
+			set
+			{
+				if (_imgPath != value)
+				{
+					_imgPath = value;
+				}
+			}
+		}
+		public class BlockInfo
+		{
+			public string type { get; set; }
+			public List<BlockInfo> children { get; set; }  // 있을 수도 없을 수도 있음
+		}
+
+		public List<BlockInfo> blockTypes
+		{
+			get => _blockTypes;
+			set
+			{
+				if (_blockTypes != value)
+				{
+					_blockTypes = value;
+				}
+			}
+		}
 
 	}
 }

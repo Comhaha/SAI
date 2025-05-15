@@ -73,6 +73,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xaml" />
@@ -246,6 +247,12 @@
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeBlockList.Designer.cs">
+      <DependentUpon>UcPracticeBlockList.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -359,6 +366,9 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
       <DependentUpon>UcCode.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockList.resx">
+      <DependentUpon>UcPracticeBlockList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
       <DependentUpon>UcTab.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +427,21 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btnLayerClicked.png" />
+    <None Include="SAI.App\Resources\Images\btnLayer.png" />
+    <None Include="SAI.App\Resources\Images\btnLoadModelWithLayerClicked.png" />
+    <None Include="SAI.App\Resources\Images\btnLoadModelWithLayer.png" />
+    <None Include="SAI.App\Resources\Images\btnAccordionShow.png" />
+    <None Include="SAI.App\Resources\Images\btnAccordionClosed.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockStart.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockResultVisualize.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockResultCheck.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockPip.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockModelInference.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockLoadModel.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockLoadData.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockLearning.png" />
+    <None Include="SAI.App\Resources\Images\txtBlockImgPath.png" />
     <None Include="SAI.App\Resources\Images\btn_save_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_close_clicked_setting.png" />
     <None Include="SAI.App\Resources\Images\btn_save.png" />
@@ -578,7 +603,6 @@
     <None Include="Resources\1.jpg.bmp" />
     <None Include="Resources\Image1.bmp" />
     <None Include="Resources\dog.bmp" />
-    <None Include="Resources\annotation 모달.png" />
     <None Include="Resources\내부 박스.png" />
     <None Include="Resources\Frame＿blue.png" />
     <None Include="Resources\Frame_green.png" />
@@ -655,6 +679,13 @@
     <None Include="Resources\toolVClick.png" />
     <None Include="Resources\toolVHover.png" />
     <None Include="Resources\NoCircleArrowR.png" />
+    <None Include="Resources\toastPopupF.png" />
+    <None Include="Resources\toastPopupS.png" />
+    <None Include="Resources\annotation 모달.png" />
+    <None Include="Resources\btn_cancel_click.png" />
+    <None Include="Resources\btn_close_click.png" />
+    <None Include="Resources\btn_save_click.png" />
+    <None Include="Resources\btn_close_pink.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
