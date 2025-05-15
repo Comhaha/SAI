@@ -451,6 +451,7 @@ namespace SAI.SAI.App.Views.Pages
             bool isCurrentImageLabeled = false;
             double currentAccuracy = 0;
             nextBtn.Enabled = false;
+            preBtn.Enabled = false;
 
             // 현재 이미지에 대한 라벨링 및 정확도 확인
             if (imageAccuracies.ContainsKey(currentImageIndex))
@@ -476,42 +477,35 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel == "Classification" && currentAccuracy >= 0)
+            if (currentLevel == "Classification" && currentAccuracy >= 1)
             {
-                //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
-
-                // 이미지를 통과 상태로 설정 (초록불)
-                // imagePassedStatus[currentImageIndex] = true;
+                if (currentImageIndex >1)
+                {
+                    preBtn.Enabled = true;
+                }
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex != 8)
             {
-                //nextBtn.Enabled = currentAccuracy >= 90.0; 임시 50
+                //임시 50
                 nextBtn.Enabled = true;
-
-                // 이미지를 통과 상태로 설정
-                // imagePassedStatus[currentImageIndex] = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex == 8)
             {
-                // imagePassedStatus[currentImageIndex] = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (0 < currentAccuracy && currentAccuracy < 50)
             {
-                // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
             }
             else
             {
-                // 아직 통과하지 못한 상태면 노란색으로 표시
-                // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = 0;
                 UpdateProgressIndicator(currentImageIndex, 0);
             }
@@ -519,19 +513,14 @@ namespace SAI.SAI.App.Views.Pages
             // 첫 번째 이미지일 경우 이전 버튼 비활성
             if (currentImageIndex == 0)
             {
-                preBtn.Enabled = false;
                 preBtn.Visible = false;
-                preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
             }
             else
             {
                 preBtn.Enabled = true;
                 preBtn.Visible = true;
-                preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
             }
 
-            // 버튼 시각적 업데이트
-            nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
             // 도움 버튼 시각적 업데이트
             UpdateQuestionButton();
             // 모든 이미지가 완료되었는지 확인
@@ -579,25 +568,19 @@ namespace SAI.SAI.App.Views.Pages
 
             if (progressControl != null)
             {
-                // // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
-                // progressControl.FillColor = passed == 1 ? Color.Green : Color.Yellow;
-
                 // 이미지를 통과했으면 통과 상태 기록
                 if (passed == 1)
                 {
-                    // imageStatusCode[imageIndex] = 1;
                     progressControl.FillColor = Color.Green;
                     ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
                 }
                 else if (passed == -1)
                 {
-                    // imageStatusCode[imageIndex] = -1;
                     progressControl.FillColor = Color.Red;
                     ShowToast(false); // 실패 시 빨간색 토스트 메시지 표시
                 }
                 else
                 {
-                    // imageStatusCode[imageIndex] = 0;
                     progressControl.FillColor = Color.Yellow;
                 }
             }
@@ -1335,13 +1318,11 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     nextBtn.Enabled = false;
                     nextBtn.Visible = false; // 마지막 이미지일 경우 다음 버튼 비활성화
-                    nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
                 }
                 else
                 {
                     nextBtn.Enabled = true;
                     nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                    nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
                 }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
@@ -1384,22 +1365,19 @@ namespace SAI.SAI.App.Views.Pages
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
                 
-                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
-                if (currentImageIndex == 0)
-                {
-                    preBtn.Enabled = false;
-                    preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
-                }
-                else
-                {
-                    preBtn.Enabled = true;
-                    preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
-                }
+                //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                //if (currentImageIndex == 0)
+                //{
+                //    preBtn.Visible = true;
+                //}
+                //else
+                //{
+                //    preBtn.Visible = true;
+                //}
                 
-                // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
-                nextBtn.Enabled = true;
-                nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
+                //// 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
+                //nextBtn.Enabled = true;
+                //nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                 
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화

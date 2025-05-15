@@ -117,10 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="resource.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EQAACxEBf2RfkQAAAyxJREFUWEe9WT2u4kAM5giUwCRs0qZ5TwiBRLMraIgoHh0VWij56RBcgAOEA8AB
+        oHkdlBTQAwdA6blEVl8ewwYngZmQYOkrUDz2l7HH9oRUKoKk0+k0Y+xvoVCwBoPBYTwe29Pp1OHA706n
+        s8XzXC73lc1mf1EbiYmiKL/hHESOx6NzuVyeYrfbObPZzKlWq98gTG3GJpzcer32kZAB1rdaLZsx9kF9
+        RBaEFSFbLpc+h69gPp87pmlasE99Skkmk9Hw1qJhlQXs1ut1O3K+giCSnxpOAqPRSJ7oOwlySBFFjpim
+        +VaCHEgtIaKNRsNKKgefAX4Nw3hMVNf1j8Vi4VssgvP57LTbbUdVVaff7wvXUApUEVVV7dBTj+2mi0Sw
+        2WycUqnkEuQol8tuEae6Img2mw5jzKL8UqqqfkUp1OgkXnIU6Ex0zTOAB9aigdyRRMuiyo+AcOKNKakg
+        1Go16fDDtqIo2xtBlBzsCFUMA/LGMAwfmUdA+GXyHRHAuttuItSi+cMXR4Vo+LHzV5I/u1ksFi2qFAbq
+        NAqozTDwaLknvdvtbqlCGKjDKKA2w8BLGubWlEwLpA6jgNoMQ6/Xc/XdciSaJwB1GAXUZhg8h+cQC0nk
+        D8oGBy3ur5BEB4qFJC0vGGqpzgsknVhyMgmSPCddksPh8EAVwkAdJknS29FiqZNJkPR0NTvFGOucTief
+        UhCow6RIogNyfbfraJqWFj081GFSJL3T1W1sE+063mT2YrVa3enxcYsCAzG1GQRSwn4+KGDaiDJPJgEM
+        0d4X03X9/3VCdDeTBplTv28E+W7G/aVCFjSXFUX5c0cSgnIkO0XHBfgluWhTfq7gpEe9kL0KXDO8u8gY
+        +6T8bqJpmjaZTN5KlFaNwNsilXcSpQQRZkSUcgoUEMUnl6RyNOTGad+VHBEB0UqlYtOO8ipCbpzyBLmA
+        KAzgrVFoqUMZYH3A7r1GkAtyRFVVCwZxh0Zv3e/3PhJBwPCC2SCEnHtIhHNQRDRN+8Rbcwf82oCe7P33
+        Ab9x2wsIqRfbwGIdl8A4WlaAYxEkS47KNV+b11TYenf5Cjufzx/wHHNr1LD+A4iNak7XLI9DAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
   <metadata name="classBtn.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="levelPanel.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOMAAABBCAYAAAAjWhOpAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -265,4 +285,7 @@
         RU5ErkJggg==
 </value>
   </data>
+  <metadata name="classBtn.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

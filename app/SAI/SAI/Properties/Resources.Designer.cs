@@ -743,6 +743,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_close_pink_click {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_pink_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_close_select_model {
             get {
                 object obj = ResourceManager.GetObject("btn_close_select_model", resourceCulture);
@@ -956,6 +966,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_faster_hover {
             get {
                 object obj = ResourceManager.GetObject("btn_faster_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_go_model {
+            get {
+                object obj = ResourceManager.GetObject("btn_go_model", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_go_model_hover {
+            get {
+                object obj = ResourceManager.GetObject("btn_go_model_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

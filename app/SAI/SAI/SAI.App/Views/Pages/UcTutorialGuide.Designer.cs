@@ -30,6 +30,7 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialGuide));
             this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.goLabelingBtn = new Guna.UI2.WinForms.Guna2CircleButton();
@@ -48,7 +49,7 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
-            this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverRDeep;
+            this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
             this.nextBtn.Image = global::SAI.Properties.Resources.NoCircleArrowR;
             this.nextBtn.ImageSize = new System.Drawing.Size(70, 70);
             this.nextBtn.Location = new System.Drawing.Point(990, 325);
@@ -70,7 +71,7 @@ namespace SAI.SAI.App.Views.Pages
             this.preBtn.FillColor = System.Drawing.Color.Transparent;
             this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.preBtn.ForeColor = System.Drawing.Color.White;
-            this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverLDeep;
+            this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverL;
             this.preBtn.Image = global::SAI.Properties.Resources.NoCircleArrowL;
             this.preBtn.ImageSize = new System.Drawing.Size(70, 70);
             this.preBtn.Location = new System.Drawing.Point(220, 325);
@@ -94,7 +95,7 @@ namespace SAI.SAI.App.Views.Pages
             this.goLabelingBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.goLabelingBtn.ForeColor = System.Drawing.Color.White;
             this.goLabelingBtn.HoverState.Image = global::SAI.Properties.Resources.btn_goLabelingHover;
-            this.goLabelingBtn.Image = global::SAI.Properties.Resources.btn_goLabeling;
+            this.goLabelingBtn.Image = ((System.Drawing.Image)(resources.GetObject("goLabelingBtn.Image")));
             this.goLabelingBtn.ImageSize = new System.Drawing.Size(168, 38);
             this.goLabelingBtn.Location = new System.Drawing.Point(905, 541);
             this.goLabelingBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
