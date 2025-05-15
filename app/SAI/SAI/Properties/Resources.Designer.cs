@@ -593,6 +593,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_right {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_title {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_title", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_white_titlebar_notion {
             get {
                 object obj = ResourceManager.GetObject("bg_white_titlebar_notion", resourceCulture);
@@ -2876,6 +2896,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap titlebar {
             get {
                 object obj = ResourceManager.GetObject("titlebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap titlebar1 {
+            get {
+                object obj = ResourceManager.GetObject("titlebar1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
