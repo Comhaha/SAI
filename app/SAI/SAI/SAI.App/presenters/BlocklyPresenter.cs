@@ -73,26 +73,18 @@ namespace SAI.SAI.App.Presenters
                             string viewText = ucCode.Text;
                             Console.WriteLine($"[DEBUG] View에 표시된 코드 길이: {viewText?.Length ?? 0}자");
 
+                            // BlocklyPresenter.cs의 이벤트 핸들러 부분 수정:
                             if (!string.IsNullOrEmpty(viewText))
                             {
-                                // 1. 직접 코드 세그먼트 하이라이트 시도
+                                // 전체 코드를 찾아서 하이라이트 시도
                                 Console.WriteLine("[DEBUG] 코드 세그먼트 하이라이트 시도");
+
+                                // 주석을 포함한 전체 코드 세그먼트 하이라이트
+                                ucCode.ClearHighlight();
                                 ucCode.HighlightCodeSegment(newCode);
 
-                                // 2. 만약 코드 세그먼트가 정확히 매치되지 않으면 텍스트 검색 사용
-                                if (!viewText.Contains(newCode))
-                                {
-                                    Console.WriteLine("[DEBUG] 정확한 매치 실패, 텍스트 검색 시도");
-                                    ucCode.FindAndHighlightText(newCode);
-                                }
-
-                                // 3. 라인 번호 추출 및 하이라이트
-                                int lineIndex = FindLineIndex(viewText, newCode);
-                                if (lineIndex >= 0)
-                                {
-                                    Console.WriteLine($"[DEBUG] 코드가 라인 {lineIndex}에서 발견됨, 라인 하이라이트 시도");
-                                    ucCode.HighlightLine(lineIndex);
-                                }
+                                // 로그 출력 추가
+                                Console.WriteLine($"[DEBUG] 하이라이트 시도한 코드: '{newCode}'");
                             }
                             else
                             {
