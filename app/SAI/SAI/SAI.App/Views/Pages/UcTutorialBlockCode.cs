@@ -50,13 +50,13 @@ namespace SAI.SAI.App.Views.Pages
 			InitializeComponent();
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
-            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
+			memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
 			blocklyModel = BlocklyModel.Instance;
 
 			tboxMemo.TextChanged += tboxMemo_TextChanged;
 
-            btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
+			btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
 
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -77,8 +77,30 @@ namespace SAI.SAI.App.Views.Pages
 			InitializeBlockButton();
 			setBtnBlockStart();
 
-			// btnRunModel
-			btnRunModel.BackColor = Color.Transparent;
+            // 여기에 UcCode 추가
+            try
+            {
+                // 새로운 UcCode 인스턴스를 생성하는 대신 디자이너에서 만든 ucCode1 사용
+                // ucCode1은 이미 pCode에 추가되어 있으므로 다시 추가할 필요 없음
+                if (ucCode1 != null)
+                {
+                    // BlocklyPresenter에 기존 ucCode1 설정
+                    blocklyPresenter.SetCodeView(ucCode1);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: ICodeView 설정 완료");
+                }
+                else
+                {
+                    Console.WriteLine("[ERROR] UcTutorialBlockCode: ucCode1이 null입니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
+            }
+
+
+            // btnRunModel
+            btnRunModel.BackColor = Color.Transparent;
 			btnRunModel.PressedColor = Color.Transparent;
 			btnRunModel.CheckedState.FillColor = Color.Transparent;
 			btnRunModel.DisabledState.FillColor = Color.Transparent;
@@ -98,12 +120,13 @@ namespace SAI.SAI.App.Views.Pages
 			// 블록 버튼 클릭 이벤트 처리
 			btnBlockStart.Click += (s, e) =>
 			{
-                Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
-                AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+				Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
+				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
 			};
 			btnPip.Click += (s, e) =>
-			{Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: pipInstall");
+			{
+				Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: pipInstall");
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 				setBtnLoadModel();
 			};
@@ -145,32 +168,9 @@ namespace SAI.SAI.App.Views.Pages
 				labelBlockContent.Text = "실행 버튼을 클릭하여\r\n모델을 학습시켜보세요.\r\n";
 				pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
 			};
+		}
 
-            var codeContainer = new UcTabCodeContainer();
-            codeContainer.Dock = DockStyle.Fill;
-            guna2Panel1.Controls.Add(codeContainer);
-
-            // 기존 CodePresenter 관련 코드가 있던 부분을 대체합니다
-            // CodePresenter 생성 및 BlocklyPresenter에 설정
-            try
-            {
-                var mainEditor = codeContainer.GetMainCodeEditor();
-                if (mainEditor != null)
-                {
-                    blocklyPresenter.SetCodeView(mainEditor);
-                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: ICodeView 설정 완료");
-                }
-                else
-                {
-                    Debug.WriteLine("[WARNING] UcTutorialBlockCode: mainEditor가 null입니다");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] UcTutorialBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
-            }
-        }
-        
+ 
 
         private void setButtonVisible(Guna2Button button)
 		{
@@ -709,6 +709,21 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void pMemo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pSideInfer_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ucCode1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pMain_Paint(object sender, PaintEventArgs e)
         {
 
         }

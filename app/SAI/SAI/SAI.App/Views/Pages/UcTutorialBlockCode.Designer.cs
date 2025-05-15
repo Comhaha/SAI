@@ -33,7 +33,6 @@ namespace SAI.SAI.App.Views.Pages
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
             this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
@@ -48,13 +47,14 @@ namespace SAI.SAI.App.Views.Pages
             this.labelBlockTitle = new System.Windows.Forms.Label();
             this.btnBlockStart = new Guna.UI2.WinForms.Guna2Button();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
-            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pTopCode = new System.Windows.Forms.Panel();
+            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
@@ -128,7 +128,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pMain, "pMain");
             this.pMain.BorderRadius = 32;
             this.pMain.BorderThickness = 1;
-            this.pMain.Controls.Add(this.guna2Panel1);
             this.pMain.Controls.Add(this.pToDoList);
             this.pMain.Controls.Add(this.pBlockList);
             this.pMain.Controls.Add(this.pCode);
@@ -138,11 +137,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pMain.Name = "pMain";
             this.pMain.ShadowDecoration.BorderRadius = 32;
             this.pMain.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(0, 0, 6, 6);
-            // 
-            // guna2Panel1
-            // 
-            resources.ApplyResources(this.guna2Panel1, "guna2Panel1");
-            this.guna2Panel1.Name = "guna2Panel1";
+            this.pMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pMain_Paint);
             // 
             // pToDoList
             // 
@@ -291,46 +286,12 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
-            this.pCode.Controls.Add(this.ibtnCloseInfer);
-            this.pCode.Controls.Add(this.ibtnCopy);
-            this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.pZoomCode);
+            this.pCode.Controls.Add(this.ibtnCopy);
+            this.pCode.Controls.Add(this.ibtnCloseInfer);
+            this.pCode.Controls.Add(this.pTopCode);
+            this.pCode.Controls.Add(this.ucCode1);
             this.pCode.Name = "pCode";
-            // 
-            // ibtnCloseInfer
-            // 
-            this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
-            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
-            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
-            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnCloseInfer.ImageRotate = 0F;
-            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
-            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
-            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
-            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
-            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
-            // 
-            // ibtnCopy
-            // 
-            this.ibtnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
-            resources.ApplyResources(this.ibtnCopy, "ibtnCopy");
-            this.ibtnCopy.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnCopy.HoverState.Image = global::SAI.Properties.Resources.btn_copy_hover;
-            this.ibtnCopy.HoverState.ImageSize = new System.Drawing.Size(29, 29);
-            this.ibtnCopy.Image = global::SAI.Properties.Resources.btn_copy;
-            this.ibtnCopy.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnCopy.ImageRotate = 0F;
-            this.ibtnCopy.ImageSize = new System.Drawing.Size(29, 29);
-            this.ibtnCopy.Name = "ibtnCopy";
-            this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
-            // 
-            // pTopCode
-            // 
-            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.pTopCode, "pTopCode");
-            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pTopCode.Name = "pTopCode";
             // 
             // pZoomCode
             // 
@@ -382,6 +343,47 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnPlusCode, "ibtnPlusCode");
             this.ibtnPlusCode.Name = "ibtnPlusCode";
             this.ibtnPlusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
+            // 
+            // ibtnCopy
+            // 
+            this.ibtnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
+            resources.ApplyResources(this.ibtnCopy, "ibtnCopy");
+            this.ibtnCopy.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCopy.HoverState.Image = global::SAI.Properties.Resources.btn_copy_hover;
+            this.ibtnCopy.HoverState.ImageSize = new System.Drawing.Size(29, 29);
+            this.ibtnCopy.Image = global::SAI.Properties.Resources.btn_copy;
+            this.ibtnCopy.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCopy.ImageRotate = 0F;
+            this.ibtnCopy.ImageSize = new System.Drawing.Size(29, 29);
+            this.ibtnCopy.Name = "ibtnCopy";
+            this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
+            // 
+            // ibtnCloseInfer
+            // 
+            this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
+            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
+            this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCloseInfer.ImageRotate = 0F;
+            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
+            resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
+            this.ibtnCloseInfer.Name = "ibtnCloseInfer";
+            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
+            // 
+            // pTopCode
+            // 
+            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pTopCode, "pTopCode");
+            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pTopCode.Name = "pTopCode";
+            // 
+            // ucCode1
+            // 
+            resources.ApplyResources(this.ucCode1, "ucCode1");
+            this.ucCode1.Name = "ucCode1";
+            this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // pBlock
             // 
@@ -605,6 +607,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblThreshold);
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
+            this.pSideInfer.Paint += new System.Windows.Forms.PaintEventHandler(this.pSideInfer_Paint_1);
             // 
             // pThreshold
             // 
@@ -922,7 +925,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCloseMemo;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnQuestionMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
-	}
+        private SAI.App.Views.Pages.UcCode ucCode1;
+    }
 }
