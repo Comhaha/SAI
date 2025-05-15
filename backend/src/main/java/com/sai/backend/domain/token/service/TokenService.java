@@ -11,4 +11,5 @@ public interface TokenService {
     TokenResponseDto reloadToken();
     Boolean isValid(String token);
     String getTokenRemainingTime();
+    void scheduleReloadToken();
 }

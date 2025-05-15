@@ -2,6 +2,11 @@ package com.sai.backend.global.config;
 
 import com.sai.backend.domain.token.repository.redis.RedisTokenRepository;
 import com.sai.backend.global.filter.ApiTokenFilter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +19,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,23 +48,77 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain adminChain(HttpSecurity http) throws Exception {
 
-        http.securityMatcher("/api/admin/**")                  // admin 하위 URL만
+        http.securityMatcher("/api/admin/**", "/api/token/**")                  // admin 하위 URL만
             .csrf(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
             .sessionManagement(s -> s
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionStrategy(refererRedirect())   // 세션 만료 시 이전 페이지로
+                .sessionFixation().migrateSession()  // 로그인 시 세션 ID 변경
+                .invalidSessionStrategy(customInvalidSessionStrategy())  // 사용자 정의 세션 무효화 전략
+                .maximumSessions(1)  // 동시 세션 1개만 허용
+                .maxSessionsPreventsLogin(false)  // 새 로그인 시 이전 세션 무효화
+                .expiredSessionStrategy(event -> {
+                    // 만료된 세션 정리
+                    HttpServletResponse response = event.getResponse();
+                    HttpServletRequest request = event.getRequest();
+
+                    // 기존 세션 완전 삭제
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+                        session.invalidate();
+                    }
+
+                    // SecurityContext 클리어
+                    SecurityContextHolder.clearContext();
+
+                    try {
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.setContentType("application/json;charset=UTF-8");
+                        response.getWriter().write(
+                            "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다.\",\"code\":401}"
+                        );
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/admin/login", "/api/admin/register", "/api/admin/change").permitAll()
+                .requestMatchers("/api/admin/**", "/api/token/**").hasAuthority("ADMIN")  // ADMIN 권한 필요
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form                         // HTML form 대신 JSON-API 사용 시 커스터마이즈
-                .loginPage("/admin/login")             // 401 → 이 엔드포인트 호출
-                .successHandler((req, res, auth) -> {})// 실제 로직은 Controller에서 처리
+                .usernameParameter("password")  // 실제로는 password만 받으므로
+                .passwordParameter("password")
+                .successHandler(customAuthenticationSuccessHandler())
+                .failureHandler(customAuthenticationFailureHandler())
                 .permitAll()
             )
-            .logout(Customizer.withDefaults());
+            .logout(logout -> logout
+                .logoutUrl("/api/admin/logout")
+                .logoutSuccessHandler(customLogoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            )
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) -> {
+                    // 인증이 필요한 경우 401 응답
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(
+                        "{\"isSuccess\":false,\"message\":\"로그인이 필요합니다.\",\"code\":401}"
+                    );
+                })
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    // 권한이 부족한 경우 403 응답
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(
+                        "{\"isSuccess\":false,\"message\":\"권한이 부족합니다.\",\"code\":403}"
+                    );
+                })
+        );
 
         return http.build();
     }
@@ -83,11 +146,84 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /*───────────────── 커스텀 세션 만료 전략 ─────────────────*/
-    private InvalidSessionStrategy refererRedirect() {
-        return (request, response) -> {
-            String referer = request.getHeader("Referer");
-            response.sendRedirect(referer != null ? referer : "/");
+    @Bean
+    public InvalidSessionStrategy customInvalidSessionStrategy() {
+        return new InvalidSessionStrategy() {
+            @Override
+            public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response)
+                throws IOException, ServletException {
+
+                // 세션 무효화 시 완전히 정리
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    session.invalidate();
+                }
+
+                // SecurityContext 완전히 클리어
+                SecurityContextHolder.clearContext();
+
+                // 세션이 무효화되었을 때의 처리
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(
+                    "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401}"
+                );
+            }
+        };
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                org.springframework.security.core.Authentication authentication)
+                throws IOException, ServletException {
+
+                // 로그인 성공 시 세션 타임아웃 설정 (5분)
+                HttpSession session = request.getSession();
+                session.setMaxInactiveInterval(300); // 5분
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(
+                    "{\"isSuccess\":true,\"message\":\"로그인 성공\",\"code\":200,\"result\":true}"
+                );
+            }
+        };
+    }
+
+    @Bean
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return new AuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                org.springframework.security.core.AuthenticationException exception)
+                throws IOException, ServletException {
+
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(
+                    "{\"isSuccess\":false,\"message\":\"로그인 실패\",\"code\":401,\"result\":false}"
+                );
+            }
+        };
+    }
+
+    @Bean
+    public LogoutSuccessHandler customLogoutSuccessHandler() {
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+                org.springframework.security.core.Authentication authentication)
+                throws IOException, ServletException {
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(
+                    "{\"isSuccess\":true,\"message\":\"로그아웃 성공\",\"code\":200}"
+                );
+            }
         };
     }
 

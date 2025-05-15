@@ -29,62 +29,130 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public Boolean login(AdminLoginRequestDto dto, HttpServletRequest request) {
-        Admin admin = adminRepository.findByAdminId(ADMIN).orElse(null);
+        try {
+            Admin admin = adminRepository.findByAdminId(ADMIN).orElse(null);
 
-        if(admin == null) return false;
+            if (admin == null) {
+                log.warn("Admin user not found");
+                return false;
+            }
 
-        if(!passwordEncoder.matches(dto.getPassword(), admin.getPassword())) return false;
+            if (!passwordEncoder.matches(dto.getPassword(), admin.getPassword())) {
+                log.warn("Password mismatch for admin login");
+                return false;
+            }
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(
-            ADMIN, null,
-            java.util.List.of(new SimpleGrantedAuthority("ADMIN"))
-        );
+            // 인증 객체 생성 - ADMIN 권한 부여
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                ADMIN, null,
+                java.util.List.of(new SimpleGrantedAuthority("ADMIN"))
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
-        HttpSession session = request.getSession(true);
-        session.setMaxInactiveInterval(300);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-            SecurityContextHolder.getContext());
+            // 세션 생성 및 설정
+            HttpSession session = request.getSession(true);
+            session.setMaxInactiveInterval(300); // 5분 (300초)
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                SecurityContextHolder.getContext());
 
-        return true;
+            log.info("Admin login successful, session created with 5-minute timeout");
+            return true;
+
+        } catch (Exception e) {
+            log.error("Admin login error", e);
+            return false;
+        }
     }
 
     @Override
     @Transactional(readOnly = true)
     public String ping(HttpSession session) {
-        return Optional.ofNullable(session)
-            .map(HttpSession::getId)
-            .map(id -> "세션 유지 중 (" + id + ")")
-            .orElse("세션이 없습니다.");
-    }
-
-    @Override
-    public boolean register(AdminRegisterRequestDto dto) {
-        if(!dto.getPassword().equals(dto.getPassword2())) {
-            return false;
+        if (session == null) {
+            return "세션이 없습니다.";
         }
 
-        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        Admin admin = dto.toEntity();
-        admin.setAdminId(ADMIN);
-        adminRepository.save(admin);
+        // 세션 유효성 검사
+        try {
+            String sessionId = session.getId();
+            int maxInactiveInterval = session.getMaxInactiveInterval();
+            long lastAccessedTime = session.getLastAccessedTime();
+            long currentTime = System.currentTimeMillis();
+            long remainingTime = maxInactiveInterval * 1000L - (currentTime - lastAccessedTime);
 
-        return true;
+            if (remainingTime <= 0) {
+                return "세션이 만료되었습니다.";
+            }
+
+            long remainingMinutes = remainingTime / (60 * 1000);
+            long remainingSeconds = (remainingTime % (60 * 1000)) / 1000;
+
+            return String.format("세션 유지 중 (ID: %s, 남은 시간: %d분 %d초)",
+                sessionId, remainingMinutes, remainingSeconds);
+
+        } catch (Exception e) {
+            log.error("Session ping error", e);
+            return "세션 오류가 발생했습니다.";
+        }
     }
 
     @Override
+    @Transactional
+    public boolean register(AdminRegisterRequestDto dto) {
+        try {
+            if (!dto.getPassword().equals(dto.getPassword2())) {
+                log.warn("Password confirmation mismatch during admin registration");
+                return false;
+            }
+
+            // 기존 admin 확인
+            Optional<Admin> existingAdmin = adminRepository.findByAdminId(ADMIN);
+            if (existingAdmin.isPresent()) {
+                log.warn("Admin user already exists");
+                return false;
+            }
+
+            dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+            Admin admin = dto.toEntity();
+            admin.setAdminId(ADMIN);
+            adminRepository.save(admin);
+
+            log.info("Admin user registered successfully");
+            return true;
+
+        } catch (Exception e) {
+            log.error("Admin registration error", e);
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
     public Boolean change(AdminChangeRequestDto dto) {
-        Admin admin = adminRepository.findByAdminId(ADMIN).orElse(null);
+        try {
+            Admin admin = adminRepository.findByAdminId(ADMIN).orElse(null);
 
-        if(admin == null) return false;
+            if (admin == null) {
+                log.warn("Admin user not found during password change");
+                return false;
+            }
 
-        if(!passwordEncoder.matches(dto.getCurrentPw(), admin.getPassword())) return false;
+            if (!passwordEncoder.matches(dto.getCurrentPw(), admin.getPassword())) {
+                log.warn("Current password mismatch during password change");
+                return false;
+            }
 
-        admin.setPassword(passwordEncoder.encode(dto.getNewPw()));
-        adminRepository.save(admin);
+            admin.setPassword(passwordEncoder.encode(dto.getNewPw()));
+            adminRepository.save(admin);
 
-        return true;
+            log.info("Admin password changed successfully");
+            return true;
+
+        } catch (Exception e) {
+            log.error("Admin password change error", e);
+            return false;
+        }
     }
 }
