@@ -36,6 +36,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
 			this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
 			this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
+			this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
 			this.btnModelInference = new Guna.UI2.WinForms.Guna2Button();
 			this.btnImgPath = new Guna.UI2.WinForms.Guna2Button();
@@ -44,8 +45,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnLoadDataset = new Guna.UI2.WinForms.Guna2Button();
 			this.btnLoadModel = new Guna.UI2.WinForms.Guna2Button();
 			this.btnPip = new Guna.UI2.WinForms.Guna2Button();
-			this.labelBlockContent = new System.Windows.Forms.Label();
-			this.labelBlockTitle = new System.Windows.Forms.Label();
 			this.btnBlockStart = new Guna.UI2.WinForms.Guna2Button();
 			this.pCode = new Guna.UI2.WinForms.Guna2Panel();
 			this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -60,7 +59,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.pTopBlock = new System.Windows.Forms.Panel();
 			this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
 			this.ibtnPreBlock = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.ibtnTrashBlock = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.ibtnNextBlock = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -153,6 +151,7 @@ namespace SAI.SAI.App.Views.Pages
 			// pBlockList
 			// 
 			this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_blocklist_tutorial;
+			this.pBlockList.Controls.Add(this.pTxtDescription);
 			this.pBlockList.Controls.Add(this.btnVisualizeResult);
 			this.pBlockList.Controls.Add(this.btnModelInference);
 			this.pBlockList.Controls.Add(this.btnImgPath);
@@ -161,11 +160,15 @@ namespace SAI.SAI.App.Views.Pages
 			this.pBlockList.Controls.Add(this.btnLoadDataset);
 			this.pBlockList.Controls.Add(this.btnLoadModel);
 			this.pBlockList.Controls.Add(this.btnPip);
-			this.pBlockList.Controls.Add(this.labelBlockContent);
-			this.pBlockList.Controls.Add(this.labelBlockTitle);
 			this.pBlockList.Controls.Add(this.btnBlockStart);
 			resources.ApplyResources(this.pBlockList, "pBlockList");
 			this.pBlockList.Name = "pBlockList";
+			// 
+			// pTxtDescription
+			// 
+			this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_report;
+			resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
+			this.pTxtDescription.Name = "pTxtDescription";
 			// 
 			// btnVisualizeResult
 			// 
@@ -262,18 +265,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnPip.FillColor = System.Drawing.Color.Transparent;
 			this.btnPip.ForeColor = System.Drawing.Color.White;
 			this.btnPip.Name = "btnPip";
-			// 
-			// labelBlockContent
-			// 
-			resources.ApplyResources(this.labelBlockContent, "labelBlockContent");
-			this.labelBlockContent.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-			this.labelBlockContent.Name = "labelBlockContent";
-			// 
-			// labelBlockTitle
-			// 
-			resources.ApplyResources(this.labelBlockTitle, "labelBlockTitle");
-			this.labelBlockTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-			this.labelBlockTitle.Name = "labelBlockTitle";
 			// 
 			// btnBlockStart
 			// 
@@ -408,7 +399,6 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.pTopBlock, "pTopBlock");
 			this.pTopBlock.Controls.Add(this.btnRunModel);
 			this.pTopBlock.Controls.Add(this.ibtnPreBlock);
-			this.pTopBlock.Controls.Add(this.ibtnTrashBlock);
 			this.pTopBlock.Controls.Add(this.ibtnNextBlock);
 			this.pTopBlock.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.pTopBlock.Name = "pTopBlock";
@@ -438,19 +428,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.ibtnPreBlock.Name = "ibtnPreBlock";
 			this.ibtnPreBlock.PressedState.ImageSize = new System.Drawing.Size(15, 10);
 			this.ibtnPreBlock.Click += new System.EventHandler(this.ibtnPreBlock_Click);
-			// 
-			// ibtnTrashBlock
-			// 
-			this.ibtnTrashBlock.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.ibtnTrashBlock.HoverState.ImageSize = new System.Drawing.Size(13, 14);
-			this.ibtnTrashBlock.Image = global::SAI.Properties.Resources.btn_trash_block;
-			this.ibtnTrashBlock.ImageOffset = new System.Drawing.Point(0, 0);
-			this.ibtnTrashBlock.ImageRotate = 0F;
-			this.ibtnTrashBlock.ImageSize = new System.Drawing.Size(13, 14);
-			resources.ApplyResources(this.ibtnTrashBlock, "ibtnTrashBlock");
-			this.ibtnTrashBlock.Name = "ibtnTrashBlock";
-			this.ibtnTrashBlock.PressedState.ImageSize = new System.Drawing.Size(13, 14);
-			this.ibtnTrashBlock.Click += new System.EventHandler(this.btnTrashBlock_Click);
 			// 
 			// ibtnNextBlock
 			// 
@@ -868,7 +845,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCopy;
         private System.Windows.Forms.Panel pTopBlock;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnPreBlock;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnTrashBlock;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnNextBlock;
         private Guna.UI2.WinForms.Guna2Panel pBlock;
         private Guna.UI2.WinForms.Guna2Panel pCode;
@@ -882,8 +858,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pToDoList;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
 		private Guna.UI2.WinForms.Guna2Button btnBlockStart;
-		private System.Windows.Forms.Label labelBlockTitle;
-		private System.Windows.Forms.Label labelBlockContent;
 		private Guna.UI2.WinForms.Guna2Button btnPip;
 		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
 		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
@@ -924,5 +898,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
+		private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
 	}
 }

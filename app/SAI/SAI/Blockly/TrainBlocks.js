@@ -45,7 +45,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "Yolov8 %1 모델 불러오기", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
@@ -84,7 +84,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "LAYERS"  // 여러 레이어 블록이 여기에 들어감
             },
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
@@ -127,7 +127,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "Conv: %1\nC2f: %2\nUpsample scale: %3", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "Conv",
                 "options": [
                     ["64", "64"],
@@ -136,7 +136,7 @@ Blockly.defineBlocksWithJsonArray([
                 ]
             },
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "C2f",
                 "options": [
                     ["1", "1"],
@@ -145,7 +145,7 @@ Blockly.defineBlocksWithJsonArray([
                 ]
             },
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "Upsample_scale",
                 "options": [
                     ["1.5", "1.5"],
@@ -208,7 +208,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "모델 학습하기\nepochs: %1\nimgsz: %2", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "epochs",
                 "options": [
                     ["50", "50"],
@@ -218,7 +218,7 @@ Blockly.defineBlocksWithJsonArray([
                 ]
             },
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "imgsz",
                 "options": [
                     ["512", "512"],
