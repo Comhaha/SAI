@@ -234,16 +234,6 @@ def find_yaml_file(dataset_dir, start_time):
         show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
         return yaml_path
     
-    # 기본 위치에 없으면 모든 하위 디렉토리에서 검색
-    show_progress("데이터 파일을 검색 중...", start_time, 50)
-    
-    for root, dirs, files in os.walk(dataset_dir):
-        for file in files:
-            if file == 'data.yaml':
-                yaml_path = os.path.join(root, file)
-                show_progress(f"데이터 파일 발견: {yaml_path}", start_time, 100)
-                return yaml_path
-    
     # 파일을 찾지 못했을 경우
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 100)
     return yaml_path
@@ -690,29 +680,8 @@ def main():
     model_path = os.path.join(results_dir, "weights", "best.pt")
     
     # 테스트 이미지 경로 설정 (로컬 경로)
-    # 데이터셋 폴더에서 test/images 폴더 내의 첫 번째 이미지 사용
+    # c#에서 string으로 보내는 image_path를 여기 넣어야함
     test_image_path = None
-    # dataset_dir = os.path.join(base_dir, "dataset")
-    # tutorial_dataset_dir = os.path.join(dataset_dir, "tutorial_dataset")
-    
-    # # 테스트 이미지 폴더 경로들 (여러 가능한 위치 검색)
-    # possible_test_folders = [
-    #     os.path.join(tutorial_dataset_dir, "dataset", "test", "images"),
-    #     os.path.join(tutorial_dataset_dir, "test", "images"),
-    #     os.path.join(tutorial_dataset_dir, "dataset", "valid", "images"),  # 검증 이미지도 시도
-    #     os.path.join(tutorial_dataset_dir, "valid", "images"),
-    #     os.path.join(tutorial_dataset_dir, "dataset", "train", "images"),  # 학습 이미지도 시도
-    #     os.path.join(tutorial_dataset_dir, "train", "images")
-    # ]
-    
-    # # 사용 가능한 테스트 이미지 찾기
-    # for folder in possible_test_folders:
-    #     if os.path.exists(folder):
-    #         image_files = [f for f in os.listdir(folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.webp'))]
-    #         if image_files:
-    #             test_image_path = os.path.join(folder, image_files[0])
-    #             show_progress(f"테스트 이미지 발견: {test_image_path}", total_start_time, 100)
-    #             break
     
     # 테스트 이미지로 추론 실행
     if test_image_path and os.path.exists(test_image_path):
