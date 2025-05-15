@@ -13,6 +13,8 @@ using SAI.SAI.Application.Interop;
 using Guna.UI2.WinForms;
 using SAI.SAI.App.Models;
 using System.Diagnostics;
+using static SAI.SAI.App.Models.BlocklyModel;
+using System.Collections.Generic;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -21,6 +23,9 @@ namespace SAI.SAI.App.Views.Pages
 		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
 		private UcShowDialogPresenter ucShowDialogPresenter;
+		
+		private BlocklyModel blocklyModel;
+
 		private readonly IMainView mainView;
 
 		public event EventHandler HomeButtonClicked;
@@ -48,8 +53,10 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyPresenter = new BlocklyPresenter(this);
 			yoloTutorialPresenter = new YoloTutorialPresenter(this);
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
-                                                 // 메모 텍스트 변경 이벤트 핸들러 연결
-            tboxMemo.TextChanged += tboxMemo_TextChanged;
+
+			blocklyModel = BlocklyModel.Instance;
+
+			tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             btnRunModel.Click += (s,e) => RunButtonClicked?.Invoke(s, e);
 
@@ -93,11 +100,12 @@ namespace SAI.SAI.App.Views.Pages
 			// 블록 버튼 클릭 이벤트 처리
 			btnBlockStart.Click += (s, e) =>
 			{
-				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
+                Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
+                AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
 				setBtnPip();
 			};
 			btnPip.Click += (s, e) =>
-			{
+			{Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: pipInstall");
 				AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("pipInstall"));
 				setBtnLoadModel();
 			};
@@ -144,15 +152,15 @@ namespace SAI.SAI.App.Views.Pages
             codeContainer.Dock = DockStyle.Fill;
             guna2Panel1.Controls.Add(codeContainer);
 
+            // 기존 CodePresenter 관련 코드가 있던 부분을 대체합니다
             // CodePresenter 생성 및 BlocklyPresenter에 설정
             try
             {
                 var mainEditor = codeContainer.GetMainCodeEditor();
                 if (mainEditor != null)
                 {
-                    var codePresenter = new CodePresenter(mainEditor);
-                    blocklyPresenter.SetCodePresenter(codePresenter);
-                    Debug.WriteLine("[DEBUG] UcTutorialBlockCode: CodePresenter 생성 및 설정 완료");
+                    blocklyPresenter.SetCodeView(mainEditor);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: ICodeView 설정 완료");
                 }
                 else
                 {
@@ -161,9 +169,10 @@ namespace SAI.SAI.App.Views.Pages
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[ERROR] UcTutorialBlockCode: CodePresenter 설정 중 오류 - {ex.Message}");
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
             }
         }
+        
 
         private void setButtonVisible(Guna2Button button)
 		{
@@ -564,6 +573,8 @@ namespace SAI.SAI.App.Views.Pages
 										string escapedFilePath = JsonSerializer.Serialize(filePath);
 										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
 
+										blocklyModel.imgPath = filePath;
+
 										string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
@@ -589,6 +600,11 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockDoubleClick":
 								string eventCode = root.GetProperty("code").GetString();
 								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
 						}
 					}

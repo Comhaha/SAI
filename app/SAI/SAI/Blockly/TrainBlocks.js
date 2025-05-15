@@ -2,7 +2,7 @@
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "start", // 블록 타입
-        "message0": "시작", // 블록에 표시되는 문구
+        "message0": "  시작  ", // 블록에 표시되는 문구
         "nextStatement": null,
         "colour": 0,
         "tooltip": "시작 블록과 연결되어있는 블록이 실행됩니다.",
@@ -14,7 +14,7 @@ Blockly.Python.forBlock['start'] = function (block) {
     return (
         `# ================================================\n` +
         `# 🔷 SAI AI 블록 코딩 튜토리얼 🔷\n` +
-        `# ================================================\n\n\n\n`
+        `# ================================================\n\n`                     
     );
 };
 
@@ -69,7 +69,7 @@ Blockly.Python.forBlock['loadModel'] = function (block) {
         `# 모델 불러오기\n` +
         `from ultralytics import YOLO\n\n` +
         `model = YOLO("${modelFile}")   # YOLOv8 모델 불러오기\n` +
-        `print("✅ YOLOv8 설치 및 (${modelFile}) 모델 로드 완료!")')\n\n\n`
+        `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")')\n\n\n`
     );
 };
 
@@ -77,37 +77,11 @@ Blockly.Python.forBlock['loadModel'] = function (block) {
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "loadModelWithLayer", // 블록 타입
-        "message0": "Yolov8 %1 모델 불러오기", // 블록에 표시되는 문구
+        "message0": "레이어수정\n%1Yolov8 %2 모델 불러오기\n", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
-                "name": "MODEL_VERSION",
-                "options": [
-                    ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
-                ]
-            },
-            {
-                "type": "field_dropdown",
-                "name": "Conv",
-                "options": [
-                    ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
-                ]
-            },
-            {
-                "type": "field_dropdown",
-                "name": "C2f",
-                "options": [
-                    ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
-                ]
+                "type": "input_statement",
+                "name": "LAYERS"  // 여러 레이어 블록이 여기에 들어감
             },
             {
                 "type": "field_dropdown",
@@ -123,18 +97,87 @@ Blockly.defineBlocksWithJsonArray([
         "previousStatement": null,
         "nextStatement": null,
         "colour": 100,
-        "tooltip": "YOLOv8 모델을 불러옵니다.\nYOLOv8의 나노버전부터 Large버전까지 제공됩니다.",
+        "tooltip":
+            `더 똑똑한 모델을 만들기 위해서 레이어를 수정합니다.\n` +
+            `YOLOv8 모델을 불러옵니다.\n` +
+            `YOLOv8의 나노버전부터 Large버전까지 제공됩니다.\n\n` +
+            `더 똑똑한 모델을 만들기 위해서 레이어를 수정합니다.\n`,
         "helpUrl": ""
     }
 ]);
 
 Blockly.Python.forBlock['loadModelWithLayer'] = function (block) {
+    const layersCode = Blockly.Python.statementToCode(block, 'LAYERS');
     const modelFile = block.getFieldValue('MODEL_VERSION');
     return (
-        `# 모델 불러오기\n` +
-        `from ultralytics import YOLO\n\n` +
-        `model = YOLO("${modelFile}")   # YOLOv8 모델 불러오기\n` +
-        `print("✅ YOLOv8 설치 및 (${modelFile}) 모델 로드 완료!")')\n\n\n`
+            `${layersCode}` +
+            `# 모델 불러오기\n` +
+            `from ultralytics import YOLO\n\n` +
+            `model = YOLO("custom.yaml") # 커스텀 레이어 적용\n` +
+            `model.load("${modelFile}") # Yolov8 모델 불러오기\n` +
+            `# YOLOv8 모델 불러오기\n` +
+            `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")')\n\n\n`
+    );
+};
+
+// 2-2-1. 레이어 수정
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "layer", // 블록 타입
+        "message0": "Conv: %1\nC2f: %2\nUpsample scale: %3", // 블록에 표시되는 문구
+        "args0": [
+            {
+                "type": "field_dropdown",
+                "name": "Conv",
+                "options": [
+                    ["64", "64"],
+                    ["128", "128"],
+                    ["256", "256"]
+                ]
+            },
+            {
+                "type": "field_dropdown",
+                "name": "C2f",
+                "options": [
+                    ["1", "1"],
+                    ["2", "2"],
+                    ["3", "3"]
+                ]
+            },
+            {
+                "type": "field_dropdown",
+                "name": "Upsample_scale",
+                "options": [
+                    ["1.5", "1.5"],
+                    ["2.0", "2.0"],
+                    ["2.5", "2.5"]
+                ]
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour":100,
+        "tooltip":
+            `Conv (합성곱 계층): 이미지에서 특징을 찾는 기본적인 눈 역할을 하는 층\n` +
+            `C2f (병목 현상을 개선한 Conv): Conv 보다 조금 더 똑똑하게 특징을 추출해서 효율을 높이는 층\n` +
+            `Upsample scale (업샘플링): 더 넓은 영역의 정보를 볼 수 있게 확대하는 층\n`,
+        "helpUrl": ""
+    }
+]);
+
+Blockly.Python.forBlock['layer'] = function (block) {
+    const statements = Blockly.Python.statementToCode(block, 'LAYERS');
+    const Conv = block.getFieldValue('Conv');
+    const C2f = block.getFieldValue('C2f');
+    const Upsample_scale = block.getFieldValue('Upsample_scale');    
+    return (`# 레이어 수정\n` +
+        `Conv = ${Conv} # Conv (합성곱 계층): 이미지에서 특징을 찾는 기본적인 눈 역할을 하는 층\n` +
+        `C2f = ${C2f} # C2f (병목 현상을 개선한 Conv): Conv 보다 조금 더 똑똑하게 특징을 추출해서 효율을 높이는 층\n` +
+        `Upsample = ${Upsample_scale} # Upsample (업샘플링): 더 넓은 영역의 정보를 볼 수 있게 확대하는 층\n` +
+        `						      # Upsample 레이어의 scale 값을 수정합니다.\n\n` +
+        `# custom.yaml 파일 생성\n` +
+        `# 입력한 Conv, C2f, Upsample_scale으로 SAI가 custom.yaml 파일을 생성해드려요!\n ` +
+        `print(\"custom.yaml 생성 완료\")\n\n`
     );
 };
 
@@ -261,7 +304,17 @@ Blockly.Python.forBlock['imgPath'] = function (block) {
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "modelInference", // 블록 타입
-        "message0": "추론 실행하기", // 블록에 표시되는 문구
+        "message0": "추론 실행하기\n threshold: %1", // 블록에 표시되는 문구
+        "args0": [
+            {
+                "type": "field_number",
+                "name": "THRESHOLD",
+                "value": 0.25,
+                "min": 0,
+                "max": 1,
+                "precision": 0.01
+            }
+        ],
         "previousStatement": null,
         "nextStatement": null,
         "colour": 350,
@@ -271,10 +324,11 @@ Blockly.defineBlocksWithJsonArray([
 ]);
 
 Blockly.Python.forBlock['modelInference'] = function (block) {
+    const threshold = block.getFieldValue('THRESHOLD');
     return (
         `# 추론 실행\n` +
         `model = YOLO("/home/.../best.pt")\n` +
-        `results = model.predict(source=img_path, save=False, show=False, conf=0.25)\n\n\n`
+        `results = model.predict(source=img_path, save=False, show=False, conf=${threshold})\n\n\n`
     );
 };
 

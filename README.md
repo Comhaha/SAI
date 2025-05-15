@@ -1,6 +1,6 @@
 # <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/a1754d0a91b9c80ddc92d37114703c71/icon192.png" width="20" alt="로고"> SAI(SSAFY AI Interface)
 
-[<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1158c1d86fd8f9aa5db790cc2160a5a8/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C.png">]()
+[<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/136ab697f8e86a4bf4d8bd7b0484de54/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C_%EB%A1%9C%EA%B3%A0_%EB%B0%94%EA%BE%BCver.png">](https://k12d201.p.ssafy.io/)
 
 #### 👆 위 이미지 클릭하면 `랜딩페이지로` 이동합니다 👆
 

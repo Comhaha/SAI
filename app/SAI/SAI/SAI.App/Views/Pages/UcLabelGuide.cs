@@ -84,6 +84,14 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지 통과 여부 저장을 위한 변수
         private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
 
+        // 이미지 상태 코드 저장을 위한 변수 (임시)
+        // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
+        private Dictionary<int, int> imageStatusCode = new Dictionary<int, int>();
+        // 토스트 메시지 관련 변수
+        private System.Windows.Forms.Timer toastTimer;
+        private Guna.UI2.WinForms.Guna2Panel toastPanel;
+        private Guna.UI2.WinForms.Guna2HtmlLabel toastLabel;
+
         // 줌 기능을 위한 변수
         private float zoomFactor = 1.0f;
         private Size originalImageSize;
@@ -122,6 +130,7 @@ namespace SAI.SAI.App.Views.Pages
             InitializeProgressIndicators(); // 진행 상태 표시기 초기화
             //RegisterAccuracyButton(); // 정확도 계산 버튼 등록
             SetupZoomFunctionality(); // 줌 기능 설정
+            InitializeToastPanel(); // 토스트 패널 초기화
 
             // 이벤트 핸들러 등록
             RegisterControlEvents();
@@ -306,6 +315,10 @@ namespace SAI.SAI.App.Views.Pages
             imageContainer.SizeChanged += (s, e) => SetRoundedRegion();
             pictureBoxImage.SizeChanged += (s, e) => SetRoundedRegion();
 
+            // popup 닫기
+            popupCloseBtn.Click += (s, e) => toastPopupPanel.Visible = false;
+            toastPopupPanel.Click += (s, e) => toastPopupPanel.Visible = false;
+
             //// 좌표 내보내기 버튼 클릭 이벤트 등록
             //exportBtn.Click += ExportBtn_Click;
         }
@@ -441,9 +454,10 @@ namespace SAI.SAI.App.Views.Pages
                 //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
 
-                // 이미지를 통과 상태로 설정
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // 이미지를 통과 상태로 설정 (초록불)
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex != 8)
             {
@@ -451,18 +465,28 @@ namespace SAI.SAI.App.Views.Pages
                 nextBtn.Enabled = true;
 
                 // 이미지를 통과 상태로 설정
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex == 8)
             {
-                imagePassedStatus[currentImageIndex] = true;
-                UpdateProgressIndicator(currentImageIndex, true);
+                // imagePassedStatus[currentImageIndex] = true;
+                imageStatusCode[currentImageIndex] = 1;
+                UpdateProgressIndicator(currentImageIndex, 1);
+            }
+            else if (0 < currentAccuracy && currentAccuracy < 50)
+            {
+                // imagePassedStatus[currentImageIndex] = false;
+                imageStatusCode[currentImageIndex] = -1;
+                UpdateProgressIndicator(currentImageIndex, -1);
             }
             else
             {
                 // 아직 통과하지 못한 상태면 노란색으로 표시
-                UpdateProgressIndicator(currentImageIndex, false);
+                // imagePassedStatus[currentImageIndex] = false;
+                imageStatusCode[currentImageIndex] = 0;
+                UpdateProgressIndicator(currentImageIndex, 0);
             }
 
             // 첫 번째 이미지일 경우 이전 버튼 비활성
@@ -481,7 +505,8 @@ namespace SAI.SAI.App.Views.Pages
 
             // 버튼 시각적 업데이트
             nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
-            
+            // 도움 버튼 시각적 업데이트
+            UpdateQuestionButton();
             // 모든 이미지가 완료되었는지 확인
             CheckAllImagesCompleted();
         }
@@ -496,7 +521,7 @@ namespace SAI.SAI.App.Views.Pages
             
             for (int i = 0; i < images.Count; i++)
             {
-                if (!imagePassedStatus.ContainsKey(i) || !imagePassedStatus[i])
+                if (!imageStatusCode.ContainsKey(i) || imageStatusCode[i] == -1 || imageStatusCode[i] == 0)
                 {
                     allCompleted = false;
                     break;
@@ -520,20 +545,33 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 진행 상태 표시기를 업데이트하는 메서드
-        private void UpdateProgressIndicator(int imageIndex, bool passed)
+        private void UpdateProgressIndicator(int imageIndex, int passed)
         {
             // 이미지 인덱스에 맞는 progress 버튼 찾기
             var progressControl = GetProgressControl(imageIndex);
 
             if (progressControl != null)
             {
-                // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
-                progressControl.FillColor = passed ? Color.Green : Color.Yellow;
+                // // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
+                // progressControl.FillColor = passed == 1 ? Color.Green : Color.Yellow;
 
                 // 이미지를 통과했으면 통과 상태 기록
-                if (passed)
+                if (passed == 1)
                 {
-                    imagePassedStatus[imageIndex] = true;
+                    // imageStatusCode[imageIndex] = 1;
+                    progressControl.FillColor = Color.Green;
+                    ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
+                }
+                else if (passed == -1)
+                {
+                    // imageStatusCode[imageIndex] = -1;
+                    progressControl.FillColor = Color.Red;
+                    ShowToast(false); // 실패 시 빨간색 토스트 메시지 표시
+                }
+                else
+                {
+                    // imageStatusCode[imageIndex] = 0;
+                    progressControl.FillColor = Color.Yellow;
                 }
             }
         }
@@ -1160,6 +1198,10 @@ namespace SAI.SAI.App.Views.Pages
                 isSquareToolActive = true;
                 pictureBoxImage.Cursor = Cursors.Cross;
 
+                // Bounding Box 단계에서는 폴리곤을 비활성 및 squre 활성
+                toolLabelingPolygon.Visible = false;
+                toolLabelingSquare.Visible = true;
+
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
                 {
@@ -1178,6 +1220,10 @@ namespace SAI.SAI.App.Views.Pages
                 // Segmentation 단계에서는 폴리곤 도구를 기본으로 활성화
                 isPolygonToolActive = true;
                 pictureBoxImage.Cursor = Cursors.Cross;
+
+                // Segmentation 단계에서는 사각형 도구를 비활성 및 polygon 활성
+                toolLabelingSquare.Visible = false;
+                toolLabelingPolygon.Visible = true;
 
                 // 버튼 활성화 및 상태 업데이트
                 if (toolVisible != null)
@@ -1287,17 +1333,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    //nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, true);
-                }
-                else
-                {
-                    // 통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
 
@@ -1345,17 +1391,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel.Text = "Accuracy: 0%";
                 }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    //nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, true);
-                }
-                else
-                {
-                    // 통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
         
@@ -1415,6 +1461,31 @@ namespace SAI.SAI.App.Views.Pages
                 Console.WriteLine($"LoadclassImage 에러: {ex.Message}");
             }
 
+        }
+
+        /// <summary>
+        /// 단계에 따른 도움버튼 가시성 변경
+        /// </summary>
+        private void UpdateQuestionButton()
+        {
+            if (currentLevel.Text == "Classification")
+            {
+                questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
+                questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
+                questClassificationPanel.Visible = true; // Classification 도움말 버튼 표시
+            }
+            else if (currentLevel.Text == "Bounding Box")
+            {
+                questBoxPanel.Visible = true;
+                questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
+                questClassificationPanel.Visible = false; // Classification 도움말 버튼 숨김
+            }
+            else if (currentLevel.Text == "Segmentation")
+            {
+                questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
+                questSegPanel.Visible = true; // Segmentation 도움말 버튼 표시
+                questClassificationPanel.Visible = false; // Classification 도움말 버튼 숨김
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3485,6 +3556,33 @@ namespace SAI.SAI.App.Views.Pages
             tooltipTimer.Stop();
             tooltipPanel.Visible = true;
         }
+        private void InitializeToastPanel()
+        {
+            // 토스트 패널 생성
+            toastPanel = toastPopupPanel;
+
+            // 토스트 타이머 초기화
+            toastTimer = new System.Windows.Forms.Timer();
+            toastTimer.Interval = 3000;
+            toastTimer.Tick += (s,e) => {
+                toastTimer.Stop();
+                toastPanel.Visible = false;
+            };
+            
+        }
+
+        // 토스트 메시지 표시 메서드
+        private void ShowToast(bool isSuccess)
+        {
+            // 기존 타이머 중지
+            toastTimer.Stop();
+            // 메시지 설정
+            toastPanel.BackgroundImage = isSuccess ? Properties.Resources.toastPopupS : Properties.Resources.toastPopupF;
+            // 패널 표시
+            toastPanel.Visible = true;
+            // 타이머 시작
+            toastTimer.Start();
+        }
         
         // 툴팁 이벤트 등록
         private void RegisterTooltipEvents()
@@ -3501,6 +3599,10 @@ namespace SAI.SAI.App.Views.Pages
             RegisterTooltip(ZoomOutBtn, "이미지를 축소합니다.");
             RegisterTooltip(nextBtn, "다음 이미지로 이동합니다.");
             RegisterTooltip(preBtn, "이전 이미지로 이동합니다.");
+            RegisterTooltip(questClassificationPanel, "이미지를 클릭하여 class를 분류합니다.");
+            RegisterTooltip(questBoxPanel, "바운딩 박스를 통해 객체를 라벨링합니다.");
+            RegisterTooltip(questSegPanel, "폴리곤을 통해 객체의 세밀한 윤곽을 라벨링합니다.");
+            RegisterTooltip(nextBtnVisible, "라벨링 정확도가 90% 이상인 경우 활성화됩니다");
         }
         
         // 컨트롤에 툴팁 이벤트 등록
@@ -3511,12 +3613,21 @@ namespace SAI.SAI.App.Views.Pages
                 control.MouseEnter += (s, e) => 
                 {
                     tooltipLabel.Text = tooltipText;
-                    
+                    int xOffset = 0;
+                    int yOffset = 0;
                     // 툴팁 위치 계산 (마우스 좌측에 표시)
                     Point mousePos = this.PointToClient(Cursor.Position);
-                    int xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
-                    int yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
-                    
+                    if (control == questClassificationPanel || control == questBoxPanel || control == questSegPanel)
+                    {
+                        xOffset = 20; // 마우스 우측에 20픽셀 간격으로 표시
+                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
+                    }
+                    else
+                    {
+                        xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
+                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
+                    }
+
                     // 화면 경계를 넘어가지 않도록 조정
                     if (mousePos.X + xOffset < 0)
                     {
@@ -3704,11 +3815,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
-        }
-
-        private void progress8_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

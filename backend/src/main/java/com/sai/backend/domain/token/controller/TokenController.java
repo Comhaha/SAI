@@ -30,4 +30,9 @@ public class TokenController implements TokenApi{
         return ResponseEntity.ok(new BaseResponse<>(tokenService.isValid(authHeader)));
     }
 
+    @Override
+    public ResponseEntity<BaseResponse<String>> getTokenTime() {
+        return ResponseEntity.ok(new BaseResponse<>(tokenService.getTokenRemainingTime()));
+    }
+
 }

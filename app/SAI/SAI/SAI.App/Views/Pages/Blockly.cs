@@ -32,7 +32,7 @@ namespace SAI.SAI.App.Views.Pages
         private UcTabCodeContainer codeContainer;
         // 기본 탭의 코드 에디터 참조 유지
         private UcCode mainCodeEditor;
-        private CodePresenter codeBoxPresenter;
+
 
         // 블록 클릭 추적을 위한 변수
         private string lastClickedBlockId = null;
@@ -48,6 +48,9 @@ namespace SAI.SAI.App.Views.Pages
 
             // 코드박스 초기화 - presenter 초기화 전에 수행
             InitializeCodeContainer();
+
+            //혜정추가
+            blocklyPresenter.SetCodeView(mainCodeEditor);
 
             // 백그라운드 색깔&이미지
             BackColor = Color.Transparent;
@@ -373,9 +376,6 @@ namespace SAI.SAI.App.Views.Pages
                 codeContainer.BringToFront(); // 컨트롤을 앞으로 가져오기
                 Console.WriteLine("[DEBUG] Blockly: UcTabCodeContainer가 Controls에 추가됨");
 
-                // CodePresenter 초기화 - mainCodeEditor 사용
-                codeBoxPresenter = new CodePresenter(mainCodeEditor);
-                Console.WriteLine("[DEBUG] Blockly: CodePresenter 인스턴스 생성됨");
             }
             catch (Exception ex)
             {

@@ -123,7 +123,7 @@ namespace SAI.SAI.App.Views.Pages
             // 라벨링 가이드 3
             prevButtonPositions.Add(new Point(939, 262));
             nextButtonPositions.Add(new Point(985, 262));
-            exitButtonPositions.Add(new Point(990, 139));
+            exitButtonPositions.Add(new Point(1000, 139));
 
             // 라벨링 가이드 4
             prevButtonPositions.Add(new Point(753, 240));
@@ -133,7 +133,7 @@ namespace SAI.SAI.App.Views.Pages
             // 라벨링 가이드 5
             prevButtonPositions.Add(new Point(864, 403));
             nextButtonPositions.Add(new Point(910, 404));
-            exitButtonPositions.Add(new Point(910, 270));
+            exitButtonPositions.Add(new Point(920, 270));
 
             // 라벨링 가이드 6
             prevButtonPositions.Add(new Point(790, 620));
@@ -143,12 +143,12 @@ namespace SAI.SAI.App.Views.Pages
             // 라벨링 가이드 7
             prevButtonPositions.Add(new Point(970, 525));
             nextButtonPositions.Add(new Point(1016, 525));
-            exitButtonPositions.Add(new Point(1021, 185));
+            exitButtonPositions.Add(new Point(1040, 185));
 
             // 라벨링 가이드 8
             prevButtonPositions.Add(new Point(1057, 226));
             nextButtonPositions.Add(new Point(1093, 216));
-            exitButtonPositions.Add(new Point(1098, 120));
+            exitButtonPositions.Add(new Point(1079, 120));
         }
 
         private void UpdatePage(int pageIndex)
@@ -177,6 +177,7 @@ namespace SAI.SAI.App.Views.Pages
             goToLabeling.Visible = isWholeTutorial;
             
             // exit 버튼은 라벨링 가이드에서만 표시하고 페이지별 위치 설정
+            exit.Size = new Size(15,15); // exit 버튼 크기 설정
             exit.Visible = !isWholeTutorial;
             if (!isWholeTutorial && pageIndex < exitButtonPositions.Count)
             {
