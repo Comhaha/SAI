@@ -195,6 +195,30 @@
   <data name="&gt;&gt;pToDoList.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="pTxtDescription.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="pTxtDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 176</value>
+  </data>
+  <data name="pTxtDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 100</value>
+  </data>
+  <data name="pTxtDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;pTxtDescription.Name" xml:space="preserve">
+    <value>pTxtDescription</value>
+  </data>
+  <data name="&gt;&gt;pTxtDescription.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pTxtDescription.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;pTxtDescription.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="btnVisualizeResult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -220,7 +244,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnVisualizeResult.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="btnModelInference.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -250,7 +274,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnModelInference.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnImgPath.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -277,7 +301,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnImgPath.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnResultGraph.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -304,7 +328,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnResultGraph.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnMachineLearning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -331,7 +355,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnMachineLearning.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="btnLoadDataset.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -358,7 +382,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnLoadDataset.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="btnLoadModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -385,7 +409,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnLoadModel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="btnPip.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -412,68 +436,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnPip.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="labelBlockContent.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 10.2pt</value>
-  </data>
-  <data name="labelBlockContent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 217</value>
-  </data>
-  <data name="labelBlockContent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 50</value>
-  </data>
-  <data name="labelBlockContent.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="labelBlockContent.Text" xml:space="preserve">
-    <value>추론 결과를 시각화합니다. 모델
-이 판단한 결과를 볼 수 있습니다.</value>
-  </data>
-  <data name="labelBlockContent.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;labelBlockContent.Name" xml:space="preserve">
-    <value>labelBlockContent</value>
-  </data>
-  <data name="&gt;&gt;labelBlockContent.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelBlockContent.Parent" xml:space="preserve">
-    <value>pBlockList</value>
-  </data>
-  <data name="&gt;&gt;labelBlockContent.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="labelBlockTitle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 12pt, style=Bold</value>
-  </data>
-  <data name="labelBlockTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 185</value>
-  </data>
-  <data name="labelBlockTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 29</value>
-  </data>
-  <data name="labelBlockTitle.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="labelBlockTitle.Text" xml:space="preserve">
-    <value>추론 결과 시각화하기</value>
-  </data>
-  <data name="labelBlockTitle.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;labelBlockTitle.Name" xml:space="preserve">
-    <value>labelBlockTitle</value>
-  </data>
-  <data name="&gt;&gt;labelBlockTitle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;labelBlockTitle.Parent" xml:space="preserve">
-    <value>pBlockList</value>
-  </data>
-  <data name="&gt;&gt;labelBlockTitle.ZOrder" xml:space="preserve">
-    <value>9</value>
   </data>
   <data name="btnBlockStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -500,7 +463,7 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;btnBlockStart.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="pBlockList.Location" type="System.Drawing.Point, System.Drawing">
     <value>29, 32</value>
@@ -1719,7 +1682,7 @@
     <value>2</value>
   </data>
   <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 312</value>
+    <value>130, 653</value>
   </data>
   <data name="pMemo.Size" type="System.Drawing.Size, System.Drawing">
     <value>354, 311</value>
