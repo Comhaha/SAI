@@ -1,4 +1,4 @@
-using SAI.SAI.App.Models;
+﻿using SAI.SAI.App.Models;
 using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
@@ -9,7 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Views.Pages; // 추가: UcCode 클래스 접근을 위해 추가
+using SAI.SAI.App.Views.Pages;
+using static SAI.SAI.App.Models.BlocklyModel; // 추가: UcCode 클래스 접근을 위해 추가
 
 namespace SAI.SAI.App.Presenters
 {
@@ -116,7 +117,6 @@ namespace SAI.SAI.App.Presenters
             };
             // 전체 블록 코드가 변경되면 실행되는 이벤트
             // 혜정언니 여기를 작성하면 돼!
-            // blocklyModel.BlockAllCodeChanged 이벤트 핸들러
             blocklyModel.BlockAllCodeChanged += (newAllCode) =>
             {
                 try
@@ -147,7 +147,7 @@ namespace SAI.SAI.App.Presenters
         public void OnAddBlockDoubleClicked(string code)
         {
             // blockCode 초기화
-            //blocklyModel.blockCode = "";//테스트~잠깐지울게요(혜정)
+            blocklyModel.blockCode = "";
             blocklyModel.blockCode = code;
         }
 
@@ -268,8 +268,26 @@ namespace SAI.SAI.App.Presenters
                 blocklyModel.blockCode = code;
             }
         }
+
+        public void setBlockTypes(List<BlockInfo> blockTypes)
+        {
+            blocklyModel.blockTypes = blockTypes;
+
+            // 잘 들어왔는지 확인용 <- (삭제요망)
+            //string message = "";
+            //foreach (var types in blocklyModel.blockTypes)
+            //{
+            //    message += "type: " + types.type + "\n";
+            //    if (types.children != null)
+            //    {
+            //        foreach (var children in types.children)
+            //        {
+            //            message += "children: " + children.type + "\n";
+            //        }
+            //    }
+            //}
+            //MessageBox.Show(message);
+        }
     }
 }
-
-
 
