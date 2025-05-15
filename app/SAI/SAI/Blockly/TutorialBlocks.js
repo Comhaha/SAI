@@ -47,7 +47,7 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "Yolov8 %1 모델 불러오기", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
                     ["Nano", "yolov8n.pt"],
@@ -101,14 +101,14 @@ Blockly.defineBlocksWithJsonArray([
         "message0": "모델 학습하기\nepochs: %1\nimgsz: %2", // 블록에 표시되는 문구
         "args0": [
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "epochs",
                 "options": [
                     ["50", "50"],
                 ]
             },
             {
-                "type": "field_dropdown",
+                "type": "field_custom_dropdown",
                 "name": "imgsz",
                 "options": [
                     ["640", "640"],
