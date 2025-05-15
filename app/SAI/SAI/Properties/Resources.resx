@@ -703,9 +703,6 @@
   <data name="bg_yellow_btn_close_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_yellow_btn_close_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_goLabeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_goNotion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="bg_dialog_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\bg_dialog_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1002,5 +999,26 @@
   </data>
   <data name="btnModelInferenceClicked2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SAI.App\Resources\Images\btnModelInferenceClicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowHoverRDeep" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverRDeep.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_whole_click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_close_whole_click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_exit_3030_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_exit_3030_hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_close_whole" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_close_whole.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_exit_3030" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_exit_3030.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_goLabeling" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_goLabeling.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoCircleArrowHoverLDeep" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoCircleArrowHoverLDeep.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

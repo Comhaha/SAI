@@ -51,34 +51,6 @@ namespace SAI.SAI.App.Views.Pages
             goToLabeling.Click += goToLabeling_Click;
             exit.Click += exit_Click;
             
-            // 버튼 클릭 시 이미지 변경 이벤트 추가
-            nextBtn.MouseDown += (s, e) => {
-                if (e.Button == MouseButtons.Left)
-                    nextBtn.Image = Properties.Resources.NoCircleArrowClickR;
-            };
-            
-            nextBtn.MouseUp += (s, e) => {
-                if (e.Button == MouseButtons.Left)
-                    nextBtn.Image = Properties.Resources.NoCircleArrowR;
-            };
-            
-            nextBtn.MouseLeave += (s, e) => {
-                nextBtn.Image = Properties.Resources.NoCircleArrowR;
-            };
-            
-            preBtn.MouseDown += (s, e) => {
-                if (e.Button == MouseButtons.Left)
-                    preBtn.Image = Properties.Resources.NoCircleArrowClickL;
-            };
-            
-            preBtn.MouseUp += (s, e) => {
-                if (e.Button == MouseButtons.Left)
-                    preBtn.Image = Properties.Resources.NoCircleArrowL;
-            };
-            
-            preBtn.MouseLeave += (s, e) => {
-                preBtn.Image = Properties.Resources.NoCircleArrowL;
-            };
         }
         private void InitializeProgressIndicators()
         {
@@ -87,8 +59,6 @@ namespace SAI.SAI.App.Views.Pages
             this.goLabelingBtn.PressedColor = Color.Transparent;
             this.goLabelingBtn.HoverState.FillColor = Color.Transparent;
             goLabelingBtn.Visible = false;
-
-
 
         }
 
@@ -113,42 +83,42 @@ namespace SAI.SAI.App.Views.Pages
             // 라벨링 가이드 1
             prevButtonPositions.Add(new Point(175, 387));
             nextButtonPositions.Add(new Point(825, 400));
-            exitButtonPositions.Add(new Point(830, 260));
+            exitButtonPositions.Add(new Point(841, 260));
 
             // 라벨링 가이드 2
             prevButtonPositions.Add(new Point(774, 234));
             nextButtonPositions.Add(new Point(820, 234));
-            exitButtonPositions.Add(new Point(825, 130));
+            exitButtonPositions.Add(new Point(840, 122));
 
             // 라벨링 가이드 3
             prevButtonPositions.Add(new Point(939, 262));
             nextButtonPositions.Add(new Point(985, 262));
-            exitButtonPositions.Add(new Point(1000, 139));
+            exitButtonPositions.Add(new Point(1011, 134));
 
             // 라벨링 가이드 4
             prevButtonPositions.Add(new Point(753, 240));
             nextButtonPositions.Add(new Point(799, 240));
-            exitButtonPositions.Add(new Point(805, 110));
+            exitButtonPositions.Add(new Point(817, 109));
 
             // 라벨링 가이드 5
             prevButtonPositions.Add(new Point(864, 403));
             nextButtonPositions.Add(new Point(910, 404));
-            exitButtonPositions.Add(new Point(920, 270));
+            exitButtonPositions.Add(new Point(935, 267));
 
             // 라벨링 가이드 6
             prevButtonPositions.Add(new Point(790, 620));
             nextButtonPositions.Add(new Point(836, 620));
-            exitButtonPositions.Add(new Point(841, 445));
+            exitButtonPositions.Add(new Point(857, 439));
 
             // 라벨링 가이드 7
             prevButtonPositions.Add(new Point(970, 525));
             nextButtonPositions.Add(new Point(1016, 525));
-            exitButtonPositions.Add(new Point(1040, 185));
+            exitButtonPositions.Add(new Point(1050, 181));
 
             // 라벨링 가이드 8
             prevButtonPositions.Add(new Point(1057, 226));
             nextButtonPositions.Add(new Point(1093, 216));
-            exitButtonPositions.Add(new Point(1079, 120));
+            exitButtonPositions.Add(new Point(1102, 117));
         }
 
         private void UpdatePage(int pageIndex)
@@ -172,12 +142,10 @@ namespace SAI.SAI.App.Views.Pages
             // 3. 페이지 구분에 따른 버튼 처리
             bool isWholeTutorial = (currentPage < 3);
             
-            // goToLabeling 버튼은 전체 튜토리얼에서만 표시하고 위치 고정
-            goToLabeling.Location = new Point(1035, 135);
+            // goToLabeling 버튼은 전체 튜토리얼에서만 표시
             goToLabeling.Visible = isWholeTutorial;
             
             // exit 버튼은 라벨링 가이드에서만 표시하고 페이지별 위치 설정
-            exit.Size = new Size(15,15); // exit 버튼 크기 설정
             exit.Visible = !isWholeTutorial;
             if (!isWholeTutorial && pageIndex < exitButtonPositions.Count)
             {
@@ -195,7 +163,6 @@ namespace SAI.SAI.App.Views.Pages
                 case 2: // 전체 튜토리얼 마지막
                     preBtn.Location = prevButtonPositions[2];
                     preBtn.Visible = true;
-                    goLabelingBtn.Location = new Point(847, 530);
                     goLabelingBtn.Visible = true;
                     break;
                 
@@ -283,5 +250,30 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
 		}
-	}
+
+        private void goToLabeling_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nextBtn_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exit_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void goToLabeling_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void goLabelingBtn_Click_1(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

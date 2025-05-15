@@ -763,6 +763,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_close_whole {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_whole", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_close_whole_click {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_whole_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_close1 {
             get {
                 object obj = ResourceManager.GetObject("btn_close1", resourceCulture);
@@ -886,6 +906,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_enter_hover {
             get {
                 object obj = ResourceManager.GetObject("btn_enter_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_exit_3030 {
+            get {
+                object obj = ResourceManager.GetObject("btn_exit_3030", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_exit_3030_hover {
+            get {
+                object obj = ResourceManager.GetObject("btn_exit_3030_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2263,9 +2303,29 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap NoCircleArrowHoverLDeep {
+            get {
+                object obj = ResourceManager.GetObject("NoCircleArrowHoverLDeep", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap NoCircleArrowHoverR {
             get {
                 object obj = ResourceManager.GetObject("NoCircleArrowHoverR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoCircleArrowHoverRDeep {
+            get {
+                object obj = ResourceManager.GetObject("NoCircleArrowHoverRDeep", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

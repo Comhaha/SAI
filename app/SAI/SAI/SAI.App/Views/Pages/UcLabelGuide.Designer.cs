@@ -35,9 +35,18 @@
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
             this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            this.progress2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress6 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress8 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress5 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
             this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
@@ -65,15 +74,6 @@
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.goModel = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress5 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress8 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress6 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress2 = new Guna.UI2.WinForms.Guna2Panel();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
@@ -117,6 +117,7 @@
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
+            this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
             this.nextBtn.Image = global::SAI.Properties.Resources.ic_next;
             this.nextBtn.ImageSize = new System.Drawing.Size(68, 68);
             this.nextBtn.Location = new System.Drawing.Point(1195, 326);
@@ -190,6 +191,19 @@
             this.leftPanel.TabIndex = 4;
             this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
             // 
+            // progress0
+            // 
+            this.progress0.BackColor = System.Drawing.Color.Transparent;
+            this.progress0.BorderColor = System.Drawing.Color.Black;
+            this.progress0.BorderRadius = 9;
+            this.progress0.BorderThickness = 1;
+            this.progress0.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress0.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress0.Location = new System.Drawing.Point(147, 371);
+            this.progress0.Name = "progress0";
+            this.progress0.Size = new System.Drawing.Size(20, 20);
+            this.progress0.TabIndex = 17;
+            // 
             // class2
             // 
             this.class2.BackColor = System.Drawing.Color.Transparent;
@@ -235,6 +249,110 @@
             this.guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
             this.guna2CustomGradientPanel1.Size = new System.Drawing.Size(79, 94);
             this.guna2CustomGradientPanel1.TabIndex = 13;
+            // 
+            // progress2
+            // 
+            this.progress2.BackColor = System.Drawing.Color.Transparent;
+            this.progress2.BorderColor = System.Drawing.Color.Black;
+            this.progress2.BorderRadius = 9;
+            this.progress2.BorderThickness = 1;
+            this.progress2.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress2.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress2.Location = new System.Drawing.Point(59, 1);
+            this.progress2.Name = "progress2";
+            this.progress2.Size = new System.Drawing.Size(20, 20);
+            this.progress2.TabIndex = 17;
+            // 
+            // progress1
+            // 
+            this.progress1.BackColor = System.Drawing.Color.Transparent;
+            this.progress1.BorderColor = System.Drawing.Color.Black;
+            this.progress1.BorderRadius = 9;
+            this.progress1.BorderThickness = 1;
+            this.progress1.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress1.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress1.Location = new System.Drawing.Point(29, 1);
+            this.progress1.Name = "progress1";
+            this.progress1.Size = new System.Drawing.Size(20, 20);
+            this.progress1.TabIndex = 16;
+            // 
+            // progress6
+            // 
+            this.progress6.BackColor = System.Drawing.Color.Transparent;
+            this.progress6.BorderColor = System.Drawing.Color.Black;
+            this.progress6.BorderRadius = 9;
+            this.progress6.BorderThickness = 1;
+            this.progress6.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress6.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress6.Location = new System.Drawing.Point(0, 74);
+            this.progress6.Name = "progress6";
+            this.progress6.Size = new System.Drawing.Size(20, 20);
+            this.progress6.TabIndex = 16;
+            // 
+            // progress3
+            // 
+            this.progress3.BackColor = System.Drawing.Color.Transparent;
+            this.progress3.BorderColor = System.Drawing.Color.Black;
+            this.progress3.BorderRadius = 9;
+            this.progress3.BorderThickness = 1;
+            this.progress3.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress3.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress3.Location = new System.Drawing.Point(0, 37);
+            this.progress3.Name = "progress3";
+            this.progress3.Size = new System.Drawing.Size(20, 20);
+            this.progress3.TabIndex = 16;
+            // 
+            // progress8
+            // 
+            this.progress8.BackColor = System.Drawing.Color.Transparent;
+            this.progress8.BorderColor = System.Drawing.Color.Black;
+            this.progress8.BorderRadius = 9;
+            this.progress8.BorderThickness = 1;
+            this.progress8.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress8.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress8.Location = new System.Drawing.Point(59, 74);
+            this.progress8.Name = "progress8";
+            this.progress8.Size = new System.Drawing.Size(20, 20);
+            this.progress8.TabIndex = 15;
+            // 
+            // progress5
+            // 
+            this.progress5.BackColor = System.Drawing.Color.Transparent;
+            this.progress5.BorderColor = System.Drawing.Color.Black;
+            this.progress5.BorderRadius = 9;
+            this.progress5.BorderThickness = 1;
+            this.progress5.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress5.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress5.Location = new System.Drawing.Point(59, 37);
+            this.progress5.Name = "progress5";
+            this.progress5.Size = new System.Drawing.Size(20, 20);
+            this.progress5.TabIndex = 15;
+            // 
+            // progress7
+            // 
+            this.progress7.BackColor = System.Drawing.Color.Transparent;
+            this.progress7.BorderColor = System.Drawing.Color.Black;
+            this.progress7.BorderRadius = 9;
+            this.progress7.BorderThickness = 1;
+            this.progress7.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress7.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress7.Location = new System.Drawing.Point(29, 74);
+            this.progress7.Name = "progress7";
+            this.progress7.Size = new System.Drawing.Size(20, 20);
+            this.progress7.TabIndex = 15;
+            // 
+            // progress4
+            // 
+            this.progress4.BackColor = System.Drawing.Color.Transparent;
+            this.progress4.BorderColor = System.Drawing.Color.Black;
+            this.progress4.BorderRadius = 9;
+            this.progress4.BorderThickness = 1;
+            this.progress4.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress4.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress4.Location = new System.Drawing.Point(29, 37);
+            this.progress4.Name = "progress4";
+            this.progress4.Size = new System.Drawing.Size(20, 20);
+            this.progress4.TabIndex = 15;
             // 
             // imageContainer
             // 
@@ -622,123 +740,6 @@
             this.goModel.TabIndex = 8;
             this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
             this.goModel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2Panel1_Paint);
-            // 
-            // progress4
-            // 
-            this.progress4.BackColor = System.Drawing.Color.Transparent;
-            this.progress4.BorderColor = System.Drawing.Color.Black;
-            this.progress4.BorderRadius = 9;
-            this.progress4.BorderThickness = 1;
-            this.progress4.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress4.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress4.Location = new System.Drawing.Point(29, 37);
-            this.progress4.Name = "progress4";
-            this.progress4.Size = new System.Drawing.Size(20, 20);
-            this.progress4.TabIndex = 15;
-            // 
-            // progress5
-            // 
-            this.progress5.BackColor = System.Drawing.Color.Transparent;
-            this.progress5.BorderColor = System.Drawing.Color.Black;
-            this.progress5.BorderRadius = 9;
-            this.progress5.BorderThickness = 1;
-            this.progress5.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress5.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress5.Location = new System.Drawing.Point(59, 37);
-            this.progress5.Name = "progress5";
-            this.progress5.Size = new System.Drawing.Size(20, 20);
-            this.progress5.TabIndex = 15;
-            // 
-            // progress3
-            // 
-            this.progress3.BackColor = System.Drawing.Color.Transparent;
-            this.progress3.BorderColor = System.Drawing.Color.Black;
-            this.progress3.BorderRadius = 9;
-            this.progress3.BorderThickness = 1;
-            this.progress3.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress3.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress3.Location = new System.Drawing.Point(0, 37);
-            this.progress3.Name = "progress3";
-            this.progress3.Size = new System.Drawing.Size(20, 20);
-            this.progress3.TabIndex = 16;
-            // 
-            // progress7
-            // 
-            this.progress7.BackColor = System.Drawing.Color.Transparent;
-            this.progress7.BorderColor = System.Drawing.Color.Black;
-            this.progress7.BorderRadius = 9;
-            this.progress7.BorderThickness = 1;
-            this.progress7.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress7.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress7.Location = new System.Drawing.Point(29, 74);
-            this.progress7.Name = "progress7";
-            this.progress7.Size = new System.Drawing.Size(20, 20);
-            this.progress7.TabIndex = 15;
-            // 
-            // progress8
-            // 
-            this.progress8.BackColor = System.Drawing.Color.Transparent;
-            this.progress8.BorderColor = System.Drawing.Color.Black;
-            this.progress8.BorderRadius = 9;
-            this.progress8.BorderThickness = 1;
-            this.progress8.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress8.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress8.Location = new System.Drawing.Point(59, 74);
-            this.progress8.Name = "progress8";
-            this.progress8.Size = new System.Drawing.Size(20, 20);
-            this.progress8.TabIndex = 15;
-            // 
-            // progress6
-            // 
-            this.progress6.BackColor = System.Drawing.Color.Transparent;
-            this.progress6.BorderColor = System.Drawing.Color.Black;
-            this.progress6.BorderRadius = 9;
-            this.progress6.BorderThickness = 1;
-            this.progress6.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress6.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress6.Location = new System.Drawing.Point(0, 74);
-            this.progress6.Name = "progress6";
-            this.progress6.Size = new System.Drawing.Size(20, 20);
-            this.progress6.TabIndex = 16;
-            // 
-            // progress1
-            // 
-            this.progress1.BackColor = System.Drawing.Color.Transparent;
-            this.progress1.BorderColor = System.Drawing.Color.Black;
-            this.progress1.BorderRadius = 9;
-            this.progress1.BorderThickness = 1;
-            this.progress1.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress1.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress1.Location = new System.Drawing.Point(29, 1);
-            this.progress1.Name = "progress1";
-            this.progress1.Size = new System.Drawing.Size(20, 20);
-            this.progress1.TabIndex = 16;
-            // 
-            // progress0
-            // 
-            this.progress0.BackColor = System.Drawing.Color.Transparent;
-            this.progress0.BorderColor = System.Drawing.Color.Black;
-            this.progress0.BorderRadius = 9;
-            this.progress0.BorderThickness = 1;
-            this.progress0.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress0.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress0.Location = new System.Drawing.Point(147, 371);
-            this.progress0.Name = "progress0";
-            this.progress0.Size = new System.Drawing.Size(20, 20);
-            this.progress0.TabIndex = 17;
-            // 
-            // progress2
-            // 
-            this.progress2.BackColor = System.Drawing.Color.Transparent;
-            this.progress2.BorderColor = System.Drawing.Color.Black;
-            this.progress2.BorderRadius = 9;
-            this.progress2.BorderThickness = 1;
-            this.progress2.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress2.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress2.Location = new System.Drawing.Point(59, 1);
-            this.progress2.Name = "progress2";
-            this.progress2.Size = new System.Drawing.Size(20, 20);
-            this.progress2.TabIndex = 17;
             // 
             // UcLabelGuide
             // 
