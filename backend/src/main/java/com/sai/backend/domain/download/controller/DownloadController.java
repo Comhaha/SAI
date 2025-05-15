@@ -17,4 +17,14 @@ public class DownloadController implements DownloadApi{
     public ResponseEntity<BaseResponse<URL>> redirectToPresignedUrl() {
         return ResponseEntity.ok(new BaseResponse<>(s3DownloadService.generatePresignedUrl()));
     }
+
+    @Override
+    public ResponseEntity<BaseResponse<URL>> redirectTutorialDataToPresignedUrl() {
+        return ResponseEntity.ok(new BaseResponse<>(s3DownloadService.generateTutorialDataPresignedUrl()));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse<URL>> redirectPracticeDataToPresignedUrl() {
+        return ResponseEntity.ok(new BaseResponse<>(s3DownloadService.generatePracticePresignedUrl()));
+    }
 }

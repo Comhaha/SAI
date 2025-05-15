@@ -5,12 +5,12 @@ import com.sai.backend.domain.ai.dto.response.AiFeedbackResponseDto;
 
 import com.sai.backend.domain.ai.model.AiLog;
 import com.sai.backend.domain.ai.repository.mongo.AiFeedbackRepository;
+import com.sai.backend.domain.notion.service.NotionService;
 import java.util.List;
 import java.util.Map;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ public class AiServiceImpl implements AiService {
 
     private final WebClient openAiWebClient;
     private final S3Service s3Service;
+    private final NotionService notionService;
     private final AiFeedbackRepository aiFeedbackRepository;
 
     @Value("${openai.model}")
@@ -73,7 +74,9 @@ public class AiServiceImpl implements AiService {
         AiLog log = new AiLog(feedbackId, dto.getCode(), dto.getLog(), dataUrl, feedback);
         aiFeedbackRepository.save(log);
 
-        return new AiFeedbackResponseDto(feedbackId, feedback);
+        String notionRedirectUrl = notionService.generateAuthUrl(feedbackId);
+
+        return new AiFeedbackResponseDto(feedbackId, feedback, notionRedirectUrl);
     }
 
 }
