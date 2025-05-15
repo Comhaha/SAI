@@ -32,10 +32,10 @@
             this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.pCodeSetting = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnDark = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLight = new Guna.UI2.WinForms.Guna2Button();
             this.tboxPath = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
-            this.btnLight = new Guna.UI2.WinForms.Guna2Button();
-            this.btnDark = new Guna.UI2.WinForms.Guna2Button();
             this.panelTitleBar.SuspendLayout();
             this.pCodeSetting.SuspendLayout();
             this.SuspendLayout();
@@ -78,12 +78,47 @@
             this.pCodeSetting.Size = new System.Drawing.Size(124, 41);
             this.pCodeSetting.TabIndex = 1;
             // 
+            // btnDark
+            // 
+            this.btnDark.BackColor = System.Drawing.Color.Transparent;
+            this.btnDark.BackgroundImage = global::SAI.Properties.Resources.btn_dark;
+            this.btnDark.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDark.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnDark.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnDark.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnDark.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnDark.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDark.FillColor = System.Drawing.Color.Transparent;
+            this.btnDark.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnDark.ForeColor = System.Drawing.Color.White;
+            this.btnDark.Location = new System.Drawing.Point(62, 0);
+            this.btnDark.Name = "btnDark";
+            this.btnDark.Size = new System.Drawing.Size(62, 41);
+            this.btnDark.TabIndex = 1;
+            // 
+            // btnLight
+            // 
+            this.btnLight.BackgroundImage = global::SAI.Properties.Resources.btn_light;
+            this.btnLight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnLight.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLight.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLight.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLight.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLight.FillColor = System.Drawing.Color.Transparent;
+            this.btnLight.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnLight.ForeColor = System.Drawing.Color.White;
+            this.btnLight.Location = new System.Drawing.Point(0, 0);
+            this.btnLight.Name = "btnLight";
+            this.btnLight.Size = new System.Drawing.Size(62, 41);
+            this.btnLight.TabIndex = 0;
+            // 
             // tboxPath
             // 
-            this.tboxPath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tboxPath.BackgroundImage")));
+            this.tboxPath.BackgroundImage = global::SAI.Properties.Resources.pbox_setting1;
             this.tboxPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tboxPath.BorderColor = System.Drawing.Color.Transparent;
-            this.tboxPath.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tboxPath.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tboxPath.DefaultText = "";
             this.tboxPath.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.tboxPath.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
@@ -93,11 +128,12 @@
             this.tboxPath.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tboxPath.ForeColor = System.Drawing.Color.Black;
             this.tboxPath.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tboxPath.Location = new System.Drawing.Point(95, 199);
+            this.tboxPath.Location = new System.Drawing.Point(95, 197);
             this.tboxPath.Margin = new System.Windows.Forms.Padding(6);
             this.tboxPath.Name = "tboxPath";
-            this.tboxPath.PlaceholderForeColor = System.Drawing.Color.Transparent;
-            this.tboxPath.PlaceholderText = "";
+            this.tboxPath.PlaceholderForeColor = System.Drawing.Color.Black;
+            this.tboxPath.PlaceholderText = "클릭하여 경로 선택";
+            this.tboxPath.ReadOnly = true;
             this.tboxPath.SelectedText = "";
             this.tboxPath.Size = new System.Drawing.Size(406, 41);
             this.tboxPath.TabIndex = 2;
@@ -119,34 +155,6 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(153, 41);
             this.btnSave.TabIndex = 3;
-            // 
-            // btnLight
-            // 
-            this.btnLight.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnLight.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnLight.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnLight.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnLight.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnLight.ForeColor = System.Drawing.Color.White;
-            this.btnLight.Location = new System.Drawing.Point(14, 3);
-            this.btnLight.Name = "btnLight";
-            this.btnLight.Size = new System.Drawing.Size(47, 30);
-            this.btnLight.TabIndex = 0;
-            this.btnLight.Text = "guna2Button1";
-            // 
-            // btnDark
-            // 
-            this.btnDark.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnDark.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnDark.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnDark.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnDark.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDark.ForeColor = System.Drawing.Color.White;
-            this.btnDark.Location = new System.Drawing.Point(67, 3);
-            this.btnDark.Name = "btnDark";
-            this.btnDark.Size = new System.Drawing.Size(47, 30);
-            this.btnDark.TabIndex = 1;
-            this.btnDark.Text = "guna2Button2";
             // 
             // DialogSetting
             // 

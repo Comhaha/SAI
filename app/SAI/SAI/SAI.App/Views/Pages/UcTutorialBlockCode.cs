@@ -34,11 +34,6 @@ namespace SAI.SAI.App.Views.Pages
         public event EventHandler RunButtonClicked;
 
         private JsBridge jsBridge;
-		
-        private TodoManager todoManager;
-        // todo 위에서부터 index 0~2번 입니다.
-        // 로직 완료되면 todoManager.SetTodoStatus(1, false); 하면
-        // 자동으로 pboxTodo1 이 Visible = false되고, pboxTodo1Done.Visible = true 됩니다.
 
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
@@ -64,39 +59,45 @@ namespace SAI.SAI.App.Views.Pages
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
 			undoCount = 0;
-			ibtnHome.Click += (s, e) => HomeButtonClicked?.Invoke(this, EventArgs.Empty);
+
+			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+
 
 			ibtnHome.BackColor = Color.Transparent;
 			ibtnDone.BackColor = Color.Transparent;
 			ibtnInfer.BackColor = Color.Transparent;
 			ibtnMemo.BackColor = Color.Transparent;
 
-			InitializeWebView2();
+            // 홈페이지로 이동
+            ibtnHome.Click += (s, e) => {
+                mainView.LoadPage(new UcSelectType(mainView));
+            };
+
+            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            ToolTipUtils.CustomToolTip(btnInfoThreshold,
+  "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+
+            ToolTipUtils.CustomToolTip(btnInfoGraph,
+              "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
+            ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
+
+            ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
+            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
+            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
+            ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
+            ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
+            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
+            InitializeWebView2();
 
 			// 블록 시작만 보이고 나머지는 안 보이게 초기화.
 			InitializeBlockButton();
 			setBtnBlockStart();
 
-			// btnRunModel
-			btnRunModel.BackColor = Color.Transparent;
-			btnRunModel.PressedColor = Color.Transparent;
-			btnRunModel.CheckedState.FillColor = Color.Transparent;
-			btnRunModel.DisabledState.FillColor = Color.Transparent;
-			btnRunModel.HoverState.FillColor = Color.Transparent;
-			// btnRunModel 마우스 입력 될 때
-			btnRunModel.MouseEnter += (s, e) =>
-			{
-				btnRunModel.BackColor = Color.Transparent;
-				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
-			};
-			// btnRunModel 마우스 떠날때
-			btnRunModel.MouseLeave += (s, e) =>
-			{
-				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
-			};
-
-			// 블록 버튼 클릭 이벤트 처리
-			btnBlockStart.Click += (s, e) =>
+            // 블록 버튼 클릭 이벤트 처리
+            btnBlockStart.Click += (s, e) =>
 			{
                 Console.WriteLine("[DEBUG] 더블클릭 이벤트 발생: start");
                 AddBlockButtonClicked?.Invoke(this, new BlockEventArgs("start"));
@@ -449,13 +450,6 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             isInferPanelVisible = false;
         }
-
-        // 다른 클래스에서도 사용 가능
-        public void MarkTodoAsDone(int index)
-        {
-            todoManager.SetTodoStatus(index, false); // false면 완료 상태
-        }
-
         private void guna2ImageButton1_Click_1(object sender, EventArgs e)
         {
             HomeButtonClicked?.Invoke(this, EventArgs.Empty); // Presenter에게 알림
@@ -493,14 +487,13 @@ namespace SAI.SAI.App.Views.Pages
         {
             HidepSideInfer();
         }
-
         private void ibtnMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void ibtnCloseMemo_Click(object sender, EventArgs e)
+        private void btnCloseMemo_Click(object sender, EventArgs e)
         {
             isMemoPanelVisible = !isMemoPanelVisible;
             pMemo.Visible = isMemoPanelVisible;
@@ -626,25 +619,38 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		// JS 함수 호출 = 다시 실행하기
-		private void ibtnNextBlock_Click(object sender, EventArgs e)
+		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
 			undoCount--;
 			webViewblock.ExecuteScriptAsync($"redo()");
+			if(undoCount == 0)
+			{
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
 		}
 
 		// JS 함수 호출 = 되돌리기
-		private void ibtnPreBlock_Click(object sender, EventArgs e)
+		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
 			if(undoCount <= 10)
 			{
 				undoCount++;
 				webViewblock.ExecuteScriptAsync($"undo()");
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = false;
 			}
 		}
-        private void pSideInfer_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         public void AppendLog(string text)
         {
@@ -683,10 +689,20 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void pMemo_Paint(object sender, PaintEventArgs e)
+        private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
+            using (var dialog = new DialogNotion())
+            {
+                dialog.ShowDialog();
+            }
+        }
 
+        private void pboxGraphe_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new DialogModelPerformance())
+            {
+                dialog.ShowDialog();
+            }
         }
     }
-	
 }
