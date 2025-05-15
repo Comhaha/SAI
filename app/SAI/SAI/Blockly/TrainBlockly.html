@@ -8,17 +8,19 @@
 </head>
 <body>
     <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
-    <xml id="toolbox" style="display: none">
-        <block type="start"></block>
-        <block type="pipInstall"></block>
-        <block type="loadModel"></block>
-        <block type="loadDataset"></block>
-        <block type="machineLearning"></block>
-        <block type="resultGraph"></block>
-        <block type="imgPath"></block>
-        <block type="modelInference"></block>
-        <block type="visualizeResult"></block>
-    </xml>
+	<xml id="toolbox" style="display: none">
+		<block type="start"></block>
+		<block type="pipInstall"></block>
+		<block type="loadModel"></block>
+		<block type="loadModelWithLayer"></block>
+		<block type="layer"></block>
+		<block type="loadDataset"></block>
+		<block type="machineLearning"></block>
+		<block type="resultGraph"></block>
+		<block type="imgPath"></block>
+		<block type="modelInference"></block>
+		<block type="visualizeResult"></block>
+	</xml>
 
     <div id="customAlert" style="
         display: none;
@@ -38,16 +40,29 @@
     </div>
 
     <script>
+		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
-
-		console.log("HTML 로딩 완료");
-
-        const workspace = Blockly.inject('blocklyDiv', {
-            toolbox: null
-            //toolbox: document.getElementById('toolbox')
-        });
-
-		Blockly.Tooltip.HOVER_MS = 100; // 툴팁 지연 시간 설정
+		const workspace = Blockly.inject('blocklyDiv', {
+			//toolbox: document.getElementById('toolbox'),
+			toolbox: null, // 혹은 document.getElementById('toolbox') 사용 가능
+			scrollbars: true, // 수평 + 수직 스크롤바 모두 사용 (공식 지원 방식)
+			trashcan: false,
+			zoom: {
+				controls: true,
+				wheel: true,
+				startScale: 2.0,
+				maxScale: 4,
+				minScale: 1,
+				scaleSpeed: 1.2,
+				pinch: true
+			},
+			renderer: 'geras', // 또는 'zelos', 'thrasos' 등 (기본: 'geras')
+			move: {
+				scrollbars: true,
+				drag: true,
+				wheel: true
+			}
+		});
 
         function showCustomAlert(text) {
             document.getElementById('customAlertText').innerText = text;
@@ -69,27 +84,93 @@
 				type: "blockCode",
 				code: code
 			});
+        }
+
+		// 하나의 블럭 코드 가져오기
+		function getPythonCodeByType(blockType) {
+			const blocks = workspace.getAllBlocks();
+			for (let block of blocks) {
+				if (block.type === blockType) {
+					window.chrome.webview.postMessage({
+						type: "blockCode",
+						code: Blockly.Python.blockToCode(block)
+					});
+					break;
+				}
+			}
 		}
 
-        window.addEventListener('DOMContentLoaded', () => {
+		// 모든 블럭 삭제
+		function clear() {
+			workspace.clear();
+		}
 
-            workspace.addChangeListener((event) => {
-                if (
-                    event.type === Blockly.Events.BLOCK_CREATE ||
-                    event.type === Blockly.Events.BLOCK_DELETE ||
-                    event.type === Blockly.Events.BLOCK_CHANGE ||
-                    event.type === Blockly.Events.BLOCK_MOVE
-                ) {
-                    // 안전하게 확인
-                    if (Blockly.Python && Blockly.Python.workspaceToCode) {
-                        const code = Blockly.Python.workspaceToCode(workspace);
+		// 이전 상태로 되돌리기(ctrl+z)
+		function undo() {
+			workspace.undo(false);
+		}
+
+		// 이전 상태 다시 실행하기(ctrl+y)
+		function redo() {
+			workspace.undo(true);
+		}
+
+		// 더블 클릭 이벤트 등록 및 이벤트 처리
+		function registerDoubleClickEventRecursively(block) {
+			if (!block) return;
+
+			// 현재 블록에 이벤트 등록
+			if (block.svgGroup_ && !block.svgGroup_.dataset.dblclickBound) {
+				block.svgGroup_.addEventListener('dblclick', (event) => {
+					// 이벤트 전파 중단
+					event.stopPropagation();
+
+					try {
+						// 현재 블록의 코드만 생성
+						let code = '';
+						if (Blockly.Python && Blockly.Python.forBlock[block.type]) {
+							code = Blockly.Python.forBlock[block.type](block);
+						}
+
+						const json = {
+							type: "blockDoubleClick",
+							code: code,
+						};
+						window.chrome.webview.postMessage(json);
+					} catch (e) {
+						showCustomAlert('블록 코드를 생성하는 중 오류가 발생했습니다.');
+						console.error(e);
+					}
+				});
+
+				block.svgGroup_.dataset.dblclickBound = true; // 더블클릭 이벤트가 중복 등록되지 않도록 방지
+			}
+		}
+
+		// 블록 생성 시 Python 코드 생성
+		window.addEventListener('DOMContentLoaded', () => {
+			workspace.addChangeListener((event) => {
+				if (
+					event.type === Blockly.Events.BLOCK_CREATE ||
+					event.type === Blockly.Events.BLOCK_DELETE ||
+					event.type === Blockly.Events.BLOCK_CHANGE ||
+					event.type === Blockly.Events.BLOCK_MOVE
+				) {
+					const allBlocks = workspace.getAllBlocks(false);
+					for (const block of allBlocks) {
+						registerDoubleClickEventRecursively(block);
+					}
+
+					// 안전하게 확인
+					if (Blockly.Python && Blockly.Python.workspaceToCode) {
+						const code = Blockly.Python.workspaceToCode(workspace);
 						sendCode(code);
-                    } else {
-                        showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
-                    }
-                }
-            });
-        });
+					} else {
+						showCustomAlert('Blockly.Python.workspaceToCode가 아직 정의되지 않았습니다.');
+					}
+				}
+			});
+		});
 
 
 		// 나만의 필드 타입(모델 선택 버튼)

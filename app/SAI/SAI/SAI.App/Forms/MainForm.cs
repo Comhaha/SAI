@@ -74,7 +74,7 @@ namespace SAI
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			// 초기 페이지인 Blockly를 불러온다.
+			// 초기 페이지인 UcSelectType을 불러온다.
 			presenter.Initialize();
 		}
 

@@ -392,25 +392,25 @@
   <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="webViewBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="webViewblock.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 37</value>
   </data>
-  <data name="webViewBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="webViewblock.Size" type="System.Drawing.Size, System.Drawing">
     <value>302, 460</value>
   </data>
-  <data name="webViewBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="webViewblock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;webViewBlock.Name" xml:space="preserve">
-    <value>webViewBlock</value>
+  <data name="&gt;&gt;webViewblock.Name" xml:space="preserve">
+    <value>webViewblock</value>
   </data>
-  <data name="&gt;&gt;webViewBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;webViewblock.Type" xml:space="preserve">
     <value>Microsoft.Web.WebView2.WinForms.WebView2, Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e</value>
   </data>
-  <data name="&gt;&gt;webViewBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;webViewblock.Parent" xml:space="preserve">
     <value>pBlock</value>
   </data>
-  <data name="&gt;&gt;webViewBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -466,20 +466,26 @@
   <data name="pTopBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnRunModel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
   <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>282, 9</value>
+    <value>280, 7</value>
   </data>
   <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>10, 12</value>
+    <value>20, 20</value>
   </data>
   <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
     <value>btnRunModel</value>
   </data>
   <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
     <value>pTopBlock</value>
@@ -487,25 +493,25 @@
   <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 13</value>
   </data>
-  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 10</value>
   </data>
-  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnPreBlock.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
+  <data name="&gt;&gt;ibtnPreBlock.Name" xml:space="preserve">
+    <value>ibtnPreBlock</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnPreBlock.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="btnTrashBlock.Location" type="System.Drawing.Point, System.Drawing">
@@ -529,25 +535,25 @@
   <data name="&gt;&gt;btnTrashBlock.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="btnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ibtnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>48, 13</value>
   </data>
-  <data name="btnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ibtnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 10</value>
   </data>
-  <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
+  <data name="ibtnNextBlock.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
-    <value>btnNextBlock</value>
+  <data name="&gt;&gt;ibtnNextBlock.Name" xml:space="preserve">
+    <value>ibtnNextBlock</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ibtnNextBlock.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -600,6 +606,51 @@
   </data>
   <data name="pBlockList.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="pSelectBlockvScrollBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>295, 17</value>
+  </data>
+  <data name="pSelectBlockvScrollBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>10, 480</value>
+  </data>
+  <data name="pSelectBlockvScrollBar.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlockvScrollBar.Name" xml:space="preserve">
+    <value>pSelectBlockvScrollBar</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlockvScrollBar.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2VScrollBar, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlockvScrollBar.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlockvScrollBar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pSelectBlock.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="pSelectBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 17</value>
+  </data>
+  <data name="pSelectBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 480</value>
+  </data>
+  <data name="pSelectBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlock.Name" xml:space="preserve">
+    <value>pSelectBlock</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlock.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlock.Parent" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;pSelectBlock.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="pBlockList.Location" type="System.Drawing.Point, System.Drawing">
     <value>45, 32</value>
