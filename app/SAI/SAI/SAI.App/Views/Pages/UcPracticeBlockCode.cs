@@ -11,6 +11,8 @@ using System.Text.Json;
 using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
+using static SAI.SAI.App.Models.BlocklyModel;
+using System.Collections.Generic;
 
 
 namespace SAI.SAI.App.Views.Pages
@@ -281,6 +283,12 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockDoubleClick":
 								string eventCode = root.GetProperty("code").GetString();
 								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
 						}
 					}
