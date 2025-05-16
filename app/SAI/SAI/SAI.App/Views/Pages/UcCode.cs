@@ -393,19 +393,37 @@ namespace SAI.SAI.App.Views.Pages
                 string normalizedCodeSegment = NormalizeLineEndings(codeSegment);
                 Console.WriteLine($"[DEBUG] UcCode: 정규화된 코드 세그먼트 길이: {normalizedCodeSegment.Length}자");
 
-                // 전체 코드에서 코드 세그먼트 검색
-                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, StringComparison.OrdinalIgnoreCase);
+                // 모든 일치하는 코드 세그먼트 찾기
+                int startIndex = 0;
+                int matchCount = 0;
+                bool foundAny = false;
 
-                if (segmentIndex >= 0)
+                while (true)
                 {
-                    Console.WriteLine($"[DEBUG] UcCode: 코드 세그먼트 직접 매칭 찾음 (위치: {segmentIndex})");
+                    // 현재 위치부터 검색
+                    int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, startIndex, StringComparison.OrdinalIgnoreCase);
+                    
+                    if (segmentIndex < 0)
+                        break;  // 더 이상 일치하는 부분이 없으면 종료
+
+                    foundAny = true;
+                    matchCount++;
+
+                    Console.WriteLine($"[DEBUG] UcCode: 코드 세그먼트 {matchCount}번째 매칭 찾음 (위치: {segmentIndex})");
 
                     // 인디케이터 적용
                     scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
                     scintilla1.IndicatorFillRange(segmentIndex, normalizedCodeSegment.Length);
 
-                    // 해당 위치로 스크롤
-                    scintilla1.GotoPosition(segmentIndex);
+                    // 다음 검색을 위해 시작 위치 업데이트
+                    startIndex = segmentIndex + normalizedCodeSegment.Length;
+                }
+
+                if (foundAny)
+                {
+                    // 첫 번째 매칭 위치로 스크롤
+                    int firstMatchIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, StringComparison.OrdinalIgnoreCase);
+                    scintilla1.GotoPosition(firstMatchIndex);
                     scintilla1.ScrollCaret();
 
                     // 화면 갱신
@@ -415,12 +433,11 @@ namespace SAI.SAI.App.Views.Pages
                     // 포커스 설정
                     scintilla1.Focus();
 
-                    Console.WriteLine("[DEBUG] UcCode: 코드 세그먼트 하이라이트 완료");
+                    Console.WriteLine($"[DEBUG] UcCode: 총 {matchCount}개의 코드 세그먼트 하이라이트 완료");
                 }
                 else
                 {
                     Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함, 부분 매칭 시도");
-
                     // 부분 매칭 시도
                     FindAndHighlightText(codeSegment);
                 }
