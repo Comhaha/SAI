@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -15,6 +16,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         public DialogModelPerformance()
         {
             InitializeComponent();
+
+            DialogUtils.ApplyDefaultStyle(this, Color.Gray);
+
+            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
+            btnClose.Click += (s, e) => { this.Close(); };
+
         }
     }
 }

@@ -52,7 +52,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             // ------------------------------------
 
             // 만약 폼 전체가 아니라 특정 Panel 위에서만 드래그하고 싶다면,
-            // 그 Panel의 MouseDown, MouseMove, MouseUp 이벤트를 등록하면 돼.
+            // 그 Panel의 MouseDown, MouseMove, MouseUp 이벤트를 등록.
             // 예를 들어, 'titlePanel'이라는 Panel이 있다면 아래처럼:
             // titlePanel.MouseDown += AnnotationEditorForm_MouseDown;
             // titlePanel.MouseMove += AnnotationEditorForm_MouseMove;
@@ -74,7 +74,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
-        {
+        {   
+            if (!annotationText.Text.Trim().Any())
+            {
+                MessageBox.Show("라벨 이름을 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             AnnotationText = annotationText.Text;
             IsSaved = true;
 

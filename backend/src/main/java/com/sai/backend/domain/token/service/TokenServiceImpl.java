@@ -6,7 +6,6 @@ import com.sai.backend.domain.token.model.Token;
 import com.sai.backend.domain.token.repository.jpa.JpaTokenRepository;
 import com.sai.backend.domain.token.repository.redis.RedisTokenRepository;
 import com.sai.backend.global.util.TokenUtil;
-import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +61,11 @@ public class TokenServiceImpl implements TokenService {
     @Override
     @Transactional
     public TokenResponseDto reloadToken() {
+        return reloadToken(true); // 수동 재발급
+    }
+
+    // 내부 메서드로 isManual 파라미터 추가
+    private TokenResponseDto reloadToken(boolean isManual) {
         RedisToken redisToken = redisTokenRepository.findById(KEY)
             .orElseGet(() -> createCurrentToken(null));
 
@@ -69,9 +73,13 @@ public class TokenServiceImpl implements TokenService {
         jpaTokenRepository.save(token);
 
         replaceWithNewToken(redisToken);
-        eventPublisher.publishEvent(new TokenReloadedEvent());
+        eventPublisher.publishEvent(new TokenReloadedEvent(isManual));
 
         return new TokenResponseDto(redisToken.getToken());
+    }
+
+    public void scheduleReloadToken() {
+        reloadToken(false); // 자동 재발급
     }
 
     @Override
@@ -140,6 +148,14 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public static class TokenReloadedEvent {
-        // 이벤트 클래스는 비어있어도 됨
+        private final boolean isManual;
+
+        public TokenReloadedEvent(boolean isManual) {
+            this.isManual = isManual;
+        }
+
+        public boolean isManual() {
+            return isManual;
+        }
     }
 }

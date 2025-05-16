@@ -30,8 +30,8 @@
         {
             this.annotationText = new Guna.UI2.WinForms.Guna2TextBox();
             this.saveBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.cancelBtn = new Guna.UI2.WinForms.Guna2Button();
             this.xBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.cancelBtn = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // annotationText
@@ -59,7 +59,7 @@
             // 
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
             this.saveBtn.BackgroundImage = global::SAI.Properties.Resources.Frame_10789;
-            this.saveBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.saveBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.saveBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.saveBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.saveBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -70,25 +70,9 @@
             this.saveBtn.Location = new System.Drawing.Point(269, 129);
             this.saveBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.saveBtn.Name = "saveBtn";
+            this.saveBtn.PressedColor = System.Drawing.Color.Transparent;
             this.saveBtn.Size = new System.Drawing.Size(81, 31);
             this.saveBtn.TabIndex = 1;
-            // 
-            // cancelBtn
-            // 
-            this.cancelBtn.BackgroundImage = global::SAI.Properties.Resources.Frame_10788;
-            this.cancelBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.cancelBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.cancelBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.cancelBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.cancelBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.cancelBtn.FillColor = System.Drawing.Color.Transparent;
-            this.cancelBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cancelBtn.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.cancelBtn.Location = new System.Drawing.Point(176, 129);
-            this.cancelBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(81, 31);
-            this.cancelBtn.TabIndex = 2;
             // 
             // xBtn
             // 
@@ -110,6 +94,24 @@
             this.xBtn.Name = "xBtn";
             this.xBtn.Size = new System.Drawing.Size(53, 40);
             this.xBtn.TabIndex = 3;
+            // 
+            // cancelBtn
+            // 
+            this.cancelBtn.BackgroundImage = global::SAI.Properties.Resources.Frame_10788;
+            this.cancelBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cancelBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.cancelBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.cancelBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.cancelBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.cancelBtn.FillColor = System.Drawing.Color.Transparent;
+            this.cancelBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cancelBtn.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.cancelBtn.Location = new System.Drawing.Point(176, 129);
+            this.cancelBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.PressedColor = System.Drawing.Color.Transparent;
+            this.cancelBtn.Size = new System.Drawing.Size(81, 31);
+            this.cancelBtn.TabIndex = 2;
             // 
             // AnnotationEditorForm
             // 
@@ -140,7 +142,7 @@
 
         private Guna.UI2.WinForms.Guna2TextBox annotationText;
         private Guna.UI2.WinForms.Guna2Button saveBtn;
-        private Guna.UI2.WinForms.Guna2Button cancelBtn;
         private Guna.UI2.WinForms.Guna2Button xBtn;
+        private Guna.UI2.WinForms.Guna2Button cancelBtn;
     }
 }
