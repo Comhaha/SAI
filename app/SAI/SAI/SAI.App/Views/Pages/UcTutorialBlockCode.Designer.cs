@@ -61,7 +61,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
-            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo0Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -459,7 +458,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.Name = "btnRunModel";
             this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
             // 
-            
             // pboxTodo2Done
             // 
             this.pboxTodo2Done.Image = global::SAI.Properties.Resources.lbl_todo3_finish;

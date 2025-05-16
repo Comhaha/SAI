@@ -144,11 +144,23 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogInferenceLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogInferenceLoading.Designer.cs">
+      <DependentUpon>DialogInferenceLoading.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.Designer.cs">
       <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.Designer.cs">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
@@ -218,6 +230,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Forms\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Models\CodeBoxModel.cs" />
     <Compile Include="SAI.App\Models\LogCsvModel.cs" />
     <Compile Include="SAI.App\Models\LogImageModel.cs" />
     <Compile Include="SAI.App\Models\NotionModel.cs" />
@@ -247,15 +266,18 @@
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICsvChartView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IPracticeInferenceView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ITutorialInferenceView.cs" />
     <Compile Include="SAI.App\Views\Common\ButtonUtils.cs" />
     <Compile Include="SAI.App\Views\Common\PercentUtils.cs" />
     <Compile Include="SAI.App\Views\Common\DialogUtils.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
-    <Compile Include="SAI.App\Views\Common\ThresholdUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtilsTutorial.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtilsPractice.cs" />
     <Compile Include="SAI.App\Views\Common\TodoManager.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IYoloTutorialView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IUcShowDialogView.cs" />
@@ -274,6 +296,12 @@
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.Designer.cs">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcCsvChart.cs">
       <SubType>UserControl</SubType>
@@ -364,6 +392,12 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
+      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelProgress.resx">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
@@ -391,8 +425,14 @@
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCsvChart.resx">
       <DependentUpon>UcCsvChart.cs</DependentUpon>
@@ -437,7 +477,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SAI.Application\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -447,7 +486,6 @@
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
-    <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
     <Folder Include="SAI.Core\ValueObjects\" />
@@ -460,6 +498,47 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\bg_train_progressbar.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_train_progress.png" />
+    <None Include="SAI.App\Resources\Images\img_inferGraphe_example.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_sai.png" />
+    <None Include="SAI.App\Resources\Images\logo_splash.png" />
+    <None Include="SAI.App\Resources\Images\btn_auth_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_auth.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_info_17.png" />
+    <None Include="SAI.App\Resources\Images\btn_info_12.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_25_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_25.png" />
+    <None Include="SAI.App\Resources\Images\btn_question_memo_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_trash_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_block_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_block_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_white_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_white.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_modelPerformance.png" />
+    <None Include="SAI.App\Resources\Images\btn_light_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark.png" />
+    <None Include="SAI.App\Resources\Images\btn_light.png" />
+    <None Include="SAI.App\Resources\Images\lbl_report.png" />
+    <None Include="SAI.App\Resources\Images\lbl_visualize_result.png" />
+    <None Include="SAI.App\Resources\Images\lbl_start.png" />
+    <None Include="SAI.App\Resources\Images\lbl_run.png" />
+    <None Include="SAI.App\Resources\Images\lbl_result_graph.png" />
+    <None Include="SAI.App\Resources\Images\lbl_pip_install.png" />
+    <None Include="SAI.App\Resources\Images\lbl_model_inference.png" />
+    <None Include="SAI.App\Resources\Images\lbl_machine_learning.png" />
+    <None Include="SAI.App\Resources\Images\lbl_load_model.png" />
+    <None Include="SAI.App\Resources\Images\lbl_load_dataset.png" />
+    <None Include="SAI.App\Resources\Images\lbl_img_path.png" />
     <None Include="SAI.App\Resources\Images\btnLayerClicked.png" />
     <None Include="SAI.App\Resources\Images\btnLayer.png" />
     <None Include="SAI.App\Resources\Images\btnLoadModelWithLayerClicked.png" />
@@ -784,6 +863,14 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_home_from_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_quit_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_setting.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide1.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide2.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide3.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide4.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide5.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

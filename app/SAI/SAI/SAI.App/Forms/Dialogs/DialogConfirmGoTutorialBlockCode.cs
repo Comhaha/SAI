@@ -32,11 +32,11 @@ namespace SAI.SAI.App.Forms.Dialogs
 			this.mainView = view;
 		}
 
-
         private void btnOk_Click(object sender, EventArgs e)
         {
-            mainView.LoadPage(new UcTutorialBlockCode(mainView));
+            mainView.LoadPage(new UcBlockGuide(mainView));
             this.Close();
+
         }
     }
 }
