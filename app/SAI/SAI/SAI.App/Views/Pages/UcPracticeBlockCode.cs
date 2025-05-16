@@ -14,25 +14,27 @@ using SAI.SAI.App.Models;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
 
+
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView
-	{
-		private BlocklyPresenter blocklyPresenter;
-		private UcShowDialogPresenter ucShowDialogPresenter;
-		
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IInferenceView
+    {
+        private BlocklyPresenter blocklyPresenter;
+        private UcShowDialogPresenter ucShowDialogPresenter;
+        private DialogInferenceLoading dialogLoadingInfer;
+
         private readonly IMainView mainView;
 
         private BlocklyModel blocklyModel;
 
-		public event EventHandler HomeButtonClicked;
+        public event EventHandler HomeButtonClicked;
 
-		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
-		public event EventHandler AddBlockButtonDoubleClicked;
-		private JsBridge jsBridge;
+        public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+        public event EventHandler AddBlockButtonDoubleClicked;
+        private JsBridge jsBridge;
 
-		private bool isInferPanelVisible = false;
-        private int inferPanelWidth = 420; 
+        private bool isInferPanelVisible = false;
+        private int inferPanelWidth = 420;
         private bool isMemoPanelVisible = false;
 
         private double currentThreshold = 0.5; // threshold 기본값 0.5
@@ -40,11 +42,11 @@ namespace SAI.SAI.App.Views.Pages
 
         private int undoCount = 0; // 뒤로가기 카운트
 
-		public UcPracticeBlockCode(IMainView view)
+        public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
-			ucShowDialogPresenter = new UcShowDialogPresenter(this);
+            ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
             // 홈페이지 이동
             ibtnHome.Click += (s, e) => {
@@ -52,9 +54,9 @@ namespace SAI.SAI.App.Views.Pages
             };
 
             ibtnHome.BackColor = Color.Transparent;
-            ibtnInfer.BackColor = Color.Transparent;    
+            ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
-			ButtonUtils.SetTransparentStyle(btnCopy);
+            ButtonUtils.SetTransparentStyle(btnCopy);
 
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
@@ -72,7 +74,7 @@ namespace SAI.SAI.App.Views.Pages
 
             pInferAccuracy.MouseEnter += (s, e) =>
             {
-                if (pSideInfer.Visible) 
+                if (pSideInfer.Visible)
                 {
                     btnSelectInferImage.Visible = true;
                     btnSelectInferImage.BringToFront();
@@ -118,84 +120,84 @@ namespace SAI.SAI.App.Views.Pages
               "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
             ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
 
-            ButtonUtils.SetupButton(btnRunModel,"btnRunModel_clicked", "btn_run_model");
+            ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
             ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
             ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
             ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
-			ButtonUtils.SetTransparentStyle(btnSelectInferImage);
+            ButtonUtils.SetTransparentStyle(btnSelectInferImage);
 
-			// 정언이가 선언
+            // 정언이가 선언
             //생성자---------------
             blocklyPresenter = new BlocklyPresenter(this);
             this.mainView = view;
             blocklyModel = BlocklyModel.Instance;
-			InitializeWebView2();
+            InitializeWebView2();
 
-			undoCount = 0;
-			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
-			// btnRunModel---------------
-			btnRunModel.BackColor = Color.Transparent;
-			btnRunModel.PressedColor = Color.Transparent;
-			btnRunModel.CheckedState.FillColor = Color.Transparent;
-			btnRunModel.DisabledState.FillColor = Color.Transparent;
-			btnRunModel.HoverState.FillColor = Color.Transparent;
-			// btnRunModel 마우스 입력 될 때
-			btnRunModel.MouseEnter += (s, e) =>
-			{
-				btnRunModel.BackColor = Color.Transparent;
-				btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
-			};
-			// btnRunModel 마우스 떠날때
-			btnRunModel.MouseLeave += (s, e) =>
-			{
-				btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
-			};
-			// 스크롤바 설정-------------------
-			var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
-			pSelectBlock.Controls.Add(ucPracticeBlockList);
-			pSelectBlock.AutoScroll = false;
-			ucPracticeBlockList.AutoScroll = false;
-			pSelectBlockvScrollBar.Scroll += (s, e) =>
-			{
-				if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤바 안 보이면 무시
+            undoCount = 0;
+            btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+                                          // btnRunModel---------------
+            btnRunModel.BackColor = Color.Transparent;
+            btnRunModel.PressedColor = Color.Transparent;
+            btnRunModel.CheckedState.FillColor = Color.Transparent;
+            btnRunModel.DisabledState.FillColor = Color.Transparent;
+            btnRunModel.HoverState.FillColor = Color.Transparent;
+            // btnRunModel 마우스 입력 될 때
+            btnRunModel.MouseEnter += (s, e) =>
+            {
+                btnRunModel.BackColor = Color.Transparent;
+                btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
+            };
+            // btnRunModel 마우스 떠날때
+            btnRunModel.MouseLeave += (s, e) =>
+            {
+                btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            };
+            // 스크롤바 설정-------------------
+            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            pSelectBlock.Controls.Add(ucPracticeBlockList);
+            pSelectBlock.AutoScroll = false;
+            ucPracticeBlockList.AutoScroll = false;
+            pSelectBlockvScrollBar.Scroll += (s, e) =>
+            {
+                if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤바 안 보이면 무시
 
-				ucPracticeBlockList.content.Top = -pSelectBlockvScrollBar.Value;
-			};
-			pSelectBlockvScrollBar.Maximum = ucPracticeBlockList.content.Height - pSelectBlockvScrollBar.Height;
-			ucPracticeBlockList.SizeChanged += (s,e) =>
-			{
-				int contentHeight = ucPracticeBlockList.content.Height;
-				int viewportHeight = pSelectBlock.Size.Height;
+                ucPracticeBlockList.content.Top = -pSelectBlockvScrollBar.Value;
+            };
+            pSelectBlockvScrollBar.Maximum = ucPracticeBlockList.content.Height - pSelectBlockvScrollBar.Height;
+            ucPracticeBlockList.SizeChanged += (s, e) =>
+            {
+                int contentHeight = ucPracticeBlockList.content.Height;
+                int viewportHeight = pSelectBlock.Size.Height;
 
-				int newMax = contentHeight - viewportHeight;
-				if(newMax <= 0)
-				{
-					pSelectBlockvScrollBar.Visible = false;
-					pSelectBlockvScrollBar.Maximum = 0;
-					pSelectBlockvScrollBar.Value = 0;
-					ucPracticeBlockList.content.Top = 0;
-				}
-				else
-				{
-					pSelectBlockvScrollBar.Visible = true;
-					pSelectBlockvScrollBar.Maximum = newMax;
-				}
-			};
-			pSelectBlock.MouseEnter += (s, e) => pSelectBlock.Focus();
-			// 마우스 휠 이벤트 수동 처리
-			pSelectBlock.MouseWheel += (s, e) =>
-			{
-				if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤 안 보이면 스킵
+                int newMax = contentHeight - viewportHeight;
+                if (newMax <= 0)
+                {
+                    pSelectBlockvScrollBar.Visible = false;
+                    pSelectBlockvScrollBar.Maximum = 0;
+                    pSelectBlockvScrollBar.Value = 0;
+                    ucPracticeBlockList.content.Top = 0;
+                }
+                else
+                {
+                    pSelectBlockvScrollBar.Visible = true;
+                    pSelectBlockvScrollBar.Maximum = newMax;
+                }
+            };
+            pSelectBlock.MouseEnter += (s, e) => pSelectBlock.Focus();
+            // 마우스 휠 이벤트 수동 처리
+            pSelectBlock.MouseWheel += (s, e) =>
+            {
+                if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤 안 보이면 스킵
 
-				int newValue = pSelectBlockvScrollBar.Value - e.Delta / 5; // 120 → 한 칸, 반전 여부 조절 가능
-				newValue = Math.Max(pSelectBlockvScrollBar.Minimum, Math.Min(pSelectBlockvScrollBar.Maximum, newValue));
-				pSelectBlockvScrollBar.Value = newValue;
-			};
-		}
-        
+                int newValue = pSelectBlockvScrollBar.Value - e.Delta / 5; // 120 → 한 칸, 반전 여부 조절 가능
+                newValue = Math.Max(pSelectBlockvScrollBar.Minimum, Math.Min(pSelectBlockvScrollBar.Maximum, newValue));
+                pSelectBlockvScrollBar.Value = newValue;
+            };
+        }
+
         private void ShowpSIdeInfer()
         {
             pSideInfer.Visible = true;
@@ -212,10 +214,12 @@ namespace SAI.SAI.App.Views.Pages
 
         private void SetupThresholdControls()
         {
-            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
-            {
-                currentThreshold = newValue;
-            });
+            ThresholdUtils.Setup(
+                tbarThreshold,
+                tboxThreshold,
+                (newValue) => currentThreshold = newValue,
+                this
+            );
         }
 
         private void ibtnHome_Click(object sender, EventArgs e)
@@ -258,163 +262,163 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
-		private void ibtnDone_Click(object sender, EventArgs e)
-		{
-			ucShowDialogPresenter.clickFinish();
-		}
+        private void ibtnDone_Click(object sender, EventArgs e)
+        {
+            ucShowDialogPresenter.clickFinish();
+        }
 
-		public void showDialog(Form dialog)
-		{
-			dialog.Owner = mainView as Form;
-			dialog.ShowDialog();
-		}
+        public void showDialog(Form dialog)
+        {
+            dialog.Owner = mainView as Form;
+            dialog.ShowDialog();
+        }
 
-		// webview에 blockly tutorial html 붙이기
-		private async void InitializeWebView2()
-		{
-			jsBridge = new JsBridge((message, type) =>
-			{
-				blocklyPresenter.HandleJsMessage(message, type);
-			});
+        // webview에 blockly tutorial html 붙이기
+        private async void InitializeWebView2()
+        {
+            jsBridge = new JsBridge((message, type) =>
+            {
+                blocklyPresenter.HandleJsMessage(message, type);
+            });
 
-			var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-			string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TrainBlockly.html"));
-			string uri = new Uri(localPath).AbsoluteUri;
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TrainBlockly.html"));
+            string uri = new Uri(localPath).AbsoluteUri;
 
-			webViewblock.WebMessageReceived += async (s, e) =>
-			{
-				try
-				{
-					// 먼저 시도: 객체 기반 JSON 메시지 처리
-					var doc = JsonDocument.Parse(e.WebMessageAsJson);
-					var root = doc.RootElement;
+            webViewblock.WebMessageReceived += async (s, e) =>
+            {
+                try
+                {
+                    // 먼저 시도: 객체 기반 JSON 메시지 처리
+                    var doc = JsonDocument.Parse(e.WebMessageAsJson);
+                    var root = doc.RootElement;
 
-					if (root.ValueKind == JsonValueKind.Object &&
-						root.TryGetProperty("type", out var typeElem))
-					{
-						string type = typeElem.GetString();
+                    if (root.ValueKind == JsonValueKind.Object &&
+                        root.TryGetProperty("type", out var typeElem))
+                    {
+                        string type = typeElem.GetString();
 
-						switch (type)
-						{
-							case "openFile":
-								using (OpenFileDialog dialog = new OpenFileDialog())
-								{
-									dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-									dialog.Multiselect = false;
-									string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
-									if (dialog.ShowDialog() == DialogResult.OK)
-									{
-										string filePath = dialog.FileName.Replace("\\", "/");
-										string escapedFilePath = JsonSerializer.Serialize(filePath);
-										string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
+                        switch (type)
+                        {
+                            case "openFile":
+                                using (OpenFileDialog dialog = new OpenFileDialog())
+                                {
+                                    dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                                    dialog.Multiselect = false;
+                                    string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
+                                    if (dialog.ShowDialog() == DialogResult.OK)
+                                    {
+                                        string filePath = dialog.FileName.Replace("\\", "/");
+                                        string escapedFilePath = JsonSerializer.Serialize(filePath);
+                                        string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
 
-										blocklyModel.imgPath = filePath;
+                                        blocklyModel.imgPath = filePath;
 
-										string json = $@"{{
+                                        string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
 										}}";
 
-										await webViewblock.ExecuteScriptAsync(
-											$"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
-										);
-									}
-								}
-								break;
+                                        await webViewblock.ExecuteScriptAsync(
+                                            $"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
+                                        );
+                                    }
+                                }
+                                break;
 
-							case "blockAllCode":
-								string blockAllCode = root.GetProperty("code").GetString();
-								jsBridge.receiveMessageFromJs(blockAllCode, type);
-								break;
+                            case "blockAllCode":
+                                string blockAllCode = root.GetProperty("code").GetString();
+                                jsBridge.receiveMessageFromJs(blockAllCode, type);
+                                break;
 
-							case "blockCode":
-								string blockCode = root.GetProperty("code").GetString();
-								jsBridge.receiveMessageFromJs(blockCode, type);
-								break;
+                            case "blockCode":
+                                string blockCode = root.GetProperty("code").GetString();
+                                jsBridge.receiveMessageFromJs(blockCode, type);
+                                break;
 
-							case "blockDoubleClick":
-								string eventCode = root.GetProperty("code").GetString();
-								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
-								break;
+                            case "blockDoubleClick":
+                                string eventCode = root.GetProperty("code").GetString();
+                                blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+                                break;
 
-							case "blockTypes":
-								var jsonTypes = root.GetProperty("types");
-								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
-								blocklyPresenter.setBlockTypes(blockTypes);
-								break;
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
-				}
-			};
+                            case "blockTypes":
+                                var jsonTypes = root.GetProperty("types");
+                                var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+                                blocklyPresenter.setBlockTypes(blockTypes);
+                                break;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
+                }
+            };
 
-			webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
+            webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
-			await webViewblock.EnsureCoreWebView2Async();
-			webViewblock.Source = new Uri(uri);
-		}
+            await webViewblock.EnsureCoreWebView2Async();
+            webViewblock.Source = new Uri(uri);
+        }
 
-		// JS 함수 호출 = 블럭 넣기
-		public void addBlock(string blockType)
-		{
-			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
-		}
+        // JS 함수 호출 = 블럭 넣기
+        public void addBlock(string blockType)
+        {
+            webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
+        }
 
-		// JS 함수호출 = 하나의 블럭의 코드 가져오기
-		public void getPythonCodeByType(string blockType)
-		{
-			webViewblock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
-		}
+        // JS 함수호출 = 하나의 블럭의 코드 가져오기
+        public void getPythonCodeByType(string blockType)
+        {
+            webViewblock.ExecuteScriptAsync($"getPythonCodeByType('{blockType}')");
+        }
 
-		// blockly 웹뷰 확대 조절 함수
-		private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
-		{
-			webViewblock.ZoomFactor = 0.5;
-		}
+        // blockly 웹뷰 확대 조절 함수
+        private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
+        {
+            webViewblock.ZoomFactor = 0.5;
+        }
 
-		// JS 함수 호출 = 다시 실행하기
-		private void ibtnNextBlock_Click(object sender, EventArgs e)
-		{
-			undoCount--;
-			webViewblock.ExecuteScriptAsync($"redo()");
+        // JS 함수 호출 = 다시 실행하기
+        private void ibtnNextBlock_Click(object sender, EventArgs e)
+        {
+            undoCount--;
+            webViewblock.ExecuteScriptAsync($"redo()");
 
-			if (undoCount == 0)
-			{
-				btnNextBlock.Visible = false;
-				btnPreBlock.Visible = true;
-			}
-			else
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = true;
-			}
-		}
+            if (undoCount == 0)
+            {
+                btnNextBlock.Visible = false;
+                btnPreBlock.Visible = true;
+            }
+            else
+            {
+                btnNextBlock.Visible = true;
+                btnPreBlock.Visible = true;
+            }
+        }
 
-		// JS 함수 호출 = 되돌리기
-		private void ibtnPreBlock_Click(object sender, EventArgs e)
-		{
-			if (undoCount <= 10)
-			{
-				undoCount++;
-				webViewblock.ExecuteScriptAsync($"undo()");
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = true;
-			}
-			else
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = false;
-			}
-		}
+        // JS 함수 호출 = 되돌리기
+        private void ibtnPreBlock_Click(object sender, EventArgs e)
+        {
+            if (undoCount <= 10)
+            {
+                undoCount++;
+                webViewblock.ExecuteScriptAsync($"undo()");
+                btnNextBlock.Visible = true;
+                btnPreBlock.Visible = true;
+            }
+            else
+            {
+                btnNextBlock.Visible = true;
+                btnPreBlock.Visible = false;
+            }
+        }
 
-		// JS 함수 호출 - 블럭 모두 삭제
-		private void btnTrashBlock_Click(object sender, EventArgs e)
-		{
-			webViewblock.ExecuteScriptAsync($"clear()");
-		}
+        // JS 함수 호출 - 블럭 모두 삭제
+        private void btnTrashBlock_Click(object sender, EventArgs e)
+        {
+            webViewblock.ExecuteScriptAsync($"clear()");
+        }
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
@@ -432,10 +436,10 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-		// 추론 이미지 불러오기
+        // 추론 이미지 불러오기
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "이미지 파일 선택";
@@ -452,10 +456,10 @@ namespace SAI.SAI.App.Views.Pages
                         string absolutePath = openFileDialog.FileName;
                         selectedImagePath = absolutePath;
 
-                        // 프로젝트 루트의 inference_images 디렉토리 (사용자 추론용 이미지 폴더 따로 설정)경로 설정
+                        // 프로젝트 루트의 inference_images 디렉토리 경로 설정
                         string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                         string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
-                        
+
                         // inference_images 디렉토리가 없으면 생성
                         if (!Directory.Exists(inferenceImagesDir))
                         {
@@ -465,13 +469,13 @@ namespace SAI.SAI.App.Views.Pages
 
                         string fileName = Path.GetFileName(absolutePath);
                         string destinationPath = Path.Combine(inferenceImagesDir, fileName);
-                        
+
                         // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
                         File.Copy(absolutePath, destinationPath, true);
 
                         // inference_images 기준 상대 경로 설정
                         string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
-                        
+
                         // BlocklyModel에 상대 경로 설정
                         BlocklyModel.Instance.imgPath = relativePath;
                         Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
@@ -490,7 +494,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
                 else
                 {
-                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류", 
+                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -500,5 +504,39 @@ namespace SAI.SAI.App.Views.Pages
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public void ShowDialogInferenceLoading()
+        {
+            using (var dialog = new DialogInferenceLoading())
+            {
+                dialog.ShowDialog();
+            }
+        }
+
+
+        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
+            // var uc = new UcPracticeBlockCode(view);  
+            // uc.ShowInferResultImage(image); 사용하시면 됩니다.
+        public void ShowInferResultImage(System.Drawing.Image resultImage)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowInferResultImage(resultImage)));
+                return;
+            }
+
+            dialogLoadingInfer?.Close();
+            dialogLoadingInfer = null;
+
+            if (resultImage != null)
+            {
+                pboxInferAccuracy.Size = new Size(287, 185);
+                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                pboxInferAccuracy.Image = resultImage;
+                pboxInferAccuracy.Visible = true;
+                btnSelectInferImage.Visible = false;
+            }
+        }
+
     }
 }
