@@ -341,7 +341,35 @@ namespace SAI.SAI.App.Views.Pages
 				}
 				else if(e.KeyCode == Keys.Z && e.Control && e.Shift)
 				{
-					MessageBox.Show("와 ctrl + shift + z 누름");
+					if(btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+			};
+
+			this.KeyDown += (sender, e) =>
+			{
+				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if (btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if (btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					if(btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
 				}
 			};
 			webViewblock.Source = new Uri(uri);

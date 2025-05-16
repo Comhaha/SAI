@@ -621,7 +621,53 @@ namespace SAI.SAI.App.Views.Pages
             webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
             await webViewblock.EnsureCoreWebView2Async();
-            webViewblock.Source = new Uri(uri);
+
+			// 단축키 이벤트 등록
+			webViewblock.KeyDown += (sender, e) =>
+			{
+				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if (btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if (btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					MessageBox.Show("와 ctrl + shift + z 누름");
+				}
+			};
+
+			this.KeyDown += (sender, e) =>
+			{
+				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if (btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if (btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					MessageBox.Show("와 ctrl + shift + z 누름");
+				}
+			};
+
+			webViewblock.Source = new Uri(uri);
         }
 
 		// JS 함수 호출 = 블럭 넣기
