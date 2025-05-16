@@ -809,6 +809,8 @@
     <None Include="Resources\btn_close_whole_click.png" />
     <None Include="Resources\btn_close_whole_5.png" />
     <None Include="Resources\bg_warning_empty.png" />
+    <None Include="Resources\copy_alert.png" />
+    <None Include="Resources\memo_alert.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

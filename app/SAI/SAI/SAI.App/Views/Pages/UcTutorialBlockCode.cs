@@ -210,7 +210,6 @@ namespace SAI.SAI.App.Views.Pages
                     Console.WriteLine($"[ERROR] UcTutorialBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
                 }
             };
-
             InitializeWebView2();
 
             // 블록 시작만 보이고 나머지는 안 보이게 초기화.
@@ -307,6 +306,11 @@ namespace SAI.SAI.App.Views.Pages
                 pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
                 pTxtDescription.BackgroundImage = Properties.Resources.lbl_run;
             };
+
+            // mAlertPanel 초기에는 숨김
+            mAlertPanel.Visible = false;
+            // btnQuestionMemo 클릭 이벤트 핸들러 등록
+            btnQuestionMemo.Click += btnQuestionMemo_Click;
         }
 
 
@@ -564,6 +568,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             pboxInferAccuracy.Visible = false;
             pMemo.Visible = false;
+            cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
 
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
@@ -981,6 +986,61 @@ namespace SAI.SAI.App.Views.Pages
                 pboxInferAccuracy.Visible = true;
                 btnSelectInferImage.Visible = false;
             }
+        }
+
+        private void btnQuestionMemo_Click(object sender, EventArgs e)
+        {
+            // mAlertPanel을 보이게 설정
+            mAlertPanel.Visible = true;
+
+            // 2초 후에 mAlertPanel을 숨기는 타이머 설정
+            Timer timer = new Timer();
+            timer.Interval = 2000; // 2초
+            timer.Tick += (s, args) =>
+            {
+                mAlertPanel.Visible = false;
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
+        }
+
+        private void ibtnCopy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // BlocklyModel에서 전체 코드 가져오기
+                string codeToCopy = blocklyModel.blockAllCode;
+                
+                if (!string.IsNullOrEmpty(codeToCopy))
+                {
+                    // 클립보드에 코드 복사
+                    Clipboard.SetText(codeToCopy);
+                    Console.WriteLine("[DEBUG] UcTutorialBlockCode: 코드가 클립보드에 복사됨");
+                }
+                else
+                {
+                    Console.WriteLine("[WARNING] UcTutorialBlockCode: 복사할 코드가 없음");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+            }
+
+            // cAlertPanel을 보이게 설정
+            cAlertPanel.Visible = true;
+
+            // 1초 후에 cAlertPanel을 숨기는 타이머 설정
+            Timer timer = new Timer();
+            timer.Interval = 1000; // 1초
+            timer.Tick += (s, args) =>
+            {
+                cAlertPanel.Visible = false;
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
         }
     }
 }

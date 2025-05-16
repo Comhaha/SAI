@@ -48,10 +48,12 @@ namespace SAI.SAI.App.Views.Pages
             this.btnPip = new Guna.UI2.WinForms.Guna2Button();
             this.btnBlockStart = new Guna.UI2.WinForms.Guna2Button();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
             this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
@@ -92,6 +94,7 @@ namespace SAI.SAI.App.Views.Pages
             this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblInfer = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
+            this.mAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.ucCsvChart1 = new UcCsvChart();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
@@ -291,12 +294,19 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
+            this.pCode.Controls.Add(this.cAlertPanel);
             this.pCode.Controls.Add(this.pZoomCode);
             this.pCode.Controls.Add(this.ibtnCloseInfer);
             this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.ucCode1);
             this.pCode.Name = "pCode";
             // 
+            // cAlertPanel
+            // 
+            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.copy_alert;
+            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
+            this.cAlertPanel.Name = "cAlertPanel";
+            //
             // pTopCode
             // 
             this.pTopCode.BackColor = System.Drawing.Color.Transparent;
@@ -756,10 +766,17 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
             resources.ApplyResources(this.pMemo, "pMemo");
+            this.pMemo.Controls.Add(this.mAlertPanel);
             this.pMemo.Controls.Add(this.btnCloseMemo);
             this.pMemo.Controls.Add(this.btnQuestionMemo);
             this.pMemo.Controls.Add(this.tboxMemo);
             this.pMemo.Name = "pMemo";
+            // 
+            // mAlertPanel
+            // 
+            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
+            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
+            this.mAlertPanel.Name = "mAlertPanel";
             // 
             // btnCloseMemo
             // 
@@ -905,7 +922,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pMemo;
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
-	private Guna.UI2.WinForms.Guna2Button btnRunModel;
+	    private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private UcCsvChart ucCsvChart1;
         private SAI.App.Views.Pages.UcCode ucCode1;
         private Guna.UI2.WinForms.Guna2Button btnTrash;
@@ -918,6 +935,8 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnCopy;
         private Guna.UI2.WinForms.Guna2Button btnInfoThreshold;
         private Guna.UI2.WinForms.Guna2Button btnInfoGraph;
+        private Guna.UI2.WinForms.Guna2Panel cAlertPanel;
+        private Guna.UI2.WinForms.Guna2Panel mAlertPanel;
         private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
     }
 }
