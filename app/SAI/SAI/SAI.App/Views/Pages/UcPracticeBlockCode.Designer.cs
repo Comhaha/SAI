@@ -42,12 +42,8 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
 			this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
 			this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
-            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -57,8 +53,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopBlock = new System.Windows.Forms.Panel();
             this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
-            this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
-            this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
             this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2VScrollBar();
             this.pSelectBlock = new Guna.UI2.WinForms.Guna2Panel();
@@ -134,7 +128,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.Controls.Add(this.btnCopy);
             this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Controls.Add(this.pZoomCode);
-            this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Name = "pCode";
             // 
             // btnCopy
@@ -248,13 +241,7 @@ namespace SAI.SAI.App.Views.Pages
             this.webViewCode.Name = "webViewCode";
             this.webViewCode.ZoomFactor = 1D;
             this.webViewCode.Click += new System.EventHandler(this.webViewCode_Click);
-            // 
-            // pTopCode
-            // 
-            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.pTopCode, "pTopCode");
-            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pTopCode.Name = "pTopCode";
+
             // 
             // pZoomCode
             // 
@@ -361,19 +348,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.ForeColor = System.Drawing.Color.White;
             this.btnRunModel.ImageSize = new System.Drawing.Size(0, 0);
             this.btnRunModel.Name = "btnRunModel";
-            // 
-            // btnTrashBlock
-            // 
-            this.btnTrashBlock.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.btnTrashBlock.HoverState.ImageSize = new System.Drawing.Size(15, 16);
-            this.btnTrashBlock.Image = global::SAI.Properties.Resources.btn_trash_block;
-            this.btnTrashBlock.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnTrashBlock.ImageRotate = 0F;
-            this.btnTrashBlock.ImageSize = new System.Drawing.Size(13, 14);
-            resources.ApplyResources(this.btnTrashBlock, "btnTrashBlock");
-            this.btnTrashBlock.Name = "btnTrashBlock";
-            this.btnTrashBlock.PressedState.ImageSize = new System.Drawing.Size(13, 14);
-            this.btnTrashBlock.Click += new System.EventHandler(this.btnTrashBlock_Click);
             // 
 			// btnNextBlock
 			// 
