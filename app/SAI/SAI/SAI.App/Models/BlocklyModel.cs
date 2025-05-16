@@ -83,6 +83,7 @@ namespace SAI.SAI.App.Models
 				if (_imgPath != value)
 				{
 					_imgPath = value;
+					Console.WriteLine($"[INFO] 새로운 이미지 경로 설정됨: {value}");
 				}
 			}
 		}

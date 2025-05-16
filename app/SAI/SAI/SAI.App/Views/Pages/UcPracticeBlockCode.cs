@@ -14,7 +14,6 @@ using SAI.SAI.App.Models;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
 
-
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView
@@ -436,8 +435,6 @@ namespace SAI.SAI.App.Views.Pages
 		// 추론 이미지 불러오기
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("버튼이 클릭되었습니다.", "테스트", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
             try 
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -452,9 +449,34 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
-                        selectedImagePath = openFileDialog.FileName;
+                        string absolutePath = openFileDialog.FileName;
+                        selectedImagePath = absolutePath;
 
-                        using (var stream = new FileStream(selectedImagePath, FileMode.Open, FileAccess.Read))
+                        // 프로젝트 루트의 inference_images 디렉토리 (사용자 추론용 이미지 폴더 따로 설정)경로 설정
+                        string projectDir = AppDomain.CurrentDomain.BaseDirectory;
+                        string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
+                        
+                        // inference_images 디렉토리가 없으면 생성
+                        if (!Directory.Exists(inferenceImagesDir))
+                        {
+                            Directory.CreateDirectory(inferenceImagesDir);
+                            Console.WriteLine($"[INFO] inference_images 디렉토리 생성됨: {inferenceImagesDir}");
+                        }
+
+                        string fileName = Path.GetFileName(absolutePath);
+                        string destinationPath = Path.Combine(inferenceImagesDir, fileName);
+                        
+                        // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
+                        File.Copy(absolutePath, destinationPath, true);
+
+                        // inference_images 기준 상대 경로 설정
+                        string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
+                        
+                        // BlocklyModel에 상대 경로 설정
+                        BlocklyModel.Instance.imgPath = relativePath;
+                        Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
+
+                        using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = Image.FromStream(stream);
                             pboxInferAccuracy.Size = new Size(287, 185);

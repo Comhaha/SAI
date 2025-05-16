@@ -37,16 +37,15 @@ namespace SAI.SAI.App.Views.Common
             {
                 currentThreshold = trackBar.Value / 100.0;
                 textBox.Text = currentThreshold.ToString("0.00");
-                Console.WriteLine($"[DEBUG] 트랙바 값 변경: {currentThreshold:F2} (텍스트박스만 업데이트)");
+                Console.WriteLine($"[TrackBar] 현재 threshold 값: {currentThreshold:0.00}");
             };
 
             // 마우스를 뗄 때 BlocklyModel에 값을 반영
             trackBar.MouseUp += (s, e) =>
             {
                 currentThreshold = trackBar.Value / 100.0;
-                double previousAccuracy = blocklyModel.accuracy;
                 blocklyModel.accuracy = currentThreshold;
-                Console.WriteLine($"[INFO] BlocklyModel accuracy 값 업데이트: {previousAccuracy:F2} -> {blocklyModel.accuracy:F2}");
+                Console.WriteLine($"[MouseUp] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
             };
 
@@ -86,14 +85,14 @@ namespace SAI.SAI.App.Views.Common
 
                 trackBar.ValueChanged -= null;
                 trackBar.Value = (int)(value * 100);
-                double previousAccuracy = blocklyModel.accuracy;
                 blocklyModel.accuracy = currentThreshold;  // accuracy 값 업데이트
-                Console.WriteLine($"[INFO] BlocklyModel accuracy 값 업데이트 (텍스트박스): {previousAccuracy:F2} -> {blocklyModel.accuracy:F2}");
+                Console.WriteLine($"[TextBox] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
             }
             else
             {
                 textBox.Text = currentThreshold.ToString("0.00");
+                Console.WriteLine($"[TextBox] 잘못된 입력으로 인한 복원 값: {currentThreshold:0.00}");
             }
         }
     }
