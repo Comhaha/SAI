@@ -76,6 +76,30 @@ namespace SAI.SAI.App.Views.Pages
             blocklyModel = BlocklyModel.Instance;
 			InitializeWebView2();
 
+            // 여기에 UcCode 추가
+            try
+            {
+                if (ucCode２ != null)
+                {
+                    // BlocklyPresenter에 기존 ucCode２ 설정
+                    blocklyPresenter.SetCodeView(ucCode２);
+                    Console.WriteLine("[DEBUG] UcPracticeBlockCode: ICodeView 설정 완료");
+
+                    // BlocklyModel 이벤트 구독 확인
+                    blocklyModel.BlockAllCodeChanged += (code) => {
+                        Console.WriteLine($"[DEBUG] UcPracticeBlockCode: BlockAllCodeChanged 이벤트 발생 - 코드 길이: {code?.Length ?? 0}");
+                    };
+                }
+                else
+                {
+                    Console.WriteLine("[ERROR] UcPracticeBlockCode: ucCode２가 null입니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcPracticeBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
+            }
+
             ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
               "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
@@ -389,6 +413,21 @@ namespace SAI.SAI.App.Views.Pages
             {
                 dialog.ShowDialog();
             }
+        }
+
+        private void UcPracticeBlockCode_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void webViewCode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ucCode1_Load(object sender, EventArgs e)
+        {
+            // ucCode２ 로드 이벤트 처리
         }
     }
 }

@@ -100,7 +100,7 @@
 
 		function sendCode(code) {
 			window.chrome.webview.postMessage({
-				type: "blockCode",
+				type: "blockAllCode",
 				code: code
 			});
         }
