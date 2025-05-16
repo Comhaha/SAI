@@ -205,7 +205,7 @@ def install_torch_cuda():
 def download_dataset_with_progress(start_time):
     """API를 통해 S3에서 데이터셋 다운로드 및 진행률 표시"""
     # 데이터셋 저장 경로 설정, 덮어쓰기 
-    dataset_dir = os.path.join(base_dir, "dataset", "tutorial_dataset")
+    dataset_dir = os.path.join(base_dir, "dataset")
     os.makedirs(dataset_dir, exist_ok=True)
     show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 10)
 
@@ -277,11 +277,32 @@ def download_dataset_with_progress(start_time):
     
     # ZIP 파일 압축 해제
     if os.path.exists(zip_path):
+        extracted_dir = dataset_dir  # 기본값 설정
+    
+    if os.path.exists(zip_path):
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 file_list = zip_ref.namelist()
                 total_files = len(file_list)
                 show_progress(f"압축 파일 내 {total_files}개 파일 발견", start_time, 75)
+                
+                # 첫 번째 파일의 경로에서 최상위 디렉토리 확인 (있는 경우)
+                if file_list and '/' in file_list[0]:
+                    top_dir = file_list[0].split('/')[0]
+                    # 최상위 디렉토리가 있는 경우, 이를 추출 디렉토리로 설정
+                    potential_extracted_dir = os.path.join(dataset_dir, top_dir)
+                else:
+                    potential_extracted_dir = dataset_dir
+                
+                # 압축 해제 진행률 표시 (기존 코드와 동일)
+                for i, file in enumerate(file_list):
+                    zip_ref.extract(file, dataset_dir)
+                    # ... (진행률 표시 코드)
+                
+                # 압축 해제 후 실제 추출 디렉토리 확인
+                if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
+                    extracted_dir = potential_extracted_dir
+                    show_progress(f"데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}", start_time, 95)
                 
                 # 압축 해제 진행률 표시
                 for i, file in enumerate(file_list):
@@ -304,19 +325,34 @@ def download_dataset_with_progress(start_time):
         show_progress("다운로드된 ZIP 파일을 찾을 수 없습니다.", start_time, 95)
     
     # 데이터셋 경로 반환
-    return type('obj', (), {'location': dataset_dir})
+    return type('obj', (), {'location': dataset_dir, 'extracted_dir': extracted_dir})
 
-def find_yaml_file(dataset_dir, start_time):
+def find_yaml_file(dataset_dir, extracted_dir, start_time):
     """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
-    show_progress(f"데이터 경로 확인: {dataset_dir}", start_time, 0)
+    show_progress(f"데이터 경로 확인: {extracted_dir}", start_time, 0)
     
-    # 기본 data.yaml 경로
-    yaml_path = os.path.join(dataset_dir, "data.yaml")
+    # 압축 해제된 디렉토리에서 data.yaml 찾기
+    yaml_path = os.path.join(extracted_dir, "data.yaml")
     
     # data.yaml 파일이 있는지 확인
-    if (os.path.exists(yaml_path)):
+    if os.path.exists(yaml_path):
         show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
         return yaml_path
+    
+    # 압축 해제된 디렉토리의 하위 폴더들에서 data.yaml 찾기
+    for root, dirs, files in os.walk(extracted_dir):
+        for file in files:
+            if file == "data.yaml":
+                yaml_path = os.path.join(root, file)
+                show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+                return yaml_path
+    
+    # 기본 dataset 디렉토리에서 데이터 찾기 (압축 해제 경로에서 찾지 못했을 경우)
+    if dataset_dir != extracted_dir:
+        yaml_path = os.path.join(dataset_dir, "data.yaml")
+        if os.path.exists(yaml_path):
+            show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+            return yaml_path
     
     # 파일을 찾지 못했을 경우
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 100)
@@ -551,9 +587,14 @@ def main():
    # 6. 데이터 경로 확인
     path_start_time = time.time()
     show_progress("데이터 경로 확인 중... (6/7)", total_start_time, 0)
-    # dataset 객체의 location 속성을 사용
-    tutorial_dataset_dataset_dir = dataset.location
-    data_yaml_path = os.path.join(tutorial_dataset_dataset_dir, "data.yaml")
+
+    # dataset 객체에서 압축 해제된 디렉토리 정보 가져오기
+    tutorial_dataset_dir = dataset.location
+    extracted_dataset_dir = getattr(dataset, 'extracted_dir', tutorial_dataset_dir)  # 추출된 디렉토리가 없으면 기본 경로 사용
+
+    # 추출된 디렉토리에서 data.yaml 파일 찾기
+    data_yaml_path = find_yaml_file(tutorial_dataset_dir, extracted_dataset_dir, path_start_time)
+
     path_elapsed = time.time() - path_start_time
     show_progress(f"데이터 경로 확인 완료 (소요 시간: {int(path_elapsed)}초)", total_start_time, 100)
     
