@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.Application.Service;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -78,6 +79,11 @@ namespace SAI.SAI.App.Views.Pages
             {
                 logOutput.Visible = visible;
             }
+        }
+
+        public void ShowInferenceResult(PythonService.InferenceResult result)
+        {
+            throw new NotImplementedException();
         }
     }
 }

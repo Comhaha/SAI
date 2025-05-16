@@ -94,6 +94,10 @@ namespace SAI.SAI.App.Presenters
             });
         }
 
-
+        public void OnInferImageSelected(string imagePath, double conf)
+        {
+            var result = _pythonService.RunInference(imagePath, conf);
+            _view.ShowInferenceResult(result);
+        }
     }
 }

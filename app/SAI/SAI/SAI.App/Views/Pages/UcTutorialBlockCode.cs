@@ -834,7 +834,7 @@ namespace SAI.SAI.App.Views.Pages
         {
 
         }
-        // 추론탭 이미지 추가 버튼
+        // 추론탭 이미지 불러오기 버튼
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -845,71 +845,27 @@ namespace SAI.SAI.App.Views.Pages
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string selectedImagePath = openFileDialog.FileName;
-                    
-                    try
-                    {
-                        // Python 스크립트 경로
-                        string pythonScriptPath = Path.Combine(
-                            AppDomain.CurrentDomain.BaseDirectory,
-                            @"..\..\SAI.Application\Python\scripts\inference.py"
-                        );
-
-                        // inference.py 스크립트 실행
-                        ProcessStartInfo startInfo = new ProcessStartInfo();
-                        startInfo.FileName = "python";
-                        startInfo.Arguments = $"\"{pythonScriptPath}\" --image \"{selectedImagePath}\" --conf {currentThreshold}";
-                        startInfo.UseShellExecute = false;
-                        startInfo.RedirectStandardOutput = true;
-                        startInfo.CreateNoWindow = true;
-
-                        using (Process process = Process.Start(startInfo))
-                        {
-                            string output = process.StandardOutput.ReadToEnd();
-                            process.WaitForExit();
-                            
-                            if (process.ExitCode == 0)
-                            {
-                                try
-                                {
-                                    // JSON 결과 파싱
-                                    string jsonResult = output.Split(new[] { "INFERENCE_RESULT:" }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();
-                                    var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonResult);
-
-                                    if (result["success"].GetBoolean())
-                                    {
-                                        string resultImagePath = result["result_image"].GetString();
-                                        if (File.Exists(resultImagePath))
-                                        {
-                                            // 결과 이미지를 PictureBox에 표시
-                                            pboxInferAccuracy.Image = System.Drawing.Image.FromFile(resultImagePath);
-                                        }
-                                        else
-                                        {
-                                            MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        string errorMessage = result["error"].GetString();
-                                        MessageBox.Show($"추론 실패: {errorMessage}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show($"결과 처리 중 오류 발생: {ex.Message}\n\n출력 내용:\n{output}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("추론 실행 중 오류가 발생했습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"오류 발생: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    yoloTutorialPresenter.OnInferImageSelected(selectedImagePath, currentThreshold);
                 }
+            }
+        }
+        // 추론 스크립트 실행해서 결과 보여주는 함수
+        public void ShowInferenceResult(SAI.Application.Service.PythonService.InferenceResult result)
+        {
+            if (result.Success)
+            {
+                if (File.Exists(result.ResultImage))
+                {
+                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(result.ResultImage);
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

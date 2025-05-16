@@ -218,6 +218,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Models\YoloModel.cs" />
     <Compile Include="SAI.App\Models\LogCsvModel.cs" />
     <Compile Include="SAI.App\Models\LogImageModel.cs" />
     <Compile Include="SAI.App\Models\NotionModel.cs" />

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SAI.SAI.Application.Service
 {
@@ -96,6 +97,80 @@ namespace SAI.SAI.Application.Service
             catch (Exception ex)
             {
                 onException?.Invoke(ex);
+            }
+        }
+
+        public class InferenceResult
+        {
+            public bool Success { get; set; }
+            public string ResultImage { get; set; }
+            public double InferenceTime { get; set; }
+            public string Error { get; set; }
+        }
+
+        public InferenceResult RunInference(string imagePath, double conf)
+        {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
+            string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py"));
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = pythonExe,
+                Arguments = $"\"{scriptPath}\" --image \"{imagePath}\" --conf {conf}",
+                WorkingDirectory = Path.GetDirectoryName(scriptPath),
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8
+            };
+
+            var process = new Process { StartInfo = psi };
+            try
+            {
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                if (process.ExitCode == 0)
+                {
+                    string jsonResult = null;
+                    foreach (var line in output.Split('\n'))
+                    {
+                        if (line.Trim().StartsWith("INFERENCE_RESULT:"))
+                        {
+                            jsonResult = line.Substring("INFERENCE_RESULT:".Length).Trim();
+                            break;
+                        }
+                    }
+                    if (jsonResult == null)
+                        return new InferenceResult { Success = false, Error = "INFERENCE_RESULT가 출력에 없습니다." };
+                    var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonResult);
+                    if (result["success"].GetBoolean())
+                    {
+                        return new InferenceResult
+                        {
+                            Success = true,
+                            ResultImage = result["result_image"].GetString(),
+                            InferenceTime = result.ContainsKey("inference_time") ? result["inference_time"].GetDouble() : 0
+                        };
+                    }
+                    else
+                    {
+                        return new InferenceResult { Success = false, Error = result["error"].GetString() };
+                    }
+                }
+                else
+                {
+                    return new InferenceResult { Success = false, Error = error };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new InferenceResult { Success = false, Error = ex.Message };
             }
         }
     }
