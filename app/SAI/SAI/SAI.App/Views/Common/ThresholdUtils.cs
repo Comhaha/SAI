@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Guna.UI2.WinForms;
 using System.Windows.Forms;
+using SAI.SAI.App.Models; 
 
 namespace SAI.SAI.App.Views.Common
 {
@@ -13,6 +14,7 @@ namespace SAI.SAI.App.Views.Common
         public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged)
         {
             double currentThreshold = 0.5;
+            var blocklyModel = BlocklyModel.Instance;
 
             trackBar.Minimum = 1;
             trackBar.Maximum = 100;
@@ -20,11 +22,31 @@ namespace SAI.SAI.App.Views.Common
 
             textBox.Text = "0.50";
             textBox.TextAlign = HorizontalAlignment.Center;
+            textBox.ReadOnly = true;
+            textBox.TabStop = false;
+            
+            textBox.FillColor = System.Drawing.Color.White;
+            textBox.DisabledState.FillColor = System.Drawing.Color.White;
+            textBox.DisabledState.ForeColor = System.Drawing.Color.Black;
+            textBox.BorderColor = System.Drawing.Color.FromArgb(213, 218, 223);
+            textBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(213, 218, 223);
+            textBox.Enabled = false;
 
+            // 트랙바 값이 변경될 때는 텍스트박스만 업데이트
             trackBar.ValueChanged += (s, e) =>
             {
                 currentThreshold = trackBar.Value / 100.0;
                 textBox.Text = currentThreshold.ToString("0.00");
+                Console.WriteLine($"[DEBUG] 트랙바 값 변경: {currentThreshold:F2} (텍스트박스만 업데이트)");
+            };
+
+            // 마우스를 뗄 때 BlocklyModel에 값을 반영
+            trackBar.MouseUp += (s, e) =>
+            {
+                currentThreshold = trackBar.Value / 100.0;
+                double previousAccuracy = blocklyModel.accuracy;
+                blocklyModel.accuracy = currentThreshold;
+                Console.WriteLine($"[INFO] BlocklyModel accuracy 값 업데이트: {previousAccuracy:F2} -> {blocklyModel.accuracy:F2}");
                 onThresholdChanged?.Invoke(currentThreshold);
             };
 
@@ -55,6 +77,7 @@ namespace SAI.SAI.App.Views.Common
 
         private static void UpdateFromTextBox(Guna2TextBox textBox, Guna2TrackBar trackBar, ref double currentThreshold, Action<double> onThresholdChanged)
         {
+            var blocklyModel = BlocklyModel.Instance;
             if (double.TryParse(textBox.Text, out double value))
             {
                 value = Math.Max(0.01, Math.Min(1.00, value));
@@ -63,6 +86,9 @@ namespace SAI.SAI.App.Views.Common
 
                 trackBar.ValueChanged -= null;
                 trackBar.Value = (int)(value * 100);
+                double previousAccuracy = blocklyModel.accuracy;
+                blocklyModel.accuracy = currentThreshold;  // accuracy 값 업데이트
+                Console.WriteLine($"[INFO] BlocklyModel accuracy 값 업데이트 (텍스트박스): {previousAccuracy:F2} -> {blocklyModel.accuracy:F2}");
                 onThresholdChanged?.Invoke(currentThreshold);
             }
             else
@@ -70,6 +96,5 @@ namespace SAI.SAI.App.Views.Common
                 textBox.Text = currentThreshold.ToString("0.00");
             }
         }
-
     }
 }

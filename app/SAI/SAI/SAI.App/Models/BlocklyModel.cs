@@ -26,8 +26,11 @@ namespace SAI.SAI.App.Models
 		// start 블럭에 붙어있는 모든 블럭들
 		private List<BlockInfo> _blockTypes;
 
-		// private 생성자 -> 외부에서 생성 못하게.
-		private BlocklyModel()
+        // 추론 정확도 값 추가
+        private double _accuracy;
+
+        // private 생성자 -> 외부에서 생성 못하게.
+        private BlocklyModel()
 		{
 			_blockAllCode = "";
 			_blockCode = "";
@@ -101,5 +104,18 @@ namespace SAI.SAI.App.Models
 			}
 		}
 
-	}
+        // accuracy 속성 추가
+        public double accuracy
+        {
+            get => _accuracy;
+            set
+            {
+                if (_accuracy != value)
+                {
+                    _accuracy = value;
+                }
+            }
+        }
+
+    }
 }
