@@ -386,12 +386,15 @@ namespace SAI.SAI.App.Views.Pages
 
                 // 전체 코드에서 코드 세그먼트 문자열 검색
                 string fullCode = scintilla1.Text;
+                Console.WriteLine($"[DEBUG] UcCode: 전체 코드 길이: {fullCode.Length}자");
 
                 // 정확한 코드 세그먼트를 찾기 위해 여러 줄 바꿈 형식을 정규화
                 string normalizedFullCode = NormalizeLineEndings(fullCode);
                 string normalizedCodeSegment = NormalizeLineEndings(codeSegment);
+                Console.WriteLine($"[DEBUG] UcCode: 정규화된 코드 세그먼트 길이: {normalizedCodeSegment.Length}자");
 
-                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment);
+                // 전체 코드에서 코드 세그먼트 검색
+                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, StringComparison.OrdinalIgnoreCase);
 
                 if (segmentIndex >= 0)
                 {
@@ -429,14 +432,17 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 추가
+        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 수정
         private string NormalizeLineEndings(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;
 
-            // 모든 줄 바꿈 문자를 \n으로 통일
-            return text.Replace("\r\n", "\n").Replace("\r", "\n");
+            // 모든 줄 바꿈 문자를 \n으로 통일하고 공백 문자도 정규화
+            return text.Replace("\r\n", "\n")
+                       .Replace("\r", "\n")
+                       .Replace("\t", "    ") // 탭을 4개의 공백으로 변환
+                       .TrimEnd(); // 끝부분의 공백 제거
         }
 
         // 새로운 메서드: Scintilla의 내장 검색 기능을 사용하여 텍스트를 찾고 하이라이트 - 인디케이터 사용

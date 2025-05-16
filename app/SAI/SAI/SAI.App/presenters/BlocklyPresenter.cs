@@ -19,7 +19,7 @@ namespace SAI.SAI.App.Presenters
         private readonly IBlocklyView view;
         private BlocklyService blocklyService;
         private BlocklyModel blocklyModel;
-
+        private ICodeView codeView;
 
         public BlocklyPresenter(IBlocklyView view)
         {
@@ -27,7 +27,6 @@ namespace SAI.SAI.App.Presenters
             this.blocklyService = new BlocklyService();
             this.blocklyModel = BlocklyModel.Instance;
             this.view.AddBlockButtonClicked += OnAddBlockButtonClicked;
-
 
             blocklyModel.BlockCodeChanged += (newCode) =>
             {
@@ -195,8 +194,6 @@ namespace SAI.SAI.App.Presenters
         }
 
         // 혜정 추가 ICodeView 설정 메서드
-        // BlocklyPresenter 클래스에서
-        private ICodeView codeView;
         public void SetCodeView(ICodeView codeView)
         {
             if (codeView == null)
