@@ -76,7 +76,7 @@ namespace SAI.SAI.App.Views.Pages
             blocklyModel = BlocklyModel.Instance;
 			InitializeWebView2();
 
-            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            //ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
               "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 

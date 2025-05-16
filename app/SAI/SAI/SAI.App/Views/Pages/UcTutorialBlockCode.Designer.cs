@@ -33,10 +33,9 @@ namespace SAI.SAI.App.Views.Pages
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
-            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
+            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
             this.btnVisualizeResult = new Guna.UI2.WinForms.Guna2Button();
             this.btnModelInference = new Guna.UI2.WinForms.Guna2Button();
             this.btnImgPath = new Guna.UI2.WinForms.Guna2Button();
@@ -51,6 +50,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
             this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
@@ -60,7 +60,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
-            this.pTxtDescription = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.pboxTodo2Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo1Done = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pboxTodo0Done = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -78,7 +78,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
-            this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -92,7 +92,6 @@ namespace SAI.SAI.App.Views.Pages
             this.lblThreshold = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblInfer = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new UcCsvChart();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
@@ -110,7 +109,6 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo0)).BeginInit();
             this.pSideInfer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).BeginInit();
             this.pThreshold.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
@@ -140,18 +138,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMain.ShadowDecoration.BorderRadius = 32;
             this.pMain.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(0, 0, 6, 6);
             // 
-            // btnCopy
-            // 
-            this.btnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
-            resources.ApplyResources(this.btnCopy, "btnCopy");
-            this.btnCopy.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCopy.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCopy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCopy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCopy.FillColor = System.Drawing.Color.Transparent;
-            this.btnCopy.ForeColor = System.Drawing.Color.White;
-            this.btnCopy.Name = "btnCopy";
-            // 
             // pToDoList
             // 
             this.pToDoList.BackgroundImage = global::SAI.Properties.Resources.p_todolist_step1;
@@ -173,6 +159,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlockList.Controls.Add(this.btnBlockStart);
             resources.ApplyResources(this.pBlockList, "pBlockList");
             this.pBlockList.Name = "pBlockList";
+            // 
+            // pTxtDescription
+            // 
+            this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_img_path;
+            resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
+            this.pTxtDescription.Name = "pTxtDescription";
             // 
             // btnVisualizeResult
             // 
@@ -292,13 +284,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.Controls.Add(this.ucCode1);
             this.pCode.Name = "pCode";
             // 
-            // pTopCode
-            // 
-            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.pTopCode, "pTopCode");
-            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pTopCode.Name = "pTopCode";
-            // 
             // pZoomCode
             // 
             this.pZoomCode.BackgroundImage = global::SAI.Properties.Resources.btn_zoom;
@@ -363,6 +348,13 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCloseInfer.Name = "ibtnCloseInfer";
             this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
             this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
+            // 
+            // pTopCode
+            // 
+            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pTopCode, "pTopCode");
+            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pTopCode.Name = "pTopCode";
             // 
             // ucCode1
             // 
@@ -453,11 +445,17 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.Name = "btnRunModel";
             this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
             // 
-            // pTxtDescription
+            // btnCopy
             // 
-            this.pTxtDescription.BackgroundImage = global::SAI.Properties.Resources.lbl_img_path;
-            resources.ApplyResources(this.pTxtDescription, "pTxtDescription");
-            this.pTxtDescription.Name = "pTxtDescription";
+            this.btnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
+            resources.ApplyResources(this.btnCopy, "btnCopy");
+            this.btnCopy.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnCopy.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnCopy.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnCopy.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnCopy.FillColor = System.Drawing.Color.Transparent;
+            this.btnCopy.ForeColor = System.Drawing.Color.White;
+            this.btnCopy.Name = "btnCopy";
             // 
             // pboxTodo2Done
             // 
@@ -590,7 +588,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.btnInfoThreshold);
             this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Controls.Add(this.ucCsvChart1);
-            this.pSideInfer.Controls.Add(this.pboxGraphe);
             this.pSideInfer.Controls.Add(this.pThreshold);
             this.pSideInfer.Controls.Add(this.tbarThreshold);
             this.pSideInfer.Controls.Add(this.ibtnDownloadAIModel);
@@ -634,14 +631,10 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pFake, "pFake");
             this.pFake.Name = "pFake";
             // 
-            // pboxGraphe
+            // ucCsvChart1
             // 
-            this.pboxGraphe.ErrorImage = global::SAI.Properties.Resources._1;
-            resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
-            this.pboxGraphe.ImageRotate = 0F;
-            this.pboxGraphe.Name = "pboxGraphe";
-            this.pboxGraphe.TabStop = false;
-            this.pboxGraphe.Click += new System.EventHandler(this.pboxGraphe_Click);
+            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
+            this.ucCsvChart1.Name = "ucCsvChart1";
             // 
             // pThreshold
             // 
@@ -819,11 +812,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
             // 
-            // ucCsvChart1
-            // 
-            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
-            this.ucCsvChart1.Name = "ucCsvChart1";
-            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -856,7 +844,6 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.pboxTodo0)).EndInit();
             this.pSideInfer.ResumeLayout(false);
             this.pSideInfer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).EndInit();
             this.pThreshold.ResumeLayout(false);
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
@@ -918,9 +905,8 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
-        private UcCsvChart ucCsvChart1;
+        private SAI.App.Views.Pages.UcCsvChart ucCsvChart1;
         private SAI.App.Views.Pages.UcCode ucCode1;
-        private Guna.UI2.WinForms.Guna2PictureBox pboxGraphe;
         private Guna.UI2.WinForms.Guna2Button btnTrash;
         private Guna.UI2.WinForms.Guna2Button btnNextBlock;
         private Guna.UI2.WinForms.Guna2Button btnPreBlock;

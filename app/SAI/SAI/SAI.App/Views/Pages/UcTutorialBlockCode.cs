@@ -62,6 +62,8 @@ namespace SAI.SAI.App.Views.Pages
 
             btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
 
+            pSideInfer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -73,7 +75,7 @@ namespace SAI.SAI.App.Views.Pages
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
-            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
   "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
