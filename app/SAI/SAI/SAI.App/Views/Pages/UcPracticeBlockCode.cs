@@ -65,6 +65,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             pMemo.Visible = false;
             pboxInferAccuracy.Visible = false;
+            cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
             // 추론사이드패널에서 '이미지 불러오기' 버튼 누르고 'pboxInferAccuracy'에 이미지 띄우고
             // pboxInferAccuracy.Visible = true 해주시면 됩니다.
 
@@ -180,9 +181,6 @@ namespace SAI.SAI.App.Views.Pages
 				pSelectBlockvScrollBar.Value = newValue;
 			};
 
-            // cAlertPanel 초기에는 숨김
-            cAlertPanel.Visible = false;
-            // ibtnCopy 클릭 이벤트 핸들러 등록
             ibtnCopy.Click += ibtnCopy_Click;
 
             // 코드 확대/축소 버튼 및 퍼센트 표시 컨트롤 연결 (튜토리얼과 동일하게)
@@ -471,7 +469,15 @@ namespace SAI.SAI.App.Views.Pages
 
         private void UcPracticeBlockCode_Load(object sender, EventArgs e)
         {
+            // 초기에는 숨기길 패널들
+            pSideInfer.Visible = false;
+            ibtnCloseInfer.Visible = false;
+            pboxInferAccuracy.Visible = false;
+            pMemo.Visible = false;
+            cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
 
+            SetupThresholdControls();
+            MemoUtils.ApplyStyle(tboxMemo);
         }
 
         private void webViewCode_Click(object sender, EventArgs e)
