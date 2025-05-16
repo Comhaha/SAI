@@ -14,7 +14,6 @@ namespace SAI.SAI.App.Presenters
         private readonly string _oauthUrl;      // Notion Authorize URL
         private readonly string _redirectBase;  // Notion Authorize Callback URL
 
-
         public AiNotionPresenter(IAiNotionView view, string oauthUrl, string redirectBase)
         {
             _view = view;
@@ -70,7 +69,6 @@ namespace SAI.SAI.App.Presenters
             if (!string.IsNullOrEmpty(notionUrl))
             {
                 _view.WebLoadUrl(notionUrl);          // 성공 시 → Notion 페이지로 전환
-                _view.ShowAuthButton(true);           // 버튼 다시 보이기
             }
             else
             {

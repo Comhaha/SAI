@@ -178,6 +178,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.Designer.cs">
       <DependentUpon>DialogSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogZoomChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogZoomChart.Designer.cs">
+      <DependentUpon>DialogZoomChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Models\LogCsvModel.cs" />
+    <Compile Include="SAI.App\Models\LogImageModel.cs" />
     <Compile Include="SAI.App\Models\NotionModel.cs" />
     <Compile Include="SAI.App\Models\MemoModel.cs" />
     <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
@@ -212,6 +220,8 @@
     <Compile Include="SAI.App\Models\MainModel.cs" />
     <Compile Include="SAI.App\Presenters\AiFeedbackPresenter.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\LogImagePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\LogCsvPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
@@ -221,9 +231,11 @@
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiBuzyAwareView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiFeedbackView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IChartView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ICsvChartView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
@@ -239,11 +251,26 @@
     <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.Designer.cs">
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Common\TransparentOverlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCsvChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCsvChart.Designer.cs">
+      <DependentUpon>UcCsvChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcImageChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcImageChart.Designer.cs">
+      <DependentUpon>UcImageChart.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -363,6 +390,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
       <DependentUpon>Blockly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcCsvChart.resx">
+      <DependentUpon>UcCsvChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcImageChart.resx">
+      <DependentUpon>UcImageChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
       <DependentUpon>UcCode.cs</DependentUpon>
