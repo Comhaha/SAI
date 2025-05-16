@@ -67,7 +67,7 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
+            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -101,7 +101,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pThreshold.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).BeginInit();
             this.pMemo.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -520,7 +519,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Name = "pSideInfer";
             // 
-	  / ucCsvChart1
+	  // ucCsvChart1
             // 
             resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
             this.ucCsvChart1.Name = "ucCsvChart1";
@@ -556,14 +555,7 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.pFake, "pFake");
 			this.pFake.Name = "pFake";
 			// 
-			// pboxGraphe
-			// 
-			this.pboxGraphe.ImageRotate = 0F;
-			resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
-			this.pboxGraphe.Name = "pboxGraphe";
-			this.pboxGraphe.TabStop = false;
-			this.pboxGraphe.Click += new System.EventHandler(this.pboxGraphe_Click);
-            // 
+			
             // pThreshold
             // 
             this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
@@ -772,7 +764,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopBlock.ResumeLayout(false);
             this.pBlockList.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).EndInit();
             this.pSideInfer.PerformLayout();
             this.pThreshold.ResumeLayout(false);
             this.pInferAccuracy.ResumeLayout(false);

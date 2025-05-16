@@ -26,3 +26,9 @@ model.train(
    "imgsz": 640,  # 이미지의 크기(가로와 세로)를 지정
    "device": "cuda"    # CPU, GPU(cuda) 지정
 )
+
+
+# 학습 결과 그래프 출력
+from IPython.display import Image, display
+
+display(Image(filename = 'runs/detect/train/results.png'))

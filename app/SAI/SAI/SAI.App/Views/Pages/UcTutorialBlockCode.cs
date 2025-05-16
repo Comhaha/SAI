@@ -139,7 +139,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
 
             // 복사 버튼 클릭 이벤트 추가
-            ibtnCopy.Click += (s, e) =>
+            btnCopy.Click += (s, e) =>
             {
                 try
                 {
