@@ -34,8 +34,6 @@ namespace SAI.SAI.App.Views.Pages
 
 		private bool isInferPanelVisible = false;
         private int inferPanelWidth = 420; 
-        private int originalCodePanelWidth;
-        private int originalCodePanelLeft;
         private bool isMemoPanelVisible = false;
 
         private double currentThreshold = 0.5; // threshold 기본값 0.5
@@ -56,6 +54,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;    
             ibtnMemo.BackColor = Color.Transparent;
+			ButtonUtils.SetTransparentStyle(btnCopy);
 
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
@@ -69,12 +68,6 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
-            // 정언이가 선언
-			//생성자---------------
-			blocklyPresenter = new BlocklyPresenter(this);
-            this.mainView = view;
-            blocklyModel = BlocklyModel.Instance;
-			InitializeWebView2();
 
             ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
@@ -92,6 +85,13 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
+            // 정언이가 선언
+			//생성자---------------
+			blocklyPresenter = new BlocklyPresenter(this);
+            this.mainView = view;
+            blocklyModel = BlocklyModel.Instance;
+			InitializeWebView2();
 
 			undoCount = 0;
 			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정

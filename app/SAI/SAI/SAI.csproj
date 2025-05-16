@@ -149,6 +149,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.Designer.cs">
       <DependentUpon>DialogModelPerformance.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.Designer.cs">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +362,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
       <DependentUpon>DialogModelPerformance.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelProgress.resx">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
@@ -435,7 +444,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SAI.Application\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -445,7 +453,6 @@
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
-    <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
     <Folder Include="SAI.Core\ValueObjects\" />
@@ -458,6 +465,11 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\bg_train_progressbar.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_train_progress.png" />
+    <None Include="SAI.App\Resources\Images\img_inferGraphe_example.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_sai.png" />
     <None Include="SAI.App\Resources\Images\logo_splash.png" />
     <None Include="SAI.App\Resources\Images\btn_auth_clicked.png" />
@@ -810,6 +822,7 @@
     <None Include="SAI.App\Resources\Images\bg_blockGuide5.png" />
     <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
     <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

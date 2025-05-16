@@ -67,6 +67,7 @@ namespace SAI.SAI.App.Views.Pages
 			ibtnDone.BackColor = Color.Transparent;
 			ibtnInfer.BackColor = Color.Transparent;
 			ibtnMemo.BackColor = Color.Transparent;
+            ButtonUtils.SetTransparentStyle(btnCopy);
 
             // 홈페이지로 이동
             ibtnHome.Click += (s, e) => {

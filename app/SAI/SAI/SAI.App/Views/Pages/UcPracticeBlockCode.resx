@@ -481,59 +481,17 @@
   <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnRunModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>280, 7</value>
-  </data>
-  <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
-    <value>btnRunModel</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ibtnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 13</value>
-  </data>
-  <data name="ibtnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 10</value>
-  </data>
-  <data name="ibtnPreBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Name" xml:space="preserve">
-    <value>ibtnPreBlock</value>
+  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
+    <value>btnPreBlock</value>
   </data>
   <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-</data>
-  <data name="&gt;&gt;ibtnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;ibtnPreBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
     <value>0</value>
-</data>
-  <data name="&gt;&gt;ibtnPreBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -577,25 +535,13 @@
   <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="ibtnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>48, 13</value>
-  </data>
-  <data name="ibtnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>15, 10</value>
-  </data>
-  <data name="ibtnNextBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Name" xml:space="preserve">
-    <value>ibtnNextBlock</value>
+  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
+    <value>btnNextBlock</value>
   </data>
   <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-</data>
-  <data name="&gt;&gt;ibtnNextBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;ibtnNextBlock.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
@@ -626,8 +572,6 @@
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnTrash.ZOrder" xml:space="preserve">
-</data>
-  <data name="&gt;&gt;ibtnNextBlock.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">

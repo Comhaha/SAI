@@ -43,12 +43,15 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
+            this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
             this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
+            this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2VScrollBar();
+            this.pSelectBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.ibtnMemo = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -80,7 +83,9 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
             this.pZoomCode.SuspendLayout();
             this.pBlock.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pTopBlock.SuspendLayout();
+            this.pBlockList.SuspendLayout();
             this.pSideInfer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).BeginInit();
             this.pThreshold.SuspendLayout();
@@ -209,6 +214,23 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode.Name = "ibtnPlusCode";
             this.ibtnPlusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
             // 
+            // pBlock
+            // 
+            this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
+            resources.ApplyResources(this.pBlock, "pBlock");
+            this.pBlock.Controls.Add(this.webViewblock);
+            this.pBlock.Controls.Add(this.pTopBlock);
+            this.pBlock.Name = "pBlock";
+            // 
+            // webViewblock
+            // 
+            this.webViewblock.AllowExternalDrop = true;
+            this.webViewblock.CreationProperties = null;
+            this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.webViewblock, "webViewblock");
+            this.webViewblock.Name = "webViewblock";
+            this.webViewblock.ZoomFactor = 1D;
+            // 
             // pTopBlock
             // 
             this.pTopBlock.BackColor = System.Drawing.Color.Transparent;
@@ -269,6 +291,37 @@ namespace SAI.SAI.App.Views.Pages
             this.btnTrash.FillColor = System.Drawing.Color.Transparent;
             this.btnTrash.ForeColor = System.Drawing.Color.White;
             this.btnTrash.Name = "btnTrash";
+            // 
+            // pBlockList
+            // 
+            this.pBlockList.BackColor = System.Drawing.Color.Transparent;
+            this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_block;
+            resources.ApplyResources(this.pBlockList, "pBlockList");
+            this.pBlockList.BorderColor = System.Drawing.Color.Transparent;
+            this.pBlockList.Controls.Add(this.pSelectBlockvScrollBar);
+            this.pBlockList.Controls.Add(this.pSelectBlock);
+            this.pBlockList.FillColor = System.Drawing.Color.Transparent;
+            this.pBlockList.Name = "pBlockList";
+            this.pBlockList.ShadowDecoration.BorderRadius = 32;
+            this.pBlockList.ShadowDecoration.Depth = 15;
+            this.pBlockList.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(0, 0, 6, 6);
+            // 
+            // pSelectBlockvScrollBar
+            // 
+            this.pSelectBlockvScrollBar.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.pSelectBlockvScrollBar.InUpdate = false;
+            this.pSelectBlockvScrollBar.LargeChange = 70;
+            resources.ApplyResources(this.pSelectBlockvScrollBar, "pSelectBlockvScrollBar");
+            this.pSelectBlockvScrollBar.Name = "pSelectBlockvScrollBar";
+            this.pSelectBlockvScrollBar.ScrollbarSize = 10;
+            this.pSelectBlockvScrollBar.ThumbColor = System.Drawing.Color.DarkGray;
+            this.pSelectBlockvScrollBar.ThumbStyle = Guna.UI2.WinForms.Enums.ThumbStyle.Inset;
+            // 
+            // pSelectBlock
+            // 
+            resources.ApplyResources(this.pSelectBlock, "pSelectBlock");
+            this.pSelectBlock.BackColor = System.Drawing.Color.White;
+            this.pSelectBlock.Name = "pSelectBlock";
             // 
             // ibtnMemo
             // 
@@ -375,6 +428,8 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxGraphe
             // 
+            this.pboxGraphe.BackgroundImage = global::SAI.Properties.Resources.img_inferGraphe_example;
+            this.pboxGraphe.Image = global::SAI.Properties.Resources.img_inferGraphe_example;
             this.pboxGraphe.ImageRotate = 0F;
             resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
             this.pboxGraphe.Name = "pboxGraphe";
@@ -575,7 +630,9 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).EndInit();
             this.pZoomCode.ResumeLayout(false);
             this.pBlock.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
             this.pTopBlock.ResumeLayout(false);
+            this.pBlockList.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
             this.pSideInfer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxGraphe)).EndInit();
@@ -585,60 +642,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-			this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
-			this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2VScrollBar();
-			this.pSelectBlock = new Guna.UI2.WinForms.Guna2Panel();
-			((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
-			this.pBlockList.SuspendLayout();
-			// 
-			// 
-			// pBlock
-			// 
-			this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
-			resources.ApplyResources(this.pBlock, "pBlock");
-			this.pBlock.Controls.Add(this.webViewblock);
-			this.pBlock.Controls.Add(this.pTopBlock);
-			this.pBlock.Name = "pBlock";
-			// 
-			// webViewblock
-			// 
-			this.webViewblock.AllowExternalDrop = true;
-			this.webViewblock.CreationProperties = null;
-			this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
-			resources.ApplyResources(this.webViewblock, "webViewblock");
-			this.webViewblock.Name = "webViewblock";
-			this.webViewblock.ZoomFactor = 1D;
-			// 
-			// pBlockList
-			// 
-			this.pBlockList.BackColor = System.Drawing.Color.Transparent;
-			this.pBlockList.BackgroundImage = global::SAI.Properties.Resources.p_block;
-			resources.ApplyResources(this.pBlockList, "pBlockList");
-			this.pBlockList.BorderColor = System.Drawing.Color.Transparent;
-			this.pBlockList.Controls.Add(this.pSelectBlockvScrollBar);
-			this.pBlockList.Controls.Add(this.pSelectBlock);
-			this.pBlockList.FillColor = System.Drawing.Color.Transparent;
-			this.pBlockList.Name = "pBlockList";
-			this.pBlockList.ShadowDecoration.BorderRadius = 32;
-			this.pBlockList.ShadowDecoration.Depth = 15;
-			this.pBlockList.ShadowDecoration.Shadow = new System.Windows.Forms.Padding(0, 0, 6, 6);
-			// 
-			// pSelectBlockvScrollBar
-			// 
-			this.pSelectBlockvScrollBar.FillColor = System.Drawing.Color.WhiteSmoke;
-			this.pSelectBlockvScrollBar.InUpdate = false;
-			this.pSelectBlockvScrollBar.LargeChange = 70;
-			resources.ApplyResources(this.pSelectBlockvScrollBar, "pSelectBlockvScrollBar");
-			this.pSelectBlockvScrollBar.Name = "pSelectBlockvScrollBar";
-			this.pSelectBlockvScrollBar.ScrollbarSize = 10;
-			this.pSelectBlockvScrollBar.ThumbColor = System.Drawing.Color.DarkGray;
-			this.pSelectBlockvScrollBar.ThumbStyle = Guna.UI2.WinForms.Enums.ThumbStyle.Inset;
-			// 
-			// pSelectBlock
-			// 
-			resources.ApplyResources(this.pSelectBlock, "pSelectBlock");
-			this.pSelectBlock.BackColor = System.Drawing.Color.White;
-			this.pSelectBlock.Name = "pSelectBlock";
+
         }
 
         #endregion
