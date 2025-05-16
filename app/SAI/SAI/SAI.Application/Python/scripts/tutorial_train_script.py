@@ -27,9 +27,15 @@ try:
     api_url = os.environ.get("API_SERVER_URL")
     print(f"Loaded API_SERVER_URL: {api_url}")
 except ImportError:
-    # dotenv가 설치되지 않은 경우 환경 변수만 사용
-    print("python-dotenv is not installed, using environment variables only")
-    pass
+    print("python-dotenv is not installed. Installing now...")
+    try:
+        # 현재 파이썬으로 pip install 실행
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "python-dotenv"])
+        from dotenv import load_dotenv  # 재시도
+        print("✅ python-dotenv 설치 완료.")
+    except Exception as e:
+        print(f"❌ python-dotenv 설치 실패: {e}")
+        load_dotenv = None  # 이후 로딩 스킵
 
 # 표준 출력 스트림 설정
 try:
@@ -224,7 +230,7 @@ def download_dataset_with_progress(start_time):
         server_url = server_url[:-1]
     
     # API 엔드포인트 URL 구성
-    api_url = f"{server_url}/api/download/dataset/tutorial"
+    api_url = f"{server_url}/api/download/tutorial"
     show_progress("API에서 다운로드 URL 요청 중...", start_time, 20)
     
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
