@@ -10,7 +10,7 @@ inference.py - 단일 이미지 추론 스크립트
 필수 패키지: ultralytics, opencv-python (튜토리얼에서 미리 설치됨)
 
 사용법:
-    python inference.py --model path/to/model.pt --image path/to/image.jpg --conf 0.25 --output-dir results
+    python inference.py --image path/to/image.jpg --conf 0.25
 """
 
 import os
@@ -18,151 +18,173 @@ import sys
 import json
 import time
 import argparse
+import cv2
 from pathlib import Path
 
+def log_message(message):
+    """로그 메시지를 출력하고 즉시 버퍼를 비웁니다."""
+    print(f"[INFERENCE] {message}", flush=True)
+
 # base_dir은 현재 스크립트 기준에서 Python 폴더
-# "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python"
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(f"Base directory: {base_dir}")
+log_message(f"Base directory: {base_dir}")
 
 # model_dir은 YOLOv8 best.pt 파일이 있는 폴더
-# "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python\runs\detect\train\weights
-# best.pt"
-model_dir = os.path.join(base_dir, "runs", "detect", "train", "weights", "best.pt")
+default_model_path = os.path.join(base_dir, "runs", "detect", "train", "weights", "best.pt")
+log_message(f"Default model path: {default_model_path}")
 
 
 # 추론 함수
-def run_inference(model_dir, image_path, conf=0.25, output_dir=None):
+def run_inference(model_path, image_path, conf=0.25):
     """
     YOLOv8 모델을 사용하여 이미지 추론 실행
     
     Args:
-        model_dir (str): 모델 파일 경로
+        model_path (str): 모델 파일 경로
         image_path (str): 이미지 파일 경로
         conf (float): 신뢰도 임계값
-        output_dir (str): 결과 저장 디렉토리
         
     Returns:
         dict: 추론 결과 정보
     """
     start_time = time.time()
-    print(f"모델 로드 중: {model_dir}")
+    log_message(f"모델 로드 중: {model_path}")
     
     # 파일 존재 확인
-    if not os.path.exists(model_dir):
-        print(f"오류: 모델 파일을 찾을 수 없습니다: {model_dir}")
-        return {"success": False, "error": f"모델 파일을 찾을 수 없습니다: {model_dir}"}
+    if not os.path.exists(model_path):
+        error_msg = f"오류: 모델 파일을 찾을 수 없습니다: {model_path}"
+        log_message(error_msg)
+        return {"success": False, "error": error_msg}
     
     if not os.path.exists(image_path):
-        print(f"오류: 이미지 파일을 찾을 수 없습니다: {image_path}")
-        return {"success": False, "error": f"이미지 파일을 찾을 수 없습니다: {image_path}"}
+        error_msg = f"오류: 이미지 파일을 찾을 수 없습니다: {image_path}"
+        log_message(error_msg)
+        return {"success": False, "error": error_msg}
     
-    # 출력 디렉토리 설정
-    # "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python\runs\result"
-    if not output_dir:
-        output_dir = os.path.join(base_dir, "runs", "result")
-    os.makedirs(output_dir, exist_ok=True)
+    # 결과 저장 디렉토리 설정
+    result_dir = os.path.join(base_dir, "runs", "result")
+    os.makedirs(result_dir, exist_ok=True)
+    log_message(f"결과 저장 디렉토리: {result_dir}")
     
     try:
         # YOLO 모델 로드
+        log_message("ultralytics 패키지 임포트 중...")
         from ultralytics import YOLO
-        model = YOLO(model_dir)
+        log_message("YOLO 모델 로드 중...")
+        model = YOLO(model_path)
+        log_message("YOLO 모델 로드 완료")
         
-        # 추론 실행
-        print(f"이미지 추론 중: {image_path}")
+        # 이미지 파일명 추출 (확장자 제외)
+        image_basename = os.path.basename(image_path)
+        image_name, image_ext = os.path.splitext(image_basename)
+        
+        # 결과 이미지 경로 정의
+        result_image_name = f"{image_name}_result{image_ext}"
+        result_image_path = os.path.join(result_dir, result_image_name)
+        
+        # 추론 실행 (save=True로 저장)
+        log_message(f"이미지 추론 시작: {image_path}")
+        log_message(f"신뢰도 임계값: {conf}")
+        
+        # 모델 추론 실행
         results = model.predict(
             source=image_path,
             conf=conf,
-            save=True,
-            save_dir=output_dir,
+            save=False,  # 자체 저장 비활성화 (직접 저장)
             show=False
         )
         
-        # 결과 처리
-        if not results or len(results) == 0:
-            print("추론 결과가 없습니다")
-            return {
-                "success": True,
-                "has_detections": False,
-                "image_path": image_path,
-                "inference_time": time.time() - start_time
-            }
-        
-        # 결과 이미지 경로 
-        image_name = os.path.basename(image_path)
-        result_image_path = os.path.join(output_dir, image_name)
-        
-        # 탐지 결과 추출
-        detections = []
-        if hasattr(results[0], 'boxes') and results[0].boxes is not None:
-            boxes = results[0].boxes
-            for i, box in enumerate(boxes):
-                # 박스 좌표
-                x1, y1, x2, y2 = box.xyxy[0].tolist()
-                
-                # 클래스 및 신뢰도
-                cls = int(box.cls[0].item())
-                conf = float(box.conf[0].item())
-                
-                # 클래스 이름
-                cls_name = results[0].names.get(cls, f"class_{cls}")
-                
-                detections.append({
-                    "id": i,
-                    "class_id": cls,
-                    "class_name": cls_name,
-                    "confidence": conf,
-                    "bbox": [x1, y1, x2, y2]
-                })
+        # 결과 이미지 직접 저장
+        if results and len(results) > 0:
+            # 첫 번째 결과에서 시각화 이미지 가져오기
+            result_img = results[0].plot()
+            
+            # OpenCV로 이미지 저장
+            cv2.imwrite(result_image_path, result_img)
+            log_message(f"결과 이미지 저장 완료: {result_image_path}")
+            
+            # 감지된 객체 정보
+            detections = []
+            if hasattr(results[0], 'boxes') and results[0].boxes is not None:
+                for box in results[0].boxes:
+                    # 박스 좌표
+                    x1, y1, x2, y2 = box.xyxy[0].tolist()
+                    
+                    # 클래스 및 신뢰도
+                    cls = int(box.cls[0].item())
+                    conf_val = float(box.conf[0].item())
+                    
+                    # 클래스 이름
+                    cls_name = results[0].names[cls]
+                    
+                    detections.append({
+                        "class": cls_name,
+                        "confidence": conf_val,
+                        "bbox": [x1, y1, x2, y2]
+                    })
+            
+            log_message(f"감지된 객체 수: {len(detections)}")
+        else:
+            # 결과가 없는 경우 원본 이미지 복사
+            log_message("객체가 감지되지 않았습니다. 원본 이미지를 복사합니다.")
+            img = cv2.imread(image_path)
+            cv2.imwrite(result_image_path, img)
+            detections = []
         
         # 추론 시간 계산
         inference_time = time.time() - start_time
-        print(f"추론 완료: {len(detections)}개 객체 감지 (소요 시간: {inference_time:.3f}초)")
+        log_message(f"추론 완료 (소요 시간: {inference_time:.3f}초)")
         
         # 결과 반환
         return {
             "success": True,
-            "has_detections": len(detections) > 0,
-            "detections": detections,
-            "detection_count": len(detections),
             "result_image": result_image_path,
-            "input_image": image_path,
+            "detections": detections,
             "inference_time": inference_time
         }
     
     except Exception as e:
-        print(f"추론 오류: {str(e)}")
-        return {"success": False, "error": str(e)}
+        import traceback
+        error_msg = f"추론 오류: {str(e)}"
+        log_message(error_msg)
+        log_message(traceback.format_exc())  # 상세 오류 추적
+        return {"success": False, "error": error_msg}
 
 
 def main():
     """명령행에서 실행될 메인 함수"""
+    log_message("스크립트 시작")
+    
     parser = argparse.ArgumentParser(description='YOLOv8 이미지 추론 도구')
     
     # 필수 인자
-    parser.add_argument('--model', required=True, help='학습된 모델 파일 경로 (.pt)')
     parser.add_argument('--image', required=True, help='추론할 이미지 파일 경로')
     
     # 선택적 인자
+    parser.add_argument('--model', help='학습된 모델 파일 경로 (.pt)')
     parser.add_argument('--conf', type=float, default=0.25, help='객체 탐지 신뢰도 임계값 (기본값: 0.25)')
-    parser.add_argument('--output-dir', help='결과 저장 디렉토리')
     
     args = parser.parse_args()
+    log_message(f"받은 인자: image={args.image}, model={args.model}, conf={args.conf}")
+    
+    # 모델 경로가 지정되지 않은 경우 기본 경로 사용
+    model_path = args.model if args.model else default_model_path
+    log_message(f"사용할 모델 경로: {model_path}")
     
     # 추론 실행
     result = run_inference(
-        model_dir=args.model,
+        model_path=model_path,
         image_path=args.image,
-        conf=args.conf,
-        output_dir=args.output_dir
+        conf=args.conf
     )
     
     # 결과 출력 (C# 애플리케이션에서 파싱하는 형식)
+    log_message("결과 JSON 생성 중...")
     print(f"INFERENCE_RESULT:{json.dumps(result)}")
     
-    # 성공 여부에 따른 종료 코드 반환
-    return 0 if result["success"] else 1
+    # 성공 여부에 따른 종료 코드
+    sys.exit(0 if result["success"] else 1)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
