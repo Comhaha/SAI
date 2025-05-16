@@ -1,4 +1,4 @@
-﻿using CefSharp;
+using CefSharp;
 using CefSharp.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
@@ -29,9 +29,7 @@ namespace SAI.SAI.App.Views.Pages
 		private JsBridge jsBridge;
 
         // UcCode를 UcTabCodeContainer로 교체
-        private UcTabCodeContainer codeContainer;
-        // 기본 탭의 코드 에디터 참조 유지
-        private UcCode mainCodeEditor;
+       private UcCode codeEditor; // UcCode 하나만 사용
 
 
         // 블록 클릭 추적을 위한 변수
@@ -47,10 +45,10 @@ namespace SAI.SAI.App.Views.Pages
 			InitializeComponent();
 
             // 코드박스 초기화 - presenter 초기화 전에 수행
-            InitializeCodeContainer();
+            InitializeCodeEditor();
 
             //혜정추가
-            blocklyPresenter.SetCodeView(mainCodeEditor);
+            blocklyPresenter.SetCodeView(codeEditor);
 
             // 백그라운드 색깔&이미지
             BackColor = Color.Transparent;
@@ -252,166 +250,161 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 블록 클릭 처리 - 더블 클릭 감지 및 처리 (개선)
-        private void HandleBlockClick(string blockId)
-        {
-            if (string.IsNullOrEmpty(blockId))
-                return;
+        //// 블록 클릭 처리 - 더블 클릭 감지 및 처리 (개선)
+        //private void HandleBlockClick(string blockId)
+        //{
+        //    if (string.IsNullOrEmpty(blockId))
+        //        return;
 
-            DateTime now = DateTime.Now;
+        //    DateTime now = DateTime.Now;
 
-            // 로그 기록
-            Console.WriteLine($"[DEBUG] Block clicked: {blockId}, Last: {lastClickedBlockId}, Time diff: {(now - lastClickTime).TotalMilliseconds}ms");
+        //    // 로그 기록
+        //    Console.WriteLine($"[DEBUG] Block clicked: {blockId}, Last: {lastClickedBlockId}, Time diff: {(now - lastClickTime).TotalMilliseconds}ms");
 
-            // 같은 블록이 일정 시간 내에 다시 클릭되면 더블 클릭으로 처리
-            if (blockId == lastClickedBlockId &&
-                (now - lastClickTime).TotalMilliseconds < doubleClickTimeMs)
-            {
-                Console.WriteLine($"[DEBUG] Double click detected on block: {blockId}");
+        //    // 같은 블록이 일정 시간 내에 다시 클릭되면 더블 클릭으로 처리
+        //    if (blockId == lastClickedBlockId &&
+        //        (now - lastClickTime).TotalMilliseconds < doubleClickTimeMs)
+        //    {
+        //        Console.WriteLine($"[DEBUG] Double click detected on block: {blockId}");
 
-                // 더블클릭 처리 중 플래그 설정
-                isDoubleClickProcessing = true;
+        //        // 더블클릭 처리 중 플래그 설정
+        //        isDoubleClickProcessing = true;
 
-                // UI 스레드에서 실행
-                this.BeginInvoke(new Action(() => {
-                    try
-                    {
-                        // 새 탭 생성 (테스트용 이름)
-                        CreateTestTab();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] 탭 생성 오류: {ex.Message}");
-                    }
-                    finally
-                    {
-                        // 처리 완료 후 플래그 해제 (약간의 딜레이 추가)
-                        System.Threading.Timer timer = null;
-                        timer = new System.Threading.Timer((obj) => {
-                            isDoubleClickProcessing = false;
-                            timer.Dispose();
-                        }, null, 500, System.Threading.Timeout.Infinite);
-                    }
-                }));
+        //        // UI 스레드에서 실행
+        //        this.BeginInvoke(new Action(() => {
+        //            try
+        //            {
+        //                // 새 탭 생성 (테스트용 이름)
+        //                CreateTestTab();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine($"[ERROR] 탭 생성 오류: {ex.Message}");
+        //            }
+        //            finally
+        //            {
+        //                // 처리 완료 후 플래그 해제 (약간의 딜레이 추가)
+        //                System.Threading.Timer timer = null;
+        //                timer = new System.Threading.Timer((obj) => {
+        //                    isDoubleClickProcessing = false;
+        //                    timer.Dispose();
+        //                }, null, 500, System.Threading.Timeout.Infinite);
+        //            }
+        //        }));
 
-                // 클릭 상태 초기화
-                lastClickedBlockId = null;
-                lastClickTime = DateTime.MinValue;
-            }
-            else
-            {
-                // 첫 번째 클릭 저장
-                lastClickedBlockId = blockId;
-                lastClickTime = now;
-                isDoubleClickProcessing = false;
-            }
-        }
+        //        // 클릭 상태 초기화
+        //        lastClickedBlockId = null;
+        //        lastClickTime = DateTime.MinValue;
+        //    }
+        //    else
+        //    {
+        //        // 첫 번째 클릭 저장
+        //        lastClickedBlockId = blockId;
+        //        lastClickTime = now;
+        //        isDoubleClickProcessing = false;
+        //    }
+        //}
 
         // 테스트용 탭 생성 메서드
-        private void CreateTestTab()
-        {
-            try
-            {
-                Console.WriteLine("[DEBUG] Blockly: 테스트 탭 생성 시작");
+        //private void CreateTestTab()
+        //{
+        //    try
+        //    {
+        //        Console.WriteLine("[DEBUG] Blockly: 테스트 탭 생성 시작");
 
-                // 카운터 증가
-                modelTabCount++;
+        //        // 카운터 증가
+        //        modelTabCount++;
 
-                // 현재 전체 코드 가져오기
-                string mainCode = string.Empty;
-                UcCode mainEditor = codeContainer.GetMainCodeEditor();
-                if (mainEditor != null)
-                {
-                    mainCode = mainEditor.Text;
-                    Console.WriteLine($"[DEBUG] 현재 코드 길이: {mainCode?.Length ?? 0}");
-                }
+        //        // 현재 전체 코드 가져오기
+        //        string mainCode = string.Empty;
+        //        if (codeEditor != null)
+        //        {
+        //            mainCode = codeEditor.Text;
+        //            Console.WriteLine($"[DEBUG] 현재 코드 길이: {mainCode?.Length ?? 0}");
+        //        }
 
-                // 새 탭 이름 설정 (테스트용)
-                string tabName = $"테스트 {modelTabCount}";
+        //        // 새 탭 이름 설정 (테스트용)
+        //        string tabName = $"테스트 {modelTabCount}";
 
-                // 새 탭 추가
-                UcCode newEditor = AddCodeTab(tabName);
-                if (newEditor != null)
-                {
-                    // 새 탭에 코드 복사
-                    if (!string.IsNullOrEmpty(mainCode))
-                    {
-                        newEditor.Text = mainCode;
-                    }
+        //        // 새 탭 추가
+        //        UcCode newEditor = AddCodeTab(tabName);
+        //        if (newEditor != null)
+        //        {
+        //            // 새 탭에 코드 복사
+        //            if (!string.IsNullOrEmpty(mainCode))
+        //            {
+        //                newEditor.Text = mainCode;
+        //            }
 
-                    Console.WriteLine($"[DEBUG] {tabName} 탭 생성 완료");
-                }
-                else
-                {
-                    Console.WriteLine("[ERROR] 새 탭 생성 실패");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] 테스트 탭 생성 오류: {ex.Message}");
-            }
-        }
+        //            Console.WriteLine($"[DEBUG] {tabName} 탭 생성 완료");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("[ERROR] 새 탭 생성 실패");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"[ERROR] 테스트 탭 생성 오류: {ex.Message}");
+        //    }
+        //}
 
         // 코드 컨테이너 초기화 메서드 (UcTabCodeContainer 사용)
-        private void InitializeCodeContainer()
+        private void InitializeCodeEditor()
         {
             try
             {
-                Console.WriteLine("[DEBUG] Blockly: InitializeCodeContainer 시작");
+                Console.WriteLine("[DEBUG] Blockly: InitializeCodeEditor 시작");
 
-                // 탭 코드 컨테이너 초기화 및 추가
-                codeContainer = new UcTabCodeContainer();
-                codeContainer.Dock = DockStyle.Right;
-                codeContainer.Width = 325; // richTextBox1과 비슷한 너비
-                Console.WriteLine("[DEBUG] Blockly: UcTabCodeContainer 인스턴스 생성됨");
-
-                // 기본 탭("전체 코드")의 코드 에디터 참조 저장
-                mainCodeEditor = codeContainer.GetMainCodeEditor();
+                // UcCode 초기화 및 추가
+                codeEditor = new UcCode();
+                codeEditor.Dock = DockStyle.Right;
+                codeEditor.Width = 325; // richTextBox1과 비슷한 너비
+                Console.WriteLine("[DEBUG] Blockly: UcCode 인스턴스 생성됨");
 
                 // richTextBox1 너비 조정 (숨기기)
                 richTextBox1.Width = 0;
 
-                // UcTabCodeContainer 컨트롤 추가
-                this.Controls.Add(codeContainer);
-                codeContainer.BringToFront(); // 컨트롤을 앞으로 가져오기
-                Console.WriteLine("[DEBUG] Blockly: UcTabCodeContainer가 Controls에 추가됨");
-
+                // UcCode 컨트롤 추가
+                this.Controls.Add(codeEditor);
+                codeEditor.BringToFront(); // 컨트롤을 앞으로 가져오기
+                Console.WriteLine("[DEBUG] Blockly: UcCode가 Controls에 추가됨");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] Blockly: 코드 컨테이너 초기화 오류 - {ex.Message}");
+                Console.WriteLine($"[ERROR] Blockly: 코드 에디터 초기화 오류 - {ex.Message}");
                 Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
             }
         }
 
         // 새 코드 탭 추가 (사용자가 호출하는 메서드)
-        public UcCode AddCodeTab(string title)
-        {
-            try
-            {
-                if (InvokeRequired)
-                {
-                    return (UcCode)Invoke(new Func<UcCode>(() => AddCodeTab(title)));
-                }
+        //public UcCode AddCodeTab(string title)
+        //{
+        //    try
+        //    {
+        //        if (InvokeRequired)
+        //        {
+        //            return (UcCode)Invoke(new Func<UcCode>(() => AddCodeTab(title)));
+        //        }
 
-                if (codeContainer != null)
-                {
-                    UcCode newEditor = codeContainer.AddCodeTab(title);
-                    Console.WriteLine($"[DEBUG] Blockly: 새 코드 탭 '{title}' 추가됨");
-                    return newEditor;
-                }
-                else
-                {
-                    Console.WriteLine("[ERROR] codeContainer가 null입니다");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] Blockly: 새 코드 탭 추가 오류 - {ex.Message}");
-            }
+        //        if (codeEditor != null)
+        //        {
+        //            UcCode newEditor = codeEditor.AddCodeTab(title);
+        //            Console.WriteLine($"[DEBUG] Blockly: 새 코드 탭 '{title}' 추가됨");
+        //            return newEditor;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("[ERROR] codeEditor가 null입니다");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"[ERROR] Blockly: 새 코드 탭 추가 오류 - {ex.Message}");
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
         // ---------------------------------------------------------
 
         // 다이얼로그 확인용 함수(delete)

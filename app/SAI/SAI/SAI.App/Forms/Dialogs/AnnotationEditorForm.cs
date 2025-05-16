@@ -40,6 +40,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             // 초기값 설정
             Accuracy = accuracy;
             annotationText.Text = initialText;
+            pleaseNamePanel.Visible = false; // 초기에는 경고 패널 숨김
 
             // 초기 상태 설정
             this.FormBorderStyle = FormBorderStyle.None;
@@ -52,7 +53,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             // ------------------------------------
 
             // 만약 폼 전체가 아니라 특정 Panel 위에서만 드래그하고 싶다면,
-            // 그 Panel의 MouseDown, MouseMove, MouseUp 이벤트를 등록하면 돼.
+            // 그 Panel의 MouseDown, MouseMove, MouseUp 이벤트를 등록.
             // 예를 들어, 'titlePanel'이라는 Panel이 있다면 아래처럼:
             // titlePanel.MouseDown += AnnotationEditorForm_MouseDown;
             // titlePanel.MouseMove += AnnotationEditorForm_MouseMove;
@@ -74,7 +75,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
-        {
+        {   
+            if (!annotationText.Text.Trim().Any())
+            {
+                pleaseNamePanel.Visible = true; // 텍스트가 비어있으면 경고 패널 표시
+                return;
+            }
             AnnotationText = annotationText.Text;
             IsSaved = true;
 

@@ -1,6 +1,6 @@
 ﻿namespace SAI.SAI.App.Views.Pages
 {
-    partial class UcTabCodeContainer
+    partial class UcCsvChart
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -30,14 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // UcTabCodeContainer
+            // UcCsvChart
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "UcTabCodeContainer";
-            this.Size = new System.Drawing.Size(320, 518);
-            this.Load += new System.EventHandler(this.UcTabCodeContainer_Load);
+            this.Name = "UcCsvChart";
+            this.Size = new System.Drawing.Size(604, 1141);
+            this.Load += new System.EventHandler(this.UcCsvChart_Load);
             this.ResumeLayout(false);
 
         }

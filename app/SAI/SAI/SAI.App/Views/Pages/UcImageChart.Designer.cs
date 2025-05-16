@@ -1,6 +1,6 @@
 ﻿namespace SAI.SAI.App.Views.Pages
 {
-    partial class UcTab
+    partial class UcImageChart
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -30,14 +30,15 @@
         {
             this.SuspendLayout();
             // 
-            // UcTab
+            // UcChart
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "UcTab";
-            this.Size = new System.Drawing.Size(800, 40);
-            this.Load += new System.EventHandler(this.UcTab_Load);
+            this.Name = "UcChart";
+            this.Size = new System.Drawing.Size(608, 1195);
+            this.Load += new System.EventHandler(this.UcChart_Load);
             this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -42,6 +42,9 @@ namespace SAI.SAI.App.Views.Pages
 
         private int undoCount = 0; // 뒤로가기 카운트
 
+        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -49,7 +52,8 @@ namespace SAI.SAI.App.Views.Pages
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
             // 홈페이지 이동
-            ibtnHome.Click += (s, e) => {
+            ibtnHome.Click += (s, e) =>
+            {
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
@@ -112,7 +116,8 @@ namespace SAI.SAI.App.Views.Pages
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
 
-            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+
+            //ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
               "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
@@ -196,6 +201,97 @@ namespace SAI.SAI.App.Views.Pages
                 newValue = Math.Max(pSelectBlockvScrollBar.Minimum, Math.Min(pSelectBlockvScrollBar.Maximum, newValue));
                 pSelectBlockvScrollBar.Value = newValue;
             };
+
+            btnCopy.Click += (s, e) =>
+            {
+                try
+                {
+                    // BlocklyModel에서 전체 코드 가져오기
+                    string codeToCopy = blocklyModel.blockAllCode;
+
+                    if (!string.IsNullOrEmpty(codeToCopy))
+                    {
+                        // 클립보드에 코드 복사
+                        Clipboard.SetText(codeToCopy);
+                        Console.WriteLine("[DEBUG] UcPracticeBlockCode: 코드가 클립보드에 복사됨");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] UcPracticeBlockCode: 복사할 코드가 없음");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+                }
+            };
+
+            // 코드 확대/축소 버튼 및 퍼센트 표시 컨트롤 연결 (튜토리얼과 동일하게)
+            guna2ImageButton2.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex < zoomLevels.Length - 1)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex + 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 확대 중 오류 발생 - {ex.Message}");
+                }
+            };
+
+            guna2ImageButton1.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex > 0)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex - 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 축소 중 오류 발생 - {ex.Message}");
+                }
+            };
+
+            // 초기 확대/축소 레벨 설정
+            currentZoomLevel = 60;
+            UpdateCodeZoom();
+
+            // PercentUtils로 퍼센트 박스 스타일 일괄 적용
+            PercentUtils.SetupPercentTextBox(guna2TextBox1, 0.5f, 0, 0);
+
+            // 여기에 UcCode 추가
+            try
+            {
+                if (ucCode２ != null)
+                {
+                    // BlocklyPresenter에 기존 ucCode２ 설정
+                    blocklyPresenter.SetCodeView(ucCode２);
+                    Console.WriteLine("[DEBUG] UcPracticeBlockCode: ICodeView 설정 완료");
+
+                    // BlocklyModel 이벤트 구독 확인
+                    blocklyModel.BlockAllCodeChanged += (code) =>
+                    {
+                        Console.WriteLine($"[DEBUG] UcPracticeBlockCode: BlockAllCodeChanged 이벤트 발생 - 코드 길이: {code?.Length ?? 0}");
+                    };
+                }
+                else
+                {
+                    Console.WriteLine("[ERROR] UcPracticeBlockCode: ucCode２가 null입니다");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcPracticeBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
+            }
         }
 
         private void ShowpSIdeInfer()
@@ -415,7 +511,7 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // JS 함수 호출 - 블럭 모두 삭제
-        private void btnTrashBlock_Click(object sender, EventArgs e)
+        private void btnTrash_Click(object sender, EventArgs e)
         {
             webViewblock.ExecuteScriptAsync($"clear()");
         }
@@ -435,7 +531,40 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
+        private void UcPracticeBlockCode_Load(object sender, EventArgs e)
+        {
 
+        }
+
+        private void webViewCode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ucCode1_Load(object sender, EventArgs e)
+        {
+            // ucCode２ 로드 이벤트 처리
+        }
+
+        private void UpdateCodeZoom()
+        {
+            try
+            {
+                if (ucCode２ != null)
+                {
+                    // Scintilla 에디터의 폰트 크기 업데이트
+                    ucCode２.UpdateFontSize(currentZoomLevel);
+                    // 확대/축소 레벨 표시 업데이트
+                    guna2TextBox1.Text = $"{currentZoomLevel}%";
+                    Console.WriteLine($"[DEBUG] UcPracticeBlockCode: 코드 확대/축소 레벨 변경 - {currentZoomLevel}%");
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine($"[ERROR] UcPracticeBlockCode: 확대/축소 레벨 업데이트 중 오류 발생 - {ex.Message}");
+            }
+        }
+                    
+                    
         // 추론 이미지 불러오기
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
@@ -537,6 +666,5 @@ namespace SAI.SAI.App.Views.Pages
                 btnSelectInferImage.Visible = false;
             }
         }
-
     }
 }
