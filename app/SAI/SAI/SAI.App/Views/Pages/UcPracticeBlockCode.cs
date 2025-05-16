@@ -180,29 +180,10 @@ namespace SAI.SAI.App.Views.Pages
 				pSelectBlockvScrollBar.Value = newValue;
 			};
 
-            ibtnCopy.Click += (s, e) =>
-            {
-                try
-                {
-                    // BlocklyModel에서 전체 코드 가져오기
-                    string codeToCopy = blocklyModel.blockAllCode;
-                    
-                    if (!string.IsNullOrEmpty(codeToCopy))
-                    {
-                        // 클립보드에 코드 복사
-                        Clipboard.SetText(codeToCopy);
-                        Console.WriteLine("[DEBUG] UcPracticeBlockCode: 코드가 클립보드에 복사됨");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[WARNING] UcPracticeBlockCode: 복사할 코드가 없음");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
-                }
-            };
+            // cAlertPanel 초기에는 숨김
+            cAlertPanel.Visible = false;
+            // ibtnCopy 클릭 이벤트 핸들러 등록
+            ibtnCopy.Click += ibtnCopy_Click;
 
             // 코드 확대/축소 버튼 및 퍼센트 표시 컨트롤 연결 (튜토리얼과 동일하게)
             guna2ImageButton2.Click += (s, e) =>
@@ -533,6 +514,44 @@ namespace SAI.SAI.App.Views.Pages
             timer.Tick += (s, args) =>
             {
                 mAlertPanel.Visible = false;
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
+        }
+
+        private void ibtnCopy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // BlocklyModel에서 전체 코드 가져오기
+                string codeToCopy = blocklyModel.blockAllCode;
+                
+                if (!string.IsNullOrEmpty(codeToCopy))
+                {
+                    // 클립보드에 코드 복사
+                    Clipboard.SetText(codeToCopy);
+                    Console.WriteLine("[DEBUG] UcPracticeBlockCode: 코드가 클립보드에 복사됨");
+                }
+                else
+                {
+                    Console.WriteLine("[WARNING] UcPracticeBlockCode: 복사할 코드가 없음");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcPracticeBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+            }
+
+            // cAlertPanel을 보이게 설정
+            cAlertPanel.Visible = true;
+
+            // 1초 후에 cAlertPanel을 숨기는 타이머 설정
+            Timer timer = new Timer();
+            timer.Interval = 1000; // 1초
+            timer.Tick += (s, args) =>
+            {
+                cAlertPanel.Visible = false;
                 timer.Stop();
                 timer.Dispose();
             };
