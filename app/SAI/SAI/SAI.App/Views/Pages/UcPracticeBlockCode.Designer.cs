@@ -34,6 +34,7 @@ namespace SAI.SAI.App.Views.Pages
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcPracticeBlockCode));
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
@@ -80,11 +81,10 @@ namespace SAI.SAI.App.Views.Pages
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.pboxGraphe = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
+            this.mAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
-            this.mAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -130,6 +130,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Controls.Add(this.pZoomCode);
             this.pCode.Name = "pCode";
+            // 
+            // cAlertPanel
+            // 
+            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.copy_alert;
+            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
+            this.cAlertPanel.Name = "cAlertPanel";
             // 
             // ibtnCloseInfer
             // 
@@ -633,6 +639,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.Controls.Add(this.btnCloseMemo);
             this.pMemo.Name = "pMemo";
             // 
+            // mAlertPanel
+            // 
+            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
+            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
+            this.mAlertPanel.Name = "mAlertPanel";
+            // 
             // tboxMemo
             // 
             this.tboxMemo.BorderColor = System.Drawing.Color.Transparent;
@@ -679,18 +691,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo.PressedColor = System.Drawing.Color.Transparent;
             this.btnCloseMemo.PressedDepth = 0;
             this.btnCloseMemo.Click += new System.EventHandler(this.btnCloseMemo_Click);
-            // 
-            // mAlertPanel
-            // 
-            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
-            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
-            this.mAlertPanel.Name = "mAlertPanel";
-            // 
-            // cAlertPanel
-            // 
-            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.copy_alert;
-            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
-            this.cAlertPanel.Name = "cAlertPanel";
             // 
             // UcPracticeBlockCode
             // 

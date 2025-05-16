@@ -129,7 +129,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 28</value>
+    <value>74, 15</value>
   </data>
   <data name="cAlertPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>171, 44</value>
@@ -265,7 +265,7 @@
     <value>Stretch</value>
   </data>
   <data name="ibtnCopy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 27</value>
+    <value>258, 29</value>
   </data>
   <data name="ibtnCopy.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 29</value>
@@ -1345,10 +1345,10 @@
     <value>13</value>
   </data>
   <data name="pSideInfer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
+    <value>Right</value>
   </data>
   <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+    <value>860, 0</value>
   </data>
   <data name="pSideInfer.Size" type="System.Drawing.Size, System.Drawing">
     <value>420, 720</value>
@@ -1375,7 +1375,7 @@
     <value>Stretch</value>
   </data>
   <data name="mAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 57</value>
+    <value>25, 49</value>
   </data>
   <data name="mAlertPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>259, 49</value>
