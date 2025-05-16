@@ -103,7 +103,7 @@ namespace SAI.SAI.App.Views.Pages
                 Console.WriteLine($"[ERROR] UcPracticeBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
             }
 
-            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            //ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
               "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
@@ -118,6 +118,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
 
 			undoCount = 0;
 			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
@@ -180,7 +181,7 @@ namespace SAI.SAI.App.Views.Pages
 				pSelectBlockvScrollBar.Value = newValue;
 			};
 
-            ibtnCopy.Click += (s, e) =>
+            btnCopy.Click += (s, e) =>
             {
                 try
                 {

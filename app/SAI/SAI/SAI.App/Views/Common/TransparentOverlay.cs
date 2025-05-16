@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Pages;
 
 namespace SAI.SAI.App.Views.Common
 {
@@ -24,6 +25,7 @@ namespace SAI.SAI.App.Views.Common
                 const int WS_EX_TRANSPARENT = 0x20;
                 var cp = base.CreateParams;
                 cp.ExStyle |= WS_EX_TRANSPARENT;   // 진짜 투명
+                ToolTipUtils.CustomToolTip(this, "자세히 보려면 클릭하세요.");
                 return cp;
             }
         }
