@@ -40,8 +40,9 @@ namespace SAI.SAI.App.Views.Pages
         private bool isMemoPanelVisible = false;
 		private MemoPresenter memoPresenter;
 
+		private int undoCount = 0; // 뒤로가기 카운트
+		private int blockCount = 0; // 블럭 개수
 
-		private int undoCount = 0;
 		public UcTutorialBlockCode(IMainView view)
 		{
 			InitializeComponent();
@@ -58,10 +59,11 @@ namespace SAI.SAI.App.Views.Pages
 			this.mainView = view;
 			ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
+			blockCount = 0; // 블럭 개수 초기화
 			undoCount = 0;
-
-			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
-
+			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+			btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
+			btnTrash.Visible = false; // 처음에는 보이지 않게 설정
 
 			ibtnHome.BackColor = Color.Transparent;
 			ibtnDone.BackColor = Color.Transparent;
@@ -603,6 +605,10 @@ namespace SAI.SAI.App.Views.Pages
 								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
 								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
+							case "blockCount":
+								var jsonCount = root.GetProperty("count").ToString();
+								blockCount = int.Parse(jsonCount);
+								break;
 						}
 					}
 				}
@@ -621,7 +627,14 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 블럭 넣기
 		public void addBlock(string blockType)
 		{
+			if (btnPreBlock.Visible == false)
+			{
+				btnPreBlock.Visible = true;
+				btnNextBlock.Visible = false;
+				undoCount = 0;
+			}
 			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
 		}
 
 		// JS 함수호출 = 하나의 블럭의 코드 가져오기
@@ -639,9 +652,10 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 다시 실행하기
 		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
-			undoCount--;
+			--undoCount;
 			webViewblock.ExecuteScriptAsync($"redo()");
-			if(undoCount == 0)
+
+			if (undoCount == 0)
 			{
 				btnNextBlock.Visible = false;
 				btnPreBlock.Visible = true;
@@ -656,10 +670,12 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 되돌리기
 		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
-			if(undoCount <= 10)
+			++undoCount;
+			webViewblock.ExecuteScriptAsync($"undo()");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
+
+			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
 			{
-				undoCount++;
-				webViewblock.ExecuteScriptAsync($"undo()");
 				btnNextBlock.Visible = true;
 				btnPreBlock.Visible = true;
 			}

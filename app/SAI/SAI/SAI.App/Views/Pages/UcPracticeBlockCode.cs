@@ -41,6 +41,7 @@ namespace SAI.SAI.App.Views.Pages
         private double currentThreshold = 0.5; // threshold 기본값 0.5
 
 		private int undoCount = 0; // 뒤로가기 카운트
+		private int blockCount = 0; // 블럭 개수
 
 		public UcPracticeBlockCode(IMainView view)
         {
@@ -93,8 +94,11 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
 
+			blockCount = 0; // 블럭 개수 초기화
 			undoCount = 0;
 			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+			btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
+
 			// btnRunModel---------------
 			btnRunModel.BackColor = Color.Transparent;
 			btnRunModel.PressedColor = Color.Transparent;
@@ -301,6 +305,10 @@ namespace SAI.SAI.App.Views.Pages
 								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
 								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
+							case "blockCount":
+								var jsonCount = root.GetProperty("count").ToString();
+								blockCount = int.Parse(jsonCount);
+								break;
 						}
 					}
 				}
@@ -313,13 +321,43 @@ namespace SAI.SAI.App.Views.Pages
 			webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
+
+			// 단축키 이벤트 등록
+			webViewblock.KeyDown += (sender, e) =>
+			{
+				if(e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if(btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if(btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if(e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					MessageBox.Show("와 ctrl + shift + z 누름");
+				}
+			};
 			webViewblock.Source = new Uri(uri);
 		}
 
 		// JS 함수 호출 = 블럭 넣기
 		public void addBlock(string blockType)
 		{
+			if(btnPreBlock.Visible == false)
+			{
+				btnPreBlock.Visible = true;
+				btnNextBlock.Visible = false;
+				undoCount = 0;
+			}
 			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
 		}
 
 		// JS 함수호출 = 하나의 블럭의 코드 가져오기
@@ -335,9 +373,9 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		// JS 함수 호출 = 다시 실행하기
-		private void ibtnNextBlock_Click(object sender, EventArgs e)
+		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
-			undoCount--;
+			--undoCount;
 			webViewblock.ExecuteScriptAsync($"redo()");
 
 			if (undoCount == 0)
@@ -353,12 +391,14 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		// JS 함수 호출 = 되돌리기
-		private void ibtnPreBlock_Click(object sender, EventArgs e)
+		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
-			if (undoCount <= 10)
+			++undoCount;
+			webViewblock.ExecuteScriptAsync($"undo()");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
+
+			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
 			{
-				undoCount++;
-				webViewblock.ExecuteScriptAsync($"undo()");
 				btnNextBlock.Visible = true;
 				btnPreBlock.Visible = true;
 			}
@@ -370,7 +410,7 @@ namespace SAI.SAI.App.Views.Pages
 		}
 
 		// JS 함수 호출 - 블럭 모두 삭제
-		private void btnTrashBlock_Click(object sender, EventArgs e)
+		private void btnTrash_Click(object sender, EventArgs e)
 		{
 			webViewblock.ExecuteScriptAsync($"clear()");
 		}
@@ -390,5 +430,5 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
-    }
+	}
 }

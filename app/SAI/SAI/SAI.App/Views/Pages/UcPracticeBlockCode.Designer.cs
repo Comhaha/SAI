@@ -255,6 +255,7 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.btnPreBlock, "btnPreBlock");
 			this.btnPreBlock.ForeColor = System.Drawing.Color.White;
 			this.btnPreBlock.Name = "btnPreBlock";
+			this.btnPreBlock.Click += new System.EventHandler(this.btnPreBlock_Click);
 			// 
 			// btnRunModel
 			// 
@@ -279,6 +280,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnNextBlock.FillColor = System.Drawing.Color.Transparent;
 			this.btnNextBlock.ForeColor = System.Drawing.Color.White;
 			this.btnNextBlock.Name = "btnNextBlock";
+			this.btnNextBlock.Click += new System.EventHandler(this.btnNextBlock_Click);
 			// 
 			// btnTrash
 			// 
@@ -292,6 +294,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnTrash.FillColor = System.Drawing.Color.Transparent;
 			this.btnTrash.ForeColor = System.Drawing.Color.White;
 			this.btnTrash.Name = "btnTrash";
+			this.btnTrash.Click += new System.EventHandler(this.btnTrash_Click);
 			// 
 			// pBlockList
 			// 

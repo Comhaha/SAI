@@ -79,6 +79,7 @@
 			block.setDeletable(false); // 블록 삭제 가능
 			block.initSvg();
 			block.render();
+			sendCode(Blockly.Python.blockToCode(block)); // 블록 생성 시 Python 코드 생성
 
 			if (lastCreatedBlockId) {
 				const lastBlock = workspace.getBlockById(lastCreatedBlockId);
@@ -129,7 +130,15 @@
         // 이전 상태 다시 실행하기(ctrl+y)
         function redo() {
 			workspace.undo(true);
-        }
+		}
+
+		function getblockCount() {
+			var blockCount = workspace.getAllBlocks(false).length;
+			window.chrome.webview.postMessage({
+				type: "blockCount",
+				count: blockCount
+			});
+		}
 
 		// 더블 클릭 이벤트 등록 및 이벤트 처리
 		function registerDoubleClickEventRecursively(block) {
