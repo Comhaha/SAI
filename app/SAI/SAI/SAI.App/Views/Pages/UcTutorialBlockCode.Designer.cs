@@ -1,4 +1,7 @@
-﻿
+﻿using Guna.UI2.WinForms;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace SAI.SAI.App.Views.Pages
 {
     partial class UcTutorialBlockCode
@@ -324,6 +327,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxZoomCode.Name = "tboxZoomCode";
             this.tboxZoomCode.PlaceholderText = "";
             this.tboxZoomCode.SelectedText = "";
+            this.tboxZoomCode.TextChanged += new System.EventHandler(this.tboxZoomCode_TextChanged);
             // 
             // ibtnMinusCode
             // 

@@ -43,6 +43,9 @@ namespace SAI.SAI.App.Views.Pages
 
 
 		private int undoCount = 0;
+		private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+		private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+
 		public UcTutorialBlockCode(IMainView view)
 		{
 			InitializeComponent();
@@ -53,6 +56,48 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyModel = BlocklyModel.Instance;
 
 			tboxMemo.TextChanged += tboxMemo_TextChanged;
+
+			// 확대/축소 버튼 이벤트 추가
+			ibtnPlusCode.Click += (s, e) =>
+			{
+				try
+				{
+					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+					if (currentIndex < zoomLevels.Length - 1)
+					{
+						currentZoomLevel = zoomLevels[currentIndex + 1];
+						UpdateCodeZoom();
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
+				}
+			};
+
+			ibtnMinusCode.Click += (s, e) =>
+			{
+				try
+				{
+					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+					if (currentIndex > 0)
+					{
+						currentZoomLevel = zoomLevels[currentIndex - 1];
+						UpdateCodeZoom();
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
+				}
+			};
+
+			// 초기 확대/축소 레벨 설정
+			currentZoomLevel = 60;
+			UpdateCodeZoom();
+
+			// PercentUtils로 퍼센트 박스 스타일 일괄 적용
+			PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
 
 			btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
 
@@ -760,6 +805,30 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void pMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void UpdateCodeZoom()
+        {
+            try
+            {
+                if (ucCode1 != null)
+                {
+                    // Scintilla 에디터의 폰트 크기 업데이트
+                    ucCode1.UpdateFontSize(currentZoomLevel);
+                    // 확대/축소 레벨 표시 업데이트
+                    tboxZoomCode.Text = $"{currentZoomLevel}%";
+                    Console.WriteLine($"[DEBUG] UcTutorialBlockCode: 코드 확대/축소 레벨 변경 - {currentZoomLevel}%");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대/축소 레벨 업데이트 중 오류 발생 - {ex.Message}");
+            }
+        }
+
+        private void tboxZoomCode_TextChanged(object sender, EventArgs e)
         {
 
         }

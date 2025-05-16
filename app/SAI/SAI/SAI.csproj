@@ -230,6 +230,7 @@
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
     <Compile Include="SAI.App\Views\Common\ButtonUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\PercentUtils.cs" />
     <Compile Include="SAI.App\Views\Common\DialogUtils.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />

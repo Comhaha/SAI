@@ -769,5 +769,28 @@ namespace SAI.SAI.App.Views.Pages
                 Console.WriteLine($"[ERROR] 테스트 하이라이트 중 오류: {ex.Message}");
             }
         }
+
+        // 코드 폰트 크기 조절 메서드 추가
+        public void UpdateFontSize(int zoomLevel)
+        {
+            try
+            {
+                if (scintilla1 != null)
+                {
+                    float baseFontSize = 10.0f;
+                    float newFontSize = baseFontSize * (zoomLevel / 100.0f);
+
+                    scintilla1.Styles[ScintillaNET.Style.Default].Size = (int)newFontSize;
+                    scintilla1.Styles[ScintillaNET.Style.LineNumber].Size = (int)newFontSize;
+
+                    scintilla1.Refresh();
+                    Console.WriteLine($"[DEBUG] UcCode: 폰트 크기 업데이트 - {newFontSize}pt");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcCode: 폰트 크기 업데이트 중 오류 발생 - {ex.Message}");
+            }
+        }
     }
 }
