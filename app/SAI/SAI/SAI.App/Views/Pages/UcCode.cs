@@ -386,23 +386,44 @@ namespace SAI.SAI.App.Views.Pages
 
                 // 전체 코드에서 코드 세그먼트 문자열 검색
                 string fullCode = scintilla1.Text;
+                Console.WriteLine($"[DEBUG] UcCode: 전체 코드 길이: {fullCode.Length}자");
 
                 // 정확한 코드 세그먼트를 찾기 위해 여러 줄 바꿈 형식을 정규화
                 string normalizedFullCode = NormalizeLineEndings(fullCode);
                 string normalizedCodeSegment = NormalizeLineEndings(codeSegment);
+                Console.WriteLine($"[DEBUG] UcCode: 정규화된 코드 세그먼트 길이: {normalizedCodeSegment.Length}자");
 
-                int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment);
+                // 모든 일치하는 코드 세그먼트 찾기
+                int startIndex = 0;
+                int matchCount = 0;
+                bool foundAny = false;
 
-                if (segmentIndex >= 0)
+                while (true)
                 {
-                    Console.WriteLine($"[DEBUG] UcCode: 코드 세그먼트 직접 매칭 찾음 (위치: {segmentIndex})");
+                    // 현재 위치부터 검색
+                    int segmentIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, startIndex, StringComparison.OrdinalIgnoreCase);
+                    
+                    if (segmentIndex < 0)
+                        break;  // 더 이상 일치하는 부분이 없으면 종료
+
+                    foundAny = true;
+                    matchCount++;
+
+                    Console.WriteLine($"[DEBUG] UcCode: 코드 세그먼트 {matchCount}번째 매칭 찾음 (위치: {segmentIndex})");
 
                     // 인디케이터 적용
                     scintilla1.IndicatorCurrent = HIGHLIGHT_INDICATOR;
                     scintilla1.IndicatorFillRange(segmentIndex, normalizedCodeSegment.Length);
 
-                    // 해당 위치로 스크롤
-                    scintilla1.GotoPosition(segmentIndex);
+                    // 다음 검색을 위해 시작 위치 업데이트
+                    startIndex = segmentIndex + normalizedCodeSegment.Length;
+                }
+
+                if (foundAny)
+                {
+                    // 첫 번째 매칭 위치로 스크롤
+                    int firstMatchIndex = normalizedFullCode.IndexOf(normalizedCodeSegment, StringComparison.OrdinalIgnoreCase);
+                    scintilla1.GotoPosition(firstMatchIndex);
                     scintilla1.ScrollCaret();
 
                     // 화면 갱신
@@ -412,12 +433,11 @@ namespace SAI.SAI.App.Views.Pages
                     // 포커스 설정
                     scintilla1.Focus();
 
-                    Console.WriteLine("[DEBUG] UcCode: 코드 세그먼트 하이라이트 완료");
+                    Console.WriteLine($"[DEBUG] UcCode: 총 {matchCount}개의 코드 세그먼트 하이라이트 완료");
                 }
                 else
                 {
                     Console.WriteLine("[WARNING] UcCode: 코드 세그먼트를 찾지 못함, 부분 매칭 시도");
-
                     // 부분 매칭 시도
                     FindAndHighlightText(codeSegment);
                 }
@@ -429,14 +449,17 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 추가
+        // 줄 바꿈 문자를 통일하는 헬퍼 메서드 수정
         private string NormalizeLineEndings(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;
 
-            // 모든 줄 바꿈 문자를 \n으로 통일
-            return text.Replace("\r\n", "\n").Replace("\r", "\n");
+            // 모든 줄 바꿈 문자를 \n으로 통일하고 공백 문자도 정규화
+            return text.Replace("\r\n", "\n")
+                       .Replace("\r", "\n")
+                       .Replace("\t", "    ") // 탭을 4개의 공백으로 변환
+                       .TrimEnd(); // 끝부분의 공백 제거
         }
 
         // 새로운 메서드: Scintilla의 내장 검색 기능을 사용하여 텍스트를 찾고 하이라이트 - 인디케이터 사용
@@ -744,6 +767,29 @@ namespace SAI.SAI.App.Views.Pages
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] 테스트 하이라이트 중 오류: {ex.Message}");
+            }
+        }
+
+        // 코드 폰트 크기 조절 메서드 추가
+        public void UpdateFontSize(int zoomLevel)
+        {
+            try
+            {
+                if (scintilla1 != null)
+                {
+                    float baseFontSize = 10.0f;
+                    float newFontSize = baseFontSize * (zoomLevel / 100.0f);
+
+                    scintilla1.Styles[ScintillaNET.Style.Default].Size = (int)newFontSize;
+                    scintilla1.Styles[ScintillaNET.Style.LineNumber].Size = (int)newFontSize;
+
+                    scintilla1.Refresh();
+                    Console.WriteLine($"[DEBUG] UcCode: 폰트 크기 업데이트 - {newFontSize}pt");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcCode: 폰트 크기 업데이트 중 오류 발생 - {ex.Message}");
             }
         }
     }

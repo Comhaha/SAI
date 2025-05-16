@@ -48,6 +48,7 @@
             this.pMain.Name = "pMain";
             this.pMain.Size = new System.Drawing.Size(1280, 720);
             this.pMain.TabIndex = 0;
+            this.pMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pMain_Paint);
             // 
             // btnClose
             // 
