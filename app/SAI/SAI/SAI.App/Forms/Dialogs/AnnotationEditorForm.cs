@@ -40,6 +40,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             // 초기값 설정
             Accuracy = accuracy;
             annotationText.Text = initialText;
+            pleaseNamePanel.Visible = false; // 초기에는 경고 패널 숨김
 
             // 초기 상태 설정
             this.FormBorderStyle = FormBorderStyle.None;
@@ -77,7 +78,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         {   
             if (!annotationText.Text.Trim().Any())
             {
-                MessageBox.Show("라벨 이름을 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pleaseNamePanel.Visible = true; // 텍스트가 비어있으면 경고 패널 표시
                 return;
             }
             AnnotationText = annotationText.Text;

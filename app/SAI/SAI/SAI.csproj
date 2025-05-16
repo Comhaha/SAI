@@ -197,6 +197,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.Designer.cs">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -733,6 +739,7 @@
     <None Include="Resources\btn_close_whole_6.png" />
     <None Include="Resources\btn_close_whole_click.png" />
     <None Include="Resources\btn_close_whole_5.png" />
+    <None Include="Resources\bg_warning_empty.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
