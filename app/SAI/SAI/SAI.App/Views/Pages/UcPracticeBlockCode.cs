@@ -177,6 +177,30 @@ namespace SAI.SAI.App.Views.Pages
 				newValue = Math.Max(pSelectBlockvScrollBar.Minimum, Math.Min(pSelectBlockvScrollBar.Maximum, newValue));
 				pSelectBlockvScrollBar.Value = newValue;
 			};
+
+            ibtnCopy.Click += (s, e) =>
+            {
+                try
+                {
+                    // BlocklyModel에서 전체 코드 가져오기
+                    string codeToCopy = blocklyModel.blockAllCode;
+                    
+                    if (!string.IsNullOrEmpty(codeToCopy))
+                    {
+                        // 클립보드에 코드 복사
+                        Clipboard.SetText(codeToCopy);
+                        Console.WriteLine("[DEBUG] UcPracticeBlockCode: 코드가 클립보드에 복사됨");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] UcPracticeBlockCode: 복사할 코드가 없음");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+                }
+            };
 		}
         
         private void ShowpSIdeInfer()

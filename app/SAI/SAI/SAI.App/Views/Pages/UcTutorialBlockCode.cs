@@ -15,6 +15,7 @@ using SAI.SAI.App.Models;
 using System.Diagnostics;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -89,6 +90,31 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
+            // 복사 버튼 클릭 이벤트 추가
+            ibtnCopy.Click += (s, e) =>
+            {
+                try
+                {
+                    // BlocklyModel에서 전체 코드 가져오기
+                    string codeToCopy = blocklyModel.blockAllCode;
+                    
+                    if (!string.IsNullOrEmpty(codeToCopy))
+                    {
+                        // 클립보드에 코드 복사
+                        Clipboard.SetText(codeToCopy);
+                        Console.WriteLine("[DEBUG] UcTutorialBlockCode: 코드가 클립보드에 복사됨");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] UcTutorialBlockCode: 복사할 코드가 없음");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+                }
+            };
 
             InitializeWebView2();
 
