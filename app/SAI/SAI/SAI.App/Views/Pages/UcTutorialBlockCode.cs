@@ -257,6 +257,11 @@ namespace SAI.SAI.App.Views.Pages
                 pToDoList.BackgroundImage = Properties.Resources.p_todolist_step2;
                 pTxtDescription.BackgroundImage = Properties.Resources.lbl_run;
             };
+
+            // mAlertPanel 초기에는 숨김
+            mAlertPanel.Visible = false;
+            // btnQuestionMemo 클릭 이벤트 핸들러 등록
+            btnQuestionMemo.Click += btnQuestionMemo_Click;
         }
 
 
@@ -831,6 +836,23 @@ namespace SAI.SAI.App.Views.Pages
         private void tboxZoomCode_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnQuestionMemo_Click(object sender, EventArgs e)
+        {
+            // mAlertPanel을 보이게 설정
+            mAlertPanel.Visible = true;
+
+            // 2초 후에 mAlertPanel을 숨기는 타이머 설정
+            Timer timer = new Timer();
+            timer.Interval = 2000; // 2초
+            timer.Tick += (s, args) =>
+            {
+                mAlertPanel.Visible = false;
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
         }
     }
 }

@@ -245,6 +245,11 @@ namespace SAI.SAI.App.Views.Pages
 
             // PercentUtils로 퍼센트 박스 스타일 일괄 적용
             PercentUtils.SetupPercentTextBox(guna2TextBox1, 0.5f, 0, 0);
+
+            // mAlertPanel 초기에는 숨김
+            mAlertPanel.Visible = false;
+            // btnQuestionMemo 클릭 이벤트 핸들러 등록
+            btnQuestionMemo.Click += btnQuestionMemo_Click;
 		}
         
         private void ShowpSIdeInfer()
@@ -515,6 +520,23 @@ namespace SAI.SAI.App.Views.Pages
             {
                 Console.WriteLine($"[ERROR] UcPracticeBlockCode: 확대/축소 레벨 업데이트 중 오류 발생 - {ex.Message}");
             }
+        }
+
+        private void btnQuestionMemo_Click(object sender, EventArgs e)
+        {
+            // mAlertPanel을 보이게 설정
+            mAlertPanel.Visible = true;
+
+            // 2초 후에 mAlertPanel을 숨기는 타이머 설정
+            Timer timer = new Timer();
+            timer.Interval = 2000; // 2초
+            timer.Tick += (s, args) =>
+            {
+                mAlertPanel.Visible = false;
+                timer.Stop();
+                timer.Dispose();
+            };
+            timer.Start();
         }
     }
 }

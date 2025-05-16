@@ -39,6 +39,7 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
@@ -82,7 +83,8 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
-            this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.mAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -120,6 +122,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_block;
             resources.ApplyResources(this.pCode, "pCode");
+            this.pCode.Controls.Add(this.cAlertPanel);
             this.pCode.Controls.Add(this.ibtnCloseInfer);
             this.pCode.Controls.Add(this.guna2Panel1);
             this.pCode.Controls.Add(this.ibtnCopy);
@@ -192,6 +195,20 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.guna2ImageButton2, "guna2ImageButton2");
             this.guna2ImageButton2.Name = "guna2ImageButton2";
             this.guna2ImageButton2.PressedState.ImageSize = new System.Drawing.Size(9, 9);
+            // 
+            // ibtnCopy
+            // 
+            this.ibtnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
+            resources.ApplyResources(this.ibtnCopy, "ibtnCopy");
+            this.ibtnCopy.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnCopy.HoverState.Image = global::SAI.Properties.Resources.btn_copy_hover;
+            this.ibtnCopy.HoverState.ImageSize = new System.Drawing.Size(29, 29);
+            this.ibtnCopy.Image = global::SAI.Properties.Resources.btn_copy;
+            this.ibtnCopy.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnCopy.ImageRotate = 0F;
+            this.ibtnCopy.ImageSize = new System.Drawing.Size(29, 29);
+            this.ibtnCopy.Name = "ibtnCopy";
+            this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
             // 
             // ucCode２
             // 
@@ -610,6 +627,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
             resources.ApplyResources(this.pMemo, "pMemo");
+            this.pMemo.Controls.Add(this.mAlertPanel);
             this.pMemo.Controls.Add(this.tboxMemo);
             this.pMemo.Controls.Add(this.btnQuestionMemo);
             this.pMemo.Controls.Add(this.btnCloseMemo);
@@ -662,19 +680,17 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo.PressedDepth = 0;
             this.btnCloseMemo.Click += new System.EventHandler(this.btnCloseMemo_Click);
             // 
-            // ibtnCopy
+            // mAlertPanel
             // 
-            this.ibtnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
-            resources.ApplyResources(this.ibtnCopy, "ibtnCopy");
-            this.ibtnCopy.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnCopy.HoverState.Image = global::SAI.Properties.Resources.btn_copy_hover;
-            this.ibtnCopy.HoverState.ImageSize = new System.Drawing.Size(29, 29);
-            this.ibtnCopy.Image = global::SAI.Properties.Resources.btn_copy;
-            this.ibtnCopy.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnCopy.ImageRotate = 0F;
-            this.ibtnCopy.ImageSize = new System.Drawing.Size(29, 29);
-            this.ibtnCopy.Name = "ibtnCopy";
-            this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
+            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
+            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
+            this.mAlertPanel.Name = "mAlertPanel";
+            // 
+            // cAlertPanel
+            // 
+            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.copy_alert;
+            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
+            this.cAlertPanel.Name = "cAlertPanel";
             // 
             // UcPracticeBlockCode
             // 
@@ -766,5 +782,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2ImageButton ibtnMinusCode;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnPlusCode;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnCopy;
+        private Guna.UI2.WinForms.Guna2Panel mAlertPanel;
+        private Guna.UI2.WinForms.Guna2Panel cAlertPanel;
     }
 }
