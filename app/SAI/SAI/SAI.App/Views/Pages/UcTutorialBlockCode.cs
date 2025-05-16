@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IInferenceView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {
 		private YoloTutorialPresenter yoloTutorialPresenter;
 		private BlocklyPresenter blocklyPresenter;
@@ -480,7 +480,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void SetupThresholdControls()
         {
-            ThresholdUtils.Setup(
+            ThresholdUtilsTutorial.Setup(
 				tbarThreshold,                
 				tboxThreshold,                     
 				(newValue) => currentThreshold = newValue,  
@@ -833,13 +833,14 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
-        // var uc = new UcPracticeBlockCode(view);  
-        // uc.ShowInferResultImage(image); 사용하시면 됩니다.
-        public void ShowInferResultImage(System.Drawing.Image resultImage)
+			// var tutorialView = new UcTutorialBlockCode(mainView);
+			//tutorialView.ShowTutorialInferResultImage(resultImage);
+
+        public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
                 return;
             }
 

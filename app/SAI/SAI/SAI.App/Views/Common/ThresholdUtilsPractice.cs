@@ -7,9 +7,9 @@ using SAI.SAI.App.Views.Interfaces;
 
 namespace SAI.SAI.App.Views.Common
 {
-    internal class ThresholdUtils
+    internal class ThresholdUtilsPractice
     {
-        public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged, IInferenceView view)
+        public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged, IPracticeInferenceView view)
         {
             double currentThreshold = 0.5;
             var blocklyModel = BlocklyModel.Instance;

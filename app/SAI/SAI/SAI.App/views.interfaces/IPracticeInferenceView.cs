@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
-    internal interface IInferenceView
+    internal interface IPracticeInferenceView
     {
         void ShowDialogInferenceLoading();
-        void ShowInferResultImage(System.Drawing.Image resultImage);
+
+        void ShowPracticeInferResultImage(System.Drawing.Image resultImage);
     }
 }
