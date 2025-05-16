@@ -30,8 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogNotion));
             this.pTitleBar = new Guna.UI2.WinForms.Guna2Panel();
-            this.ibtnClose = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.lblTitleBar = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.pInfo = new Guna.UI2.WinForms.Guna2Panel();
             this.lblInfo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.webView2 = new Microsoft.Web.WebView2.WinForms.WebView2();
@@ -40,7 +39,7 @@
             this.ibtnEnter = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.authButton = new System.Windows.Forms.Button();
+            this.authButton = new Guna.UI2.WinForms.Guna2Button();
             this.pTitleBar.SuspendLayout();
             this.pInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2)).BeginInit();
@@ -49,41 +48,35 @@
             // 
             // pTitleBar
             // 
-            this.pTitleBar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pTitleBar.BackgroundImage")));
+            this.pTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_white_titlebar_notion1;
             this.pTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pTitleBar.Controls.Add(this.ibtnClose);
-            this.pTitleBar.Controls.Add(this.lblTitleBar);
+            this.pTitleBar.Controls.Add(this.btnClose);
             this.pTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pTitleBar.Location = new System.Drawing.Point(0, 0);
             this.pTitleBar.Name = "pTitleBar";
-            this.pTitleBar.Size = new System.Drawing.Size(1060, 30);
+            this.pTitleBar.Size = new System.Drawing.Size(1060, 40);
             this.pTitleBar.TabIndex = 0;
             // 
-            // ibtnClose
+            // btnClose
             // 
-            this.ibtnClose.BackColor = System.Drawing.Color.Transparent;
-            this.ibtnClose.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.ibtnClose.HoverState.ImageSize = new System.Drawing.Size(31, 31);
-            this.ibtnClose.Image = global::SAI.Properties.Resources.btn_close;
-            this.ibtnClose.ImageOffset = new System.Drawing.Point(0, 0);
-            this.ibtnClose.ImageRotate = 0F;
-            this.ibtnClose.ImageSize = new System.Drawing.Size(29, 29);
-            this.ibtnClose.Location = new System.Drawing.Point(1001, 7);
-            this.ibtnClose.Name = "ibtnClose";
-            this.ibtnClose.PressedState.ImageSize = new System.Drawing.Size(31, 31);
-            this.ibtnClose.Size = new System.Drawing.Size(24, 20);
-            this.ibtnClose.TabIndex = 1;
-            this.ibtnClose.Click += new System.EventHandler(this.ibtnClose_Click);
-            // 
-            // lblTitleBar
-            // 
-            this.lblTitleBar.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitleBar.Font = new System.Drawing.Font("Noto Sans KR Medium", 7.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblTitleBar.Location = new System.Drawing.Point(12, 0);
-            this.lblTitleBar.Name = "lblTitleBar";
-            this.lblTitleBar.Size = new System.Drawing.Size(114, 29);
-            this.lblTitleBar.TabIndex = 0;
-            this.lblTitleBar.Text = "AI 분석 보고서";
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_close_white;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
+            this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
+            this.btnClose.Location = new System.Drawing.Point(1000, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(60, 40);
+            this.btnClose.TabIndex = 3;
             // 
             // pInfo
             // 
@@ -101,7 +94,7 @@
             this.lblInfo.ForeColor = System.Drawing.Color.White;
             this.lblInfo.Location = new System.Drawing.Point(204, 196);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(572, 41);
+            this.lblInfo.Size = new System.Drawing.Size(368, 27);
             this.lblInfo.TabIndex = 3;
             this.lblInfo.Text = "코드를 입력해야 AI 보고서를 확인하실 수 있습니다.";
             // 
@@ -120,10 +113,10 @@
             // lblCode
             // 
             this.lblCode.BackColor = System.Drawing.Color.Transparent;
-            this.lblCode.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblCode.Location = new System.Drawing.Point(56, 50);
+            this.lblCode.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblCode.Location = new System.Drawing.Point(66, 61);
             this.lblCode.Name = "lblCode";
-            this.lblCode.Size = new System.Drawing.Size(53, 41);
+            this.lblCode.Size = new System.Drawing.Size(39, 31);
             this.lblCode.TabIndex = 2;
             this.lblCode.Text = "코드";
             // 
@@ -143,7 +136,7 @@
             this.tboxSecretKey.ForeColor = System.Drawing.Color.Black;
             this.tboxSecretKey.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tboxSecretKey.Location = new System.Drawing.Point(4, 4);
-            this.tboxSecretKey.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tboxSecretKey.Margin = new System.Windows.Forms.Padding(4);
             this.tboxSecretKey.Name = "tboxSecretKey";
             this.tboxSecretKey.PlaceholderForeColor = System.Drawing.Color.White;
             this.tboxSecretKey.PlaceholderText = "";
@@ -160,7 +153,7 @@
             this.ibtnEnter.ImageOffset = new System.Drawing.Point(0, 0);
             this.ibtnEnter.ImageRotate = 0F;
             this.ibtnEnter.ImageSize = new System.Drawing.Size(53, 25);
-            this.ibtnEnter.Location = new System.Drawing.Point(288, 59);
+            this.ibtnEnter.Location = new System.Drawing.Point(288, 65);
             this.ibtnEnter.Name = "ibtnEnter";
             this.ibtnEnter.PressedState.ImageSize = new System.Drawing.Size(53, 25);
             this.ibtnEnter.Size = new System.Drawing.Size(53, 25);
@@ -172,26 +165,33 @@
             this.guna2Panel1.BackgroundImage = global::SAI.Properties.Resources.tbox_secretkey;
             this.guna2Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.guna2Panel1.Controls.Add(this.tboxSecretKey);
-            this.guna2Panel1.Location = new System.Drawing.Point(141, 59);
+            this.guna2Panel1.Location = new System.Drawing.Point(141, 65);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(152, 25);
             this.guna2Panel1.TabIndex = 5;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(376, 59);
+            this.progressBar.Location = new System.Drawing.Point(376, 65);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(167, 21);
             this.progressBar.TabIndex = 6;
             // 
             // authButton
             // 
+            this.authButton.BackColor = System.Drawing.Color.Transparent;
+            this.authButton.BackgroundImage = global::SAI.Properties.Resources.btn_auth;
+            this.authButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.authButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.authButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.authButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.authButton.FillColor = System.Drawing.Color.Transparent;
+            this.authButton.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.authButton.ForeColor = System.Drawing.Color.White;
             this.authButton.Location = new System.Drawing.Point(857, 57);
             this.authButton.Name = "authButton";
             this.authButton.Size = new System.Drawing.Size(168, 34);
-            this.authButton.TabIndex = 7;
-            this.authButton.Text = "인증하기";
-            this.authButton.UseVisualStyleBackColor = true;
+            this.authButton.TabIndex = 8;
             this.authButton.Visible = false;
             this.authButton.Click += new System.EventHandler(this.authButton_Click);
             // 
@@ -216,7 +216,6 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.DialogNotion_Load);
             this.pTitleBar.ResumeLayout(false);
-            this.pTitleBar.PerformLayout();
             this.pInfo.ResumeLayout(false);
             this.pInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2)).EndInit();
@@ -229,8 +228,6 @@
         #endregion
 
         private Guna.UI2.WinForms.Guna2Panel pTitleBar;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblTitleBar;
-        private Guna.UI2.WinForms.Guna2ImageButton ibtnClose;
         private Guna.UI2.WinForms.Guna2Panel pInfo;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView2;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblInfo;
@@ -239,6 +236,7 @@
         private Guna.UI2.WinForms.Guna2ImageButton ibtnEnter;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.Button authButton;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Guna.UI2.WinForms.Guna2Button authButton;
     }
 }

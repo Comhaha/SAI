@@ -19,11 +19,12 @@ using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {
-        private YoloTutorialPresenter yoloTutorialPresenter;
-        private BlocklyPresenter blocklyPresenter;
-        private UcShowDialogPresenter ucShowDialogPresenter;
+		private YoloTutorialPresenter yoloTutorialPresenter;
+		private BlocklyPresenter blocklyPresenter;
+		private UcShowDialogPresenter ucShowDialogPresenter;
+        private DialogInferenceLoading dialogLoadingInfer;
 
         private BlocklyModel blocklyModel;
 
@@ -39,8 +40,8 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-        private MemoPresenter memoPresenter;
-
+		private MemoPresenter memoPresenter;
+        private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
 
 		private int undoCount = 0;
 		private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
@@ -96,6 +97,59 @@ namespace SAI.SAI.App.Views.Pages
 			currentZoomLevel = 60;
 			UpdateCodeZoom();
 
+			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+            pboxInferAccuracy.Visible = false;
+            btnSelectInferImage.Visible = false;
+
+            // 새 이미지 불러오기 버튼 설정
+            btnSelectInferImage.Size = new Size(329, 185);  // pInferAccuracy와 동일한 크기
+            btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
+            btnSelectInferImage.Enabled = true;
+            btnSelectInferImage.Cursor = Cursors.Hand;
+            btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
+
+            pInferAccuracy.MouseEnter += (s, e) =>
+            {
+                if (pSideInfer.Visible)
+                {
+                    btnSelectInferImage.Visible = true;
+                    btnSelectInferImage.BringToFront();
+                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+                }
+            };
+
+            pInferAccuracy.MouseLeave += (s, e) =>
+            {
+                if (!btnSelectInferImage.ClientRectangle.Contains(btnSelectInferImage.PointToClient(Control.MousePosition)))
+                {
+                    btnSelectInferImage.Visible = false;
+                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                }
+            };
+
+            // 버튼에도 MouseEnter/Leave 이벤트 추가
+            btnSelectInferImage.MouseEnter += (s, e) =>
+            {
+                btnSelectInferImage.Visible = true;
+                btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+            };
+
+            btnSelectInferImage.MouseLeave += (s, e) =>
+            {
+                if (!pInferAccuracy.ClientRectangle.Contains(pInferAccuracy.PointToClient(Control.MousePosition)))
+                {
+                    btnSelectInferImage.Visible = false;
+                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                }
+            };
+
+
+            ibtnHome.BackColor = Color.Transparent;
+			ibtnDone.BackColor = Color.Transparent;
+			ibtnInfer.BackColor = Color.Transparent;
+			ibtnMemo.BackColor = Color.Transparent;
+            ButtonUtils.SetTransparentStyle(btnCopy);
+
 			// PercentUtils로 퍼센트 박스 스타일 일괄 적용
 			PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
 
@@ -108,18 +162,14 @@ namespace SAI.SAI.App.Views.Pages
 
             btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
 
-
-            ibtnHome.BackColor = Color.Transparent;
-            ibtnDone.BackColor = Color.Transparent;
-            ibtnInfer.BackColor = Color.Transparent;
-            ibtnMemo.BackColor = Color.Transparent;
+            pSideInfer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
 
             // 홈페이지로 이동
             ibtnHome.Click += (s, e) => {
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
-            ToolTipUtils.CustomToolTip(pboxGraphe, "자세히 보려면 클릭하세요.");
+            //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
   "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
@@ -137,8 +187,29 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
 
             // 복사 버튼 클릭 이벤트 추가
-            ibtnCopy.Click += ibtnCopy_Click;
-
+            btnCopy.Click += (s, e) =>
+            {
+                try
+                {
+                    // BlocklyModel에서 전체 코드 가져오기
+                    string codeToCopy = blocklyModel.blockAllCode;
+                    
+                    if (!string.IsNullOrEmpty(codeToCopy))
+                    {
+                        // 클립보드에 코드 복사
+                        Clipboard.SetText(codeToCopy);
+                        Console.WriteLine("[DEBUG] UcTutorialBlockCode: 코드가 클립보드에 복사됨");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] UcTutorialBlockCode: 복사할 코드가 없음");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+                }
+            };
             InitializeWebView2();
 
             // 블록 시작만 보이고 나머지는 안 보이게 초기화.
@@ -505,10 +576,12 @@ namespace SAI.SAI.App.Views.Pages
 
         private void SetupThresholdControls()
         {
-            ThresholdUtils.Setup(tbarThreshold, tboxThreshold, (newValue) =>
-            {
-                currentThreshold = newValue;
-            });
+            ThresholdUtilsTutorial.Setup(
+				tbarThreshold,                
+				tboxThreshold,                     
+				(newValue) => currentThreshold = newValue,  
+				this                             
+			);
         }
         private void ShowpSIdeInfer()
         {
@@ -812,9 +885,107 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void tboxZoomCode_TextChanged(object sender, EventArgs e)
+        public void ShowDialogInferenceLoading()
         {
+            using (var dialog = new DialogInferenceLoading())
+            {
+                dialog.ShowDialog();
+            }
+        }
 
+        // 추론 이미지 불러오기
+        private void btnSelectInferImage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "이미지 파일 선택";
+                openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                openFileDialog.Multiselect = false;
+                openFileDialog.RestoreDirectory = true;
+
+                Form parentForm = this.FindForm();
+                if (parentForm != null)
+                {
+                    if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
+                    {
+                        string absolutePath = openFileDialog.FileName;
+                        selectedImagePath = absolutePath;
+
+                        // 프로젝트 루트의 inference_images 디렉토리 경로 설정
+                        string projectDir = AppDomain.CurrentDomain.BaseDirectory;
+                        string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
+
+                        // inference_images 디렉토리가 없으면 생성
+                        if (!Directory.Exists(inferenceImagesDir))
+                        {
+                            Directory.CreateDirectory(inferenceImagesDir);
+                            Console.WriteLine($"[INFO] inference_images 디렉토리 생성됨: {inferenceImagesDir}");
+                        }
+
+                        string fileName = Path.GetFileName(absolutePath);
+                        string destinationPath = Path.Combine(inferenceImagesDir, fileName);
+
+                        // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
+                        File.Copy(absolutePath, destinationPath, true);
+
+                        // inference_images 기준 상대 경로 설정
+                        string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
+
+                        // BlocklyModel에 상대 경로 설정
+                        BlocklyModel.Instance.imgPath = relativePath;
+                        Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
+
+                        using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
+                        {
+                            var originalImage = System.Drawing.Image.FromStream(stream);
+                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = originalImage;
+                            pboxInferAccuracy.Visible = true;
+                        }
+
+                        btnSelectInferImage.Visible = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"이미지 로드 중 오류가 발생했습니다: {ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
+        // var tutorialView = new UcTutorialBlockCode(mainView);
+        //tutorialView.ShowTutorialInferResultImage(resultImage);
+
+        public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
+                return;
+            }
+
+            dialogLoadingInfer?.Close();
+            dialogLoadingInfer = null;
+
+            if (resultImage != null)
+            {
+                pboxInferAccuracy.Size = new Size(287, 185);
+                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                pboxInferAccuracy.Image = resultImage;
+                pboxInferAccuracy.Visible = true;
+                btnSelectInferImage.Visible = false;
+            }
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
