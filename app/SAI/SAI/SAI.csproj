@@ -204,6 +204,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.Designer.cs">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -712,6 +718,17 @@
     <None Include="Resources\btn_close_click.png" />
     <None Include="Resources\btn_save_click.png" />
     <None Include="Resources\btn_close_pink.png" />
+    <None Include="Resources\btn_close_pink_click.png" />
+    <None Include="Resources\라벨링가이드6.png" />
+    <None Include="Resources\라벨링가이드7.png" />
+    <None Include="Resources\라벨링가이드8.png" />
+    <None Include="Resources\전체튜토리얼가이드1.png" />
+    <None Include="Resources\전체튜토리얼가이드2.png" />
+    <None Include="Resources\전체튜토리얼가이드3.png" />
+    <None Include="Resources\btn_close_whole_6.png" />
+    <None Include="Resources\btn_close_whole_click.png" />
+    <None Include="Resources\btn_close_whole_5.png" />
+    <None Include="Resources\bg_warning_empty.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

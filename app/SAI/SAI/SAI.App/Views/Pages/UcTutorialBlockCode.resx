@@ -129,7 +129,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 34</value>
+    <value>231, 53</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
@@ -883,7 +883,7 @@
     <value>pCode</value>
   </data>
   <data name="&gt;&gt;ibtnCopy.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="ibtnCloseInfer.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, -1</value>
@@ -1009,9 +1009,6 @@
   </data>
   <data name="&gt;&gt;ucCode1.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="pCode.Location" type="System.Drawing.Point, System.Drawing">
     <value>713, 32</value>
@@ -1282,6 +1279,27 @@
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="btnCopy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnCopy.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>266, 54</value>
+  </data>
+  <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 29</value>
+  </data>
+  <data name="btnCopy.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Name" xml:space="preserve">
+    <value>btnCopy</value>
+  </data>
+  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
   <data name="pboxTodo2Done.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1431,7 +1449,7 @@
     <value>21, 179</value>
   </data>
   <data name="lblBlockTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 27</value>
+    <value>166, 41</value>
   </data>
   <data name="lblBlockTitle.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1933,7 +1951,7 @@
     <value>35, 368</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 34</value>
+    <value>327, 53</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1960,7 +1978,7 @@
     <value>44, 81</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 23</value>
+    <value>125, 37</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1987,7 +2005,7 @@
     <value>40, 36</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 34</value>
+    <value>144, 53</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

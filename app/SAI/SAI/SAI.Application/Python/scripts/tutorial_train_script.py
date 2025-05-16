@@ -20,8 +20,10 @@ except Exception as e:
     # 이미 설정되어 있거나 닫혀있는 경우 무시
     pass
 
-PYTHON_DIR = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
-
+# base_dir을 스크립트 실행 기준으로 설정
+# 
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(f"Base directory: {base_dir}")
 
 # 로깅 설정 - 시간 포맷 변경 및 상세 정보 표시
 logging.basicConfig(
@@ -147,8 +149,7 @@ def install_torch_cuda():
     show_progress("CUDA 지원 PyTorch 설치 준비 중...", start_time, 0)
     
     # 스크립트 경로
-    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "install_pytorch_cuda.py")
-    
+    script_path = os.path.join(base_dir, "scripts", "install_pytorch_cuda.py")
     
     # 별도 프로세스에서 스크립트 실행
     show_progress("별도 프로세스에서 PyTorch 설치 실행 중...", start_time, 20)
@@ -180,16 +181,11 @@ def install_torch_cuda():
         return False, "cpu"
 
 def download_dataset_with_progress(start_time):
-    """Roboflow 데이터셋 다운로드 및 진행률 표시"""
-    # 데이터셋 저장 경로 설정
-    dataset_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python\dataset"
+    """서버에서 데이터셋 다운로드 및 진행률 표시"""
+    # 데이터셋 저장 경로 설정, 덮어쓰기 
+    dataset_dir = os.path.join(base_dir, "dataset", "tutorial_dataset")
     os.makedirs(dataset_dir, exist_ok=True)
     show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 70)
-
-    # tutorial_dataset 폴더 생성
-    tutorial_dataset_dir = os.path.join(dataset_dir, "tutorial_dataset")
-    os.makedirs(tutorial_dataset_dir, exist_ok=True)
-    show_progress(f"튜토리얼 데이터셋 경로: {tutorial_dataset_dir}", start_time, 70)
 
     # ZIP 파일 경로 정의
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
@@ -204,7 +200,7 @@ def download_dataset_with_progress(start_time):
                 
                 # 압축 해제 진행률 표시
                 for i, file in enumerate(file_list):
-                    zip_ref.extract(file, tutorial_dataset_dir)  # tutorial_dataset 폴더에 압축 해제
+                    zip_ref.extract(file, dataset_dir)  # tutorial_dataset 폴더에 압축 해제
                     if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
                         extract_progress = 92 + (i / total_files) * 8  # 92% ~ 100% 범위
                         show_progress(f"압축 해제 중: {i+1}/{total_files} 파일", start_time, extract_progress)
@@ -222,12 +218,9 @@ def download_dataset_with_progress(start_time):
     else:
         show_progress("다운로드된 ZIP 파일을 찾을 수 없습니다.", start_time, 95)
     
-    # 수정된 부분: data.yaml 파일 생성 코드 제거
-    # 데이터셋 경로 변경: tutorial_dataset 내부의 dataset 폴더 사용
-    tutorial_dataset_dataset_dir = os.path.join(tutorial_dataset_dir, "dataset")
-    
-    # 반환 값 변경: dataset 하위 폴더를 location으로 반환
-    return type('obj', (), {'location': tutorial_dataset_dataset_dir})
+    # 데이터셋 경로
+    # 
+    return type('obj', (), {'location': dataset_dir})
 
 def find_yaml_file(dataset_dir, start_time):
     """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
@@ -237,19 +230,9 @@ def find_yaml_file(dataset_dir, start_time):
     yaml_path = os.path.join(dataset_dir, "data.yaml")
     
     # data.yaml 파일이 있는지 확인
-    if os.path.exists(yaml_path):
+    if (os.path.exists(yaml_path)):
         show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
         return yaml_path
-    
-    # 기본 위치에 없으면 모든 하위 디렉토리에서 검색
-    show_progress("데이터 파일을 검색 중...", start_time, 50)
-    
-    for root, dirs, files in os.walk(dataset_dir):
-        for file in files:
-            if file == 'data.yaml':
-                yaml_path = os.path.join(root, file)
-                show_progress(f"데이터 파일 발견: {yaml_path}", start_time, 100)
-                return yaml_path
     
     # 파일을 찾지 못했을 경우
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 100)
@@ -301,18 +284,17 @@ def check_gpu():
     
 def find_latest_results_dir():
     """가장 최근에 생성된 results 디렉토리 찾기"""
-    python_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
-    base_dir = os.path.join(PYTHON_DIR, "runs", "detect")
+    base_runs_dir = os.path.join(base_dir, "runs", "detect")
     
-    if not os.path.exists(base_dir):
+    if not os.path.exists(base_runs_dir):
         # 디렉토리가 없으면 생성
-        os.makedirs(base_dir, exist_ok=True)
-        return os.path.join(PYTHON_DIR, "runs", "detect", "train")
+        os.makedirs(base_runs_dir, exist_ok=True)
+        return os.path.join(base_dir, "runs", "detect", "train")
     
     # 'train'으로 시작하는 모든 폴더 찾기
-    train_dirs = [d for d in os.listdir(base_dir) if d.startswith('train')]
+    train_dirs = [d for d in os.listdir(base_runs_dir) if d.startswith('train')]
     if not train_dirs:
-        return os.path.join(PYTHON_DIR, "runs", "detect", "train")
+        return os.path.join(base_dir, "runs", "detect", "train")
     
     # 숫자 접미사가 있는 경우 가장 큰 숫자 찾기
     latest_dir = "train"
@@ -327,7 +309,7 @@ def find_latest_results_dir():
                 max_num = num
                 latest_dir = d
     
-    return os.path.join(PYTHON_DIR, "runs", "detect", latest_dir)
+    return os.path.join(base_dir, "runs", "detect", latest_dir)
     
 def visualize_training_results(results_path, start_time):
     """학습 결과 그래프 시각화"""
@@ -375,8 +357,9 @@ def run_inference(model_path, image_path, start_time, conf_threshold=0.25, show=
         result_img = results[0].plot()  # BGR 형식
         
         # 결과 이미지 저장
-        output_dir = PYTHON_DIR  # Python 폴더 사용
+        output_dir = base_dir  # Python 폴더 사용
         output_path = os.path.join(output_dir, "inference_result.jpg")
+        import cv2
         cv2.imwrite(output_path, result_img)
 
         import matplotlib
@@ -422,8 +405,6 @@ def run_inference(model_path, image_path, start_time, conf_threshold=0.25, show=
     except Exception as e:
         show_progress(f"추론 오류: {e}", start_time, 100)
         return None
-    
-
 
 def main():
     """메인 실행 함수"""
@@ -442,10 +423,6 @@ def main():
     # ultralytics 설치
     show_progress("ultralytics 패키지 설치 중...", package_start_time, 0)
     install_packages_with_progress("ultralytics", package_start_time)
-    
-    # roboflow 설치
-    show_progress("roboflow 패키지 설치 중...", package_start_time, 50)
-    install_packages_with_progress("roboflow", package_start_time)
 
     # OpenCV 설치 추가
     show_progress("opencv-python 패키지 설치 중...", package_start_time, 0)
@@ -475,14 +452,14 @@ def main():
     model_start_time = time.time()
     show_progress("YOLOv8 모델 로드 중... (4/7)", total_start_time, 0)
     from ultralytics import YOLO
-    model_path = os.path.join(PYTHON_DIR, "yolov8n.pt")
+    model_path = os.path.join(base_dir, "yolov8n.pt")
     model = YOLO(model_path)
     model_elapsed = time.time() - model_start_time
     show_progress(f"YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)", total_start_time, 100)
     
-    # 5. Roboflow에서 데이터셋 다운로드
+    # 5. 서버에서 데이터셋 다운로드
     data_start_time = time.time()
-    show_progress("Roboflow에서 데이터셋 다운로드 중... (5/7)", total_start_time, 0)
+    show_progress("서버에서 데이터셋 다운로드 중... (5/7)", total_start_time, 0)
     dataset = download_dataset_with_progress(data_start_time)
     data_elapsed = time.time() - data_start_time
     show_progress(f"데이터셋 준비 완료 (총 소요 시간: {int(data_elapsed)}초)", total_start_time, 100)
@@ -590,9 +567,9 @@ def main():
             batch=batch_size,
             imgsz=640,
             device=device,
-            project=os.path.join(PYTHON_DIR, "runs"),
+            project=os.path.join(base_dir, "runs"),
             name="detect/train",  # 하위 폴더 구조 지정
-            exist_ok=False  # 기존 폴더가 있으면 덮어쓰기
+            exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
         )
     
         # 진행 스레드 종료 신호
@@ -633,7 +610,9 @@ def main():
                     batch=reduced_batch,
                     imgsz=640,
                     device=device,
-                    project=os.path.join(PYTHON_DIR, "runs")
+                    project=os.path.join(base_dir, "runs"),
+                    name="detect/train",  # 하위 폴더 구조 지정
+                    exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
                 )
                 
                 # 진행 스레드 종료 신호
@@ -669,7 +648,9 @@ def main():
                     batch=4,
                     imgsz=640,
                     device="cpu",
-                    project=os.path.join(PYTHON_DIR, "runs")
+                    project=os.path.join(base_dir, "runs"),
+                    name="detect/train",  # 하위 폴더 구조 지정
+                    exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
                 )
                 
                 # 진행 스레드 종료 신호
@@ -683,87 +664,12 @@ def main():
                 hrs, remainder = divmod(cpu_elapsed, 3600)
                 mins, secs = divmod(remainder, 60)
                 show_progress(f"CPU로 학습 완료! (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
-        
-        # 데이터 경로 오류 처리
-        elif "does not exist" in str(e) or "No such file" in str(e) or "file not found" in str(e).lower():
-            show_progress("데이터 경로 오류. data.yaml 파일을 찾을 수 없습니다.", total_start_time, 80)
-            show_progress("수동으로 data.yaml 파일을 생성합니다...", total_start_time, 85)
-            
-            # 데이터 디렉토리 확인
-            data_dir = dataset.location
-            if os.path.exists(data_dir):
-                # 디렉토리 구조 확인
-                try:
-                    dirs = os.listdir(data_dir)
-                    show_progress(f"데이터 디렉토리 내용: {dirs}", total_start_time, 87)
-                except:
-                    show_progress(f"디렉토리 내용 조회 실패: {data_dir}", total_start_time, 87)
                 
-                # 필요한 디렉토리 생성
-                train_images_dir = os.path.join(data_dir, "train", "images")
-                valid_images_dir = os.path.join(data_dir, "valid", "images")
-                os.makedirs(train_images_dir, exist_ok=True)
-                os.makedirs(valid_images_dir, exist_ok=True)
-                
-                # data.yaml 직접 생성
-                manual_yaml_path = os.path.join(data_dir, "data.yaml")
-                with open(manual_yaml_path, 'w') as f:
-                    f.write(f"""
-path: {data_dir}
-train: train/images
-val: valid/images
-test: test/images
-
-names:
-  0: strawberry
-""")
-                
-                show_progress(f"data.yaml 파일 생성 완료: {manual_yaml_path}", total_start_time, 90)
-                
-                # 재시도
-                show_progress("data.yaml 생성 완료. 학습 재시도...", total_start_time, 93)
-                retry_start = time.time()
-                
-                # 진행 상황을 초기화하고 다시 시작
-                completed_epochs = 0
-                total_epochs = epochs
-                last_progress_update = time.time()
-                
-                # 재시도 진행률 업데이트를 위한 새 스레드
-                retry_thread = threading.Thread(target=update_training_progress)
-                retry_thread.daemon = True
-                retry_thread.start()
-                
-                try:
-                    model.train(
-                        data=manual_yaml_path,
-                        epochs=epochs,
-                        batch=batch_size if device == "cuda" else 4,
-                        imgsz=640,
-                        device=device,
-                        project=os.path.join(PYTHON_DIR, "runs")
-                    )
-                    
-                    # 진행 스레드 종료 신호
-                    completed_epochs = total_epochs
-                    
-                    # 스레드가 종료될 때까지 잠시 대기
-                    if retry_thread and retry_thread.is_alive():
-                        retry_thread.join(timeout=1)
-                    
-                    retry_elapsed = time.time() - retry_start
-                    min, sec = divmod(retry_elapsed, 60)
-                    show_progress(f"모델 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", total_start_time, 100)
-                except Exception as e3:
-                    show_progress(f"수동 생성 data.yaml 파일로 학습 실패: {e3}", total_start_time, 100)
-    
     # 8. 학습 결과 처리 중
     show_progress("학습 결과 처리 중...", total_start_time, 100)
     
-    # 결과 저장 경로
    # 결과 저장 경로를 Python 폴더 내로 설정
-    python_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python"
-    results_dir = os.path.join(PYTHON_DIR, "runs", "detect", "train")
+    results_dir = os.path.join(base_dir, "runs", "detect", "train")
     
     # 9. 학습 결과 그래프 시각화
     results_image_path = os.path.join(results_dir, "results.png")
@@ -774,55 +680,8 @@ names:
     model_path = os.path.join(results_dir, "weights", "best.pt")
     
     # 테스트 이미지 경로 설정 (로컬 경로)
-    # 데이터셋 폴더에서 test/images 폴더 내의 첫 번째 이미지 사용
+    # c#에서 string으로 보내는 image_path를 여기 넣어야함
     test_image_path = None
-    dataset_dir = r"C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\SAI.Application\Python\dataset"
-    tutorial_dataset_dir = os.path.join(dataset_dir, "tutorial_dataset")
-    
-    # 테스트 이미지 폴더 경로들 (여러 가능한 위치 검색)
-    possible_test_folders = [
-        os.path.join(tutorial_dataset_dir, "dataset", "test", "images"),
-        os.path.join(tutorial_dataset_dir, "test", "images"),
-        os.path.join(tutorial_dataset_dir, "dataset", "valid", "images"),  # 검증 이미지도 시도
-        os.path.join(tutorial_dataset_dir, "valid", "images"),
-        os.path.join(tutorial_dataset_dir, "dataset", "train", "images"),  # 학습 이미지도 시도
-        os.path.join(tutorial_dataset_dir, "train", "images")
-    ]
-    
-    # 사용 가능한 테스트 이미지 찾기
-    for folder in possible_test_folders:
-        if os.path.exists(folder):
-            image_files = [f for f in os.listdir(folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.webp'))]
-            if image_files:
-                test_image_path = os.path.join(folder, image_files[0])
-                show_progress(f"테스트 이미지 발견: {test_image_path}", total_start_time, 100)
-                break
-    
-    # # 테스트 이미지를 찾지 못한 경우 기본 이미지 사용
-    # if not test_image_path:
-    #     # 기본 테스트 이미지 경로 (프로젝트 폴더 내에 테스트 이미지 포함)
-    #     test_image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_image.jpg")
-    #     show_progress(f"기본 테스트 이미지 사용: {test_image_path}", total_start_time, 100)
-        
-    #     # 기본 테스트 이미지가 없는 경우 생성 (빈 이미지)
-    #     if not os.path.exists(test_image_path):
-    #         show_progress("테스트 이미지가 없어 빈 이미지 생성", total_start_time, 100)
-    #         try:
-    #             import numpy as np
-    #             import cv2
-                
-    #             # 500x500 크기의 빈 이미지 생성
-    #             blank_image = np.zeros((500, 500, 3), np.uint8)
-    #             blank_image[:] = (255, 255, 255)  # 흰색 배경
-                
-    #             # 이미지 중앙에 텍스트 추가
-    #             font = cv2.FONT_HERSHEY_SIMPLEX
-    #             cv2.putText(blank_image, 'Test Image', (150, 250), font, 1, (0, 0, 0), 2, cv2.LINE_AA)
-                
-    #             # 이미지 저장
-    #             cv2.imwrite(test_image_path, blank_image)
-    #         except Exception as e:
-    #             show_progress(f"테스트 이미지 생성 실패: {e}", total_start_time, 100)
     
     # 테스트 이미지로 추론 실행
     if test_image_path and os.path.exists(test_image_path):
@@ -832,21 +691,6 @@ names:
     else:
         show_progress("테스트 이미지를 찾을 수 없어 추론을 건너뜁니다.", total_start_time, 100)
     
-    # # 10. 샘플 이미지로 추론 실행 (있는 경우)
-    # inference_result = None
-    # model_path = os.path.join(results_dir, "weights", "best.pt")
-    
-    # # 사용자 이미지 경로 확인 (명령줄 인수로 전달받을 수 있음)
-    # sample_image_path = None
-    # if len(sys.argv) > 1:
-    #     sample_image_path = sys.argv[1]
-    
-    # # 샘플 이미지가 제공된 경우 추론 실행
-    # if sample_image_path and os.path.exists(sample_image_path):
-    #     inference_start_time = time.time()
-    #     show_progress(f"샘플 이미지 추론 중... ({sample_image_path})", total_start_time, 100)
-    #     inference_result = run_inference(model_path, sample_image_path, inference_start_time)
-    
     # 11. 학습 완료 알림
     total_elapsed = time.time() - total_start_time
     hrs, remainder = divmod(total_elapsed, 3600)
@@ -854,6 +698,11 @@ names:
     
     show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
     show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
+
+    print("PROGRESS:100:학습 완료", flush=True)
+
+    # 🚨 종료 디버깅용
+    input("❗Press any key to exit...")
 
     # 최신 결과 디렉토리에서 모델 경로 찾기
     results_dir = find_latest_results_dir()

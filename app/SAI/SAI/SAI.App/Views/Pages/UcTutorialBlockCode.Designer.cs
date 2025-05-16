@@ -20,7 +20,7 @@ namespace SAI.SAI.App.Views.Pages
             }
             base.Dispose(disposing);
         }
-        
+
 
         #region 구성 요소 디자이너에서 생성한 코드
 
@@ -885,15 +885,15 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pBlockList;
         private Guna.UI2.WinForms.Guna2Panel pToDoList;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
-		private Guna.UI2.WinForms.Guna2Button btnBlockStart;
-		private Guna.UI2.WinForms.Guna2Button btnPip;
-		private Guna.UI2.WinForms.Guna2Button btnLoadModel;
-		private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
-		private Guna.UI2.WinForms.Guna2Button btnMachineLearning;
-		private Guna.UI2.WinForms.Guna2Button btnResultGraph;
-		private Guna.UI2.WinForms.Guna2Button btnImgPath;
-		private Guna.UI2.WinForms.Guna2Button btnModelInference;
-		private Guna.UI2.WinForms.Guna2Button btnVisualizeResult;
+        private Guna.UI2.WinForms.Guna2Button btnBlockStart;
+        private Guna.UI2.WinForms.Guna2Button btnPip;
+        private Guna.UI2.WinForms.Guna2Button btnLoadModel;
+        private Guna.UI2.WinForms.Guna2Button btnLoadDataset;
+        private Guna.UI2.WinForms.Guna2Button btnMachineLearning;
+        private Guna.UI2.WinForms.Guna2Button btnResultGraph;
+        private Guna.UI2.WinForms.Guna2Button btnImgPath;
+        private Guna.UI2.WinForms.Guna2Button btnModelInference;
+        private Guna.UI2.WinForms.Guna2Button btnVisualizeResult;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockDescription;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBlockTitle;
         private Guna.UI2.WinForms.Guna2Panel pSideInfer;
@@ -931,6 +931,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnCopy;
         private Guna.UI2.WinForms.Guna2Button btnInfoThreshold;
         private Guna.UI2.WinForms.Guna2Button btnInfoGraph;
-		private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
-	}
+        private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
+    }
 }
