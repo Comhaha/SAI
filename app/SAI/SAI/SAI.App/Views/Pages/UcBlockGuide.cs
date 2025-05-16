@@ -17,5 +17,10 @@ namespace SAI.SAI.App.Views.Pages
             InitializeComponent();
 
         }
+
+        private void pMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

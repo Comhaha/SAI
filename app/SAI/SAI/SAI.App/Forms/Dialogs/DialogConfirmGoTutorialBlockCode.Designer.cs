@@ -1,4 +1,4 @@
-﻿namespace SAI.SAI.App.Forms.Dialogs
+namespace SAI.SAI.App.Forms.Dialogs
 {
 	partial class DialogConfirmGoTutorialBlockCode
 	{
@@ -54,7 +54,7 @@
             this.btnOk.PressedColor = System.Drawing.Color.Transparent;
             this.btnOk.Size = new System.Drawing.Size(100, 40);
             this.btnOk.TabIndex = 0;
-            this.btnOk.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // panelTitleBar
             // 

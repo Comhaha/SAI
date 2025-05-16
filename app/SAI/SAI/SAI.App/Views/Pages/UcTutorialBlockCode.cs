@@ -15,6 +15,7 @@ using SAI.SAI.App.Models;
 using System.Diagnostics;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -41,19 +42,64 @@ namespace SAI.SAI.App.Views.Pages
         private MemoPresenter memoPresenter;
 
 
-        private int undoCount = 0;
-        public UcTutorialBlockCode(IMainView view)
-        {
-            InitializeComponent();
-            blocklyPresenter = new BlocklyPresenter(this);
-            yoloTutorialPresenter = new YoloTutorialPresenter(this);
-            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
+		private int undoCount = 0;
+		private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+		private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+
+		public UcTutorialBlockCode(IMainView view)
+		{
+			InitializeComponent();
+			blocklyPresenter = new BlocklyPresenter(this);
+			yoloTutorialPresenter = new YoloTutorialPresenter(this);
+			memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
             blocklyModel = BlocklyModel.Instance;
 
             tboxMemo.TextChanged += tboxMemo_TextChanged;
 
-            btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
+			// 확대/축소 버튼 이벤트 추가
+			ibtnPlusCode.Click += (s, e) =>
+			{
+				try
+				{
+					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+					if (currentIndex < zoomLevels.Length - 1)
+					{
+						currentZoomLevel = zoomLevels[currentIndex + 1];
+						UpdateCodeZoom();
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
+				}
+			};
+
+			ibtnMinusCode.Click += (s, e) =>
+			{
+				try
+				{
+					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+					if (currentIndex > 0)
+					{
+						currentZoomLevel = zoomLevels[currentIndex - 1];
+						UpdateCodeZoom();
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
+				}
+			};
+
+			// 초기 확대/축소 레벨 설정
+			currentZoomLevel = 60;
+			UpdateCodeZoom();
+
+			// PercentUtils로 퍼센트 박스 스타일 일괄 적용
+			PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
+
+			btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
 
             this.mainView = view;
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
@@ -89,6 +135,31 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
+            // 복사 버튼 클릭 이벤트 추가
+            ibtnCopy.Click += (s, e) =>
+            {
+                try
+                {
+                    // BlocklyModel에서 전체 코드 가져오기
+                    string codeToCopy = blocklyModel.blockAllCode;
+                    
+                    if (!string.IsNullOrEmpty(codeToCopy))
+                    {
+                        // 클립보드에 코드 복사
+                        Clipboard.SetText(codeToCopy);
+                        Console.WriteLine("[DEBUG] UcTutorialBlockCode: 코드가 클립보드에 복사됨");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] UcTutorialBlockCode: 복사할 코드가 없음");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
+                }
+            };
 
             InitializeWebView2();
 
@@ -734,6 +805,30 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void pMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void UpdateCodeZoom()
+        {
+            try
+            {
+                if (ucCode1 != null)
+                {
+                    // Scintilla 에디터의 폰트 크기 업데이트
+                    ucCode1.UpdateFontSize(currentZoomLevel);
+                    // 확대/축소 레벨 표시 업데이트
+                    tboxZoomCode.Text = $"{currentZoomLevel}%";
+                    Console.WriteLine($"[DEBUG] UcTutorialBlockCode: 코드 확대/축소 레벨 변경 - {currentZoomLevel}%");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대/축소 레벨 업데이트 중 오류 발생 - {ex.Message}");
+            }
+        }
+
+        private void tboxZoomCode_TextChanged(object sender, EventArgs e)
         {
 
         }
