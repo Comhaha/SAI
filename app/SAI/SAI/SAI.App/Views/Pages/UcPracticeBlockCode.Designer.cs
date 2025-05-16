@@ -40,7 +40,6 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCopy = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
@@ -83,6 +82,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -207,12 +207,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCopy.ImageSize = new System.Drawing.Size(29, 29);
             this.ibtnCopy.Name = "ibtnCopy";
             this.ibtnCopy.PressedState.ImageSize = new System.Drawing.Size(29, 29);
-            // 
-            // ucCode２
-            // 
-            resources.ApplyResources(this.ucCode２, "ucCode２");
-            this.ucCode２.Name = "ucCode２";
-            this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // btnCopy
             // 
@@ -502,8 +496,8 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxGraphe
             // 
-            this.pboxGraphe.ImageRotate = 0F;
             resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
+            this.pboxGraphe.ImageRotate = 0F;
             this.pboxGraphe.Name = "pboxGraphe";
             this.pboxGraphe.TabStop = false;
             this.pboxGraphe.Click += new System.EventHandler(this.pboxGraphe_Click);
@@ -602,9 +596,8 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxInferAccuracy
             // 
-            this.pboxInferAccuracy.Image = global::SAI.Properties.Resources.img_bounding_example;
-            this.pboxInferAccuracy.ImageRotate = 0F;
             resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.ImageRotate = 0F;
             this.pboxInferAccuracy.Name = "pboxInferAccuracy";
             this.pboxInferAccuracy.TabStop = false;
             // 
@@ -681,6 +674,12 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
+            // 
+            // ucCode２
+            // 
+            resources.ApplyResources(this.ucCode２, "ucCode２");
+            this.ucCode２.Name = "ucCode２";
+            this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // UcPracticeBlockCode
             // 

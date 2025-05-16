@@ -42,6 +42,9 @@ namespace SAI.SAI.App.Views.Pages
 
 		private int undoCount = 0; // 뒤로가기 카운트
 
+        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+
 		public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -201,6 +204,48 @@ namespace SAI.SAI.App.Views.Pages
                     Console.WriteLine($"[ERROR] UcPracticeBlockCode: 코드 복사 중 오류 발생 - {ex.Message}");
                 }
             };
+
+            // 코드 확대/축소 버튼 및 퍼센트 표시 컨트롤 연결 (튜토리얼과 동일하게)
+            guna2ImageButton2.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex < zoomLevels.Length - 1)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex + 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 확대 중 오류 발생 - {ex.Message}");
+                }
+            };
+
+            guna2ImageButton1.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex > 0)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex - 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcPracticeBlockCode: 축소 중 오류 발생 - {ex.Message}");
+                }
+            };
+
+            // 초기 확대/축소 레벨 설정
+            currentZoomLevel = 60;
+            UpdateCodeZoom();
+
+            // PercentUtils로 퍼센트 박스 스타일 일괄 적용
+            PercentUtils.SetupPercentTextBox(guna2TextBox1, 0.5f, 0, 0);
 		}
         
         private void ShowpSIdeInfer()
@@ -452,6 +497,25 @@ namespace SAI.SAI.App.Views.Pages
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
+        }
+
+        private void UpdateCodeZoom()
+        {
+            try
+            {
+                if (ucCode２ != null)
+                {
+                    // Scintilla 에디터의 폰트 크기 업데이트
+                    ucCode２.UpdateFontSize(currentZoomLevel);
+                    // 확대/축소 레벨 표시 업데이트
+                    guna2TextBox1.Text = $"{currentZoomLevel}%";
+                    Console.WriteLine($"[DEBUG] UcPracticeBlockCode: 코드 확대/축소 레벨 변경 - {currentZoomLevel}%");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] UcPracticeBlockCode: 확대/축소 레벨 업데이트 중 오류 발생 - {ex.Message}");
+            }
         }
     }
 }
