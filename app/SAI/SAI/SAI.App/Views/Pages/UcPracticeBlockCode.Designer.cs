@@ -428,7 +428,6 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxGraphe
             // 
-            this.pboxGraphe.BackgroundImage = global::SAI.Properties.Resources.img_inferGraphe_example;
             this.pboxGraphe.Image = global::SAI.Properties.Resources.img_inferGraphe_example;
             this.pboxGraphe.ImageRotate = 0F;
             resources.ApplyResources(this.pboxGraphe, "pboxGraphe");
@@ -520,6 +519,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.btnSelectInferImage.BackgroundImage = global::SAI.Properties.Resources.btn_selectinferimage;
             resources.ApplyResources(this.btnSelectInferImage, "btnSelectInferImage");
+            this.btnSelectInferImage.BorderColor = System.Drawing.Color.Transparent;
             this.btnSelectInferImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnSelectInferImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnSelectInferImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -527,10 +527,10 @@ namespace SAI.SAI.App.Views.Pages
             this.btnSelectInferImage.FillColor = System.Drawing.Color.Transparent;
             this.btnSelectInferImage.ForeColor = System.Drawing.Color.White;
             this.btnSelectInferImage.Name = "btnSelectInferImage";
+            this.btnSelectInferImage.Click += new System.EventHandler(this.btnSelectInferImage_Click);
             // 
             // pboxInferAccuracy
             // 
-            this.pboxInferAccuracy.Image = global::SAI.Properties.Resources.img_bounding_example;
             this.pboxInferAccuracy.ImageRotate = 0F;
             resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
             this.pboxInferAccuracy.Name = "pboxInferAccuracy";

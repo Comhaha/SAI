@@ -1082,10 +1082,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnSelectInferImage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 61</value>
+    <value>0, 0</value>
   </data>
   <data name="btnSelectInferImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 36</value>
+    <value>329, 185</value>
   </data>
   <data name="btnSelectInferImage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1106,7 +1106,7 @@
     <value>21, 0</value>
   </data>
   <data name="pboxInferAccuracy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 158</value>
+    <value>287, 185</value>
   </data>
   <data name="pboxInferAccuracy.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1127,7 +1127,7 @@
     <value>35, 167</value>
   </data>
   <data name="pInferAccuracy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 158</value>
+    <value>329, 185</value>
   </data>
   <data name="pInferAccuracy.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
