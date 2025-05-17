@@ -53,7 +53,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
-            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
+            this.ucCode1 = new SAI.SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
@@ -79,7 +79,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
+            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -348,14 +348,14 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.ibtnCloseInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.ibtnCloseInfer.HoverState.Image = global::SAI.Properties.Resources.btn_close_infer_hover;
-            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.HoverState.ImageSize = new System.Drawing.Size(58, 230);
             this.ibtnCloseInfer.Image = global::SAI.Properties.Resources.btn_close_infer;
             this.ibtnCloseInfer.ImageOffset = new System.Drawing.Point(0, 0);
             this.ibtnCloseInfer.ImageRotate = 0F;
-            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.ImageSize = new System.Drawing.Size(58, 230);
             resources.ApplyResources(this.ibtnCloseInfer, "ibtnCloseInfer");
             this.ibtnCloseInfer.Name = "ibtnCloseInfer";
-            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(38, 153);
+            this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(58, 230);
             this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
             // 
             // pTopCode

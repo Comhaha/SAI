@@ -773,7 +773,7 @@
     <value>447, 8</value>
   </data>
   <data name="pSelectBlockvScrollBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>10, 727</value>
+    <value>10, 714</value>
   </data>
   <data name="pSelectBlockvScrollBar.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1073,7 +1073,7 @@
     <value>2</value>
   </data>
   <data name="ibtnDownloadAIModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 2252</value>
+    <value>303, 2250</value>
   </data>
   <data name="ibtnDownloadAIModel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 100</value>

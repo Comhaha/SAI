@@ -40,7 +40,7 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ucCode２ = new SAI.App.Views.Pages.UcCode();
+            this.ucCode２ = new SAI.SAI.App.Views.Pages.UcCode();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.pTopCode = new System.Windows.Forms.Panel();
@@ -64,7 +64,7 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
+            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
