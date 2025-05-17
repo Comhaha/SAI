@@ -45,11 +45,11 @@ namespace SAI.SAI.App.Views.Pages
 			this.label.TabIndex = 0;
 			this.label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// AutoFontLabel
+			// AutoSizeLabel
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.Controls.Add(this.label);
-			this.Name = "AutoFontLabel";
+			this.Name = "AutoSizeLabel";
 			this.Size = new System.Drawing.Size(200, 50);
 			this.ResumeLayout(false);
 
