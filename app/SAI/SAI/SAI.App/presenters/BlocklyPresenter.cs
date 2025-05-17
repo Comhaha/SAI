@@ -110,7 +110,7 @@ namespace SAI.SAI.App.Presenters
             // 혜정언니 여기를 작성하면 돼!
             blocklyModel.BlockAllCodeChanged += (newAllCode) =>
             {
-                try
+				try
                 {
                     Console.WriteLine($"[DEBUG] BlocklyPresenter: 전체 코드가 변경됨 ({newAllCode?.Length ?? 0}자)");
 
@@ -230,7 +230,7 @@ namespace SAI.SAI.App.Presenters
         {
             if (type == "blockAllCode")
             {
-                blocklyModel.blockAllCode = code;
+				blocklyModel.blockAllCode = code;
                 blocklyService.SaveCodeToFileInTutorial();
 
                 //--------혜정언니 꺼 develop에 있던 코드 ----------------------------

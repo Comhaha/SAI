@@ -32,6 +32,12 @@ namespace SAI.SAI.App.Views.Pages
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcPracticeBlockCode));
+			this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
+			this.lbErrorMessage = new System.Windows.Forms.Label();
+			this.pErrorImg = new Guna.UI2.WinForms.Guna2Panel();
+			this.lbMissingType = new System.Windows.Forms.Label();
+			this.lbErrorType = new System.Windows.Forms.Label();
+			this.pErrorToast.SuspendLayout();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
@@ -311,6 +317,7 @@ namespace SAI.SAI.App.Views.Pages
             // webViewblock
             // 
             this.webViewblock.AllowExternalDrop = true;
+            this.webViewblock.Controls.Add(this.pErrorToast);
             this.webViewblock.BackColor = System.Drawing.Color.White;
             this.webViewblock.CreationProperties = null;
             this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
@@ -355,6 +362,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnRunModel.ForeColor = System.Drawing.Color.White;
             this.btnRunModel.ImageSize = new System.Drawing.Size(0, 0);
             this.btnRunModel.Name = "btnRunModel";
+            this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
 
 	    // btnNextBlock
             // 
@@ -391,6 +399,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnNextBlock.FillColor = System.Drawing.Color.Transparent;
 			this.btnNextBlock.ForeColor = System.Drawing.Color.White;
 			this.btnNextBlock.Name = "btnNextBlock";
+			this.btnNextBlock.Click += new System.EventHandler(this.btnNextBlock_Click);
 			// 
 			// btnTrash
 			// 
@@ -576,6 +585,40 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.pFake, "pFake");
 			this.pFake.Name = "pFake";
 			// 
+			// 
+			// pErrorToast
+			// 
+			this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
+			resources.ApplyResources(this.pErrorToast, "pErrorToast");
+			this.pErrorToast.Controls.Add(this.lbErrorMessage);
+			this.pErrorToast.Controls.Add(this.pErrorImg);
+			this.pErrorToast.Controls.Add(this.lbMissingType);
+			this.pErrorToast.Controls.Add(this.lbErrorType);
+			this.pErrorToast.Name = "pErrorToast";
+			// 
+			// lbErrorMessage
+			// 
+			resources.ApplyResources(this.lbErrorMessage, "lbErrorMessage");
+			this.lbErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+			this.lbErrorMessage.Name = "lbErrorMessage";
+			// 
+			// pErrorImg
+			// 
+			this.pErrorImg.BackgroundImage = global::SAI.Properties.Resources.icon_error;
+			resources.ApplyResources(this.pErrorImg, "pErrorImg");
+			this.pErrorImg.Name = "pErrorImg";
+			// 
+			// lbMissingType
+			// 
+			resources.ApplyResources(this.lbMissingType, "lbMissingType");
+			this.lbMissingType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+			this.lbMissingType.Name = "lbMissingType";
+			// 
+			// lbErrorType
+			// 
+			resources.ApplyResources(this.lbErrorType, "lbErrorType");
+			this.lbErrorType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+			this.lbErrorType.Name = "lbErrorType";
 			
             // pThreshold
             // 
@@ -796,6 +839,8 @@ namespace SAI.SAI.App.Views.Pages
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.pMemo.ResumeLayout(false);
+            this.pErrorToast.ResumeLayout(false);
+			this.pErrorToast.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -847,6 +892,11 @@ namespace SAI.SAI.App.Views.Pages
 		private Guna.UI2.WinForms.Guna2Button btnRunModel;
 		private Guna.UI2.WinForms.Guna2Panel pSelectBlock;
 		private Guna.UI2.WinForms.Guna2VScrollBar pSelectBlockvScrollBar;
+		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
+		private System.Windows.Forms.Label lbErrorMessage;
+		private Guna.UI2.WinForms.Guna2Panel pErrorImg;
+		private System.Windows.Forms.Label lbMissingType;
+		private System.Windows.Forms.Label lbErrorType;
         private SAI.App.Views.Pages.UcCode ucCode２;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;

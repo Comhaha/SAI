@@ -30,9 +30,8 @@ namespace SAI
             presenter = new MainPresenter(this);
 
 			// 사이즈 고정
-			Size = new Size(1280, 750);
 			MinimumSize = new Size(1280, 750);
-			AutoScaleMode = AutoScaleMode.None;
+			AutoScaleMode = AutoScaleMode.Dpi;
 			guna2DragControl1.TargetControl = titlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
 			guna2DragControl1.UseTransparentDrag = false;
@@ -40,6 +39,8 @@ namespace SAI
 			this.Resize += MainForm_Resize;
 		}
 
+		private int pageWidth = 1280;
+		private int pageHeight = 720;
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
 			int maxWidth = 1280;
@@ -58,8 +59,8 @@ namespace SAI
 			int newWidth = (int)(maxWidth * scale);
 			int newHeight = (int)(maxHeight * scale);
 
-			newWidth = Math.Min(newWidth, maxWidth);
-			newHeight = Math.Min(newHeight, maxHeight);
+			pageHeight = newHeight;
+			pageWidth = newWidth;
 
 			// 중앙 정렬 위치 계산
 			int x = (formWidth - newWidth) / 2;
@@ -83,7 +84,8 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
-			page.Size = new Size(1280, 720);
+			page.Dock = DockStyle.Fill;
+			page.Size = new Size(pageWidth, pageHeight);
 			mainPanel.Controls.Clear();
 			mainPanel.BackColor = Color.Transparent;
 			mainPanel.Controls.Add(page);

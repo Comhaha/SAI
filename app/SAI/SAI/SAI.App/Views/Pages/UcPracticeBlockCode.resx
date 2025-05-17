@@ -830,6 +830,166 @@
   <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="pErrorToast.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="lbErrorMessage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="lbErrorMessage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbErrorMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 5pt</value>
+  </data>
+  <data name="lbErrorMessage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbErrorMessage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 40</value>
+  </data>
+  <data name="lbErrorMessage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>256, 26</value>
+  </data>
+  <data name="lbErrorMessage.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lbErrorMessage.Text" xml:space="preserve">
+    <value>“모델 불러오기” 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.
+[pip install] - [모델 불러오기] - [데이터셋 불러오기]</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Name" xml:space="preserve">
+    <value>lbErrorMessage</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pErrorImg.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="pErrorImg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 12</value>
+  </data>
+  <data name="pErrorImg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>11, 9</value>
+  </data>
+  <data name="pErrorImg.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.Name" xml:space="preserve">
+    <value>pErrorImg</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbMissingType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbMissingType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR SemiBold, 6pt</value>
+  </data>
+  <data name="lbMissingType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbMissingType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 23</value>
+  </data>
+  <data name="lbMissingType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 15</value>
+  </data>
+  <data name="lbMissingType.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lbMissingType.Text" xml:space="preserve">
+    <value>Missing "모델 불러오기"</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Name" xml:space="preserve">
+    <value>lbMissingType</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lbErrorType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbErrorType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 5pt</value>
+  </data>
+  <data name="lbErrorType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbErrorType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>32, 10</value>
+  </data>
+  <data name="lbErrorType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="lbErrorType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
+  </data>
+  <data name="lbErrorType.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbErrorType.Text" xml:space="preserve">
+    <value>블럭 배치 오류</value>
+  </data>
+  <data name="&gt;&gt;lbErrorType.Name" xml:space="preserve">
+    <value>lbErrorType</value>
+  </data>
+  <data name="&gt;&gt;lbErrorType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbErrorType.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;lbErrorType.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pErrorToast.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 42</value>
+  </data>
+  <data name="pErrorToast.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="pErrorToast.Size" type="System.Drawing.Size, System.Drawing">
+    <value>292, 78</value>
+  </data>
+  <data name="pErrorToast.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="pErrorToast.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pErrorToast.Name" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;pErrorToast.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pErrorToast.Parent" xml:space="preserve">
+    <value>pBlock</value>
+  </data>
+  <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="webViewblock.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 37</value>
   </data>
@@ -849,7 +1009,7 @@
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
