@@ -114,7 +114,7 @@
 			this.tpBtnParent.Controls.Add(this.btnImage, 0, 0);
 			this.tpBtnParent.Controls.Add(this.btnPose, 2, 0);
 			this.tpBtnParent.Controls.Add(this.btnAudio, 1, 0);
-			this.tpBtnParent.Location = new System.Drawing.Point(3, 121);
+			this.tpBtnParent.Location = new System.Drawing.Point(3, 120);
 			this.tpBtnParent.Name = "tpBtnParent";
 			this.tpBtnParent.RowCount = 1;
 			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -146,7 +146,7 @@
 			this.lbTitle.Font = new System.Drawing.Font("Noto Sans KR SemiBold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
 			this.lbTitle.Location = new System.Drawing.Point(3, 3);
 			this.lbTitle.Name = "lbTitle";
-			this.lbTitle.Size = new System.Drawing.Size(875, 112);
+			this.lbTitle.Size = new System.Drawing.Size(875, 111);
 			this.lbTitle.TabIndex = 14;
 			this.lbTitle.Text = "학습 데이터 종류를 선택하세요";
 			this.lbTitle.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;

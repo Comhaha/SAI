@@ -193,16 +193,6 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap bg_annotation_modal {
-            get {
-                object obj = ResourceManager.GetObject("bg_annotation_modal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
         internal static System.Drawing.Bitmap bg_blue_btn_close {
             get {
                 object obj = ResourceManager.GetObject("bg_blue_btn_close", resourceCulture);
@@ -619,6 +609,20 @@ namespace SAI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_toast_error {
+            get {
+                object obj = ResourceManager.GetObject("bg_toast_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_warning_empty {
             get {
                 object obj = ResourceManager.GetObject("bg_warning_empty", resourceCulture);
@@ -2312,6 +2316,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap icon_check_good {
             get {
                 object obj = ResourceManager.GetObject("icon_check_good", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_error {
+            get {
+                object obj = ResourceManager.GetObject("icon_error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

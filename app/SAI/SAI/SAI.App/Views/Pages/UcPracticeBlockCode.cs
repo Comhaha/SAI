@@ -13,6 +13,8 @@ using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 
 
 namespace SAI.SAI.App.Views.Pages
@@ -42,6 +44,12 @@ namespace SAI.SAI.App.Views.Pages
 
 		private int undoCount = 0; // 뒤로가기 카운트
 		private int blockCount = 0; // 블럭 개수
+
+		private string errorMessage = "";
+		private string missingType = "";
+		private string errorType = "";
+
+		private CancellationTokenSource _toastCancellationSource;
 
 		public UcPracticeBlockCode(IMainView view)
         {
@@ -325,53 +333,33 @@ namespace SAI.SAI.App.Views.Pages
 			// 단축키 이벤트 등록
 			webViewblock.KeyDown += (sender, e) =>
 			{
-				if(e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				if (e.Control)
 				{
-					if(btnPreBlock.Visible)
+					if (e.KeyCode == Keys.Z && !e.Shift) // Ctrl + Z
 					{
-						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+						if (btnPreBlock.Visible)
+						{
+							btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+							e.Handled = true;
+						}
+					}
+					else if (e.KeyCode == Keys.Y || (e.KeyCode == Keys.Z && e.Shift)) // Ctrl + Y 또는 Ctrl + Shift + Z
+					{
+						if (btnNextBlock.Visible)
+						{
+							btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+							e.Handled = true;
+						}
 					}
 				}
-				else if (e.KeyCode == Keys.Y && e.Control)
+				// Delete 키는 WebView2로 전파되도록 함
+				else if (e.KeyCode == Keys.Delete)
 				{
-					if(btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
-				}
-				else if(e.KeyCode == Keys.Z && e.Control && e.Shift)
-				{
-					if(btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
+					e.Handled = false;
+					e.SuppressKeyPress = false;
 				}
 			};
 
-			this.KeyDown += (sender, e) =>
-			{
-				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
-				{
-					if (btnPreBlock.Visible)
-					{
-						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
-					}
-				}
-				else if (e.KeyCode == Keys.Y && e.Control)
-				{
-					if (btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
-				}
-				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
-				{
-					if(btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
-				}
-			};
 			webViewblock.Source = new Uri(uri);
 		}
 
@@ -458,5 +446,289 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
+
+		private bool checkBlockPosition(string blockType, int nowPosition)
+		{
+			float correctPosition;
+			switch (blockType)
+			{
+				case "start":
+					correctPosition = 0;
+					break;
+				case "pipInstall":
+					correctPosition = 1;
+					break;
+				case "loadModel":
+					correctPosition = 2;
+					break;
+				case "loadModelWithLayer":
+					correctPosition = 2;
+					break;
+				case "layer":
+					correctPosition = 2.5f;
+					break;
+				case "loadDataset":
+					correctPosition = 3;
+					break;
+				case "machineLearning":
+					correctPosition = 4;
+					break;
+				case "resultGraph":
+					correctPosition = 5;
+					break;
+				case "imgPath":
+					correctPosition = 6;
+					break;
+				case "modelInference":
+					correctPosition = 7;
+					break;
+				case "visualizeResult":
+					correctPosition = 8;
+					break;
+				default:
+					correctPosition = -1;
+					break;
+			}
+
+			if (correctPosition != nowPosition)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		private void blockErrorMessage(string blockType)
+		{
+			switch (blockType)
+			{
+				case "start":
+					errorType = "블록 배치 오류";
+					missingType = "\"pipInstall\"";
+					errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[시작] - [패키지 설치]";
+					break;
+				case "pipInstall":
+					errorType = "블록 배치 오류";
+					missingType = "\"loadModel\"";
+					errorMessage = "\"모델 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[패키지 설치] - [모델 불러오기]";
+					break;
+				case "loadModel":
+					errorType = "블록 배치 오류";
+					missingType = "\"loadDataset\"";
+					errorMessage = "\"데이터 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[모델 불러오기] - [데이터 불러오기]";
+					break;
+				case "loadDataset":
+					errorType = "블록 배치 오류";
+					missingType = "\"machineLearning\"";
+					errorMessage = "\"모델 학습하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[데이터 불러오기] - [모델 학습하기]";
+					break;
+				case "machineLearning":
+					errorType = "블록 배치 오류";
+					missingType = "\"resultGraph\"";
+					errorMessage = "\"학습 결과 그래프 출력하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[모델 학습하기] - [학습 결과 그래프 출력하기]";
+					break;
+				case "resultGraph":
+					errorType = "블록 배치 오류";
+					missingType = "\"imgPath\"";
+					errorMessage = "\"이미지 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[학습 결과 그래프 출력하기] - [이미지 불러오기]";
+					break;
+				case "imgPath":
+					errorType = "블록 배치 오류";
+					missingType = "\"modelInference\"";
+					errorMessage = "\"추론 실행하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[이미지 불러오기] - [추론 실행하기]";
+					break;
+				case "modelInference":
+					errorType = "블록 배치 오류";
+					missingType = "\"visualizeResult\"";
+					errorMessage = "\"결과 시각화하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[추론 실행하기] - [결과 시각화하기]";
+					break;
+				case "loadModelWithLayer":
+					errorType = "블록 배치 오류";
+					missingType = "\"loadDataset\"";
+					errorMessage = "\"데이터 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[모델 불러오기] - [데이터 불러오기]";
+					break;
+				case "layer":
+					errorType = "블록 배치 오류";
+					missingType = "\"layer\"";
+					errorMessage = "\"레이어 수정 모델 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[레이어 수정 모델 불러오기] 안에 [layer] 블럭을 넣어주세요.";
+					break;
+			}
+		}
+
+		// 블록 에러 처리는 참 어려워어
+		public bool isBlockError()
+		{
+			if (blocklyModel == null || blocklyModel.blockTypes == null)
+			{
+				errorType = "블록 배치 오류";
+				missingType = "MISSING \"시작\"";
+				errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
+				errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+				return true;
+			}
+
+			if (blocklyModel.blockTypes.Count == 11 || blocklyModel.blockTypes.Count == 9)
+			{
+				for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
+				{
+					BlockInfo block = blocklyModel.blockTypes[i];
+					if (block == null) continue;
+					
+					string blockType = block.type;
+					if (!checkBlockPosition(blockType, i))
+					{
+						blockErrorMessage(blockType);
+						return true;
+					}
+
+					if(blockType == "loadModelWithLayer")
+					{
+						if(block.children != null)
+						{
+							if(block.children.Count > 1)
+							{
+								MessageBox.Show("블럭 9개 block child");
+								blockErrorMessage("layer");
+								return true;
+							}
+						}
+						else
+						{
+							MessageBox.Show("블럭 9개 block child null");
+							blockErrorMessage("layer");
+							return true;
+						}
+					}
+				}
+			}
+			else if (blocklyModel.blockTypes.Count < 11)
+			{
+				int lastBlock = blocklyModel.blockTypes.Count - 1;
+				if (lastBlock < 0) return true;
+
+				BlockInfo block = blocklyModel.blockTypes[lastBlock];
+				if (block == null) return true;
+
+				for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
+				{
+					BlockInfo blockInfo = blocklyModel.blockTypes[i];
+					if (blockInfo == null) continue;
+
+					string blockType = blockInfo.type;
+					if (!checkBlockPosition(blockType, i))
+					{
+						if (i > 0)
+						{
+							blockInfo = blocklyModel.blockTypes[i - 1];
+							if (blockInfo != null)
+							{
+								blockType = blockInfo.type;
+								blockErrorMessage(blockType);
+								return true;
+							}
+						}
+					}
+
+					if (blockType == "imgPath")
+					{
+						if (string.IsNullOrEmpty(blocklyModel.imgPath))
+						{
+							errorType = "파라미터 오류";
+							missingType = "파라미터 \"이미지 파일\"";
+							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+							return true;
+						}
+					}
+					else if (blockType == "loadModelWithLayer")
+					{
+						if (block.children != null)
+						{
+							if (block.children.Count > 1)
+							{
+								MessageBox.Show("블럭 11개 보다 적은 block child");
+								blockErrorMessage("layer");
+								return true;
+							}
+						}
+						else
+						{
+							MessageBox.Show("블럭 11개 보다 적은 block child null");
+							blockErrorMessage("layer");
+							return true;
+						}
+					}
+				}
+				blockErrorMessage(block.type);
+				return true;
+			}
+
+			return false;
+		}
+
+		// 실행 버튼 클릭 이벤트
+		private void btnRunModel_Click(object sender, EventArgs e)
+		{
+			if (blocklyModel.blockTypes != null)
+			{
+				// 블록 순서가 맞는지 판단
+				if (!isBlockError()) // 순서가 맞을 떄
+				{
+					// 파이썬 코드 실행
+					//RunButtonClicked?.Invoke(sender, e);
+				}
+				else // 순서가 틀릴 때
+				{
+					ShowToastMessage(errorType, missingType, errorMessage);
+				}
+			}
+			else
+			{
+				errorType = "블록 배치 오류";
+				missingType = "MISSING \"시작\"";
+				errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
+				errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+				ShowToastMessage(errorType, missingType, errorMessage);
+			}
+		}
+
+		private async void ShowToastMessage(string errorType, string missingType, string errorMessage)
+		{
+			// 이전 토스트 메시지가 있다면 취소
+			_toastCancellationSource?.Cancel();
+			_toastCancellationSource = new CancellationTokenSource();
+			var token = _toastCancellationSource.Token;
+
+			try
+			{
+				pErrorToast.Visible = true;
+				pErrorToast.FillColor = Color.FromArgb(0, pErrorToast.FillColor);
+				lbErrorType.Text = errorType;
+				lbMissingType.Text = missingType;
+				lbErrorMessage.Text = errorMessage;
+
+				// 2초 대기 (취소 가능)
+				await Task.Delay(2000, token);
+				pErrorToast.Visible = false;
+			}
+			catch (OperationCanceledException)
+			{
+				// 토스트가 취소된 경우 아무것도 하지 않음
+			}
+			finally
+			{
+				_toastCancellationSource?.Dispose();
+				_toastCancellationSource = null;
+			}
+		}
 	}
 }
