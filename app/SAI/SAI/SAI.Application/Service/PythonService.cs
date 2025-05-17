@@ -100,6 +100,7 @@ namespace SAI.SAI.Application.Service
             }
         }
 
+        // yolomodel.cs 파일에 정의했음. 지우고 수정해야함
         public class InferenceResult
         {
             public bool Success { get; set; }
@@ -108,6 +109,8 @@ namespace SAI.SAI.Application.Service
             public string Error { get; set; }
         }
 
+        // 추론 스크립트 실행 함수
+        // imagePath와 conf를 던져줘야한다
         public InferenceResult RunInference(string imagePath, double conf)
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;

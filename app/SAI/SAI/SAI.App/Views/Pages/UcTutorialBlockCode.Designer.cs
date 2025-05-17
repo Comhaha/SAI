@@ -773,9 +773,9 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // mAlertPanel
             // 
-            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
-            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
-            this.mAlertPanel.Name = "mAlertPanel";
+            //this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
+            //resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
+            //this.mAlertPanel.Name = "mAlertPanel";
             // 
             // btnCloseMemo
             // 

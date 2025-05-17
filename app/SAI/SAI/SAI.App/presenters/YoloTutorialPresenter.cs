@@ -94,6 +94,8 @@ namespace SAI.SAI.App.Presenters
             });
         }
 
+        // 추론시 PythonService에 구현된 추론스크립트 함수를 실행
+        // 사용자 지정 imagePath와 conf값을 스크립트에 던져주면, 스크립트에서 그 값으로 추론을 진행
         public void OnInferImageSelected(string imagePath, double conf)
         {
             var result = _pythonService.RunInference(imagePath, conf);

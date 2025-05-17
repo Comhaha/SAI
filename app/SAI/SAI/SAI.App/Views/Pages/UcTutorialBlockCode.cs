@@ -16,6 +16,7 @@ using System.Diagnostics;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using SAI.SAI.Application.Service;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -308,7 +309,7 @@ namespace SAI.SAI.App.Views.Pages
             };
 
             // mAlertPanel 초기에는 숨김
-            mAlertPanel.Visible = false;
+            //mAlertPanel.Visible = false;
             // btnQuestionMemo 클릭 이벤트 핸들러 등록
             btnQuestionMemo.Click += btnQuestionMemo_Click;
         }
@@ -574,14 +575,33 @@ namespace SAI.SAI.App.Views.Pages
             MemoUtils.ApplyStyle(tboxMemo);
         }
 
+        //     private void SetupThresholdControls()
+        //     {
+        //         ThresholdUtilsTutorial.Setup(
+        //	tbarThreshold,                
+        //	tboxThreshold,                     
+        //	(newValue) => currentThreshold = newValue,  
+        //	this                             
+        //);
+
+        //     }
+
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
-				tbarThreshold,                
-				tboxThreshold,                     
-				(newValue) => currentThreshold = newValue,  
-				this                             
-			);
+                tbarThreshold,
+                tboxThreshold,
+                (newValue) =>
+                {
+                    currentThreshold = newValue;
+                    
+                    yoloTutorialPresenter.OnInferImageSelected(
+                        blocklyModel.imgPath,
+                        currentThreshold
+                    );
+                },
+                this
+            );
         }
         private void ShowpSIdeInfer()
         {
@@ -893,7 +913,8 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        // 추론 이미지 불러오기
+        // 추론 이미지 불러오기 버튼 클릭시
+        // 사용자 지정 이미지 경로의 상대경로를 blockly.imagepath에 저장
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
             try
@@ -916,6 +937,7 @@ namespace SAI.SAI.App.Views.Pages
                         // 프로젝트 루트의 inference_images 디렉토리 경로 설정
                         string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                         string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
+                        @"..\..\SAI.Application\Python\runs\detection\inference_images"
 
                         // inference_images 디렉토리가 없으면 생성
                         if (!Directory.Exists(inferenceImagesDir))
@@ -988,6 +1010,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
+
         private void btnQuestionMemo_Click(object sender, EventArgs e)
         {
             // mAlertPanel을 보이게 설정
@@ -1042,29 +1065,34 @@ namespace SAI.SAI.App.Views.Pages
             };
             timer.Start();
         }
-        // 추론탭 이미지 불러오기 버튼
-        private void btnSelectInferImage_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-                openFileDialog.Title = "추론할 이미지 선택";
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string selectedImagePath = openFileDialog.FileName;
-                    yoloTutorialPresenter.OnInferImageSelected(selectedImagePath, currentThreshold);
-                }
-            }
-        }
-        // 추론 스크립트 실행해서 결과 보여주는 함수
-        public void ShowInferenceResult(SAI.Application.Service.PythonService.InferenceResult result)
+        public void ShowInferenceResult(PythonService.InferenceResult result)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowInferenceResult(result)));
+                return;
+            }
+
+            dialogLoadingInfer?.Close();
+            dialogLoadingInfer = null;
+
             if (result.Success)
             {
                 if (File.Exists(result.ResultImage))
                 {
-                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(result.ResultImage);
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+                            ShowTutorialInferResultImage(image); 
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
@@ -1076,5 +1104,39 @@ namespace SAI.SAI.App.Views.Pages
                 MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        //// 추론탭 이미지 불러오기 버튼
+        //private void btnSelectInferImage_Click(object sender, EventArgs e)
+        //{
+        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        //    {
+        //        openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+        //        openFileDialog.Title = "추론할 이미지 선택";
+
+        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            string selectedImagePath = openFileDialog.FileName;
+        //            yoloTutorialPresenter.OnInferImageSelected(selectedImagePath, currentThreshold);
+        //        }
+        //    }
+        //}
+        // 추론 스크립트 실행해서 결과 보여주는 함수
+        //public void ShowInferenceResult(SAI.Application.Service.PythonService.InferenceResult result)
+        //{
+        //    if (result.Success)
+        //    {
+        //        if (File.Exists(result.ResultImage))
+        //        {
+        //            pboxInferAccuracy.Image = System.Drawing.Image.FromFile(result.ResultImage);
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
     }
 }
