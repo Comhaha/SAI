@@ -50,8 +50,6 @@ app/SAI/SAI/SAI.Application/Python/**
 
 # 2. scripts 폴더 제외
 !app/SAI/SAI/SAI.Application/Python/scripts/
-!app/SAI/SAI/SAI.Application/Python/dataset/
-!app/SAI/SAI/SAI.Application/Python/runs/
 
 # 3. scripts 폴더 중 특정 파일은 무시
 app/SAI/SAI/SAI.Application/Python/scripts/train_script.py
