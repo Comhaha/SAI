@@ -110,7 +110,7 @@ namespace SAI.SAI.Application.Service
         }
 
         // 추론 스크립트 실행 함수
-        // imagePath와 conf를 던져줘야한다
+        // imagePath와 conf를 파이썬에 던져줘야한다
         public InferenceResult RunInference(string imagePath, double conf)
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;

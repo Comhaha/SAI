@@ -11,16 +11,19 @@ namespace SAI.SAI.App.Presenters
 {
     public class YoloTutorialPresenter
     {
-        private readonly IYoloTutorialView _view;
+        private readonly ITutorialInferenceView _itutorialInferenceView;
+        private readonly IYoloTutorialView _yolotutorialview;
         private readonly PythonService _pythonService;
         private ProgressDialog _progressDialog;
 
-        public YoloTutorialPresenter(IYoloTutorialView view)
+        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
         {
-            _view = view;
+            _yolotutorialview = yolotutorialview;
             _pythonService = new PythonService();
 
-            _view.RunButtonClicked += OnRunButtonClicked;
+            _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
+
+            _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
         }
 
         private void OnRunButtonClicked(object sender, EventArgs e)
@@ -37,7 +40,7 @@ namespace SAI.SAI.App.Presenters
                         onOutput: text =>
                         {
                             Console.WriteLine($"Python Output: {text}");
-                            _view.AppendLog(text);
+                            _yolotutorialview.AppendLog(text);
 
                             if (text.StartsWith("PROGRESS:"))
                             {
@@ -83,23 +86,23 @@ namespace SAI.SAI.App.Presenters
                                 }
                             }
                         },
-                        onError: err => { _view.AppendLog("[Error] " + err); },
-                        onException: ex => { _view.ShowErrorMessage("❌ 예외 발생:\n" + ex.Message); }
+                        onError: err => { _yolotutorialview.AppendLog("[Error] " + err); },
+                        onException: ex => { _yolotutorialview.ShowErrorMessage("❌ 예외 발생:\n" + ex.Message); }
                     );
                 }
                 catch (Exception ex)
                 {
-                    _view.ShowErrorMessage("❌ 예상치 못한 오류 발생:\n" + ex.Message);
+                    _yolotutorialview.ShowErrorMessage("❌ 예상치 못한 오류 발생:\n" + ex.Message);
                 }
             });
         }
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행
-        // 사용자 지정 imagePath와 conf값을 스크립트에 던져주면, 스크립트에서 그 값으로 추론을 진행
+        // 사용자 지정 imagePath와 conf값을 파이썬에 던져주면, 스크립트에서 그 값으로 추론을 진행
         public void OnInferImageSelected(string imagePath, double conf)
         {
             var result = _pythonService.RunInference(imagePath, conf);
-            _view.ShowInferenceResult(result);
+            _itutorialInferenceView.ShowInferenceResult(result);
         }
     }
 }

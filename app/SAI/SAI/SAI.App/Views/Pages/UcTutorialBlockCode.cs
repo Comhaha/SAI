@@ -575,17 +575,6 @@ namespace SAI.SAI.App.Views.Pages
             MemoUtils.ApplyStyle(tboxMemo);
         }
 
-        //     private void SetupThresholdControls()
-        //     {
-        //         ThresholdUtilsTutorial.Setup(
-        //	tbarThreshold,                
-        //	tboxThreshold,                     
-        //	(newValue) => currentThreshold = newValue,  
-        //	this                             
-        //);
-
-        //     }
-
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
@@ -593,12 +582,14 @@ namespace SAI.SAI.App.Views.Pages
                 tboxThreshold,
                 (newValue) =>
                 {
-                    currentThreshold = newValue;
-                    
-                    yoloTutorialPresenter.OnInferImageSelected(
-                        blocklyModel.imgPath,
-                        currentThreshold
-                    );
+                currentThreshold = newValue;
+
+                yoloTutorialPresenter.OnInferImageSelected(
+                    blocklyModel.imgPath,
+                    currentThreshold
+                );
+                    Console.WriteLine($"[DEBUG] 경로: {BlocklyModel.Instance.imgPath}, threshold: {currentThreshold}");
+
                 },
                 this
             );
@@ -914,7 +905,7 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 추론 이미지 불러오기 버튼 클릭시
-        // 사용자 지정 이미지 경로의 상대경로를 blockly.imagepath에 저장
+        // 사용자 지정 이미지 경로를 blockly.imagepath에 던져줌
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
             try
@@ -932,33 +923,11 @@ namespace SAI.SAI.App.Views.Pages
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = absolutePath;
 
-                        // 프로젝트 루트의 inference_images 디렉토리 경로 설정
-                        string projectDir = AppDomain.CurrentDomain.BaseDirectory;
-                        string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
-                        @"..\..\SAI.Application\Python\runs\detection\inference_images"
+                        // 사용자 지정 이미지 경로를 저장 없이 바로 blockly.imagepath에 전달
+                        BlocklyModel.Instance.imgPath = absolutePath.Replace("\\", "/");
 
-                        // inference_images 디렉토리가 없으면 생성
-                        if (!Directory.Exists(inferenceImagesDir))
-                        {
-                            Directory.CreateDirectory(inferenceImagesDir);
-                            Console.WriteLine($"[INFO] inference_images 디렉토리 생성됨: {inferenceImagesDir}");
-                        }
-
-                        string fileName = Path.GetFileName(absolutePath);
-                        string destinationPath = Path.Combine(inferenceImagesDir, fileName);
-
-                        // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
-                        File.Copy(absolutePath, destinationPath, true);
-
-                        // inference_images 기준 상대 경로 설정
-                        string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
-
-                        // BlocklyModel에 상대 경로 설정
-                        BlocklyModel.Instance.imgPath = relativePath;
-                        Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
-
+                        // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
@@ -970,7 +939,8 @@ namespace SAI.SAI.App.Views.Pages
 
                         btnSelectInferImage.Visible = false;
                     }
-                }
+                
+            }
                 else
                 {
                     MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
@@ -984,31 +954,86 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-
-        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
-        // var tutorialView = new UcTutorialBlockCode(mainView);
-        //tutorialView.ShowTutorialInferResultImage(resultImage);
-
-        public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
+        public void ShowInferenceResult(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowInferenceResult(result)));
                 return;
             }
 
             dialogLoadingInfer?.Close();
             dialogLoadingInfer = null;
 
-            if (resultImage != null)
+            if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(287, 185);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
+                if (File.Exists(result.ResultImage))
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+
+                            // ✅ 직접 PictureBox에 표시
+                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = image;
+                            pboxInferAccuracy.Visible = true;
+                            btnSelectInferImage.Visible = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
         }
+
+
+
+        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
+        // var tutorialView = new UcTutorialBlockCode(mainView);
+        //tutorialView.ShowTutorialInferResultImage(resultImage);
+
+        //public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
+        //        return;
+        //    }
+
+        //    dialogLoadingInfer?.Close();
+        //    dialogLoadingInfer = null;
+
+        //    if (resultImage != null)
+        //    {
+        //        pboxInferAccuracy.Size = new Size(287, 185);
+        //        pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+        //        pboxInferAccuracy.Image = resultImage;
+        //        pboxInferAccuracy.Visible = true;
+        //        btnSelectInferImage.Visible = false;
+        //    }
+        //}
+
+
 
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
@@ -1066,43 +1091,6 @@ namespace SAI.SAI.App.Views.Pages
             timer.Start();
         }
 
-        public void ShowInferenceResult(PythonService.InferenceResult result)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => ShowInferenceResult(result)));
-                return;
-            }
-
-            dialogLoadingInfer?.Close();
-            dialogLoadingInfer = null;
-
-            if (result.Success)
-            {
-                if (File.Exists(result.ResultImage))
-                {
-                    try
-                    {
-                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
-                        {
-                            var image = System.Drawing.Image.FromStream(stream);
-                            ShowTutorialInferResultImage(image); 
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         //// 추론탭 이미지 불러오기 버튼
         //private void btnSelectInferImage_Click(object sender, EventArgs e)
@@ -1139,4 +1127,3 @@ namespace SAI.SAI.App.Views.Pages
         //    }
         //}
     }
-}

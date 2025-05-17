@@ -15,6 +15,6 @@ namespace SAI.SAI.App.Views.Interfaces
         void ClearLog();
         void SetLogVisible(bool visible);
         void ShowErrorMessage(string message);
-        void ShowInferenceResult(PythonService.InferenceResult result);
+        //void ShowInferenceResult(PythonService.InferenceResult result);
     }
 }
