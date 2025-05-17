@@ -45,21 +45,21 @@ venv/
 .venv/
 .ipynb_checkpoints
 
-# /Python/ 하위 전체 무시
-app/SAI/SAI/SAI.Application/Python/*
+# 1. Python 전체 무시
 app/SAI/SAI/SAI.Application/Python/**
 
-# /Python/script/ 폴더는 예외 처리
+# 2. scripts 폴더 제외
 !app/SAI/SAI/SAI.Application/Python/scripts/
-!app/SAI/SAI/SAI.Application/Python/scripts/**
+!app/SAI/SAI/SAI.Application/Python/dataset/
+!app/SAI/SAI/SAI.Application/Python/runs/
 
-# 학습 결과 무시
-app/SAI/SAI/SAI.Application/Python/runs/
-app/SAI/SAI/SAI.Application/Python/runs/**/*
-
-# scripts 폴더 내의 특정 파일 다시 무시
+# 3. scripts 폴더 중 특정 파일은 무시
 app/SAI/SAI/SAI.Application/Python/scripts/train_script.py
 app/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
+
+# 4. 나머지 scripts 폴더는 추적
+!app/SAI/SAI/SAI.Application/Python/scripts/*.py
+
 
 # 모델, 결과, 캐시 무시
 *.pt
