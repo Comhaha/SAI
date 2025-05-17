@@ -104,5 +104,13 @@ namespace SAI.SAI.App.Presenters
             var result = _pythonService.RunInference(imagePath, conf);
             _itutorialInferenceView.ShowInferenceResult(result);
         }
+
+        public PythonService.InferenceResult RunInferenceDirect(string imagePath, double conf)
+        {
+            Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
+            var result = _pythonService.RunInference(imagePath, conf);
+            Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}");
+            return result;
+        }
     }
 }

@@ -17,6 +17,7 @@ using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using SAI.SAI.Application.Service;
+using System.Threading.Tasks;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -575,6 +576,8 @@ namespace SAI.SAI.App.Views.Pages
             MemoUtils.ApplyStyle(tboxMemo);
         }
 
+        // threshold 바에서 threshold 값을 생성
+        // 마우스 떼면 추론 스크립트 실행
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
@@ -584,12 +587,20 @@ namespace SAI.SAI.App.Views.Pages
                 {
                 currentThreshold = newValue;
 
-                yoloTutorialPresenter.OnInferImageSelected(
-                    blocklyModel.imgPath,
-                    currentThreshold
-                );
-                    Console.WriteLine($"[DEBUG] 경로: {BlocklyModel.Instance.imgPath}, threshold: {currentThreshold}");
+                    // 추론은 백그라운드에서 실행
+                    Task.Run(() =>
+                    {
+                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                            blocklyModel.imgPath,
+                            currentThreshold
+                        );
 
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            ShowInferenceResult(result);
+                        }));
+                    });
                 },
                 this
             );
@@ -898,9 +909,10 @@ namespace SAI.SAI.App.Views.Pages
 
         public void ShowDialogInferenceLoading()
         {
-            using (var dialog = new DialogInferenceLoading())
+            if (dialogLoadingInfer == null || dialogLoadingInfer.IsDisposed)
             {
-                dialog.ShowDialog();
+                dialogLoadingInfer = new DialogInferenceLoading();
+                dialogLoadingInfer.Show();  // 비동기적으로 띄움
             }
         }
 
@@ -954,6 +966,9 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
+        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
+        // var tutorialView = new UcTutorialBlockCode(mainView);
+        //tutorialView.ShowTutorialInferResultImage(resultImage);
         public void ShowInferenceResult(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
@@ -1005,36 +1020,6 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
             Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
         }
-
-
-
-        // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
-        // var tutorialView = new UcTutorialBlockCode(mainView);
-        //tutorialView.ShowTutorialInferResultImage(resultImage);
-
-        //public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
-        //{
-        //    if (InvokeRequired)
-        //    {
-        //        Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
-        //        return;
-        //    }
-
-        //    dialogLoadingInfer?.Close();
-        //    dialogLoadingInfer = null;
-
-        //    if (resultImage != null)
-        //    {
-        //        pboxInferAccuracy.Size = new Size(287, 185);
-        //        pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-        //        pboxInferAccuracy.Image = resultImage;
-        //        pboxInferAccuracy.Visible = true;
-        //        btnSelectInferImage.Visible = false;
-        //    }
-        //}
-
-
-
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
         {
@@ -1092,38 +1077,5 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         }
-        //// 추론탭 이미지 불러오기 버튼
-        //private void btnSelectInferImage_Click(object sender, EventArgs e)
-        //{
-        //    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-        //    {
-        //        openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-        //        openFileDialog.Title = "추론할 이미지 선택";
-
-        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //        {
-        //            string selectedImagePath = openFileDialog.FileName;
-        //            yoloTutorialPresenter.OnInferImageSelected(selectedImagePath, currentThreshold);
-        //        }
-        //    }
-        //}
-        // 추론 스크립트 실행해서 결과 보여주는 함수
-        //public void ShowInferenceResult(SAI.Application.Service.PythonService.InferenceResult result)
-        //{
-        //    if (result.Success)
-        //    {
-        //        if (File.Exists(result.ResultImage))
-        //        {
-        //            pboxInferAccuracy.Image = System.Drawing.Image.FromFile(result.ResultImage);
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
+        
     }
