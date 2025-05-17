@@ -1,4 +1,6 @@
-﻿namespace SAI.SAI.App.Views.Pages
+﻿using System.Windows.Forms;
+
+namespace SAI.SAI.App.Views.Pages
 {
     partial class UcSelectType
     {
@@ -32,10 +34,12 @@
 			this.btnAudio = new Guna.UI2.WinForms.Guna2Button();
 			this.btnPose = new Guna.UI2.WinForms.Guna2Button();
 			this.tpBtnParent = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.lbTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
+			this.tpContentParent = new System.Windows.Forms.TableLayoutPanel();
+			this.tpParent = new System.Windows.Forms.TableLayoutPanel();
+			this.autoSizeTitle = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.tpBtnParent.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.tpContentParent.SuspendLayout();
+			this.tpParent.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnImage
@@ -45,7 +49,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnImage.BackColor = System.Drawing.Color.Transparent;
 			this.btnImage.BackgroundImage = global::SAI.Properties.Resources.btn_image;
-			this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnImage.DefaultAutoSize = true;
 			this.btnImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -53,10 +58,10 @@
 			this.btnImage.FillColor = System.Drawing.Color.Transparent;
 			this.btnImage.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnImage.ForeColor = System.Drawing.Color.White;
-			this.btnImage.Location = new System.Drawing.Point(20, 20);
-			this.btnImage.Margin = new System.Windows.Forms.Padding(20);
+			this.btnImage.Location = new System.Drawing.Point(51, 31);
+			this.btnImage.Margin = new System.Windows.Forms.Padding(0);
 			this.btnImage.Name = "btnImage";
-			this.btnImage.Size = new System.Drawing.Size(251, 315);
+			this.btnImage.Size = new System.Drawing.Size(304, 571);
 			this.btnImage.TabIndex = 0;
 			this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
 			// 
@@ -67,7 +72,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnAudio.BackColor = System.Drawing.Color.Transparent;
 			this.btnAudio.BackgroundImage = global::SAI.Properties.Resources.btn_audio;
-			this.btnAudio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.btnAudio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.btnAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -75,10 +80,10 @@
 			this.btnAudio.FillColor = System.Drawing.Color.Transparent;
 			this.btnAudio.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnAudio.ForeColor = System.Drawing.Color.White;
-			this.btnAudio.Location = new System.Drawing.Point(311, 20);
-			this.btnAudio.Margin = new System.Windows.Forms.Padding(20);
+			this.btnAudio.Location = new System.Drawing.Point(761, 31);
+			this.btnAudio.Margin = new System.Windows.Forms.Padding(0);
 			this.btnAudio.Name = "btnAudio";
-			this.btnAudio.Size = new System.Drawing.Size(251, 315);
+			this.btnAudio.Size = new System.Drawing.Size(304, 571);
 			this.btnAudio.TabIndex = 10;
 			this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
 			// 
@@ -89,7 +94,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPose.BackColor = System.Drawing.Color.Transparent;
 			this.btnPose.BackgroundImage = global::SAI.Properties.Resources.btn_pose;
-			this.btnPose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.btnPose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.btnPose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
 			this.btnPose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
 			this.btnPose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -97,70 +102,105 @@
 			this.btnPose.FillColor = System.Drawing.Color.Transparent;
 			this.btnPose.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.btnPose.ForeColor = System.Drawing.Color.White;
-			this.btnPose.Location = new System.Drawing.Point(602, 20);
-			this.btnPose.Margin = new System.Windows.Forms.Padding(20);
+			this.btnPose.Location = new System.Drawing.Point(406, 31);
+			this.btnPose.Margin = new System.Windows.Forms.Padding(0);
 			this.btnPose.Name = "btnPose";
-			this.btnPose.Size = new System.Drawing.Size(253, 315);
+			this.btnPose.Size = new System.Drawing.Size(304, 571);
 			this.btnPose.TabIndex = 11;
 			this.btnPose.Click += new System.EventHandler(this.btnPose_Click);
 			// 
 			// tpBtnParent
 			// 
-			this.tpBtnParent.BackColor = System.Drawing.Color.Transparent;
-			this.tpBtnParent.ColumnCount = 3;
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tpBtnParent.Controls.Add(this.btnImage, 0, 0);
-			this.tpBtnParent.Controls.Add(this.btnPose, 2, 0);
-			this.tpBtnParent.Controls.Add(this.btnAudio, 1, 0);
-			this.tpBtnParent.Location = new System.Drawing.Point(3, 120);
+			this.tpBtnParent.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tpBtnParent.BackColor = System.Drawing.Color.LightSalmon;
+			this.tpBtnParent.ColumnCount = 7;
+			this.tpContentParent.SetColumnSpan(this.tpBtnParent, 3);
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
+			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
+			this.tpBtnParent.Controls.Add(this.btnImage, 1, 1);
+			this.tpBtnParent.Controls.Add(this.btnPose, 3, 1);
+			this.tpBtnParent.Controls.Add(this.btnAudio, 5, 1);
+			this.tpBtnParent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tpBtnParent.Location = new System.Drawing.Point(0, 158);
+			this.tpBtnParent.Margin = new System.Windows.Forms.Padding(0);
 			this.tpBtnParent.Name = "tpBtnParent";
-			this.tpBtnParent.RowCount = 1;
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tpBtnParent.RowCount = 3;
+			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
 			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tpBtnParent.Size = new System.Drawing.Size(875, 355);
+			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tpBtnParent.Size = new System.Drawing.Size(1122, 635);
 			this.tpBtnParent.TabIndex = 12;
 			// 
-			// tableLayoutPanel1
+			// tpContentParent
 			// 
-			this.tableLayoutPanel1.ColumnCount = 1;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.tpBtnParent, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.lbTitle, 0, 0);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(212, 78);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.63465F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.36534F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(881, 479);
-			this.tableLayoutPanel1.TabIndex = 13;
+			this.tpContentParent.BackColor = System.Drawing.Color.IndianRed;
+			this.tpContentParent.ColumnCount = 1;
+			this.tpContentParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tpContentParent.Controls.Add(this.autoSizeTitle, 0, 0);
+			this.tpContentParent.Controls.Add(this.tpBtnParent, 0, 1);
+			this.tpContentParent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tpContentParent.Location = new System.Drawing.Point(379, 269);
+			this.tpContentParent.Name = "tpContentParent";
+			this.tpContentParent.RowCount = 2;
+			this.tpContentParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpContentParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+			this.tpContentParent.Size = new System.Drawing.Size(1122, 793);
+			this.tpContentParent.TabIndex = 13;
 			// 
-			// lbTitle
+			// tpParent
 			// 
-			this.lbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.tpParent.BackColor = System.Drawing.Color.LightGray;
+			this.tpParent.ColumnCount = 3;
+			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.Controls.Add(this.tpContentParent, 1, 1);
+			this.tpParent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tpParent.Location = new System.Drawing.Point(0, 0);
+			this.tpParent.Name = "tpParent";
+			this.tpParent.RowCount = 3;
+			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.Size = new System.Drawing.Size(1880, 1332);
+			this.tpParent.TabIndex = 14;
+			this.tpParent.Paint += new System.Windows.Forms.PaintEventHandler(this.tpParent_Paint);
+			// 
+			// autoSizeTitle
+			// 
+			this.autoSizeTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lbTitle.AutoSize = false;
-			this.lbTitle.BackColor = System.Drawing.Color.Transparent;
-			this.lbTitle.Font = new System.Drawing.Font("Noto Sans KR SemiBold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.lbTitle.Location = new System.Drawing.Point(3, 3);
-			this.lbTitle.Name = "lbTitle";
-			this.lbTitle.Size = new System.Drawing.Size(875, 111);
-			this.lbTitle.TabIndex = 14;
-			this.lbTitle.Text = "학습 데이터 종류를 선택하세요";
-			this.lbTitle.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+			this.autoSizeTitle.Font = new System.Drawing.Font("Noto Sans KR SemiBold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+			this.autoSizeTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+			this.autoSizeTitle.Location = new System.Drawing.Point(40, 0);
+			this.autoSizeTitle.Margin = new System.Windows.Forms.Padding(40, 0, 40, 40);
+			this.autoSizeTitle.Name = "autoSizeTitle";
+			this.autoSizeTitle.Size = new System.Drawing.Size(1042, 118);
+			this.autoSizeTitle.TabIndex = 14;
+			this.autoSizeTitle.Text = "학습 데이터 종류를 선택하세요.";
+			this.autoSizeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// UcSelectType
 			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.AutoSize = true;
-			this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
-			this.Controls.Add(this.tableLayoutPanel1);
+			this.Controls.Add(this.tpParent);
 			this.Name = "UcSelectType";
-			this.Size = new System.Drawing.Size(1280, 720);
+			this.Size = new System.Drawing.Size(1880, 1332);
 			this.tpBtnParent.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tpBtnParent.PerformLayout();
+			this.tpContentParent.ResumeLayout(false);
+			this.tpParent.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
@@ -170,7 +210,8 @@
 		private Guna.UI2.WinForms.Guna2Button btnAudio;
 		private Guna.UI2.WinForms.Guna2Button btnPose;
 		private System.Windows.Forms.TableLayoutPanel tpBtnParent;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private Guna.UI2.WinForms.Guna2HtmlLabel lbTitle;
+		private System.Windows.Forms.TableLayoutPanel tpContentParent;
+		private SAI.App.Views.Pages.AutoSizeLabel autoSizeTitle;
+		private System.Windows.Forms.TableLayoutPanel tpParent;
 	}
 }

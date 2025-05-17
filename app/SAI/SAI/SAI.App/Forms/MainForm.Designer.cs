@@ -33,8 +33,8 @@
 			// 
 			// mainPanel
 			// 
-			this.mainPanel.AutoSize = true;
 			this.mainPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.mainPanel.BackColor = System.Drawing.Color.Transparent;
 			this.mainPanel.Location = new System.Drawing.Point(0, 30);
 			this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.mainPanel.MinimumSize = new System.Drawing.Size(1280, 720);
@@ -162,6 +162,7 @@
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(1280, 750);
 			this.Controls.Add(this.titlebar);
@@ -176,7 +177,6 @@
 			this.titlebar.ResumeLayout(false);
 			this.pTitlebarRight.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
         }
 

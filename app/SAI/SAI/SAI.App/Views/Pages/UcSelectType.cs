@@ -15,6 +15,7 @@ namespace SAI.SAI.App.Views.Pages
             InitializeComponent();
 			this.mainView = view;
 			presenter = new UcShowDialogPresenter(this);
+			this.Dock = DockStyle.Fill;
 
 			// btnImage
 			btnImage.BackColor = Color.Transparent;
@@ -90,6 +91,11 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
+		}
+
+		private void tpParent_Paint(object sender, PaintEventArgs e)
+		{
+
 		}
 	}
 }

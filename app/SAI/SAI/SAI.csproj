@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -251,11 +251,11 @@
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Common\ToolTipUtils.cs" />
-    <Compile Include="SAI.App\Views\Pages\Blockly.cs">
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
-      <DependentUpon>Blockly.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.Designer.cs">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -370,8 +370,8 @@
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
-      <DependentUpon>Blockly.cs</DependentUpon>
+    <EmbeddedResource Include="SAI.App\Views\Pages\AutoSizeLabel.resx">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
       <DependentUpon>UcCode.cs</DependentUpon>
@@ -403,7 +403,6 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
