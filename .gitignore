@@ -77,6 +77,11 @@ app/SAI/SAI/SAI.Application/Python/runs/result/*
 app/SAI/SAI/SAI.Application/Python/dataset/*
 !app/SAI/SAI/SAI.Application/Python/dataset/.gitkeep
 
+# 9. runs/detect/train 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/detect/train
+app/SAI/SAI/SAI.Application/Python/runs/detect/train/*
+!app/SAI/SAI/SAI.Application/Python/runs/detect/train/.gitkeep
+
 
 # 모델, 결과, 캐시 무시
 *.pt
