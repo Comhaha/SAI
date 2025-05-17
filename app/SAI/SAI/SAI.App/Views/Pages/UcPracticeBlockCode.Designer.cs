@@ -317,6 +317,7 @@ namespace SAI.SAI.App.Views.Pages
             // webViewblock
             // 
             this.webViewblock.AllowExternalDrop = true;
+            this.webViewblock.Controls.Add(this.pErrorToast);
             this.webViewblock.BackColor = System.Drawing.Color.White;
             this.webViewblock.CreationProperties = null;
             this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;

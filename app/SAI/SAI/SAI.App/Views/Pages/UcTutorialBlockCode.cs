@@ -19,14 +19,15 @@ using System.Messaging;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
+using Timer = System.Windows.Forms.Timer;
 
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {
-		private YoloTutorialPresenter yoloTutorialPresenter;
-		private BlocklyPresenter blocklyPresenter;
-		private UcShowDialogPresenter ucShowDialogPresenter;
+        private YoloTutorialPresenter yoloTutorialPresenter;
+        private BlocklyPresenter blocklyPresenter;
+        private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
 
         private BlocklyModel blocklyModel;
@@ -43,11 +44,11 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-		private MemoPresenter memoPresenter;
+        private MemoPresenter memoPresenter;
         private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
 
-		private int undoCount = 0; // 뒤로가기 카운트
-		private int blockCount = 0; // 블럭 개수
+        private int undoCount = 0; // 뒤로가기 카운트
+        private int blockCount = 0; // 블럭 개수
 
         private string errorMessage = "";
         private string missingType = "";
@@ -55,15 +56,15 @@ namespace SAI.SAI.App.Views.Pages
 
         private CancellationTokenSource _toastCancellationSource;
 
-		private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
-		private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
-		public UcTutorialBlockCode(IMainView view)
-		{
-			InitializeComponent();
-			blocklyPresenter = new BlocklyPresenter(this);
-			yoloTutorialPresenter = new YoloTutorialPresenter(this);
-			memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
+        public UcTutorialBlockCode(IMainView view)
+        {
+            InitializeComponent();
+            blocklyPresenter = new BlocklyPresenter(this);
+            yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
             blocklyModel = BlocklyModel.Instance;
 
@@ -73,46 +74,46 @@ namespace SAI.SAI.App.Views.Pages
             tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             //btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
-			// 확대/축소 버튼 이벤트 추가
-			ibtnPlusCode.Click += (s, e) =>
-			{
-				try
-				{
-					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
-					if (currentIndex < zoomLevels.Length - 1)
-					{
-						currentZoomLevel = zoomLevels[currentIndex + 1];
-						UpdateCodeZoom();
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
-				}
-			};
+            // 확대/축소 버튼 이벤트 추가
+            ibtnPlusCode.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex < zoomLevels.Length - 1)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex + 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
+                }
+            };
 
-			ibtnMinusCode.Click += (s, e) =>
-			{
-				try
-				{
-					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
-					if (currentIndex > 0)
-					{
-						currentZoomLevel = zoomLevels[currentIndex - 1];
-						UpdateCodeZoom();
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
-				}
-			};
+            ibtnMinusCode.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex > 0)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex - 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
+                }
+            };
 
-			// 초기 확대/축소 레벨 설정
-			currentZoomLevel = 60;
-			UpdateCodeZoom();
+            // 초기 확대/축소 레벨 설정
+            currentZoomLevel = 60;
+            UpdateCodeZoom();
 
-			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+            btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
             pboxInferAccuracy.Visible = false;
             btnSelectInferImage.Visible = false;
 
@@ -160,22 +161,22 @@ namespace SAI.SAI.App.Views.Pages
 
 
             ibtnHome.BackColor = Color.Transparent;
-			ibtnDone.BackColor = Color.Transparent;
-			ibtnInfer.BackColor = Color.Transparent;
-			ibtnMemo.BackColor = Color.Transparent;
+            ibtnDone.BackColor = Color.Transparent;
+            ibtnInfer.BackColor = Color.Transparent;
+            ibtnMemo.BackColor = Color.Transparent;
             ButtonUtils.SetTransparentStyle(btnCopy);
 
-			// PercentUtils로 퍼센트 박스 스타일 일괄 적용
-			PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
+            // PercentUtils로 퍼센트 박스 스타일 일괄 적용
+            PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
 
             this.mainView = view;
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
-			blockCount = 0; // 블럭 개수 초기화
-			undoCount = 0;
-			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
-			btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
-			btnTrash.Visible = false; // 처음에는 보이지 않게 설정
+            blockCount = 0; // 블럭 개수 초기화
+            undoCount = 0;
+            btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+            btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
+            btnTrash.Visible = false; // 처음에는 보이지 않게 설정
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -191,7 +192,7 @@ namespace SAI.SAI.App.Views.Pages
 
             //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
-  "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+            "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
             ToolTipUtils.CustomToolTip(btnInfoGraph,
               "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
@@ -213,7 +214,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     // BlocklyModel에서 전체 코드 가져오기
                     string codeToCopy = blocklyModel.blockAllCode;
-                    
+
                     if (!string.IsNullOrEmpty(codeToCopy))
                     {
                         // 클립보드에 코드 복사
@@ -592,6 +593,7 @@ namespace SAI.SAI.App.Views.Pages
 
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
+
         }
 
         private void SetupThresholdControls()
@@ -1119,7 +1121,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     BlockInfo block = blocklyModel.blockTypes[i];
                     if (block == null) continue;
-                    
+
                     string blockType = block.type;
                     if (!checkBlockPosition(blockType, i))
                     {
@@ -1170,6 +1172,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             return false;
+        }
         private void UpdateCodeZoom()
         {
             try
