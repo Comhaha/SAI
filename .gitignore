@@ -58,27 +58,24 @@ app/SAI/SAI/SAI.Application/Python/**
 app/SAI/SAI/SAI.Application/Python/scripts/tutorial_script.py
 app/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
 
-# runs 폴더의 모든 파일 무시 (폴더 자체는 유지)
-runs/*
+# 5. runs 폴더 추적 설정 (Python 안에 있다면 경로 수정 필요)
+!app/SAI/SAI/SAI.Application/Python/runs/
+app/SAI/SAI/SAI.Application/Python/runs/*
 
-# runs/detect 폴더 추적
-!runs/detect/
-# runs/detect 폴더 내부 파일 무시
-runs/detect/*
-# runs/detect 폴더 유지를 위한 .gitkeep 파일 추적
-!runs/detect/.gitkeep
+# 6. runs 내부의 detect 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/detect/
+app/SAI/SAI/SAI.Application/Python/runs/detect/*
+!app/SAI/SAI/SAI.Application/Python/runs/detect/.gitkeep
 
-# runs/result 폴더 추적
-!runs/result/
-# runs/result 폴더 내부 파일 무시
-runs/result/*
-# runs/result 폴더 유지를 위한 .gitkeep 파일 추적
-!runs/result/.gitkeep
+# 7. runs 내부의 result 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/result/
+app/SAI/SAI/SAI.Application/Python/runs/result/*
+!app/SAI/SAI/SAI.Application/Python/runs/result/.gitkeep
 
-# dataset 폴더의 모든 파일 무시 (폴더 자체는 유지)
-dataset/*
-# dataset 폴더 유지를 위한 .gitkeep 파일 추적
-!dataset/.gitkeep
+# 8. dataset 폴더 추적 설정 (Python 안에 있다면 경로 수정 필요)
+!app/SAI/SAI/SAI.Application/Python/dataset/
+app/SAI/SAI/SAI.Application/Python/dataset/*
+!app/SAI/SAI/SAI.Application/Python/dataset/.gitkeep
 
 
 # 모델, 결과, 캐시 무시
