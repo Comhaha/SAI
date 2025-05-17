@@ -25,7 +25,9 @@ namespace SAI
 		{
 			InitializeComponent();
 
-			presenter = new MainPresenter(this);
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            presenter = new MainPresenter(this);
 
 			// 사이즈 고정
 			MinimumSize = new Size(1280, 750);
@@ -77,7 +79,7 @@ namespace SAI
 		{
 			// 초기 페이지인 UcSelectType을 불러온다.
 			presenter.Initialize();
-		}
+        }
 
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)

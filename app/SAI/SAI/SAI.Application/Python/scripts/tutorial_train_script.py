@@ -12,6 +12,31 @@ import glob
 import io
 from datetime import datetime
 
+# base_dir을 스크립트 실행 기준으로 설정
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(f"Base directory: {base_dir}")
+
+# 환경변수 로드
+try:
+    from dotenv import load_dotenv
+    dotenv_path = os.path.join(base_dir, "scripts", ".env")
+    print(f"Loading .env from: {dotenv_path}")
+    load_dotenv(dotenv_path=dotenv_path)
+    
+    # 환경 변수가 로드되었는지 확인 (디버깅용)
+    api_url = os.environ.get("API_SERVER_URL")
+    print(f"Loaded API_SERVER_URL: {api_url}")
+except ImportError:
+    print("python-dotenv is not installed. Installing now...")
+    try:
+        # 현재 파이썬으로 pip install 실행
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "python-dotenv"])
+        from dotenv import load_dotenv  # 재시도
+        print("✅ python-dotenv 설치 완료.")
+    except Exception as e:
+        print(f"❌ python-dotenv 설치 실패: {e}")
+        load_dotenv = None  # 이후 로딩 스킵
+
 # 표준 출력 스트림 설정
 try:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -20,10 +45,7 @@ except Exception as e:
     # 이미 설정되어 있거나 닫혀있는 경우 무시
     pass
 
-# base_dir을 스크립트 실행 기준으로 설정
-# 
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(f"Base directory: {base_dir}")
+
 
 # 로깅 설정 - 시간 포맷 변경 및 상세 정보 표시
 logging.basicConfig(
@@ -181,28 +203,112 @@ def install_torch_cuda():
         return False, "cpu"
 
 def download_dataset_with_progress(start_time):
-    """서버에서 데이터셋 다운로드 및 진행률 표시"""
+    """API를 통해 S3에서 데이터셋 다운로드 및 진행률 표시"""
     # 데이터셋 저장 경로 설정, 덮어쓰기 
-    dataset_dir = os.path.join(base_dir, "dataset", "tutorial_dataset")
+    dataset_dir = os.path.join(base_dir, "dataset")
     os.makedirs(dataset_dir, exist_ok=True)
-    show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 70)
+    show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 10)
 
-    # ZIP 파일 경로 정의
+    # 필요한 패키지 설치 확인
+    try:
+        import requests
+        from tqdm import tqdm
+    except ImportError:
+        show_progress("필요한 패키지 설치 중...", start_time, 15)
+        install_packages_with_progress(["requests", "tqdm"], start_time)
+        import requests
+        from tqdm import tqdm
+    
+    # 환경 변수에서 서버 주소 가져오기
+    server_url = os.environ.get("API_SERVER_URL")
+    if not server_url:
+        show_progress("API_SERVER_URL 환경 변수가 설정되지 않았습니다.", start_time, 15)
+        return type('obj', (), {'location': dataset_dir})
+    
+    # 슬래시로 끝나지 않는지 확인
+    if server_url.endswith('/'):
+        server_url = server_url[:-1]
+    
+    # API 엔드포인트 URL 구성
+    api_url = f"{server_url}/api/download/tutorial"
+    show_progress("API에서 다운로드 URL 요청 중...", start_time, 20)
+    
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
     
+    # API 호출하여 presigned URL 받기
+    try:
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            data = response.json()
+            download_url = data['result']
+            show_progress("다운로드 URL 획득 성공", start_time, 30)
+        else:
+            show_progress(f"API 호출 실패: 상태 코드 {response.status_code}", start_time, 30)
+            raise Exception(f"API 응답 오류: {response.text}")
+    except Exception as e:
+        show_progress(f"API 호출 중 오류 발생: {e}", start_time, 30)
+        return type('obj', (), {'location': dataset_dir})
+
+    # 파일 다운로드 (진행률 표시)
+    show_progress("데이터셋 다운로드 시작...", start_time, 40)
+    try:
+        response = requests.get(download_url, stream=True)
+        total_size = int(response.headers.get('content-length', 0))
+        
+        # 다운로드 진행률 표시 및 파일 저장
+        with open(zip_path, 'wb') as f:
+            downloaded = 0
+            for chunk in response.iter_content(chunk_size=1024*1024):  # 1MB 단위로 청크 다운로드
+                if chunk:
+                    f.write(chunk)
+                    downloaded += len(chunk)
+                    progress = min(40 + (downloaded / total_size * 30), 70)  # 40% ~ 70% 범위
+                    show_progress(f"다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB", start_time, progress)
+        
+        show_progress("데이터셋 다운로드 완료", start_time, 70)
+    except Exception as e:
+        show_progress(f"다운로드 중 오류 발생: {e}", start_time, 70)
+        # 다운로드 실패 시 처리
+        if os.path.exists(zip_path):
+            show_progress(f"부분적으로 다운로드된 파일이 있습니다: {zip_path}", start_time, 71)
+        else:
+            show_progress("다운로드 파일이 생성되지 않았습니다", start_time, 71)
+        return type('obj', (), {'location': dataset_dir})
+    
     # ZIP 파일 압축 해제
+    if os.path.exists(zip_path):
+        extracted_dir = dataset_dir  # 기본값 설정
+    
     if os.path.exists(zip_path):
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 file_list = zip_ref.namelist()
                 total_files = len(file_list)
-                show_progress(f"압축 파일 내 {total_files}개 파일 발견", start_time, 92)
+                show_progress(f"압축 파일 내 {total_files}개 파일 발견", start_time, 75)
+                
+                # 첫 번째 파일의 경로에서 최상위 디렉토리 확인 (있는 경우)
+                if file_list and '/' in file_list[0]:
+                    top_dir = file_list[0].split('/')[0]
+                    # 최상위 디렉토리가 있는 경우, 이를 추출 디렉토리로 설정
+                    potential_extracted_dir = os.path.join(dataset_dir, top_dir)
+                else:
+                    potential_extracted_dir = dataset_dir
+                
+                # 압축 해제 진행률 표시 (기존 코드와 동일)
+                for i, file in enumerate(file_list):
+                    zip_ref.extract(file, dataset_dir)
+                    # ... (진행률 표시 코드)
+                
+                # 압축 해제 후 실제 추출 디렉토리 확인
+                if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
+                    extracted_dir = potential_extracted_dir
+                    show_progress(f"데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}", start_time, 95)
                 
                 # 압축 해제 진행률 표시
                 for i, file in enumerate(file_list):
-                    zip_ref.extract(file, dataset_dir)  # tutorial_dataset 폴더에 압축 해제
+                    zip_ref.extract(file, dataset_dir)
                     if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
-                        extract_progress = 92 + (i / total_files) * 8  # 92% ~ 100% 범위
+                        extract_progress = 75 + (i / total_files) * 25  # 75% ~ 100% 범위
                         show_progress(f"압축 해제 중: {i+1}/{total_files} 파일", start_time, extract_progress)
             
             show_progress("압축 해제 완료", start_time, 100)
@@ -218,21 +324,35 @@ def download_dataset_with_progress(start_time):
     else:
         show_progress("다운로드된 ZIP 파일을 찾을 수 없습니다.", start_time, 95)
     
-    # 데이터셋 경로
-    # 
-    return type('obj', (), {'location': dataset_dir})
+    # 데이터셋 경로 반환
+    return type('obj', (), {'location': dataset_dir, 'extracted_dir': extracted_dir})
 
-def find_yaml_file(dataset_dir, start_time):
+def find_yaml_file(dataset_dir, extracted_dir, start_time):
     """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
-    show_progress(f"데이터 경로 확인: {dataset_dir}", start_time, 0)
+    show_progress(f"데이터 경로 확인: {extracted_dir}", start_time, 0)
     
-    # 기본 data.yaml 경로
-    yaml_path = os.path.join(dataset_dir, "data.yaml")
+    # 압축 해제된 디렉토리에서 data.yaml 찾기
+    yaml_path = os.path.join(extracted_dir, "data.yaml")
     
     # data.yaml 파일이 있는지 확인
-    if (os.path.exists(yaml_path)):
+    if os.path.exists(yaml_path):
         show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
         return yaml_path
+    
+    # 압축 해제된 디렉토리의 하위 폴더들에서 data.yaml 찾기
+    for root, dirs, files in os.walk(extracted_dir):
+        for file in files:
+            if file == "data.yaml":
+                yaml_path = os.path.join(root, file)
+                show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+                return yaml_path
+    
+    # 기본 dataset 디렉토리에서 데이터 찾기 (압축 해제 경로에서 찾지 못했을 경우)
+    if dataset_dir != extracted_dir:
+        yaml_path = os.path.join(dataset_dir, "data.yaml")
+        if os.path.exists(yaml_path):
+            show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+            return yaml_path
     
     # 파일을 찾지 못했을 경우
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 100)
@@ -467,9 +587,14 @@ def main():
    # 6. 데이터 경로 확인
     path_start_time = time.time()
     show_progress("데이터 경로 확인 중... (6/7)", total_start_time, 0)
-    # dataset 객체의 location 속성을 사용
-    tutorial_dataset_dataset_dir = dataset.location
-    data_yaml_path = os.path.join(tutorial_dataset_dataset_dir, "data.yaml")
+
+    # dataset 객체에서 압축 해제된 디렉토리 정보 가져오기
+    tutorial_dataset_dir = dataset.location
+    extracted_dataset_dir = getattr(dataset, 'extracted_dir', tutorial_dataset_dir)  # 추출된 디렉토리가 없으면 기본 경로 사용
+
+    # 추출된 디렉토리에서 data.yaml 파일 찾기
+    data_yaml_path = find_yaml_file(tutorial_dataset_dir, extracted_dataset_dir, path_start_time)
+
     path_elapsed = time.time() - path_start_time
     show_progress(f"데이터 경로 확인 완료 (소요 시간: {int(path_elapsed)}초)", total_start_time, 100)
     

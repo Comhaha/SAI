@@ -19,7 +19,7 @@ namespace SAI.SAI.App.Presenters
         private readonly IBlocklyView view;
         private BlocklyService blocklyService;
         private BlocklyModel blocklyModel;
-
+        private ICodeView codeView;
 
         public BlocklyPresenter(IBlocklyView view)
         {
@@ -27,7 +27,6 @@ namespace SAI.SAI.App.Presenters
             this.blocklyService = new BlocklyService();
             this.blocklyModel = BlocklyModel.Instance;
             this.view.AddBlockButtonClicked += OnAddBlockButtonClicked;
-
 
             blocklyModel.BlockCodeChanged += (newCode) =>
             {
@@ -119,6 +118,10 @@ namespace SAI.SAI.App.Presenters
                     if (codeView != null)
                     {
                         Console.WriteLine("[DEBUG] BlocklyPresenter: codeView 사용, 코드 업데이트 시도");
+                        if (codeView is UcCode ucCode)
+                        {
+                            ucCode.SetAccumulateMode(false);
+                        }
                         codeView.UpdateCode(newAllCode);
                         Console.WriteLine("[DEBUG] BlocklyPresenter: codeView 업데이트 완료");
                     }
@@ -191,8 +194,6 @@ namespace SAI.SAI.App.Presenters
         }
 
         // 혜정 추가 ICodeView 설정 메서드
-        // BlocklyPresenter 클래스에서
-        private ICodeView codeView;
         public void SetCodeView(ICodeView codeView)
         {
             if (codeView == null)
@@ -210,7 +211,12 @@ namespace SAI.SAI.App.Presenters
                 Console.WriteLine("[DEBUG] BlocklyPresenter: 기존 코드로 즉시 업데이트 시도");
                 try
                 {
+                    if (codeView is UcCode ucCode)
+                    {
+                        ucCode.SetAccumulateMode(false);
+                    }
                     codeView.UpdateCode(blocklyModel.blockAllCode);
+                    Console.WriteLine("[DEBUG] BlocklyPresenter: 초기 코드 업데이트 성공");
                 }
                 catch (Exception ex)
                 {
@@ -251,7 +257,6 @@ namespace SAI.SAI.App.Presenters
                 else
                 {
                     Console.WriteLine("[WARNING] BlocklyPresenter: codeView가 null입니다 - 코드는 유지됨");
-                    // MessageBox.Show 제거
                 }
             }
             else if (type == "blockCode")

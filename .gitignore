@@ -94,11 +94,15 @@ app/SAI/SAI/SAI.App/.vs/
 app/SAI/packages/
 app/SAI/SAI/package.config
 app/SAI/SAI/bin/
-app/SAI/SAI/obj/
+app/SAI/SAI/obj/8
 .vs
 **/.vshistory
 app/SAI/SAI/.vs/
 /app/SAI/SAI/.vs
+# Inference images directory
+app/SAI/SAI/inference_images/
+**/inference_images/
+
 
 # Firebase
 backend/src/main/resources/firebase/firebase_service_key.json

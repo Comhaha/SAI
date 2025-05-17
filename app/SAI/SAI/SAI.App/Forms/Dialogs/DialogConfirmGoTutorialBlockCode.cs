@@ -32,10 +32,11 @@ namespace SAI.SAI.App.Forms.Dialogs
 			this.mainView = view;
 		}
 
-		private void guna2Button1_Click(object sender, EventArgs e)
-		{
-			mainView.LoadPage(new UcTutorialBlockCode(mainView));
-			this.Close();
-		}
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            mainView.LoadPage(new UcBlockGuide(mainView));
+            this.Close();
+
+        }
     }
 }
