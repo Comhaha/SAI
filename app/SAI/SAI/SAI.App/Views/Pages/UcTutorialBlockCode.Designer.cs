@@ -963,7 +963,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pMemo;
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
-	    private Guna.UI2.WinForms.Guna2Button btnRunModel;
+	private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private UcCsvChart ucCsvChart1;
         private SAI.App.Views.Pages.UcCode ucCode1;
         private Guna.UI2.WinForms.Guna2Button btnTrash;

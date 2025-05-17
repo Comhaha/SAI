@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SAI.SAI.Application.Service;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
@@ -14,5 +15,6 @@ namespace SAI.SAI.App.Views.Interfaces
         void ClearLog();
         void SetLogVisible(bool visible);
         void ShowErrorMessage(string message);
+        //void ShowInferenceResult(PythonService.InferenceResult result);
     }
 }
