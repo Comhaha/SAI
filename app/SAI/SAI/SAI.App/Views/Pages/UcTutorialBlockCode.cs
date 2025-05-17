@@ -47,7 +47,7 @@ namespace SAI.SAI.App.Views.Pages
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
         private MemoPresenter memoPresenter;
-        private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
+        private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
 
         private int undoCount = 0; // 뒤로가기 카운트
         private int blockCount = 0; // 블럭 개수
@@ -610,10 +610,11 @@ namespace SAI.SAI.App.Views.Pages
                 currentThreshold = newValue;
 
                     // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
                     Task.Run(() =>
                     {
                         var result = yoloTutorialPresenter.RunInferenceDirect(
-                            blocklyModel.imgPath,
+                            selectedImagePath,
                             currentThreshold
                         );
 
@@ -1243,8 +1244,8 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         string absolutePath = openFileDialog.FileName;
 
-                        // 사용자 지정 이미지 경로를 저장 없이 바로 blockly.imagepath에 전달
-                        BlocklyModel.Instance.imgPath = absolutePath.Replace("\\", "/");
+                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
+                        selectedImagePath = absolutePath.Replace("\\", "/");
 
                         // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
