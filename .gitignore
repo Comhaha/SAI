@@ -16,6 +16,13 @@ yarn-error.log*
 pnpm-debug.log*
 *.orig
 
+# Git merge conflict backup files
+*BACKUP_*
+*BASE_*
+*LOCAL_*
+*REMOTE_*
+
+
 # Node.js / Frontend
 node_modules/
 dist/
