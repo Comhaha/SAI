@@ -72,7 +72,7 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
-            btnSelectInferImage.Size = new Size(329, 185);  // pInferAccuracy와 동일한 크기
+            btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
@@ -627,7 +627,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -674,7 +674,7 @@ namespace SAI.SAI.App.Views.Pages
 
             if (resultImage != null)
             {
-                pboxInferAccuracy.Size = new Size(287, 185);
+                pboxInferAccuracy.Size = new Size(494, 278);
                 pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                 pboxInferAccuracy.Image = resultImage;
                 pboxInferAccuracy.Visible = true;
@@ -736,5 +736,6 @@ namespace SAI.SAI.App.Views.Pages
             };
             timer.Start();
         }
+
     }
 }

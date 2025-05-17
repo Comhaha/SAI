@@ -42,8 +42,8 @@ namespace SAI
 
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
-			int maxWidth = 1280;
-			int maxHeight = 750;
+			int maxWidth = 1920;
+			int maxHeight = 1080;
 
 			// 현재 폼의 너비와 높이
 			int formWidth = this.ClientSize.Width;
@@ -54,7 +54,7 @@ namespace SAI
 			float scaleY = (float)formHeight / maxHeight;
 			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
 
-			// 확대된 크기 계산 (최대 1280 x 720)
+			// 확대된 크기 계산 (최대 1920 x 1080)
 			int newWidth = (int)(maxWidth * scale);
 			int newHeight = (int)(maxHeight * scale);
 
@@ -83,7 +83,7 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
-			page.Size = new Size(1280, 720);
+			page.Size = new Size(1920, 1080);
 			mainPanel.Controls.Clear();
 			mainPanel.BackColor = Color.Transparent;
 			mainPanel.Controls.Add(page);
@@ -110,7 +110,7 @@ namespace SAI
 			{
 				// 원래 사이즈로
 				this.WindowState = FormWindowState.Normal;
-				this.Size = new Size(1280, 750);
+				this.Size = new Size(1920, 1080);
 			}
 			else
 			{

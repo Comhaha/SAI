@@ -48,11 +48,10 @@
             this.btnTutorial.FillColor = System.Drawing.Color.Transparent;
             this.btnTutorial.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnTutorial.ForeColor = System.Drawing.Color.White;
-            this.btnTutorial.Location = new System.Drawing.Point(467, 409);
+            this.btnTutorial.Location = new System.Drawing.Point(708, 624);
             this.btnTutorial.Name = "btnTutorial";
-            this.btnTutorial.Size = new System.Drawing.Size(114, 41);
+            this.btnTutorial.Size = new System.Drawing.Size(172, 62);
             this.btnTutorial.TabIndex = 5;
-            //this.btnTutorial.Click += new System.EventHandler(this.btnTutorial_Click);
             // 
             // btnTrain
             // 
@@ -66,16 +65,16 @@
             this.btnTrain.FillColor = System.Drawing.Color.Transparent;
             this.btnTrain.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnTrain.ForeColor = System.Drawing.Color.White;
-            this.btnTrain.Location = new System.Drawing.Point(595, 409);
+            this.btnTrain.Location = new System.Drawing.Point(902, 624);
             this.btnTrain.Name = "btnTrain";
-            this.btnTrain.Size = new System.Drawing.Size(114, 41);
+            this.btnTrain.Size = new System.Drawing.Size(172, 62);
             this.btnTrain.TabIndex = 6;
-            //this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
             // 
             // btnYolo
             // 
             this.btnYolo.BackColor = System.Drawing.Color.Transparent;
             this.btnYolo.BackgroundImage = global::SAI.Properties.Resources.btn_yolo;
+            this.btnYolo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnYolo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnYolo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnYolo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -83,15 +82,16 @@
             this.btnYolo.FillColor = System.Drawing.Color.Transparent;
             this.btnYolo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnYolo.ForeColor = System.Drawing.Color.White;
-            this.btnYolo.Location = new System.Drawing.Point(32, 78);
+            this.btnYolo.Location = new System.Drawing.Point(48, 117);
             this.btnYolo.Name = "btnYolo";
-            this.btnYolo.Size = new System.Drawing.Size(365, 73);
+            this.btnYolo.Size = new System.Drawing.Size(548, 110);
             this.btnYolo.TabIndex = 7;
             // 
             // btnEfficient
             // 
             this.btnEfficient.BackColor = System.Drawing.Color.Transparent;
             this.btnEfficient.BackgroundImage = global::SAI.Properties.Resources.btn_efficientdet;
+            this.btnEfficient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnEfficient.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnEfficient.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnEfficient.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -99,15 +99,16 @@
             this.btnEfficient.FillColor = System.Drawing.Color.Transparent;
             this.btnEfficient.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnEfficient.ForeColor = System.Drawing.Color.White;
-            this.btnEfficient.Location = new System.Drawing.Point(32, 171);
+            this.btnEfficient.Location = new System.Drawing.Point(48, 256);
             this.btnEfficient.Name = "btnEfficient";
-            this.btnEfficient.Size = new System.Drawing.Size(365, 73);
+            this.btnEfficient.Size = new System.Drawing.Size(548, 110);
             this.btnEfficient.TabIndex = 8;
             // 
             // btnFaster
             // 
             this.btnFaster.BackColor = System.Drawing.Color.Transparent;
             this.btnFaster.BackgroundImage = global::SAI.Properties.Resources.btn_faster;
+            this.btnFaster.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnFaster.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.btnFaster.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.btnFaster.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -115,9 +116,9 @@
             this.btnFaster.FillColor = System.Drawing.Color.Transparent;
             this.btnFaster.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnFaster.ForeColor = System.Drawing.Color.White;
-            this.btnFaster.Location = new System.Drawing.Point(32, 264);
+            this.btnFaster.Location = new System.Drawing.Point(48, 396);
             this.btnFaster.Name = "btnFaster";
-            this.btnFaster.Size = new System.Drawing.Size(365, 73);
+            this.btnFaster.Size = new System.Drawing.Size(548, 110);
             this.btnFaster.TabIndex = 9;
             // 
             // btnClose
@@ -132,9 +133,9 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(700, 0);
+            this.btnClose.Location = new System.Drawing.Point(1079, 0);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(59, 38);
+            this.btnClose.Size = new System.Drawing.Size(60, 58);
             this.btnClose.TabIndex = 10;
             // 
             // DialogModelSelect
@@ -142,7 +143,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.selectModel;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(759, 518);
+            this.ClientSize = new System.Drawing.Size(1139, 777);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnFaster);
             this.Controls.Add(this.btnEfficient);
