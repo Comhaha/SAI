@@ -679,6 +679,12 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_right {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
         internal static System.Drawing.Bitmap bg_titlebar_sai {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_sai", resourceCulture);
@@ -689,9 +695,25 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_title {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_title", resourceCulture);
+                                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
         internal static System.Drawing.Bitmap bg_titlebar_train_progress {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_train_progress", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_toast_error {
+            get {
+                object obj = ResourceManager.GetObject("bg_toast_error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2465,6 +2487,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_error {
+            get {
+                object obj = ResourceManager.GetObject("icon_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_warning {
             get {
                 object obj = ResourceManager.GetObject("icon_warning", resourceCulture);
@@ -3185,6 +3217,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap titlebar {
             get {
                 object obj = ResourceManager.GetObject("titlebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap titlebar1 {
+            get {
+                object obj = ResourceManager.GetObject("titlebar1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

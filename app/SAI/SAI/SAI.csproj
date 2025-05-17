@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -288,14 +288,14 @@
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Common\ToolTipUtils.cs" />
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="SAI.App\Views\Common\TransparentOverlay.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\Blockly.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
-      <DependentUpon>Blockly.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.Designer.cs">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
       <SubType>UserControl</SubType>
@@ -425,11 +425,11 @@
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\AutoSizeLabel.resx">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
-      <DependentUpon>Blockly.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
       <DependentUpon>UcBlockGuide.cs</DependentUpon>
@@ -467,7 +467,6 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -498,6 +497,10 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\icon_error.png" />
+    <None Include="SAI.App\Resources\Images\bg_toast_error.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_right.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_title.png" />
     <None Include="SAI.App\Resources\Images\bg_train_progressbar.png" />
     <None Include="SAI.App\Resources\Images\btn_yellow_close_train_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_yellow_close_train.png" />

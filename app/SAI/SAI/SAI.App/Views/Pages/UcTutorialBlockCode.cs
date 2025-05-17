@@ -15,15 +15,19 @@ using SAI.SAI.App.Models;
 using System.Diagnostics;
 using static SAI.SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Messaging;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Threading;
+using Timer = System.Windows.Forms.Timer;
 
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {
-		private YoloTutorialPresenter yoloTutorialPresenter;
-		private BlocklyPresenter blocklyPresenter;
-		private UcShowDialogPresenter ucShowDialogPresenter;
+        private YoloTutorialPresenter yoloTutorialPresenter;
+        private BlocklyPresenter blocklyPresenter;
+        private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
 
         private BlocklyModel blocklyModel;
@@ -40,64 +44,76 @@ namespace SAI.SAI.App.Views.Pages
         private bool isInferPanelVisible = false;
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
-		private MemoPresenter memoPresenter;
+        private MemoPresenter memoPresenter;
         private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
 
-		private int undoCount = 0;
-		private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
-		private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+        private int undoCount = 0; // 뒤로가기 카운트
+        private int blockCount = 0; // 블럭 개수
 
-		public UcTutorialBlockCode(IMainView view)
-		{
-			InitializeComponent();
-			blocklyPresenter = new BlocklyPresenter(this);
-			yoloTutorialPresenter = new YoloTutorialPresenter(this);
-			memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
+        private string errorMessage = "";
+        private string missingType = "";
+        private string errorType = "";
+
+        private CancellationTokenSource _toastCancellationSource;
+
+        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
+
+        public UcTutorialBlockCode(IMainView view)
+        {
+            InitializeComponent();
+            blocklyPresenter = new BlocklyPresenter(this);
+            yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
             blocklyModel = BlocklyModel.Instance;
 
+            errorMessage = "";
+            missingType = "";
+
             tboxMemo.TextChanged += tboxMemo_TextChanged;
 
-			// 확대/축소 버튼 이벤트 추가
-			ibtnPlusCode.Click += (s, e) =>
-			{
-				try
-				{
-					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
-					if (currentIndex < zoomLevels.Length - 1)
-					{
-						currentZoomLevel = zoomLevels[currentIndex + 1];
-						UpdateCodeZoom();
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
-				}
-			};
+            //btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
+            // 확대/축소 버튼 이벤트 추가
+            ibtnPlusCode.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex < zoomLevels.Length - 1)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex + 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 확대 중 오류 발생 - {ex.Message}");
+                }
+            };
 
-			ibtnMinusCode.Click += (s, e) =>
-			{
-				try
-				{
-					int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
-					if (currentIndex > 0)
-					{
-						currentZoomLevel = zoomLevels[currentIndex - 1];
-						UpdateCodeZoom();
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
-				}
-			};
+            ibtnMinusCode.Click += (s, e) =>
+            {
+                try
+                {
+                    int currentIndex = Array.IndexOf(zoomLevels, currentZoomLevel);
+                    if (currentIndex > 0)
+                    {
+                        currentZoomLevel = zoomLevels[currentIndex - 1];
+                        UpdateCodeZoom();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] UcTutorialBlockCode: 축소 중 오류 발생 - {ex.Message}");
+                }
+            };
 
-			// 초기 확대/축소 레벨 설정
-			currentZoomLevel = 60;
-			UpdateCodeZoom();
+            // 초기 확대/축소 레벨 설정
+            currentZoomLevel = 60;
+            UpdateCodeZoom();
 
-			btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+            btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
             pboxInferAccuracy.Visible = false;
             btnSelectInferImage.Visible = false;
 
@@ -145,22 +161,27 @@ namespace SAI.SAI.App.Views.Pages
 
 
             ibtnHome.BackColor = Color.Transparent;
-			ibtnDone.BackColor = Color.Transparent;
-			ibtnInfer.BackColor = Color.Transparent;
-			ibtnMemo.BackColor = Color.Transparent;
+            ibtnDone.BackColor = Color.Transparent;
+            ibtnInfer.BackColor = Color.Transparent;
+            ibtnMemo.BackColor = Color.Transparent;
             ButtonUtils.SetTransparentStyle(btnCopy);
 
-			// PercentUtils로 퍼센트 박스 스타일 일괄 적용
-			PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
-
-			btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
+            // PercentUtils로 퍼센트 박스 스타일 일괄 적용
+            PercentUtils.SetupPercentTextBox(tboxZoomCode, 0.5f, 0, 0);
 
             this.mainView = view;
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
+            blockCount = 0; // 블럭 개수 초기화
             undoCount = 0;
+            btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
+            btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
+            btnTrash.Visible = false; // 처음에는 보이지 않게 설정
 
-            btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
+            ibtnHome.BackColor = Color.Transparent;
+            ibtnDone.BackColor = Color.Transparent;
+            ibtnInfer.BackColor = Color.Transparent;
+            ibtnMemo.BackColor = Color.Transparent;
 
             pSideInfer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
 
@@ -171,7 +192,7 @@ namespace SAI.SAI.App.Views.Pages
 
             //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
             ToolTipUtils.CustomToolTip(btnInfoThreshold,
-  "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+            "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
             ToolTipUtils.CustomToolTip(btnInfoGraph,
               "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
@@ -193,7 +214,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     // BlocklyModel에서 전체 코드 가져오기
                     string codeToCopy = blocklyModel.blockAllCode;
-                    
+
                     if (!string.IsNullOrEmpty(codeToCopy))
                     {
                         // 클립보드에 코드 복사
@@ -572,6 +593,7 @@ namespace SAI.SAI.App.Views.Pages
 
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
+
         }
 
         private void SetupThresholdControls()
@@ -624,11 +646,65 @@ namespace SAI.SAI.App.Views.Pages
             ucShowDialogPresenter.clickGoTrain();
         }
 
+        // 실행 버튼 클릭 이벤트
         private void btnRunModel_Click(object sender, EventArgs e)
         {
-            pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
-            pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
+            if(blocklyModel.blockTypes != null)
+            {
+                pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+                pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
+
+                // 블록 순서가 맞는지 판단
+                if (!isBlockError()) // 순서가 맞을 떄
+                {
+                    // 파이썬 코드 실행
+                    //RunButtonClicked?.Invoke(sender, e);
+			    }
+                else // 순서가 틀릴 때
+                {
+                    ShowToastMessage(errorType, missingType, errorMessage);
+                }
+            }
+            else
+            {
+				errorType = "블록 배치 오류";
+				missingType = "MISSING \"시작\"";
+                errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
+                errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+                ShowToastMessage(errorType, missingType, errorMessage);
+			}
+		}
+
+        private async void ShowToastMessage(string errorType, string missingType, string errorMessage)
+        {
+            // 이전 토스트 메시지가 있다면 취소
+            _toastCancellationSource?.Cancel();
+            _toastCancellationSource = new CancellationTokenSource();
+            var token = _toastCancellationSource.Token;
+
+            try
+            {
+                pErrorToast.Visible = true;
+                pErrorToast.FillColor = Color.FromArgb(0, pErrorToast.FillColor);
+                lbErrorType.Text = errorType;
+                lbMissingType.Text = missingType;
+                lbErrorMessage.Text = errorMessage;
+
+                // 2초 대기 (취소 가능)
+                await Task.Delay(2000, token);
+                pErrorToast.Visible = false;
+            }
+            catch (OperationCanceledException)
+            {
+                // 토스트가 취소된 경우 아무것도 하지 않음
+            }
+            finally
+            {
+                _toastCancellationSource?.Dispose();
+                _toastCancellationSource = null;
+            }
         }
+
         private void ibtnCloseInfer_Click(object sender, EventArgs e)
         {
             HidepSideInfer();
@@ -722,35 +798,92 @@ namespace SAI.SAI.App.Views.Pages
                                 jsBridge.receiveMessageFromJs(blockCode, type);
                                 break;
 
-                            case "blockDoubleClick":
-                                string eventCode = root.GetProperty("code").GetString();
-                                blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
-                                break;
-                            case "blockTypes":
-                                var jsonTypes = root.GetProperty("types");
-                                var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
-                                blocklyPresenter.setBlockTypes(blockTypes);
-                                break;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
-                }
-            };
+							case "blockDoubleClick":
+								string eventCode = root.GetProperty("code").GetString();
+								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
+								break;
+							case "blockTypes":
+								var jsonTypes = root.GetProperty("types");
+								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.setBlockTypes(blockTypes);
+								break;
+							case "blockCount":
+								var jsonCount = root.GetProperty("count").ToString();
+								blockCount = int.Parse(jsonCount);
+								break;
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"WebView2 메시지 처리 오류: {ex.Message}");
+				}
+			};
 
             webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
             await webViewblock.EnsureCoreWebView2Async();
-            webViewblock.Source = new Uri(uri);
+
+			// 단축키 이벤트 등록
+			webViewblock.KeyDown += (sender, e) =>
+			{
+				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if (btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if (btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					MessageBox.Show("와 ctrl + shift + z 누름");
+				}
+			};
+
+			this.KeyDown += (sender, e) =>
+			{
+				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
+				{
+					if (btnPreBlock.Visible)
+					{
+						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Y && e.Control)
+				{
+					if (btnNextBlock.Visible)
+					{
+						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+					}
+				}
+				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
+				{
+					MessageBox.Show("와 ctrl + shift + z 누름");
+				}
+			};
+
+			webViewblock.Source = new Uri(uri);
         }
 
-        // JS 함수 호출 = 블럭 넣기
-        public void addBlock(string blockType)
-        {
-            webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
-        }
+		// JS 함수 호출 = 블럭 넣기
+		public void addBlock(string blockType)
+		{
+			if (btnPreBlock.Visible == false)
+			{
+				btnPreBlock.Visible = true;
+				btnNextBlock.Visible = false;
+				undoCount = 0;
+			}
+			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
+		}
 
         // JS 함수호출 = 하나의 블럭의 코드 가져오기
         public void getPythonCodeByType(string blockType)
@@ -764,39 +897,42 @@ namespace SAI.SAI.App.Views.Pages
             webViewblock.ZoomFactor = 0.5;
         }
 
-        // JS 함수 호출 = 다시 실행하기
-        private void btnNextBlock_Click(object sender, EventArgs e)
-        {
-            undoCount--;
-            webViewblock.ExecuteScriptAsync($"redo()");
-            if (undoCount == 0)
-            {
-                btnNextBlock.Visible = false;
-                btnPreBlock.Visible = true;
-            }
-            else
-            {
-                btnNextBlock.Visible = true;
-                btnPreBlock.Visible = true;
-            }
-        }
+		// JS 함수 호출 = 다시 실행하기
+		private void btnNextBlock_Click(object sender, EventArgs e)
+		{
+			--undoCount;
+			webViewblock.ExecuteScriptAsync($"redo()");
 
-        // JS 함수 호출 = 되돌리기
-        private void btnPreBlock_Click(object sender, EventArgs e)
-        {
-            if (undoCount <= 10)
-            {
-                undoCount++;
-                webViewblock.ExecuteScriptAsync($"undo()");
-                btnNextBlock.Visible = true;
-                btnPreBlock.Visible = true;
-            }
-            else
-            {
-                btnNextBlock.Visible = true;
-                btnPreBlock.Visible = false;
-            }
-        }
+			if (undoCount == 0)
+			{
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+		}
+
+		// JS 함수 호출 = 되돌리기
+		private void btnPreBlock_Click(object sender, EventArgs e)
+		{
+			++undoCount;
+			webViewblock.ExecuteScriptAsync($"undo()");
+			webViewblock.ExecuteScriptAsync($"getblockCount()");
+
+			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = false;
+			}
+		}
 
         public void AppendLog(string text)
         {
@@ -866,6 +1002,177 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        private bool checkBlockPosition(string blockType, int nowPosition)
+        {
+            int correctPosition;
+			switch (blockType)
+			{
+				case "start":
+                    correctPosition = 0;
+					break;
+				case "pipInstall":
+					correctPosition = 1;
+					break;
+				case "loadModel":
+					correctPosition = 2;
+					break;
+				case "loadDataset":
+					correctPosition = 3;
+					break;
+				case "machineLearning":
+					correctPosition = 4;
+					break;
+				case "resultGraph":
+					correctPosition = 5;
+					break;
+				case "imgPath":
+					correctPosition = 6;
+					break;
+				case "modelInference":
+					correctPosition = 7;
+					break;
+				case "visualizeResult":
+					correctPosition = 8;
+					break;
+				default:
+					correctPosition = -1;
+					break;
+			}
+
+			if (correctPosition != nowPosition)
+			{
+				return false;
+			}
+			return true;
+        }
+
+        private void blockErrorMessage(string blockType)
+        {
+			switch (blockType)
+			{
+				case "start":
+					errorType = "블록 배치 오류";
+					missingType = "\"pipInstall\"";
+				    errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+				    errorMessage += "[시작] - [패키지 설치]";
+					//errorMessage = "시작블록이 맨 앞에 있어야 합니다.\n";
+					//	errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+					break;
+				case "pipInstall":
+					errorType = "블록 배치 오류";
+					missingType = "\"loadModel\"";
+					errorMessage = "\"모델 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[패키지 설치] - [모델 불러오기]";
+					break;
+				case "loadModel":
+						errorType = "블록 배치 오류";
+						missingType = "\"loadDataset\"";
+					errorMessage = "\"데이터 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[모델 불러오기] - [데이터 불러오기]";
+					break;
+				case "loadDataset":
+						errorType = "블록 배치 오류";
+						missingType = "\"machineLearning\"";
+					errorMessage = "\"모델 학습하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[데이터 불러오기] - [모델 학습하기]";
+					break;
+				case "machineLearning":
+						errorType = "블록 배치 오류";
+						missingType = "\"resultGraph\"";
+					errorMessage = "\"학습 결과 그래프 출력하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[모델 학습하기] - [학습 결과 그래프 출력하기]";
+					break;
+				case "resultGraph":
+						errorType = "블록 배치 오류";
+						missingType = "\"imgPath\"";
+					errorMessage = "\"이미지 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[학습 결과 그래프 출력하기] - [이미지 불러오기]";
+					break;
+				case "imgPath":
+						errorType = "블록 배치 오류";
+						missingType = "\"modelInference\"";
+					errorMessage = "\"추론 실행하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[이미지 불러오기] - [추론 실행하기]";
+					break;
+				case "modelInference":
+					errorType = "블록 배치 오류";
+					missingType = "\"visualizeResult\"";
+					errorMessage = "\"결과 시각화하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage += "[추론 실행하기] - [결과 시각화하기]";
+					break;
+			}
+		}
+
+        // 블록 에러 처리이이
+        public bool isBlockError()
+        {
+            if (blocklyModel == null || blocklyModel.blockTypes == null)
+            {
+                errorType = "블록 배치 오류";
+                missingType = "MISSING \"시작\"";
+                errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
+                errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+                return true;
+            }
+
+            if (blocklyModel.blockTypes.Count == 9)
+            {
+                for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
+                {
+                    BlockInfo block = blocklyModel.blockTypes[i];
+                    if (block == null) continue;
+
+                    string blockType = block.type;
+                    if (!checkBlockPosition(blockType, i))
+                    {
+                        blockErrorMessage(blockType);
+                        return true;
+                    }
+                }
+            }
+            else if (blocklyModel.blockTypes.Count < 9)
+            {
+                int lastBlock = blocklyModel.blockTypes.Count - 1;
+                if (lastBlock < 0) return true;
+
+                BlockInfo block = blocklyModel.blockTypes[lastBlock];
+                if (block == null) return true;
+
+                for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
+                {
+                    BlockInfo blockInfo = blocklyModel.blockTypes[i];
+                    if (blockInfo == null) continue;
+
+                    string blockType = blockInfo.type;
+                    if (!checkBlockPosition(blockType, i))
+                    {
+                        blockInfo = blocklyModel.blockTypes[i - 1];
+                        if (blockInfo != null)
+                        {
+                            blockType = blockInfo.type;
+                            blockErrorMessage(blockType);
+                        }
+                        return true;
+                    }
+
+                    if (blockType == "imgPath")
+                    {
+                        if (string.IsNullOrEmpty(blocklyModel.imgPath))
+                        {
+                            errorType = "파라미터 오류";
+                            missingType = "파라미터 \"이미지 파일\"";
+                            errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+                            errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+                            return true;
+                        }
+                    }
+                }
+                blockErrorMessage(block.type);
+                return true;
+            }
+
+            return false;
+        }
         private void UpdateCodeZoom()
         {
             try
