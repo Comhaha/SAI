@@ -45,18 +45,18 @@ venv/
 .venv/
 .ipynb_checkpoints
 
-# # 1. Python 전체 무시
+# 1. Python 폴더 전체를 먼저 무시
 app/SAI/SAI/SAI.Application/Python/**
 
-# 2. scripts 폴더 제외
+# 2. scripts 폴더는 추적 대상으로 설정
 !app/SAI/SAI/SAI.Application/Python/scripts/
 
-# 3. scripts 폴더 중 특정 파일은 무시
+# 3. scripts 폴더의 모든 .py 파일은 추적
+!app/SAI/SAI/SAI.Application/Python/scripts/*.py
+
+# 4. 명시적으로 무시할 특정 파일들
 app/SAI/SAI/SAI.Application/Python/scripts/tutorial_script.py
 app/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
-
-# 4. 나머지 scripts 폴더는 추적
-!app/SAI/SAI/SAI.Application/Python/scripts/*.py
 
 
 # 모델, 결과, 캐시 무시
