@@ -45,8 +45,8 @@ venv/
 .venv/
 .ipynb_checkpoints
 
-# 1. Python 전체 무시
-app/SAI/SAI/SAI.Application/Python/**
+# # 1. Python 전체 무시
+# app/SAI/SAI/SAI.Application/Python/**
 
 # 2. scripts 폴더 제외
 !app/SAI/SAI/SAI.Application/Python/scripts/

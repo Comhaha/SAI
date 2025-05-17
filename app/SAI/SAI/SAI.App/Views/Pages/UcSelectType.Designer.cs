@@ -36,7 +36,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpBtnParent = new System.Windows.Forms.TableLayoutPanel();
 			this.tpContentParent = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.autoSizeTitle = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+			this.autoSizeTitle = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.tpParent = new System.Windows.Forms.TableLayoutPanel();
 			this.tpBtnParent.SuspendLayout();
 			this.tpContentParent.SuspendLayout();
