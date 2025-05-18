@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
 
@@ -87,7 +88,8 @@ namespace SAI.SAI.App.Presenters
                             }
                         },
                         onError: err => { _yolotutorialview.AppendLog("[Error] " + err); },
-                        onException: ex => { _yolotutorialview.ShowErrorMessage("❌ 예외 발생:\n" + ex.Message); }
+                        onException: ex => { _yolotutorialview.ShowErrorMessage("❌ 예외 발생:\n" + ex.Message); },
+                        blocklyModel: BlocklyModel.Instance
                     );
                 }
                 catch (Exception ex)
