@@ -500,6 +500,12 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel_clicked_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok_clicked_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_prepare_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_prepare.png" />
     <None Include="SAI.App\Resources\Images\btn_close_zoomChart_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_close_zoomChart.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_zoomChart.png" />
@@ -889,6 +895,8 @@
     <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_zoomChart.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close_8060.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close_clicked_8060.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
