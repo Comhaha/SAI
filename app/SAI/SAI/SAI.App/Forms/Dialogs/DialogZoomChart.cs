@@ -3,18 +3,28 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
     public partial class DialogZoomChart : Form
     {
         public DialogZoomChart(GunaChart sourceChart)
-        {
-            ClientSize = new Size(900, 600);
-            StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
-            Text = sourceChart.Title.Text;
+        {   
 
+            InitializeComponent();
+            DialogUtils.ApplyDefaultStyle(this, Color.Gray);
+
+            ButtonUtils.SetupButton(btnCloseCustom, "btn_close_zoomChart_clicked", "btn_close_zoomChart");
+            btnCloseCustom.Click += (s, e) => { this.Close(); };
+            panelChartArea.Padding = new Padding(20);
+
+            ClientSize = new Size(900, 600);
+            //StartPosition = FormStartPosition.CenterScreen;
+            //FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            //Text = sourceChart.Title.Text;
+
+            lblTitle.Text = sourceChart.Title.Text;
             BuildZoomChart(sourceChart);
         }
 
@@ -55,7 +65,9 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             chart.Legend.Position = LegendPosition.Right;
             chart.Update();
-            Controls.Add(chart);
+            //Controls.Add(chart);
+
+            panelChartArea.Controls.Add(chart);
         }
     }
 }

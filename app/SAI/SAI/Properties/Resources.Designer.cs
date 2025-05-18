@@ -553,6 +553,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_dialog_zoomChart {
+            get {
+                object obj = ResourceManager.GetObject("bg_dialog_zoomChart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_gray_titlebar {
             get {
                 object obj = ResourceManager.GetObject("bg_gray_titlebar", resourceCulture);
@@ -706,6 +716,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap bg_titlebar_train_progress {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_train_progress", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_zoomChart {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_zoomChart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1046,6 +1066,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_close_whole_click {
             get {
                 object obj = ResourceManager.GetObject("btn_close_whole_click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_close_zoomChart {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_zoomChart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_close_zoomChart_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_zoomChart_clicked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
