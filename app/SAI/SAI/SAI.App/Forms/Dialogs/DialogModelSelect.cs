@@ -227,6 +227,6 @@ namespace SAI.SAI.App.Forms.Dialogs
 			var view = this.Owner as IMainView;
 			presenter = new DialogLoadPagePresenter(view);
 		}
-	}
+    }
 
 }

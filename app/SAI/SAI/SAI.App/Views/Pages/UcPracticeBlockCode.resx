@@ -123,21 +123,9 @@
   </data>
   <data name="pCode.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
-  </data>AD
+  </data>
   <data name="cAlertPanel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;btnCopy.Name" xml:space="preserve">
-    <value>btnCopy</value>
-  </data>
-  <data name="&gt;&gt;btnCopy.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnCopy.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
@@ -166,10 +154,10 @@
     <value>0, 0</value>
   </data>
   <data name="ibtnCloseInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 153</value>
+    <value>58, 230</value>
   </data>
   <data name="ibtnCloseInfer.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;ibtnCloseInfer.Name" xml:space="preserve">
     <value>ibtnCloseInfer</value>
@@ -183,18 +171,6 @@
   <data name="&gt;&gt;ibtnCloseInfer.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;webViewCode.Name" xml:space="preserve">
-    <value>webViewCode</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.Type" xml:space="preserve">
-    <value>Microsoft.Web.WebView2.WinForms.WebView2, Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="guna2TextBox1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
@@ -204,13 +180,9 @@
   <data name="guna2TextBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
   </data>
-<data name="webViewCode.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-
   <data name="guna2TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 30</value>
- </data>
+  </data>
   <data name="guna2TextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
@@ -289,193 +261,53 @@
   <data name="&gt;&gt;guna2Panel1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="ibtnCopy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+  <data name="ucCode２.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 39</value>
   </data>
-  <data name="ibtnCopy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 29</value>
+  <data name="ucCode２.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="ibtnCopy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 29</value>
+  <data name="ucCode２.Size" type="System.Drawing.Size, System.Drawing">
+    <value>460, 715</value>
   </data>
-  <data name="ibtnCopy.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="ucCode２.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
-  <data name="&gt;&gt;ibtnCopy.Name" xml:space="preserve">
-    <value>ibtnCopy</value>
+  <data name="&gt;&gt;ucCode２.Name" xml:space="preserve">
+    <value>ucCode２</value>
   </data>
-  <data name="&gt;&gt;ibtnCopy.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  <data name="&gt;&gt;ucCode２.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.UcCode, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;ibtnCopy.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ucCode２.Parent" xml:space="preserve">
     <value>pCode</value>
   </data>
-  <data name="&gt;&gt;ibtnCopy.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ucCode２.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;pTopCode.Name" xml:space="preserve">
-    <value>pTopCode</value>
+  <data name="webViewCode.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="&gt;&gt;pTopCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="webViewCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 39</value>
   </data>
-  <data name="&gt;&gt;pTopCode.Parent" xml:space="preserve">
-    <value>pCode</value>
+  <data name="webViewCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 738</value>
   </data>
-  <data name="&gt;&gt;pTopCode.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="webViewCode.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
-  <data name="&gt;&gt;pZoomCode.Name" xml:space="preserve">
-    <value>pZoomCode</value>
+  <data name="&gt;&gt;webViewCode.Name" xml:space="preserve">
+    <value>webViewCode</value>
   </data>
-  <data name="&gt;&gt;pZoomCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>713, 32</value>
-  </data>
-  <data name="pCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 518</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pCode.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;pCode.Name" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;pCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pCode.Parent" xml:space="preserve">
-    <value>pMain</value>
-  </data>
-  <data name="&gt;&gt;pCode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;webViewblock.Name" xml:space="preserve">
-    <value>webViewblock</value>
-  </data>
-  <data name="&gt;&gt;webViewblock.Type" xml:space="preserve">
+  <data name="&gt;&gt;webViewCode.Type" xml:space="preserve">
     <value>Microsoft.Web.WebView2.WinForms.WebView2, Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e</value>
   </data>
-  <data name="&gt;&gt;webViewblock.Parent" xml:space="preserve">
-    <value>pBlock</value>
+  <data name="&gt;&gt;webViewCode.Parent" xml:space="preserve">
+    <value>pCode</value>
   </data>
-  <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Parent" xml:space="preserve">
-    <value>pBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 32</value>
-  </data>
-  <data name="pBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 518</value>
-  </data>
-  <data name="pBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;pBlock.Name" xml:space="preserve">
-    <value>pBlock</value>
-  </data>
-  <data name="&gt;&gt;pBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pBlock.Parent" xml:space="preserve">
-    <value>pMain</value>
-  </data>
-  <data name="&gt;&gt;pBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pBlockList.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlockvScrollBar.Name" xml:space="preserve">
-    <value>pSelectBlockvScrollBar</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlockvScrollBar.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2VScrollBar, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlockvScrollBar.Parent" xml:space="preserve">
-    <value>pBlockList</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlockvScrollBar.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlock.Name" xml:space="preserve">
-    <value>pSelectBlock</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlock.Parent" xml:space="preserve">
-    <value>pBlockList</value>
-  </data>
-  <data name="&gt;&gt;pSelectBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pBlockList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>45, 32</value>
-  </data>
-  <data name="pBlockList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 518</value>
-  </data>
-  <data name="pBlockList.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;pBlockList.Name" xml:space="preserve">
-    <value>pBlockList</value>
-  </data>
-  <data name="&gt;&gt;pBlockList.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pBlockList.Parent" xml:space="preserve">
-    <value>pMain</value>
-  </data>
-  <data name="&gt;&gt;pBlockList.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 64</value>
-  </data>
-  <data name="pMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1064, 583</value>
-  </data>
-  <data name="pMain.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;pMain.Name" xml:space="preserve">
-    <value>pMain</value>
-  </data>
-  <data name="&gt;&gt;pMain.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pMain.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;webViewCode.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="btnCopy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -502,75 +334,6 @@
     <value>pCode</value>
   </data>
   <data name="&gt;&gt;btnCopy.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-<data name="ucCode２.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 14</value>
-  </data>
-  <data name="ucCode２.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="ucCode２.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 491</value>
-  </data>
-  <data name="ucCode２.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;ucCode２.Name" xml:space="preserve">
-    <value>ucCode２</value>
-  </data>
-  <data name="&gt;&gt;ucCode２.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.UcCode, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ucCode２.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;ucCode２.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="ibtnCloseInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="ibtnCloseInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 153</value>
-  </data>
-  <data name="ibtnCloseInfer.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseInfer.Name" xml:space="preserve">
-    <value>ibtnCloseInfer</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseInfer.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseInfer.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseInfer.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="webViewCode.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="webViewCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="webViewCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 518</value>
-  </data>
-  <data name="webViewCode.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.Name" xml:space="preserve">
-    <value>webViewCode</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.Type" xml:space="preserve">
-    <value>Microsoft.Web.WebView2.WinForms.WebView2, Microsoft.Web.WebView2.WinForms, Version=1.0.3240.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;webViewCode.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="pTopCode.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -636,7 +399,7 @@
     <value>0, 0, 3, 3</value>
   </data>
   <data name="pTopCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 39</value>
+    <value>480, 39</value>
   </data>
   <data name="pTopCode.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -651,67 +414,7 @@
     <value>pCode</value>
   </data>
   <data name="&gt;&gt;pTopCode.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.Name" xml:space="preserve">
-    <value>tboxZoomCode</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;tboxZoomCode.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Name" xml:space="preserve">
-    <value>ibtnMinusCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnMinusCode.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Name" xml:space="preserve">
-    <value>ibtnPlusCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.Parent" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;ibtnPlusCode.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pZoomCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 410</value>
-  </data>
-  <data name="pZoomCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="pZoomCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 87</value>
-  </data>
-  <data name="pZoomCode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Name" xml:space="preserve">
-    <value>pZoomCode</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.Parent" xml:space="preserve">
-    <value>pCode</value>
-  </data>
-  <data name="&gt;&gt;pZoomCode.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="tboxZoomCode.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
@@ -804,13 +507,13 @@
     <value>pCode</value>
   </data>
   <data name="&gt;&gt;pZoomCode.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="pCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>713, 32</value>
+    <value>1070, 32</value>
   </data>
   <data name="pCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 518</value>
+    <value>480, 777</value>
   </data>
   <data name="pCode.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -994,7 +697,7 @@
     <value>3, 37</value>
   </data>
   <data name="webViewblock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 460</value>
+    <value>460, 715</value>
   </data>
   <data name="webViewblock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1064,18 +767,6 @@
   <data name="pTopBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -1083,10 +774,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>280, 7</value>
+    <value>430, 5</value>
   </data>
   <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
+    <value>25, 25</value>
   </data>
   <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -1101,192 +792,33 @@
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
-    <value>btnNextBlock</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Name" xml:space="preserve">
-    <value>btnTrash</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="pTopBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="pTopBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 3, 3</value>
-  </data>
-  <data name="pTopBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 39</value>
-  </data>
-  <data name="pTopBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Parent" xml:space="preserve">
-    <value>pBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnPreBlock.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 7</value>
-  </data>
-  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Name" xml:space="preserve">
-    <value>ibtnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;ibtnPreBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;btnTrashBlock.Name" xml:space="preserve">
-    <value>btnTrashBlock</value>
-  </data>
-  <data name="&gt;&gt;btnTrashBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnTrashBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnTrashBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Name" xml:space="preserve">
-    <value>ibtnNextBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;ibtnNextBlock.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="pTopBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="pTopBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 3, 3</value>
-  </data>
-  <data name="pTopBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>319, 39</value>
-  </data>
-  <data name="pTopBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Parent" xml:space="preserve">
-    <value>pBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnPreBlock.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 7</value>
-  </data>
-  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="btnPreBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="btnRunModel.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="btnPreBlock.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
-  <data name="btnRunModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>280, 7</value>
+  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 5</value>
   </data>
-  <data name="btnRunModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
+  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 25</value>
   </data>
-  <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
-    <value>btnRunModel</value>
+  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
+    <value>btnPreBlock</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
     <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
     <value>pTopBlock</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="btnNextBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
@@ -1296,10 +828,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 7</value>
+    <value>49, 5</value>
   </data>
   <data name="btnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
+    <value>25, 25</value>
   </data>
   <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1323,10 +855,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnTrash.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 7</value>
+    <value>83, 5</value>
   </data>
   <data name="btnTrash.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
+    <value>25, 25</value>
   </data>
   <data name="btnTrash.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1343,11 +875,65 @@
   <data name="&gt;&gt;btnTrash.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="pTopBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="pTopBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 3, 3</value>
+  </data>
+  <data name="pTopBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 39</value>
+  </data>
+  <data name="pTopBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
+    <value>pTopBlock</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.Parent" xml:space="preserve">
+    <value>pBlock</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>559, 32</value>
+  </data>
+  <data name="pBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 777</value>
+  </data>
+  <data name="pBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Name" xml:space="preserve">
+    <value>pBlock</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pBlock.Parent" xml:space="preserve">
+    <value>pMain</value>
+  </data>
+  <data name="&gt;&gt;pBlock.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pBlockList.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="pSelectBlock.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="pSelectBlockvScrollBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>295, 17</value>
+    <value>447, 8</value>
   </data>
   <data name="pSelectBlockvScrollBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>10, 480</value>
+    <value>10, 714</value>
   </data>
   <data name="pSelectBlockvScrollBar.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1359,19 +945,16 @@
     <value>Guna.UI2.WinForms.Guna2VScrollBar, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="&gt;&gt;pSelectBlockvScrollBar.Parent" xml:space="preserve">
-    <value>pBlockList</value>
+    <value>pSelectBlock</value>
   </data>
   <data name="&gt;&gt;pSelectBlockvScrollBar.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="pSelectBlock.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="pSelectBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 17</value>
   </data>
   <data name="pSelectBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 480</value>
+    <value>461, 739</value>
   </data>
   <data name="pSelectBlock.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1386,16 +969,58 @@
     <value>pBlockList</value>
   </data>
   <data name="&gt;&gt;pSelectBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
+  </data>
+  <data name="pBlockList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 32</value>
+  </data>
+  <data name="pBlockList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 777</value>
+  </data>
+  <data name="pBlockList.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pBlockList.Name" xml:space="preserve">
+    <value>pBlockList</value>
+  </data>
+  <data name="&gt;&gt;pBlockList.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pBlockList.Parent" xml:space="preserve">
+    <value>pMain</value>
+  </data>
+  <data name="&gt;&gt;pBlockList.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>165, 120</value>
+  </data>
+  <data name="pMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1596, 875</value>
+  </data>
+  <data name="pMain.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;pMain.Name" xml:space="preserve">
+    <value>pMain</value>
+  </data>
+  <data name="&gt;&gt;pMain.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="ibtnMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
   <data name="ibtnMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 591</value>
+    <value>42, 937</value>
   </data>
   <data name="ibtnMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 56</value>
+    <value>87, 87</value>
   </data>
   <data name="ibtnMemo.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1416,10 +1041,10 @@
     <value>None</value>
   </data>
   <data name="ibtnInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1242, 81</value>
+    <value>1862, 179</value>
   </data>
   <data name="ibtnInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 158</value>
+    <value>58, 230</value>
   </data>
   <data name="ibtnInfer.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1437,13 +1062,13 @@
     <value>5</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 18</value>
+    <value>200, 38</value>
   </data>
   <data name="ibtnHome.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="ibtnHome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 39</value>
+    <value>59, 59</value>
   </data>
   <data name="ibtnHome.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1479,10 +1104,10 @@
     <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
   </data>
   <data name="lblTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>198, 16</value>
+    <value>293, 38</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 34</value>
+    <value>67, 53</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1502,9 +1127,6 @@
   <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="pSideInfer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
   <data name="pSideInfer.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1512,13 +1134,19 @@
     <value>Stretch</value>
   </data>
   <data name="ucCsvChart1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 427</value>
+    <value>40, 612</value>
+  </data>
+  <data name="ucCsvChart1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="ucCsvChart1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>352, 1423</value>
+    <value>520, 1423</value>
   </data>
   <data name="ucCsvChart1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;ucCsvChart1.Name" xml:space="preserve">
+    <value>ucCsvChart1</value>
   </data>
   <data name="&gt;&gt;ucCsvChart1.Type" xml:space="preserve">
     <value>SAI.SAI.App.Views.Pages.UcCsvChart, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
@@ -1529,125 +1157,23 @@
   <data name="&gt;&gt;ucCsvChart1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-<data name="&gt;&gt;ucCsvChart1.Name" xml:space="preserve">
-    <value>ucCsvChart1</value>
-  </data>
-  <data name="pThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnInfoGraph.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnInfoGraph.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnInfoGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 377</value>
-  </data>
-  <data name="btnInfoGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>17, 17</value>
-  </data>
-  <data name="btnInfoGraph.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;btnInfoGraph.Name" xml:space="preserve">
-    <value>btnInfoGraph</value>
-  </data>
-  <data name="&gt;&gt;btnInfoGraph.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnInfoGraph.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;btnInfoGraph.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-<data name="tboxThreshold.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR DemiLight, 4.875pt</value>
-  </data>
-  <data name="btnInfoThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnInfoThreshold.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 88</value>
-  </data>
-  <data name="btnInfoThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="btnInfoThreshold.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;btnInfoThreshold.Name" xml:space="preserve">
-    <value>btnInfoThreshold</value>
-  </data>
-  <data name="&gt;&gt;btnInfoThreshold.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnInfoThreshold.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;btnInfoThreshold.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
-    <value>145, 910</value>
-  </data>
-  <data name="pFake.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 33</value>
-  </data>
-  <data name="pFake.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;pFake.Name" xml:space="preserve">
-    <value>pFake</value>
-  </data>
-  <data name="&gt;&gt;pFake.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pFake.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;pFake.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pboxGraphe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 421</value>
-  </data>
-  <data name="pboxGraphe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 275</value>
-  </data>
-  <data name="pboxGraphe.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Name" xml:space="preserve">
-    <value>pboxGraphe</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2PictureBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="pThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
   <data name="tboxThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="tboxThreshold.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 7.875pt</value>
+  </data>
   <data name="tboxThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+    <value>11, 9</value>
   </data>
   <data name="tboxThreshold.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
   </data>
   <data name="tboxThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
+    <value>50, 19</value>
   </data>
   <data name="tboxThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1665,10 +1191,10 @@
     <value>0</value>
   </data>
   <data name="pThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 120</value>
+    <value>456, 152</value>
   </data>
   <data name="pThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 22</value>
+    <value>73, 37</value>
   </data>
   <data name="pThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1686,10 +1212,10 @@
     <value>1</value>
   </data>
   <data name="tbarThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>44, 123</value>
+    <value>51, 163</value>
   </data>
   <data name="tbarThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 21</value>
+    <value>366, 25</value>
   </data>
   <data name="tbarThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1707,13 +1233,13 @@
     <value>2</value>
   </data>
   <data name="ibtnDownloadAIModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 1982</value>
+    <value>303, 2250</value>
   </data>
   <data name="ibtnDownloadAIModel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 100</value>
   </data>
   <data name="ibtnDownloadAIModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 50</value>
+    <value>240, 75</value>
   </data>
   <data name="ibtnDownloadAIModel.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1731,13 +1257,13 @@
     <value>3</value>
   </data>
   <data name="ibtnGoNotion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 1982</value>
+    <value>45, 2250</value>
   </data>
   <data name="ibtnGoNotion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 100</value>
   </data>
   <data name="ibtnGoNotion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 50</value>
+    <value>240, 75</value>
   </data>
   <data name="ibtnGoNotion.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1755,10 +1281,10 @@
     <value>4</value>
   </data>
   <data name="ibtnAiFeedback.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 1876</value>
+    <value>40, 2085</value>
   </data>
   <data name="ibtnAiFeedback.Size" type="System.Drawing.Size, System.Drawing">
-    <value>347, 90</value>
+    <value>520, 135</value>
   </data>
   <data name="ibtnAiFeedback.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1775,67 +1301,6 @@
   <data name="&gt;&gt;ibtnAiFeedback.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-
-  <data name="pInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;btnSelectInferImage.Name" xml:space="preserve">
-    <value>btnSelectInferImage</value>
-  </data>
-  <data name="&gt;&gt;btnSelectInferImage.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnSelectInferImage.Parent" xml:space="preserve">
-    <value>pInferAccuracy</value>
-  </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Name" xml:space="preserve">
-    <value>ibtnSelectInferImage</value>
-  </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.Parent" xml:space="preserve">
-    <value>pInferAccuracy</value>
-  </data>
-  <data name="&gt;&gt;ibtnSelectInferImage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pboxInferAccuracy.Name" xml:space="preserve">
-    <value>pboxInferAccuracy</value>
-  </data>
-  <data name="&gt;&gt;pboxInferAccuracy.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2PictureBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pboxInferAccuracy.Parent" xml:space="preserve">
-    <value>pInferAccuracy</value>
-  </data>
-  <data name="&gt;&gt;pboxInferAccuracy.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pInferAccuracy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 167</value>
-  </data>
-  <data name="pInferAccuracy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 185</value>
-  </data>
-  <data name="pInferAccuracy.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;pInferAccuracy.Name" xml:space="preserve">
-    <value>pInferAccuracy</value>
-  </data>
-  <data name="&gt;&gt;pInferAccuracy.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pInferAccuracy.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;pInferAccuracy.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="lblInferGraph.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 10.124999pt, style=Bold</value>
-  </data>
   <data name="btnInfoGraph.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -1843,10 +1308,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 377</value>
+    <value>376, 538</value>
   </data>
   <data name="btnInfoGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>17, 17</value>
+    <value>25, 25</value>
   </data>
   <data name="btnInfoGraph.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -1863,155 +1328,17 @@
   <data name="&gt;&gt;btnInfoGraph.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="lblInferGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 368</value>
-  </data>
-  <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 41</value>
-  </data>
-  <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lblInferGraph.Text" xml:space="preserve">
-    <value>모델 성능 지표 그래프</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Name" xml:space="preserve">
-    <value>lblInferGraph</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2HtmlLabel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="lblThreshold.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 6pt, style=Bold</value>
-  </data>
-  <data name="lblThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>44, 81</value>
-  </data>
-  <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 26</value>
-  </data>
-  <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lblThreshold.Text" xml:space="preserve">
-    <value>threshold</value>
-  </data>
-  <data name="&gt;&gt;lblThreshold.Name" xml:space="preserve">
-    <value>lblThreshold</value>
-  </data>
-  <data name="&gt;&gt;lblThreshold.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2HtmlLabel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;lblThreshold.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;lblThreshold.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="lblInfer.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 10.124999pt, style=Bold</value>
-  </data>
-  <data name="lblInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 36</value>
-  </data>
-  <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 41</value>
-  </data>
-  <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lblInfer.Text" xml:space="preserve">
-    <value>모델 추론</value>
-  </data>
-  <data name="&gt;&gt;lblInfer.Name" xml:space="preserve">
-    <value>lblInfer</value>
-  </data>
-  <data name="&gt;&gt;lblInfer.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2HtmlLabel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;lblInfer.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;lblInfer.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="pSideInfer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>860, 0</value>
-  </data>
-  <data name="pSideInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>420, 720</value>
-  </data>
-  <data name="pSideInfer.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;pSideInfer.Name" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;pSideInfer.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pSideInfer.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="tboxThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="tboxThreshold.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR DemiLight, 4.875pt</value>
-  </data>
-  <data name="tboxThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 3</value>
-  </data>
-  <data name="tboxThreshold.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="tboxThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
-  </data>
-  <data name="tboxThreshold.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;tboxThreshold.Name" xml:space="preserve">
-    <value>tboxThreshold</value>
-  </data>
-  <data name="&gt;&gt;tboxThreshold.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxThreshold.Parent" xml:space="preserve">
-    <value>pThreshold</value>
-  </data>
-  <data name="&gt;&gt;tboxThreshold.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
- <data name="btnInfoThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="btnInfoThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
   <data name="btnInfoThreshold.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 88</value>
+    <value>173, 123</value>
   </data>
   <data name="btnInfoThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>12, 12</value>
+    <value>15, 15</value>
   </data>
   <data name="btnInfoThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -2028,6 +1355,12 @@
   <data name="&gt;&gt;btnInfoThreshold.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="pInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
   <data name="btnSelectInferImage.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
@@ -2035,7 +1368,7 @@
     <value>0, 0</value>
   </data>
   <data name="btnSelectInferImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 185</value>
+    <value>494, 278</value>
   </data>
   <data name="btnSelectInferImage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2051,6 +1384,9 @@
   </data>
   <data name="&gt;&gt;btnSelectInferImage.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="pboxInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
   </data>
   <data name="pboxInferAccuracy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2073,10 +1409,10 @@
     <value>NoControl</value>
   </data>
   <data name="pboxInferAccuracy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 0</value>
+    <value>31, 0</value>
   </data>
   <data name="pboxInferAccuracy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 185</value>
+    <value>431, 275</value>
   </data>
   <data name="pboxInferAccuracy.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2093,131 +1429,11 @@
   <data name="&gt;&gt;pboxInferAccuracy.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;btnQuestionMemo.Name" xml:space="preserve">
-    <value>btnQuestionMemo</value>
-  </data>
-  <data name="&gt;&gt;btnQuestionMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnQuestionMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;btnQuestionMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;btnCloseMemo.Name" xml:space="preserve">
-    <value>btnCloseMemo</value>
-  </data>
-  <data name="&gt;&gt;btnCloseMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnCloseMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;btnCloseMemo.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Name" xml:space="preserve">
-    <value>tboxMemo</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 314</value>
-  </data>
-  <data name="pMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>354, 311</value>
-  </data>
-  <data name="pMemo.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Name" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnQuestionMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Name" xml:space="preserve">
-    <value>tboxMemo</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Name" xml:space="preserve">
-    <value>ibtnCloseMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnCloseMemo.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Name" xml:space="preserve">
-    <value>ibtnQuestionMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2ImageButton, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.Parent" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;ibtnQuestionMemo.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 314</value>
-  </data>
-  <data name="pMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>354, 311</value>
-  </data>
-  <data name="pMemo.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Name" xml:space="preserve">
-    <value>pMemo</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pMemo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="pInferAccuracy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 167</value>
+    <value>40, 217</value>
   </data>
   <data name="pInferAccuracy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 158</value>
+    <value>494, 278</value>
   </data>
   <data name="pInferAccuracy.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2238,10 +1454,10 @@
     <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
   </data>
   <data name="lblInferGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 368</value>
+    <value>40, 524</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>210, 34</value>
+    <value>315, 53</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2265,10 +1481,10 @@
     <value>Noto Sans KR Medium, 9pt, style=Bold</value>
   </data>
   <data name="lblThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>44, 81</value>
+    <value>51, 109</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 23</value>
+    <value>116, 37</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2295,7 +1511,7 @@
     <value>40, 36</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 34</value>
+    <value>139, 53</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2316,7 +1532,7 @@
     <value>11</value>
   </data>
   <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
-    <value>121, 2052</value>
+    <value>251, 2350</value>
   </data>
   <data name="pFake.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 33</value>
@@ -2336,55 +1552,14 @@
   <data name="&gt;&gt;pFake.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
-  <data name="pboxGraphe.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
-        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
-        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
-        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
-        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
-        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
-        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
-        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
-        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
-        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
-        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
-        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
-</value>
-  </data>
-  <data name="pboxGraphe.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pboxGraphe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 421</value>
-  </data>
-  <data name="pboxGraphe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 275</value>
-  </data>
-  <data name="pboxGraphe.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Name" xml:space="preserve">
-    <value>pboxGraphe</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2PictureBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;pboxGraphe.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
   <data name="pSideInfer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
   </data>
   <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>860, 0</value>
+    <value>1290, 0</value>
   </data>
   <data name="pSideInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>420, 720</value>
+    <value>630, 1080</value>
   </data>
   <data name="pSideInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2408,10 +1583,10 @@
     <value>Stretch</value>
   </data>
   <data name="mAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 49</value>
+    <value>23, 87</value>
   </data>
   <data name="mAlertPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>259, 49</value>
+    <value>449, 84</value>
   </data>
   <data name="mAlertPanel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2432,13 +1607,13 @@
     <value>Noto Sans KR, 6pt</value>
   </data>
   <data name="tboxMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 49</value>
+    <value>25, 78</value>
   </data>
   <data name="tboxMemo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="tboxMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>323, 247</value>
+    <value>481, 355</value>
   </data>
   <data name="tboxMemo.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2462,10 +1637,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnQuestionMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 12</value>
+    <value>17, 27</value>
   </data>
   <data name="btnQuestionMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
+    <value>44, 44</value>
   </data>
   <data name="btnQuestionMemo.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2482,14 +1657,17 @@
   <data name="&gt;&gt;btnQuestionMemo.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="btnCloseMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
   <data name="btnCloseMemo.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnCloseMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>309, 14</value>
+    <value>471, 18</value>
   </data>
   <data name="btnCloseMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 25</value>
+    <value>44, 44</value>
   </data>
   <data name="btnCloseMemo.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2507,34 +1685,25 @@
     <value>3</value>
   </data>
   <data name="pMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 314</value>
+    <value>123, 501</value>
   </data>
   <data name="pMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>354, 311</value>
+    <value>531, 467</value>
   </data>
-<data name="pMemo.TabIndex" type="System.Int32, mscorlib">
+  <data name="pMemo.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
-  <data name="tboxMemo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="tboxMemo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>323, 247</value>
-  </data>
-  <data name="tboxMemo.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Name" xml:space="preserve">
-    <value>tboxMemo</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2TextBox, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;tboxMemo.Parent" xml:space="preserve">
+  <data name="&gt;&gt;pMemo.Name" xml:space="preserve">
     <value>pMemo</value>
   </data>
-  <data name="&gt;&gt;tboxMemo.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;pMemo.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pMemo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2549,7 +1718,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1280, 720</value>
+    <value>1920, 1080</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>UcPracticeBlockCode</value>

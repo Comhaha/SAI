@@ -24,207 +24,93 @@ namespace SAI.SAI.App.Views.Pages
 
 		#region 구성 요소 디자이너에서 생성한 코드
 
-		/// <summary> 
-		/// 디자이너 지원에 필요한 메서드입니다. 
-		/// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.btnImage = new Guna.UI2.WinForms.Guna2Button();
-			this.btnAudio = new Guna.UI2.WinForms.Guna2Button();
-			this.btnPose = new Guna.UI2.WinForms.Guna2Button();
-			this.tpBtnParent = new System.Windows.Forms.TableLayoutPanel();
-			this.tpContentParent = new System.Windows.Forms.TableLayoutPanel();
-			this.tpContentTitle = new System.Windows.Forms.TableLayoutPanel();
-			this.autoSizeTitle = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.tpParent = new System.Windows.Forms.TableLayoutPanel();
-			this.tpBtnParent.SuspendLayout();
-			this.tpContentParent.SuspendLayout();
-			this.tpContentTitle.SuspendLayout();
-			this.tpParent.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// btnImage
-			// 
-			this.btnImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnImage.BackColor = System.Drawing.Color.Transparent;
-			this.btnImage.BackgroundImage = global::SAI.Properties.Resources.btn_image;
-			this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnImage.DefaultAutoSize = true;
-			this.btnImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnImage.FillColor = System.Drawing.Color.Transparent;
-			this.btnImage.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnImage.ForeColor = System.Drawing.Color.White;
-			this.btnImage.Location = new System.Drawing.Point(43, 26);
-			this.btnImage.Margin = new System.Windows.Forms.Padding(0);
-			this.btnImage.Name = "btnImage";
-			this.btnImage.Size = new System.Drawing.Size(254, 477);
-			this.btnImage.TabIndex = 0;
-			this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
-			// 
-			// btnAudio
-			// 
-			this.btnAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAudio.BackColor = System.Drawing.Color.Transparent;
-			this.btnAudio.BackgroundImage = global::SAI.Properties.Resources.btn_audio;
-			this.btnAudio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnAudio.FillColor = System.Drawing.Color.Transparent;
-			this.btnAudio.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnAudio.ForeColor = System.Drawing.Color.White;
-			this.btnAudio.Location = new System.Drawing.Point(637, 26);
-			this.btnAudio.Margin = new System.Windows.Forms.Padding(0);
-			this.btnAudio.Name = "btnAudio";
-			this.btnAudio.Size = new System.Drawing.Size(254, 477);
-			this.btnAudio.TabIndex = 10;
-			this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
-			// 
-			// btnPose
-			// 
-			this.btnPose.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPose.BackColor = System.Drawing.Color.Transparent;
-			this.btnPose.BackgroundImage = global::SAI.Properties.Resources.btn_pose;
-			this.btnPose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnPose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnPose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnPose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnPose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnPose.FillColor = System.Drawing.Color.Transparent;
-			this.btnPose.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnPose.ForeColor = System.Drawing.Color.White;
-			this.btnPose.Location = new System.Drawing.Point(340, 26);
-			this.btnPose.Margin = new System.Windows.Forms.Padding(0);
-			this.btnPose.Name = "btnPose";
-			this.btnPose.Size = new System.Drawing.Size(254, 477);
-			this.btnPose.TabIndex = 11;
-			this.btnPose.Click += new System.EventHandler(this.btnPose_Click);
-			// 
-			// tpBtnParent
-			// 
-			this.tpBtnParent.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tpBtnParent.BackColor = System.Drawing.Color.Transparent;
-			this.tpBtnParent.ColumnCount = 7;
-			this.tpContentParent.SetColumnSpan(this.tpBtnParent, 3);
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.1719F));
-			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
-			this.tpBtnParent.Controls.Add(this.btnImage, 1, 1);
-			this.tpBtnParent.Controls.Add(this.btnPose, 3, 1);
-			this.tpBtnParent.Controls.Add(this.btnAudio, 5, 1);
-			this.tpBtnParent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tpBtnParent.Location = new System.Drawing.Point(0, 132);
-			this.tpBtnParent.Margin = new System.Windows.Forms.Padding(0);
-			this.tpBtnParent.Name = "tpBtnParent";
-			this.tpBtnParent.RowCount = 3;
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
-			this.tpBtnParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
-			this.tpBtnParent.Size = new System.Drawing.Size(936, 530);
-			this.tpBtnParent.TabIndex = 12;
-			// 
-			// tpContentParent
-			// 
-			this.tpContentParent.BackColor = System.Drawing.Color.Transparent;
-			this.tpContentParent.ColumnCount = 1;
-			this.tpContentParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tpContentParent.Controls.Add(this.tpBtnParent, 0, 1);
-			this.tpContentParent.Controls.Add(this.tpContentTitle, 0, 0);
-			this.tpContentParent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tpContentParent.Location = new System.Drawing.Point(315, 168);
-			this.tpContentParent.Margin = new System.Windows.Forms.Padding(2);
-			this.tpContentParent.Name = "tpContentParent";
-			this.tpContentParent.RowCount = 2;
-			this.tpContentParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tpContentParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-			this.tpContentParent.Size = new System.Drawing.Size(936, 662);
-			this.tpContentParent.TabIndex = 13;
-			// 
-			// tpContentTitle
-			// 
-			this.tpContentTitle.ColumnCount = 3;
-			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
-			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tpContentTitle.Controls.Add(this.autoSizeTitle, 1, 0);
-			this.tpContentTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tpContentTitle.Location = new System.Drawing.Point(3, 3);
-			this.tpContentTitle.Name = "tpContentTitle";
-			this.tpContentTitle.RowCount = 2;
-			this.tpContentTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-			this.tpContentTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tpContentTitle.Size = new System.Drawing.Size(930, 126);
-			this.tpContentTitle.TabIndex = 13;
-			// 
-			// autoSizeTitle
-			// 
-			this.autoSizeTitle.BackColor = System.Drawing.Color.Transparent;
-			this.autoSizeTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.autoSizeTitle.Font = new System.Drawing.Font("Noto Sans KR SemiBold", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.autoSizeTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-			this.autoSizeTitle.Location = new System.Drawing.Point(46, 0);
-			this.autoSizeTitle.Margin = new System.Windows.Forms.Padding(0);
-			this.autoSizeTitle.Name = "autoSizeTitle";
-			this.autoSizeTitle.Size = new System.Drawing.Size(837, 100);
-			this.autoSizeTitle.TabIndex = 14;
-			this.autoSizeTitle.Text = "학습 데이터 종류를 선택하세요.";
-			this.autoSizeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// tpParent
-			// 
-			this.tpParent.BackColor = System.Drawing.Color.Transparent;
-			this.tpParent.BackgroundImage = global::SAI.Properties.Resources.img_background;
-			this.tpParent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.tpParent.ColumnCount = 3;
-			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tpParent.Controls.Add(this.tpContentParent, 1, 1);
-			this.tpParent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tpParent.Location = new System.Drawing.Point(0, 0);
-			this.tpParent.Margin = new System.Windows.Forms.Padding(2);
-			this.tpParent.Name = "tpParent";
-			this.tpParent.RowCount = 3;
-			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tpParent.Size = new System.Drawing.Size(1567, 1110);
-			this.tpParent.TabIndex = 14;
-			this.tpParent.Paint += new System.Windows.Forms.PaintEventHandler(this.tpParent_Paint);
-			// 
-			// UcSelectType
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.AutoSize = true;
-			this.Controls.Add(this.tpParent);
-			this.Margin = new System.Windows.Forms.Padding(2);
-			this.Name = "UcSelectType";
-			this.Size = new System.Drawing.Size(1567, 1110);
-			this.tpBtnParent.ResumeLayout(false);
-			this.tpBtnParent.PerformLayout();
-			this.tpContentParent.ResumeLayout(false);
-			this.tpContentTitle.ResumeLayout(false);
-			this.tpParent.ResumeLayout(false);
-			this.ResumeLayout(false);
+        /// <summary> 
+        /// 디자이너 지원에 필요한 메서드입니다. 
+        /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnImage = new Guna.UI2.WinForms.Guna2Button();
+            this.btnAudio = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPose = new Guna.UI2.WinForms.Guna2Button();
+            this.SuspendLayout();
+            // 
+            // pTitle
+            // 
+            this.pTitle.BackColor = System.Drawing.Color.Transparent;
+            this.pTitle.BackgroundImage = global::SAI.Properties.Resources.pSelectTypeTitle1;
+            this.pTitle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pTitle.Location = new System.Drawing.Point(571, 75);
+            this.pTitle.Name = "pTitle";
+            this.pTitle.Size = new System.Drawing.Size(773, 86);
+            this.pTitle.TabIndex = 9;
+            // 
+            // btnImage
+            // 
+            this.btnImage.BackColor = System.Drawing.Color.Transparent;
+            this.btnImage.BackgroundImage = global::SAI.Properties.Resources.btn_image;
+            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnImage.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnImage.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnImage.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnImage.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnImage.FillColor = System.Drawing.Color.Transparent;
+            this.btnImage.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnImage.ForeColor = System.Drawing.Color.White;
+            this.btnImage.Location = new System.Drawing.Point(325, 280);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(313, 481);
+            this.btnImage.TabIndex = 0;
+            this.btnImage.Click += new System.EventHandler(this.btnImage_Click);
+            // 
+            // btnAudio
+            // 
+            this.btnAudio.BackColor = System.Drawing.Color.Transparent;
+            this.btnAudio.BackgroundImage = global::SAI.Properties.Resources.btn_audio;
+            this.btnAudio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAudio.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAudio.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAudio.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAudio.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAudio.FillColor = System.Drawing.Color.Transparent;
+            this.btnAudio.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnAudio.ForeColor = System.Drawing.Color.White;
+            this.btnAudio.Location = new System.Drawing.Point(801, 280);
+            this.btnAudio.Name = "btnAudio";
+            this.btnAudio.Size = new System.Drawing.Size(313, 481);
+            this.btnAudio.TabIndex = 10;
+            this.btnAudio.Click += new System.EventHandler(this.btnAudio_Click);
+            // 
+            // btnPose
+            // 
+            this.btnPose.BackColor = System.Drawing.Color.Transparent;
+            this.btnPose.BackgroundImage = global::SAI.Properties.Resources.btn_pose;
+            this.btnPose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnPose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPose.FillColor = System.Drawing.Color.Transparent;
+            this.btnPose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnPose.ForeColor = System.Drawing.Color.White;
+            this.btnPose.Location = new System.Drawing.Point(1278, 280);
+            this.btnPose.Name = "btnPose";
+            this.btnPose.Size = new System.Drawing.Size(313, 481);
+            this.btnPose.TabIndex = 11;
+            this.btnPose.Click += new System.EventHandler(this.btnPose_Click);
+            // 
+            // UcSelectType
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
+            this.Controls.Add(this.btnPose);
+            this.Controls.Add(this.btnAudio);
+            this.Controls.Add(this.btnImage);
+            this.Controls.Add(this.pTitle);
+            this.Name = "UcSelectType";
+            this.Size = new System.Drawing.Size(1920, 1080);
+            this.ResumeLayout(false);
 
 		}
 

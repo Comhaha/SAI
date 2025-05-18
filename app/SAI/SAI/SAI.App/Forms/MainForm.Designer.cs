@@ -17,12 +17,15 @@
 
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.titlebar = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
+            this.btnMinScreen = new Guna.UI2.WinForms.Guna2Button();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            this.titlebar.SuspendLayout();
 			this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.btnClose = new Guna.UI2.WinForms.Guna2Button();
 			this.btnFullScreen = new Guna.UI2.WinForms.Guna2Button();
-			this.btnMinScreen = new Guna.UI2.WinForms.Guna2Button();
-			this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
 			this.pTitlebarTitle = new Guna.UI2.WinForms.Guna2Panel();
 			this.tpParent = new System.Windows.Forms.TableLayoutPanel();
@@ -31,56 +34,58 @@
 			this.tpParent.SuspendLayout();
 			this.tpTitlebar.SuspendLayout();
 			this.tpTitlebarBtn.SuspendLayout();
-			this.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainPanel.Location = new System.Drawing.Point(0, 45);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.mainPanel.MinimumSize = new System.Drawing.Size(1920, 1080);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(1920, 1080);
+            this.mainPanel.TabIndex = 5;
 			// 
-			// mainPanel
+			// guna2DragControl1
 			// 
-			this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.mainPanel.BackColor = System.Drawing.Color.Transparent;
-			this.mainPanel.Location = new System.Drawing.Point(0, 30);
-			this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.mainPanel.MinimumSize = new System.Drawing.Size(1280, 720);
-			this.mainPanel.Name = "mainPanel";
-			this.mainPanel.Size = new System.Drawing.Size(1280, 720);
-			this.mainPanel.TabIndex = 5;
+			this.guna2DragControl1.DockIndicatorTransparencyValue = 0.6D;
+			this.guna2DragControl1.UseTransparentDrag = true;
+            // 
+            // titlebar
+            // 
+            this.titlebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.titlebar.BackColor = System.Drawing.Color.Transparent;
+            this.titlebar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("titlebar.BackgroundImage")));
+            this.titlebar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.titlebar.Controls.Add(this.btnSetting);
+            this.titlebar.Controls.Add(this.btnMinScreen);
+            this.titlebar.Controls.Add(this.btnFullScreen);
+            this.titlebar.Controls.Add(this.btnClose);
+            this.titlebar.Location = new System.Drawing.Point(0, 0);
+            this.titlebar.Name = "titlebar";
+            this.titlebar.Size = new System.Drawing.Size(1920, 45);
+            this.titlebar.TabIndex = 6;
 			// 
-			// btnClose
+			// btnSetting
 			// 
-			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_close;
-			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnClose.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnClose.FillColor = System.Drawing.Color.Transparent;
-			this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnClose.ForeColor = System.Drawing.Color.White;
-			this.btnClose.Location = new System.Drawing.Point(99, 0);
-			this.btnClose.Margin = new System.Windows.Forms.Padding(0);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(34, 30);
-			this.btnClose.TabIndex = 0;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
-			// btnFullScreen
-			// 
-			this.btnFullScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_fullscreen;
-			this.btnFullScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnFullScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnFullScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnFullScreen.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnFullScreen.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnFullScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnFullScreen.FillColor = System.Drawing.Color.Transparent;
-			this.btnFullScreen.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnFullScreen.ForeColor = System.Drawing.Color.White;
-			this.btnFullScreen.Location = new System.Drawing.Point(69, 0);
-			this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
-			this.btnFullScreen.Name = "btnFullScreen";
-			this.btnFullScreen.Size = new System.Drawing.Size(30, 30);
-			this.btnFullScreen.TabIndex = 0;
-			this.btnFullScreen.Click += new System.EventHandler(this.btnFullScreen_Click);
+			this.btnSetting.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_setting;
+			this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnSetting.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnSetting.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnSetting.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnSetting.FillColor = System.Drawing.Color.Transparent;
+			this.btnSetting.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnSetting.ForeColor = System.Drawing.Color.White;
+			this.btnSetting.Location = new System.Drawing.Point(6, 0);
+			this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
+			this.btnSetting.Name = "btnSetting";
+			this.btnSetting.Size = new System.Drawing.Size(30, 30);
+			this.btnSetting.TabIndex = 0;
 			// 
 			// btnMinScreen
 			// 
@@ -101,28 +106,43 @@
 			this.btnMinScreen.TabIndex = 1;
 			this.btnMinScreen.Click += new System.EventHandler(this.btnMinScreen_Click);
 			// 
-			// btnSetting
+			// btnFullScreen
 			// 
-			this.btnSetting.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_setting;
-			this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnSetting.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnSetting.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnSetting.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnSetting.FillColor = System.Drawing.Color.Transparent;
-			this.btnSetting.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.btnSetting.ForeColor = System.Drawing.Color.White;
-			this.btnSetting.Location = new System.Drawing.Point(6, 0);
-			this.btnSetting.Margin = new System.Windows.Forms.Padding(0);
-			this.btnSetting.Name = "btnSetting";
-			this.btnSetting.Size = new System.Drawing.Size(30, 30);
-			this.btnSetting.TabIndex = 0;
-			// 
-			// guna2DragControl1
-			// 
-			this.guna2DragControl1.DockIndicatorTransparencyValue = 0.6D;
-			this.guna2DragControl1.UseTransparentDrag = true;
+			this.btnFullScreen.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_fullscreen;
+			this.btnFullScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnFullScreen.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnFullScreen.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnFullScreen.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnFullScreen.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnFullScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnFullScreen.FillColor = System.Drawing.Color.Transparent;
+			this.btnFullScreen.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnFullScreen.ForeColor = System.Drawing.Color.White;
+			this.btnFullScreen.Location = new System.Drawing.Point(69, 0);
+			this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0);
+			this.btnFullScreen.Name = "btnFullScreen";
+			this.btnFullScreen.Size = new System.Drawing.Size(30, 30);
+			this.btnFullScreen.TabIndex = 0;
+			this.btnFullScreen.Click += new System.EventHandler(this.btnFullScreen_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_titlebar_close;
+			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+			this.btnClose.Location = new System.Drawing.Point(99, 0);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(34, 30);
+            this.btnClose.TabIndex = 0;
+			this.btnClose.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// pTitlebarTitle
 			// 
@@ -198,26 +218,27 @@
 			this.tpTitlebarBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tpTitlebarBtn.Size = new System.Drawing.Size(133, 30);
 			this.tpTitlebarBtn.TabIndex = 1;
-			// 
-			// MainForm
-			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
-			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.titlebar);
+            this.Controls.Add(this.mainPanel);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(1920, 1080);
+            this.Name = "MainForm";
+            this.Text = "메인페이지";
 			this.Controls.Add(this.tpParent);
-			this.DoubleBuffered = true;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Margin = new System.Windows.Forms.Padding(2);
-			this.MinimumSize = new System.Drawing.Size(1280, 720);
-			this.Name = "MainForm";
-			this.Text = "메인페이지";
-			this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
 			this.tpParent.ResumeLayout(false);
 			this.tpTitlebar.ResumeLayout(false);
 			this.tpTitlebarBtn.ResumeLayout(false);
-			this.ResumeLayout(false);
-
+            this.ResumeLayout(false);
         }
 
 		#endregion

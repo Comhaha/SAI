@@ -30,7 +30,7 @@ namespace SAI
             presenter = new MainPresenter(this);
 
 			// 사이즈 고정
-			MinimumSize = new Size(1280, 720);
+			MinimumSize = new Size(1920, 1080);
 			AutoScaleMode = AutoScaleMode.Dpi;
 			guna2DragControl1.TargetControl = tpTitlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
@@ -129,7 +129,7 @@ namespace SAI
 			float scaleY = (float)formHeight / maxHeight;
 			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
 
-			// 확대된 크기 계산 (최대 1280 x 720)
+			// 확대된 크기 계산 (최대 1920 x 1080)
 			int newWidth = (int)(maxWidth * scale);
 			int newHeight = (int)(maxHeight * scale);
 
@@ -186,7 +186,7 @@ namespace SAI
 			{
 				// 원래 사이즈로
 				this.WindowState = FormWindowState.Normal;
-				this.Size = new Size(1280, 720);
+				this.Size = new Size(1920, 1080);
 			}
 			else
 			{
