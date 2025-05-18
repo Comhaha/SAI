@@ -348,6 +348,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 98)
     return None
 
+# 4. 모델 학습 블럭
 def train_model_block(epochs=None, imgsz=None):
     """
     모델 학습 블록 실행 함수
@@ -411,7 +412,7 @@ def train_model_block(epochs=None, imgsz=None):
         try:
             imgsz = int(imgsz)
             # 유효한 이미지 크기 범위 확인 (YOLO 권장 크기)
-            valid_sizes = [320, 416, 512, 640, 960, 1280]
+            valid_sizes = [512, 640, 960, 1024, 1280]
             if imgsz not in valid_sizes:
                 # 가장 가까운 유효 크기 찾기
                 closest_size = min(valid_sizes, key=lambda x: abs(x - imgsz))
