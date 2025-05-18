@@ -40,20 +40,20 @@ class TutorialRunner:
     
     def __init__(self, tutorial_train_script_path: str):
         self.tutorial_train_script_path = tutorial_train_script_path
-        self.test_script = None
+        self.tutorial_train_script = None
         self._load_script()
         
         # 블록 타입과 함수 매핑
         self.block_mappings = {
             "start": None,  # 시작 블록은 실행하지 않음
-            "pipInstall": self.test_script.install_packages_with_progress,
-            "loadModel": self.test_script.check_gpu,
-            "loadDataset": self.test_script.download_dataset_with_progress,
-            "machineLearning": self.test_script.train_model_block,  # 수정된 함수명
-            "resultGraph": self.test_script.visualize_training_results,
-            "imgPath": self.test_script.set_image_path_block,
-            "modelInference": self.test_script.run_inference_block,
-            "visualizeResult": self.test_script.visualize_results
+            "pipInstall": self.tutorial_train_script.install_packages_block,
+            "loadModel": self.tutorial_train_script.check_gpu_yolo_load_block,
+            "loadDataset": self.tutorial_train_script.download_dataset_block,
+            "machineLearning": self.tutorial_train_script.train_model_block,  # 수정된 함수명
+            "resultGraph": self.tutorial_train_script.visualize_training_results_block,
+            "imgPath": self.tutorial_train_script.set_image_path_block,
+            "modelInference": self.tutorial_train_script.run_inference_block,
+            "visualizeResult": self.tutorial_train_script.visualize_results_block
         }
     
     def _load_script(self) -> None:
@@ -61,9 +61,9 @@ class TutorialRunner:
         try:
             # 튜토리얼 스크립트를 모듈로 로드
             if os.path.exists(self.tutorial_train_script_path):
-                spec = importlib.util.spec_from_file_location("test_script", self.tutorial_train_script_path)
-                self.test_script = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(self.test_script)
+                spec = importlib.util.spec_from_file_location("tutorial_train_script", self.tutorial_train_script_path)
+                self.tutorial_train_script = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(self.tutorial_train_script)
                 logger.info(f"테스트 스크립트 로드 완료: {self.tutorial_train_script_path}")
             else:
                 raise FileNotFoundError(f"테스트 스크립트를 찾을 수 없습니다: {self.tutorial_train_script_path}")
