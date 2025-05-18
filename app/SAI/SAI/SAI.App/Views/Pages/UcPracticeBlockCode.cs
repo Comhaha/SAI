@@ -376,10 +376,6 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
-        private void ibtnDone_Click(object sender, EventArgs e)
-        {
-            ucShowDialogPresenter.clickFinish();
-        }
 
         public void showDialog(Form dialog)
         {

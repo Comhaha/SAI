@@ -28,79 +28,78 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            this.btnLearnModel = new Guna.UI2.WinForms.Guna2Button();
-            this.panelTitleBar.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // panelTitleBar
-            // 
-            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_complete_labeling;
-            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelTitleBar.Controls.Add(this.btnClose);
-            this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
-            this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(667, 40);
-            this.panelTitleBar.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_blue_btn_close;
-            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnClose.FillColor = System.Drawing.Color.Transparent;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Image = global::SAI.Properties.Resources.btn_close;
-            this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
-            this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
-            this.btnClose.Location = new System.Drawing.Point(607, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(60, 40);
-            this.btnClose.TabIndex = 1;
-            // 
-            // btnLearnModel
-            // 
-            this.btnLearnModel.BackColor = System.Drawing.Color.Transparent;
-            this.btnLearnModel.BackgroundImage = global::SAI.Properties.Resources.btn_learnmodel;
-            this.btnLearnModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnLearnModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnLearnModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnLearnModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnLearnModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnLearnModel.FillColor = System.Drawing.Color.Transparent;
-            this.btnLearnModel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnLearnModel.ForeColor = System.Drawing.Color.White;
-            this.btnLearnModel.Location = new System.Drawing.Point(466, 202);
-            this.btnLearnModel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLearnModel.Name = "btnLearnModel";
-            this.btnLearnModel.Size = new System.Drawing.Size(161, 40);
-            this.btnLearnModel.TabIndex = 4;
-            // 
-            // DialogCompleteLabeling
-            // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.Gray;
-            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_complete_labeling;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(667, 282);
-            this.Controls.Add(this.btnLearnModel);
-            this.Controls.Add(this.panelTitleBar);
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
-            this.Name = "DialogCompleteLabeling";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.TopMost = true;
-            this.panelTitleBar.ResumeLayout(false);
-            this.ResumeLayout(false);
+			this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
+			this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+			this.btnLearnModel = new Guna.UI2.WinForms.Guna2Button();
+			this.panelTitleBar.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// panelTitleBar
+			// 
+			this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_complete_labeling;
+			this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.panelTitleBar.Controls.Add(this.btnClose);
+			this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
+			this.panelTitleBar.Name = "panelTitleBar";
+			this.panelTitleBar.Size = new System.Drawing.Size(779, 50);
+			this.panelTitleBar.TabIndex = 0;
+			// 
+			// btnClose
+			// 
+			this.btnClose.BackColor = System.Drawing.Color.Transparent;
+			this.btnClose.BackgroundImage = global::SAI.Properties.Resources.bg_blue_btn_close;
+			this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+			this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnClose.FillColor = System.Drawing.Color.Transparent;
+			this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnClose.ForeColor = System.Drawing.Color.White;
+			this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
+			this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
+			this.btnClose.Location = new System.Drawing.Point(708, 0);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(71, 49);
+			this.btnClose.TabIndex = 1;
+			// 
+			// btnLearnModel
+			// 
+			this.btnLearnModel.BackColor = System.Drawing.Color.Transparent;
+			this.btnLearnModel.BackgroundImage = global::SAI.Properties.Resources.btn_learnmodel;
+			this.btnLearnModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnLearnModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnLearnModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnLearnModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnLearnModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnLearnModel.FillColor = System.Drawing.Color.Transparent;
+			this.btnLearnModel.Font = new System.Drawing.Font("Segoe UI", 9F);
+			this.btnLearnModel.ForeColor = System.Drawing.Color.White;
+			this.btnLearnModel.Location = new System.Drawing.Point(474, 251);
+			this.btnLearnModel.Margin = new System.Windows.Forms.Padding(4);
+			this.btnLearnModel.Name = "btnLearnModel";
+			this.btnLearnModel.Size = new System.Drawing.Size(255, 50);
+			this.btnLearnModel.TabIndex = 4;
+			// 
+			// DialogCompleteLabeling
+			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.BackColor = System.Drawing.Color.Gray;
+			this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_complete_labeling;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.ClientSize = new System.Drawing.Size(779, 341);
+			this.Controls.Add(this.btnLearnModel);
+			this.Controls.Add(this.panelTitleBar);
+			this.DoubleBuffered = true;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.MaximizeBox = false;
+			this.Name = "DialogCompleteLabeling";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.TopMost = true;
+			this.panelTitleBar.ResumeLayout(false);
+			this.ResumeLayout(false);
 
 		}
 

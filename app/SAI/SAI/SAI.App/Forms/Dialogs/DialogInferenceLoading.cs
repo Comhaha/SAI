@@ -16,5 +16,10 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             InitializeComponent();
         }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

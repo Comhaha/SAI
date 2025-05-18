@@ -188,7 +188,7 @@
     <value>True</value>
   </data>
   <data name="lbMissingType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 6pt</value>
+    <value>Noto Sans KR SemiBold, 6pt</value>
   </data>
   <data name="lbMissingType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -275,7 +275,7 @@
     <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="&gt;&gt;pErrorToast.Parent" xml:space="preserve">
-    <value>pBlock</value>
+    <value>webViewblock</value>
   </data>
   <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -668,7 +668,7 @@
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1063,7 +1063,7 @@
     <value>293, 24</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 53</value>
+    <value>45, 34</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1410,10 +1410,10 @@
     <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
   </data>
   <data name="lblInferGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 524</value>
+    <value>79, 1024</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 53</value>
+    <value>210, 34</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1437,10 +1437,10 @@
     <value>Noto Sans KR Medium, 9pt, style=Bold</value>
   </data>
   <data name="lblThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>51, 109</value>
+    <value>64, 136</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 37</value>
+    <value>79, 23</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1464,10 +1464,10 @@
     <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
   </data>
   <data name="lblInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 36</value>
+    <value>50, 45</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 53</value>
+    <value>93, 34</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1512,10 +1512,10 @@
     <value>Right</value>
   </data>
   <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1290, 0</value>
+    <value>1132, 0</value>
   </data>
   <data name="pSideInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>630, 1080</value>
+    <value>788, 1080</value>
   </data>
   <data name="pSideInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
