@@ -297,6 +297,18 @@
     <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.Designer.cs">
       <DependentUpon>AutoSizeLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\DynamicUcPracticeBlockCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\DynamicUcPracticeBlockCode.Designer.cs">
+      <DependentUpon>DynamicUcPracticeBlockCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\LayoutTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\LayoutTest.Designer.cs">
+      <DependentUpon>LayoutTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -314,6 +326,12 @@
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcImageChart.Designer.cs">
       <DependentUpon>UcImageChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\CopyUcPracticeBlockCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\CopyUcPracticeBlockCode.Designer.cs">
+      <DependentUpon>CopyUcPracticeBlockCode.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -431,6 +449,12 @@
     <EmbeddedResource Include="SAI.App\Forms\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\DynamicUcPracticeBlockCode.resx">
+      <DependentUpon>DynamicUcPracticeBlockCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\LayoutTest.resx">
+      <DependentUpon>LayoutTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
       <DependentUpon>UcBlockGuide.cs</DependentUpon>
     </EmbeddedResource>
@@ -442,6 +466,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
       <DependentUpon>UcCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\CopyUcPracticeBlockCode.resx">
+      <DependentUpon>CopyUcPracticeBlockCode.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockList.resx">
       <DependentUpon>UcPracticeBlockList.cs</DependentUpon>

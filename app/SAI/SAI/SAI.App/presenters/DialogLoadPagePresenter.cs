@@ -24,7 +24,7 @@ namespace SAI.SAI.App.Presenters
 
 		public void clickTrainAtModelSelect()
 		{
-			mainView.LoadPage(new UcPracticeBlockCode(mainView));
+			mainView.LoadPage(new DynamicUcPracticeBlockCode(mainView));
 		}
 
 		//public void clickGoTutorialBlockCode()
