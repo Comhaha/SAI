@@ -28,786 +28,803 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcLabelGuide));
-			this.homeBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-			this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-			this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-			this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
-			this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-			this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-			this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress2 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress1 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress6 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress3 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress8 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress5 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
-			this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
-			this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
-			this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
-			this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-			this.questBoxPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.questClassificationPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.questSegPanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.toolZoom = new Guna.UI2.WinForms.Guna2GradientPanel();
-			this.ZoomCurrent = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.ZoomOutBtn = new Guna.UI2.WinForms.Guna2Button();
-			this.ZoomInBtn = new Guna.UI2.WinForms.Guna2Button();
-			this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			this.toolBox = new Guna.UI2.WinForms.Guna2GradientPanel();
-			this.toolRedo = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolUndo = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolVisible = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolLabelingSquare = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolDelete = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolLabelingPolygon = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.toolHand = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
-			this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
-			this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
-			this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
-			this.goModel = new Guna.UI2.WinForms.Guna2Button();
-			this.mainpanel.SuspendLayout();
-			this.leftPanel.SuspendLayout();
-			this.guna2CustomGradientPanel1.SuspendLayout();
-			this.imageContainer.SuspendLayout();
-			this.toastPopupPanel.SuspendLayout();
-			this.accuracyPanel.SuspendLayout();
-			this.levelPanel.SuspendLayout();
-			this.guna2Panel1.SuspendLayout();
-			this.toolZoom.SuspendLayout();
-			this.toolBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// homeBtn
-			// 
-			this.homeBtn.BackColor = System.Drawing.Color.Transparent;
-			this.homeBtn.Cursor = System.Windows.Forms.Cursors.AppStarting;
-			this.homeBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.homeBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.homeBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.homeBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.homeBtn.FillColor = System.Drawing.Color.Transparent;
-			this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.homeBtn.ForeColor = System.Drawing.Color.White;
-			this.homeBtn.HoverState.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-			this.homeBtn.Image = global::SAI.Properties.Resources.ic_home;
-			this.homeBtn.ImageSize = new System.Drawing.Size(58, 58);
-			this.homeBtn.Location = new System.Drawing.Point(202, 48);
-			this.homeBtn.Name = "homeBtn";
-			this.homeBtn.PressedColor = System.Drawing.Color.Transparent;
-			this.homeBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-			this.homeBtn.Size = new System.Drawing.Size(62, 62);
-			this.homeBtn.TabIndex = 0;
-			// 
-			// nextBtn
-			// 
-			this.nextBtn.BackColor = System.Drawing.Color.Transparent;
-			this.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.nextBtn.FillColor = System.Drawing.Color.Transparent;
-			this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.nextBtn.ForeColor = System.Drawing.Color.White;
-			this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
-			this.nextBtn.Image = global::SAI.Properties.Resources.ic_next;
-			this.nextBtn.ImageSize = new System.Drawing.Size(102, 102);
-			this.nextBtn.Location = new System.Drawing.Point(1793, 489);
-			this.nextBtn.Name = "nextBtn";
-			this.nextBtn.Size = new System.Drawing.Size(105, 105);
-			this.nextBtn.TabIndex = 5;
-			this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
-			// 
-			// preBtn
-			// 
-			this.preBtn.BackColor = System.Drawing.Color.Transparent;
-			this.preBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.preBtn.FillColor = System.Drawing.Color.Transparent;
-			this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.preBtn.ForeColor = System.Drawing.Color.White;
-			this.preBtn.HoverState.BorderColor = System.Drawing.Color.Transparent;
-			this.preBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.preBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
-			this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverL;
-			this.preBtn.Image = global::SAI.Properties.Resources.ic_pre;
-			this.preBtn.ImageSize = new System.Drawing.Size(102, 102);
-			this.preBtn.Location = new System.Drawing.Point(26, 489);
-			this.preBtn.Name = "preBtn";
-			this.preBtn.PressedColor = System.Drawing.Color.Transparent;
-			this.preBtn.Size = new System.Drawing.Size(105, 105);
-			this.preBtn.TabIndex = 6;
-			// 
-			// class1
-			// 
-			this.class1.BackColor = System.Drawing.Color.Transparent;
-			this.class1.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.class1.ForeColor = System.Drawing.Color.Black;
-			this.class1.Location = new System.Drawing.Point(0, 0);
-			this.class1.Name = "class1";
-			this.class1.Size = new System.Drawing.Size(119, 36);
-			this.class1.TabIndex = 8;
-			this.class1.Text = "클래스 예시";
-			this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			// 
-			// mainpanel
-			// 
-			this.mainpanel.BackColor = System.Drawing.Color.Transparent;
-			this.mainpanel.BackgroundImage = global::SAI.Properties.Resources.내부_박스;
-			this.mainpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.mainpanel.Controls.Add(this.leftPanel);
-			this.mainpanel.Controls.Add(this.imageContainer);
-			this.mainpanel.FillColor = System.Drawing.Color.Transparent;
-			this.mainpanel.Location = new System.Drawing.Point(168, 141);
-			this.mainpanel.Name = "mainpanel";
-			this.mainpanel.Size = new System.Drawing.Size(1601, 875);
-			this.mainpanel.TabIndex = 7;
-			this.mainpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainpanel_Paint_1);
-			// 
-			// leftPanel
-			// 
-			this.leftPanel.BackColor = System.Drawing.Color.Transparent;
-			this.leftPanel.BackgroundImage = global::SAI.Properties.Resources.Frame_1000004304;
-			this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.leftPanel.BorderColor = System.Drawing.Color.Transparent;
-			this.leftPanel.Controls.Add(this.class2);
-			this.leftPanel.Controls.Add(this.classBtn);
-			this.leftPanel.Controls.Add(this.guna2CustomGradientPanel1);
-			this.leftPanel.CustomBorderColor = System.Drawing.Color.DimGray;
-			this.leftPanel.CustomizableEdges.BottomLeft = false;
-			this.leftPanel.CustomizableEdges.BottomRight = false;
-			this.leftPanel.CustomizableEdges.TopRight = false;
-			this.leftPanel.Location = new System.Drawing.Point(30, 87);
-			this.leftPanel.Name = "leftPanel";
-			this.leftPanel.Size = new System.Drawing.Size(351, 696);
-			this.leftPanel.TabIndex = 4;
-			this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
-			// 
-			// class2
-			// 
-			this.class2.BackColor = System.Drawing.Color.Transparent;
-			this.class2.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.class2.Location = new System.Drawing.Point(34, 75);
-			this.class2.Name = "class2";
-			this.class2.Size = new System.Drawing.Size(141, 45);
-			this.class2.TabIndex = 14;
-			this.class2.Text = "라벨링 예시";
-			this.class2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			this.class2.Click += new System.EventHandler(this.class2_Click);
-			// 
-			// classBtn
-			// 
-			this.classBtn.BorderThickness = 1;
-			this.classBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.classBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.classBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.classBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.classBtn.FillColor = System.Drawing.Color.Transparent;
-			this.classBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.classBtn.ForeColor = System.Drawing.Color.White;
-			this.classBtn.HoverState.BorderColor = System.Drawing.Color.DimGray;
-			this.classBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.classBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
-			this.classBtn.HoverState.ForeColor = System.Drawing.Color.Transparent;
-			this.classBtn.Location = new System.Drawing.Point(1, 84);
-			this.classBtn.Name = "classBtn";
-			this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-			this.classBtn.Size = new System.Drawing.Size(24, 24);
-			this.classBtn.TabIndex = 12;
-			this.classBtn.Click += new System.EventHandler(this.classBtn_Click);
-			// 
-			// guna2CustomGradientPanel1
-			// 
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress0);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress2);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress1);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress6);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress3);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress8);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress5);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress7);
-			this.guna2CustomGradientPanel1.Controls.Add(this.progress4);
-			this.guna2CustomGradientPanel1.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.guna2CustomGradientPanel1.FillColor = System.Drawing.Color.Transparent;
-			this.guna2CustomGradientPanel1.FillColor2 = System.Drawing.Color.Transparent;
-			this.guna2CustomGradientPanel1.FillColor3 = System.Drawing.Color.Transparent;
-			this.guna2CustomGradientPanel1.FillColor4 = System.Drawing.Color.Transparent;
-			this.guna2CustomGradientPanel1.Location = new System.Drawing.Point(219, 553);
-			this.guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
-			this.guna2CustomGradientPanel1.Size = new System.Drawing.Size(129, 143);
-			this.guna2CustomGradientPanel1.TabIndex = 13;
-			// 
-			// progress0
-			// 
-			this.progress0.BackColor = System.Drawing.Color.Transparent;
-			this.progress0.BorderColor = System.Drawing.Color.Black;
-			this.progress0.BorderRadius = 15;
-			this.progress0.BorderThickness = 1;
-			this.progress0.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress0.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress0.Location = new System.Drawing.Point(0, 2);
-			this.progress0.Margin = new System.Windows.Forms.Padding(0);
-			this.progress0.Name = "progress0";
-			this.progress0.Size = new System.Drawing.Size(30, 30);
-			this.progress0.TabIndex = 17;
-			// 
-			// progress2
-			// 
-			this.progress2.BackColor = System.Drawing.Color.Transparent;
-			this.progress2.BorderColor = System.Drawing.Color.Black;
-			this.progress2.BorderRadius = 15;
-			this.progress2.BorderThickness = 1;
-			this.progress2.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress2.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress2.Location = new System.Drawing.Point(99, 2);
-			this.progress2.Margin = new System.Windows.Forms.Padding(0);
-			this.progress2.Name = "progress2";
-			this.progress2.Size = new System.Drawing.Size(30, 30);
-			this.progress2.TabIndex = 17;
-			// 
-			// progress1
-			// 
-			this.progress1.BackColor = System.Drawing.Color.Transparent;
-			this.progress1.BorderColor = System.Drawing.Color.Black;
-			this.progress1.BorderRadius = 15;
-			this.progress1.BorderThickness = 1;
-			this.progress1.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress1.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress1.Location = new System.Drawing.Point(50, 2);
-			this.progress1.Margin = new System.Windows.Forms.Padding(0);
-			this.progress1.Name = "progress1";
-			this.progress1.Size = new System.Drawing.Size(30, 30);
-			this.progress1.TabIndex = 16;
-			// 
-			// progress6
-			// 
-			this.progress6.BackColor = System.Drawing.Color.Transparent;
-			this.progress6.BorderColor = System.Drawing.Color.Black;
-			this.progress6.BorderRadius = 15;
-			this.progress6.BorderThickness = 1;
-			this.progress6.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress6.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress6.Location = new System.Drawing.Point(0, 112);
-			this.progress6.Margin = new System.Windows.Forms.Padding(0);
-			this.progress6.Name = "progress6";
-			this.progress6.Size = new System.Drawing.Size(30, 30);
-			this.progress6.TabIndex = 16;
-			// 
-			// progress3
-			// 
-			this.progress3.BackColor = System.Drawing.Color.Transparent;
-			this.progress3.BorderColor = System.Drawing.Color.Black;
-			this.progress3.BorderRadius = 15;
-			this.progress3.BorderThickness = 1;
-			this.progress3.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress3.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress3.Location = new System.Drawing.Point(0, 57);
-			this.progress3.Margin = new System.Windows.Forms.Padding(0);
-			this.progress3.Name = "progress3";
-			this.progress3.Size = new System.Drawing.Size(30, 30);
-			this.progress3.TabIndex = 16;
-			// 
-			// progress8
-			// 
-			this.progress8.BackColor = System.Drawing.Color.Transparent;
-			this.progress8.BorderColor = System.Drawing.Color.Black;
-			this.progress8.BorderRadius = 15;
-			this.progress8.BorderThickness = 1;
-			this.progress8.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress8.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress8.Location = new System.Drawing.Point(99, 112);
-			this.progress8.Margin = new System.Windows.Forms.Padding(0);
-			this.progress8.Name = "progress8";
-			this.progress8.Size = new System.Drawing.Size(30, 30);
-			this.progress8.TabIndex = 15;
-			// 
-			// progress5
-			// 
-			this.progress5.BackColor = System.Drawing.Color.Transparent;
-			this.progress5.BorderColor = System.Drawing.Color.Black;
-			this.progress5.BorderRadius = 15;
-			this.progress5.BorderThickness = 1;
-			this.progress5.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress5.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress5.Location = new System.Drawing.Point(99, 57);
-			this.progress5.Margin = new System.Windows.Forms.Padding(0);
-			this.progress5.Name = "progress5";
-			this.progress5.Size = new System.Drawing.Size(30, 30);
-			this.progress5.TabIndex = 15;
-			// 
-			// progress7
-			// 
-			this.progress7.BackColor = System.Drawing.Color.Transparent;
-			this.progress7.BorderColor = System.Drawing.Color.Black;
-			this.progress7.BorderRadius = 15;
-			this.progress7.BorderThickness = 1;
-			this.progress7.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress7.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress7.Location = new System.Drawing.Point(50, 112);
-			this.progress7.Margin = new System.Windows.Forms.Padding(0);
-			this.progress7.Name = "progress7";
-			this.progress7.Size = new System.Drawing.Size(30, 30);
-			this.progress7.TabIndex = 15;
-			// 
-			// progress4
-			// 
-			this.progress4.BackColor = System.Drawing.Color.Transparent;
-			this.progress4.BorderColor = System.Drawing.Color.Black;
-			this.progress4.BorderRadius = 15;
-			this.progress4.BorderThickness = 1;
-			this.progress4.CustomBorderColor = System.Drawing.Color.Black;
-			this.progress4.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-			this.progress4.Location = new System.Drawing.Point(50, 57);
-			this.progress4.Margin = new System.Windows.Forms.Padding(0);
-			this.progress4.Name = "progress4";
-			this.progress4.Size = new System.Drawing.Size(30, 30);
-			this.progress4.TabIndex = 15;
-			// 
-			// imageContainer
-			// 
-			this.imageContainer.BackColor = System.Drawing.Color.Transparent;
-			this.imageContainer.BorderColor = System.Drawing.Color.Transparent;
-			this.imageContainer.Controls.Add(this.toastPopupPanel);
-			this.imageContainer.Controls.Add(this.accuracyPanel);
-			this.imageContainer.Controls.Add(this.levelPanel);
-			this.imageContainer.Controls.Add(this.toolZoom);
-			this.imageContainer.Controls.Add(this.toolBox);
-			this.imageContainer.Controls.Add(this.pictureBoxImage);
-			this.imageContainer.CustomBorderColor = System.Drawing.Color.DimGray;
-			this.imageContainer.CustomBorderThickness = new System.Windows.Forms.Padding(1, 0, 0, 0);
-			this.imageContainer.CustomizableEdges.BottomLeft = false;
-			this.imageContainer.CustomizableEdges.BottomRight = false;
-			this.imageContainer.CustomizableEdges.TopLeft = false;
-			this.imageContainer.Location = new System.Drawing.Point(410, 0);
-			this.imageContainer.Name = "imageContainer";
-			this.imageContainer.Size = new System.Drawing.Size(1182, 875);
-			this.imageContainer.TabIndex = 3;
-			this.imageContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
-			// 
-			// toastPopupPanel
-			// 
-			this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.toastPopupS;
-			this.toastPopupPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.toastPopupPanel.Controls.Add(this.popupCloseBtn);
-			this.toastPopupPanel.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toastPopupPanel.Location = new System.Drawing.Point(439, 24);
-			this.toastPopupPanel.Name = "toastPopupPanel";
-			this.toastPopupPanel.Size = new System.Drawing.Size(492, 130);
-			this.toastPopupPanel.TabIndex = 15;
-			this.toastPopupPanel.Visible = false;
-			// 
-			// popupCloseBtn
-			// 
-			this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
-			this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.popupCloseBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.popupCloseBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.popupCloseBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
-			this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
-			this.popupCloseBtn.Location = new System.Drawing.Point(446, 16);
-			this.popupCloseBtn.Name = "popupCloseBtn";
-			this.popupCloseBtn.Size = new System.Drawing.Size(20, 20);
-			this.popupCloseBtn.TabIndex = 0;
-			this.popupCloseBtn.Text = "guna2Button1";
-			// 
-			// accuracyPanel
-			// 
-			this.accuracyPanel.BackColor = System.Drawing.Color.Transparent;
-			this.accuracyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.accuracyPanel.BorderColor = System.Drawing.Color.Black;
-			this.accuracyPanel.BorderThickness = 1;
-			this.accuracyPanel.Controls.Add(this.accuracyLabel);
-			this.accuracyPanel.CustomBorderThickness = new System.Windows.Forms.Padding(0, 1, 1, 1);
-			this.accuracyPanel.FillColor = System.Drawing.Color.Transparent;
-			this.accuracyPanel.Location = new System.Drawing.Point(0, 134);
-			this.accuracyPanel.Name = "accuracyPanel";
-			this.accuracyPanel.Size = new System.Drawing.Size(302, 81);
-			this.accuracyPanel.TabIndex = 14;
-			this.accuracyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.accuracyPanel_Paint);
-			// 
-			// accuracyLabel
-			// 
-			this.accuracyLabel.AutoSize = false;
-			this.accuracyLabel.BackColor = System.Drawing.Color.Transparent;
-			this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.accuracyLabel.Location = new System.Drawing.Point(57, 24);
-			this.accuracyLabel.Margin = new System.Windows.Forms.Padding(0);
-			this.accuracyLabel.Name = "accuracyLabel";
-			this.accuracyLabel.Size = new System.Drawing.Size(188, 31);
-			this.accuracyLabel.TabIndex = 13;
-			this.accuracyLabel.Text = "Accuracy : 100%";
-			this.accuracyLabel.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-			this.accuracyLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			this.accuracyLabel.Click += new System.EventHandler(this.accuracyLabel_Click);
-			// 
-			// levelPanel
-			// 
-			this.levelPanel.BackColor = System.Drawing.Color.Transparent;
-			this.levelPanel.BackgroundImage = global::SAI.Properties.Resources.class1;
-			this.levelPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.levelPanel.BorderColor = System.Drawing.Color.Transparent;
-			this.levelPanel.BorderThickness = 1;
-			this.levelPanel.Controls.Add(this.guna2Panel1);
-			this.levelPanel.CustomizableEdges.BottomLeft = false;
-			this.levelPanel.CustomizableEdges.TopLeft = false;
-			this.levelPanel.FillColor = System.Drawing.Color.Transparent;
-			this.levelPanel.Location = new System.Drawing.Point(1, 24);
-			this.levelPanel.Name = "levelPanel";
-			this.levelPanel.Size = new System.Drawing.Size(341, 98);
-			this.levelPanel.TabIndex = 13;
-			this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
-			// 
-			// guna2Panel1
-			// 
-			this.guna2Panel1.Controls.Add(this.questBoxPanel);
-			this.guna2Panel1.Controls.Add(this.questClassificationPanel);
-			this.guna2Panel1.Controls.Add(this.questSegPanel);
-			this.guna2Panel1.Location = new System.Drawing.Point(255, 33);
-			this.guna2Panel1.Name = "guna2Panel1";
-			this.guna2Panel1.Size = new System.Drawing.Size(32, 33);
-			this.guna2Panel1.TabIndex = 17;
-			// 
-			// questBoxPanel
-			// 
-			this.questBoxPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
-			this.questBoxPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.questBoxPanel.Location = new System.Drawing.Point(4, 4);
-			this.questBoxPanel.Name = "questBoxPanel";
-			this.questBoxPanel.Size = new System.Drawing.Size(25, 25);
-			this.questBoxPanel.TabIndex = 16;
-			// 
-			// questClassificationPanel
-			// 
-			this.questClassificationPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
-			this.questClassificationPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.questClassificationPanel.Location = new System.Drawing.Point(3, 5);
-			this.questClassificationPanel.Name = "questClassificationPanel";
-			this.questClassificationPanel.Size = new System.Drawing.Size(25, 25);
-			this.questClassificationPanel.TabIndex = 15;
-			// 
-			// questSegPanel
-			// 
-			this.questSegPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
-			this.questSegPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.questSegPanel.Location = new System.Drawing.Point(4, 4);
-			this.questSegPanel.Name = "questSegPanel";
-			this.questSegPanel.Size = new System.Drawing.Size(25, 25);
-			this.questSegPanel.TabIndex = 16;
-			// 
-			// toolZoom
-			// 
-			this.toolZoom.BackColor = System.Drawing.Color.Transparent;
-			this.toolZoom.BackgroundImage = global::SAI.Properties.Resources.확대_축소;
-			this.toolZoom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.toolZoom.BorderColor = System.Drawing.Color.Transparent;
-			this.toolZoom.BorderThickness = 3;
-			this.toolZoom.Controls.Add(this.ZoomCurrent);
-			this.toolZoom.Controls.Add(this.ZoomOutBtn);
-			this.toolZoom.Controls.Add(this.ZoomInBtn);
-			this.toolZoom.Controls.Add(this.guna2HtmlLabel4);
-			this.toolZoom.FillColor = System.Drawing.Color.Transparent;
-			this.toolZoom.FillColor2 = System.Drawing.Color.Transparent;
-			this.toolZoom.Location = new System.Drawing.Point(1085, 629);
-			this.toolZoom.Name = "toolZoom";
-			this.toolZoom.Size = new System.Drawing.Size(51, 149);
-			this.toolZoom.TabIndex = 11;
-			this.toolZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.toolZoom_Paint);
-			// 
-			// ZoomCurrent
-			// 
-			this.ZoomCurrent.BackColor = System.Drawing.Color.Transparent;
-			this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.ZoomCurrent.Location = new System.Drawing.Point(5, 64);
-			this.ZoomCurrent.Name = "ZoomCurrent";
-			this.ZoomCurrent.Size = new System.Drawing.Size(44, 23);
-			this.ZoomCurrent.TabIndex = 11;
-			this.ZoomCurrent.Text = "100%";
-			this.ZoomCurrent.Click += new System.EventHandler(this.guna2HtmlLabel1_Click);
-			// 
-			// ZoomOutBtn
-			// 
-			this.ZoomOutBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.ZoomOutBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.ZoomOutBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.ZoomOutBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.ZoomOutBtn.FillColor = System.Drawing.Color.Transparent;
-			this.ZoomOutBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.ZoomOutBtn.ForeColor = System.Drawing.Color.Transparent;
-			this.ZoomOutBtn.Location = new System.Drawing.Point(0, 96);
-			this.ZoomOutBtn.Name = "ZoomOutBtn";
-			this.ZoomOutBtn.Size = new System.Drawing.Size(48, 50);
-			this.ZoomOutBtn.TabIndex = 10;
-			this.ZoomOutBtn.Text = "guna2Button2";
-			// 
-			// ZoomInBtn
-			// 
-			this.ZoomInBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.ZoomInBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.ZoomInBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.ZoomInBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.ZoomInBtn.FillColor = System.Drawing.Color.Transparent;
-			this.ZoomInBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.ZoomInBtn.ForeColor = System.Drawing.Color.Transparent;
-			this.ZoomInBtn.Location = new System.Drawing.Point(0, 0);
-			this.ZoomInBtn.Name = "ZoomInBtn";
-			this.ZoomInBtn.Size = new System.Drawing.Size(48, 45);
-			this.ZoomInBtn.TabIndex = 8;
-			this.ZoomInBtn.Text = "guna2Button1";
-			// 
-			// guna2HtmlLabel4
-			// 
-			this.guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent;
-			this.guna2HtmlLabel4.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-			this.guna2HtmlLabel4.Location = new System.Drawing.Point(23, 26);
-			this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-			this.guna2HtmlLabel4.Size = new System.Drawing.Size(3, 2);
-			this.guna2HtmlLabel4.TabIndex = 9;
-			this.guna2HtmlLabel4.Text = null;
-			// 
-			// toolBox
-			// 
-			this.toolBox.BackColor = System.Drawing.Color.Transparent;
-			this.toolBox.BackgroundImage = global::SAI.Properties.Resources.도구창２;
-			this.toolBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.toolBox.BorderColor = System.Drawing.Color.Transparent;
-			this.toolBox.BorderRadius = 10;
-			this.toolBox.BorderThickness = 3;
-			this.toolBox.Controls.Add(this.toolRedo);
-			this.toolBox.Controls.Add(this.toolUndo);
-			this.toolBox.Controls.Add(this.toolVisible);
-			this.toolBox.Controls.Add(this.toolLabelingSquare);
-			this.toolBox.Controls.Add(this.toolDelete);
-			this.toolBox.Controls.Add(this.toolLabelingPolygon);
-			this.toolBox.Controls.Add(this.toolHand);
-			this.toolBox.Location = new System.Drawing.Point(1085, 63);
-			this.toolBox.Name = "toolBox";
-			this.toolBox.Size = new System.Drawing.Size(51, 476);
-			this.toolBox.TabIndex = 10;
-			this.toolBox.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint_1);
-			// 
-			// toolRedo
-			// 
-			this.toolRedo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolRedo.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolRedo.HoverState.Image = global::SAI.Properties.Resources.toolRedoHover;
-			this.toolRedo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolRedo.Image = global::SAI.Properties.Resources.tool_redo_basic;
-			this.toolRedo.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolRedo.ImageRotate = 0F;
-			this.toolRedo.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolRedo.Location = new System.Drawing.Point(7, 274);
-			this.toolRedo.Name = "toolRedo";
-			this.toolRedo.PressedState.Image = global::SAI.Properties.Resources.toolRedoClick;
-			this.toolRedo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolRedo.Size = new System.Drawing.Size(35, 35);
-			this.toolRedo.TabIndex = 15;
-			// 
-			// toolUndo
-			// 
-			this.toolUndo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolUndo.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolUndo.HoverState.Image = global::SAI.Properties.Resources.toolUndoHover;
-			this.toolUndo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolUndo.Image = global::SAI.Properties.Resources.tool_undo_basic;
-			this.toolUndo.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolUndo.ImageRotate = 0F;
-			this.toolUndo.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolUndo.Location = new System.Drawing.Point(6, 220);
-			this.toolUndo.Name = "toolUndo";
-			this.toolUndo.PressedState.Image = global::SAI.Properties.Resources.toolUndoClick;
-			this.toolUndo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolUndo.Size = new System.Drawing.Size(35, 35);
-			this.toolUndo.TabIndex = 14;
-			// 
-			// toolVisible
-			// 
-			this.toolVisible.CheckedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolVisible.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolVisible.HoverState.Image = global::SAI.Properties.Resources.toolVHover;
-			this.toolVisible.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolVisible.Image = global::SAI.Properties.Resources.tool_visible_basic;
-			this.toolVisible.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolVisible.ImageRotate = 0F;
-			this.toolVisible.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolVisible.Location = new System.Drawing.Point(6, 416);
-			this.toolVisible.Name = "toolVisible";
-			this.toolVisible.PressedState.Image = global::SAI.Properties.Resources.toolVClick;
-			this.toolVisible.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolVisible.Size = new System.Drawing.Size(35, 35);
-			this.toolVisible.TabIndex = 13;
-			// 
-			// toolLabelingSquare
-			// 
-			this.toolLabelingSquare.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolLabelingSquare.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolLabelingSquare.HoverState.Image = global::SAI.Properties.Resources.toolLabelHover;
-			this.toolLabelingSquare.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolLabelingSquare.Image = global::SAI.Properties.Resources.tool_square_basic;
-			this.toolLabelingSquare.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolLabelingSquare.ImageRotate = 0F;
-			this.toolLabelingSquare.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolLabelingSquare.Location = new System.Drawing.Point(6, 73);
-			this.toolLabelingSquare.Name = "toolLabelingSquare";
-			this.toolLabelingSquare.PressedState.Image = global::SAI.Properties.Resources.toolLabelClick;
-			this.toolLabelingSquare.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolLabelingSquare.Size = new System.Drawing.Size(35, 35);
-			this.toolLabelingSquare.TabIndex = 12;
-			// 
-			// toolDelete
-			// 
-			this.toolDelete.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolDelete.HoverState.Image = global::SAI.Properties.Resources.toolDelHover;
-			this.toolDelete.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolDelete.Image = global::SAI.Properties.Resources.tool_del_basic;
-			this.toolDelete.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolDelete.ImageRotate = 0F;
-			this.toolDelete.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolDelete.Location = new System.Drawing.Point(6, 355);
-			this.toolDelete.Name = "toolDelete";
-			this.toolDelete.PressedState.Image = global::SAI.Properties.Resources.toolDelClick;
-			this.toolDelete.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolDelete.Size = new System.Drawing.Size(35, 35);
-			this.toolDelete.TabIndex = 11;
-			// 
-			// toolLabelingPolygon
-			// 
-			this.toolLabelingPolygon.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolLabelingPolygon.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolLabelingPolygon.HoverState.Image = global::SAI.Properties.Resources.toolPolHover;
-			this.toolLabelingPolygon.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolLabelingPolygon.Image = global::SAI.Properties.Resources.tool_pol_basic;
-			this.toolLabelingPolygon.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolLabelingPolygon.ImageRotate = 0F;
-			this.toolLabelingPolygon.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolLabelingPolygon.Location = new System.Drawing.Point(6, 132);
-			this.toolLabelingPolygon.Name = "toolLabelingPolygon";
-			this.toolLabelingPolygon.PressedState.Image = global::SAI.Properties.Resources.toolPolClick;
-			this.toolLabelingPolygon.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolLabelingPolygon.Size = new System.Drawing.Size(35, 35);
-			this.toolLabelingPolygon.TabIndex = 10;
-			// 
-			// toolHand
-			// 
-			this.toolHand.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.toolHand.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.toolHand.HoverState.Image = global::SAI.Properties.Resources.toolHandHover;
-			this.toolHand.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolHand.Image = global::SAI.Properties.Resources.tool_hand_basic;
-			this.toolHand.ImageOffset = new System.Drawing.Point(0, 0);
-			this.toolHand.ImageRotate = 0F;
-			this.toolHand.ImageSize = new System.Drawing.Size(30, 30);
-			this.toolHand.Location = new System.Drawing.Point(6, 24);
-			this.toolHand.Name = "toolHand";
-			this.toolHand.PressedState.Image = global::SAI.Properties.Resources.toolHandClick;
-			this.toolHand.PressedState.ImageSize = new System.Drawing.Size(0, 0);
-			this.toolHand.Size = new System.Drawing.Size(35, 35);
-			this.toolHand.TabIndex = 0;
-			// 
-			// pictureBoxImage
-			// 
-			this.pictureBoxImage.BackgroundImage = global::SAI.Properties.Resources._1;
-			this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.pictureBoxImage.FillColor = System.Drawing.Color.Transparent;
-			this.pictureBoxImage.ImageRotate = 0F;
-			this.pictureBoxImage.Location = new System.Drawing.Point(119, 225);
-			this.pictureBoxImage.Name = "pictureBoxImage";
-			this.pictureBoxImage.Size = new System.Drawing.Size(873, 558);
-			this.pictureBoxImage.TabIndex = 0;
-			this.pictureBoxImage.TabStop = false;
-			this.pictureBoxImage.WaitOnLoad = true;
-			this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click_1);
-			// 
-			// showLevel1
-			// 
-			this.showLevel1.BackColor = System.Drawing.Color.Transparent;
-			this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_9;
-			this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.showLevel1.Location = new System.Drawing.Point(932, 58);
-			this.showLevel1.Name = "showLevel1";
-			this.showLevel1.Size = new System.Drawing.Size(57, 37);
-			this.showLevel1.TabIndex = 0;
-			// 
-			// totalLevelpanel
-			// 
-			this.totalLevelpanel.BackColor = System.Drawing.Color.Transparent;
-			this.totalLevelpanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("totalLevelpanel.BackgroundImage")));
-			this.totalLevelpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.totalLevelpanel.Location = new System.Drawing.Point(278, 57);
-			this.totalLevelpanel.Name = "totalLevelpanel";
-			this.totalLevelpanel.Size = new System.Drawing.Size(220, 39);
-			this.totalLevelpanel.TabIndex = 9;
-			this.totalLevelpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.totalLevelpanel_Paint);
-			// 
-			// nextBtnVisible
-			// 
-			this.nextBtnVisible.BackColor = System.Drawing.Color.Transparent;
-			this.nextBtnVisible.Location = new System.Drawing.Point(1793, 489);
-			this.nextBtnVisible.Name = "nextBtnVisible";
-			this.nextBtnVisible.Size = new System.Drawing.Size(102, 104);
-			this.nextBtnVisible.TabIndex = 12;
-			// 
-			// goModel
-			// 
-			this.goModel.BackColor = System.Drawing.Color.Transparent;
-			this.goModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.goModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.goModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.goModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.goModel.FillColor = System.Drawing.Color.Transparent;
-			this.goModel.Font = new System.Drawing.Font("Segoe UI", 9F);
-			this.goModel.ForeColor = System.Drawing.Color.White;
-			this.goModel.HoverState.BorderColor = System.Drawing.Color.Transparent;
-			this.goModel.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
-			this.goModel.HoverState.FillColor = System.Drawing.Color.Transparent;
-			this.goModel.HoverState.Image = global::SAI.Properties.Resources.btn_go_model_hover;
-			this.goModel.Image = global::SAI.Properties.Resources.btn_go_model;
-			this.goModel.ImageSize = new System.Drawing.Size(251, 53);
-			this.goModel.Location = new System.Drawing.Point(1473, 50);
-			this.goModel.Name = "goModel";
-			this.goModel.PressedColor = System.Drawing.Color.Transparent;
-			this.goModel.Size = new System.Drawing.Size(255, 53);
-			this.goModel.TabIndex = 11;
-			this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
-			// 
-			// UcLabelGuide
-			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
-			this.Controls.Add(this.goModel);
-			this.Controls.Add(this.totalLevelpanel);
-			this.Controls.Add(this.showLevel1);
-			this.Controls.Add(this.preBtn);
-			this.Controls.Add(this.nextBtn);
-			this.Controls.Add(this.mainpanel);
-			this.Controls.Add(this.homeBtn);
-			this.Controls.Add(this.nextBtnVisible);
-			this.Name = "UcLabelGuide";
-			this.Size = new System.Drawing.Size(1920, 1080);
-			this.mainpanel.ResumeLayout(false);
-			this.leftPanel.ResumeLayout(false);
-			this.leftPanel.PerformLayout();
-			this.guna2CustomGradientPanel1.ResumeLayout(false);
-			this.imageContainer.ResumeLayout(false);
-			this.toastPopupPanel.ResumeLayout(false);
-			this.accuracyPanel.ResumeLayout(false);
-			this.levelPanel.ResumeLayout(false);
-			this.guna2Panel1.ResumeLayout(false);
-			this.toolZoom.ResumeLayout(false);
-			this.toolZoom.PerformLayout();
-			this.toolBox.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
-			this.ResumeLayout(false);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcLabelGuide));
+            this.homeBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
+            this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress6 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress8 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress5 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
+            this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
+            this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.questBoxPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.questClassificationPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.questSegPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.toolZoom = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.ZoomCurrent = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.ZoomOutBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.ZoomInBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.toolBox = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.toolRedo = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolUndo = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolVisible = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolLabelingSquare = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolDelete = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolLabelingPolygon = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.toolHand = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
+            this.goModel = new Guna.UI2.WinForms.Guna2Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.mainpanel.SuspendLayout();
+            this.leftPanel.SuspendLayout();
+            this.guna2CustomGradientPanel1.SuspendLayout();
+            this.imageContainer.SuspendLayout();
+            this.toastPopupPanel.SuspendLayout();
+            this.accuracyPanel.SuspendLayout();
+            this.levelPanel.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
+            this.toolZoom.SuspendLayout();
+            this.toolBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // homeBtn
+            // 
+            this.homeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.homeBtn.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.homeBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.homeBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.homeBtn.FillColor = System.Drawing.Color.Transparent;
+            this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.homeBtn.ForeColor = System.Drawing.Color.White;
+            this.homeBtn.HoverState.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
+            this.homeBtn.Image = global::SAI.Properties.Resources.ic_home;
+            this.homeBtn.ImageSize = new System.Drawing.Size(58, 58);
+            this.homeBtn.Location = new System.Drawing.Point(202, 48);
+            this.homeBtn.Name = "homeBtn";
+            this.homeBtn.PressedColor = System.Drawing.Color.Transparent;
+            this.homeBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.homeBtn.Size = new System.Drawing.Size(62, 62);
+            this.homeBtn.TabIndex = 0;
+            // 
+            // nextBtn
+            // 
+            this.nextBtn.BackColor = System.Drawing.Color.Transparent;
+            this.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.nextBtn.FillColor = System.Drawing.Color.Transparent;
+            this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.nextBtn.ForeColor = System.Drawing.Color.White;
+            this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
+            this.nextBtn.Image = global::SAI.Properties.Resources.ic_next;
+            this.nextBtn.ImageSize = new System.Drawing.Size(102, 102);
+            this.nextBtn.Location = new System.Drawing.Point(1793, 489);
+            this.nextBtn.Name = "nextBtn";
+            this.nextBtn.Size = new System.Drawing.Size(105, 105);
+            this.nextBtn.TabIndex = 5;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
+            // 
+            // preBtn
+            // 
+            this.preBtn.BackColor = System.Drawing.Color.Transparent;
+            this.preBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.preBtn.FillColor = System.Drawing.Color.Transparent;
+            this.preBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.preBtn.ForeColor = System.Drawing.Color.White;
+            this.preBtn.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.preBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.preBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
+            this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverL;
+            this.preBtn.Image = global::SAI.Properties.Resources.ic_pre;
+            this.preBtn.ImageSize = new System.Drawing.Size(102, 102);
+            this.preBtn.Location = new System.Drawing.Point(26, 489);
+            this.preBtn.Name = "preBtn";
+            this.preBtn.PressedColor = System.Drawing.Color.Transparent;
+            this.preBtn.Size = new System.Drawing.Size(105, 105);
+            this.preBtn.TabIndex = 6;
+            // 
+            // class1
+            // 
+            this.class1.BackColor = System.Drawing.Color.Transparent;
+            this.class1.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.class1.ForeColor = System.Drawing.Color.Black;
+            this.class1.Location = new System.Drawing.Point(0, 0);
+            this.class1.Name = "class1";
+            this.class1.Size = new System.Drawing.Size(92, 29);
+            this.class1.TabIndex = 8;
+            this.class1.Text = "클래스 예시";
+            this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            // 
+            // mainpanel
+            // 
+            this.mainpanel.BackColor = System.Drawing.Color.Transparent;
+            this.mainpanel.BackgroundImage = global::SAI.Properties.Resources.내부_박스;
+            this.mainpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.mainpanel.Controls.Add(this.leftPanel);
+            this.mainpanel.Controls.Add(this.imageContainer);
+            this.mainpanel.FillColor = System.Drawing.Color.Transparent;
+            this.mainpanel.Location = new System.Drawing.Point(168, 141);
+            this.mainpanel.Name = "mainpanel";
+            this.mainpanel.Size = new System.Drawing.Size(1601, 875);
+            this.mainpanel.TabIndex = 7;
+            this.mainpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainpanel_Paint_1);
+            // 
+            // leftPanel
+            // 
+            this.leftPanel.BackColor = System.Drawing.Color.Transparent;
+            this.leftPanel.BackgroundImage = global::SAI.Properties.Resources.Frame_1000004304;
+            this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.leftPanel.BorderColor = System.Drawing.Color.Transparent;
+            this.leftPanel.Controls.Add(this.class2);
+            this.leftPanel.Controls.Add(this.classBtn);
+            this.leftPanel.Controls.Add(this.guna2CustomGradientPanel1);
+            this.leftPanel.CustomBorderColor = System.Drawing.Color.DimGray;
+            this.leftPanel.CustomizableEdges.BottomLeft = false;
+            this.leftPanel.CustomizableEdges.BottomRight = false;
+            this.leftPanel.CustomizableEdges.TopRight = false;
+            this.leftPanel.Location = new System.Drawing.Point(30, 87);
+            this.leftPanel.Name = "leftPanel";
+            this.leftPanel.Size = new System.Drawing.Size(351, 696);
+            this.leftPanel.TabIndex = 4;
+            this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
+            // 
+            // class2
+            // 
+            this.class2.BackColor = System.Drawing.Color.Transparent;
+            this.class2.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.class2.Location = new System.Drawing.Point(34, 75);
+            this.class2.Name = "class2";
+            this.class2.Size = new System.Drawing.Size(92, 29);
+            this.class2.TabIndex = 14;
+            this.class2.Text = "라벨링 예시";
+            this.class2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.class2.Click += new System.EventHandler(this.class2_Click);
+            // 
+            // classBtn
+            // 
+            this.classBtn.BorderThickness = 1;
+            this.classBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.classBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.classBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.classBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.classBtn.FillColor = System.Drawing.Color.Transparent;
+            this.classBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.classBtn.ForeColor = System.Drawing.Color.White;
+            this.classBtn.HoverState.BorderColor = System.Drawing.Color.DimGray;
+            this.classBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.classBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
+            this.classBtn.HoverState.ForeColor = System.Drawing.Color.Transparent;
+            this.classBtn.Location = new System.Drawing.Point(1, 84);
+            this.classBtn.Name = "classBtn";
+            this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.classBtn.Size = new System.Drawing.Size(24, 24);
+            this.classBtn.TabIndex = 12;
+            this.classBtn.Click += new System.EventHandler(this.classBtn_Click);
+            // 
+            // guna2CustomGradientPanel1
+            // 
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress0);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress2);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress1);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress6);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress3);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress8);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress5);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress7);
+            this.guna2CustomGradientPanel1.Controls.Add(this.progress4);
+            this.guna2CustomGradientPanel1.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.guna2CustomGradientPanel1.FillColor = System.Drawing.Color.Transparent;
+            this.guna2CustomGradientPanel1.FillColor2 = System.Drawing.Color.Transparent;
+            this.guna2CustomGradientPanel1.FillColor3 = System.Drawing.Color.Transparent;
+            this.guna2CustomGradientPanel1.FillColor4 = System.Drawing.Color.Transparent;
+            this.guna2CustomGradientPanel1.Location = new System.Drawing.Point(219, 553);
+            this.guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
+            this.guna2CustomGradientPanel1.Size = new System.Drawing.Size(129, 143);
+            this.guna2CustomGradientPanel1.TabIndex = 13;
+            // 
+            // progress0
+            // 
+            this.progress0.BackColor = System.Drawing.Color.Transparent;
+            this.progress0.BorderColor = System.Drawing.Color.Black;
+            this.progress0.BorderRadius = 15;
+            this.progress0.BorderThickness = 1;
+            this.progress0.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress0.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress0.Location = new System.Drawing.Point(0, 2);
+            this.progress0.Margin = new System.Windows.Forms.Padding(0);
+            this.progress0.Name = "progress0";
+            this.progress0.Size = new System.Drawing.Size(30, 30);
+            this.progress0.TabIndex = 17;
+            // 
+            // progress2
+            // 
+            this.progress2.BackColor = System.Drawing.Color.Transparent;
+            this.progress2.BorderColor = System.Drawing.Color.Black;
+            this.progress2.BorderRadius = 15;
+            this.progress2.BorderThickness = 1;
+            this.progress2.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress2.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress2.Location = new System.Drawing.Point(99, 2);
+            this.progress2.Margin = new System.Windows.Forms.Padding(0);
+            this.progress2.Name = "progress2";
+            this.progress2.Size = new System.Drawing.Size(30, 30);
+            this.progress2.TabIndex = 17;
+            // 
+            // progress1
+            // 
+            this.progress1.BackColor = System.Drawing.Color.Transparent;
+            this.progress1.BorderColor = System.Drawing.Color.Black;
+            this.progress1.BorderRadius = 15;
+            this.progress1.BorderThickness = 1;
+            this.progress1.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress1.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress1.Location = new System.Drawing.Point(50, 2);
+            this.progress1.Margin = new System.Windows.Forms.Padding(0);
+            this.progress1.Name = "progress1";
+            this.progress1.Size = new System.Drawing.Size(30, 30);
+            this.progress1.TabIndex = 16;
+            // 
+            // progress6
+            // 
+            this.progress6.BackColor = System.Drawing.Color.Transparent;
+            this.progress6.BorderColor = System.Drawing.Color.Black;
+            this.progress6.BorderRadius = 15;
+            this.progress6.BorderThickness = 1;
+            this.progress6.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress6.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress6.Location = new System.Drawing.Point(0, 112);
+            this.progress6.Margin = new System.Windows.Forms.Padding(0);
+            this.progress6.Name = "progress6";
+            this.progress6.Size = new System.Drawing.Size(30, 30);
+            this.progress6.TabIndex = 16;
+            // 
+            // progress3
+            // 
+            this.progress3.BackColor = System.Drawing.Color.Transparent;
+            this.progress3.BorderColor = System.Drawing.Color.Black;
+            this.progress3.BorderRadius = 15;
+            this.progress3.BorderThickness = 1;
+            this.progress3.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress3.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress3.Location = new System.Drawing.Point(0, 57);
+            this.progress3.Margin = new System.Windows.Forms.Padding(0);
+            this.progress3.Name = "progress3";
+            this.progress3.Size = new System.Drawing.Size(30, 30);
+            this.progress3.TabIndex = 16;
+            // 
+            // progress8
+            // 
+            this.progress8.BackColor = System.Drawing.Color.Transparent;
+            this.progress8.BorderColor = System.Drawing.Color.Black;
+            this.progress8.BorderRadius = 15;
+            this.progress8.BorderThickness = 1;
+            this.progress8.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress8.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress8.Location = new System.Drawing.Point(99, 112);
+            this.progress8.Margin = new System.Windows.Forms.Padding(0);
+            this.progress8.Name = "progress8";
+            this.progress8.Size = new System.Drawing.Size(30, 30);
+            this.progress8.TabIndex = 15;
+            // 
+            // progress5
+            // 
+            this.progress5.BackColor = System.Drawing.Color.Transparent;
+            this.progress5.BorderColor = System.Drawing.Color.Black;
+            this.progress5.BorderRadius = 15;
+            this.progress5.BorderThickness = 1;
+            this.progress5.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress5.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress5.Location = new System.Drawing.Point(99, 57);
+            this.progress5.Margin = new System.Windows.Forms.Padding(0);
+            this.progress5.Name = "progress5";
+            this.progress5.Size = new System.Drawing.Size(30, 30);
+            this.progress5.TabIndex = 15;
+            // 
+            // progress7
+            // 
+            this.progress7.BackColor = System.Drawing.Color.Transparent;
+            this.progress7.BorderColor = System.Drawing.Color.Black;
+            this.progress7.BorderRadius = 15;
+            this.progress7.BorderThickness = 1;
+            this.progress7.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress7.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress7.Location = new System.Drawing.Point(50, 112);
+            this.progress7.Margin = new System.Windows.Forms.Padding(0);
+            this.progress7.Name = "progress7";
+            this.progress7.Size = new System.Drawing.Size(30, 30);
+            this.progress7.TabIndex = 15;
+            // 
+            // progress4
+            // 
+            this.progress4.BackColor = System.Drawing.Color.Transparent;
+            this.progress4.BorderColor = System.Drawing.Color.Black;
+            this.progress4.BorderRadius = 15;
+            this.progress4.BorderThickness = 1;
+            this.progress4.CustomBorderColor = System.Drawing.Color.Black;
+            this.progress4.CustomBorderThickness = new System.Windows.Forms.Padding(1);
+            this.progress4.Location = new System.Drawing.Point(50, 57);
+            this.progress4.Margin = new System.Windows.Forms.Padding(0);
+            this.progress4.Name = "progress4";
+            this.progress4.Size = new System.Drawing.Size(30, 30);
+            this.progress4.TabIndex = 15;
+            // 
+            // imageContainer
+            // 
+            this.imageContainer.BackColor = System.Drawing.Color.Transparent;
+            this.imageContainer.BorderColor = System.Drawing.Color.Transparent;
+            this.imageContainer.Controls.Add(this.toastPopupPanel);
+            this.imageContainer.Controls.Add(this.accuracyPanel);
+            this.imageContainer.Controls.Add(this.levelPanel);
+            this.imageContainer.Controls.Add(this.toolZoom);
+            this.imageContainer.Controls.Add(this.toolBox);
+            this.imageContainer.Controls.Add(this.pictureBoxImage);
+            this.imageContainer.CustomBorderColor = System.Drawing.Color.DimGray;
+            this.imageContainer.CustomBorderThickness = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.imageContainer.CustomizableEdges.BottomLeft = false;
+            this.imageContainer.CustomizableEdges.BottomRight = false;
+            this.imageContainer.CustomizableEdges.TopLeft = false;
+            this.imageContainer.Location = new System.Drawing.Point(410, 0);
+            this.imageContainer.Name = "imageContainer";
+            this.imageContainer.Size = new System.Drawing.Size(1182, 875);
+            this.imageContainer.TabIndex = 3;
+            this.imageContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
+            // 
+            // toastPopupPanel
+            // 
+            this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.toastPopupS;
+            this.toastPopupPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toastPopupPanel.Controls.Add(this.popupCloseBtn);
+            this.toastPopupPanel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toastPopupPanel.Location = new System.Drawing.Point(439, 24);
+            this.toastPopupPanel.Name = "toastPopupPanel";
+            this.toastPopupPanel.Size = new System.Drawing.Size(492, 130);
+            this.toastPopupPanel.TabIndex = 15;
+            this.toastPopupPanel.Visible = false;
+            // 
+            // popupCloseBtn
+            // 
+            this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
+            this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.popupCloseBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.popupCloseBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.popupCloseBtn.FillColor = System.Drawing.Color.Transparent;
+            this.popupCloseBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.popupCloseBtn.ForeColor = System.Drawing.Color.White;
+            this.popupCloseBtn.Location = new System.Drawing.Point(446, 16);
+            this.popupCloseBtn.Name = "popupCloseBtn";
+            this.popupCloseBtn.Size = new System.Drawing.Size(20, 20);
+            this.popupCloseBtn.TabIndex = 0;
+            this.popupCloseBtn.Text = "guna2Button1";
+            // 
+            // accuracyPanel
+            // 
+            this.accuracyPanel.BackColor = System.Drawing.Color.Transparent;
+            this.accuracyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.accuracyPanel.BorderColor = System.Drawing.Color.Black;
+            this.accuracyPanel.BorderThickness = 1;
+            this.accuracyPanel.Controls.Add(this.tableLayoutPanel1);
+            this.accuracyPanel.CustomBorderThickness = new System.Windows.Forms.Padding(0, 1, 1, 1);
+            this.accuracyPanel.FillColor = System.Drawing.Color.Transparent;
+            this.accuracyPanel.Location = new System.Drawing.Point(0, 134);
+            this.accuracyPanel.Name = "accuracyPanel";
+            this.accuracyPanel.Size = new System.Drawing.Size(302, 81);
+            this.accuracyPanel.TabIndex = 14;
+            this.accuracyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.accuracyPanel_Paint);
+            // 
+            // accuracyLabel
+            // 
+            this.accuracyLabel.AutoSize = false;
+            this.accuracyLabel.BackColor = System.Drawing.Color.Transparent;
+            this.accuracyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.accuracyLabel.Location = new System.Drawing.Point(0, 0);
+            this.accuracyLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.accuracyLabel.Name = "accuracyLabel";
+            this.accuracyLabel.Size = new System.Drawing.Size(302, 81);
+            this.accuracyLabel.TabIndex = 13;
+            this.accuracyLabel.Text = "Accuracy : 100%";
+            this.accuracyLabel.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.accuracyLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            this.accuracyLabel.Click += new System.EventHandler(this.accuracyLabel_Click);
+            // 
+            // levelPanel
+            // 
+            this.levelPanel.BackColor = System.Drawing.Color.Transparent;
+            this.levelPanel.BackgroundImage = global::SAI.Properties.Resources.class1;
+            this.levelPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.levelPanel.BorderColor = System.Drawing.Color.Transparent;
+            this.levelPanel.BorderThickness = 1;
+            this.levelPanel.Controls.Add(this.guna2Panel1);
+            this.levelPanel.CustomizableEdges.BottomLeft = false;
+            this.levelPanel.CustomizableEdges.TopLeft = false;
+            this.levelPanel.FillColor = System.Drawing.Color.Transparent;
+            this.levelPanel.Location = new System.Drawing.Point(1, 24);
+            this.levelPanel.Name = "levelPanel";
+            this.levelPanel.Size = new System.Drawing.Size(341, 98);
+            this.levelPanel.TabIndex = 13;
+            this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
+            // 
+            // guna2Panel1
+            // 
+            this.guna2Panel1.Controls.Add(this.questBoxPanel);
+            this.guna2Panel1.Controls.Add(this.questClassificationPanel);
+            this.guna2Panel1.Controls.Add(this.questSegPanel);
+            this.guna2Panel1.Location = new System.Drawing.Point(255, 33);
+            this.guna2Panel1.Name = "guna2Panel1";
+            this.guna2Panel1.Size = new System.Drawing.Size(32, 33);
+            this.guna2Panel1.TabIndex = 17;
+            // 
+            // questBoxPanel
+            // 
+            this.questBoxPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questBoxPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questBoxPanel.Location = new System.Drawing.Point(4, 4);
+            this.questBoxPanel.Name = "questBoxPanel";
+            this.questBoxPanel.Size = new System.Drawing.Size(25, 25);
+            this.questBoxPanel.TabIndex = 16;
+            // 
+            // questClassificationPanel
+            // 
+            this.questClassificationPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questClassificationPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questClassificationPanel.Location = new System.Drawing.Point(3, 5);
+            this.questClassificationPanel.Name = "questClassificationPanel";
+            this.questClassificationPanel.Size = new System.Drawing.Size(25, 25);
+            this.questClassificationPanel.TabIndex = 15;
+            // 
+            // questSegPanel
+            // 
+            this.questSegPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questSegPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.questSegPanel.Location = new System.Drawing.Point(4, 4);
+            this.questSegPanel.Name = "questSegPanel";
+            this.questSegPanel.Size = new System.Drawing.Size(25, 25);
+            this.questSegPanel.TabIndex = 16;
+            // 
+            // toolZoom
+            // 
+            this.toolZoom.BackColor = System.Drawing.Color.Transparent;
+            this.toolZoom.BackgroundImage = global::SAI.Properties.Resources.확대_축소;
+            this.toolZoom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolZoom.BorderColor = System.Drawing.Color.Transparent;
+            this.toolZoom.BorderThickness = 3;
+            this.toolZoom.Controls.Add(this.ZoomCurrent);
+            this.toolZoom.Controls.Add(this.ZoomOutBtn);
+            this.toolZoom.Controls.Add(this.ZoomInBtn);
+            this.toolZoom.Controls.Add(this.guna2HtmlLabel4);
+            this.toolZoom.FillColor = System.Drawing.Color.Transparent;
+            this.toolZoom.FillColor2 = System.Drawing.Color.Transparent;
+            this.toolZoom.Location = new System.Drawing.Point(1085, 629);
+            this.toolZoom.Name = "toolZoom";
+            this.toolZoom.Size = new System.Drawing.Size(51, 149);
+            this.toolZoom.TabIndex = 11;
+            this.toolZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.toolZoom_Paint);
+            // 
+            // ZoomCurrent
+            // 
+            this.ZoomCurrent.BackColor = System.Drawing.Color.Transparent;
+            this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.ZoomCurrent.Location = new System.Drawing.Point(5, 64);
+            this.ZoomCurrent.Name = "ZoomCurrent";
+            this.ZoomCurrent.Size = new System.Drawing.Size(35, 19);
+            this.ZoomCurrent.TabIndex = 11;
+            this.ZoomCurrent.Text = "100%";
+            this.ZoomCurrent.Click += new System.EventHandler(this.guna2HtmlLabel1_Click);
+            // 
+            // ZoomOutBtn
+            // 
+            this.ZoomOutBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.ZoomOutBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.ZoomOutBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.ZoomOutBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.ZoomOutBtn.FillColor = System.Drawing.Color.Transparent;
+            this.ZoomOutBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ZoomOutBtn.ForeColor = System.Drawing.Color.Transparent;
+            this.ZoomOutBtn.Location = new System.Drawing.Point(0, 96);
+            this.ZoomOutBtn.Name = "ZoomOutBtn";
+            this.ZoomOutBtn.Size = new System.Drawing.Size(48, 50);
+            this.ZoomOutBtn.TabIndex = 10;
+            this.ZoomOutBtn.Text = "guna2Button2";
+            // 
+            // ZoomInBtn
+            // 
+            this.ZoomInBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.ZoomInBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.ZoomInBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.ZoomInBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.ZoomInBtn.FillColor = System.Drawing.Color.Transparent;
+            this.ZoomInBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ZoomInBtn.ForeColor = System.Drawing.Color.Transparent;
+            this.ZoomInBtn.Location = new System.Drawing.Point(0, 0);
+            this.ZoomInBtn.Name = "ZoomInBtn";
+            this.ZoomInBtn.Size = new System.Drawing.Size(48, 45);
+            this.ZoomInBtn.TabIndex = 8;
+            this.ZoomInBtn.Text = "guna2Button1";
+            // 
+            // guna2HtmlLabel4
+            // 
+            this.guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel4.Font = new System.Drawing.Font("Noto Sans KR Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.guna2HtmlLabel4.Location = new System.Drawing.Point(23, 26);
+            this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
+            this.guna2HtmlLabel4.Size = new System.Drawing.Size(3, 2);
+            this.guna2HtmlLabel4.TabIndex = 9;
+            this.guna2HtmlLabel4.Text = null;
+            // 
+            // toolBox
+            // 
+            this.toolBox.BackColor = System.Drawing.Color.Transparent;
+            this.toolBox.BackgroundImage = global::SAI.Properties.Resources.도구창２;
+            this.toolBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolBox.BorderColor = System.Drawing.Color.Transparent;
+            this.toolBox.BorderRadius = 10;
+            this.toolBox.BorderThickness = 3;
+            this.toolBox.Controls.Add(this.toolRedo);
+            this.toolBox.Controls.Add(this.toolUndo);
+            this.toolBox.Controls.Add(this.toolVisible);
+            this.toolBox.Controls.Add(this.toolLabelingSquare);
+            this.toolBox.Controls.Add(this.toolDelete);
+            this.toolBox.Controls.Add(this.toolLabelingPolygon);
+            this.toolBox.Controls.Add(this.toolHand);
+            this.toolBox.Location = new System.Drawing.Point(1085, 63);
+            this.toolBox.Name = "toolBox";
+            this.toolBox.Size = new System.Drawing.Size(51, 476);
+            this.toolBox.TabIndex = 10;
+            this.toolBox.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint_1);
+            // 
+            // toolRedo
+            // 
+            this.toolRedo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolRedo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolRedo.HoverState.Image = global::SAI.Properties.Resources.toolRedoHover;
+            this.toolRedo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolRedo.Image = global::SAI.Properties.Resources.tool_redo_basic;
+            this.toolRedo.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolRedo.ImageRotate = 0F;
+            this.toolRedo.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolRedo.Location = new System.Drawing.Point(7, 274);
+            this.toolRedo.Name = "toolRedo";
+            this.toolRedo.PressedState.Image = global::SAI.Properties.Resources.toolRedoClick;
+            this.toolRedo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolRedo.Size = new System.Drawing.Size(35, 35);
+            this.toolRedo.TabIndex = 15;
+            // 
+            // toolUndo
+            // 
+            this.toolUndo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolUndo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolUndo.HoverState.Image = global::SAI.Properties.Resources.toolUndoHover;
+            this.toolUndo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolUndo.Image = global::SAI.Properties.Resources.tool_undo_basic;
+            this.toolUndo.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolUndo.ImageRotate = 0F;
+            this.toolUndo.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolUndo.Location = new System.Drawing.Point(6, 220);
+            this.toolUndo.Name = "toolUndo";
+            this.toolUndo.PressedState.Image = global::SAI.Properties.Resources.toolUndoClick;
+            this.toolUndo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolUndo.Size = new System.Drawing.Size(35, 35);
+            this.toolUndo.TabIndex = 14;
+            // 
+            // toolVisible
+            // 
+            this.toolVisible.CheckedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolVisible.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolVisible.HoverState.Image = global::SAI.Properties.Resources.toolVHover;
+            this.toolVisible.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolVisible.Image = global::SAI.Properties.Resources.tool_visible_basic;
+            this.toolVisible.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolVisible.ImageRotate = 0F;
+            this.toolVisible.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolVisible.Location = new System.Drawing.Point(6, 416);
+            this.toolVisible.Name = "toolVisible";
+            this.toolVisible.PressedState.Image = global::SAI.Properties.Resources.toolVClick;
+            this.toolVisible.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolVisible.Size = new System.Drawing.Size(35, 35);
+            this.toolVisible.TabIndex = 13;
+            // 
+            // toolLabelingSquare
+            // 
+            this.toolLabelingSquare.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingSquare.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolLabelingSquare.HoverState.Image = global::SAI.Properties.Resources.toolLabelHover;
+            this.toolLabelingSquare.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolLabelingSquare.Image = global::SAI.Properties.Resources.tool_square_basic;
+            this.toolLabelingSquare.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolLabelingSquare.ImageRotate = 0F;
+            this.toolLabelingSquare.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolLabelingSquare.Location = new System.Drawing.Point(6, 73);
+            this.toolLabelingSquare.Name = "toolLabelingSquare";
+            this.toolLabelingSquare.PressedState.Image = global::SAI.Properties.Resources.toolLabelClick;
+            this.toolLabelingSquare.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolLabelingSquare.Size = new System.Drawing.Size(35, 35);
+            this.toolLabelingSquare.TabIndex = 12;
+            // 
+            // toolDelete
+            // 
+            this.toolDelete.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolDelete.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolDelete.HoverState.Image = global::SAI.Properties.Resources.toolDelHover;
+            this.toolDelete.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolDelete.Image = global::SAI.Properties.Resources.tool_del_basic;
+            this.toolDelete.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolDelete.ImageRotate = 0F;
+            this.toolDelete.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolDelete.Location = new System.Drawing.Point(6, 355);
+            this.toolDelete.Name = "toolDelete";
+            this.toolDelete.PressedState.Image = global::SAI.Properties.Resources.toolDelClick;
+            this.toolDelete.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolDelete.Size = new System.Drawing.Size(35, 35);
+            this.toolDelete.TabIndex = 11;
+            // 
+            // toolLabelingPolygon
+            // 
+            this.toolLabelingPolygon.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolLabelingPolygon.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolLabelingPolygon.HoverState.Image = global::SAI.Properties.Resources.toolPolHover;
+            this.toolLabelingPolygon.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolLabelingPolygon.Image = global::SAI.Properties.Resources.tool_pol_basic;
+            this.toolLabelingPolygon.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolLabelingPolygon.ImageRotate = 0F;
+            this.toolLabelingPolygon.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolLabelingPolygon.Location = new System.Drawing.Point(6, 132);
+            this.toolLabelingPolygon.Name = "toolLabelingPolygon";
+            this.toolLabelingPolygon.PressedState.Image = global::SAI.Properties.Resources.toolPolClick;
+            this.toolLabelingPolygon.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolLabelingPolygon.Size = new System.Drawing.Size(35, 35);
+            this.toolLabelingPolygon.TabIndex = 10;
+            // 
+            // toolHand
+            // 
+            this.toolHand.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.toolHand.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toolHand.HoverState.Image = global::SAI.Properties.Resources.toolHandHover;
+            this.toolHand.HoverState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolHand.Image = global::SAI.Properties.Resources.tool_hand_basic;
+            this.toolHand.ImageOffset = new System.Drawing.Point(0, 0);
+            this.toolHand.ImageRotate = 0F;
+            this.toolHand.ImageSize = new System.Drawing.Size(30, 30);
+            this.toolHand.Location = new System.Drawing.Point(6, 24);
+            this.toolHand.Name = "toolHand";
+            this.toolHand.PressedState.Image = global::SAI.Properties.Resources.toolHandClick;
+            this.toolHand.PressedState.ImageSize = new System.Drawing.Size(0, 0);
+            this.toolHand.Size = new System.Drawing.Size(35, 35);
+            this.toolHand.TabIndex = 0;
+            // 
+            // pictureBoxImage
+            // 
+            this.pictureBoxImage.BackgroundImage = global::SAI.Properties.Resources._1;
+            this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBoxImage.FillColor = System.Drawing.Color.Transparent;
+            this.pictureBoxImage.ImageRotate = 0F;
+            this.pictureBoxImage.Location = new System.Drawing.Point(119, 225);
+            this.pictureBoxImage.Name = "pictureBoxImage";
+            this.pictureBoxImage.Size = new System.Drawing.Size(873, 558);
+            this.pictureBoxImage.TabIndex = 0;
+            this.pictureBoxImage.TabStop = false;
+            this.pictureBoxImage.WaitOnLoad = true;
+            this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click_1);
+            // 
+            // showLevel1
+            // 
+            this.showLevel1.BackColor = System.Drawing.Color.Transparent;
+            this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_9;
+            this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.showLevel1.Location = new System.Drawing.Point(932, 58);
+            this.showLevel1.Name = "showLevel1";
+            this.showLevel1.Size = new System.Drawing.Size(57, 37);
+            this.showLevel1.TabIndex = 0;
+            // 
+            // totalLevelpanel
+            // 
+            this.totalLevelpanel.BackColor = System.Drawing.Color.Transparent;
+            this.totalLevelpanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("totalLevelpanel.BackgroundImage")));
+            this.totalLevelpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.totalLevelpanel.Location = new System.Drawing.Point(278, 57);
+            this.totalLevelpanel.Name = "totalLevelpanel";
+            this.totalLevelpanel.Size = new System.Drawing.Size(220, 39);
+            this.totalLevelpanel.TabIndex = 9;
+            this.totalLevelpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.totalLevelpanel_Paint);
+            // 
+            // nextBtnVisible
+            // 
+            this.nextBtnVisible.BackColor = System.Drawing.Color.Transparent;
+            this.nextBtnVisible.Location = new System.Drawing.Point(1793, 489);
+            this.nextBtnVisible.Name = "nextBtnVisible";
+            this.nextBtnVisible.Size = new System.Drawing.Size(102, 104);
+            this.nextBtnVisible.TabIndex = 12;
+            // 
+            // goModel
+            // 
+            this.goModel.BackColor = System.Drawing.Color.Transparent;
+            this.goModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.goModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.goModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.goModel.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.goModel.FillColor = System.Drawing.Color.Transparent;
+            this.goModel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.goModel.ForeColor = System.Drawing.Color.White;
+            this.goModel.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.goModel.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.goModel.HoverState.FillColor = System.Drawing.Color.Transparent;
+            this.goModel.HoverState.Image = global::SAI.Properties.Resources.btn_go_model_hover;
+            this.goModel.Image = global::SAI.Properties.Resources.btn_go_model;
+            this.goModel.ImageSize = new System.Drawing.Size(251, 53);
+            this.goModel.Location = new System.Drawing.Point(1473, 50);
+            this.goModel.Name = "goModel";
+            this.goModel.PressedColor = System.Drawing.Color.Transparent;
+            this.goModel.Size = new System.Drawing.Size(255, 53);
+            this.goModel.TabIndex = 11;
+            this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.accuracyLabel, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(302, 81);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // UcLabelGuide
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+            this.Controls.Add(this.goModel);
+            this.Controls.Add(this.totalLevelpanel);
+            this.Controls.Add(this.showLevel1);
+            this.Controls.Add(this.preBtn);
+            this.Controls.Add(this.nextBtn);
+            this.Controls.Add(this.mainpanel);
+            this.Controls.Add(this.homeBtn);
+            this.Controls.Add(this.nextBtnVisible);
+            this.Name = "UcLabelGuide";
+            this.Size = new System.Drawing.Size(1920, 1080);
+            this.mainpanel.ResumeLayout(false);
+            this.leftPanel.ResumeLayout(false);
+            this.leftPanel.PerformLayout();
+            this.guna2CustomGradientPanel1.ResumeLayout(false);
+            this.imageContainer.ResumeLayout(false);
+            this.toastPopupPanel.ResumeLayout(false);
+            this.accuracyPanel.ResumeLayout(false);
+            this.levelPanel.ResumeLayout(false);
+            this.guna2Panel1.ResumeLayout(false);
+            this.toolZoom.ResumeLayout(false);
+            this.toolZoom.PerformLayout();
+            this.toolBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
 
@@ -859,5 +876,6 @@
         private Guna.UI2.WinForms.Guna2Panel progress2;
         private Guna.UI2.WinForms.Guna2Button goModel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
