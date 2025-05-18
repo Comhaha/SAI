@@ -19,11 +19,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.titlebar = new Guna.UI2.WinForms.Guna2Panel();
             this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
             this.btnMinScreen = new Guna.UI2.WinForms.Guna2Button();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            this.titlebar.SuspendLayout();
 			this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
 			this.btnFullScreen = new Guna.UI2.WinForms.Guna2Button();
 			this.guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(this.components);
@@ -52,22 +50,6 @@
 			// 
 			this.guna2DragControl1.DockIndicatorTransparencyValue = 0.6D;
 			this.guna2DragControl1.UseTransparentDrag = true;
-            // 
-            // titlebar
-            // 
-            this.titlebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.titlebar.BackColor = System.Drawing.Color.Transparent;
-            this.titlebar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("titlebar.BackgroundImage")));
-            this.titlebar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.titlebar.Controls.Add(this.btnSetting);
-            this.titlebar.Controls.Add(this.btnMinScreen);
-            this.titlebar.Controls.Add(this.btnFullScreen);
-            this.titlebar.Controls.Add(this.btnClose);
-            this.titlebar.Location = new System.Drawing.Point(0, 0);
-            this.titlebar.Name = "titlebar";
-            this.titlebar.Size = new System.Drawing.Size(1920, 45);
-            this.titlebar.TabIndex = 6;
 			// 
 			// btnSetting
 			// 
@@ -225,7 +207,6 @@
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
-            this.Controls.Add(this.titlebar);
             this.Controls.Add(this.mainPanel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
