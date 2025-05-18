@@ -38,10 +38,5 @@ namespace SAI.SAI.App.Presenters
 		{
 			view.showDialog(new DialogComfirmGoTrain());
 		}
-
-		public void clickFinish()
-		{
-			view.showDialog(new DialogFinishTrain());
-		}
 	}
 }

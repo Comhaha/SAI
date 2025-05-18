@@ -14,6 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Text.RegularExpressions;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Forms.Dialogs;
+using Microsoft.Win32;
 
 namespace SAI
 {
@@ -31,7 +32,6 @@ namespace SAI
 
 			// 사이즈 고정
 			MinimumSize = new Size(1920, 1080);
-			AutoScaleMode = AutoScaleMode.Dpi;
 			guna2DragControl1.TargetControl = tpTitlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
 			guna2DragControl1.UseTransparentDrag = false;
@@ -113,40 +113,20 @@ namespace SAI
 			};
 		}
 
-		private int pageWidth = 1280;
-		private int pageHeight = 720;
+		private int pageWidth = 1920;
+		private int pageHeight = 1035;
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
-			int maxWidth = 1280;
-			int maxHeight = 690;
-
-			// 현재 폼의 너비와 높이
 			int formWidth = this.ClientSize.Width;
 			int formHeight = this.ClientSize.Height;
 
-			// 비율 계산 (비율 유지한 채 확대)
-			float scaleX = (float)formWidth / maxWidth;
-			float scaleY = (float)formHeight / maxHeight;
-			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
+			int x = (formWidth - pageWidth) / 2;
+			int y = (formHeight - pageHeight) / 2;
 
-			// 확대된 크기 계산 (최대 1920 x 1080)
-			int newWidth = (int)(maxWidth * scale);
-			int newHeight = (int)(maxHeight * scale);
+			mainPanel.Location = new Point(x, y);  // ✨ 중앙 정렬 위치 설정
 
-			pageHeight = newHeight;
-			pageWidth = newWidth;
-
-			// 중앙 정렬 위치 계산
-			int x = (formWidth - newWidth) / 2;
-			int y = (formHeight - newHeight) / 2;
-
-			var barHeight = tpTitlebar.Size.Height;
-
-			// 위치와 크기 조정
-			mainPanel.Size = new Size(newWidth, newHeight - barHeight);
-
-			// panel사이즈가 몇인지 확인
-			//MessageBox.Show(mainPanel.Size.ToString());
+			// 확인용
+			//MessageBox.Show($"Panel 위치: {mainPanel.Location}, 크기: {mainPanel.Size}");
 		}
 
 
@@ -159,9 +139,8 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
-			page.Dock = DockStyle.Fill;
+			page.Size = new Size(pageWidth, pageHeight);
 			mainPanel.Controls.Clear();
-			mainPanel.BackColor = this.BackColor;
 			mainPanel.Controls.Add(page);
 			mainPanel.BringToFront();
 		}

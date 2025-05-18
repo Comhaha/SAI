@@ -42,9 +42,9 @@
             this.pictureBox.ErrorImage = null;
             this.pictureBox.ImageRotate = 0F;
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(788, 450);
+            this.pictureBox.Size = new System.Drawing.Size(1920, 1080);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
@@ -61,10 +61,10 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(958, 376);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClose.Location = new System.Drawing.Point(1558, 603);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(6);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(30, 30);
+            this.btnClose.Size = new System.Drawing.Size(49, 49);
             this.btnClose.TabIndex = 3;
             // 
             // btnPre
@@ -79,10 +79,10 @@
             this.btnPre.FillColor = System.Drawing.Color.Transparent;
             this.btnPre.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnPre.ForeColor = System.Drawing.Color.White;
-            this.btnPre.Location = new System.Drawing.Point(816, 429);
-            this.btnPre.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPre.Location = new System.Drawing.Point(1327, 687);
+            this.btnPre.Margin = new System.Windows.Forms.Padding(6);
             this.btnPre.Name = "btnPre";
-            this.btnPre.Size = new System.Drawing.Size(30, 30);
+            this.btnPre.Size = new System.Drawing.Size(49, 49);
             this.btnPre.TabIndex = 2;
             // 
             // btnNext
@@ -97,24 +97,24 @@
             this.btnNext.FillColor = System.Drawing.Color.Transparent;
             this.btnNext.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnNext.ForeColor = System.Drawing.Color.White;
-            this.btnNext.Location = new System.Drawing.Point(977, 318);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNext.Location = new System.Drawing.Point(1589, 510);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(6);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(30, 30);
+            this.btnNext.Size = new System.Drawing.Size(49, 49);
             this.btnNext.TabIndex = 1;
             // 
             // UcBlockGuide
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnPre);
             this.Controls.Add(this.btnNext);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "UcBlockGuide";
-            this.Size = new System.Drawing.Size(788, 450);
+            this.Size = new System.Drawing.Size(1920, 1080);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 

@@ -26,35 +26,35 @@ namespace SAI.SAI.App.Views.Pages
         // 버튼 위치 배열 (각 이미지별 위치)
         private Point[] nextButtonPositions = new Point[]
         {
-            new Point(1201, 640), // 1번 next 버튼 위치
-            new Point(812, 278), // 2번 
-            new Point(1181, 451), // 3번 
-            new Point(749, 346), // 4번 
-            new Point(746, 352), // 5번 
-            new Point(796, 599), // 6번 
-            new Point(915, 191)  // 7번 
+            new Point(1763, 890), // 1번 next 버튼 위치
+            new Point(1101, 423), // 2번 
+            new Point(1649, 677), // 3번 
+            new Point(998, 518), // 4번 
+            new Point(1124, 482), // 5번 
+            new Point(1073, 899), // 6번 
+            new Point(1371, 287)  // 7번 
         };
 
         private Point[] preButtonPositions = new Point[]
         {
-            new Point(1155, 640), // 1번 pre 버튼 위치
-            new Point(766, 278), // 2번
-            new Point(1135, 451), // 3번 
-            new Point(703, 346), // 4번
-            new Point(700, 352), // 5번 
-            new Point(750, 599), // 6번 
-            new Point(869, 191)  // 7번 
+            new Point(1694, 890), // 1번 pre 버튼 위치
+            new Point(1032, 423), // 2번
+            new Point(1580, 677), // 3번 
+            new Point(929, 518), // 4번
+            new Point(1055, 482), // 5번 
+            new Point(1004, 899), // 6번 
+            new Point(1302, 287)  // 7번 
         };
 
         private Point[] closeButtonPositions = new Point[]
         {
-            new Point(1201, 375), // 1번 close 버튼 위치
-            new Point(812, 158), // 2번
-            new Point(1181, 158), // 3번
-            new Point(749, 158), // 4번
-            new Point(746, 159), // 5번
-            new Point(796, 479), // 6번
-            new Point(915, 74)  // 7번
+            new Point(1761, 491), // 1번 close 버튼 위치
+            new Point(1110, 242), // 2번
+            new Point(1647, 236), // 3번
+            new Point(996, 234), // 4번
+            new Point(1122, 190), // 5번
+            new Point(1071, 717), // 6번
+            new Point(1370, 110)  // 7번
         };
 
         public UcBlockGuide(IMainView view)
