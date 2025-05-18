@@ -16,22 +16,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
+using SAI.SAI.Application.Service;
 
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IPracticeInferenceView
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloPracticeView, IPracticeInferenceView
     {
         private BlocklyPresenter blocklyPresenter;
         private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
+        private YoloPracticePresenter yoloPracticePresenter;
 
         private readonly IMainView mainView;
 
         private BlocklyModel blocklyModel;
 
         public event EventHandler HomeButtonClicked;
-
         public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
         public event EventHandler AddBlockButtonDoubleClicked;
         private JsBridge jsBridge;
@@ -55,9 +56,13 @@ namespace SAI.SAI.App.Views.Pages
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
+        public event EventHandler RunButtonClicked;
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
+
+            yoloPracticePresenter = new YoloPracticePresenter(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
@@ -840,13 +845,12 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			if (blocklyModel.blockTypes != null)
 			{
-				// 블록 순서가 맞는지 판단
-				if (!isBlockError()) // 순서가 맞을 떄
+				if (!isBlockError()) // 순서가 맞을 때
 				{
 					// 파이썬 코드 실행
-					//RunButtonClicked?.Invoke(sender, e);
+					RunButtonClicked?.Invoke(sender, e);
 				}
-				else // 순서가 틀릴 때
+				else
 				{
 					ShowToastMessage(errorType, missingType, errorMessage);
 				}
@@ -1088,6 +1092,31 @@ namespace SAI.SAI.App.Views.Pages
                 timer.Dispose();
             };
             timer.Start();
+        }
+
+        public void AppendLog(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearLog()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLogVisible(bool visible)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
+        {
+            throw new NotImplementedException();
         }
     }
 }

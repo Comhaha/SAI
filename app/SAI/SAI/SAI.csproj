@@ -251,6 +251,7 @@
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Presenters\AiNotionPresenter.cs" />
     <Compile Include="SAI.App\Presenters\SettingPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\YoloPracticePresenter.cs" />
     <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiBuzyAwareView.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ITutorialInferenceView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IYoloPracticeView.cs" />
     <Compile Include="SAI.App\Views\Common\ButtonUtils.cs" />
     <Compile Include="SAI.App\Views\Common\PercentUtils.cs" />
     <Compile Include="SAI.App\Views\Common\DialogUtils.cs" />
