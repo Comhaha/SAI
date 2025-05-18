@@ -910,7 +910,8 @@ def run_inference_block(block_params=None):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             universal_newlines=True,
-            bufsize=1
+            bufsize=1,
+            encoding='utf-8'
         )
         
         # 출력 처리
@@ -996,56 +997,13 @@ def visualize_results_block(block_params=None):
             "error": "결과 이미지 파일 없음"
         }
     
-    try:
-        # 이미지 표시 (IPython 환경에서만 작동)
-        try:
-            import cv2
-            import matplotlib.pyplot as plt
-            
-            # 이미지 읽기
-            img = cv2.imread(result_image_path)
-            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            
-            # matplotlib으로 시각화
-            plt.figure(figsize=(10, 8))
-            plt.imshow(img_rgb)
-            plt.axis('off')
-            plt.title("YOLOv8 Prediction")
-            
-            # IPython 환경인지 확인
-            try:
-                from IPython import get_ipython
-                if get_ipython() is not None:
-                    plt.show()
-                    show_progress("결과 이미지 표시 완료", start_time, 100)
-                else:
-                    # 일반 환경에서는 이미지 저장
-                    output_path = os.path.join(base_dir, "visualization_result.png")
-                    plt.savefig(output_path)
-                    plt.close()
-                    show_progress(f"결과 이미지 저장 완료: {output_path}", start_time, 100)
-            except ImportError:
-                # IPython이 없으면 이미지 저장
-                output_path = os.path.join(base_dir, "visualization_result.png")
-                plt.savefig(output_path)
-                plt.close()
-                show_progress(f"결과 이미지 저장 완료: {output_path}", start_time, 100)
-            
-        except ImportError:
-            show_progress("matplotlib 또는 OpenCV를 가져올 수 없습니다. 이미지 경로만 반환합니다.", start_time, 70)
-            
-        return {
-            "success": True,
-            "result_image_path": result_image_path,
-            "elapsed_time": time.time() - start_time
-        }
-    except Exception as e:
-        show_progress(f"결과 시각화 오류: {e}", start_time, 100)
-        return {
-            "success": False,
-            "error": str(e),
-            "elapsed_time": time.time() - start_time
-        }
+    # 별도의 시각화 저장 없이, 경로만 반환
+    show_progress(f"결과 이미지 경로 반환: {result_image_path}", start_time, 100)
+    return {
+        "success": True,
+        "result_image_path": result_image_path,
+        "elapsed_time": time.time() - start_time
+    }
 
 # 메인 실행 함수
 def main(block_params=None):
@@ -1140,28 +1098,22 @@ def infer_image(model_path, image_path, show=False):
         ]
         
         # 프로세스 실행
-        process = subprocess.run(
+        process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             universal_newlines=True,
-            check=False
+            bufsize=1,
+            encoding='utf-8'
         )
         
-        # 결과 확인
-        if process.returncode != 0:
-            error_result = {
-                "success": False,
-                "error": f"inference.py 실행 오류 (반환 코드: {process.returncode}): {process.stderr}",
-                "image_path": image_path,
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
-            return error_result
-        
-        # inference.py 출력에서 결과 JSON 찾기
+        # 출력 처리
         inference_result = None
-        for line in process.stdout.splitlines():
+        for line in iter(process.stdout.readline, ''):
+            line = line.strip()
+            print(line)  # 로그 확인용
+            
+            # 결과 JSON 찾기
             if line.startswith("INFERENCE_RESULT:"):
                 result_json = line[len("INFERENCE_RESULT:"):]
                 try:

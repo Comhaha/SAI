@@ -20,6 +20,7 @@ import time
 import argparse
 import cv2
 from pathlib import Path
+import subprocess
 
 def log_message(message):
     """로그 메시지를 출력하고 즉시 버퍼를 비웁니다."""
