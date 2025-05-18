@@ -117,21 +117,13 @@ class TutorialRunner:
                     logger.debug(f"[Runner] 매핑된 함수: {func}")
 
                     if func:
-                        block_params = {}
-                        if block_type == "imgPath" and "image_path" in params:
-                            block_params["image_path"] = params["image_path"]
-                        if block_type == "machineLearning":
-                            if "epochs" in params:
-                                block_params["epochs"] = params["epochs"]
-                            if "imgsz" in params:
-                                block_params["imgsz"] = params["imgsz"]
-
+                        block_params = params.copy() if params else {}
                         print(f"[DEBUG] 전달할 파라미터: {block_params}", flush=True)
                         logger.debug(f"[Runner] 전달할 파라미터: {block_params}")
                         
                         try:
                             print(f"[DEBUG] 함수 실행 시작: {block_type}", flush=True)
-                            result = func(**block_params) if block_params else func()
+                            result = func(block_params=block_params)
                             print(f"[DEBUG] 함수 실행 완료: {block_type}", flush=True)
                             logger.debug(f"[Runner] 실행 결과: {result}")
 

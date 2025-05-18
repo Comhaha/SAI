@@ -388,7 +388,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
     return None
 
 # 4. 모델 학습 블럭
-def train_model_block(epochs=None, imgsz=None, block_params=None):
+def train_model_block(block_params=None):
     """
     모델 학습 블록 실행 함수
     
@@ -399,14 +399,20 @@ def train_model_block(epochs=None, imgsz=None, block_params=None):
     start_time = time.time()
     show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
 
-    # block_params가 있으면 우선적으로 사용
-    if block_params:
-        if epochs is None and "epoch" in block_params:
-            epochs = block_params["epoch"]
-        if imgsz is None and "imgsz" in block_params:
-            imgsz = block_params["imgsz"]
-        # 추가 파라미터도 필요하면 여기서 꺼내서 사용
-        # 예: block_params.get("model"), block_params.get("accuracy") 등
+    epochs = block_params.get("epoch") if block_params else None
+    imgsz = block_params.get("imgsz") if block_params else None
+    if "accuracy" in block_params:
+        accuracy = block_params["accuracy"]
+    if "model" in block_params:
+        model_name = block_params["model"]
+    if "Conv" in block_params:
+        conv = block_params["Conv"]
+    if "C2f" in block_params:
+        c2f = block_params["C2f"]
+    if "Upsample_scale" in block_params:
+        upsample_scale = block_params["Upsample_scale"]
+    if "blockTypes" in block_params:
+        block_types = block_params["blockTypes"]
 
     # 기존 results.csv 삭제
     results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
@@ -1066,7 +1072,7 @@ def main(block_params=None):
     for i, (block_name, block_func) in enumerate(blocks):
         show_progress(f"블록 실행 중: {block_name} ({i+1}/{len(blocks)})", total_start_time, i * (100 / len(blocks)))
         try:
-            result = block_func(block_params) if block_params else block_func()
+            result = block_func(block_params)
             results[block_name] = result
             
             if not result.get("success", False):
