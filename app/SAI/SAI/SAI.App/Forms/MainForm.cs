@@ -27,10 +27,11 @@ namespace SAI
 			InitializeComponent();
 
             this.StartPosition = FormStartPosition.CenterScreen;
-			this.mainPanel.MinimumSize = new Size(1920, 1035);
-			this.mainPanel.Size = new Size(1920, 1035);
+			this.mainPanel.MinimumSize = new Size(1920, 1080);
+			this.mainPanel.Size = new Size(1920, 1080);
+			this.AutoScaleMode = AutoScaleMode.None;
 
-            presenter = new MainPresenter(this);
+			presenter = new MainPresenter(this);
 
 			// 사이즈 고정
 			MinimumSize = new Size(1920, 1080);
@@ -116,7 +117,7 @@ namespace SAI
 		}
 
 		private int pageWidth = 1920;
-		private int pageHeight = 1035;
+		private int pageHeight = 1080;
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
 			int formWidth = this.ClientSize.Width;
