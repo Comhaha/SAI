@@ -132,12 +132,6 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogDeleteModel.Designer.cs">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.Designer.cs">
-      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
-    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -386,9 +380,6 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogDeleteModel.resx">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogFinishTrain.resx">
-      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
@@ -497,6 +488,7 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_select_type.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_close_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_fullscreen_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_minscreen_clicked.png" />
@@ -880,6 +872,7 @@
     <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
     <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_modelInference.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -60,9 +60,9 @@
 			this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
 			this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
 			this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
-			this.btnClose.Location = new System.Drawing.Point(719, 0);
+			this.btnClose.Location = new System.Drawing.Point(708, 0);
 			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(60, 50);
+			this.btnClose.Size = new System.Drawing.Size(71, 49);
 			this.btnClose.TabIndex = 1;
 			// 
 			// btnLearnModel

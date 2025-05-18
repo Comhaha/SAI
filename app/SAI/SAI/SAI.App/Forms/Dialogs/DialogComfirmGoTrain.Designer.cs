@@ -38,7 +38,7 @@
 			// panelTitleBar
 			// 
 			this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_comfirm_go_train;
-			this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.panelTitleBar.Controls.Add(this.btnClose);
 			this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
 			this.panelTitleBar.Name = "panelTitleBar";
@@ -61,9 +61,10 @@
 			this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
 			this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
 			this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
-			this.btnClose.Location = new System.Drawing.Point(521, 0);
+			this.btnClose.Location = new System.Drawing.Point(510, 0);
+			this.btnClose.Margin = new System.Windows.Forms.Padding(0);
 			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(60, 50);
+			this.btnClose.Size = new System.Drawing.Size(71, 49);
 			this.btnClose.TabIndex = 1;
 			// 
 			// btnOk
