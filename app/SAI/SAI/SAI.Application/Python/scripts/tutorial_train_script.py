@@ -96,7 +96,7 @@ tutorial_state = {
 }
 
 # 1. 패키지 설치 블록 함수
-def install_packages_with_progress_block():
+def install_packages_block():
     """패키지 설치 블록 실행 함수"""
     start_time = time.time()
     show_progress("필수 패키지 설치 시작... (1/8)", start_time, 0)
@@ -116,7 +116,7 @@ def install_packages_with_progress_block():
     }
 
 # 2. GPU 확인 및 모델 로드 블록 함수
-def check_gpu():
+def check_gpu_yolo_load_block():
     """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
     start_time = time.time()
     show_progress("GPU 정보 확인 중... (2/8)", start_time, 0)
@@ -164,7 +164,7 @@ def check_gpu():
     }
 
 # 3. 데이터셋 다운로드 블록 함수
-def download_dataset_with_progress():
+def download_dataset_block():
     """데이터셋 다운로드 블록 실행 함수"""
     start_time = time.time()
     show_progress("서버에서 데이터셋 다운로드 중... (3/8)", start_time, 0)
@@ -349,7 +349,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
     return None
 
 # 4. 모델 학습 블록 함수
-def train_model():
+def train_model_block():
     """모델 학습 블록 실행 함수"""
     start_time = time.time()
     show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
@@ -629,7 +629,7 @@ def find_latest_results_dir():
     return os.path.join(base_dir, "runs", "detect", latest_dir)
 
 # 5. 결과 그래프 시각화 블록 함수
-def visualize_training_results():
+def visualize_training_results_block():
     """학습 결과 그래프 시각화 블록 실행 함수"""
     start_time = time.time()
     show_progress("학습 결과 시각화 중... (5/8)", start_time, 0)
@@ -704,78 +704,51 @@ def visualize_training_results():
             "elapsed_time": time.time() - start_time
         }
 
-# 6. 이미지 경로 설정 블록 함수
-def set_image_path():
-    """추론용 이미지 경로 설정 블록 실행 함수"""
+# 6. 사용자 이미지 경로 받는 블럭
+# 이미지 경로를 inference.py 파일로 던져준다
+def set_image_path_block(image_path=None):
+    """
+    추론용 이미지 경로 설정 블록 실행 함수
+    
+    Args:
+        image_path (str, optional): 사용자가 지정한 이미지 경로. 
+                                   None이면 기본 테스트 이미지 찾기 시도
+    """
     start_time = time.time()
     show_progress("추론용 이미지 경로 설정 중... (6/8)", start_time, 0)
     
-    # 데이터셋에서 테스트 이미지 찾기
-    dataset_path = tutorial_state.get("dataset_path")
-    if not dataset_path:
-        show_progress("데이터셋 경로가 설정되지 않았습니다. 데이터셋 준비 단계를 먼저 실행하세요.", start_time, 10)
-        return {
-            "success": False,
-            "error": "데이터셋 경로 없음"
-        }
-    
-    # 이미지 파일 찾기 (jpg, jpeg, png)
-    image_extensions = ['.jpg', '.jpeg', '.png']
-    test_images = []
-    
-    # 테스트 폴더에서 이미지 찾기
-    test_dirs = ['test', 'valid', 'val', 'validation', 'images']
-    
-    for test_dir in test_dirs:
-        test_dir_path = os.path.join(dataset_path, test_dir)
-        if os.path.exists(test_dir_path) and os.path.isdir(test_dir_path):
-            show_progress(f"테스트 이미지 디렉토리 발견: {test_dir_path}", start_time, 30)
-            for root, _, files in os.walk(test_dir_path):
-                for file in files:
-                    if any(file.lower().endswith(ext) for ext in image_extensions):
-                        test_images.append(os.path.join(root, file))
-                        if len(test_images) >= 5:  # 최대 5개까지만 찾기
-                            break
-                if len(test_images) >= 5:
-                    break
-        if len(test_images) >= 5:
-            break
-    
-    # 테스트 폴더에서 찾지 못했다면 전체 데이터셋에서 이미지 찾기
-    if not test_images:
-        show_progress("지정된 테스트 폴더에서 이미지를 찾지 못했습니다. 전체 데이터셋에서 이미지를 검색합니다.", start_time, 50)
-        for root, _, files in os.walk(dataset_path):
-            for file in files:
-                if any(file.lower().endswith(ext) for ext in image_extensions):
-                    test_images.append(os.path.join(root, file))
-                    if len(test_images) >= 5:  # 최대 5개까지만 찾기
-                        break
-            if len(test_images) >= 5:
-                break
-    
-    # 이미지를 찾았는지 확인
-    if test_images:
-        # 첫 번째 이미지 선택
-        image_path = test_images[0]
-        tutorial_state["image_path"] = image_path
-        
-        show_progress(f"테스트 이미지 경로 설정 완료: {image_path}", start_time, 100)
-        return {
-            "success": True,
-            "image_path": image_path,
-            "all_images": test_images,
-            "elapsed_time": time.time() - start_time
-        }
-    else:
-        show_progress("테스트 이미지를 찾을 수 없습니다.", start_time, 100)
-        return {
-            "success": False,
-            "error": "테스트 이미지 없음",
-            "elapsed_time": time.time() - start_time
-        }
+    # 사용자가 지정한 이미지 경로가 있는지 확인
+    if image_path:
+        # 이미지 파일이 실제로 존재하는지 확인
+        if os.path.exists(image_path):
+            # 이미지 파일 확장자 확인
+            if image_path.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp')):
+                # 경로 저장
+                tutorial_state["image_path"] = image_path
+                show_progress(f"사용자 지정 이미지 경로 설정 완료: {image_path}", start_time, 100)
+                return {
+                    "success": True,
+                    "image_path": image_path,
+                    "source_type": "user_specified",
+                    "elapsed_time": time.time() - start_time
+                }
+            else:
+                show_progress(f"지원되지 않는 이미지 형식입니다: {image_path}", start_time, 50)
+                return {
+                    "success": False,
+                    "error": "지원되지 않는 이미지 형식",
+                    "elapsed_time": time.time() - start_time
+                }
+        else:
+            show_progress(f"지정한 이미지 파일을 찾을 수 없습니다: {image_path}", start_time, 50)
+            return {
+                "success": False,
+                "error": "이미지 파일 없음",
+                "elapsed_time": time.time() - start_time
+            }
 
 # 7. 모델 추론 블록 함수
-def run_inference():
+def run_inference_block():
     """모델 추론 실행 블록 함수 - inference.py 활용"""
     start_time = time.time()
     show_progress("모델 추론 실행 중... (7/8)", start_time, 0)
@@ -811,7 +784,7 @@ def run_inference():
         # subprocess를 사용하여 inference.py 실행
         import subprocess
         
-        # 명령 구성
+        # 명령 구성 - inference.py의 명령행 인자 형식에 맞춤
         cmd = [
             sys.executable,
             inference_script_path,
@@ -892,7 +865,7 @@ def run_inference():
         }
 
 # 8. 결과 시각화 블록 함수 - inference.py 결과 활용
-def visualize_results():
+def visualize_results_block():
     """추론 결과 시각화 블록 실행 함수"""
     start_time = time.time()
     show_progress("추론 결과 시각화 중... (8/8)", start_time, 0)
