@@ -464,6 +464,19 @@ namespace SAI.SAI.App.Views.Pages
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
 								break;
+							case "blockCreated":
+								var blockType = root.GetProperty("blockType").ToString();
+								var newValue = root.GetProperty("allValues");
+								var value = JsonSerializer.Deserialize<Dictionary<string, object>>(newValue.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
+								break;
+
+							case "blockFieldUpdated":
+								blockType = root.GetProperty("blockType").ToString();
+								var allValues = root.GetProperty("allValues");
+								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
+								break;
 						}
 					}
 				}

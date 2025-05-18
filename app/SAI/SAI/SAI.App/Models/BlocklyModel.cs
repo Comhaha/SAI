@@ -29,27 +29,27 @@ namespace SAI.SAI.App.Models
         // 추론 정확도 값 추가
         private double _accuracy;
 
-        // 모델
-        private string _model;
+		// 모델
+		private string _model;
 
-        // epoch
-        private int _epoch;
+		// epoch
+		private int _epoch;
 
-        // imgsz
-        private int _imgsz;
+		// imgsz
+		private int _imgsz;
 
-        // _Conv
-        private int _Conv;
+		// _Conv
+		private int _Conv;
 
-        // _C2f
-        private int _C2f;
+		// _C2f
+		private int _C2f;
 
-        // _Upsample_scale
-        private double _Upsample_scale;
+		// _Upsample_scale
+		private double _Upsample_scale;
 
 
-        // private 생성자 -> 외부에서 생성 못하게.
-        private BlocklyModel()
+		// private 생성자 -> 외부에서 생성 못하게.
+		private BlocklyModel()
         {
             _blockAllCode = "";
             _blockCode = "";
@@ -139,77 +139,77 @@ namespace SAI.SAI.App.Models
             }
         }
 
-        public string model
-        {
-            get => _model;
-            set
-            {
-                if (_model != value)
-                {
-                    _model = value;
-                }
-            }
-        }
+		public string model
+		{
+			get => _model;
+			set
+			{
+				if (_model != value)
+				{
+					_model = value;
+				}
+			}
+		}
 
-        public int epoch
-        {
-            get => _epoch;
-            set
-            {
-                if (_epoch != value)
-                {
-                    _epoch = value;
-                }
-            }
-        }
+		public int epoch
+		{
+			get => _epoch;
+			set
+			{
+				if (_epoch != value)
+				{
+					_epoch = value;
+				}
+			}
+		}
 
-        public int imgsz
-        {
-            get => _imgsz;
-            set
-            {
-                if (_imgsz != value)
-                {
-                    _imgsz = value;
-                }
-            }
-        }
+		public int imgsz
+		{
+			get => _imgsz;
+			set
+			{
+				if (_imgsz != value)
+				{
+					_imgsz = value;
+				}
+			}
+		}
 
 
-        public int Conv
-        {
-            get => _Conv;
-            set
-            {
-                if (_Conv != value)
-                {
-                    _Conv = value;
-                }
-            }
-        }
+		public int Conv
+		{
+			get => _Conv;
+			set
+			{
+				if (_Conv != value)
+				{
+					_Conv = value;
+				}
+			}
+		}
 
-        public int C2f
-        {
-            get => _C2f;
-            set
-            {
-                if (_C2f != value)
-                {
-                    _C2f = value;
-                }
-            }
-        }
+		public int C2f
+		{
+			get => _C2f;
+			set
+			{
+				if (_C2f != value)
+				{
+					_C2f = value;
+				}
+			}
+		}
 
-        public double Upsample_scale
-        {
-            get => _Upsample_scale;
-            set
-            {
-                if (_Upsample_scale != value)
-                {
-                    _Upsample_scale = value;
-                }
-            }
-        }
-    }
+		public double Upsample_scale
+		{
+			get => _Upsample_scale;
+			set
+			{
+				if (_Upsample_scale != value)
+				{
+					_Upsample_scale = value;
+				}
+			}
+		}
+	}
 }
