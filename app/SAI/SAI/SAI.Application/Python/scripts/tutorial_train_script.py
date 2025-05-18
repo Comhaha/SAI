@@ -1,10 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+tutorial_train_script.py - AI 블록 코딩 튜토리얼 모드 구현
+
+이 스크립트는 AI 블록 코딩 튜토리얼 모드를 위한 기능을 구현합니다.
+install_packages.py의 유틸리티 함수를 활용하여 패키지 설치, GPU 확인 등을 수행합니다.
+"""
+
 import os
 import sys
-import subprocess
 import logging
 import json
-import platform
-import re
 import time
 import threading
 import zipfile
@@ -12,20 +19,29 @@ import glob
 import io
 from datetime import datetime
 
-# install_pacakages.py 를 import
-try:
-    # 상대 경로로 import
-    from . import install_packages
-    print("✅ 상대 경로로 import 성공")
-except ImportError as e:
-    print(f"❌ 상대 경로 import 실패: {e}")
-
-
-# base_dir을 스크립트 실행 기준으로 설정
-# base_dir = "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python"
+# 기본 디렉토리 설정
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(f"Base directory: {base_dir}")
 
+# install_packages 모듈 가져오기
+try:
+    import install_packages
+    print("✅ install_packages 모듈 가져오기 성공")
+except ImportError as e:
+    print(f"❌ install_packages 모듈 가져오기 실패: {e}")
+    # 경로 문제로 import가 실패할 경우를 대비한 추가 시도
+    try:
+        # 현재 파일의 디렉토리를 명시적으로 sys.path에 추가
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        if current_dir not in sys.path:
+            sys.path.append(current_dir)
+        
+        # 다시 import 시도
+        import install_packages
+        print(f"✅ 경로 추가 후 install_packages 모듈 가져오기 성공")
+    except ImportError as e:
+        print(f"❌ 두 번째 시도 후에도 import 실패: {e}")
+        sys.exit(1)  # 중요한 모듈이므로 실패 시 종료
 
 # 환경변수 로드
 try:
@@ -56,9 +72,7 @@ except Exception as e:
     # 이미 설정되어 있거나 닫혀있는 경우 무시
     pass
 
-
-
-# 로깅 설정 - 시간 포맷 변경 및 상세 정보 표시
+# 로깅 설정
 logging.basicConfig(
     encoding='utf-8',
     level=logging.INFO,
@@ -67,174 +81,121 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# 진행 상황 표시 함수
-def show_progress(message, start_time=None, progress=None):
-    """진행 상황 및 경과 시간 표시"""
-    try:
-        elapsed_str = ""
-        if start_time:
-            elapsed = time.time() - start_time
-            minutes, seconds = divmod(elapsed, 60)
-            elapsed_str = f"[{int(minutes):02d}:{int(seconds):02d}] "
-            
-        progress_str = ""
-        if progress is not None:
-            progress_str = f"[{progress:.1f}%] "
-        
-        full_message = f"{elapsed_str}{progress_str}{message}"
-        logger.info(full_message)
-        
-        # C# 애플리케이션에서 쉽게 파싱할 수 있는 태그 추가
-        if progress is not None:
-            print(f"PROGRESS:{progress:.1f}:{message}", flush=True)
-        else:
-            print(f"PROGRESS::{message}", flush=True)
-    except Exception as e:
-        logger.error(f"show_progress 오류: {e}")
+# install_packages의 진행 상황 표시 함수 사용
+show_progress = install_packages.show_progress
 
-# pip 설치 진행률 추적 클래스
-class PipProgressTracker:
-    def __init__(self, packages, start_time, total_steps=100):
-        self.packages = packages
-        self.start_time = start_time
-        self.total_steps = total_steps
-        self.current_step = 0
-        self.found_packages = set()
-        self.completed = False
-        self.last_progress_time = time.time()
-    
-    def update_from_output(self, line):
-        """pip 출력에서 진행 상태 업데이트"""
-        for package in self.packages:
-            if package in line.lower() and package not in self.found_packages:
-                self.found_packages.add(package)
-                self.current_step += (self.total_steps / len(self.packages)) * 0.5
-                show_progress(f"패키지 {package} 설치 중: {line}", self.start_time, self.current_step)
-                return True
-        
-        if "collecting" in line.lower() or "downloading" in line.lower():
-            self.current_step += 0.5
-            self.current_step = min(self.current_step, self.total_steps * 0.7)  # 최대 70%까지만
-            show_progress(f"패키지 다운로드 중: {line}", self.start_time, self.current_step)
-            self.last_progress_time = time.time()
-            return True
-            
-        if "installing collected packages" in line.lower():
-            self.current_step = self.total_steps * 0.8
-            show_progress(f"패키지 설치 중: {line}", self.start_time, self.current_step)
-            self.last_progress_time = time.time()
-            return True
-            
-        if "successfully installed" in line.lower():
-            self.current_step = self.total_steps
-            self.completed = True
-            show_progress(f"패키지 설치 완료: {line}", self.start_time, self.current_step)
-            return True
-        
-        # 일정 시간 경과시 진행 중임을 표시
-        if time.time() - self.last_progress_time > 5:
-            show_progress("패키지 설치 진행 중...", self.start_time, self.current_step)
-            self.last_progress_time = time.time()
-            return True
-            
-        return False
+# 튜토리얼 상태 관리용 전역 변수
+tutorial_state = {
+    "model": None,
+    "model_path": None,
+    "dataset_path": None,
+    "data_yaml_path": None,
+    "image_path": None,
+    "result_image_path": None,
+    "training_completed": False
+}
 
-def install_packages_with_progress(packages, start_time):
-    """패키지 설치 및 진행률 표시"""
-    if not isinstance(packages, list):
-        packages = [packages]
-    
-    # 설치 진행 상황 추적기 생성
-    tracker = PipProgressTracker(packages, start_time)
-    
-    # 설치 명령 준비
-    install_cmd = [
-        sys.executable, "-m", "pip", "install", 
-        *packages, 
-        "--verbose"
-    ]
-    
-    # 실시간 출력 캡처를 위한 Popen 사용
-    process = subprocess.Popen(
-        install_cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        universal_newlines=True,
-        bufsize=1
-    )
-    
-    # 출력 처리
-    for line in iter(process.stdout.readline, ''):
-        tracker.update_from_output(line.strip())
-    
-    process.wait()
-    
-    # 설치 완료 확인
-    if not tracker.completed:
-        tracker.current_step = 100
-        show_progress(f"{', '.join(packages)} 설치 완료", start_time, 100)
-    
-    return process.returncode == 0
-
-def install_torch_cuda():
-    """별도 프로세스에서 CUDA 지원 PyTorch 설치"""
+# 1. 패키지 설치 블록 함수
+def install_packages_with_progress_block():
+    """패키지 설치 블록 실행 함수"""
     start_time = time.time()
-    show_progress("CUDA 지원 PyTorch 설치 준비 중...", start_time, 0)
+    show_progress("필수 패키지 설치 시작... (1/8)", start_time, 0)
     
-    # 스크립트 경로
-    script_path = os.path.join(base_dir, "scripts", "install_pytorch_cuda.py")
+    # install_packages 모듈의 함수 사용
+    packages = ["numpy==1.24.3", "ultralytics", "opencv-python"]
+    result = install_packages.install_packages_with_progress(packages, start_time)
     
-    # 별도 프로세스에서 스크립트 실행
-    show_progress("별도 프로세스에서 PyTorch 설치 실행 중...", start_time, 20)
-    subprocess.run([sys.executable, script_path])
+    pkg_elapsed = time.time() - start_time
+    show_progress(f"패키지 설치 완료 (소요 시간: {int(pkg_elapsed)}초)", start_time, 100)
     
-    # 결과 확인
-    result_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pytorch_install_result.txt")
-    if os.path.exists(result_path):
-        with open(result_path, "r") as f:
-            result = f.read().strip()
-        
-        # 결과 파일 삭제
-        try:
-            os.remove(result_path)
-        except:
-            pass
-        
-        if result == "CUDA_SUCCESS":
-            show_progress("PyTorch CUDA 설치 성공!", start_time, 100)
-            return True, "cuda"
-        elif result == "GPU_NOT_DETECTED":
-            show_progress("PyTorch 설치는 성공했으나 GPU를 감지할 수 없습니다.", start_time, 100)
-            return False, "cpu"
+    return {
+        "success": result.get("success", False),
+        "installed_packages": result.get("installed_packages", []),
+        "failed_packages": result.get("failed_packages", []),
+        "elapsed_time": pkg_elapsed
+    }
+
+# 2. GPU 확인 및 모델 로드 블록 함수
+def check_gpu():
+    """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
+    start_time = time.time()
+    show_progress("GPU 정보 확인 중... (2/8)", start_time, 0)
+    
+    # install_packages 모듈의 GPU 확인 함수 사용
+    gpu_info = install_packages.check_gpu(start_time)
+    
+    # PyTorch CUDA 설치 확인
+    if not gpu_info.get("available", False):
+        show_progress("GPU를 감지할 수 없습니다. PyTorch CUDA 설치를 시도합니다...", start_time, 30)
+        cuda_success, device = install_packages.install_torch_cuda(start_time)
+        if cuda_success:
+            show_progress("PyTorch CUDA 설치 성공", start_time, 40)
+            # GPU 정보 다시 확인
+            gpu_info = install_packages.check_gpu(start_time)
         else:
-            show_progress(f"PyTorch 설치 중 오류 발생: {result}", start_time, 100)
-            return False, "cpu"
-    else:
-        show_progress("PyTorch 설치 결과를 확인할 수 없습니다.", start_time, 100)
-        return False, "cpu"
+            show_progress("PyTorch CUDA 설치 실패, CPU 모드로 계속합니다", start_time, 40)
+    
+    # YOLO 모델 로드
+    show_progress("YOLOv8 모델 로드 중...", start_time, 50)
+    try:
+        from ultralytics import YOLO
+        model_path = os.path.join(base_dir, "yolov8n.pt")
+        model = YOLO(model_path)
+        
+        # 전역 상태 업데이트
+        tutorial_state["model"] = model
+        tutorial_state["model_path"] = model_path
+        
+        model_elapsed = time.time() - start_time
+        show_progress(f"YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)", start_time, 100)
+    except Exception as e:
+        show_progress(f"모델 로드 오류: {e}", start_time, 100)
+        return {
+            "success": False,
+            "error": str(e),
+            "gpu_info": gpu_info
+        }
+    
+    return {
+        "success": True,
+        "gpu_info": gpu_info,
+        "model_path": model_path,
+        "elapsed_time": time.time() - start_time
+    }
 
-def download_dataset_with_progress(start_time):
-    """API를 통해 S3에서 데이터셋 다운로드 및 진행률 표시"""
-    # 데이터셋 저장 경로 설정, 덮어쓰기 
-    dataset_dir = os.path.join(base_dir, "dataset")
-    os.makedirs(dataset_dir, exist_ok=True)
-    show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 10)
-
-    # 필요한 패키지 설치 확인
+# 3. 데이터셋 다운로드 블록 함수
+def download_dataset_with_progress():
+    """데이터셋 다운로드 블록 실행 함수"""
+    start_time = time.time()
+    show_progress("서버에서 데이터셋 다운로드 중... (3/8)", start_time, 0)
+    
+    # API 서버에서 데이터셋 다운로드
     try:
         import requests
         from tqdm import tqdm
     except ImportError:
-        show_progress("필요한 패키지 설치 중...", start_time, 15)
-        install_packages_with_progress(["requests", "tqdm"], start_time)
+        show_progress("필요한 패키지 설치 중...", start_time, 5)
+        install_packages.install_packages_with_progress(["requests", "tqdm"], start_time)
         import requests
         from tqdm import tqdm
+    
+    # 데이터셋 저장 경로 설정
+    dataset_dir = os.path.join(base_dir, "dataset")
+    os.makedirs(dataset_dir, exist_ok=True)
+    show_progress(f"데이터셋 기본 경로: {dataset_dir}", start_time, 10)
     
     # 환경 변수에서 서버 주소 가져오기
     server_url = os.environ.get("API_SERVER_URL")
     if not server_url:
         show_progress("API_SERVER_URL 환경 변수가 설정되지 않았습니다.", start_time, 15)
-        return type('obj', (), {'location': dataset_dir})
+        
+        # 테스트용 더미 데이터 생성
+        tutorial_state["dataset_path"] = dataset_dir
+        return {
+            "success": True,
+            "message": "테스트용 더미 데이터 사용",
+            "location": dataset_dir
+        }
     
     # 슬래시로 끝나지 않는지 확인
     if server_url.endswith('/'):
@@ -255,11 +216,21 @@ def download_dataset_with_progress(start_time):
             show_progress("다운로드 URL 획득 성공", start_time, 30)
         else:
             show_progress(f"API 호출 실패: 상태 코드 {response.status_code}", start_time, 30)
-            raise Exception(f"API 응답 오류: {response.text}")
+            tutorial_state["dataset_path"] = dataset_dir
+            return {
+                "success": False,
+                "error": f"API 응답 오류: {response.text}",
+                "location": dataset_dir
+            }
     except Exception as e:
         show_progress(f"API 호출 중 오류 발생: {e}", start_time, 30)
-        return type('obj', (), {'location': dataset_dir})
-
+        tutorial_state["dataset_path"] = dataset_dir
+        return {
+            "success": False,
+            "error": str(e),
+            "location": dataset_dir
+        }
+    
     # 파일 다운로드 (진행률 표시)
     show_progress("데이터셋 다운로드 시작...", start_time, 40)
     try:
@@ -279,16 +250,15 @@ def download_dataset_with_progress(start_time):
         show_progress("데이터셋 다운로드 완료", start_time, 70)
     except Exception as e:
         show_progress(f"다운로드 중 오류 발생: {e}", start_time, 70)
-        # 다운로드 실패 시 처리
-        if os.path.exists(zip_path):
-            show_progress(f"부분적으로 다운로드된 파일이 있습니다: {zip_path}", start_time, 71)
-        else:
-            show_progress("다운로드 파일이 생성되지 않았습니다", start_time, 71)
-        return type('obj', (), {'location': dataset_dir})
+        tutorial_state["dataset_path"] = dataset_dir
+        return {
+            "success": False,
+            "error": str(e),
+            "location": dataset_dir
+        }
     
     # ZIP 파일 압축 해제
-    if os.path.exists(zip_path):
-        extracted_dir = dataset_dir  # 기본값 설정
+    extracted_dir = dataset_dir  # 기본값 설정
     
     if os.path.exists(zip_path):
         try:
@@ -305,24 +275,19 @@ def download_dataset_with_progress(start_time):
                 else:
                     potential_extracted_dir = dataset_dir
                 
-                # 압축 해제 진행률 표시 (기존 코드와 동일)
+                # 압축 해제 진행률 표시
                 for i, file in enumerate(file_list):
                     zip_ref.extract(file, dataset_dir)
-                    # ... (진행률 표시 코드)
+                    if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
+                        extract_progress = 75 + (i / total_files) * 20  # 75% ~ 95% 범위
+                        show_progress(f"압축 해제 중: {i+1}/{total_files} 파일", start_time, extract_progress)
                 
                 # 압축 해제 후 실제 추출 디렉토리 확인
                 if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
                     extracted_dir = potential_extracted_dir
                     show_progress(f"데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}", start_time, 95)
-                
-                # 압축 해제 진행률 표시
-                for i, file in enumerate(file_list):
-                    zip_ref.extract(file, dataset_dir)
-                    if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
-                        extract_progress = 75 + (i / total_files) * 25  # 75% ~ 100% 범위
-                        show_progress(f"압축 해제 중: {i+1}/{total_files} 파일", start_time, extract_progress)
             
-            show_progress("압축 해제 완료", start_time, 100)
+            show_progress("압축 해제 완료", start_time, 95)
             
             # 임시 ZIP 파일 삭제
             try:
@@ -335,19 +300,33 @@ def download_dataset_with_progress(start_time):
     else:
         show_progress("다운로드된 ZIP 파일을 찾을 수 없습니다.", start_time, 95)
     
-    # 데이터셋 경로 반환
-    return type('obj', (), {'location': dataset_dir, 'extracted_dir': extracted_dir})
+    # 데이터셋 경로 저장
+    tutorial_state["dataset_path"] = extracted_dir
+    
+    # data.yaml 파일 찾기
+    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+    tutorial_state["data_yaml_path"] = data_yaml_path
+    
+    show_progress("데이터셋 준비 완료", start_time, 100)
+    return {
+        "success": True,
+        "location": extracted_dir,
+        "extracted_dir": extracted_dir,
+        "data_yaml_path": data_yaml_path,
+        "elapsed_time": time.time() - start_time
+    }
 
+# data.yaml 파일 찾기 도우미 함수
 def find_yaml_file(dataset_dir, extracted_dir, start_time):
     """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
-    show_progress(f"데이터 경로 확인: {extracted_dir}", start_time, 0)
+    show_progress(f"데이터 경로 확인: {extracted_dir}", start_time, 95)
     
     # 압축 해제된 디렉토리에서 data.yaml 찾기
     yaml_path = os.path.join(extracted_dir, "data.yaml")
     
     # data.yaml 파일이 있는지 확인
     if os.path.exists(yaml_path):
-        show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+        show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 98)
         return yaml_path
     
     # 압축 해제된 디렉토리의 하위 폴더들에서 data.yaml 찾기
@@ -355,278 +334,60 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
         for file in files:
             if file == "data.yaml":
                 yaml_path = os.path.join(root, file)
-                show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+                show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 98)
                 return yaml_path
     
     # 기본 dataset 디렉토리에서 데이터 찾기 (압축 해제 경로에서 찾지 못했을 경우)
     if dataset_dir != extracted_dir:
         yaml_path = os.path.join(dataset_dir, "data.yaml")
         if os.path.exists(yaml_path):
-            show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 100)
+            show_progress(f"데이터 파일 확인됨: {yaml_path}", start_time, 98)
             return yaml_path
     
     # 파일을 찾지 못했을 경우
-    show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 100)
-    return yaml_path
+    show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 98)
+    return None
 
-def check_gpu():
-    """GPU 상태 확인 및 정보 반환"""
+# 4. 모델 학습 블록 함수
+def train_model():
+    """모델 학습 블록 실행 함수"""
     start_time = time.time()
-    show_progress("GPU 확인 중...", start_time, 0)
+    show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
     
-    try:
-        import torch
-        show_progress("PyTorch GPU 기능 확인 중...", start_time, 25)
-        
-        if torch.cuda.is_available():
-            show_progress("CUDA 지원 확인됨", start_time, 50)
-            gpu_count = torch.cuda.device_count()
-            gpu_names = [torch.cuda.get_device_name(i) for i in range(gpu_count)]
-            cuda_version = torch.version.cuda
-            gpu_memory = []
-            
-            show_progress(f"GPU {gpu_count}개 감지됨", start_time, 75)
-            
-            for i in range(gpu_count):
-                try:
-                    props = torch.cuda.get_device_properties(i)
-                    mem_gb = props.total_memory / (1024**3)
-                    gpu_memory.append(round(mem_gb, 1))
-                    show_progress(f"GPU {i}: {gpu_names[i]} ({gpu_memory[-1]} GB)", start_time, 80 + (i+1) * (20/gpu_count))
-                except:
-                    gpu_memory.append(None)
-                    show_progress(f"GPU {i}: {gpu_names[i]} (메모리 정보 없음)", start_time, 80 + (i+1) * (20/gpu_count))
-            
-            show_progress(f"CUDA 버전: {cuda_version}", start_time, 100)
-            
-            return {
-                "available": True,
-                "count": gpu_count,
-                "names": gpu_names,
-                "cuda_version": cuda_version,
-                "memory_gb": gpu_memory
-            }
-        else:
-            show_progress("GPU 감지 안됨: CPU 모드로 실행합니다.", start_time, 100)
-            return {"available": False}
-    except Exception as e:
-        show_progress(f"GPU 확인 오류: {e}", start_time, 100)
-        return {"available": False, "error": str(e)}    
-    
-def find_latest_results_dir():
-    """가장 최근에 생성된 results 디렉토리 찾기"""
-    base_runs_dir = os.path.join(base_dir, "runs", "detect")
-    
-    if not os.path.exists(base_runs_dir):
-        # 디렉토리가 없으면 생성
-        os.makedirs(base_runs_dir, exist_ok=True)
-        return os.path.join(base_dir, "runs", "detect", "train")
-    
-    # 'train'으로 시작하는 모든 폴더 찾기
-    train_dirs = [d for d in os.listdir(base_runs_dir) if d.startswith('train')]
-    if not train_dirs:
-        return os.path.join(base_dir, "runs", "detect", "train")
-    
-    # 숫자 접미사가 있는 경우 가장 큰 숫자 찾기
-    latest_dir = "train"
-    max_num = 0
-    for d in train_dirs:
-        # train, train1, train2, ... 형식에서 숫자 추출
-        match = re.match(r'train(\d*)', d)
-        if match:
-            num_str = match.group(1)
-            num = int(num_str) if num_str else 0
-            if num > max_num:
-                max_num = num
-                latest_dir = d
-    
-    return os.path.join(base_dir, "runs", "detect", latest_dir)
-    
-def visualize_training_results(results_path, start_time):
-    """학습 결과 그래프 시각화"""
-    try:
-        # 결과 이미지 경로 확인
-        if not os.path.exists(results_path):
-            show_progress(f"결과 그래프 파일을 찾을 수 없습니다: {results_path}", start_time, 100)
-            return False
-        
-        show_progress(f"학습 결과 그래프 확인: {results_path}", start_time, 100)
-        
-        # 여기서는 파일 경로만 반환 (실제 표시는 C# UI에서 수행)
-        return results_path
-    except Exception as e:
-        show_progress(f"결과 시각화 오류: {e}", start_time, 100)
-        return False    
-
-def run_inference(model_path, image_path, start_time, conf_threshold=0.25, show=True):
-    """모델을 사용해 이미지에서 객체 탐지 수행"""
-    try:
-        # 모델 경로 및 이미지 경로 확인
-        if not os.path.exists(model_path):
-            show_progress(f"모델 파일을 찾을 수 없습니다: {model_path}", start_time, 0)
-            return None
-        
-        if not os.path.exists(image_path):
-            show_progress(f"이미지 파일을 찾을 수 없습니다: {image_path}", start_time, 0)
-            return None
-        
-        show_progress(f"모델 로드 중: {model_path}", start_time, 10)
-        from ultralytics import YOLO
-        model = YOLO(model_path)
-        
-        show_progress(f"이미지 추론 중: {image_path}", start_time, 30)
-        results = model.predict(source=image_path, save=False, show=False, conf=conf_threshold)
-        
-        if not results or len(results) == 0:
-            show_progress("추론 결과가 없습니다", start_time, 50)
-            return None
-        
-        # 결과 처리
-        show_progress("추론 결과 처리 중...", start_time, 70)
-        
-        # 결과 시각화
-        result_img = results[0].plot()  # BGR 형식
-        
-        # 결과 이미지 저장
-        output_dir = base_dir  # Python 폴더 사용
-        output_path = os.path.join(output_dir, "inference_result.jpg")
-        import cv2
-        cv2.imwrite(output_path, result_img)
-
-        import matplotlib
-        matplotlib.use("TkAgg")
-
-        # ✅ matplotlib 시각화 추가
-        import matplotlib.pyplot as plt
-        result_rgb = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)
-        plt.imshow(result_rgb)
-        plt.axis("off")
-        plt.title("YOLOv8 Prediction")
-        plt.show()
-        input("🔍 창이 떴나요? 아무 키나 눌러 종료하세요.")
-        
-        # 탐지 결과 추출 (JSON으로 반환하기 위함)
-        detections = []
-        if hasattr(results[0], 'boxes') and results[0].boxes is not None:
-            for box in results[0].boxes:
-                # 박스 좌표
-                x1, y1, x2, y2 = box.xyxy[0].tolist()
-                
-                # 클래스 및 신뢰도
-                cls = int(box.cls[0].item())
-                conf = float(box.conf[0].item())
-                
-                # 클래스 이름
-                cls_name = results[0].names[cls]
-                
-                detections.append({
-                    "class": cls_name,
-                    "confidence": conf,
-                    "bbox": [x1, y1, x2, y2]
-                })
-        
-        show_progress(f"추론 완료: {len(detections)}개 객체 감지됨", start_time, 100)
-        
+    # 필요한 데이터가 있는지 확인
+    if not tutorial_state.get("model"):
+        show_progress("모델이 로드되지 않았습니다. 모델 로드 단계를 먼저 실행하세요.", start_time, 10)
         return {
-            "image_path": image_path,
-            "result_image": output_path,
-            "detections": detections
+            "success": False,
+            "error": "모델이 로드되지 않음"
         }
-        
-    except Exception as e:
-        show_progress(f"추론 오류: {e}", start_time, 100)
-        return None
-
-def main():
-    """메인 실행 함수"""
-    total_start_time = time.time()
-    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    show_progress(f"AI 블록 코딩 튜토리얼 모드 실행 시작 - {current_date}", total_start_time, 0)
     
-    # 1. 필수 패키지 설치
-    package_start_time = time.time()
-    show_progress("필수 패키지 설치 중... (1/7)", total_start_time, 0)
-
-    # NumPy 다운그레이드
-    show_progress("NumPy 다운그레이드 중...", package_start_time, 0)
-    install_packages_with_progress("numpy==1.24.3", package_start_time)
-        
-    # ultralytics 설치
-    show_progress("ultralytics 패키지 설치 중...", package_start_time, 0)
-    install_packages_with_progress("ultralytics", package_start_time)
-
-    # OpenCV 설치 추가
-    show_progress("opencv-python 패키지 설치 중...", package_start_time, 0)
-    install_packages_with_progress("opencv-python", package_start_time)
+    if not tutorial_state.get("data_yaml_path"):
+        show_progress("데이터셋 YAML 파일이 설정되지 않았습니다. 데이터셋 준비 단계를 먼저 실행하세요.", start_time, 10)
+        return {
+            "success": False,
+            "error": "데이터셋 YAML 파일 없음"
+        }
     
-    pkg_elapsed = time.time() - package_start_time
-    show_progress(f"패키지 설치 완료 (소요 시간: {int(pkg_elapsed)}초)", total_start_time, 100)
-   
-    # 2. PyTorch 설치 확인 및 CUDA 지원 확인
-    torch_start_time = time.time()
-    show_progress("PyTorch 확인 중... (2/7)", total_start_time, 0)
-
-    # 별도 프로세스에서 PyTorch 설치
-    cuda_available, device = install_torch_cuda()  # 여기서 반환 값을 올바르게 받아야 함
-
-    torch_elapsed = time.time() - torch_start_time
-    show_progress(f"PyTorch 확인 완료 (소요 시간: {int(torch_elapsed)}초)", total_start_time, 100)
+    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨)
+    gpu_info = install_packages.check_gpu(start_time)
+    device = "cuda" if gpu_info.get("available", False) else "cpu"
     
-    # 3. GPU 정보 확인
-    gpu_start_time = time.time()
-    show_progress("GPU 정보 확인 중... (3/7)", total_start_time, 0)
-    gpu_info = check_gpu()
-    gpu_elapsed = time.time() - gpu_start_time
-    show_progress(f"GPU 정보 확인 완료 (소요 시간: {int(gpu_elapsed)}초)", total_start_time, 100)
-    
-    # 4. YOLO 모델 로드
-    model_start_time = time.time()
-    show_progress("YOLOv8 모델 로드 중... (4/7)", total_start_time, 0)
-    from ultralytics import YOLO
-    model_path = os.path.join(base_dir, "yolov8n.pt")
-    model = YOLO(model_path)
-    model_elapsed = time.time() - model_start_time
-    show_progress(f"YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)", total_start_time, 100)
-    
-    # 5. 서버에서 데이터셋 다운로드
-    data_start_time = time.time()
-    show_progress("서버에서 데이터셋 다운로드 중... (5/7)", total_start_time, 0)
-    dataset = download_dataset_with_progress(data_start_time)
-    data_elapsed = time.time() - data_start_time
-    show_progress(f"데이터셋 준비 완료 (총 소요 시간: {int(data_elapsed)}초)", total_start_time, 100)
-    
-   # 6. 데이터 경로 확인
-    path_start_time = time.time()
-    show_progress("데이터 경로 확인 중... (6/7)", total_start_time, 0)
-
-    # dataset 객체에서 압축 해제된 디렉토리 정보 가져오기
-    tutorial_dataset_dir = dataset.location
-    extracted_dataset_dir = getattr(dataset, 'extracted_dir', tutorial_dataset_dir)  # 추출된 디렉토리가 없으면 기본 경로 사용
-
-    # 추출된 디렉토리에서 data.yaml 파일 찾기
-    data_yaml_path = find_yaml_file(tutorial_dataset_dir, extracted_dataset_dir, path_start_time)
-
-    path_elapsed = time.time() - path_start_time
-    show_progress(f"데이터 경로 확인 완료 (소요 시간: {int(path_elapsed)}초)", total_start_time, 100)
-    
-    # 7. 학습 파라미터 설정 및 실행
-    train_start_time = time.time()
-    show_progress("모델 학습 준비 중... (7/7)", total_start_time, 0)
-    
+    # 학습 파라미터 설정
     batch_size = 16
     if device == "cuda" and gpu_info.get("available", False):
         # GPU 메모리에 따른 배치 크기 조정
         memory = gpu_info.get("memory_gb", [0])[0]
         if memory and memory < 6:
             batch_size = 8
-            show_progress(f"GPU 메모리 제한으로 배치 크기 {batch_size}로 조정", total_start_time, 10)
+            show_progress(f"GPU 메모리 제한으로 배치 크기 {batch_size}로 조정", start_time, 10)
     
-    # 에폭 수
-    epochs = 2 if device == "cuda" else 1
+    # 에폭 수 (튜토리얼이므로 적은 수로 설정)
+    epochs = 5 if device == "cuda" else 2
     
-    show_progress(f"모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs})", total_start_time, 20)
-    show_progress("학습 중... (YOLOv8 진행 상황이 표시됩니다)", total_start_time, 30)
-    show_progress("이 작업은 GPU 사용 시 약 10-30분, CPU 사용 시 1-3시간 소요될 수 있습니다", total_start_time, 40)
+    show_progress(f"모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs})", start_time, 20)
+    show_progress("학습 중... (YOLOv8 진행 상황이 표시됩니다)", start_time, 30)
+    show_progress("이 작업은 GPU 사용 시 약 5-15분, CPU 사용 시 20-60분 소요될 수 있습니다", start_time, 40)
     
     try:
         # 학습 시작 시간 기록
@@ -664,15 +425,15 @@ def main():
                         show_progress(
                             f"학습 중: {completed_epochs}/{total_epochs} 에폭 완료 "
                             f"({int(minutes)}분 {int(seconds)}초 경과, 약 {int(rem_minutes)}분 {int(rem_seconds)}초 남음)", 
-                            total_start_time, 
-                            40 + (progress * 0.6)  # 40% ~ 100% 범위
+                            start_time, 
+                            40 + (progress * 0.5)  # 40% ~ 90% 범위
                         )
                     else:
                         show_progress(
                             f"학습 중: {completed_epochs}/{total_epochs} 에폭 완료 "
                             f"({int(minutes)}분 {int(seconds)}초 경과)", 
-                            total_start_time, 
-                            40 + (progress * 0.6)
+                            start_time, 
+                            40 + (progress * 0.5)
                         )
                     
                     last_progress_update = current_time
@@ -694,10 +455,13 @@ def main():
         
         # 콜백 객체 생성
         callbacks = [ProgressCallback()]
-
         
         # 학습 실행
-        model.train(
+        model = tutorial_state["model"]
+        data_yaml_path = tutorial_state["data_yaml_path"]
+        
+        # YOLOv8 학습 실행
+        results = model.train(
             data=data_yaml_path,
             epochs=epochs,
             batch=batch_size,
@@ -707,7 +471,7 @@ def main():
             name="detect/train",  # 하위 폴더 구조 지정
             exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
         )
-    
+        
         # 진행 스레드 종료 신호
         completed_epochs = total_epochs
         
@@ -715,178 +479,632 @@ def main():
         if progress_thread and progress_thread.is_alive():
             progress_thread.join(timeout=1)
         
-        train_elapsed = time.time() - train_start_time
+        # 결과 경로 설정
+        results_dir = find_latest_results_dir()
+        model_path = os.path.join(results_dir, "weights", "best.pt")
+        
+        # 전역 상태 업데이트
+        tutorial_state["model_path"] = model_path
+        tutorial_state["results_dir"] = results_dir
+        tutorial_state["training_completed"] = True
+        
+        train_elapsed = time.time() - start_time
         min, sec = divmod(train_elapsed, 60)
-        show_progress(f"모델 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", total_start_time, 100)
+        show_progress(f"모델 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", start_time, 100)
+        
+        return {
+            "success": True,
+            "model_path": model_path,
+            "results_dir": results_dir,
+            "elapsed_time": train_elapsed
+        }
     except Exception as e:
-        show_progress(f"학습 중 오류 발생: {e}", total_start_time, 70)
+        show_progress(f"학습 중 오류 발생: {e}", start_time, 70)
         
         # 메모리 부족 오류 처리
         if "CUDA out of memory" in str(e):
-            show_progress("GPU 메모리 부족. 배치 크기를 줄여서 다시 시도합니다.", total_start_time, 75)
+            show_progress("GPU 메모리 부족. 배치 크기를 줄여서 다시 시도합니다.", start_time, 75)
             try:
                 # 배치 크기 절반으로 줄임
                 reduced_batch = max(1, batch_size // 2)
                 retry_start = time.time()
-                show_progress(f"줄어든 배치 크기로 재시도 중 (배치 크기: {reduced_batch})...", total_start_time, 80)
+                show_progress(f"줄어든 배치 크기로 재시도 중 (배치 크기: {reduced_batch})...", start_time, 80)
                 
-                # 진행 상황을 초기화하고 다시 시작
-                completed_epochs = 0
-                last_progress_update = time.time()
-                
-                # 재시도 진행률 업데이트를 위한 새 스레드
-                retry_thread = threading.Thread(target=update_training_progress)
-                retry_thread.daemon = True
-                retry_thread.start()
-                
-                # 줄어든 배치 크기로 학습 재시도
-                model.train(
-                    data=data_yaml_path,
+                # 재시도
+                model = tutorial_state["model"]
+                results = model.train(
+                    data=tutorial_state["data_yaml_path"],
                     epochs=epochs,
                     batch=reduced_batch,
                     imgsz=640,
                     device=device,
                     project=os.path.join(base_dir, "runs"),
-                    name="detect/train",  # 하위 폴더 구조 지정
-                    exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
+                    name="detect/train",
+                    exist_ok=True
                 )
                 
-                # 진행 스레드 종료 신호
-                completed_epochs = total_epochs
+                # 결과 경로 설정
+                results_dir = find_latest_results_dir()
+                model_path = os.path.join(results_dir, "weights", "best.pt")
                 
-                # 스레드가 종료될 때까지 잠시 대기
-                if retry_thread and retry_thread.is_alive():
-                    retry_thread.join(timeout=1)
+                # 전역 상태 업데이트
+                tutorial_state["model_path"] = model_path
+                tutorial_state["results_dir"] = results_dir
+                tutorial_state["training_completed"] = True
                 
                 retry_elapsed = time.time() - retry_start
                 min, sec = divmod(retry_elapsed, 60)
-                show_progress(f"배치 크기 {reduced_batch}로 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", total_start_time, 100)
+                show_progress(f"배치 크기 {reduced_batch}로 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", start_time, 100)
+                
+                return {
+                    "success": True,
+                    "model_path": model_path,
+                    "results_dir": results_dir,
+                    "elapsed_time": time.time() - start_time,
+                    "note": "배치 크기 감소로 재시도 성공"
+                }
             except Exception as e2:
-                show_progress(f"재시도도 실패: {e2}", total_start_time, 85)
+                show_progress(f"재시도도 실패: {e2}", start_time, 85)
                 # CPU로 전환
-                show_progress("CPU 모드로 전환합니다...", total_start_time, 90)
-                cpu_start = time.time()
-                show_progress("CPU로 학습 중 (이 작업은 1-3시간 소요될 수 있습니다)...", total_start_time, 93)
+                show_progress("CPU 모드로 전환합니다...", start_time, 90)
                 
-                # CPU로 전환하고 에폭 수 줄임
-                completed_epochs = 0
-                total_epochs = 50  # CPU에서는 에폭 수 줄임
-                last_progress_update = time.time()
-                
-                # CPU 학습 진행률 업데이트를 위한 새 스레드
-                cpu_thread = threading.Thread(target=update_training_progress)
-                cpu_thread.daemon = True
-                cpu_thread.start()
-                
-                model.train(
-                    data=data_yaml_path,
-                    epochs=total_epochs,
-                    batch=4,
-                    imgsz=640,
-                    device="cpu",
-                    project=os.path.join(base_dir, "runs"),
-                    name="detect/train",  # 하위 폴더 구조 지정
-                    exist_ok=True  # 기존 폴더가 있으면 덮어쓰기
-                )
-                
-                # 진행 스레드 종료 신호
-                completed_epochs = total_epochs
-                
-                # 스레드가 종료될 때까지 잠시 대기
-                if cpu_thread and cpu_thread.is_alive():
-                    cpu_thread.join(timeout=1)
-                
-                cpu_elapsed = time.time() - cpu_start
-                hrs, remainder = divmod(cpu_elapsed, 3600)
-                mins, secs = divmod(remainder, 60)
-                show_progress(f"CPU로 학습 완료! (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
-                
-    # 8. 학습 결과 처리 중
-    show_progress("학습 결과 처리 중...", total_start_time, 100)
-    
-   # 결과 저장 경로를 Python 폴더 내로 설정
-    results_dir = os.path.join(base_dir, "runs", "detect", "train")
-    
-    # 9. 학습 결과 그래프 시각화
-    results_image_path = os.path.join(results_dir, "results.png")
-    visualize_result = visualize_training_results(results_image_path, total_start_time)
+                try:
+                    # CPU로 전환하고 에폭 수 줄임
+                    cpu_epochs = 2
+                    model = tutorial_state["model"]
+                    
+                    results = model.train(
+                        data=tutorial_state["data_yaml_path"],
+                        epochs=cpu_epochs,
+                        batch=4,
+                        imgsz=640,
+                        device="cpu",
+                        project=os.path.join(base_dir, "runs"),
+                        name="detect/train",
+                        exist_ok=True
+                    )
+                    
+                    # 결과 경로 설정
+                    results_dir = find_latest_results_dir()
+                    model_path = os.path.join(results_dir, "weights", "best.pt")
+                    
+                    # 전역 상태 업데이트
+                    tutorial_state["model_path"] = model_path
+                    tutorial_state["results_dir"] = results_dir
+                    tutorial_state["training_completed"] = True
+                    
+                    cpu_elapsed = time.time() - start_time
+                    hrs, mins = divmod(cpu_elapsed, 3600)
+                    mins, secs = divmod(mins, 60)
+                    show_progress(f"CPU로 학습 완료! (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", start_time, 100)
+                    
+                    return {
+                        "success": True,
+                        "model_path": model_path,
+                        "results_dir": results_dir,
+                        "elapsed_time": cpu_elapsed,
+                        "note": "CPU 모드로 전환하여 완료"
+                    }
+                except Exception as e3:
+                    show_progress(f"CPU 모드도 실패: {e3}", start_time, 95)
+                    return {
+                        "success": False,
+                        "error": str(e3),
+                        "original_error": str(e)
+                    }
+        
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
-    # 10. 테스트 이미지로 추론 실행
-    inference_result = None
-    model_path = os.path.join(results_dir, "weights", "best.pt")
+# 최신 결과 디렉토리 찾기 도우미 함수
+def find_latest_results_dir():
+    """가장 최근에 생성된 results 디렉토리 찾기"""
+    base_runs_dir = os.path.join(base_dir, "runs", "detect")
     
-    # 테스트 이미지 경로 설정 (로컬 경로)
-    # c#에서 string으로 보내는 image_path를 여기 넣어야함
-    test_image_path = None
+    if not os.path.exists(base_runs_dir):
+        # 디렉토리가 없으면 생성
+        os.makedirs(base_runs_dir, exist_ok=True)
+        return os.path.join(base_dir, "runs", "detect", "train")
     
-    # 테스트 이미지로 추론 실행
-    if test_image_path and os.path.exists(test_image_path):
-        inference_start_time = time.time()
-        show_progress(f"테스트 이미지 추론 중... ({test_image_path})", total_start_time, 100)
-        inference_result = run_inference(model_path, test_image_path, inference_start_time)
+    # 'train'으로 시작하는 모든 폴더 찾기
+    train_dirs = [d for d in os.listdir(base_runs_dir) if d.startswith('train')]
+    if not train_dirs:
+        return os.path.join(base_dir, "runs", "detect", "train")
+    
+    # 숫자 접미사가 있는 경우 가장 큰 숫자 찾기
+    latest_dir = "train"
+    max_num = 0
+    for d in train_dirs:
+        # train, train1, train2, ... 형식에서 숫자 추출
+        match = re.match(r'train(\d*)', d)
+        if match:
+            num_str = match.group(1)
+            num = int(num_str) if num_str else 0
+            if num > max_num:
+                max_num = num
+                latest_dir = d
+    
+    return os.path.join(base_dir, "runs", "detect", latest_dir)
+
+# 5. 결과 그래프 시각화 블록 함수
+def visualize_training_results():
+    """학습 결과 그래프 시각화 블록 실행 함수"""
+    start_time = time.time()
+    show_progress("학습 결과 시각화 중... (5/8)", start_time, 0)
+    
+    # 학습이 완료되었는지 확인
+    if not tutorial_state.get("training_completed"):
+        show_progress("학습이 완료되지 않았습니다. 모델 학습 단계를 먼저 실행하세요.", start_time, 10)
+        return {
+            "success": False,
+            "error": "학습이 완료되지 않음"
+        }
+    
+    # 결과 디렉토리 확인
+    results_dir = tutorial_state.get("results_dir")
+    if not results_dir or not os.path.exists(results_dir):
+        results_dir = find_latest_results_dir()
+        tutorial_state["results_dir"] = results_dir
+    
+    # 결과 이미지 경로 확인
+    results_path = os.path.join(results_dir, "results.png")
+    
+    try:
+        # 결과 이미지가 존재하는지 확인
+        if not os.path.exists(results_path):
+            show_progress(f"결과 그래프 파일을 찾을 수 없습니다: {results_path}", start_time, 50)
+            
+            # 다른 가능한 경로 확인
+            alternative_paths = [
+                os.path.join(results_dir, "results.png"),
+                os.path.join(results_dir, "confusion_matrix.png"),
+                os.path.join(results_dir, "val_batch0_pred.jpg")
+            ]
+            
+            for alt_path in alternative_paths:
+                if os.path.exists(alt_path):
+                    results_path = alt_path
+                    show_progress(f"대체 결과 파일 발견: {results_path}", start_time, 60)
+                    break
+        
+        # 결과 이미지 표시
+        if os.path.exists(results_path):
+            show_progress(f"학습 결과 그래프 확인: {results_path}", start_time, 80)
+            try:
+                # 이미지 표시 (IPython 환경에서만 작동)
+                from IPython.display import Image, display
+                display(Image(filename=results_path))
+                show_progress("결과 그래프 표시 완료", start_time, 100)
+            except ImportError:
+                # 일반 환경에서는 파일 경로만 반환
+                show_progress("IPython 환경이 아니므로 결과 파일 경로만 반환합니다.", start_time, 90)
+            
+            # 결과 경로 저장
+            tutorial_state["results_image_path"] = results_path
+            
+            return {
+                "success": True,
+                "results_path": results_path,
+                "elapsed_time": time.time() - start_time
+            }
+        else:
+            show_progress("결과 그래프 파일을 찾을 수 없습니다.", start_time, 100)
+            return {
+                "success": False,
+                "error": "결과 그래프 파일 없음",
+                "elapsed_time": time.time() - start_time
+            }
+    except Exception as e:
+        show_progress(f"결과 시각화 오류: {e}", start_time, 100)
+        return {
+            "success": False,
+            "error": str(e),
+            "elapsed_time": time.time() - start_time
+        }
+
+# 6. 이미지 경로 설정 블록 함수
+def set_image_path():
+    """추론용 이미지 경로 설정 블록 실행 함수"""
+    start_time = time.time()
+    show_progress("추론용 이미지 경로 설정 중... (6/8)", start_time, 0)
+    
+    # 데이터셋에서 테스트 이미지 찾기
+    dataset_path = tutorial_state.get("dataset_path")
+    if not dataset_path:
+        show_progress("데이터셋 경로가 설정되지 않았습니다. 데이터셋 준비 단계를 먼저 실행하세요.", start_time, 10)
+        return {
+            "success": False,
+            "error": "데이터셋 경로 없음"
+        }
+    
+    # 이미지 파일 찾기 (jpg, jpeg, png)
+    image_extensions = ['.jpg', '.jpeg', '.png']
+    test_images = []
+    
+    # 테스트 폴더에서 이미지 찾기
+    test_dirs = ['test', 'valid', 'val', 'validation', 'images']
+    
+    for test_dir in test_dirs:
+        test_dir_path = os.path.join(dataset_path, test_dir)
+        if os.path.exists(test_dir_path) and os.path.isdir(test_dir_path):
+            show_progress(f"테스트 이미지 디렉토리 발견: {test_dir_path}", start_time, 30)
+            for root, _, files in os.walk(test_dir_path):
+                for file in files:
+                    if any(file.lower().endswith(ext) for ext in image_extensions):
+                        test_images.append(os.path.join(root, file))
+                        if len(test_images) >= 5:  # 최대 5개까지만 찾기
+                            break
+                if len(test_images) >= 5:
+                    break
+        if len(test_images) >= 5:
+            break
+    
+    # 테스트 폴더에서 찾지 못했다면 전체 데이터셋에서 이미지 찾기
+    if not test_images:
+        show_progress("지정된 테스트 폴더에서 이미지를 찾지 못했습니다. 전체 데이터셋에서 이미지를 검색합니다.", start_time, 50)
+        for root, _, files in os.walk(dataset_path):
+            for file in files:
+                if any(file.lower().endswith(ext) for ext in image_extensions):
+                    test_images.append(os.path.join(root, file))
+                    if len(test_images) >= 5:  # 최대 5개까지만 찾기
+                        break
+            if len(test_images) >= 5:
+                break
+    
+    # 이미지를 찾았는지 확인
+    if test_images:
+        # 첫 번째 이미지 선택
+        image_path = test_images[0]
+        tutorial_state["image_path"] = image_path
+        
+        show_progress(f"테스트 이미지 경로 설정 완료: {image_path}", start_time, 100)
+        return {
+            "success": True,
+            "image_path": image_path,
+            "all_images": test_images,
+            "elapsed_time": time.time() - start_time
+        }
     else:
-        show_progress("테스트 이미지를 찾을 수 없어 추론을 건너뜁니다.", total_start_time, 100)
+        show_progress("테스트 이미지를 찾을 수 없습니다.", start_time, 100)
+        return {
+            "success": False,
+            "error": "테스트 이미지 없음",
+            "elapsed_time": time.time() - start_time
+        }
+
+# 7. 모델 추론 블록 함수
+def run_inference():
+    """모델 추론 실행 블록 함수 - inference.py 활용"""
+    start_time = time.time()
+    show_progress("모델 추론 실행 중... (7/8)", start_time, 0)
     
-    # 11. 학습 완료 알림
+    # 필요한 정보가 있는지 확인
+    model_path = tutorial_state.get("model_path")
+    if not model_path:
+        # 학습된 모델이 없다면 기본 모델 사용
+        model_path = os.path.join(base_dir, "yolov8n.pt")
+        show_progress(f"학습된 모델 경로가 설정되지 않아 기본 모델을 사용합니다: {model_path}", start_time, 10)
+    
+    image_path = tutorial_state.get("image_path")
+    if not image_path:
+        show_progress("테스트 이미지 경로가 설정되지 않았습니다. 이미지 경로 설정 단계를 먼저 실행하세요.", start_time, 10)
+        return {
+            "success": False,
+            "error": "테스트 이미지 경로 없음"
+        }
+    
+    # inference.py 파일 경로 확인
+    inference_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inference.py")
+    if not os.path.exists(inference_script_path):
+        show_progress(f"inference.py 파일을 찾을 수 없습니다: {inference_script_path}", start_time, 20)
+        return {
+            "success": False,
+            "error": "inference.py 파일 없음"
+        }
+    
+    # 추론 실행 (inference.py 호출)
+    try:
+        show_progress(f"inference.py를 사용하여 추론 실행 중...", start_time, 30)
+        
+        # subprocess를 사용하여 inference.py 실행
+        import subprocess
+        
+        # 명령 구성
+        cmd = [
+            sys.executable,
+            inference_script_path,
+            "--model", model_path,
+            "--image", image_path,
+            "--conf", "0.25"
+        ]
+        
+        show_progress(f"실행 명령: {' '.join(cmd)}", start_time, 40)
+        
+        # 프로세스 실행
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            bufsize=1
+        )
+        
+        # 출력 처리
+        inference_result = None
+        for line in iter(process.stdout.readline, ''):
+            line = line.strip()
+            print(line)  # 로그 확인용
+            
+            # 결과 JSON 찾기
+            if line.startswith("INFERENCE_RESULT:"):
+                result_json = line[len("INFERENCE_RESULT:"):]
+                try:
+                    inference_result = json.loads(result_json)
+                    show_progress("추론 결과 JSON 파싱 성공", start_time, 70)
+                except json.JSONDecodeError:
+                    show_progress(f"추론 결과 JSON 파싱 실패: {result_json}", start_time, 70)
+            
+            # 진행 상황 메시지 확인
+            elif line.startswith("[INFERENCE]"):
+                progress_msg = line[len("[INFERENCE] "):]
+                show_progress(f"추론 진행 중: {progress_msg}", start_time, 60)
+        
+        # 프로세스 완료 대기
+        process.wait()
+        
+        # 결과 확인
+        if process.returncode != 0:
+            stderr = process.stderr.read()
+            show_progress(f"inference.py 실행 오류 (반환 코드: {process.returncode}): {stderr}", start_time, 80)
+            return {
+                "success": False,
+                "error": f"inference.py 실행 오류 (반환 코드: {process.returncode}): {stderr}",
+                "elapsed_time": time.time() - start_time
+            }
+        
+        # inference.py가 반환한 결과 확인
+        if inference_result:
+            # 결과 이미지 경로 저장
+            if "result_image" in inference_result:
+                tutorial_state["result_image_path"] = inference_result["result_image"]
+            
+            show_progress(f"추론 완료: {inference_result.get('success', False)}", start_time, 100)
+            return {
+                "success": inference_result.get("success", False),
+                "result": inference_result,
+                "elapsed_time": time.time() - start_time
+            }
+        else:
+            show_progress("inference.py에서 결과를 반환하지 않았습니다.", start_time, 100)
+            return {
+                "success": False,
+                "error": "inference.py에서 결과가 없음",
+                "elapsed_time": time.time() - start_time
+            }
+    except Exception as e:
+        show_progress(f"추론 실행 중 오류 발생: {e}", start_time, 100)
+        return {
+            "success": False,
+            "error": str(e),
+            "elapsed_time": time.time() - start_time
+        }
+
+# 8. 결과 시각화 블록 함수 - inference.py 결과 활용
+def visualize_results():
+    """추론 결과 시각화 블록 실행 함수"""
+    start_time = time.time()
+    show_progress("추론 결과 시각화 중... (8/8)", start_time, 0)
+    
+    # 결과 이미지 경로 확인
+    result_image_path = tutorial_state.get("result_image_path")
+    if not result_image_path:
+        show_progress("추론 결과 이미지 경로가 설정되지 않았습니다. 모델 추론 단계를 먼저 실행하세요.", start_time, 10)
+        return {
+            "success": False,
+            "error": "추론 결과 이미지 경로 없음"
+        }
+    
+    # 이미지 파일 존재 확인
+    if not os.path.exists(result_image_path):
+        show_progress(f"결과 이미지 파일을 찾을 수 없습니다: {result_image_path}", start_time, 20)
+        return {
+            "success": False,
+            "error": "결과 이미지 파일 없음"
+        }
+    
+    try:
+        # 이미지 표시 (IPython 환경에서만 작동)
+        try:
+            import cv2
+            import matplotlib.pyplot as plt
+            
+            # 이미지 읽기
+            img = cv2.imread(result_image_path)
+            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            
+            # matplotlib으로 시각화
+            plt.figure(figsize=(10, 8))
+            plt.imshow(img_rgb)
+            plt.axis('off')
+            plt.title("YOLOv8 Prediction")
+            
+            # IPython 환경인지 확인
+            try:
+                from IPython import get_ipython
+                if get_ipython() is not None:
+                    plt.show()
+                    show_progress("결과 이미지 표시 완료", start_time, 100)
+                else:
+                    # 일반 환경에서는 이미지 저장
+                    output_path = os.path.join(base_dir, "visualization_result.png")
+                    plt.savefig(output_path)
+                    plt.close()
+                    show_progress(f"결과 이미지 저장 완료: {output_path}", start_time, 100)
+            except ImportError:
+                # IPython이 없으면 이미지 저장
+                output_path = os.path.join(base_dir, "visualization_result.png")
+                plt.savefig(output_path)
+                plt.close()
+                show_progress(f"결과 이미지 저장 완료: {output_path}", start_time, 100)
+            
+        except ImportError:
+            show_progress("matplotlib 또는 OpenCV를 가져올 수 없습니다. 이미지 경로만 반환합니다.", start_time, 70)
+            
+        return {
+            "success": True,
+            "result_image_path": result_image_path,
+            "elapsed_time": time.time() - start_time
+        }
+    except Exception as e:
+        show_progress(f"결과 시각화 오류: {e}", start_time, 100)
+        return {
+            "success": False,
+            "error": str(e),
+            "elapsed_time": time.time() - start_time
+        }
+
+# 메인 실행 함수
+def main():
+    """AI 블록 코딩 튜토리얼 모드 실행 메인 함수"""
+    total_start_time = time.time()
+    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    show_progress(f"AI 블록 코딩 튜토리얼 모드 실행 시작 - {current_date}", total_start_time, 0)
+    
+    # 전체 블록 순차 실행
+    blocks = [
+        ("패키지 설치", install_packages_with_progress),
+        ("GPU 확인 및 모델 로드", check_gpu),
+        ("데이터셋 다운로드", download_dataset_with_progress),
+        ("모델 학습", train_model),
+        ("학습 결과 시각화", visualize_training_results),
+        ("테스트 이미지 경로 설정", set_image_path),
+        ("모델 추론", run_inference),
+        ("추론 결과 시각화", visualize_results)
+    ]
+    
+    results = {}
+    success = True
+    
+    for i, (block_name, block_func) in enumerate(blocks):
+        show_progress(f"블록 실행 중: {block_name} ({i+1}/{len(blocks)})", total_start_time, i * (100 / len(blocks)))
+        try:
+            result = block_func()
+            results[block_name] = result
+            
+            if not result.get("success", False):
+                success = False
+                show_progress(f"블록 실행 실패: {block_name} - {result.get('error', '알 수 없는 오류')}", total_start_time, (i+1) * (100 / len(blocks)))
+                break
+            
+            show_progress(f"블록 실행 완료: {block_name}", total_start_time, (i+1) * (100 / len(blocks)))
+        except Exception as e:
+            success = False
+            results[block_name] = {"success": False, "error": str(e)}
+            show_progress(f"블록 실행 중 오류 발생: {block_name} - {e}", total_start_time, (i+1) * (100 / len(blocks)))
+            break
+    
+    # 튜토리얼 완료 보고
     total_elapsed = time.time() - total_start_time
     hrs, remainder = divmod(total_elapsed, 3600)
     mins, secs = divmod(remainder, 60)
     
-    show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
-    show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
-
-    print("PROGRESS:100:학습 완료", flush=True)
-
-    # 🚨 종료 디버깅용
-    input("❗Press any key to exit...")
-
-    # 최신 결과 디렉토리에서 모델 경로 찾기
-    results_dir = find_latest_results_dir()
-    model_path = os.path.join(results_dir, "weights", "best.pt")
-    
-    show_progress(f"튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
-    show_progress(f"학습된 모델 경로: {model_path}", total_start_time, 100)
+    if success:
+        show_progress(f"✅ 튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
+    else:
+        show_progress(f"❌ 튜토리얼 모드 실행 중단 (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
     
     # 결과 정보
     result = {
-        "success": True,
-        "model_path": model_path,
-        "results_path": results_image_path if visualize_result else None,
-        "device_used": device,
-        "gpu_info": gpu_info,
+        "success": success,
+        "blocks_results": results,
         "total_time_seconds": total_elapsed,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
-    
-    # 추론 결과가 있으면 추가
-    if inference_result:
-        result["inference"] = {
-            "image_path": inference_result["image_path"],
-            "result_image": inference_result["result_image"],
-            "detections_count": len(inference_result["detections"]),
-            "detections": inference_result["detections"]
-        }
     
     # JSON으로 결과 출력 (C# 프로그램에서 파싱)
     print(f"RESULT_JSON:{json.dumps(result)}")
     return result
 
-# 추론 전용 함수
+# 추론 전용 함수 (외부에서 호출용)
 def infer_image(model_path, image_path, show=False):
-    """모델을 사용해 개별 이미지 추론 (외부에서 호출용)"""
+    """모델을 사용해 개별 이미지 추론 (외부에서 호출용) - inference.py 활용"""
     start_time = time.time()
     show_progress(f"이미지 추론 요청: {image_path}", start_time, 0)
     
-    # 추론 실행
-    result = run_inference(model_path, image_path, start_time, show=show)
-    
-    if result:
-        print(f"INFERENCE_RESULT:{json.dumps(result)}")
-        return result
-    else:
+    # inference.py 파일 경로 확인
+    inference_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inference.py")
+    if not os.path.exists(inference_script_path):
         error_result = {
             "success": False,
-            "error": "추론 실패",
+            "error": f"inference.py 파일을 찾을 수 없습니다: {inference_script_path}",
+            "image_path": image_path,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        return error_result
+    
+    # inference.py 실행
+    try:
+        import subprocess
+        
+        # 명령 구성
+        cmd = [
+            sys.executable,
+            inference_script_path,
+            "--model", model_path,
+            "--image", image_path,
+            "--conf", "0.25"
+        ]
+        
+        # 프로세스 실행
+        process = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            check=False
+        )
+        
+        # 결과 확인
+        if process.returncode != 0:
+            error_result = {
+                "success": False,
+                "error": f"inference.py 실행 오류 (반환 코드: {process.returncode}): {process.stderr}",
+                "image_path": image_path,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            return error_result
+        
+        # inference.py 출력에서 결과 JSON 찾기
+        inference_result = None
+        for line in process.stdout.splitlines():
+            if line.startswith("INFERENCE_RESULT:"):
+                result_json = line[len("INFERENCE_RESULT:"):]
+                try:
+                    inference_result = json.loads(result_json)
+                    break
+                except json.JSONDecodeError:
+                    pass
+        
+        if inference_result:
+            print(f"INFERENCE_RESULT:{json.dumps(inference_result)}")
+            return inference_result
+        else:
+            error_result = {
+                "success": False,
+                "error": "inference.py에서 결과를 반환하지 않았습니다.",
+                "image_path": image_path,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            return error_result
+    except Exception as e:
+        error_result = {
+            "success": False,
+            "error": str(e),
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
@@ -896,7 +1114,7 @@ def infer_image(model_path, image_path, show=False):
 if __name__ == "__main__":
     # 명령행 인수 확인
     if len(sys.argv) > 2 and sys.argv[1] == "infer":
-        # 추론 모드: python script.py infer <모델_경로> <이미지_경로>
+        # 추론 모드: python tutorial_train_script.py infer <모델_경로> <이미지_경로>
         try:
             model_path = sys.argv[2]
             image_path = sys.argv[3]
@@ -909,7 +1127,7 @@ if __name__ == "__main__":
             }
             print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
     else:
-        # 일반 모드: 전체 학습 파이프라인 실행
+        # 일반 모드: 전체 튜토리얼 파이프라인 실행
         try:
             main()
         except Exception as e:
