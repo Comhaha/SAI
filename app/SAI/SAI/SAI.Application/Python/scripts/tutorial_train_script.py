@@ -348,9 +348,14 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
     show_progress(f"data.yaml 파일을 찾을 수 없습니다: {yaml_path}", start_time, 98)
     return None
 
-# 4. 모델 학습 블록 함수
-def train_model_block():
-    """모델 학습 블록 실행 함수"""
+def train_model_block(epochs=None, imgsz=None):
+    """
+    모델 학습 블록 실행 함수
+    
+    Args:
+        epochs (int, optional): 사용자가 지정한 에폭 수. None이면 기본값 사용
+        imgsz (int, optional): 사용자가 지정한 이미지 크기. None이면 기본값 사용
+    """
     start_time = time.time()
     show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
     
@@ -382,10 +387,41 @@ def train_model_block():
             batch_size = 8
             show_progress(f"GPU 메모리 제한으로 배치 크기 {batch_size}로 조정", start_time, 10)
     
-    # 에폭 수 (튜토리얼이므로 적은 수로 설정)
-    epochs = 5 if device == "cuda" else 2
+    # 에폭 수 설정 - 사용자 지정 값 또는 기본값
+    if epochs is None:
+        # 기본 에폭 수 설정
+        epochs = 5 if device == "cuda" else 2
+    else:
+        # 사용자 지정 에폭 수를 정수로 변환
+        try:
+            epochs = int(epochs)
+            if epochs <= 0:
+                show_progress(f"에폭 수는 양수여야 합니다. 기본값을 사용합니다.", start_time, 15)
+                epochs = 5 if device == "cuda" else 2
+        except ValueError:
+            show_progress(f"유효하지 않은 에폭 수입니다. 기본값을 사용합니다.", start_time, 15)
+            epochs = 5 if device == "cuda" else 2
     
-    show_progress(f"모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs})", start_time, 20)
+    # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
+    if imgsz is None:
+        # 기본 이미지 크기 설정
+        imgsz = 640
+    else:
+        # 사용자 지정 이미지 크기를 정수로 변환
+        try:
+            imgsz = int(imgsz)
+            # 유효한 이미지 크기 범위 확인 (YOLO 권장 크기)
+            valid_sizes = [320, 416, 512, 640, 960, 1280]
+            if imgsz not in valid_sizes:
+                # 가장 가까운 유효 크기 찾기
+                closest_size = min(valid_sizes, key=lambda x: abs(x - imgsz))
+                show_progress(f"이미지 크기 {imgsz}는 권장되지 않습니다. 가장 가까운 권장 크기 {closest_size}를 사용합니다.", start_time, 15)
+                imgsz = closest_size
+        except ValueError:
+            show_progress(f"유효하지 않은 이미지 크기입니다. 기본값 640을 사용합니다.", start_time, 15)
+            imgsz = 640
+    
+    show_progress(f"모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})", start_time, 20)
     show_progress("학습 중... (YOLOv8 진행 상황이 표시됩니다)", start_time, 30)
     show_progress("이 작업은 GPU 사용 시 약 5-15분, CPU 사용 시 20-60분 소요될 수 있습니다", start_time, 40)
     
@@ -465,7 +501,7 @@ def train_model_block():
             data=data_yaml_path,
             epochs=epochs,
             batch=batch_size,
-            imgsz=640,
+            imgsz=imgsz,
             device=device,
             project=os.path.join(base_dir, "runs"),
             name="detect/train",  # 하위 폴더 구조 지정
@@ -496,6 +532,9 @@ def train_model_block():
             "success": True,
             "model_path": model_path,
             "results_dir": results_dir,
+            "epochs": epochs,
+            "imgsz": imgsz,
+            "device": device,
             "elapsed_time": train_elapsed
         }
     except Exception as e:
@@ -516,7 +555,7 @@ def train_model_block():
                     data=tutorial_state["data_yaml_path"],
                     epochs=epochs,
                     batch=reduced_batch,
-                    imgsz=640,
+                    imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
                     device=device,
                     project=os.path.join(base_dir, "runs"),
                     name="detect/train",
@@ -540,6 +579,9 @@ def train_model_block():
                     "success": True,
                     "model_path": model_path,
                     "results_dir": results_dir,
+                    "epochs": epochs,
+                    "imgsz": imgsz,
+                    "device": device,
                     "elapsed_time": time.time() - start_time,
                     "note": "배치 크기 감소로 재시도 성공"
                 }
@@ -550,14 +592,14 @@ def train_model_block():
                 
                 try:
                     # CPU로 전환하고 에폭 수 줄임
-                    cpu_epochs = 2
+                    cpu_epochs = min(2, epochs)  # 원래 에폭보다 크지 않게
                     model = tutorial_state["model"]
                     
                     results = model.train(
                         data=tutorial_state["data_yaml_path"],
                         epochs=cpu_epochs,
                         batch=4,
-                        imgsz=640,
+                        imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
                         device="cpu",
                         project=os.path.join(base_dir, "runs"),
                         name="detect/train",
@@ -582,6 +624,9 @@ def train_model_block():
                         "success": True,
                         "model_path": model_path,
                         "results_dir": results_dir,
+                        "epochs": cpu_epochs,
+                        "imgsz": imgsz,
+                        "device": "cpu",
                         "elapsed_time": cpu_elapsed,
                         "note": "CPU 모드로 전환하여 완료"
                     }

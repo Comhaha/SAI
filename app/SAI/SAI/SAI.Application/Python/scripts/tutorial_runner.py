@@ -40,20 +40,20 @@ class TutorialRunner:
     
     def __init__(self, tutorial_train_script_path: str):
         self.tutorial_train_script_path = tutorial_train_script_path
-        self.tutorial_train_script = None
+        self.test_script = None
         self._load_script()
         
         # 블록 타입과 함수 매핑
         self.block_mappings = {
             "start": None,  # 시작 블록은 실행하지 않음
-            "pipInstall": self.tutorial_train_script.install_packages_with_progress,
-            "loadModel": self.tutorial_train_script.check_gpu,
-            "loadDataset": self.tutorial_train_script.download_dataset_with_progress,
-            "machineLearning": self.tutorial_train_script.train_model,
-            "resultGraph": self.tutorial_train_script.visualize_training_results,
-            "imgPath": self.tutorial_train_script.set_image_path,
-            "modelInference": self.tutorial_train_script.run_inference,
-            "visualizeResult": self.tutorial_train_script.visualize_results
+            "pipInstall": self.test_script.install_packages_with_progress,
+            "loadModel": self.test_script.check_gpu,
+            "loadDataset": self.test_script.download_dataset_with_progress,
+            "machineLearning": self.test_script.train_model_block,  # 수정된 함수명
+            "resultGraph": self.test_script.visualize_training_results,
+            "imgPath": self.test_script.set_image_path_block,
+            "modelInference": self.test_script.run_inference_block,
+            "visualizeResult": self.test_script.visualize_results
         }
     
     def _load_script(self) -> None:
@@ -61,26 +61,30 @@ class TutorialRunner:
         try:
             # 튜토리얼 스크립트를 모듈로 로드
             if os.path.exists(self.tutorial_train_script_path):
-                spec = importlib.util.spec_from_file_location("tutorial_train_script", self.tutorial_train_script_path)
-                self.tutorial_train_script = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(self.tutorial_train_script)
-                logger.info(f"튜토리얼 학습 스크립트 로드 완료: {self.tutorial_train_script_path}")
+                spec = importlib.util.spec_from_file_location("test_script", self.tutorial_train_script_path)
+                self.test_script = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(self.test_script)
+                logger.info(f"테스트 스크립트 로드 완료: {self.tutorial_train_script_path}")
             else:
-                raise FileNotFoundError(f"튜토리얼 학습 스크립트를 찾을 수 없습니다: {self.tutorial_train_script_path}")
+                raise FileNotFoundError(f"테스트 스크립트를 찾을 수 없습니다: {self.tutorial_train_script_path}")
         except Exception as e:
             logger.error(f"스크립트 로드 중 오류: {e}")
             raise
     
-    def execute_blocks(self, block_types: List[str]) -> Dict[str, Any]:
+    def execute_blocks(self, block_types: List[str], params: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         블록 배열을 받아서 순서대로 실행
         
         Args:
             block_types (List[str]): 블록 타입 배열 (예: ["start", "pipInstall", "loadModel"])
+            params (Dict[str, Any], optional): 블록에 전달할 파라미터
             
         Returns:
             Dict[str, Any]: 실행 결과
         """
+        if params is None:
+            params = {}
+        
         results = {
             "success": True,
             "blocks_executed": [],
@@ -99,7 +103,26 @@ class TutorialRunner:
                 if block_type in self.block_mappings:
                     func = self.block_mappings[block_type]
                     if func:
-                        result = func()  # 필요한 매개변수는 각 함수에 맞게 전달
+                        # 블록 타입에 맞는 파라미터 추출
+                        block_params = {}
+                        
+                        # 이미지 경로 파라미터 처리
+                        if block_type == "imgPath" and "image_path" in params:
+                            block_params["image_path"] = params["image_path"]
+                        
+                        # 학습 파라미터 처리
+                        if block_type == "machineLearning":
+                            if "epochs" in params:
+                                block_params["epochs"] = params["epochs"]
+                            if "imgsz" in params:
+                                block_params["imgsz"] = params["imgsz"]
+                        
+                        # 블록 함수 실행
+                        if block_params:
+                            result = func(**block_params)
+                        else:
+                            result = func()
+                            
                         results["blocks_executed"].append(block_type)
                         results["results"][block_type] = result
                     else:
@@ -120,6 +143,9 @@ def main():
     parser = argparse.ArgumentParser(description='튜토리얼 스크립트 실행기')
     parser.add_argument('--tutorial-train-script', required=True, help='튜토리얼 트레이닝 스크립트 경로')
     parser.add_argument('--blocks', nargs='+', help='실행할 블록 타입 (공백으로 구분, 예: start pipInstall loadModel)')
+    parser.add_argument('--image-path', help='추론에 사용할 이미지 경로')
+    parser.add_argument('--epochs', type=int, help='학습 에폭 수')
+    parser.add_argument('--imgsz', type=int, help='이미지 크기')
     
     args = parser.parse_args()
     
@@ -127,8 +153,17 @@ def main():
         # 실행기 초기화
         runner = TutorialRunner(args.tutorial_train_script)
         
+        # 파라미터 설정
+        params = {}
+        if args.image_path:
+            params["image_path"] = args.image_path
+        if args.epochs:
+            params["epochs"] = args.epochs
+        if args.imgsz:
+            params["imgsz"] = args.imgsz
+        
         # 블록 실행
-        results = runner.execute_blocks(args.blocks)
+        results = runner.execute_blocks(args.blocks, params)
         
         # JSON 결과 출력
         print(f"RESULT_JSON:{json.dumps(results)}")
