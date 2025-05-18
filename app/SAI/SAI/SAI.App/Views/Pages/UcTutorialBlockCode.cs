@@ -681,7 +681,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
                     // 파이썬 코드 실행
-                    //RunButtonClicked?.Invoke(sender, e);
+                    RunButtonClicked?.Invoke(sender, e);
 			    }
                 else // 순서가 틀릴 때
                 {

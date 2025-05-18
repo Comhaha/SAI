@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.Application.Service
 {
@@ -19,10 +20,15 @@ namespace SAI.SAI.Application.Service
         }
 
         public void RunPythonScript(
+            // 생성자에 변수 추가해야함
             Mode mode,
             Action<string> onOutput,
             Action<string> onError,
-            Action<Exception> onException)
+            Action<Exception> onException,
+            string imagePath = null,
+            int epochs = 0,
+            int imgsz = 0,
+            BlocklyModel blocklyModel = null)
         {
             try
             {
@@ -41,16 +47,20 @@ namespace SAI.SAI.Application.Service
                 var pythonScriptsDir = Path.Combine(pythonDir, "Scripts");
 
                 // 학습 스크립트 경로 
-                string scriptPath = mode == Mode.Tutorial
-                    ? Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py")) // 튜토리얼 모드
-                    : Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_train_script.py")); // 실습 모드
-                Console.WriteLine($"Script Path: {scriptPath}");
-                onOutput?.Invoke($"Script Path: {scriptPath}");
+                // 스크립트가 분리 될 때마다 추가해줘야함
+                string runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py")); //runner 스크립트
+                string trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py")); // tutorial 메인 스크립트
+                string inferenceScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py")); // 추론 스크립트
+                var blockTypes = blocklyModel?.blockTypes.Select(b => b.type).ToList() ?? new List<string>();
+                string blocksArg = string.Join(" ", blockTypes);
+
+                Console.WriteLine($"Script Path: {runnerPath}");
+                onOutput?.Invoke($"Script Path: {runnerPath}");
 
                 // 학습 스크립트 없을 때 에러 
-                if (!File.Exists(scriptPath))
+                if (!File.Exists(runnerPath))
                 {
-                    string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {scriptPath}";
+                    string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {runnerPath}";
                     Console.WriteLine(errorMsg);
                     onError?.Invoke(errorMsg);
                     return;
@@ -65,12 +75,21 @@ namespace SAI.SAI.Application.Service
                     return;
                 }
 
+                // 예시: 이미지 경로, epochs, imgsz 등도 넘길 수 있음
+                string extraArgs = "";
+                if (!string.IsNullOrEmpty(imagePath))
+                    extraArgs += $" --image-path \"{imagePath}\"";
+                if (epochs > 0)
+                    extraArgs += $" --epochs {epochs}";
+                if (imgsz > 0)
+                    extraArgs += $" --imgsz {imgsz}";
+
                 // 실행 설정
                 var psi = new ProcessStartInfo
                 {
                     FileName = pythonExe,
-                    Arguments = $"-u \"{scriptPath}\"",
-                    WorkingDirectory = Path.GetDirectoryName(scriptPath),
+                    Arguments = $"\"{runnerPath}\" --tutorial-train-script \"{trainScriptPath}\" --inference-script \"{inferenceScriptPath}\" --blocks {blocksArg}{extraArgs}",
+                    WorkingDirectory = Path.GetDirectoryName(runnerPath),
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -84,7 +103,7 @@ namespace SAI.SAI.Application.Service
                     pythonDir + ";" +
                     pythonScriptsDir + ";" +
                     Environment.GetEnvironmentVariable("PATH");
-                psi.EnvironmentVariables["PYTHONPATH"] = Path.GetDirectoryName(scriptPath);
+                psi.EnvironmentVariables["PYTHONPATH"] = Path.GetDirectoryName(runnerPath);
 
                 var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
                 process.OutputDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onOutput?.Invoke(e.Data); };
@@ -100,7 +119,6 @@ namespace SAI.SAI.Application.Service
             }
         }
 
-        // yolomodel.cs 파일에 정의했음. 지우고 수정해야함
         public class InferenceResult
         {
             public bool Success { get; set; }
@@ -108,13 +126,12 @@ namespace SAI.SAI.Application.Service
             public double InferenceTime { get; set; }
             public string Error { get; set; }
         }
-
-        // 추론 스크립트 실행 함수
-        // imagePath와 conf를 파이썬에 던져줘야한다
+        // 추론 실행 스크립트
+        // 추론 탭에서 추론만 따로 실행할때 사용
         public InferenceResult RunInference(string imagePath, double conf)
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
+            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
             string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py"));
 
             var psi = new ProcessStartInfo
