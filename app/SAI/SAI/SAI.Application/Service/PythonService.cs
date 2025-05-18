@@ -19,7 +19,7 @@ namespace SAI.SAI.Application.Service
             Practice
         }
 
-        public void RunPythonScript(
+        public Process RunPythonScript(
             Mode mode,
             Action<string> onOutput,
             Action<string> onError,
@@ -56,7 +56,7 @@ namespace SAI.SAI.Application.Service
                     string errorMsg = "블록 모델이 null입니다.";
                     Console.WriteLine(errorMsg);
                     onError?.Invoke(errorMsg);
-                    return;
+                    return null;
                 }
 
                 if (!blocklyModel.blockTypes.Any())
@@ -64,7 +64,7 @@ namespace SAI.SAI.Application.Service
                     string errorMsg = "블록 모델이 비어있습니다. 블록을 추가해주세요.";
                     Console.WriteLine(errorMsg);
                     onError?.Invoke(errorMsg);
-                    return;
+                    return null;
                 }
 
                 var blockTypes = blocklyModel.blockTypes.Select(b => b.type).ToList();
@@ -79,7 +79,7 @@ namespace SAI.SAI.Application.Service
                     string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {runnerPath}";
                     Console.WriteLine(errorMsg);
                     onError?.Invoke(errorMsg);
-                    return;
+                    return null;
                 }
 
                 // 가상환경 없을 때 에러
@@ -88,7 +88,7 @@ namespace SAI.SAI.Application.Service
                     string errorMsg = $"파이썬 실행 파일을 찾을 수 없습니다: {pythonExe}";
                     Console.WriteLine(errorMsg);
                     onError?.Invoke(errorMsg);
-                    return;
+                    return null;
                 }
 
                 // 예시: 이미지 경로, epochs, imgsz 등도 넘길 수 있음
@@ -128,12 +128,14 @@ namespace SAI.SAI.Application.Service
                 process.Start();
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
-                process.WaitForExit();
+                return process;
+
             }
             catch (Exception ex)
             {
                 onException?.Invoke(ex);
             }
+            return null;
         }
 
         public class InferenceResult

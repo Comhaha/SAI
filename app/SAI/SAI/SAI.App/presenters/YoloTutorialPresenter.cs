@@ -8,6 +8,7 @@ using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
+using System.Diagnostics;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -16,7 +17,7 @@ namespace SAI.SAI.App.Presenters
         private readonly ITutorialInferenceView _itutorialInferenceView;
         private readonly IYoloTutorialView _yolotutorialview;
         private readonly PythonService _pythonService;
-        private ProgressDialog _progressDialog;
+        private DialogModelProgress _progressDialog;
 
         public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
         {
@@ -32,177 +33,198 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                _progressDialog = new ProgressDialog();
-                _progressDialog.Show();
-
-                Task.Run(() =>
+                // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
+                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
                 {
-                    try
+                    viewControl.Invoke(new Action(() =>
                     {
-                        // 표준 출력 스트림 설정
-                        Console.WriteLine("[DEBUG] 표준 출력 스트림 설정 시도");
-                        Console.WriteLine("[DEBUG] 표준 출력 스트림 설정 생략");
-
-                        _pythonService.RunPythonScript(
-                            PythonService.Mode.Tutorial,
-                            onOutput: text =>
-                            {
-                                try
-                                {
-                                    if (string.IsNullOrEmpty(text)) return;
-
-                                    Console.WriteLine($"Python Output: {text}");
-                                    
-                                    // UI 스레드에서 로그 추가
-                                    if (_yolotutorialview != null)
-                                    {
-                                        if (_yolotutorialview is Control control && control.InvokeRequired)
-                                        {
-                                            control.Invoke(new Action(() => _yolotutorialview.AppendLog(text)));
-                                        }
-                                        else
-                                        {
-                                            _yolotutorialview.AppendLog(text);
-                                        }
-                                    }
-
-                                    // 진행률 업데이트
-                                    if (text.StartsWith("PROGRESS:"))
-                                    {
-                                        var parts = text.Substring(9).Split(new[] { ':' }, 2);
-                                        if (parts.Length == 2 && double.TryParse(parts[0], out double progress))
-                                        {
-                                            string message = parts[1];
-
-                                            if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                            {
-                                                if (_progressDialog.InvokeRequired)
-                                                {
-                                                    _progressDialog.Invoke(new Action(() =>
-                                                    {
-                                                        if (!_progressDialog.IsDisposed)
-                                                        {
-                                                            _progressDialog.UpdateProgress(progress, message);
-                                                        }
-                                                    }));
-                                                }
-                                                else
-                                                {
-                                                    _progressDialog.UpdateProgress(progress, message);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine($"Error in output handler: {ex}");
-                                }
-                            },
-                            onError: text =>
-                            {
-                                try
-                                {
-                                    if (string.IsNullOrEmpty(text)) return;
-                                    
-                                    if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                    {
-                                        if (_progressDialog.InvokeRequired)
-                                        {
-                                            _progressDialog.Invoke(new Action(() =>
-                                            {
-                                                if (!_progressDialog.IsDisposed)
-                                                {
-                                                    _progressDialog.UpdateProgress(0, $"오류: {text}");
-                                                }
-                                            }));
-                                        }
-                                        else
-                                        {
-                                            _progressDialog.UpdateProgress(0, $"오류: {text}");
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine($"Error in error handler: {ex}");
-                                }
-                            },
-                            onException: ex =>
-                            {
-                                try
-                                {
-                                    Console.WriteLine($"Python Exception: {ex}");
-                                    
-                                    // UI 스레드에서 예외 메시지 표시
-                                    if (_yolotutorialview != null)
-                                    {
-                                        if (_yolotutorialview is Control control && control.InvokeRequired)
-                                        {
-                                            control.Invoke(new Action(() => _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}")));
-                                        }
-                                        else
-                                        {
-                                            _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}");
-                                        }
-                                    }
-                                }
-                                catch (Exception innerEx)
-                                {
-                                    Console.WriteLine($"Error in exception handler: {innerEx}");
-                                }
-                            },
-                            blocklyModel: BlocklyModel.Instance
-                        );
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error in Python script execution: {ex}");
-                        if (_yolotutorialview != null)
+                        _progressDialog = new DialogModelProgress();
+                        _progressDialog.FormClosing += (s, args) =>
                         {
-                            if (_yolotutorialview is Control control && control.InvokeRequired)
+                            if (args.CloseReason == CloseReason.UserClosing)
                             {
-                                control.Invoke(new Action(() => _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}")));
+                                args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
                             }
-                            else
-                            {
-                                _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}");
-                            }
-                        }
-                    }
-                    finally
+                        };
+                        _progressDialog.Show();  // 비모달로 표시
+                        StartPythonScript();
+                    }));
+                }
+                else
+                {
+                    _progressDialog = new DialogModelProgress();
+                    _progressDialog.FormClosing += (s, args) =>
                     {
-                        // 진행 대화상자 정리
-                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                        if (args.CloseReason == CloseReason.UserClosing)
                         {
-                            if (_progressDialog.InvokeRequired)
-                            {
-                                _progressDialog.Invoke(new Action(() =>
-                                {
-                                    if (!_progressDialog.IsDisposed)
-                                    {
-                                        _progressDialog.Close();
-                                        _progressDialog.Dispose();
-                                    }
-                                }));
-                            }
-                            else
-                            {
-                                _progressDialog.Close();
-                                _progressDialog.Dispose();
-                            }
+                            args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
                         }
-                    }
-                });
+                    };
+                    _progressDialog.Show();  // 비모달로 표시
+                    StartPythonScript();
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in OnRunButtonClicked: {ex}");
-                if (_yolotutorialview != null)
-                {
-                    _yolotutorialview.ShowErrorMessage($"실행 중 오류가 발생했습니다: {ex.Message}");
-                }
+                _yolotutorialview.ShowErrorMessage($"실행 중 오류가 발생했습니다: {ex.Message}");
             }
+        }
+
+        private void StartPythonScript()
+        {
+            Task.Run(() =>
+            {
+                Process process = null;
+                try
+                {
+                    Console.WriteLine("[DEBUG] 표준 출력 스트림 설정 생략");
+
+                    process = _pythonService.RunPythonScript(
+                        PythonService.Mode.Tutorial,
+                        onOutput: text =>
+                        {
+                            try
+                            {
+                                if (string.IsNullOrEmpty(text)) return;
+
+                                Console.WriteLine($"Python Output: {text}");
+
+                                if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                                {
+                                    logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(text)));
+                                }
+                                else
+                                {
+                                    _yolotutorialview.AppendLog(text);
+                                }
+
+                                if (text.StartsWith("PROGRESS:"))
+                                {
+                                    var parts = text.Substring(9).Split(new[] { ':' }, 2);
+                                    if (parts.Length == 2 && double.TryParse(parts[0], out double progress))
+                                    {
+                                        string message = parts[1];
+
+                                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                        {
+                                            if (_progressDialog.InvokeRequired)
+                                            {
+                                                _progressDialog.Invoke(new Action(() =>
+                                                {
+                                                    if (!_progressDialog.IsDisposed)
+                                                    {
+                                                        _progressDialog.UpdateProgress(progress, message);
+                                                    }
+                                                }));
+                                            }
+                                            else
+                                            {
+                                                _progressDialog.UpdateProgress(progress, message);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error in output handler: {ex}");
+                            }
+                        },
+                        onError: text =>
+                        {
+                            try
+                            {
+                                if (string.IsNullOrEmpty(text)) return;
+
+                                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                {
+                                    if (_progressDialog.InvokeRequired)
+                                    {
+                                        _progressDialog.Invoke(new Action(() =>
+                                        {
+                                            if (!_progressDialog.IsDisposed)
+                                            {
+                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                            }
+                                        }));
+                                    }
+                                    else
+                                    {
+                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error in error handler: {ex}");
+                            }
+                        },
+                        onException: ex =>
+                        {
+                            try
+                            {
+                                Console.WriteLine($"Python Exception: {ex}");
+
+                                if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+                                {
+                                    errorControl.Invoke(new Action(() => _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}")));
+                                }
+                                else
+                                {
+                                    _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}");
+                                }
+                            }
+                            catch (Exception innerEx)
+                            {
+                                Console.WriteLine($"Error in exception handler: {innerEx}");
+                            }
+                        },
+                        blocklyModel: BlocklyModel.Instance
+                    );
+
+                    _progressDialog.SetProcess(process);
+
+                    // 여기서 프로세스가 끝날 때까지 대기
+                    process?.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in Python script execution: {ex}");
+                    if (_yolotutorialview is Control errorView && errorView.InvokeRequired)
+                    {
+                        errorView.Invoke(new Action(() =>
+                            _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}")
+                        ));
+                    }
+                    else
+                    {
+                        _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}");
+                    }
+                }
+                finally
+                {
+                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                    {
+                        if (_progressDialog.InvokeRequired)
+                        {
+                            _progressDialog.Invoke(new Action(() =>
+                            {
+                                if (!_progressDialog.IsDisposed)
+                                {
+                                    _progressDialog.Close();
+                                    _progressDialog.Dispose();
+                                }
+                            }));
+                        }
+                        else
+                        {
+                            _progressDialog.Close();
+                            _progressDialog.Dispose();
+                        }
+                    }
+                }
+            });
         }
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행

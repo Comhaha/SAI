@@ -62,6 +62,7 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(60, 40);
             this.btnClose.TabIndex = 1;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // guna2ProgressBar1
             // 
@@ -84,7 +85,7 @@
             this.lblEpoch.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblEpoch.Location = new System.Drawing.Point(300, 83);
             this.lblEpoch.Name = "lblEpoch";
-            this.lblEpoch.Size = new System.Drawing.Size(70, 27);
+            this.lblEpoch.Size = new System.Drawing.Size(111, 41);
             this.lblEpoch.TabIndex = 2;
             this.lblEpoch.Text = "001/100";
             // 
@@ -94,7 +95,7 @@
             this.lblRemaining.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblRemaining.Location = new System.Drawing.Point(300, 109);
             this.lblRemaining.Name = "lblRemaining";
-            this.lblRemaining.Size = new System.Drawing.Size(73, 27);
+            this.lblRemaining.Size = new System.Drawing.Size(117, 41);
             this.lblRemaining.TabIndex = 3;
             this.lblRemaining.Text = "00:29:59";
             // 
@@ -104,7 +105,7 @@
             this.lblStatus.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lblStatus.Location = new System.Drawing.Point(255, 177);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(70, 27);
+            this.lblStatus.Size = new System.Drawing.Size(115, 41);
             this.lblStatus.TabIndex = 4;
             this.lblStatus.Text = "준비 중...";
             // 
