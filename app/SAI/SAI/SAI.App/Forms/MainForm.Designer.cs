@@ -102,9 +102,9 @@
 			this.mainPanel.BackColor = System.Drawing.Color.White;
 			this.mainPanel.Location = new System.Drawing.Point(0, 45);
 			this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.mainPanel.MinimumSize = new System.Drawing.Size(1920, 1080);
+			this.mainPanel.MinimumSize = new System.Drawing.Size(1920, 1035);
 			this.mainPanel.Name = "mainPanel";
-			this.mainPanel.Size = new System.Drawing.Size(1920, 1080);
+			this.mainPanel.Size = new System.Drawing.Size(1920, 1035);
 			this.mainPanel.TabIndex = 5;
 			// 
 			// guna2DragControl1

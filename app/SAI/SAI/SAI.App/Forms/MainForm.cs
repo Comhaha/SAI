@@ -114,7 +114,7 @@ namespace SAI
 		}
 
 		private int pageWidth = 1920;
-		private int pageHeight = 1080;
+		private int pageHeight = 1035;
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
 			int formWidth = this.ClientSize.Width;
@@ -123,14 +123,11 @@ namespace SAI
 			int x = (formWidth - pageWidth) / 2;
 			int y = (formHeight - pageHeight) / 2;
 
-			var barHeight = tpTitlebar.Size.Height;
-
 			mainPanel.Location = new Point(x, y);  // ✨ 중앙 정렬 위치 설정
 
 			// 확인용
 			//MessageBox.Show($"Panel 위치: {mainPanel.Location}, 크기: {mainPanel.Size}");
 		}
-
 
 
 		private void MainForm_Load(object sender, EventArgs e)
