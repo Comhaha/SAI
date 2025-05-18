@@ -833,6 +833,19 @@ namespace SAI.SAI.App.Views.Pages
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
 								break;
+							case "blockCreated":
+								var blockType = root.GetProperty("blockType").ToString();
+                                var newValue = root.GetProperty("allValues");
+								var value = JsonSerializer.Deserialize <Dictionary<string, object>>(newValue.GetRawText());
+                                blocklyPresenter.setFieldValue(blockType, value);
+								break;
+
+							case "blockFieldUpdated":
+								blockType = root.GetProperty("blockType").ToString();
+								var allValues = root.GetProperty("allValues");
+								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
+								break;
 						}
 					}
 				}
@@ -1077,8 +1090,6 @@ namespace SAI.SAI.App.Views.Pages
 					missingType = "\"pipInstall\"";
 				    errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 				    errorMessage += "[시작] - [패키지 설치]";
-					//errorMessage = "시작블록이 맨 앞에 있어야 합니다.\n";
-					//	errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 					break;
 				case "pipInstall":
 					errorType = "블록 배치 오류";
@@ -1259,11 +1270,6 @@ namespace SAI.SAI.App.Views.Pages
                         btnSelectInferImage.Visible = false;
                     }
                 
-            }
-                else
-                {
-                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

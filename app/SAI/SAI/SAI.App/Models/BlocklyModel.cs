@@ -29,8 +29,27 @@ namespace SAI.SAI.App.Models
         // 추론 정확도 값 추가
         private double _accuracy;
 
-        // private 생성자 -> 외부에서 생성 못하게.
-        private BlocklyModel()
+		// 모델
+		private string _model;
+
+		// epoch
+		private int _epoch;
+
+		// imgsz
+		private int _imgsz;
+
+		// _Conv
+		private int _Conv;
+
+		// _C2f
+		private int _C2f;
+
+		// _Upsample_scale
+		private double _Upsample_scale;
+
+
+		// private 생성자 -> 외부에서 생성 못하게.
+		private BlocklyModel()
 		{
 			_blockAllCode = "";
 			_blockCode = "";
@@ -93,6 +112,7 @@ namespace SAI.SAI.App.Models
 			public List<BlockInfo> children { get; set; }  // 있을 수도 없을 수도 있음
 		}
 
+
 		public List<BlockInfo> blockTypes
 		{
 			get => _blockTypes;
@@ -118,5 +138,77 @@ namespace SAI.SAI.App.Models
             }
         }
 
-    }
+		public string model
+		{
+			get => _model;
+			set
+			{
+				if (_model != value)
+				{
+					_model = value;
+				}
+			}
+		}
+
+		public int epoch
+		{
+			get => _epoch;
+			set
+			{
+				if (_epoch != value)
+				{
+					_epoch = value;
+				}
+			}
+		}
+
+		public int imgsz
+		{
+			get => _imgsz;
+			set
+			{
+				if (_imgsz != value)
+				{
+					_imgsz = value;
+				}
+			}
+		}
+
+
+		public int Conv
+		{
+			get => _Conv;
+			set
+			{
+				if (_Conv != value)
+				{
+					_Conv = value;
+				}
+			}
+		}
+
+		public int C2f
+		{
+			get => _C2f;
+			set
+			{
+				if (_C2f != value)
+				{
+					_C2f = value;
+				}
+			}
+		}
+
+		public double Upsample_scale
+		{
+			get => _Upsample_scale;
+			set
+			{
+				if (_Upsample_scale != value)
+				{
+					_Upsample_scale = value;
+				}
+			}
+		}
+	}
 }
