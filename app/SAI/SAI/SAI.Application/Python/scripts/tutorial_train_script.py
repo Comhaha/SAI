@@ -17,7 +17,10 @@ import threading
 import zipfile
 import glob
 import io
+import re
 from datetime import datetime
+# 로깅 레벨 설정
+logging.getLogger().setLevel(logging.INFO)
 
 print("[DEBUG] tutorial_train_script.py 시작", flush=True)
 
@@ -395,6 +398,13 @@ def train_model_block(epochs=None, imgsz=None):
     """
     start_time = time.time()
     show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
+
+    # 기존 results.csv 삭제
+    results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
+    if os.path.exists(results_csv):
+        os.remove(results_csv)
+        show_progress("기존 results.csv 파일 삭제 완료", start_time, 18)
+
     
     # 필요한 데이터가 있는지 확인
     if not tutorial_state.get("model"):
