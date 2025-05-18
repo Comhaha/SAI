@@ -933,10 +933,10 @@ namespace SAI.SAI.App.Views.Pages
         private void UpdateToolVisualState()
         {
             // BackColor 대신 Image 속성 사용하여 활성화 상태 표시
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
-            
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
+                
             // 마우스 커서 설정
             pictureBoxImage.Cursor = isHandToolActive ? Cursors.Hand : Cursors.Default;
         }
@@ -992,9 +992,9 @@ namespace SAI.SAI.App.Views.Pages
             }
             
             // 도구 버튼 시각적 상태 업데이트
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
         }
 
         // ActionState 클래스 추가
@@ -1193,7 +1193,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = false;  // 버튼 비활성화
-                    toolVisible.Image = Properties.Resources.visibility_off;
+                    toolVisible.Image = Properties.Resources.tool_visible_basic;
                     toolVisible.Text = "라벨 숨기기";
                 }
             }
@@ -1216,7 +1216,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
@@ -1239,15 +1239,15 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
 
             // 도구 버튼 상태 업데이트
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
 
             LoadclassImage(); // 이미지 라벨링 불러오기
         }
@@ -3438,7 +3438,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 바운딩 박스 가시성 토글
                     isBoundingBoxVisible = !isBoundingBoxVisible;
                     // 시각적 피드백 제공
-                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel == "Segmentation")
@@ -3446,7 +3446,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 세그멘테이션 가시성 토글
                     isSegmentationVisible = !isSegmentationVisible;
                     // 시각적 피드백 제공
-                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel == "Classification")
@@ -3456,7 +3456,7 @@ namespace SAI.SAI.App.Views.Pages
                     isSegmentationVisible = true;
 
                     // 버튼을 활성화된 상태로 유지
-                    toolVisible.Image = Properties.Resources.visibility_off;
+                    toolVisible.Image = Properties.Resources.tool_visible_basic;
                     toolVisible.Text = "라벨 숨기기";
 
                     // 메시지 표시 (선택 사항)
@@ -3537,7 +3537,7 @@ namespace SAI.SAI.App.Views.Pages
             // 툴팁 레이블 생성
             tooltipLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             tooltipLabel.ForeColor = System.Drawing.Color.White;
-            tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 9F);
+            tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 13F);
             tooltipLabel.AutoSize = true;
             tooltipLabel.MaximumSize = new Size(230, 0);
             tooltipLabel.TextAlignment = ContentAlignment.MiddleLeft;
@@ -3833,6 +3833,21 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void accuracyLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toastPopupPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void classBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void totalLevelpanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
