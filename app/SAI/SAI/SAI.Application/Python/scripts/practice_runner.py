@@ -165,7 +165,7 @@ class TutorialRunner:
         return results
 
 def main():
-    parser = argparse.ArgumentParser(description='튜토리얼 스크립트 실행기')
+    parser = argparse.ArgumentParser(description='실습 스크립트 실행기')
     parser.add_argument('--train-script', required=True, help='트레이닝 스크립트 경로')
     parser.add_argument('--blocks', nargs='+', help='실행할 블록 타입 (공백으로 구분)')
     parser.add_argument('--image-path', help='추론용 이미지 경로')

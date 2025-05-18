@@ -285,5 +285,89 @@ namespace SAI.SAI.App.Presenters
             //}
             //MessageBox.Show(message);
         }
-    }
+
+        public void setFieldValue(string blockType, Dictionary<string, object> value)
+        {
+            switch (blockType)
+            {
+                case "loadModel":
+                    foreach (var kvp in value)
+                    {
+                        var key = kvp.Key;
+                        var val = kvp.Value;
+                        blocklyModel.model = val.ToString();
+                    }
+					MessageBox.Show(blocklyModel.model);
+					break;
+				case "loadModelWithLayer":
+					foreach (var kvp in value)
+					{
+						var key = kvp.Key;
+						var val = kvp.Value;
+                        if(key == "MODEL_VERSION")
+                        {
+						    blocklyModel.model = val.ToString();
+                        }
+					}
+					MessageBox.Show(blocklyModel.model);
+					break;
+				case "layer":
+					foreach (var kvp in value)
+					{
+						var key = kvp.Key;
+						var val = kvp.Value;
+						if (key == "Conv")
+						{
+							var Conv = val.ToString();
+							blocklyModel.Conv = int.Parse(Conv);
+						}
+						else if (key == "C2f")
+						{
+							var C2f = val.ToString();
+							blocklyModel.C2f = int.Parse(C2f);
+						}
+						else if (key == "Upsample_scale")
+						{
+							var Upsample_scale = val.ToString();
+							blocklyModel.Upsample_scale = Double.Parse(Upsample_scale);
+						}
+
+					}
+					MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
+					break;
+
+				case "machineLearning":
+                    foreach (var kvp in value)
+                    {
+                        var key = kvp.Key;
+                        var val = kvp.Value;
+                        if (key == "epochs")
+                        {
+                            var epoch = val.ToString();
+                            blocklyModel.epoch = int.Parse(epoch);
+                        }
+                        else if (key == "imgsz")
+                        {
+                            var imgsz = val.ToString();
+                            blocklyModel.imgsz = int.Parse(imgsz);
+                        }
+                    }
+					MessageBox.Show(blocklyModel.epoch + "\n" + blocklyModel.imgsz);
+					break;
+                case "modelInference":
+                    foreach (var kvp in value)
+                    {
+                        var key = kvp.Key;
+                        var val = kvp.Value;
+                        if (key == "THRESHOLD")
+                        {
+                            var accuracy = val.ToString();
+                            blocklyModel.accuracy = Double.Parse(accuracy);
+                        }
+                    }
+                    MessageBox.Show(blocklyModel.accuracy.ToString());
+					break;
+            }
+        }
+	}
 }
