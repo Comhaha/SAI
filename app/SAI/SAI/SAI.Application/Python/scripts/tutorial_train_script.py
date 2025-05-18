@@ -119,7 +119,7 @@ except Exception as e:
     raise
 
 # 1. 패키지 설치 블록 함수
-def install_packages_block():
+def install_packages_block(block_params=None):
     """패키지 설치 블록 실행 함수"""
     print("[DEBUG] install_packages_block 함수 진입", flush=True)
 
@@ -155,7 +155,7 @@ def install_packages_block():
         }
 
 # 2. GPU 확인 및 모델 로드 블록 함수
-def check_gpu_yolo_load_block():
+def check_gpu_yolo_load_block(block_params=None):
     """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
     start_time = time.time()
     show_progress("GPU 정보 확인 중... (2/8)", start_time, 0)
@@ -203,7 +203,7 @@ def check_gpu_yolo_load_block():
     }
 
 # 3. 데이터셋 다운로드 블록 함수
-def download_dataset_block():
+def download_dataset_block(block_params=None):
     """데이터셋 다운로드 블록 실행 함수"""
     start_time = time.time()
     show_progress("서버에서 데이터셋 다운로드 중... (3/8)", start_time, 0)
@@ -388,7 +388,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time):
     return None
 
 # 4. 모델 학습 블럭
-def train_model_block(epochs=None, imgsz=None):
+def train_model_block(epochs=None, imgsz=None, block_params=None):
     """
     모델 학습 블록 실행 함수
     
@@ -398,6 +398,15 @@ def train_model_block(epochs=None, imgsz=None):
     """
     start_time = time.time()
     show_progress("모델 학습 준비 중... (4/8)", start_time, 0)
+
+    # block_params가 있으면 우선적으로 사용
+    if block_params:
+        if epochs is None and "epoch" in block_params:
+            epochs = block_params["epoch"]
+        if imgsz is None and "imgsz" in block_params:
+            imgsz = block_params["imgsz"]
+        # 추가 파라미터도 필요하면 여기서 꺼내서 사용
+        # 예: block_params.get("model"), block_params.get("accuracy") 등
 
     # 기존 results.csv 삭제
     results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
@@ -572,8 +581,8 @@ def train_model_block(epochs=None, imgsz=None):
         tutorial_state["training_completed"] = True
         
         train_elapsed = time.time() - start_time
-        min, sec = divmod(train_elapsed, 60)
-        show_progress(f"모델 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", start_time, 100)
+        minutes, seconds = divmod(train_elapsed, 60)
+        show_progress(f"모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)", start_time, 100)
         
         return {
             "success": True,
@@ -619,8 +628,8 @@ def train_model_block(epochs=None, imgsz=None):
                 tutorial_state["training_completed"] = True
                 
                 retry_elapsed = time.time() - retry_start
-                min, sec = divmod(retry_elapsed, 60)
-                show_progress(f"배치 크기 {reduced_batch}로 학습 완료! (소요 시간: {int(min)}분 {int(sec)}초)", start_time, 100)
+                minutes, seconds = divmod(retry_elapsed, 60)
+                show_progress(f"배치 크기 {reduced_batch}로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)", start_time, 100)
                 
                 return {
                     "success": True,
@@ -663,9 +672,8 @@ def train_model_block(epochs=None, imgsz=None):
                     tutorial_state["training_completed"] = True
                     
                     cpu_elapsed = time.time() - start_time
-                    hrs, mins = divmod(cpu_elapsed, 3600)
-                    mins, secs = divmod(mins, 60)
-                    show_progress(f"CPU로 학습 완료! (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", start_time, 100)
+                    minutes, seconds = divmod(cpu_elapsed, 60)
+                    show_progress(f"CPU로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)", start_time, 100)
                     
                     return {
                         "success": True,
@@ -721,7 +729,7 @@ def find_latest_results_dir():
     return os.path.join(base_dir, "runs", "detect", latest_dir)
 
 # 5. 결과 그래프 시각화 블록 함수
-def visualize_training_results_block():
+def visualize_training_results_block(block_params=None):
     """학습 결과 그래프 시각화 블록 실행 함수"""
     start_time = time.time()
     show_progress("학습 결과 시각화 중... (5/8)", start_time, 0)
@@ -798,7 +806,7 @@ def visualize_training_results_block():
 
 # 6. 사용자 이미지 경로 받는 블럭
 # 이미지 경로를 inference.py 파일로 던져준다
-def set_image_path_block(image_path=None):
+def set_image_path_block(image_path=None, block_params=None):
     """
     추론용 이미지 경로 설정 블록 실행 함수
     
@@ -808,6 +816,9 @@ def set_image_path_block(image_path=None):
     """
     start_time = time.time()
     show_progress("추론용 이미지 경로 설정 중... (6/8)", start_time, 0)
+    
+    if block_params and image_path is None:
+        image_path = block_params.get("imgPath") or block_params.get("image_path")
     
     # 사용자가 지정한 이미지 경로가 있는지 확인
     if image_path:
@@ -840,7 +851,7 @@ def set_image_path_block(image_path=None):
             }
 
 # 7. 모델 추론 블록 함수
-def run_inference_block():
+def run_inference_block(block_params=None):
     """모델 추론 실행 블록 함수 - inference.py 활용"""
     start_time = time.time()
     show_progress("모델 추론 실행 중... (7/8)", start_time, 0)
@@ -957,7 +968,7 @@ def run_inference_block():
         }
 
 # 8. 결과 시각화 블록 함수 - inference.py 결과 활용
-def visualize_results_block():
+def visualize_results_block(block_params=None):
     """추론 결과 시각화 블록 실행 함수"""
     start_time = time.time()
     show_progress("추론 결과 시각화 중... (8/8)", start_time, 0)
@@ -1031,7 +1042,7 @@ def visualize_results_block():
         }
 
 # 메인 실행 함수
-def main():
+def main(block_params=None):
     """AI 블록 코딩 튜토리얼 모드 실행 메인 함수"""
     total_start_time = time.time()
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -1055,7 +1066,7 @@ def main():
     for i, (block_name, block_func) in enumerate(blocks):
         show_progress(f"블록 실행 중: {block_name} ({i+1}/{len(blocks)})", total_start_time, i * (100 / len(blocks)))
         try:
-            result = block_func()
+            result = block_func(block_params) if block_params else block_func()
             results[block_name] = result
             
             if not result.get("success", False):
@@ -1072,13 +1083,12 @@ def main():
     
     # 튜토리얼 완료 보고
     total_elapsed = time.time() - total_start_time
-    hrs, remainder = divmod(total_elapsed, 3600)
-    mins, secs = divmod(remainder, 60)
+    minutes, seconds = divmod(total_elapsed, 60)
     
     if success:
-        show_progress(f"✅ 튜토리얼 모드 실행 완료! (총 소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
+        show_progress(f"✅ 튜토리얼 모드 실행 완료! (총 소요 시간: {int(minutes)}분 {int(seconds)}초)", total_start_time, 100)
     else:
-        show_progress(f"❌ 튜토리얼 모드 실행 중단 (소요 시간: {int(hrs)}시간 {int(mins)}분 {int(secs)}초)", total_start_time, 100)
+        show_progress(f"❌ 튜토리얼 모드 실행 중단 (소요 시간: {int(minutes)}분 {int(seconds)}초)", total_start_time, 100)
     
     # 결과 정보
     result = {
@@ -1203,4 +1213,3 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            # print(f"RESULT_JSON:{json.dumps(error_result)}") # 이 부분은 주석처리 또는 삭제

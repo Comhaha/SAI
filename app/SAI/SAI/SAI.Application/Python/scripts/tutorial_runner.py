@@ -179,6 +179,7 @@ def main():
     parser.add_argument('--image-path', help='추론용 이미지 경로')
     parser.add_argument('--epochs', type=int, help='에폭 수')
     parser.add_argument('--imgsz', type=int, help='이미지 사이즈')
+    parser.add_argument('--params', type=str, help='모든 파라미터를 담은 JSON 문자열')
 
     args = parser.parse_args()
     logger.debug(f"[Runner] 받은 인자: {args}")
@@ -193,6 +194,11 @@ def main():
             params["epochs"] = args.epochs
         if args.imgsz:
             params["imgsz"] = args.imgsz
+        print(f"[DEBUG] args.params: {args.params}")
+        if args.params:
+            params = json.loads(args.params)
+        else:
+            print("[DEBUG] --params 인자가 비어있음")
 
         logger.debug(f"[Runner] 전달할 최종 파라미터: {params}")
 

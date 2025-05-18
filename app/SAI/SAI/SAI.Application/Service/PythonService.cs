@@ -70,6 +70,27 @@ namespace SAI.SAI.Application.Service
                 var blockTypes = blocklyModel.blockTypes.Select(b => b.type).ToList();
                 string blocksArg = string.Join(" ", blockTypes);
 
+                // 여기에 파라미터 딕셔너리 생성 및 JSON 직렬화 추가
+                // 추가할 파라미터가 있으면 여기에 추가하면됨
+                var paramDict = new Dictionary<string, object>
+                {
+                    { "imgPath", blocklyModel.imgPath },
+                    { "accuracy", blocklyModel.accuracy },
+                    { "model", blocklyModel.model },
+                    { "epoch", blocklyModel.epoch },
+                    { "imgsz", blocklyModel.imgsz },
+                    { "Conv", blocklyModel.Conv },
+                    { "C2f", blocklyModel.C2f },
+                    { "Upsample_scale", blocklyModel.Upsample_scale },
+                    { "blockTypes", blocklyModel.blockTypes }
+                };
+                string paramJson = JsonSerializer.Serialize(paramDict);
+
+                Console.WriteLine($"[DEBUG] paramJson: {paramJson}");
+
+                // 인자에 추가
+                string extraArgs = $" --params \"{paramJson.Replace("\"", "\\\"")}\"";
+
                 Console.WriteLine($"Script Path: {runnerPath}");
                 onOutput?.Invoke($"Script Path: {runnerPath}");
 
@@ -92,7 +113,6 @@ namespace SAI.SAI.Application.Service
                 }
 
                 // 예시: 이미지 경로, epochs, imgsz 등도 넘길 수 있음
-                string extraArgs = "";
                 if (!string.IsNullOrEmpty(imagePath))
                     extraArgs += $" --image-path \"{imagePath}\"";
                 if (epochs > 0)
