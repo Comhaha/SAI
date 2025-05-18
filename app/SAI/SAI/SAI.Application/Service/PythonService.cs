@@ -47,8 +47,23 @@ namespace SAI.SAI.Application.Service
                 var pythonScriptsDir = Path.Combine(pythonDir, "Scripts");
 
                 // 학습 스크립트 경로 
-                string runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py"));
-                string trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py"));
+                string runnerPath, trainScriptPath;
+                string trainScriptArgName = "--train-script"; // 인자명 통일
+
+                if (mode == Mode.Tutorial) // 튜토리얼 모드
+                {
+                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py"));
+                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py"));
+                }
+                else if (mode == Mode.Practice) // 실습 모드
+                {
+                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_runner.py"));
+                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_train_script.py"));
+                }
+                else
+                {
+                    throw new ArgumentException("지원하지 않는 모드입니다.");
+                }
 
                 // 블록 모델 검증
                 if (blocklyModel == null)
@@ -125,7 +140,7 @@ namespace SAI.SAI.Application.Service
                 var psi = new ProcessStartInfo
                 {
                     FileName = pythonExe,
-                    Arguments = $"\"{runnerPath}\" --tutorial-train-script \"{trainScriptPath}\" --blocks {blocksArg}{extraArgs}",
+                    Arguments = $"\"{runnerPath}\" {trainScriptArgName} \"{trainScriptPath}\" --blocks {blocksArg}{extraArgs}",
                     WorkingDirectory = Path.GetDirectoryName(runnerPath),
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
@@ -242,6 +257,22 @@ namespace SAI.SAI.Application.Service
             catch (Exception ex)
             {
                 return new InferenceResult { Success = false, Error = ex.Message };
+            }
+        }
+
+        public void Run(Mode mode)
+        {
+            if (mode == Mode.Tutorial)
+            {
+                RunPythonScript(Mode.Tutorial, null, null, null);
+            }
+            else if (mode == Mode.Practice)
+            {
+                RunPythonScript(Mode.Practice, null, null, null);
+            }
+            else
+            {
+                throw new ArgumentException("지원하지 않는 모드입니다.");
             }
         }
     }
