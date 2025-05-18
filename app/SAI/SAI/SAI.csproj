@@ -497,6 +497,8 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\p_topCode.png" />
+    <None Include="SAI.App\Resources\Images\p_blockCode.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_close_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_fullscreen_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_titlebar_minscreen_clicked.png" />

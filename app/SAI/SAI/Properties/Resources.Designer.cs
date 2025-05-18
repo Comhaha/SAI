@@ -2993,6 +2993,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap p_blockCode {
+            get {
+                object obj = ResourceManager.GetObject("p_blockCode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap p_blocklist_tutorial {
             get {
                 object obj = ResourceManager.GetObject("p_blocklist_tutorial", resourceCulture);
@@ -3096,6 +3106,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap p_topbar {
             get {
                 object obj = ResourceManager.GetObject("p_topbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_topCode {
+            get {
+                object obj = ResourceManager.GetObject("p_topCode", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
