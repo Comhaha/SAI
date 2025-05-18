@@ -16,6 +16,13 @@ yarn-error.log*
 pnpm-debug.log*
 *.orig
 
+# Git merge conflict backup files
+*BACKUP_*
+*BASE_*
+*LOCAL_*
+*REMOTE_*
+
+
 # Node.js / Frontend
 node_modules/
 dist/
@@ -38,21 +45,43 @@ venv/
 .venv/
 .ipynb_checkpoints
 
-# /Python/ 하위 전체 무시
-app/SAI/SAI/SAI.Application/Python/*
+# 1. Python 폴더 전체를 먼저 무시
 app/SAI/SAI/SAI.Application/Python/**
 
-# /Python/script/ 폴더는 예외 처리
+# 2. scripts 폴더는 추적 대상으로 설정
 !app/SAI/SAI/SAI.Application/Python/scripts/
-!app/SAI/SAI/SAI.Application/Python/scripts/**
 
-# 학습 결과 무시
-app/SAI/SAI/SAI.Application/Python/runs/
-app/SAI/SAI/SAI.Application/Python/runs/**/*
+# 3. scripts 폴더의 모든 .py 파일은 추적
+!app/SAI/SAI/SAI.Application/Python/scripts/*.py
 
-# scripts 폴더 내의 특정 파일 다시 무시
-app/SAI/SAI/SAI.Application/Python/scripts/train_script.py
+# 4. 명시적으로 무시할 특정 파일들
+app/SAI/SAI/SAI.Application/Python/scripts/tutorial_script.py
 app/SAI/SAI/SAI.Application/Python/scripts/practice_script.py
+
+# 5. runs 폴더 추적 설정 (Python 안에 있다면 경로 수정 필요)
+!app/SAI/SAI/SAI.Application/Python/runs/
+app/SAI/SAI/SAI.Application/Python/runs/*
+
+# 6. runs 내부의 detect 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/detect/
+app/SAI/SAI/SAI.Application/Python/runs/detect/*
+!app/SAI/SAI/SAI.Application/Python/runs/detect/.gitkeep
+
+# 7. runs 내부의 result 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/result/
+app/SAI/SAI/SAI.Application/Python/runs/result/*
+!app/SAI/SAI/SAI.Application/Python/runs/result/.gitkeep
+
+# 8. dataset 폴더 추적 설정 (Python 안에 있다면 경로 수정 필요)
+!app/SAI/SAI/SAI.Application/Python/dataset/
+app/SAI/SAI/SAI.Application/Python/dataset/*
+!app/SAI/SAI/SAI.Application/Python/dataset/.gitkeep
+
+# 9. runs/detect/train 폴더 추적
+!app/SAI/SAI/SAI.Application/Python/runs/detect/train
+app/SAI/SAI/SAI.Application/Python/runs/detect/train/*
+!app/SAI/SAI/SAI.Application/Python/runs/detect/train/.gitkeep
+
 
 # 모델, 결과, 캐시 무시
 *.pt

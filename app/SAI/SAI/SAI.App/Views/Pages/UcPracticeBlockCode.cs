@@ -460,6 +460,19 @@ namespace SAI.SAI.App.Views.Pages
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
 								break;
+							case "blockCreated":
+								var blockType = root.GetProperty("blockType").ToString();
+								var newValue = root.GetProperty("allValues");
+								var value = JsonSerializer.Deserialize<Dictionary<string, object>>(newValue.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
+								break;
+
+							case "blockFieldUpdated":
+								blockType = root.GetProperty("blockType").ToString();
+								var allValues = root.GetProperty("allValues");
+								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
+								break;
 						}
 					}
 				}
@@ -934,7 +947,7 @@ namespace SAI.SAI.App.Views.Pages
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = absolutePath;
+                        selectedImagePath = Path.GetFullPath(absolutePath).Trim();
 
                         // 프로젝트 루트의 inference_images 디렉토리 경로 설정
                         string projectDir = AppDomain.CurrentDomain.BaseDirectory;
