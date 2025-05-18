@@ -20,7 +20,6 @@ namespace SAI.SAI.Application.Service
         }
 
         public void RunPythonScript(
-            // 생성자에 변수 추가해야함
             Mode mode,
             Action<string> onOutput,
             Action<string> onError,
@@ -30,6 +29,7 @@ namespace SAI.SAI.Application.Service
             int imgsz = 0,
             BlocklyModel blocklyModel = null)
         {
+            Process process = null;
             try
             {
                 // baseDir : "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\c#\SAI\SAI\bin\Debug"
@@ -47,12 +47,19 @@ namespace SAI.SAI.Application.Service
                 var pythonScriptsDir = Path.Combine(pythonDir, "Scripts");
 
                 // 학습 스크립트 경로 
-                // 스크립트가 분리 될 때마다 추가해줘야함
-                string runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py")); //runner 스크립트
-                string trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py")); // tutorial 메인 스크립트
-                string inferenceScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py")); // 추론 스크립트
+                string runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py"));
+                string trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py"));
 
-                if (blocklyModel == null || !blocklyModel.blockTypes.Any())
+                // 블록 모델 검증
+                if (blocklyModel == null)
+                {
+                    string errorMsg = "블록 모델이 null입니다.";
+                    Console.WriteLine(errorMsg);
+                    onError?.Invoke(errorMsg);
+                    return;
+                }
+
+                if (!blocklyModel.blockTypes.Any())
                 {
                     string errorMsg = "블록 모델이 비어있습니다. 블록을 추가해주세요.";
                     Console.WriteLine(errorMsg);
@@ -66,7 +73,7 @@ namespace SAI.SAI.Application.Service
                 Console.WriteLine($"Script Path: {runnerPath}");
                 onOutput?.Invoke($"Script Path: {runnerPath}");
 
-                // 학습 스크립트 없을 때 에러 
+                // 학습 스크립트 존재 확인
                 if (!File.Exists(runnerPath))
                 {
                     string errorMsg = $"스크립트 파일을 찾을 수 없습니다: {runnerPath}";
@@ -97,15 +104,16 @@ namespace SAI.SAI.Application.Service
                 var psi = new ProcessStartInfo
                 {
                     FileName = pythonExe,
-                    Arguments = $"\"{runnerPath}\" --tutorial-train-script \"{trainScriptPath}\" --inference-script \"{inferenceScriptPath}\" --blocks {blocksArg}{extraArgs}",
+                    Arguments = $"\"{runnerPath}\" --tutorial-train-script \"{trainScriptPath}\" --blocks {blocksArg}{extraArgs}",
                     WorkingDirectory = Path.GetDirectoryName(runnerPath),
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     CreateNoWindow = true,
                     StandardOutputEncoding = Encoding.UTF8,
-                    StandardErrorEncoding = Encoding.UTF8
+                    StandardErrorEncoding = Encoding.UTF8,
                 };
+                psi.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
 
                 // 환경 변수 설정
                 psi.EnvironmentVariables["PATH"] =
@@ -114,7 +122,7 @@ namespace SAI.SAI.Application.Service
                     Environment.GetEnvironmentVariable("PATH");
                 psi.EnvironmentVariables["PYTHONPATH"] = Path.GetDirectoryName(runnerPath);
 
-                var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+                process = new Process { StartInfo = psi, EnableRaisingEvents = true };
                 process.OutputDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onOutput?.Invoke(e.Data); };
                 process.ErrorDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onError?.Invoke(e.Data); };
                 process.Start();
@@ -144,6 +152,7 @@ namespace SAI.SAI.Application.Service
             string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py"));
 
             var psi = new ProcessStartInfo
+
             {
                 FileName = pythonExe,
                 Arguments = $"\"{scriptPath}\" --image \"{imagePath}\" --conf {conf}",

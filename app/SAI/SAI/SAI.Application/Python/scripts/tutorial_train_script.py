@@ -19,101 +19,136 @@ import glob
 import io
 from datetime import datetime
 
-# 기본 디렉토리 설정
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(f"Base directory: {base_dir}")
+print("[DEBUG] tutorial_train_script.py 시작", flush=True)
 
-# install_packages 모듈 가져오기
 try:
-    import install_packages
-    print("✅ install_packages 모듈 가져오기 성공")
-except ImportError as e:
-    print(f"❌ install_packages 모듈 가져오기 실패: {e}")
-    # 경로 문제로 import가 실패할 경우를 대비한 추가 시도
+    # 기본 디렉토리 설정
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    print(f"[DEBUG] base_dir 설정됨: {base_dir}", flush=True)
+
+    # 현재 파일 경로 기준으로 scripts 디렉토리 얻기
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    print(f"[DEBUG] current_dir: {current_dir}", flush=True)
+
+    # scripts 디렉토리를 sys.path에 추가
+    if current_dir not in sys.path:
+        sys.path.insert(0, current_dir)
+        print(f"[DEBUG] sys.path에 추가된 경로: {current_dir}", flush=True)
+
+    # install_packages 가져오기
+    print("[DEBUG] install_packages 모듈 가져오기 시도", flush=True)
     try:
-        # 현재 파일의 디렉토리를 명시적으로 sys.path에 추가
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        if current_dir not in sys.path:
-            sys.path.append(current_dir)
-        
-        # 다시 import 시도
         import install_packages
-        print(f"✅ 경로 추가 후 install_packages 모듈 가져오기 성공")
-    except ImportError as e:
-        print(f"❌ 두 번째 시도 후에도 import 실패: {e}")
-        sys.exit(1)  # 중요한 모듈이므로 실패 시 종료
-
-# 환경변수 로드
-try:
-    from dotenv import load_dotenv
-    dotenv_path = os.path.join(base_dir, "scripts", ".env")
-    print(f"Loading .env from: {dotenv_path}")
-    load_dotenv(dotenv_path=dotenv_path)
-    
-    # 환경 변수가 로드되었는지 확인 (디버깅용)
-    api_url = os.environ.get("API_SERVER_URL")
-    print(f"Loaded API_SERVER_URL: {api_url}")
-except ImportError:
-    print("python-dotenv is not installed. Installing now...")
-    try:
-        # 현재 파이썬으로 pip install 실행
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "python-dotenv"])
-        from dotenv import load_dotenv  # 재시도
-        print("✅ python-dotenv 설치 완료.")
+        print("[DEBUG] install_packages 모듈 가져오기 성공", flush=True)
     except Exception as e:
-        print(f"❌ python-dotenv 설치 실패: {e}")
-        load_dotenv = None  # 이후 로딩 스킵
+        print(f"[ERROR] install_packages 모듈 가져오기 실패: {str(e)}", flush=True)
+        raise
 
-# 표준 출력 스트림 설정
-try:
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+    # python-dotenv 가져오기
+    print("[DEBUG] python-dotenv 가져오기 시도", flush=True)
+    try:
+        from dotenv import load_dotenv
+        print("[DEBUG] python-dotenv 가져오기 성공", flush=True)
+    except Exception as e:
+        print(f"[ERROR] python-dotenv 가져오기 실패: {str(e)}", flush=True)
+        raise
+    
+    # .env 파일 로드
+    env_path = os.path.join(current_dir, '.env')
+    print(f"[DEBUG] .env 파일 경로: {env_path}", flush=True)
+    
+    if os.path.exists(env_path):
+        print("[DEBUG] .env 파일 존재함", flush=True)
+        try:
+            load_dotenv(env_path)
+            print("[DEBUG] .env 파일 로드 완료", flush=True)
+            api_url = os.getenv('API_SERVER_URL')
+            print(f"[DEBUG] API_SERVER_URL: {api_url}", flush=True)
+        except Exception as e:
+            print(f"[ERROR] .env 파일 로드 실패: {str(e)}", flush=True)
+            raise
+    else:
+        print("[ERROR] .env 파일이 존재하지 않음", flush=True)
+        raise FileNotFoundError(".env 파일을 찾을 수 없습니다.")
+
+    # 표준 출력 스트림 설정
+    print("[DEBUG] 표준 출력 스트림 설정 시도", flush=True)
+    print("[DEBUG] 표준 출력 스트림 설정 생략", flush=True)
+
+    # 로깅 설정
+    print("[DEBUG] 로깅 설정 시도", flush=True)
+    try:
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.StreamHandler(sys.stdout)
+            ]
+        )
+        print("[DEBUG] 로깅 설정 완료", flush=True)
+    except Exception as e:
+        print(f"[ERROR] 로깅 설정 실패: {str(e)}", flush=True)
+        raise
+
+    # install_packages의 진행 상황 표시 함수 사용
+    print("[DEBUG] show_progress 함수 가져오기 시도", flush=True)
+    show_progress = install_packages.show_progress
+    print("[DEBUG] show_progress 함수 가져오기 성공", flush=True)
+
+    # 튜토리얼 상태 관리용 전역 변수
+    print("[DEBUG] tutorial_state 초기화 시도", flush=True)
+    tutorial_state = {
+        "model": None,
+        "model_path": None,
+        "dataset_path": None,
+        "data_yaml_path": None,
+        "image_path": None,
+        "result_image_path": None,
+        "training_completed": False
+    }
+    print("[DEBUG] tutorial_state 초기화 완료", flush=True)
+
+    print("[DEBUG] tutorial_train_script.py 초기화 완료", flush=True)
+
 except Exception as e:
-    # 이미 설정되어 있거나 닫혀있는 경우 무시
-    pass
-
-# 로깅 설정
-logging.basicConfig(
-    encoding='utf-8',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
-logger = logging.getLogger(__name__)
-
-# install_packages의 진행 상황 표시 함수 사용
-show_progress = install_packages.show_progress
-
-# 튜토리얼 상태 관리용 전역 변수
-tutorial_state = {
-    "model": None,
-    "model_path": None,
-    "dataset_path": None,
-    "data_yaml_path": None,
-    "image_path": None,
-    "result_image_path": None,
-    "training_completed": False
-}
+    print(f"[ERROR] tutorial_train_script.py 초기화 중 오류 발생: {str(e)}", flush=True)
+    raise
 
 # 1. 패키지 설치 블록 함수
 def install_packages_block():
     """패키지 설치 블록 실행 함수"""
+    print("[DEBUG] install_packages_block 함수 진입", flush=True)
+
     start_time = time.time()
     show_progress("필수 패키지 설치 시작... (1/8)", start_time, 0)
     
-    # install_packages 모듈의 함수 사용
-    packages = ["numpy==1.24.3", "ultralytics", "opencv-python"]
-    result = install_packages.install_packages_with_progress(packages, start_time)
+    # 패키지 설치 순서 변경 및 버전 명시
+    packages = [
+        "numpy==1.24.3",
+        "ultralytics==8.0.196",
+        "opencv-python==4.8.0.76"
+    ]
     
-    pkg_elapsed = time.time() - start_time
-    show_progress(f"패키지 설치 완료 (소요 시간: {int(pkg_elapsed)}초)", start_time, 100)
-    
-    return {
-        "success": result.get("success", False),
-        "installed_packages": result.get("installed_packages", []),
-        "failed_packages": result.get("failed_packages", []),
-        "elapsed_time": pkg_elapsed
-    }
+    try:
+        result = install_packages.install_packages_with_progress(packages, start_time)
+        print("[DEBUG] install_packages_with_progress 결과:", result, flush=True)
+        
+        pkg_elapsed = time.time() - start_time
+        show_progress(f"패키지 설치 완료 (소요 시간: {int(pkg_elapsed)}초)", start_time, 100)
+        
+        return {
+            "success": result.get("success", False),
+            "installed_packages": result.get("installed_packages", []),
+            "failed_packages": result.get("failed_packages", []),
+            "elapsed_time": pkg_elapsed
+        }
+    except Exception as e:
+        print(f"[DEBUG] 패키지 설치 중 오류 발생: {e}", flush=True)
+        return {
+            "success": False,
+            "error": str(e),
+            "elapsed_time": time.time() - start_time
+        }
 
 # 2. GPU 확인 및 모델 로드 블록 함수
 def check_gpu_yolo_load_block():
@@ -804,7 +839,7 @@ def run_inference_block():
     if not model_path:
         # 학습된 모델이 없다면 기본 모델 사용
         model_path = os.path.join(base_dir, "yolov8n.pt")
-        show_progress(f"학습된 모델 경로가 설정되지 않아 기본 모델을 사용합니다: {model_path}", start_time, 10)
+        show_progress(f"학습된 모델 경로가 설정되지 않았습니다. 기본 모델을 사용합니다: {model_path}", start_time, 10)
     
     image_path = tutorial_state.get("image_path")
     if not image_path:
@@ -993,14 +1028,14 @@ def main():
     
     # 전체 블록 순차 실행
     blocks = [
-        ("패키지 설치", install_packages_with_progress),
-        ("GPU 확인 및 모델 로드", check_gpu),
-        ("데이터셋 다운로드", download_dataset_with_progress),
-        ("모델 학습", train_model),
-        ("학습 결과 시각화", visualize_training_results),
-        ("테스트 이미지 경로 설정", set_image_path),
-        ("모델 추론", run_inference),
-        ("추론 결과 시각화", visualize_results)
+        ("패키지 설치", install_packages_block),
+        ("GPU 확인 및 모델 로드", check_gpu_yolo_load_block),
+        ("데이터셋 다운로드", download_dataset_block),
+        ("모델 학습", train_model_block),
+        ("학습 결과 시각화", visualize_training_results_block),
+        ("테스트 이미지 경로 설정", set_image_path_block),
+        ("모델 추론", run_inference_block),
+        ("추론 결과 시각화", visualize_results_block)
     ]
     
     results = {}
