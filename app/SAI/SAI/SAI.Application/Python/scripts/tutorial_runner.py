@@ -203,7 +203,7 @@ def main():
 
     except Exception as e:
         logger.error(f"[Runner] 전체 실행 중 오류 발생: {e}", exc_info=True)
-        print(f"ERROR:{str(e)}")
+        print(f"PROGRESS::오류 발생: {str(e)}", flush=True)
         return 1
 
 if __name__ == "__main__":

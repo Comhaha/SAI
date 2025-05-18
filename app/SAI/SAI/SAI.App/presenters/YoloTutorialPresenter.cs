@@ -104,19 +104,22 @@ namespace SAI.SAI.App.Presenters
                                 try
                                 {
                                     if (string.IsNullOrEmpty(text)) return;
-
-                                    Console.WriteLine($"Python Error: {text}");
                                     
-                                    // UI 스레드에서 에러 메시지 표시
-                                    if (_yolotutorialview != null)
+                                    if (_progressDialog != null && !_progressDialog.IsDisposed)
                                     {
-                                        if (_yolotutorialview is Control control && control.InvokeRequired)
+                                        if (_progressDialog.InvokeRequired)
                                         {
-                                            control.Invoke(new Action(() => _yolotutorialview.ShowErrorMessage(text)));
+                                            _progressDialog.Invoke(new Action(() =>
+                                            {
+                                                if (!_progressDialog.IsDisposed)
+                                                {
+                                                    _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                                }
+                                            }));
                                         }
                                         else
                                         {
-                                            _yolotutorialview.ShowErrorMessage(text);
+                                            _progressDialog.UpdateProgress(0, $"오류: {text}");
                                         }
                                     }
                                 }

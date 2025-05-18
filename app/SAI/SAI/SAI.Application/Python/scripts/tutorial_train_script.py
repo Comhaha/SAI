@@ -111,7 +111,8 @@ try:
     print("[DEBUG] tutorial_train_script.py 초기화 완료", flush=True)
 
 except Exception as e:
-    print(f"[ERROR] tutorial_train_script.py 초기화 중 오류 발생: {str(e)}", flush=True)
+    logger.error(f"tutorial_train_script.py 초기화 중 오류 발생: {str(e)}", exc_info=True)
+    print(f"PROGRESS::초기화 오류 발생: {str(e)}", flush=True)
     raise
 
 # 1. 패키지 설치 블록 함수
@@ -1185,10 +1186,11 @@ if __name__ == "__main__":
         try:
             main()
         except Exception as e:
-            logger.error(f"프로그램 실행 중 오류 발생: {e}")
+            logger.error(f"프로그램 실행 중 오류 발생: {e}", exc_info=True)
+            print(f"PROGRESS::프로그램 실행 중 오류 발생: {str(e)}", flush=True)
             error_result = {
                 "success": False,
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"RESULT_JSON:{json.dumps(error_result)}")
+            # print(f"RESULT_JSON:{json.dumps(error_result)}") # 이 부분은 주석처리 또는 삭제
