@@ -9,6 +9,7 @@ namespace SAI.SAI.App.Forms.Dialogs
     public partial class DialogModelProgress : Form
 
     {
+        // 파이썬 스크립트 종료 감지를 위함
         private Process pythonProcess;
         public void SetProcess(Process process)
         {
@@ -79,5 +80,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.Close();
 
         }
+
+        
     }
 }

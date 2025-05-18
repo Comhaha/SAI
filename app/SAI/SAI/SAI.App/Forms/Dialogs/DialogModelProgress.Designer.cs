@@ -103,7 +103,7 @@
             // 
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblStatus.Location = new System.Drawing.Point(255, 177);
+            this.lblStatus.Location = new System.Drawing.Point(223, 177);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(115, 41);
             this.lblStatus.TabIndex = 4;
