@@ -35,12 +35,12 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnPose = new Guna.UI2.WinForms.Guna2Button();
 			this.tpBtnParent = new System.Windows.Forms.TableLayoutPanel();
 			this.tpContentParent = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.autoSizeTitle = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+			this.tpContentTitle = new System.Windows.Forms.TableLayoutPanel();
+			this.autoSizeTitle = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.tpParent = new System.Windows.Forms.TableLayoutPanel();
 			this.tpBtnParent.SuspendLayout();
 			this.tpContentParent.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
+			this.tpContentTitle.SuspendLayout();
 			this.tpParent.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -114,7 +114,7 @@ namespace SAI.SAI.App.Views.Pages
 			// tpBtnParent
 			// 
 			this.tpBtnParent.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tpBtnParent.BackColor = System.Drawing.Color.LightSalmon;
+			this.tpBtnParent.BackColor = System.Drawing.Color.Transparent;
 			this.tpBtnParent.ColumnCount = 7;
 			this.tpContentParent.SetColumnSpan(this.tpBtnParent, 3);
 			this.tpBtnParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.621072F));
@@ -143,13 +143,13 @@ namespace SAI.SAI.App.Views.Pages
 			// 
 			// tpContentParent
 			// 
-			this.tpContentParent.BackColor = System.Drawing.Color.IndianRed;
+			this.tpContentParent.BackColor = System.Drawing.Color.Transparent;
 			this.tpContentParent.ColumnCount = 1;
 			this.tpContentParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tpContentParent.Controls.Add(this.tpBtnParent, 0, 1);
-			this.tpContentParent.Controls.Add(this.tableLayoutPanel2, 0, 0);
+			this.tpContentParent.Controls.Add(this.tpContentTitle, 0, 0);
 			this.tpContentParent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tpContentParent.Location = new System.Drawing.Point(315, 224);
+			this.tpContentParent.Location = new System.Drawing.Point(315, 168);
 			this.tpContentParent.Margin = new System.Windows.Forms.Padding(2);
 			this.tpContentParent.Name = "tpContentParent";
 			this.tpContentParent.RowCount = 2;
@@ -158,24 +158,25 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpContentParent.Size = new System.Drawing.Size(936, 662);
 			this.tpContentParent.TabIndex = 13;
 			// 
-			// tableLayoutPanel2
+			// tpContentTitle
 			// 
-			this.tableLayoutPanel2.ColumnCount = 3;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tableLayoutPanel2.Controls.Add(this.autoSizeTitle, 1, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 2;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(930, 126);
-			this.tableLayoutPanel2.TabIndex = 13;
+			this.tpContentTitle.ColumnCount = 3;
+			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
+			this.tpContentTitle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+			this.tpContentTitle.Controls.Add(this.autoSizeTitle, 1, 0);
+			this.tpContentTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tpContentTitle.Location = new System.Drawing.Point(3, 3);
+			this.tpContentTitle.Name = "tpContentTitle";
+			this.tpContentTitle.RowCount = 2;
+			this.tpContentTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+			this.tpContentTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpContentTitle.Size = new System.Drawing.Size(930, 126);
+			this.tpContentTitle.TabIndex = 13;
 			// 
 			// autoSizeTitle
 			// 
+			this.autoSizeTitle.BackColor = System.Drawing.Color.Transparent;
 			this.autoSizeTitle.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.autoSizeTitle.Font = new System.Drawing.Font("Noto Sans KR SemiBold", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
 			this.autoSizeTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
@@ -189,7 +190,9 @@ namespace SAI.SAI.App.Views.Pages
 			// 
 			// tpParent
 			// 
-			this.tpParent.BackColor = System.Drawing.Color.LightGray;
+			this.tpParent.BackColor = System.Drawing.Color.Transparent;
+			this.tpParent.BackgroundImage = global::SAI.Properties.Resources.img_background;
+			this.tpParent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.tpParent.ColumnCount = 3;
 			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -200,9 +203,9 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpParent.Margin = new System.Windows.Forms.Padding(2);
 			this.tpParent.Name = "tpParent";
 			this.tpParent.RowCount = 3;
-			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
 			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
 			this.tpParent.Size = new System.Drawing.Size(1567, 1110);
 			this.tpParent.TabIndex = 14;
 			this.tpParent.Paint += new System.Windows.Forms.PaintEventHandler(this.tpParent_Paint);
@@ -219,7 +222,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpBtnParent.ResumeLayout(false);
 			this.tpBtnParent.PerformLayout();
 			this.tpContentParent.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tpContentTitle.ResumeLayout(false);
 			this.tpParent.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -233,6 +236,6 @@ namespace SAI.SAI.App.Views.Pages
 		private System.Windows.Forms.TableLayoutPanel tpContentParent;
 		private SAI.App.Views.Pages.AutoSizeLabel autoSizeTitle;
 		private System.Windows.Forms.TableLayoutPanel tpParent;
-		private TableLayoutPanel tableLayoutPanel2;
+		private TableLayoutPanel tpContentTitle;
 	}
 }
