@@ -34,15 +34,16 @@
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
             this.tpSelectBlockParent = new System.Windows.Forms.TableLayoutPanel();
             this.pSelectBlock = new Guna.UI2.WinForms.Guna2Panel();
-            this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2Panel();
+            this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2VScrollBar();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.tpBlocklyParent = new System.Windows.Forms.TableLayoutPanel();
             this.pTopBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.tpIconParent = new System.Windows.Forms.TableLayoutPanel();
+            this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
-            this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
-            this.webView2Block = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
+            this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tpCodeParent = new System.Windows.Forms.TableLayoutPanel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
@@ -54,7 +55,6 @@
             this.btnStartInfer = new Guna.UI2.WinForms.Guna2Button();
             this.tpMemoParent = new System.Windows.Forms.TableLayoutPanel();
             this.btnMemo = new Guna.UI2.WinForms.Guna2Button();
-            this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.tpParent.SuspendLayout();
             this.pMain.SuspendLayout();
             this.tpBlockParent.SuspendLayout();
@@ -65,7 +65,7 @@
             this.tpBlocklyParent.SuspendLayout();
             this.pTopBlock.SuspendLayout();
             this.tpIconParent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.webView2Block)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pCode.SuspendLayout();
             this.tpCodeParent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2Code)).BeginInit();
@@ -76,7 +76,7 @@
             // 
             // tpParent
             // 
-            this.tpParent.BackColor = System.Drawing.Color.Transparent;
+            this.tpParent.BackColor = System.Drawing.Color.DarkGray;
             this.tpParent.ColumnCount = 3;
             this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.62F));
             this.tpParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.27F));
@@ -173,9 +173,12 @@
             // pSelectBlockvScrollBar
             // 
             this.pSelectBlockvScrollBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pSelectBlockvScrollBar.Location = new System.Drawing.Point(253, 0);
+            this.pSelectBlockvScrollBar.InUpdate = false;
+            this.pSelectBlockvScrollBar.LargeChange = 10;
+            this.pSelectBlockvScrollBar.Location = new System.Drawing.Point(254, 0);
             this.pSelectBlockvScrollBar.Name = "pSelectBlockvScrollBar";
-            this.pSelectBlockvScrollBar.Size = new System.Drawing.Size(13, 447);
+            this.pSelectBlockvScrollBar.ScrollbarSize = 12;
+            this.pSelectBlockvScrollBar.Size = new System.Drawing.Size(12, 447);
             this.pSelectBlockvScrollBar.TabIndex = 0;
             // 
             // pBlock
@@ -195,7 +198,7 @@
             this.tpBlocklyParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tpBlocklyParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tpBlocklyParent.Controls.Add(this.pTopBlock, 0, 0);
-            this.tpBlocklyParent.Controls.Add(this.webView2Block, 0, 1);
+            this.tpBlocklyParent.Controls.Add(this.webViewblock, 0, 1);
             this.tpBlocklyParent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tpBlocklyParent.Location = new System.Drawing.Point(0, 0);
             this.tpBlocklyParent.Name = "tpBlocklyParent";
@@ -242,6 +245,24 @@
             this.tpIconParent.Size = new System.Drawing.Size(305, 36);
             this.tpIconParent.TabIndex = 0;
             // 
+            // btnPreBlock
+            // 
+            this.btnPreBlock.BackgroundImage = global::SAI.Properties.Resources.btn_pre_block1;
+            this.btnPreBlock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnPreBlock.BorderColor = System.Drawing.Color.Transparent;
+            this.btnPreBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnPreBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnPreBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnPreBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnPreBlock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPreBlock.FillColor = System.Drawing.Color.Transparent;
+            this.btnPreBlock.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnPreBlock.ForeColor = System.Drawing.Color.White;
+            this.btnPreBlock.Location = new System.Drawing.Point(19, 6);
+            this.btnPreBlock.Name = "btnPreBlock";
+            this.btnPreBlock.Size = new System.Drawing.Size(24, 22);
+            this.btnPreBlock.TabIndex = 18;
+            // 
             // btnTrash
             // 
             this.btnTrash.BackgroundImage = global::SAI.Properties.Resources.btn_trash_block;
@@ -278,35 +299,34 @@
             this.btnRunModel.Size = new System.Drawing.Size(24, 22);
             this.btnRunModel.TabIndex = 17;
             // 
-            // btnPreBlock
+            // btnNextBlock
             // 
-            this.btnPreBlock.BackgroundImage = global::SAI.Properties.Resources.btn_pre_block1;
-            this.btnPreBlock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnPreBlock.BorderColor = System.Drawing.Color.Transparent;
-            this.btnPreBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnPreBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnPreBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnPreBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnPreBlock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPreBlock.FillColor = System.Drawing.Color.Transparent;
-            this.btnPreBlock.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPreBlock.ForeColor = System.Drawing.Color.White;
-            this.btnPreBlock.Location = new System.Drawing.Point(19, 6);
-            this.btnPreBlock.Name = "btnPreBlock";
-            this.btnPreBlock.Size = new System.Drawing.Size(24, 22);
-            this.btnPreBlock.TabIndex = 18;
+            this.btnNextBlock.BackgroundImage = global::SAI.Properties.Resources.btn_next_block1;
+            this.btnNextBlock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnNextBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNextBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNextBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNextBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNextBlock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNextBlock.FillColor = System.Drawing.Color.Transparent;
+            this.btnNextBlock.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnNextBlock.ForeColor = System.Drawing.Color.White;
+            this.btnNextBlock.Location = new System.Drawing.Point(57, 6);
+            this.btnNextBlock.Name = "btnNextBlock";
+            this.btnNextBlock.Size = new System.Drawing.Size(24, 22);
+            this.btnNextBlock.TabIndex = 21;
             // 
-            // webView2Block
+            // webViewblock
             // 
-            this.webView2Block.AllowExternalDrop = true;
-            this.webView2Block.CreationProperties = null;
-            this.webView2Block.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView2Block.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webView2Block.Location = new System.Drawing.Point(3, 45);
-            this.webView2Block.Name = "webView2Block";
-            this.webView2Block.Size = new System.Drawing.Size(305, 458);
-            this.webView2Block.TabIndex = 1;
-            this.webView2Block.ZoomFactor = 1D;
+            this.webViewblock.AllowExternalDrop = true;
+            this.webViewblock.CreationProperties = null;
+            this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webViewblock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webViewblock.Location = new System.Drawing.Point(3, 45);
+            this.webViewblock.Name = "webViewblock";
+            this.webViewblock.Size = new System.Drawing.Size(305, 458);
+            this.webViewblock.TabIndex = 1;
+            this.webViewblock.ZoomFactor = 1D;
             // 
             // pCode
             // 
@@ -440,6 +460,7 @@
             // 
             // tpMemoParent
             // 
+            this.tpMemoParent.BackColor = System.Drawing.Color.Transparent;
             this.tpMemoParent.ColumnCount = 3;
             this.tpMemoParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.87324F));
             this.tpMemoParent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.77465F));
@@ -472,23 +493,6 @@
             this.btnMemo.Size = new System.Drawing.Size(59, 59);
             this.btnMemo.TabIndex = 0;
             // 
-            // btnNextBlock
-            // 
-            this.btnNextBlock.BackgroundImage = global::SAI.Properties.Resources.btn_next_block1;
-            this.btnNextBlock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnNextBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnNextBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnNextBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnNextBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnNextBlock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNextBlock.FillColor = System.Drawing.Color.Transparent;
-            this.btnNextBlock.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnNextBlock.ForeColor = System.Drawing.Color.White;
-            this.btnNextBlock.Location = new System.Drawing.Point(57, 6);
-            this.btnNextBlock.Name = "btnNextBlock";
-            this.btnNextBlock.Size = new System.Drawing.Size(24, 22);
-            this.btnNextBlock.TabIndex = 21;
-            // 
             // DynamicUcPracticeBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -505,7 +509,7 @@
             this.tpBlocklyParent.ResumeLayout(false);
             this.pTopBlock.ResumeLayout(false);
             this.tpIconParent.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.webView2Block)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
             this.pCode.ResumeLayout(false);
             this.tpCodeParent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webView2Code)).EndInit();
@@ -535,8 +539,7 @@
         private Guna.UI2.WinForms.Guna2Panel pTopBlock;
         private System.Windows.Forms.TableLayoutPanel tpCodeParent;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
-        private Guna.UI2.WinForms.Guna2Panel pSelectBlockvScrollBar;
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView2Block;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webViewblock;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView2Code;
         private System.Windows.Forms.TableLayoutPanel tpMemoParent;
         private Guna.UI2.WinForms.Guna2Button btnMemo;
@@ -545,5 +548,6 @@
         private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private Guna.UI2.WinForms.Guna2Button btnPreBlock;
         private Guna.UI2.WinForms.Guna2Button btnNextBlock;
+        private Guna.UI2.WinForms.Guna2VScrollBar pSelectBlockvScrollBar;
     }
 }

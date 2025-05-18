@@ -14,7 +14,7 @@ namespace SAI.SAI.App.Views.Pages
 	public partial class UcPracticeBlockList : UserControl
 	{
 		public UserControl content => this;
-		public UcPracticeBlockList(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		public UcPracticeBlockList(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			InitializeComponent();
 
@@ -29,7 +29,7 @@ namespace SAI.SAI.App.Views.Pages
 			resultVisualizeEvent(parent, AddBlockButtonClicked);
 		}
 
-		private void startEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void startEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleStart.Click += (s, e) => { titleStartEvent(); };
@@ -66,7 +66,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void pipEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void pipEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitlePip.Click += (s, e) => { titlePipEvent(); };
@@ -103,7 +103,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void loadModelEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void loadModelEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleLoadModel.Click += (s, e) => { titleLoadModelEvent(); };
@@ -184,7 +184,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void loadDatasetEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void loadDatasetEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleLoadDataset.Click += (s, e) => { titleLoadDatasetEvent(); };
@@ -221,7 +221,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void modelLearningEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void modelLearningEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleMachineLearning.Click += (s, e) => { titleModelLearningEvent(); };
@@ -258,7 +258,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void resultCheckEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void resultCheckEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleResultCheck.Click += (s, e) => { titleResultCheckEvent(); };
@@ -295,7 +295,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void imgPathEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void imgPathEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleImgPath.Click += (s, e) => { titleImgPathEvent(); };
@@ -332,7 +332,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void modelInferenceEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void modelInferenceEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleModelInference.Click += (s, e) => { titleModelInferenceEvent(); };
@@ -369,7 +369,7 @@ namespace SAI.SAI.App.Views.Pages
 			}
 		}
 
-		private void resultVisualizeEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
+		private void resultVisualizeEvent(DynamicUcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)
 		{
 			// 제목 클릭시 아코디언 열기/닫기
 			pTitleResultVisualize.Click += (s, e) => { titleResultVisualizeEvent(); };

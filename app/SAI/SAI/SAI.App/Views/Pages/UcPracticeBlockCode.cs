@@ -174,36 +174,36 @@ namespace SAI.SAI.App.Views.Pages
                 btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
             };
             // 스크롤바 설정-------------------
-            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
-            pSelectBlock.Controls.Add(ucPracticeBlockList);
-            pSelectBlock.AutoScroll = false;
-            ucPracticeBlockList.AutoScroll = false;
-            pSelectBlockvScrollBar.Scroll += (s, e) =>
-            {
-                if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤바 안 보이면 무시
+            //var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            //pSelectBlock.Controls.Add(ucPracticeBlockList);
+            //pSelectBlock.AutoScroll = false;
+            //ucPracticeBlockList.AutoScroll = false;
+            //pSelectBlockvScrollBar.Scroll += (s, e) =>
+            //{
+            //    if (!pSelectBlockvScrollBar.Visible) return; // ❗ 스크롤바 안 보이면 무시
 
-                ucPracticeBlockList.content.Top = -pSelectBlockvScrollBar.Value;
-            };
-            pSelectBlockvScrollBar.Maximum = ucPracticeBlockList.content.Height - pSelectBlockvScrollBar.Height;
-            ucPracticeBlockList.SizeChanged += (s, e) =>
-            {
-                int contentHeight = ucPracticeBlockList.content.Height;
-                int viewportHeight = pSelectBlock.Size.Height;
+            //    ucPracticeBlockList.content.Top = -pSelectBlockvScrollBar.Value;
+            //};
+            //pSelectBlockvScrollBar.Maximum = ucPracticeBlockList.content.Height - pSelectBlockvScrollBar.Height;
+            //ucPracticeBlockList.SizeChanged += (s, e) =>
+            //{
+            //    int contentHeight = ucPracticeBlockList.content.Height;
+            //    int viewportHeight = pSelectBlock.Size.Height;
 
-                int newMax = contentHeight - viewportHeight;
-                if (newMax <= 0)
-                {
-                    pSelectBlockvScrollBar.Visible = false;
-                    pSelectBlockvScrollBar.Maximum = 0;
-                    pSelectBlockvScrollBar.Value = 0;
-                    ucPracticeBlockList.content.Top = 0;
-                }
-                else
-                {
-                    pSelectBlockvScrollBar.Visible = true;
-                    pSelectBlockvScrollBar.Maximum = newMax;
-                }
-            };
+            //    int newMax = contentHeight - viewportHeight;
+            //    if (newMax <= 0)
+            //    {
+            //        pSelectBlockvScrollBar.Visible = false;
+            //        pSelectBlockvScrollBar.Maximum = 0;
+            //        pSelectBlockvScrollBar.Value = 0;
+            //        ucPracticeBlockList.content.Top = 0;
+            //    }
+            //    else
+            //    {
+            //        pSelectBlockvScrollBar.Visible = true;
+            //        pSelectBlockvScrollBar.Maximum = newMax;
+            //    }
+            //};
             pSelectBlock.MouseEnter += (s, e) => pSelectBlock.Focus();
             // 마우스 휠 이벤트 수동 처리
             pSelectBlock.MouseWheel += (s, e) =>
