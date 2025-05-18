@@ -12,9 +12,20 @@ import glob
 import io
 from datetime import datetime
 
+# install_pacakages.py 를 import
+try:
+    # 상대 경로로 import
+    from . import install_packages
+    print("✅ 상대 경로로 import 성공")
+except ImportError as e:
+    print(f"❌ 상대 경로 import 실패: {e}")
+
+
 # base_dir을 스크립트 실행 기준으로 설정
+# base_dir = "C:\Users\SSAFY\Desktop\3rd PJT\S12P31D201\app\SAI\SAI\SAI.Application\Python"
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(f"Base directory: {base_dir}")
+
 
 # 환경변수 로드
 try:
