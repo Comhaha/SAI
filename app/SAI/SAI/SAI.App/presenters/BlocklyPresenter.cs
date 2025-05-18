@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAI.SAI.App.Views.Pages;
 using static SAI.SAI.App.Models.BlocklyModel; // 추가: UcCode 클래스 접근을 위해 추가
+using System.Text.Json;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -230,7 +231,7 @@ namespace SAI.SAI.App.Presenters
         {
             if (type == "blockAllCode")
             {
-				blocklyModel.blockAllCode = code;
+                blocklyModel.blockAllCode = code;
                 blocklyService.SaveCodeToFileInTutorial();
 
                 //--------혜정언니 꺼 develop에 있던 코드 ----------------------------
@@ -263,6 +264,19 @@ namespace SAI.SAI.App.Presenters
             {
                 Console.WriteLine($"[DEBUG] 개별 블록 코드 변경 감지: {code?.Length ?? 0}자");
                 blocklyModel.blockCode = code;
+            }
+            else if (type == "blockTypes")
+            {
+                try
+                {
+                    var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(code);
+                    Console.WriteLine($"[DEBUG] blockTypes 메시지 수신: {blockTypes?.Count ?? 0}개의 블록");
+                    setBlockTypes(blockTypes);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] blockTypes 파싱 오류: {ex.Message}");
+                }
             }
         }
 
