@@ -27,6 +27,8 @@ namespace SAI
 			InitializeComponent();
 
             this.StartPosition = FormStartPosition.CenterScreen;
+			this.mainPanel.MinimumSize = new Size(1920, 1035);
+			this.mainPanel.Size = new Size(1920, 1035);
 
             presenter = new MainPresenter(this);
 
@@ -126,7 +128,7 @@ namespace SAI
 			mainPanel.Location = new Point(x, y);  // ✨ 중앙 정렬 위치 설정
 
 			// 확인용
-			//MessageBox.Show($"Panel 위치: {mainPanel.Location}, 크기: {mainPanel.Size}");
+			MessageBox.Show($"Panel 위치: {mainPanel.Location}, 크기: {mainPanel.Size}");
 		}
 
 

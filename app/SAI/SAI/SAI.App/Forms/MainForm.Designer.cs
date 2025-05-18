@@ -47,9 +47,9 @@
             this.btnSetting.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnSetting.ForeColor = System.Drawing.Color.Black;
             this.btnSetting.Location = new System.Drawing.Point(0, 0);
-            this.btnSetting.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnSetting.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(36, 34);
+            this.btnSetting.Size = new System.Drawing.Size(60, 64);
             this.btnSetting.TabIndex = 0;
             // 
             // btnMinScreen
@@ -66,10 +66,10 @@
             this.btnMinScreen.FillColor = System.Drawing.Color.Transparent;
             this.btnMinScreen.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnMinScreen.ForeColor = System.Drawing.Color.White;
-            this.btnMinScreen.Location = new System.Drawing.Point(36, 0);
-            this.btnMinScreen.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnMinScreen.Location = new System.Drawing.Point(60, 0);
+            this.btnMinScreen.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.btnMinScreen.Name = "btnMinScreen";
-            this.btnMinScreen.Size = new System.Drawing.Size(36, 34);
+            this.btnMinScreen.Size = new System.Drawing.Size(60, 64);
             this.btnMinScreen.TabIndex = 1;
             this.btnMinScreen.Click += new System.EventHandler(this.btnMinScreen_Click);
             // 
@@ -88,10 +88,10 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(108, 0);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnClose.Location = new System.Drawing.Point(180, 0);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(36, 34);
+            this.btnClose.Size = new System.Drawing.Size(63, 64);
             this.btnClose.TabIndex = 0;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -100,11 +100,11 @@
             this.mainPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.mainPanel.AutoScroll = true;
             this.mainPanel.BackColor = System.Drawing.Color.White;
-            this.mainPanel.Location = new System.Drawing.Point(0, 36);
+            this.mainPanel.Location = new System.Drawing.Point(335, 309);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.mainPanel.MinimumSize = new System.Drawing.Size(1920, 1035);
+            this.mainPanel.MinimumSize = new System.Drawing.Size(1920, 1080);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1920, 1035);
+            this.mainPanel.Size = new System.Drawing.Size(1920, 1080);
             this.mainPanel.TabIndex = 5;
             // 
             // guna2DragControl1
@@ -126,7 +126,7 @@
             this.tpParent.RowCount = 2;
             this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.2F));
             this.tpParent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.8F));
-            this.tpParent.Size = new System.Drawing.Size(1536, 864);
+            this.tpParent.Size = new System.Drawing.Size(2590, 1630);
             this.tpParent.TabIndex = 0;
             // 
             // tpTitlebar
@@ -139,14 +139,14 @@
             this.tpTitlebar.ColumnCount = 2;
             this.tpTitlebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90.625F));
             this.tpTitlebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.375F));
-            this.tpTitlebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tpTitlebar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tpTitlebar.Controls.Add(this.tpTitlebarBtn, 1, 0);
             this.tpTitlebar.Location = new System.Drawing.Point(0, 0);
             this.tpTitlebar.Margin = new System.Windows.Forms.Padding(0);
             this.tpTitlebar.Name = "tpTitlebar";
             this.tpTitlebar.RowCount = 1;
             this.tpTitlebar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tpTitlebar.Size = new System.Drawing.Size(1536, 36);
+            this.tpTitlebar.Size = new System.Drawing.Size(2590, 68);
             this.tpTitlebar.TabIndex = 3;
             // 
             // tpTitlebarBtn
@@ -158,19 +158,19 @@
             this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tpTitlebarBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tpTitlebarBtn.Controls.Add(this.btnFullScreen, 2, 0);
             this.tpTitlebarBtn.Controls.Add(this.btnClose, 3, 0);
             this.tpTitlebarBtn.Controls.Add(this.btnMinScreen, 1, 0);
             this.tpTitlebarBtn.Controls.Add(this.btnSetting, 0, 0);
             this.tpTitlebarBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tpTitlebarBtn.Location = new System.Drawing.Point(1392, 0);
+            this.tpTitlebarBtn.Location = new System.Drawing.Point(2347, 0);
             this.tpTitlebarBtn.Margin = new System.Windows.Forms.Padding(0);
             this.tpTitlebarBtn.Name = "tpTitlebarBtn";
             this.tpTitlebarBtn.RowCount = 1;
             this.tpTitlebarBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tpTitlebarBtn.Size = new System.Drawing.Size(144, 36);
+            this.tpTitlebarBtn.Size = new System.Drawing.Size(243, 68);
             this.tpTitlebarBtn.TabIndex = 1;
             // 
             // btnFullScreen
@@ -187,25 +187,25 @@
             this.btnFullScreen.FillColor = System.Drawing.Color.Transparent;
             this.btnFullScreen.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnFullScreen.ForeColor = System.Drawing.Color.White;
-            this.btnFullScreen.Location = new System.Drawing.Point(72, 0);
-            this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.btnFullScreen.Location = new System.Drawing.Point(120, 0);
+            this.btnFullScreen.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.btnFullScreen.Name = "btnFullScreen";
-            this.btnFullScreen.Size = new System.Drawing.Size(36, 34);
+            this.btnFullScreen.Size = new System.Drawing.Size(60, 64);
             this.btnFullScreen.TabIndex = 2;
             this.btnFullScreen.Click += new System.EventHandler(this.btnFullScreen_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1536, 864);
+            this.ClientSize = new System.Drawing.Size(2590, 1630);
             this.Controls.Add(this.tpParent);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(1534, 814);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(2558, 1502);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "메인페이지";
