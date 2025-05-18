@@ -143,6 +143,11 @@ namespace SAI.SAI.Application.Service
                     Environment.GetEnvironmentVariable("PATH");
                 psi.EnvironmentVariables["PYTHONPATH"] = Path.GetDirectoryName(runnerPath);
 
+                Console.WriteLine($"[LOG] pythonExe: {pythonExe}, Exists: {File.Exists(pythonExe)}");
+                Console.WriteLine($"[LOG] scriptPath: {runnerPath}, Exists: {File.Exists(runnerPath)}");
+                Console.WriteLine($"[LOG] imagePath: {imagePath}, Exists: {File.Exists(imagePath)}");
+                Console.WriteLine($"[LOG] Arguments: {psi.Arguments}");
+
                 process = new Process { StartInfo = psi, EnableRaisingEvents = true };
                 process.OutputDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onOutput?.Invoke(e.Data); };
                 process.ErrorDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) onError?.Invoke(e.Data); };
@@ -171,11 +176,14 @@ namespace SAI.SAI.Application.Service
         public InferenceResult RunInference(string imagePath, double conf)
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\Scripts\python.exe"));
+            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
             string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py"));
 
-            var psi = new ProcessStartInfo
+            Console.WriteLine($"[LOG] pythonExe: {pythonExe}, Exists: {File.Exists(pythonExe)}");
+            Console.WriteLine($"[LOG] scriptPath: {scriptPath}, Exists: {File.Exists(scriptPath)}");
+            Console.WriteLine($"[LOG] imagePath: {imagePath}, Exists: {File.Exists(imagePath)}");
 
+            var psi = new ProcessStartInfo
             {
                 FileName = pythonExe,
                 Arguments = $"\"{scriptPath}\" --image \"{imagePath}\" --conf {conf}",
@@ -187,6 +195,8 @@ namespace SAI.SAI.Application.Service
                 StandardOutputEncoding = Encoding.UTF8,
                 StandardErrorEncoding = Encoding.UTF8
             };
+
+            Console.WriteLine($"[LOG] Arguments: {psi.Arguments}");
 
             var process = new Process { StartInfo = psi };
             try

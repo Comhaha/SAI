@@ -951,7 +951,7 @@ namespace SAI.SAI.App.Views.Pages
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = absolutePath;
+                        selectedImagePath = Path.GetFullPath(absolutePath).Trim();
 
                         // 프로젝트 루트의 inference_images 디렉토리 경로 설정
                         string projectDir = AppDomain.CurrentDomain.BaseDirectory;

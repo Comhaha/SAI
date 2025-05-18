@@ -607,7 +607,10 @@ namespace SAI.SAI.App.Views.Pages
                 tboxThreshold,
                 (newValue) =>
                 {
-                currentThreshold = newValue;
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
@@ -617,6 +620,17 @@ namespace SAI.SAI.App.Views.Pages
                             selectedImagePath,
                             currentThreshold
                         );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
 
                         // 결과는 UI 스레드로 전달
                         this.Invoke(new Action(() =>

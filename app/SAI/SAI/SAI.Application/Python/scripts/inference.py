@@ -137,19 +137,21 @@ def run_inference(model_path, image_path, conf=0.25):
         log_message(f"추론 완료 (소요 시간: {inference_time:.3f}초)")
         
         # 결과 반환
-        return {
+        result = {
             "success": True,
             "result_image": result_image_path,
             "detections": detections,
             "inference_time": inference_time
         }
-    
     except Exception as e:
         import traceback
         error_msg = f"추론 오류: {str(e)}"
         log_message(error_msg)
         log_message(traceback.format_exc())  # 상세 오류 추적
-        return {"success": False, "error": error_msg}
+        result = {"success": False, "error": error_msg}
+    finally:
+        print(f"INFERENCE_RESULT:{json.dumps(result, ensure_ascii=False)}")
+        return result
 
 
 def main():
@@ -178,10 +180,6 @@ def main():
         image_path=args.image,
         conf=args.conf
     )
-    
-    # 결과 출력 (C# 애플리케이션에서 파싱하는 형식)
-    log_message("결과 JSON 생성 중...")
-    print(f"INFERENCE_RESULT:{json.dumps(result)}")
     
     # 성공 여부에 따른 종료 코드
     sys.exit(0 if result["success"] else 1)
