@@ -54,7 +54,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
-            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
             this.lbErrorMessage = new System.Windows.Forms.Label();
@@ -84,7 +83,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -102,6 +100,8 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
+            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
+            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -385,12 +385,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pTopCode.Name = "pTopCode";
             // 
-            // ucCode1
-            // 
-            resources.ApplyResources(this.ucCode1, "ucCode1");
-            this.ucCode1.Name = "ucCode1";
-            this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
-            // 
             // pBlock
             // 
             this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
@@ -511,49 +505,43 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxTodo2Done
             // 
-            this.pboxTodo2Done.Image = global::SAI.Properties.Resources.lbl_todo3_finish;
-            this.pboxTodo2Done.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo2Done, "pboxTodo2Done");
+            this.pboxTodo2Done.ImageRotate = 0F;
             this.pboxTodo2Done.Name = "pboxTodo2Done";
             this.pboxTodo2Done.TabStop = false;
             // 
             // pboxTodo1Done
             // 
-            this.pboxTodo1Done.Image = global::SAI.Properties.Resources.lbl_todo2_finish;
-            this.pboxTodo1Done.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo1Done, "pboxTodo1Done");
+            this.pboxTodo1Done.ImageRotate = 0F;
             this.pboxTodo1Done.Name = "pboxTodo1Done";
             this.pboxTodo1Done.TabStop = false;
             // 
             // pboxTodo0Done
             // 
-            this.pboxTodo0Done.Image = global::SAI.Properties.Resources.lbl_todo1_finish;
-            this.pboxTodo0Done.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo0Done, "pboxTodo0Done");
+            this.pboxTodo0Done.ImageRotate = 0F;
             this.pboxTodo0Done.Name = "pboxTodo0Done";
             this.pboxTodo0Done.TabStop = false;
             // 
             // pboxTodo2
             // 
-            this.pboxTodo2.Image = global::SAI.Properties.Resources.lbl_todo3;
-            this.pboxTodo2.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo2, "pboxTodo2");
+            this.pboxTodo2.ImageRotate = 0F;
             this.pboxTodo2.Name = "pboxTodo2";
             this.pboxTodo2.TabStop = false;
             // 
             // pboxTodo1
             // 
-            this.pboxTodo1.Image = global::SAI.Properties.Resources.lbl_todo2;
-            this.pboxTodo1.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo1, "pboxTodo1");
+            this.pboxTodo1.ImageRotate = 0F;
             this.pboxTodo1.Name = "pboxTodo1";
             this.pboxTodo1.TabStop = false;
             // 
             // pboxTodo0
             // 
-            this.pboxTodo0.Image = global::SAI.Properties.Resources.lbl_todo1;
-            this.pboxTodo0.ImageRotate = 0F;
             resources.ApplyResources(this.pboxTodo0, "pboxTodo0");
+            this.pboxTodo0.ImageRotate = 0F;
             this.pboxTodo0.Name = "pboxTodo0";
             this.pboxTodo0.TabStop = false;
             // 
@@ -682,11 +670,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pFake.BorderColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.pFake, "pFake");
             this.pFake.Name = "pFake";
-            // 
-            // ucCsvChart1
-            // 
-            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
-            this.ucCsvChart1.Name = "ucCsvChart1";
             // 
             // pThreshold
             // 
@@ -870,6 +853,17 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
+            // 
+            // ucCsvChart1
+            // 
+            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
+            this.ucCsvChart1.Name = "ucCsvChart1";
+            // 
+            // ucCode1
+            // 
+            resources.ApplyResources(this.ucCode1, "ucCode1");
+            this.ucCode1.Name = "ucCode1";
+            this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // UcTutorialBlockCode
             // 

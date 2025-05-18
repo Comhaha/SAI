@@ -46,6 +46,7 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.ucCode２ = new SAI.SAI.App.Views.Pages.UcCode();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
@@ -68,6 +69,7 @@ namespace SAI.SAI.App.Views.Pages
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -88,8 +90,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
-            this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.pErrorToast.SuspendLayout();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -254,6 +254,13 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.guna2ImageButton2, "guna2ImageButton2");
             this.guna2ImageButton2.Name = "guna2ImageButton2";
             this.guna2ImageButton2.PressedState.ImageSize = new System.Drawing.Size(9, 9);
+            // 
+            // ucCode２
+            // 
+            this.ucCode２.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.ucCode２, "ucCode２");
+            this.ucCode２.Name = "ucCode２";
+            this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // webViewCode
             // 
@@ -511,6 +518,11 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Name = "pSideInfer";
             // 
+            // ucCsvChart1
+            // 
+            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
+            this.ucCsvChart1.Name = "ucCsvChart1";
+            // 
             // pThreshold
             // 
             this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
@@ -725,18 +737,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo.PressedDepth = 0;
             this.btnCloseMemo.Click += new System.EventHandler(this.btnCloseMemo_Click);
             // 
-            // ucCsvChart1
-            // 
-            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
-            this.ucCsvChart1.Name = "ucCsvChart1";
-            // 
-            // ucCode２
-            // 
-            this.ucCode２.Cursor = System.Windows.Forms.Cursors.Default;
-            resources.ApplyResources(this.ucCode２, "ucCode２");
-            this.ucCode２.Name = "ucCode２";
-            this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
-            // 
             // UcPracticeBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -773,6 +773,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
