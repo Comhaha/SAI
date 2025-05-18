@@ -268,22 +268,24 @@ namespace SAI.SAI.App.Presenters
 
         public void setBlockTypes(List<BlockInfo> blockTypes)
         {
+            // 블럭타입 로그 추가 유진
+            Console.WriteLine($"[DEBUG] setBlockTypes 호출됨. 전달된 블록 수: {blockTypes?.Count ?? 0}");
+            if (blockTypes != null)
+            {
+                foreach (var block in blockTypes)
+                {
+                    Console.WriteLine($"[DEBUG] 블록 타입: {block.type}");
+                    if (block.children != null)
+                    {
+                        foreach (var child in block.children)
+                        {
+                            Console.WriteLine($"[DEBUG] - 자식 블록 타입: {child.type}");
+                        }
+                    }
+                }
+            }
+            
             blocklyModel.blockTypes = blockTypes;
-
-            // 잘 들어왔는지 확인용 <- (삭제요망)
-            //string message = "";
-            //foreach (var types in blocklyModel.blockTypes)
-            //{
-            //    message += "type: " + types.type + "\n";
-            //    if (types.children != null)
-            //    {
-            //        foreach (var children in types.children)
-            //        {
-            //            message += "children: " + children.type + "\n";
-            //        }
-            //    }
-            //}
-            //MessageBox.Show(message);
         }
     }
 }

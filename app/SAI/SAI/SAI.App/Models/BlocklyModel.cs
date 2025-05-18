@@ -34,6 +34,7 @@ namespace SAI.SAI.App.Models
 		{
 			_blockAllCode = "";
 			_blockCode = "";
+			_blockTypes = new List<BlockInfo>();  // blockTypes 초기화 유진 추가
 		}
 
 		// [싱글톤] 외부에서 BlocklyModel 인스턴스를 가져올 수 있게

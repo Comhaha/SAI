@@ -51,7 +51,16 @@ namespace SAI.SAI.Application.Service
                 string runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py")); //runner 스크립트
                 string trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py")); // tutorial 메인 스크립트
                 string inferenceScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py")); // 추론 스크립트
-                var blockTypes = blocklyModel?.blockTypes.Select(b => b.type).ToList() ?? new List<string>();
+
+                if (blocklyModel == null || !blocklyModel.blockTypes.Any())
+                {
+                    string errorMsg = "블록 모델이 비어있습니다. 블록을 추가해주세요.";
+                    Console.WriteLine(errorMsg);
+                    onError?.Invoke(errorMsg);
+                    return;
+                }
+
+                var blockTypes = blocklyModel.blockTypes.Select(b => b.type).ToList();
                 string blocksArg = string.Join(" ", blockTypes);
 
                 Console.WriteLine($"Script Path: {runnerPath}");
