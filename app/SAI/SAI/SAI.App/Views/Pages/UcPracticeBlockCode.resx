@@ -136,7 +136,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbErrorType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 7.8pt</value>
+    <value>Noto Sans KR, 6pt</value>
   </data>
   <data name="lbErrorType.Location" type="System.Drawing.Point, System.Drawing">
     <value>38, 0</value>
@@ -353,7 +353,7 @@
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpContentError" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,90,Percent,5" /&gt;&lt;Rows Styles="Percent,10,Percent,80,Percent,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="pErrorToast.Location" type="System.Drawing.Point, System.Drawing">
-    <value>218, 45</value>
+    <value>215, 45</value>
   </data>
   <data name="pErrorToast.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
