@@ -70,6 +70,9 @@ namespace SAI.SAI.App.Views.Pages
 
             yoloPracticePresenter = new YoloPracticePresenter(this);
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            
+            // RunButtonClicked 이벤트를 yoloTutorialPresenter에서 해제
+            yoloTutorialPresenter.UnsubscribeFromRunButtonClicked(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 

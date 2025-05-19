@@ -265,5 +265,14 @@ namespace SAI.SAI.App.Presenters
             Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}");
             return result;
         }
+
+        // RunButtonClicked 이벤트 구독 해제 메서드 추가
+        public void UnsubscribeFromRunButtonClicked(IYoloTutorialView view)
+        {
+            if (view != null)
+            {
+                view.RunButtonClicked -= OnRunButtonClicked;
+            }
+        }
     }
 }
