@@ -36,7 +36,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             mainView.LoadPage(new UcBlockGuide(mainView));
             this.Close();
-
         }
     }
 }
