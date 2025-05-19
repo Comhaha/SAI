@@ -13,7 +13,7 @@ function Content3() {
   const fadeInUp2 = useFadeInUp(0.1);
   const fadeInUp3 = useFadeInUp(0.2);
   return (
-    <div className="w-full flex flex-col gap-24 py-16 max-w-[1296px] mx-auto max-[900px]:gap-16 max-[900px]:py-8">
+    <div className="w-full flex flex-col gap-24 py-16 px-8 max-w-[1296px] mx-auto max-[900px]:gap-16 max-[900px]:py-8">
       <motion.div {...fadeInUp1}>
         <Card2
           title="기초 튜토리얼"

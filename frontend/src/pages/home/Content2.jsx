@@ -19,7 +19,7 @@ function Content2() {
   return (
     <div
       id="content2"
-      className="w-full flex justify-between items-start gap-8 py-16 max-w-[1296px] mx-auto max-[900px]:flex-col"
+      className="w-full flex justify-between items-start gap-8 py-16 px-8 max-w-[1296px] mx-auto max-[900px]:flex-col"
     >
       {/* 왼쪽 영역 */}
       <motion.div {...fadeInUpDesc} className="flex flex-col w-1/2 max-[900px]:w-full h-full mt-8">
