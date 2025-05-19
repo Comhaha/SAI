@@ -2,7 +2,6 @@ package com.sai.backend.domain.notion.service;
 
 import com.sai.backend.domain.ai.model.AiLog;
 import com.sai.backend.domain.notion.dto.response.ExportResponseDto;
-import com.sai.backend.domain.notion.model.NotionAccessToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;

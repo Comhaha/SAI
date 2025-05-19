@@ -45,19 +45,6 @@ namespace SAI.SAI.App.Views.Common
                 blocklyModel.accuracy = currentThreshold;
                 Console.WriteLine($"[MouseUp] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
-
-                //
-                //  TODO: Python 추론 함수 호출 위치입니다.
-                //
-                // 사용자가 선택한 이미지(`imgPath`)와 설정한 정확도(`accuracy`)는 
-                // `BlocklyModel.Instance`를 통해 가져올 수 있어요.
-                // 
-                // 사용자가 선택한 이미지는 아래 경로로 복사되어 저장돼요:
-                //    app/SAI/inference_images/스크린샷 2025-01-07 154804.png
-                //
-                // 모델에 저장된 경로는 상대경로로 관리됩니당:
-                //    "inference_images/스크린샷 2025-01-07 154804.png"
-
                 view.ShowDialogInferenceLoading();
 
             };

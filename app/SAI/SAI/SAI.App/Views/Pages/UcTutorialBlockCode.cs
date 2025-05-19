@@ -47,7 +47,7 @@ namespace SAI.SAI.App.Views.Pages
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
         private MemoPresenter memoPresenter;
-        private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
+        private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
 
         private int undoCount = 0; // 뒤로가기 카운트
         private int blockCount = 0; // 블럭 개수
@@ -607,15 +607,30 @@ namespace SAI.SAI.App.Views.Pages
                 tboxThreshold,
                 (newValue) =>
                 {
-                currentThreshold = newValue;
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
                     Task.Run(() =>
                     {
                         var result = yoloTutorialPresenter.RunInferenceDirect(
-                            blocklyModel.imgPath,
+                            selectedImagePath,
                             currentThreshold
                         );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
 
                         // 결과는 UI 스레드로 전달
                         this.Invoke(new Action(() =>
@@ -679,8 +694,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
+                    Console.WriteLine($"[DEBUG] 전달된 blocklyModel이 null인가? {(blocklyModel == null)}");
+                    Console.WriteLine($"[DEBUG] blockTypes count: {(blocklyModel?.blockTypes?.Count ?? -1)}");
+
                     // 파이썬 코드 실행
-                    //RunButtonClicked?.Invoke(sender, e);
+                    RunButtonClicked?.Invoke(sender, e);
 			    }
                 else // 순서가 틀릴 때
                 {
@@ -834,6 +852,19 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockCount":
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
+								break;
+							case "blockCreated":
+								var blockType = root.GetProperty("blockType").ToString();
+                                var newValue = root.GetProperty("allValues");
+								var value = JsonSerializer.Deserialize <Dictionary<string, object>>(newValue.GetRawText());
+                                blocklyPresenter.setFieldValue(blockType, value);
+								break;
+
+							case "blockFieldUpdated":
+								blockType = root.GetProperty("blockType").ToString();
+								var allValues = root.GetProperty("allValues");
+								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
 								break;
 						}
 					}
@@ -1081,8 +1112,6 @@ namespace SAI.SAI.App.Views.Pages
 					missingType = "\"pipInstall\"";
 				    errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 				    errorMessage += "[시작] - [패키지 설치]";
-					//errorMessage = "시작블록이 맨 앞에 있어야 합니다.\n";
-					//	errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 					break;
 				case "pipInstall":
 					errorType = "블록 배치 오류";
@@ -1247,8 +1276,8 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         string absolutePath = openFileDialog.FileName;
 
-                        // 사용자 지정 이미지 경로를 저장 없이 바로 blockly.imagepath에 전달
-                        BlocklyModel.Instance.imgPath = absolutePath.Replace("\\", "/");
+                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
+                        selectedImagePath = absolutePath.Replace("\\", "/");
 
                         // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
@@ -1263,11 +1292,6 @@ namespace SAI.SAI.App.Views.Pages
                         btnSelectInferImage.Visible = false;
                     }
                 
-            }
-                else
-                {
-                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
