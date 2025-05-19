@@ -377,20 +377,21 @@ namespace SAI.SAI.App.Presenters
 				case "imgPath":
 					foreach (var kvp in value)
 					{
+                        MessageBox.Show(kvp.Key + "\n" + kvp.Value);
 						var key = kvp.Key;
 						var val = kvp.Value;
 						if (key == "FILE_PATH")
 						{
 							var file = val.ToString();
-                            if(file == "파일 선택" || file == "")
+                            if(file == "파일 선택" )
                             {
-                                file = null;
+                                file = String.Empty;
                             }
                             blocklyModel.imgPath = file;
 						}
 					}
 					//MessageBox.Show(blocklyModel.imgPath.ToString());
-					break;
+                    break;
 			}
         }
 	}

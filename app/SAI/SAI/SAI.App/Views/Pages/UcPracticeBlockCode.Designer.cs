@@ -36,10 +36,10 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpParentError = new System.Windows.Forms.TableLayoutPanel();
 			this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
 			this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
-			this.lbErrorType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+			this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.pError = new System.Windows.Forms.Panel();
-			this.lbMissingType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
-			this.lbErrorMessage = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+			this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
+			this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.pMain = new Guna.UI2.WinForms.Guna2Panel();
 			this.pCode = new Guna.UI2.WinForms.Guna2Panel();
 			this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -49,7 +49,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
 			this.guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
-			this.ucCode２ = new SAI.SAI.App.Views.Pages.UcCode();
+			this.ucCode２ = new SAI.App.Views.Pages.UcCode();
 			this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
 			this.pTopCode = new System.Windows.Forms.Panel();
 			this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
@@ -72,7 +72,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
-			this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
+			this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
 			this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
 			this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
 			this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -706,7 +706,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.pMemo.Controls.Add(this.btnQuestionMemo);
 			this.pMemo.Controls.Add(this.btnCloseMemo);
 			this.pMemo.Name = "pMemo";
-			this.pMemo.Paint += new System.Windows.Forms.PaintEventHandler(this.pMemo_Paint);
 			// 
 			// mAlertPanel
 			// 
