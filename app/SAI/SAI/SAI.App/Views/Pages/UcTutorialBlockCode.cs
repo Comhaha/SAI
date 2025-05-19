@@ -729,7 +729,7 @@ namespace SAI.SAI.App.Views.Pages
                 pErrorToast.Visible = true;
                 pErrorToast.FillColor = Color.FromArgb(0, pErrorToast.FillColor);
                 lbErrorType.Text = errorType;
-                lbMissingType.Text = missingType;
+                lbMissingType.Text = "MISSING " + missingType;
                 lbErrorMessage.Text = errorMessage;
 
                 // 2초 대기 (취소 가능)
