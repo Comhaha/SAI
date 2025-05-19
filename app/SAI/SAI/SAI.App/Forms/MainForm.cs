@@ -14,6 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Text.RegularExpressions;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Forms.Dialogs;
+using Microsoft.Win32;
 
 namespace SAI
 {
@@ -26,52 +27,109 @@ namespace SAI
 			InitializeComponent();
 
             this.StartPosition = FormStartPosition.CenterScreen;
+			this.mainPanel.MinimumSize = new Size(1920, 1080);
+			this.mainPanel.Size = new Size(1920, 1080);
+			this.AutoScaleMode = AutoScaleMode.None;
 
-            presenter = new MainPresenter(this);
+			presenter = new MainPresenter(this);
 
 			// 사이즈 고정
-			MinimumSize = new Size(1280, 750);
-			AutoScaleMode = AutoScaleMode.Dpi;
-			guna2DragControl1.TargetControl = titlebar;
+			MinimumSize = new Size(1920, 1080);
+			guna2DragControl1.TargetControl = tpTitlebar;
 			guna2DragControl1.TransparentWhileDrag = false;
 			guna2DragControl1.UseTransparentDrag = false;
-
+			this.DoubleBuffered = true;
 			this.Resize += MainForm_Resize;
+
+			// btnClose
+			btnClose.BackColor = Color.Transparent;
+			btnClose.PressedColor = Color.Transparent;
+			btnClose.CheckedState.FillColor = Color.Transparent;
+			btnClose.DisabledState.FillColor = Color.Transparent;
+			btnClose.HoverState.FillColor = Color.Transparent;
+			// btnClose 마우스 입력 될 때
+			btnClose.MouseEnter += (s, e) =>
+			{
+				btnClose.BackColor = Color.Transparent;
+				btnClose.BackgroundImage = Properties.Resources.btn_titlebar_close_clicked;
+			};
+			// btnClose 마우스 떠날때
+			btnClose.MouseLeave += (s, e) =>
+			{
+				btnClose.BackgroundImage = Properties.Resources.btn_titlebar_close;
+			};
+
+
+			// btnSetting
+			btnSetting.BackColor = Color.Transparent;
+			btnSetting.PressedColor = Color.Transparent;
+			btnSetting.CheckedState.FillColor = Color.Transparent;
+			btnSetting.DisabledState.FillColor = Color.Transparent;
+			btnSetting.HoverState.FillColor = Color.Transparent;
+			// btnSetting 마우스 입력 될 때
+			btnSetting.MouseEnter += (s, e) =>
+			{
+				btnSetting.BackColor = Color.Transparent;
+				btnSetting.BackgroundImage = Properties.Resources.btn_titlebar_setting_clicked;
+			};
+			// btnSetting 마우스 떠날때
+			btnSetting.MouseLeave += (s, e) =>
+			{
+				btnSetting.BackgroundImage = Properties.Resources.btn_titlebar_setting;
+			};
+
+
+			// btnMinScreen
+			btnMinScreen.BackColor = Color.Transparent;
+			btnMinScreen.PressedColor = Color.Transparent;
+			btnMinScreen.CheckedState.FillColor = Color.Transparent;
+			btnMinScreen.DisabledState.FillColor = Color.Transparent;
+			btnMinScreen.HoverState.FillColor = Color.Transparent;
+			// btnMinScreen 마우스 입력 될 때
+			btnMinScreen.MouseEnter += (s, e) =>
+			{
+				btnMinScreen.BackColor = Color.Transparent;
+				btnMinScreen.BackgroundImage = Properties.Resources.btn_titlebar_minscreen_clicked;
+			};
+			// btnMinScreen 마우스 떠날때
+			btnMinScreen.MouseLeave += (s, e) =>
+			{
+				btnMinScreen.BackgroundImage = Properties.Resources.btn_titlebar_minscreen;
+			};
+
+			// btnFullScreen
+			btnFullScreen.BackColor = Color.Transparent;
+			btnFullScreen.PressedColor = Color.Transparent;
+			btnFullScreen.CheckedState.FillColor = Color.Transparent;
+			btnFullScreen.DisabledState.FillColor = Color.Transparent;
+			btnFullScreen.HoverState.FillColor = Color.Transparent;
+			// btnFullScreen 마우스 입력 될 때
+			btnFullScreen.MouseEnter += (s, e) =>
+			{
+				btnFullScreen.BackColor = Color.Transparent;
+				btnFullScreen.BackgroundImage = Properties.Resources.btn_titlebar_fullscreen_clicked;
+			};
+			// btnFullScreen 마우스 떠날때
+			btnFullScreen.MouseLeave += (s, e) =>
+			{
+				btnFullScreen.BackgroundImage = Properties.Resources.btn_titlebar_fullscreen;
+			};
 		}
 
-		private int pageWidth = 1280;
-		private int pageHeight = 720;
+		private int pageWidth = 1920;
+		private int pageHeight = 1080;
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
-			int maxWidth = 1280;
-			int maxHeight = 750;
-
-			// 현재 폼의 너비와 높이
 			int formWidth = this.ClientSize.Width;
 			int formHeight = this.ClientSize.Height;
 
-			// 비율 계산 (비율 유지한 채 확대)
-			float scaleX = (float)formWidth / maxWidth;
-			float scaleY = (float)formHeight / maxHeight;
-			float scale = Math.Min(scaleX, scaleY); // 둘 중 작은 값으로 비율 유지
+			int x = (formWidth - pageWidth) / 2;
+			int y = (formHeight - pageHeight) / 2;
 
-			// 확대된 크기 계산 (최대 1280 x 720)
-			int newWidth = (int)(maxWidth * scale);
-			int newHeight = (int)(maxHeight * scale);
+			mainPanel.Location = new Point(x, y);  // ✨ 중앙 정렬 위치 설정
 
-			pageHeight = newHeight;
-			pageWidth = newWidth;
-
-			// 중앙 정렬 위치 계산
-			int x = (formWidth - newWidth) / 2;
-			int y = (formHeight - newHeight) / 2;
-
-			// 위치와 크기 조정
-			mainPanel.Location = new Point(x, y + 30); // titlebar 때문에 y는 약간 내림
-			mainPanel.Size = new Size(newWidth, newHeight - 30);
-
-			titlebar.Location = new Point(0, 0);
-			titlebar.Size = new Size(formWidth, 30); // 타이틀바는 항상 높이 30
+			// 확인용
+			//MessageBox.Show($"Panel 위치: {mainPanel.Location}, 크기: {mainPanel.Size}");
 		}
 
 
@@ -84,10 +142,8 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
-			page.Dock = DockStyle.Fill;
 			page.Size = new Size(pageWidth, pageHeight);
 			mainPanel.Controls.Clear();
-			mainPanel.BackColor = Color.Transparent;
 			mainPanel.Controls.Add(page);
 			mainPanel.BringToFront();
 		}
@@ -112,7 +168,7 @@ namespace SAI
 			{
 				// 원래 사이즈로
 				this.WindowState = FormWindowState.Normal;
-				this.Size = new Size(1280, 750);
+				this.Size = new Size(1920, 1080);
 			}
 			else
 			{
@@ -125,14 +181,6 @@ namespace SAI
 		{
 			// 최소화
 			this.WindowState = FormWindowState.Minimized;
-		}
-
-		private void btnSetting_Click(object sender, EventArgs e)
-		{
-			using(var dialog = new DialogSetting())
-			{
-				dialog.ShowDialog();
-			}
 		}
 	}
 }

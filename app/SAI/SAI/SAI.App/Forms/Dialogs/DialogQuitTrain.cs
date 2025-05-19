@@ -40,12 +40,12 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnClose.MouseEnter += (s, e) =>
 			{
 				btnClose.BackColor = Color.Transparent;
-				btnClose.BackgroundImage = Properties.Resources.bg_btn_close_clicked;
+				btnClose.BackgroundImage = Properties.Resources.bg_btn_close_clicked_8060;
 			};
 			// btnClose 마우스 떠날때
 			btnClose.MouseLeave += (s, e) =>
 			{
-				btnClose.BackgroundImage = Properties.Resources.bg_btn_close;
+				btnClose.BackgroundImage = Properties.Resources.bg_btn_close_8060;
 			};
 
 			// btnOk
@@ -59,13 +59,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.MouseEnter += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_red_ok_clicked;
+				btnOk.BackgroundImage = Properties.Resources.btn_red_ok_clicked_15258;
 			};
 			// btnOk 마우스 떠날때
 			btnOk.MouseLeave += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_red_ok;
+				btnOk.BackgroundImage = Properties.Resources.btn_red_ok_15258;
 			};
 
 			// btnCancel
@@ -79,12 +79,12 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnCancel.MouseEnter += (s, e) =>
 			{
 				btnCancel.BackColor = Color.Transparent;
-				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel_clicked;
+				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel_clicked_15258;
 			};
 			// btnCancel 마우스 떠날때
 			btnCancel.MouseLeave += (s, e) =>
 			{
-				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel;
+				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel_15258;
 			};
 		}
 	}

@@ -17,7 +17,7 @@ function Home() {
   }, [location]);
 
   return (
-    <div className="flex flex-col w-full max-w-[1280px] min-w-[480px] mx-auto px-[15px] min-[1130px]:px-[72px] min-[900px]:px-[30px] min-[480px]:px-[15px] my-5">
+    <div className="flex flex-col w-full">
       <Content1 />
       <Content2 />
       <Content3 />

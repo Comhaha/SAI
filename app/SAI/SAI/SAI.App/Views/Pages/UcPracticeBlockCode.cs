@@ -90,10 +90,11 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
-            btnSelectInferImage.Size = new Size(329, 185);  // pInferAccuracy와 동일한 크기
+            btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
+            btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
 
             pInferAccuracy.MouseEnter += (s, e) =>
             {
@@ -264,7 +265,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            guna2ImageButton1.Click += (s, e) =>
+            btnMinus.Click += (s, e) =>
             {
                 try
                 {
@@ -419,10 +420,6 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog();
             }
         }
-        private void ibtnDone_Click(object sender, EventArgs e)
-        {
-            ucShowDialogPresenter.clickFinish();
-        }
 
         public void showDialog(Form dialog)
         {
@@ -435,7 +432,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             jsBridge = new JsBridge((message, type) =>
             {
-                blocklyPresenter.HandleJsMessage(message, type);
+                blocklyPresenter.HandleJsMessage(message, type, "practice");
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -947,12 +944,6 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
         }
-
-        private void webViewCode_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
@@ -1024,7 +1015,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -1080,7 +1071,7 @@ namespace SAI.SAI.App.Views.Pages
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(494, 278);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
@@ -1188,6 +1179,11 @@ namespace SAI.SAI.App.Views.Pages
             {
                 folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
                 folderDialog.ShowNewFolderButton = true;
+                
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
+
 
                 throw new NotImplementedException();
             }
@@ -1202,7 +1198,15 @@ namespace SAI.SAI.App.Views.Pages
         public void SetLogVisible(bool visible)
         {
         }
+                    // 비동기 복사 (UI 멈춤 방지)
+                    await CopyModelAsync(_modelPath, destPath);
 
+                    MessageBox.Show(
+                        $"모델이 복사되었습니다.\n{destPath}",
+                        "완료",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
         public void ShowErrorMessage(string message)
         {
             if (InvokeRequired)

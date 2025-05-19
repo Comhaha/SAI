@@ -132,12 +132,6 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogDeleteModel.Designer.cs">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\DialogFinishTrain.Designer.cs">
-      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
-    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,7 +226,7 @@
     <Compile Include="SAI.App\Forms\SplashForm.Designer.cs">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Models\CodeBoxModel.cs" />
+    <Compile Include="SAI.App\Models\CodeBoxModel.cs" /> 
     <Compile Include="SAI.App\Models\LogCsvModel.cs" />
     <Compile Include="SAI.App\Models\LogImageModel.cs" />
     <Compile Include="SAI.App\Models\NotionModel.cs" />
@@ -383,11 +377,11 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogDeleteModel.resx">
       <DependentUpon>DialogDeleteModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogFinishTrain.resx">
-      <DependentUpon>DialogFinishTrain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogInferenceLoading.resx">
+      <DependentUpon>DialogInferenceLoading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
       <DependentUpon>DialogModelPerformance.cs</DependentUpon>
@@ -412,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogSetting.resx">
       <DependentUpon>DialogSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogZoomChart.resx">
+      <DependentUpon>DialogZoomChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\TutorialGuideForm.resx">
       <DependentUpon>TutorialGuideForm.cs</DependentUpon>
@@ -494,6 +491,21 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel_clicked_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_white_cancel_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok_clicked_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_red_ok_15258.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_prepare_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_prepare.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_zoomChart_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_zoomChart.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_zoomChart.png" />
+    <None Include="SAI.App\Resources\Images\p_topCode.png" />
+    <None Include="SAI.App\Resources\Images\p_blockCode.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_close_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_fullscreen_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_minscreen_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_titlebar_setting_clicked.png" />
     <None Include="SAI.App\Resources\Images\icon_error.png" />
     <None Include="SAI.App\Resources\Images\bg_toast_error.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_right.png" />
@@ -742,40 +754,46 @@
     <None Include="Resources\img_background.png" />
     <None Include="Resources\tutorialBg.png" />
     <None Include="Resources\Frame 1000004323.png" />
-    <None Include="Resources\Frame 1000004304.png" />
     <None Include="Resources\btn_goLabelingClick.png" />
     <None Include="Resources\btn_goLabelingHover.png" />
     <None Include="Resources\btn_goNotion.png" />
-    <None Include="Resources\level 1-9.png" />
-    <None Include="Resources\level 2-9.png" />
-    <None Include="Resources\level 3-9.png" />
-    <None Include="Resources\level 4-9.png" />
-    <None Include="Resources\level 5-9.png" />
-    <None Include="Resources\level 6-9.png" />
-    <None Include="Resources\level 7-9.png" />
-    <None Include="Resources\level 8-9.png" />
-    <None Include="Resources\level 9-9.png" />
     <None Include="Resources\0단계 라벨링.png" />
-    <None Include="Resources\class1.png" />
-    <None Include="Resources\class2.png" />
-    <None Include="Resources\class3.png" />
     <None Include="Resources\BtnClose3030.png" />
-    <None Include="Resources\라벨링가이드1.png" />
-    <None Include="Resources\라벨링가이드2.png" />
-    <None Include="Resources\라벨링가이드3.png" />
-    <None Include="Resources\라벨링가이드4.png" />
-    <None Include="Resources\라벨링가이드5.png" />
-    <None Include="Resources\라벨링가이드8.png" />
-    <None Include="Resources\전체튜토리얼가이드1.png" />
-    <None Include="Resources\전체튜토리얼가이드2.png" />
-    <None Include="Resources\전체튜토리얼가이드3.png" />
-    <None Include="Resources\라벨링가이드6.png" />
-    <None Include="Resources\라벨링가이드7.png" />
     <None Include="Resources\NoCircleArrowHoverL.png" />
     <None Include="Resources\NoCircleArrowHoverR.png" />
     <None Include="Resources\NoCircleArrowClickL.png" />
     <None Include="Resources\NoCircleArrowClickR.png" />
     <None Include="Resources\NoCircleArrowL.png" />
+    <None Include="Resources\NoCircleArrowR.png" />
+    <None Include="Resources\annotation 모달.png" />
+    <None Include="Resources\btn_cancel_click.png" />
+    <None Include="Resources\btn_close_click.png" />
+    <None Include="Resources\btn_save_click.png" />
+    <None Include="Resources\btn_close_pink.png" />
+    <None Include="Resources\btn_close_pink_click.png" />
+    <None Include="Resources\btn_close_whole_6.png" />
+    <None Include="Resources\btn_close_whole_click.png" />
+    <None Include="Resources\btn_close_whole_5.png" />
+    <None Include="Resources\bg_warning_empty.png" />
+    <None Include="Resources\copy_alert.png" />
+    <None Include="Resources\memo_alert.png" />
+    <None Include="Resources\level 1-9.png" />
+    <None Include="Resources\level 2-9.png" />
+    <None Include="Resources\level 3-9.png" />
+    <None Include="Resources\level 4-9.png" />
+    <None Include="Resources\level 6-9.png" />
+    <None Include="Resources\level 7-9.png" />
+    <None Include="Resources\level 8-9.png" />
+    <None Include="Resources\level 9-9.png" />
+    <None Include="Resources\level 5-9.png" />
+    <None Include="Resources\img_level_0.png" />
+    <None Include="Resources\Frame 1000004304.png" />
+    <None Include="Resources\class1.png" />
+    <None Include="Resources\class2.png" />
+    <None Include="Resources\class3.png" />
+    <None Include="Resources\toastPopupF.png" />
+    <None Include="Resources\toastPopupS.png" />
+    <None Include="Resources\btn_go_model.png" />
     <None Include="Resources\toolDelClick.png" />
     <None Include="Resources\toolDelHover.png" />
     <None Include="Resources\toolHandClick.png" />
@@ -790,27 +808,30 @@
     <None Include="Resources\toolUndoHover.png" />
     <None Include="Resources\toolVClick.png" />
     <None Include="Resources\toolVHover.png" />
-    <None Include="Resources\NoCircleArrowR.png" />
-    <None Include="Resources\toastPopupF.png" />
-    <None Include="Resources\toastPopupS.png" />
-    <None Include="Resources\annotation 모달.png" />
-    <None Include="Resources\btn_cancel_click.png" />
-    <None Include="Resources\btn_close_click.png" />
-    <None Include="Resources\btn_save_click.png" />
-    <None Include="Resources\btn_close_pink.png" />
-    <None Include="Resources\btn_close_pink_click.png" />
-    <None Include="Resources\라벨링가이드6.png" />
-    <None Include="Resources\라벨링가이드7.png" />
-    <None Include="Resources\라벨링가이드8.png" />
+    <None Include="Resources\tool_del_basic.png" />
+    <None Include="Resources\tool_hand_basic.png" />
+    <None Include="Resources\tool_pol_basic.png" />
+    <None Include="Resources\tool_redo_basic.png" />
+    <None Include="Resources\tool_sqaure_basic.png" />
+    <None Include="Resources\tool_undo_basic.png" />
+    <None Include="Resources\tool_visible_basic.png" />
     <None Include="Resources\전체튜토리얼가이드1.png" />
     <None Include="Resources\전체튜토리얼가이드2.png" />
     <None Include="Resources\전체튜토리얼가이드3.png" />
-    <None Include="Resources\btn_close_whole_6.png" />
-    <None Include="Resources\btn_close_whole_click.png" />
-    <None Include="Resources\btn_close_whole_5.png" />
-    <None Include="Resources\bg_warning_empty.png" />
-    <None Include="Resources\copy_alert.png" />
-    <None Include="Resources\memo_alert.png" />
+    <None Include="Resources\라벨링가이드2.png" />
+    <None Include="Resources\라벨링가이드3.png" />
+    <None Include="Resources\라벨링가이드4.png" />
+    <None Include="Resources\라벨링가이드5.png" />
+    <None Include="Resources\라벨링가이드6.png" />
+    <None Include="Resources\라벨링가이드7.png" />
+    <None Include="Resources\라벨링가이드8.png" />
+    <None Include="Resources\라벨링가이드1.png" />
+    <None Include="Resources\btn_done.png" />
+    <None Include="Resources\btn_done_click.png" />
+    <None Include="Resources\bg_inference_title.png" />
+    <None Include="Resources\Animation - 1747598450166.gif" />
+    <None Include="Resources\Animation - 1747598577326.gif" />
+    <None Include="Resources\DialogInferenceLoading.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
@@ -873,6 +894,9 @@
     <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
     <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_zoomChart.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close_8060.png" />
+    <None Include="SAI.App\Resources\Images\bg_btn_close_clicked_8060.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

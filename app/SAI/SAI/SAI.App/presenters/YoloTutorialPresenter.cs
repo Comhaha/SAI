@@ -212,6 +212,7 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
+                                    _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
                                 }
@@ -219,6 +220,7 @@ namespace SAI.SAI.App.Presenters
                         }
                         else
                         {
+                            _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
                         }
