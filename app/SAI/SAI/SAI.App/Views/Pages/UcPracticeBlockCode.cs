@@ -1166,5 +1166,10 @@ namespace SAI.SAI.App.Views.Pages
                 File.Copy(source, destination, overwrite: true);
             });
         }
+
+        public void AppendLog(string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
