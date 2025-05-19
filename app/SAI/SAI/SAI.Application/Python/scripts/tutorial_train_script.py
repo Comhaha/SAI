@@ -166,7 +166,7 @@ def check_gpu_yolo_load_block(block_params=None):
     # PyTorch CUDA 설치 확인
     if not gpu_info.get("available", False):
         show_progress("GPU를 감지할 수 없습니다. PyTorch CUDA 설치를 시도합니다...", start_time, 30)
-        cuda_success, device = install_packages.install_pytorch_cuda(start_time)
+        cuda_success, device = install_packages.install_torch_cuda(start_time)
         if cuda_success:
             show_progress("PyTorch CUDA 설치 성공", start_time, 40)
             # GPU 정보 다시 확인

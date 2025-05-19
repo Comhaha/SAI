@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-tutorial_train_script.py - AI 블록 코딩 튜토리얼 모드 구현
+tutorial_practice_script.py - AI 블록 코딩 튜토리얼 모드 구현
 
 이 스크립트는 AI 블록 코딩 튜토리얼 모드를 위한 기능을 구현합니다.
 install_packages.py의 유틸리티 함수를 활용하여 패키지 설치, GPU 확인 등을 수행합니다.
