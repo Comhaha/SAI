@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import RemainTimeModal from '@/components/RemainTimeModal';
 import SessionExpiredModal from '@/components/SessionExpiredModal';
 import { useAuth } from './AuthContext';
+import AdminSt from './AdminSt';
 
 function formatTime(sec) {
   const h = String(Math.floor(sec / 3600)).padStart(1, '0');
@@ -47,13 +48,11 @@ function AdminRe() {
         if (res.data && res.data.result) {
           setApiKey(res.data.result.token);
         } else {
-          //           navigate('/admin/login'); // 테스트라서 잠시 주석처리
-          setApiKey('12345');
+          // 비로그인 상태에서는 상위에서 AdminSt가 렌더링됨
         }
       })
       .catch(() => {
-        //         navigate('/admin/login'); // 테스트라서 잠시 주석처리
-        setApiKey('12345');
+        // 비로그인 상태에서는 상위에서 AdminSt가 렌더링됨
       });
   }, [navigate]);
 
@@ -106,6 +105,9 @@ function AdminRe() {
     setGuideModal({ show: true, text });
     setTimeout(() => setGuideModal({ show: false, text: '' }), 2000);
   };
+
+  // 비로그인 상태에서는 아무것도 렌더링하지 않음 (상위에서 AdminSt가 렌더링)
+  if (!isLoggedIn) return null;
 
   return (
     <div className="w-full flex justify-center items-center relative overflow-hidden h-[630px] pt-20 box-border">
