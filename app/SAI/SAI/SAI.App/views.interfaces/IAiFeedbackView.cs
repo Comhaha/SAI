@@ -9,8 +9,9 @@ namespace SAI.SAI.App.Views.Interfaces
     public interface IAiFeedbackView : IAiBuzyAwareView
     {
         string CodeText { get; }
-        string LogText { get; }
-        string ImagePath { get; }
+        string LogImagePath { get; }
+        string ResultImagePath { get; }
+        string memo { get; }
 
         event EventHandler SendRequested;
 
