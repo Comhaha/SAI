@@ -1,4 +1,4 @@
-﻿using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
@@ -27,10 +27,10 @@ namespace SAI.SAI.App.Presenters
 			mainView.LoadPage(new UcPracticeBlockCode(mainView));
 		}
 
-		public void clickGoTutorialBlockCode()
-		{
-			mainView.LoadPage(new UcTutorialBlockCode(mainView));
-		}
+		//public void clickGoTutorialBlockCode()
+		//{
+		//	mainView.LoadPage(new UcTutorialBlockCode(mainView));
+		//}
 
 		public void clickGoTrain()
 		{

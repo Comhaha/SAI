@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Common;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
@@ -32,6 +33,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             InitializeComponent();
             pInfo.BackColor = ColorTranslator.FromHtml("#1D1D1D");
+
+            DialogUtils.ApplyDefaultStyle(this, Color.Gray);
+
+            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
+            btnClose.Click += (s, e) => { this.Close(); };
+            ButtonUtils.SetupButton(authButton, "btn_auth_clicked", "btn_auth");
 
             InitWebOnce();
         }
@@ -269,6 +276,5 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             this.Close();
         }
-
     }
 }

@@ -7,20 +7,20 @@
 	<script src="TutorialBlocks.js"></script>
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 96vh; width: 96vw; "></div>
-    <xml id="toolbox" style="display: none">
-        <block type="start"></block>
-        <block type="pipInstall"></block>
-        <block type="loadModel"></block>
-        <block type="loadDataset"></block>
-        <block type="machineLearning"></block>
-        <block type="resultGraph"></block>
-        <block type="imgPath"></block>
-        <block type="modelInference"></block>
-        <block type="visualizeResult"></block>
-    </xml>
+	<div id="blocklyDiv" style="height: 96vh; width: 96vw; "></div>
+	<xml id="toolbox" style="display: none">
+		<block type="start"></block>
+		<block type="pipInstall"></block>
+		<block type="loadModel"></block>
+		<block type="loadDataset"></block>
+		<block type="machineLearning"></block>
+		<block type="resultGraph"></block>
+		<block type="imgPath"></block>
+		<block type="modelInference"></block>
+		<block type="visualizeResult"></block>
+	</xml>
 
-    <div id="customAlert" style="
+	<div id="customAlert" style="
         display: none;
         position: fixed;
         top: 30%;
@@ -33,15 +33,15 @@
         border-radius: 8px;
         z-index: 9999;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-        <p id="customAlertText"></p>
-        <button onclick="closeCustomAlert()">확인</button>
-    </div>
+		<p id="customAlertText"></p>
+		<button onclick="closeCustomAlert()">확인</button>
+	</div>
 
-    <script>
-        //const workspace = Blockly.inject('blocklyDiv', {
-        //    toolbox: null,
-        //    //toolbox: document.getElementById('toolbox')
-        //});
+	<script>
+		//const workspace = Blockly.inject('blocklyDiv', {
+		//    toolbox: null,
+		//    //toolbox: document.getElementById('toolbox')
+		//});
 		Blockly.Tooltip.HOVER_MS = 100; // 기본값은 1000ms
 
 		const workspace = Blockly.inject('blocklyDiv', {
@@ -58,27 +58,28 @@
 				pinch: true
 			},
 			renderer: 'geras', // 또는 'zelos', 'thrasos' 등 (기본: 'geras')
-            move: {
-                scrollbars: true,
+			move: {
+				scrollbars: true,
 				drag: true,
 				wheel: true
 			}
 		});
 
-        function showCustomAlert(text) {
-            document.getElementById('customAlertText').innerText = text;
-            document.getElementById('customAlert').style.display = 'block';
-        }
-
-        function closeCustomAlert() {
-            document.getElementById('customAlert').style.display = 'none';
+		function showCustomAlert(text) {
+			document.getElementById('customAlertText').innerText = text;
+			document.getElementById('customAlert').style.display = 'block';
 		}
-        
+
+		function closeCustomAlert() {
+			document.getElementById('customAlert').style.display = 'none';
+		}
+
 		function addBlock(type) {
 			const block = workspace.newBlock(type);
 			block.setDeletable(false); // 블록 삭제 가능
 			block.initSvg();
 			block.render();
+			sendCode(Blockly.Python.blockToCode(block)); // 블록 생성 시 Python 코드 생성
 
 			if (lastCreatedBlockId) {
 				const lastBlock = workspace.getBlockById(lastCreatedBlockId);
@@ -99,37 +100,45 @@
 			}
 		}
 
-		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송  
-        function sendCode(code) {
+		// 블록을 생성할 때마다 Python 코드를 생성하여 C#으로 전송
+		function sendCode(code) {
 			window.chrome.webview.postMessage({
 				type: "blockAllCode",
 				code: code
 			});
-        }
+		}
 
-        // 하나의 블럭 코드 가져오기
+		// 하나의 블럭 코드 가져오기
 		function getPythonCodeByType(blockType) {
 			const blocks = workspace.getAllBlocks();
 			for (let block of blocks) {
-                if (block.type === blockType) {
+				if (block.type === blockType) {
 					window.chrome.webview.postMessage({
 						type: "blockCode",
 						code: Blockly.Python.blockToCode(block)
 					});
-                    break;
+					break;
 				}
 			}
-        }
+		}
 
-        // 이전 상태로 되돌리기(ctrl+z)
-        function undo() {
+		// 이전 상태로 되돌리기(ctrl+z)
+		function undo() {
 			workspace.undo(false);
-        }
+		}
 
-        // 이전 상태 다시 실행하기(ctrl+y)
-        function redo() {
+		// 이전 상태 다시 실행하기(ctrl+y)
+		function redo() {
 			workspace.undo(true);
-        }
+		}
+
+		function getblockCount() {
+			var blockCount = workspace.getAllBlocks(false).length;
+			window.chrome.webview.postMessage({
+				type: "blockCount",
+				count: blockCount
+			});
+		}
 
 		// 더블 클릭 이벤트 등록 및 이벤트 처리
 		function registerDoubleClickEventRecursively(block) {
@@ -140,7 +149,7 @@
 				block.svgGroup_.addEventListener('dblclick', (event) => {
 					// 이벤트 전파 중단
 					event.stopPropagation();
-					
+
 					try {
 						// 현재 블록의 코드만 생성
 						let code = '';
@@ -211,6 +220,19 @@
 			}
 		}
 
+		function getBlockFieldValues(block) {
+			const fieldValues = {};
+			block.inputList.forEach(input => {
+				input.fieldRow.forEach(field => {
+					if (field.name) {
+						fieldValues[field.name] = field.getValue();
+					}
+				});
+			});
+			return fieldValues;
+		}
+
+
 		// 가장 마지막으로 생성된 블럭
 		let lastCreatedBlockId = null;
 
@@ -221,6 +243,34 @@
 					// 여러 개가 생성될 수 있으므로 마지막 ID만 저장
 					const ids = event.ids;
 					lastCreatedBlockId = ids[ids.length - 1];
+
+					// 블록 생성될 때 필드값 전달
+					ids.forEach(id => {
+						const block = workspace.getBlockById(id);
+						if (!block) return;
+
+						const fieldValues = getBlockFieldValues(block);
+
+						window.chrome.webview.postMessage({
+							type: "blockCreated",
+							blockType: block.type,
+							allValues: fieldValues
+						});
+					});
+				}
+
+				// 필드값 변경되었을 때 (드롭다운, 넘버 등)
+				if (event.type === Blockly.Events.CHANGE && event.element === 'field') {
+					const block = workspace.getBlockById(event.blockId);
+					if (!block) return;
+
+					const fieldValues = getBlockFieldValues(block);
+
+					window.chrome.webview.postMessage({
+						type: "blockFieldUpdated",
+						blockType: block.type,
+						allValues: fieldValues
+					});
 				}
 
 				if (
@@ -261,19 +311,19 @@
 					type: "openFile",
 					blockId: blockId
 				});
-            }
+			}
 
 			// C#에서 경로가 돌아오면 이 값을 필드에 설정
 			setImagePath(path) {
 				this.setValue(path);
 			}
 		}
-        Blockly.fieldRegistry.register('field_filepicker', FieldFilePicker);
+		Blockly.fieldRegistry.register('field_filepicker', FieldFilePicker);
 
 		// JS가 메시지 수신 (C# → JS)
 		window.addEventListener("message", (event) => {
 			const { blockId, filePath } = event.data;
-            const block = Blockly.getMainWorkspace().getBlockById(blockId);
+			const block = Blockly.getMainWorkspace().getBlockById(blockId);
 			if (!block) return;
 
 			const fields = block.inputList.flatMap(input => input.fieldRow);
@@ -283,6 +333,7 @@
 				filePickerField.setImagePath(filePath);
 			}
 		});
+
 
 		// 나만의 필드 타입(드롭다운)
 		class CustomDropdown extends Blockly.FieldDropdown {
@@ -317,7 +368,7 @@
 
 		Blockly.fieldRegistry.register('field_custom_dropdown', CustomDropdown);
 
-    </script>
+	</script>
 
 </body>
 </html>

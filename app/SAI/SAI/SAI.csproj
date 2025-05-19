@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -99,7 +99,9 @@
     <Compile Include="SAI.Application\Dto\BaseResponse.cs" />
     <Compile Include="SAI.Application\Service\AiFeedbackService.cs" />
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
+    <Compile Include="SAI.Application\Service\CodeBoxService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />
+    <Compile Include="SAI.Application\Service\SettingService.cs" />
     <Compile Include="SAI.App\Forms\Dialogs\DialogCompleteTutorial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,11 +144,23 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.Designer.cs">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogInferenceLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogInferenceLoading.Designer.cs">
+      <DependentUpon>DialogInferenceLoading.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelPerformance.Designer.cs">
       <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.Designer.cs">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
@@ -178,6 +192,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.Designer.cs">
       <DependentUpon>DialogSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogZoomChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogZoomChart.Designer.cs">
+      <DependentUpon>DialogZoomChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\TutorialGuideForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,32 +224,55 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAI.App\Models\YoloModel.cs" />
+    <Compile Include="SAI.App\Forms\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Models\CodeBoxModel.cs" />
+    <Compile Include="SAI.App\Models\LogCsvModel.cs" />
+    <Compile Include="SAI.App\Models\LogImageModel.cs" />
     <Compile Include="SAI.App\Models\NotionModel.cs" />
     <Compile Include="SAI.App\Models\MemoModel.cs" />
     <Compile Include="SAI.App\Models\Events\BlockEventArgs.cs" />
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
     <Compile Include="SAI.Application\Interop\JSBridge.cs" />
     <Compile Include="SAI.App\Models\MainModel.cs" />
+    <Compile Include="SAI.App\Models\SettingModel.cs" />
     <Compile Include="SAI.App\Presenters\AiFeedbackPresenter.cs" />
     <Compile Include="SAI.App\Presenters\BlocklyPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\LogImagePresenter.cs" />
+    <Compile Include="SAI.App\Presenters\LogCsvPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
     <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Presenters\AiNotionPresenter.cs" />
+    <Compile Include="SAI.App\Presenters\SettingPresenter.cs" />
     <Compile Include="SAI.App\Presenters\YoloTutorialPresenter.cs" />
     <Compile Include="SAI.App\Presenters\UcShowDialogPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiBuzyAwareView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiFeedbackView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IChartView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\ICodeView.cs" />
     <Compile Include="SAI.App\Presenters\DialogDeleteModelPresenter.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IBlocklyView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ICsvChartView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IDialogDeleteModelView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\IPracticeInferenceView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IMainView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IAiNotionView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ISettingView.cs" />
+    <Compile Include="SAI.App\Views.Interfaces\ITutorialInferenceView.cs" />
+    <Compile Include="SAI.App\Views\Common\ButtonUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\PercentUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\DialogUtils.cs" />
     <Compile Include="SAI.App\Views\Common\MemoUtils.cs" />
     <Compile Include="SAI.App\Views\Common\ScrollUtils.cs" />
-    <Compile Include="SAI.App\Views\Common\ThresholdUtils.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtilsTutorial.cs" />
+    <Compile Include="SAI.App\Views\Common\ThresholdUtilsPractice.cs" />
     <Compile Include="SAI.App\Views\Common\TodoManager.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IYoloTutorialView.cs" />
     <Compile Include="SAI.App\Views.Interfaces\IUcShowDialogView.cs" />
@@ -239,11 +282,33 @@
     <Compile Include="SAI.App\Forms\Dialogs\AnnotationEditorForm.Designer.cs">
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\Blockly.cs">
+    <Compile Include="SAI.App\Views\Common\ToolTipUtils.cs" />
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\Blockly.Designer.cs">
-      <DependentUpon>Blockly.cs</DependentUpon>
+    <Compile Include="SAI.App\Views\Common\TransparentOverlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\AutoSizeLabel.Designer.cs">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcBlockGuide.Designer.cs">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCsvChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcCsvChart.Designer.cs">
+      <DependentUpon>UcCsvChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcImageChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcImageChart.Designer.cs">
+      <DependentUpon>UcImageChart.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockCode.cs">
       <SubType>UserControl</SubType>
@@ -281,20 +346,8 @@
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTab.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="SAI.App\Views\Pages\YoloTutorial.Designer.cs">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTab.Designer.cs">
-      <DependentUpon>UcTab.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Views\Pages\UcTabCodeContainer.Designer.cs">
-      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="SAI.App\Views\Pages\UcLabelGuide.cs">
       <SubType>UserControl</SubType>
@@ -334,6 +387,12 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogHomeFromTrain.resx">
       <DependentUpon>DialogHomeFromTrain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelPerformance.resx">
+      <DependentUpon>DialogModelPerformance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogModelProgress.resx">
+      <DependentUpon>DialogModelProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogNotion.resx">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,8 +420,20 @@
     <EmbeddedResource Include="SAI.App\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\Blockly.resx">
-      <DependentUpon>Blockly.cs</DependentUpon>
+    <EmbeddedResource Include="SAI.App\Views\Pages\AutoSizeLabel.resx">
+      <DependentUpon>AutoSizeLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcBlockGuide.resx">
+      <DependentUpon>UcBlockGuide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcCsvChart.resx">
+      <DependentUpon>UcCsvChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcImageChart.resx">
+      <DependentUpon>UcImageChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcCode.resx">
       <DependentUpon>UcCode.cs</DependentUpon>
@@ -370,20 +441,16 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockList.resx">
       <DependentUpon>UcPracticeBlockList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcTab.resx">
-      <DependentUpon>UcTab.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SAI.App\Views\Pages\UcTabCodeContainer.resx">
-      <DependentUpon>UcTabCodeContainer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeBlockCode.resx">
       <DependentUpon>UcPracticeBlockCode.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcSelectType.resx">
       <DependentUpon>UcSelectType.cs</DependentUpon>
@@ -395,7 +462,6 @@
     <EmbeddedResource Include="SAI.App\Views\Pages\YoloTutorial.resx">
       <DependentUpon>YoloTutorial.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -405,7 +471,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SAI.Application\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -415,7 +480,6 @@
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
-    <Folder Include="SAI.App\Views\Sections\" />
     <Folder Include="SAI.Core\Entities\" />
     <Folder Include="SAI.Core\Enums\" />
     <Folder Include="SAI.Core\ValueObjects\" />
@@ -428,6 +492,40 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\icon_error.png" />
+    <None Include="SAI.App\Resources\Images\bg_toast_error.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_right.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_title.png" />
+    <None Include="SAI.App\Resources\Images\bg_train_progressbar.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_close_train.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_train_progress.png" />
+    <None Include="SAI.App\Resources\Images\img_inferGraphe_example.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_sai.png" />
+    <None Include="SAI.App\Resources\Images\logo_splash.png" />
+    <None Include="SAI.App\Resources\Images\btn_auth_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_auth.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_info_17.png" />
+    <None Include="SAI.App\Resources\Images\btn_info_12.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_25_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_25.png" />
+    <None Include="SAI.App\Resources\Images\btn_question_memo_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_trash_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_pre_block_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_next_block_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_white_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_white.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_modelPerformance.png" />
+    <None Include="SAI.App\Resources\Images\btn_light_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_dark.png" />
+    <None Include="SAI.App\Resources\Images\btn_light.png" />
     <None Include="SAI.App\Resources\Images\lbl_report.png" />
     <None Include="SAI.App\Resources\Images\lbl_visualize_result.png" />
     <None Include="SAI.App\Resources\Images\lbl_start.png" />
@@ -698,6 +796,19 @@
     <None Include="Resources\btn_close_click.png" />
     <None Include="Resources\btn_save_click.png" />
     <None Include="Resources\btn_close_pink.png" />
+    <None Include="Resources\btn_close_pink_click.png" />
+    <None Include="Resources\라벨링가이드6.png" />
+    <None Include="Resources\라벨링가이드7.png" />
+    <None Include="Resources\라벨링가이드8.png" />
+    <None Include="Resources\전체튜토리얼가이드1.png" />
+    <None Include="Resources\전체튜토리얼가이드2.png" />
+    <None Include="Resources\전체튜토리얼가이드3.png" />
+    <None Include="Resources\btn_close_whole_6.png" />
+    <None Include="Resources\btn_close_whole_click.png" />
+    <None Include="Resources\btn_close_whole_5.png" />
+    <None Include="Resources\bg_warning_empty.png" />
+    <None Include="Resources\copy_alert.png" />
+    <None Include="Resources\memo_alert.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
@@ -752,6 +863,14 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_home_from_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_quit_train.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_setting.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide1.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide2.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide3.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide4.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide5.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide6.png" />
+    <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

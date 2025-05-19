@@ -3,7 +3,7 @@ chcp 65001 > nul
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 REM 현재 배치 파일의 위치를 기준으로 상대 경로 설정
-SET "TARGET_DIR=%~dp0c#\SAI\SAI\SAI.Application\Python"
+SET "TARGET_DIR=%~dp0app\SAI\SAI\SAI.Application\Python"
 SET "VENV_DIR=%TARGET_DIR%\venv"
 
 REM 가상환경 생성

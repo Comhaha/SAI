@@ -87,6 +87,7 @@ namespace SAI.SAI.App.Views.Pages
         // 이미지 상태 코드 저장을 위한 변수 (임시)
         // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
         private Dictionary<int, int> imageStatusCode = new Dictionary<int, int>();
+
         // 토스트 메시지 관련 변수
         private System.Windows.Forms.Timer toastTimer;
         private Guna.UI2.WinForms.Guna2Panel toastPanel;
@@ -103,6 +104,8 @@ namespace SAI.SAI.App.Views.Pages
 
         // 클래스 멤버 변수에 완료 다이얼로그 표시 여부 추가
         private bool isCompletionDialogShown = false;
+
+        private string currentLevel = "0"; // 현재 레벨
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +152,25 @@ namespace SAI.SAI.App.Views.Pages
             this.classBtn.CheckedState.FillColor = Color.Transparent;
             this.classBtn.PressedColor = Color.Transparent;
             classBtn.Visible = false; // 분류 버튼 숨김
-            
+
+            //// progress0 부터 8까지 호버 및 클리 효과 삭제
+            //for (int i = 0; i < 9; i++)
+            //{
+            //    var progressLabel = Controls.Find($"progress{i}", true).FirstOrDefault() as Guna.UI2.WinForms.Guna2CircleButton;
+            //    if (progressLabel != null)
+            //    {
+            //        progressLabel.MouseEnter += (s, e) => { progressLabel.BackColor = Color.Transparent; };
+            //        progressLabel.MouseLeave += (s, e) => { progressLabel.BackColor = Color.Transparent; };
+            //        progressLabel.Click += (s, e) => { progressLabel.BackColor = Color.Transparent; };
+            //        progressLabel.CheckedState.FillColor = Color.Transparent;
+            //        progressLabel.PressedColor = Color.Transparent;
+            //    }
+            //}
+            //progress0.CheckedState.FillColor = Color.Transparent;
+            //progress0.PressedColor = Color.Transparent;
+            //this.progress1.CheckedState.FillColor = Color.Transparent;
+            //this.progress1.PressedColor = Color.Transparent;
+
             // class2 초기 상태에 따라 classBtn 가시성 설정
             UpdateClassButtonVisibility();
         }
@@ -319,6 +340,12 @@ namespace SAI.SAI.App.Views.Pages
             popupCloseBtn.Click += (s, e) => toastPopupPanel.Visible = false;
             toastPopupPanel.Click += (s, e) => toastPopupPanel.Visible = false;
 
+            // 홈으로 돌아가기
+            homeBtn.Click += (s, e) =>
+            {
+                var dialog = new DialogHomeFromTrain();
+                dialog.ShowDialog(this);
+            };
             //// 좌표 내보내기 버튼 클릭 이벤트 등록
             //exportBtn.Click += ExportBtn_Click;
         }
@@ -424,6 +451,7 @@ namespace SAI.SAI.App.Views.Pages
             bool isCurrentImageLabeled = false;
             double currentAccuracy = 0;
             nextBtn.Enabled = false;
+            preBtn.Enabled = false;
 
             // 현재 이미지에 대한 라벨링 및 정확도 확인
             if (imageAccuracies.ContainsKey(currentImageIndex))
@@ -434,57 +462,50 @@ namespace SAI.SAI.App.Views.Pages
             else
             {
                 // 이미지 타입에 따라 라벨링 되었는지 확인
-                if (currentLevel.Text == "Classification")
+                if (currentLevel == "Classification")
                 {
                     isCurrentImageLabeled = imageClassifications.ContainsKey(currentImageIndex);
                 }
-                else if (currentLevel.Text == "Bounding Box")
+                else if (currentLevel == "Bounding Box")
                 {
                     isCurrentImageLabeled = imageBoundingBoxes.ContainsKey(currentImageIndex) && imageBoundingBoxes[currentImageIndex].Count > 0;
                 }
-                else if (currentLevel.Text == "Segmentation")
+                else if (currentLevel == "Segmentation")
                 {
                     isCurrentImageLabeled = imagePolygons.ContainsKey(currentImageIndex) && imagePolygons[currentImageIndex].Count > 0;
                 }
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel.Text == "Classification" && currentAccuracy >= 0)
+            if (currentLevel == "Classification" && currentAccuracy >= 1)
             {
-                //nextBtn.Enabled = currentAccuracy >= 100; 임시
                 nextBtn.Enabled = true;
-
-                // 이미지를 통과 상태로 설정 (초록불)
-                // imagePassedStatus[currentImageIndex] = true;
+                if (currentImageIndex >1)
+                {
+                    preBtn.Enabled = true;
+                }
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex != 8)
             {
-                //nextBtn.Enabled = currentAccuracy >= 90.0; 임시 50
+                //임시 50
                 nextBtn.Enabled = true;
-
-                // 이미지를 통과 상태로 설정
-                // imagePassedStatus[currentImageIndex] = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (currentAccuracy >= 50 && currentImageIndex == 8)
             {
-                // imagePassedStatus[currentImageIndex] = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
             else if (0 < currentAccuracy && currentAccuracy < 50)
             {
-                // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
             }
             else
             {
-                // 아직 통과하지 못한 상태면 노란색으로 표시
-                // imagePassedStatus[currentImageIndex] = false;
                 imageStatusCode[currentImageIndex] = 0;
                 UpdateProgressIndicator(currentImageIndex, 0);
             }
@@ -492,19 +513,14 @@ namespace SAI.SAI.App.Views.Pages
             // 첫 번째 이미지일 경우 이전 버튼 비활성
             if (currentImageIndex == 0)
             {
-                preBtn.Enabled = false;
                 preBtn.Visible = false;
-                preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
             }
             else
             {
                 preBtn.Enabled = true;
                 preBtn.Visible = true;
-                preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
             }
 
-            // 버튼 시각적 업데이트
-            nextBtn.FillColor = nextBtn.Enabled ? Color.FromArgb(94, 148, 255) : Color.FromArgb(169, 169, 169);
             // 도움 버튼 시각적 업데이트
             UpdateQuestionButton();
             // 모든 이미지가 완료되었는지 확인
@@ -552,25 +568,19 @@ namespace SAI.SAI.App.Views.Pages
 
             if (progressControl != null)
             {
-                // // 이미지를 통과했으면 초록색, 아니면 노란색으로 표시
-                // progressControl.FillColor = passed == 1 ? Color.Green : Color.Yellow;
-
                 // 이미지를 통과했으면 통과 상태 기록
                 if (passed == 1)
                 {
-                    // imageStatusCode[imageIndex] = 1;
                     progressControl.FillColor = Color.Green;
                     ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
                 }
                 else if (passed == -1)
                 {
-                    // imageStatusCode[imageIndex] = -1;
                     progressControl.FillColor = Color.Red;
                     ShowToast(false); // 실패 시 빨간색 토스트 메시지 표시
                 }
                 else
                 {
-                    // imageStatusCode[imageIndex] = 0;
                     progressControl.FillColor = Color.Yellow;
                 }
             }
@@ -597,7 +607,7 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         // 이미지 인덱스에 맞는 progress 버튼을 반환하는 헬퍼 메서드
-        private Guna.UI2.WinForms.Guna2CircleButton GetProgressControl(int imageIndex)
+        private Guna.UI2.WinForms.Guna2Panel GetProgressControl(int imageIndex)
         {
             switch (imageIndex)
             {
@@ -771,7 +781,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 손 도구가 활성화되면 현재 모드에 따라 적절한 편집 모드 설정
                 if (isHandToolActive) 
                 {
-                    if (currentLevel.Text == "Segmentation" &&
+                    if (currentLevel == "Segmentation" &&
                         imagePolygons.ContainsKey(currentImageIndex) &&
                         imagePolygons[currentImageIndex].Count > 0)
                     {
@@ -786,7 +796,7 @@ namespace SAI.SAI.App.Views.Pages
                         // 이미지 좌표를 화면 좌표로 변환
                         editingPolygonPoints = ConvertPointsToDisplayCoordinates(existingPolygon.Item1);
                     }
-                    else if (currentLevel.Text == "Bounding Box" &&
+                    else if (currentLevel == "Bounding Box" &&
                              imageBoundingBoxes.ContainsKey(currentImageIndex) &&
                              imageBoundingBoxes[currentImageIndex].Count > 0)
                     {
@@ -841,7 +851,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             toolLabelingSquare.Click += (s, e) =>
             {
-                if (currentLevel.Text == "Bounding Box")
+                if (currentLevel == "Bounding Box")
                 {
                     // 폴리곤 작업 중이었다면 초기화
                     if (isPolygonToolActive && polygonPoints.Count > 0)
@@ -873,7 +883,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             toolLabelingPolygon.Click += (s, e) =>
             {
-                if (currentLevel.Text == "Segmentation")
+                if (currentLevel == "Segmentation")
                 {
                     // 현재 편집 모드라면 편집 내용을 저장
                     if (isEditingPolygon)
@@ -1166,7 +1176,7 @@ namespace SAI.SAI.App.Views.Pages
 
             if (imageIndex >= 1 && imageIndex <= 3)
             {
-                currentLevel.Text = "Classification"; // 이미지 1,2,3
+                currentLevel = "Classification"; // 이미지 1,2,3
                 toolBox.Visible = false; // Classification 단계에서는 도구창 숨김
                 accuracyPanel.Visible = false; // 정확도 패널 숨김
                 //accuracyLabel.Visible = false; // 정확도 숨김
@@ -1189,7 +1199,7 @@ namespace SAI.SAI.App.Views.Pages
             }
             else if (imageIndex >= 4 && imageIndex <= 6)
             {
-                currentLevel.Text = "Bounding Box"; // 이미지 4,5,6
+                currentLevel = "Bounding Box"; // 이미지 4,5,6
                 toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
@@ -1212,7 +1222,7 @@ namespace SAI.SAI.App.Views.Pages
             }
             else if (imageIndex >= 7 && imageIndex <= 9)
             {
-                currentLevel.Text = "Segmentation"; // 이미지 7,8,9
+                currentLevel = "Segmentation"; // 이미지 7,8,9
                 toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
@@ -1308,13 +1318,11 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     nextBtn.Enabled = false;
                     nextBtn.Visible = false; // 마지막 이미지일 경우 다음 버튼 비활성화
-                    nextBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
                 }
                 else
                 {
                     nextBtn.Enabled = true;
                     nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                    nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
                 }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
@@ -1357,22 +1365,19 @@ namespace SAI.SAI.App.Views.Pages
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
                 
-                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
-                if (currentImageIndex == 0)
-                {
-                    preBtn.Enabled = false;
-                    preBtn.FillColor = Color.FromArgb(169, 169, 169); // 회색으로 변경
-                }
-                else
-                {
-                    preBtn.Enabled = true;
-                    preBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
-                }
+                //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                //if (currentImageIndex == 0)
+                //{
+                //    preBtn.Visible = true;
+                //}
+                //else
+                //{
+                //    preBtn.Visible = true;
+                //}
                 
-                // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
-                nextBtn.Enabled = true;
-                nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                nextBtn.FillColor = Color.FromArgb(94, 148, 255); // 파란색으로 변경
+                //// 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
+                //nextBtn.Enabled = true;
+                //nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                 
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
@@ -1438,15 +1443,15 @@ namespace SAI.SAI.App.Views.Pages
                 if (classImages.Count >= 3)
                 {
                     // currentLevel에 따라 배경 이미지 설정
-                    if (currentLevel.Text == "Classification")
+                    if (currentLevel == "Classification")
                     {
                         levelPanel.BackgroundImage = classImages[0]; // class1.png
                     }
-                    else if (currentLevel.Text == "Bounding Box")
+                    else if (currentLevel == "Bounding Box")
                     {
                         levelPanel.BackgroundImage = classImages[1]; // class2.png
                     }
-                    else if (currentLevel.Text == "Segmentation")
+                    else if (currentLevel == "Segmentation")
                     {
                         levelPanel.BackgroundImage = classImages[2]; // class3.png
                     }
@@ -1468,19 +1473,19 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void UpdateQuestionButton()
         {
-            if (currentLevel.Text == "Classification")
+            if (currentLevel == "Classification")
             {
                 questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
                 questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
                 questClassificationPanel.Visible = true; // Classification 도움말 버튼 표시
             }
-            else if (currentLevel.Text == "Bounding Box")
+            else if (currentLevel == "Bounding Box")
             {
                 questBoxPanel.Visible = true;
                 questSegPanel.Visible = false; // Segmentation 도움말 버튼 숨김
                 questClassificationPanel.Visible = false; // Classification 도움말 버튼 숨김
             }
-            else if (currentLevel.Text == "Segmentation")
+            else if (currentLevel == "Segmentation")
             {
                 questBoxPanel.Visible = false; // BoundingBox 도움말 버튼 숨김
                 questSegPanel.Visible = true; // Segmentation 도움말 버튼 표시
@@ -1703,7 +1708,7 @@ namespace SAI.SAI.App.Views.Pages
                             new Tuple<List<Point>, string>(imagePoints, label);
 
                         // 폴리곤 수정 후 정확도 즉시 계산 및 표시
-                        if (currentLevel.Text == "Segmentation")
+                        if (currentLevel == "Segmentation")
                         {
                             CalculateAndDisplayAccuracy();
                         }
@@ -1747,7 +1752,7 @@ namespace SAI.SAI.App.Views.Pages
                         AddToHistory(action);
 
                         // 바운딩 박스 수정 후 정확도 즉시 계산 및 표시
-                        if (currentLevel.Text == "Bounding Box")
+                        if (currentLevel == "Bounding Box")
                         {
                             CalculateAndDisplayAccuracy();
                         }
@@ -1850,12 +1855,12 @@ namespace SAI.SAI.App.Views.Pages
             // 현재 마우스 포인터 위치 가져오기
             Point clickPoint = mouseEvent.Location;
 
-            if (currentLevel.Text == "Classification")
+            if (currentLevel == "Classification")
             {
                 // Classification 단계에서는 이미지 클릭으로 주석 편집기 열기
                 OpenAnnotationEditor(class2.Text);
             }
-            else if ((currentLevel.Text == "Bounding Box" || currentLevel.Text == "Segmentation") &&
+            else if ((currentLevel == "Bounding Box" || currentLevel == "Segmentation") &&
                      !isSquareToolActive && !isEditingBoundingBox) // 바운딩 박스 편집 모드에서는 annotation editor 열지 않음
             {
                 // 클릭한 위치가 기존 바운딩 박스 내부인지 확인
@@ -1873,7 +1878,7 @@ namespace SAI.SAI.App.Views.Pages
         private void PictureBoxImage_MouseClick(object sender, MouseEventArgs e)
         {
             // 폴리곤 도구가 활성화된 상태에서만 처리
-            if (isPolygonToolActive && currentLevel.Text == "Segmentation")
+            if (isPolygonToolActive && currentLevel == "Segmentation")
             {
                 Point clickPoint = e.Location;
 
@@ -2895,7 +2900,7 @@ namespace SAI.SAI.App.Views.Pages
         private void UpdatePolygonLabel(string newLabel)
         {
             // Segmentation 모드이고, 현재 이미지에 폴리곤이 있는 경우
-            if (currentLevel.Text == "Segmentation" &&
+            if (currentLevel == "Segmentation" &&
                 imagePolygons.ContainsKey(currentImageIndex) &&
                 imagePolygons[currentImageIndex].Count > 0)
             {
@@ -3068,7 +3073,7 @@ namespace SAI.SAI.App.Views.Pages
                     UpdateClassButtonVisibility();
 
                     // 라벨링 단계에 따라 다른 작업 수행
-                    if (currentLevel.Text == "Segmentation")
+                    if (currentLevel == "Segmentation")
                     {
                         // 이전 폴리곤 상태 저장
                         List<Tuple<List<Point>, string>> previousState = null;
@@ -3092,7 +3097,7 @@ namespace SAI.SAI.App.Views.Pages
                         };
                         AddToHistory(action);
                     }
-                    else if (currentLevel.Text == "Classification")
+                    else if (currentLevel == "Classification")
                     {
                         // 현재 이미지의 분류 정보 저장
                         imageClassifications[currentImageIndex] = annotationText;
@@ -3103,8 +3108,8 @@ namespace SAI.SAI.App.Views.Pages
                         imageAccuracies[currentImageIndex] = 100.0;
 
                     }
-
-                    else if (currentLevel.Text == "Bounding Box")
+                        
+                    else if (currentLevel == "Bounding Box")
                     {
                         // 이전 상태 저장
                         List<Tuple<Rectangle, string>> previousBoxes = null;
@@ -3145,7 +3150,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             try
             {
-                if (currentLevel.Text == "Bounding Box")
+                if (currentLevel == "Bounding Box")
                 {
                     if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
                         imageBoundingBoxes[currentImageIndex] != null &&
@@ -3167,7 +3172,7 @@ namespace SAI.SAI.App.Views.Pages
                         imageAccuracies[currentImageIndex] = 0;
                     }
                 }
-                else if (currentLevel.Text == "Segmentation")
+                else if (currentLevel == "Segmentation")
                 {
                     if (imagePolygons.ContainsKey(currentImageIndex) &&
                         imagePolygons[currentImageIndex] != null &&
@@ -3273,7 +3278,7 @@ namespace SAI.SAI.App.Views.Pages
             try
             {
 
-                if (currentLevel.Text == "Bounding Box")
+                if (currentLevel == "Bounding Box")
                 {
                     // 기존 바운딩 박스가 있는지 확인
                     if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
@@ -3314,7 +3319,7 @@ namespace SAI.SAI.App.Views.Pages
                         UpdateNavigationButtonState();
                     }
                 }
-                else if (currentLevel.Text == "Segmentation")
+                else if (currentLevel == "Segmentation")
                 {
                     // 기존 폴리곤이 있는지 확인
                     if (imagePolygons.ContainsKey(currentImageIndex) &&
@@ -3367,7 +3372,7 @@ namespace SAI.SAI.App.Views.Pages
                         UpdateNavigationButtonState();
                     }
                 }
-                else if (currentLevel.Text == "Classification") 
+                else if (currentLevel == "Classification") 
                 {
                     // 분류 라벨 삭제
                     if (imageClassifications.ContainsKey(currentImageIndex))
@@ -3428,7 +3433,7 @@ namespace SAI.SAI.App.Views.Pages
             try
             {
                 // 바운딩 박스 또는 세그멘테이션 가시성 전환
-                if (currentLevel.Text == "Bounding Box")
+                if (currentLevel == "Bounding Box")
                 {
                     // 바운딩 박스 가시성 토글
                     isBoundingBoxVisible = !isBoundingBoxVisible;
@@ -3436,7 +3441,7 @@ namespace SAI.SAI.App.Views.Pages
                     toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
-                else if (currentLevel.Text == "Segmentation")
+                else if (currentLevel == "Segmentation")
                 {
                     // 세그멘테이션 가시성 토글
                     isSegmentationVisible = !isSegmentationVisible;
@@ -3444,7 +3449,7 @@ namespace SAI.SAI.App.Views.Pages
                     toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
-                else if (currentLevel.Text == "Classification")
+                else if (currentLevel == "Classification")
                 {
                     // Classification 모드에서는 항상 라벨이 보이도록 설정
                     isBoundingBoxVisible = true;
@@ -3815,6 +3820,21 @@ namespace SAI.SAI.App.Views.Pages
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
+        }
+
+        private void progress0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void progress8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accuracyLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

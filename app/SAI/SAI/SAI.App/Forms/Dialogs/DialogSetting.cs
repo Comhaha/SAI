@@ -1,70 +1,104 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Common;
+
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-	public partial class DialogSetting : Form
+	public partial class DialogSetting : Form, ISettingView
 	{
-		public DialogSetting()
-		{
-			InitializeComponent();
 
-            // 부모 기준 중앙
-            this.StartPosition = FormStartPosition.CenterParent;
-            // 기존 타이틀바 삭제
-            this.FormBorderStyle = FormBorderStyle.None;
-            // 떴을 때 이 다이얼로그가 가장 위에 있고 다이얼로그를 끄기 전에는 다른 건 못 누르게!
-            this.TopMost = true;
+        private readonly SettingPresenter presenter;
+        private bool isLightTheme;
+        private bool originalTheme;
+        private string originalPath;
 
-            // 배경을 투명하게 하기 위해서
-            this.BackColor = Color.Gray;           // 투명 처리할 색
-            this.TransparencyKey = Color.Gray;
+        public DialogSetting()
+        {
+            InitializeComponent();
+            presenter = new SettingPresenter(this);
 
-            // btnClose
-            btnClose.BackColor = Color.Transparent;
-            btnClose.PressedColor = Color.Transparent;
-            btnClose.CheckedState.FillColor = Color.Transparent;
-            btnClose.DisabledState.FillColor = Color.Transparent;
-            btnClose.HoverState.FillColor = Color.Transparent;
-            btnClose.Click += (s, e) => { this.Close(); };
-            // btnClose 마우스 입력 될 때
-            btnClose.MouseEnter += (s, e) =>
-            {
-                btnClose.BackColor = Color.Transparent;
-                btnClose.BackgroundImage = Properties.Resources.btn_close_select_model_clicked;
-            };
-            // btnClose 마우스 떠날때
-            btnClose.MouseLeave += (s, e) =>
-            {
-                btnClose.BackgroundImage = Properties.Resources.btn_close_select_model;
-            };
+            DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            // btnSave
-            btnSave.BackColor = Color.Transparent;
-            btnSave.PressedColor = Color.Transparent;
-            btnSave.CheckedState.FillColor = Color.Transparent;
-            btnSave.DisabledState.FillColor = Color.Transparent;
-            btnSave.HoverState.FillColor = Color.Transparent;
-            btnSave.Click += (s, e) => { this.Close(); };
-            // btnClose 마우스 입력 될 때
-            btnSave.MouseEnter += (s, e) =>
+            // ToolTip 설정 (제대로 안됨)
+            ToolTipUtils.CustomToolTip(tboxPath, "모델 저장 경로를 변경하려면 클릭하세요.");
+
+            // 버튼 설정(버튼 이름, 호버 이미지, default 이미지)
+            ButtonUtils.SetupButton(btnClose, "btn_close_select_model_clicked", "btn_close_select_model");
+            ButtonUtils.SetupButton(btnSave, "btn_save_clicked", "btn_save");
+            ButtonUtils.SetTransparentStyle(btnLight);
+            ButtonUtils.SetTransparentStyle(btnDark);
+
+            presenter.OnViewLoaded();
+
+            // 백업값 저장
+            originalTheme = isLightTheme;
+            originalPath = tboxPath.Text;
+
+            btnClose.Click += (s, e) =>
             {
-                btnSave.BackColor = Color.Transparent;
-                btnSave.BackgroundImage = Properties.Resources.btn_save_clicked;
-            };
-            // btnClose 마우스 떠날때
-            btnSave.MouseLeave += (s, e) =>
-            {
-                btnSave.BackgroundImage = Properties.Resources.btn_save;
+                // 원래 상태 복원
+                presenter.OnThemeChanged(originalTheme);
+                presenter.OnPathChanged(originalPath);
+                SetTheme(originalTheme);
+                SetPath(originalPath);  
+
+                presenter.OnCancel();
             };
 
+            btnSave.Click += (s, e) => presenter.OnSave();
+
+            btnLight.Click += (s, e) =>
+            {
+                isLightTheme = true;
+                UpdateThemeButtonUI();
+                presenter.OnThemeChanged(true);
+            };
+
+            btnDark.Click += (s, e) =>
+            {
+                isLightTheme = false;
+                UpdateThemeButtonUI();
+                presenter.OnThemeChanged(false);
+            };
+
+            tboxPath.Click += (s, e) =>
+            {
+                using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        tboxPath.Text = dlg.SelectedPath;
+                        presenter.OnPathChanged(dlg.SelectedPath);
+                    }
+                }
+            };
         }
+
+        private void UpdateThemeButtonUI()
+        {
+            btnLight.BackgroundImage = isLightTheme ? Properties.Resources.btn_light_clicked : Properties.Resources.btn_light;
+            btnDark.BackgroundImage = isLightTheme ? Properties.Resources.btn_dark : Properties.Resources.btn_dark_clicked;
+        }
+
+        // ISettingView 구현
+        public void SetTheme(bool isLight)
+        {
+            isLightTheme = isLight;
+            UpdateThemeButtonUI();
+        }
+
+        public void SetPath(string path)
+        {
+            tboxPath.Text = path;
+        }
+
+        public bool IsLightThemeSelected() => isLightTheme;
+
+        public string GetSelectedPath() => tboxPath.Text;
+
+        public void CloseDialog() => this.Close();
     }
 }
