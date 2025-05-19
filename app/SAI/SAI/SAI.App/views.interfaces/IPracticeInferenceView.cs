@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SAI.SAI.Application.Service;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
@@ -10,6 +11,6 @@ namespace SAI.SAI.App.Views.Interfaces
     {
         void ShowDialogInferenceLoading();
 
-        void ShowPracticeInferResultImage(System.Drawing.Image resultImage);
+        void ShowPracticeInferResultImage(PythonService.InferenceResult result);
     }
 }

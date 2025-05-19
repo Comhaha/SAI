@@ -286,24 +286,24 @@ namespace SAI.SAI.App.Views.Pages
         private void LoadImageLabels()
         {
             // 기본값은 빈 문자열로 설정
-            class2.Text = "";
+            class3.Text = "";
 
             // Classification 라벨 불러오기
             if (imageClassifications.ContainsKey(currentImageIndex))
             {
-                class2.Text = imageClassifications[currentImageIndex];
+                class3.Text = imageClassifications[currentImageIndex];
             }
             // Bounding Box 라벨 불러오기
             else if (imageBoundingBoxes.ContainsKey(currentImageIndex) &&
                      imageBoundingBoxes[currentImageIndex].Count > 0)
             {
-                class2.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
+                class3.Text = imageBoundingBoxes[currentImageIndex][0].Item2;
             }
             // Segmentation 라벨 불러오기 (구현되어 있다면)
             else if (imagePolygons.ContainsKey(currentImageIndex) &&
                      imagePolygons[currentImageIndex].Count > 0)
             {
-                class2.Text = imagePolygons[currentImageIndex][0].Item2;
+                class3.Text = imagePolygons[currentImageIndex][0].Item2;
             }
 
             // classBtn 가시성 업데이트
@@ -320,7 +320,7 @@ namespace SAI.SAI.App.Views.Pages
         private void RegisterControlEvents()
         {
             // class2 라벨 클릭 시 주석 편집기 열기
-            class2.Click += (s, e) => OpenAnnotationEditor(class2.Text);
+            class3.Click += (s, e) => OpenAnnotationEditor(class3.Text);
 
             // 이미지 클릭 이벤트 추가
             pictureBoxImage.Click += PictureBoxImage_Click;
@@ -933,10 +933,10 @@ namespace SAI.SAI.App.Views.Pages
         private void UpdateToolVisualState()
         {
             // BackColor 대신 Image 속성 사용하여 활성화 상태 표시
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
-            
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
+                
             // 마우스 커서 설정
             pictureBoxImage.Cursor = isHandToolActive ? Cursors.Hand : Cursors.Default;
         }
@@ -992,9 +992,9 @@ namespace SAI.SAI.App.Views.Pages
             }
             
             // 도구 버튼 시각적 상태 업데이트
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
         }
 
         // ActionState 클래스 추가
@@ -1193,7 +1193,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = false;  // 버튼 비활성화
-                    toolVisible.Image = Properties.Resources.visibility_off;
+                    toolVisible.Image = Properties.Resources.tool_visible_basic;
                     toolVisible.Text = "라벨 숨기기";
                 }
             }
@@ -1216,7 +1216,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
@@ -1239,15 +1239,15 @@ namespace SAI.SAI.App.Views.Pages
                 if (toolVisible != null)
                 {
                     toolVisible.Enabled = true;  // 버튼 활성화
-                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
 
             // 도구 버튼 상태 업데이트
-            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.back_hand;
-            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.check_box_outline_blank;
-            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.ph_polygon_thin;
+            toolHand.Image = isHandToolActive ? Properties.Resources.toolHandClick : Properties.Resources.tool_hand_basic;
+            toolLabelingSquare.Image = isSquareToolActive ? Properties.Resources.toolLabelClick : Properties.Resources.tool_square_basic;
+            toolLabelingPolygon.Image = isPolygonToolActive ? Properties.Resources.toolPolClick : Properties.Resources.tool_pol_basic;
 
             LoadclassImage(); // 이미지 라벨링 불러오기
         }
@@ -1334,12 +1334,13 @@ namespace SAI.SAI.App.Views.Pages
                 // 정확도 표시 업데이트
                 if (imageAccuracies.ContainsKey(currentImageIndex))
                 {
-                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+                    accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+
                 }
                 else
                 {
-                    accuracyLabel.Text = "Accuracy: 0%";
-                }
+                    accuracyLabel1.Text = "Accuracy: 0%";
+                }   
 
                 // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
                 // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
@@ -1389,11 +1390,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 정확도 표시 업데이트
                 if (imageAccuracies.ContainsKey(currentImageIndex))
                 {
-                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+                    accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
                 }
                 else
                 {
-                    accuracyLabel.Text = "Accuracy: 0%";
+                    accuracyLabel1.Text = "Accuracy: 0%";
                 }
 
                 // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
@@ -1858,7 +1859,7 @@ namespace SAI.SAI.App.Views.Pages
             if (currentLevel == "Classification")
             {
                 // Classification 단계에서는 이미지 클릭으로 주석 편집기 열기
-                OpenAnnotationEditor(class2.Text);
+                OpenAnnotationEditor(class3.Text);
             }
             else if ((currentLevel == "Bounding Box" || currentLevel == "Segmentation") &&
                      !isSquareToolActive && !isEditingBoundingBox) // 바운딩 박스 편집 모드에서는 annotation editor 열지 않음
@@ -2334,7 +2335,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void OpenAnnotationEditorForBoundingBox(Rectangle imageRect)
         {
-            using (var editorForm = new AnnotationEditorForm(class2.Text))
+            using (var editorForm = new AnnotationEditorForm(class3.Text))
             {
                 if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                 {
@@ -2349,7 +2350,7 @@ namespace SAI.SAI.App.Views.Pages
                     }
 
                     // class2 라벨 업데이트 (Bounding Box 단계에서도 라벨 표시)
-                    class2.Text = annotationText;
+                    class3.Text = annotationText;
                     
                     // classBtn 가시성 업데이트
                     UpdateClassButtonVisibility();
@@ -2776,12 +2777,12 @@ namespace SAI.SAI.App.Views.Pages
         {
             try
             {
-                using (var editorForm = new AnnotationEditorForm(class2.Text))
+                using (var editorForm = new AnnotationEditorForm(class3.Text))
                 {
                     if (editorForm.ShowDialog() == DialogResult.OK || editorForm.IsSaved)
                     {
                         string annotationText = editorForm.AnnotationText;
-                        string previousLabel = class2.Text;
+                        string previousLabel = class3.Text;
 
                         // 이전 폴리곤 상태 저장
                         List<Tuple<List<Point>, string>> previousPolygons = new List<Tuple<List<Point>, string>>();
@@ -2794,7 +2795,7 @@ namespace SAI.SAI.App.Views.Pages
                         List<Point> imagePoints = ConvertPointsToImageCoordinates(polygonPoints);
                         List<Point> savedPolygonPoints = new List<Point>(polygonPoints);
 
-                        class2.Text = annotationText;
+                        class3.Text = annotationText;
                         
                         // classBtn 가시성 업데이트
                         UpdateClassButtonVisibility();
@@ -3064,10 +3065,10 @@ namespace SAI.SAI.App.Views.Pages
                 editorForm.SaveClicked += (sender, annotationText) =>
                 {
                     // 이전 상태 저장
-                    string previousLabel = class2.Text;
+                    string previousLabel = class3.Text;
 
                     // class2 라벨 업데이트
-                    class2.Text = annotationText;
+                    class3.Text = annotationText;
                     
                     // classBtn 가시성 업데이트
                     UpdateClassButtonVisibility();
@@ -3163,12 +3164,12 @@ namespace SAI.SAI.App.Views.Pages
                         double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
                         double accuracy = iou * 100;
 
-                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
                     {
-                        accuracyLabel.Text = "Accuracy: 0%";
+                        accuracyLabel1.Text = "Accuracy: 0%";
                         imageAccuracies[currentImageIndex] = 0;
                     }
                 }
@@ -3185,12 +3186,12 @@ namespace SAI.SAI.App.Views.Pages
                         double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
                         double accuracy = ioa * 100;
 
-                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
                     {
-                        accuracyLabel.Text = "Accuracy: 0%";
+                        accuracyLabel1.Text = "Accuracy: 0%";
                         imageAccuracies[currentImageIndex] = 0;
                     }
                 }
@@ -3201,7 +3202,7 @@ namespace SAI.SAI.App.Views.Pages
             catch (Exception ex)
             {
                 MessageBox.Show($"정확도 계산 중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                accuracyLabel.Text = "Accuracy: 0%";
+                accuracyLabel1.Text = "Accuracy: 0%";
                 imageAccuracies[currentImageIndex] = 0;
             }
         }
@@ -3291,7 +3292,7 @@ namespace SAI.SAI.App.Views.Pages
                         // 바운딩 박스 데이터 삭제
                         imageBoundingBoxes[currentImageIndex].Clear();
                         // class2 라벨 지우기
-                        class2.Text = "";
+                        class3.Text = "";
                         
                         // classBtn 가시성 업데이트
                         UpdateClassButtonVisibility();
@@ -3310,7 +3311,7 @@ namespace SAI.SAI.App.Views.Pages
                         if (imageAccuracies.ContainsKey(currentImageIndex))
                             imageAccuracies[currentImageIndex] = 0;
 
-                        accuracyLabel.Text = "Accuracy: 0%";
+                        accuracyLabel1.Text = "Accuracy: 0%";
 
                         // 화면 갱신
                         pictureBoxImage.Invalidate();
@@ -3344,7 +3345,7 @@ namespace SAI.SAI.App.Views.Pages
                         polygonPoints.Clear();
 
                         // class2 라벨 지우기
-                        class2.Text = "";
+                        class3.Text = "";
                         
                         // classBtn 가시성 업데이트
                         UpdateClassButtonVisibility();
@@ -3363,7 +3364,7 @@ namespace SAI.SAI.App.Views.Pages
                         if (imageAccuracies.ContainsKey(currentImageIndex))
                             imageAccuracies[currentImageIndex] = 0;
 
-                        accuracyLabel.Text = "Accuracy: 0%";
+                        accuracyLabel1.Text = "Accuracy: 0%";
 
                         // 화면 갱신
                         pictureBoxImage.Invalidate();
@@ -3378,7 +3379,7 @@ namespace SAI.SAI.App.Views.Pages
                     if (imageClassifications.ContainsKey(currentImageIndex))
                     {
                         imageClassifications.Remove(currentImageIndex);
-                        class2.Text = "";
+                        class3.Text = "";
                         
                         // classBtn 가시성 업데이트
                         UpdateClassButtonVisibility();
@@ -3438,7 +3439,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 바운딩 박스 가시성 토글
                     isBoundingBoxVisible = !isBoundingBoxVisible;
                     // 시각적 피드백 제공
-                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isBoundingBoxVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel == "Segmentation")
@@ -3446,7 +3447,7 @@ namespace SAI.SAI.App.Views.Pages
                     // 세그멘테이션 가시성 토글
                     isSegmentationVisible = !isSegmentationVisible;
                     // 시각적 피드백 제공
-                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.visibility_off : Properties.Resources.toolVClick;
+                    toolVisible.Image = isSegmentationVisible ? Properties.Resources.tool_visible_basic : Properties.Resources.toolVClick;
                     toolVisible.Text = isSegmentationVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
                 else if (currentLevel == "Classification")
@@ -3456,7 +3457,7 @@ namespace SAI.SAI.App.Views.Pages
                     isSegmentationVisible = true;
 
                     // 버튼을 활성화된 상태로 유지
-                    toolVisible.Image = Properties.Resources.visibility_off;
+                    toolVisible.Image = Properties.Resources.tool_visible_basic;
                     toolVisible.Text = "라벨 숨기기";
 
                     // 메시지 표시 (선택 사항)
@@ -3537,7 +3538,7 @@ namespace SAI.SAI.App.Views.Pages
             // 툴팁 레이블 생성
             tooltipLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             tooltipLabel.ForeColor = System.Drawing.Color.White;
-            tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 9F);
+            tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 13F);
             tooltipLabel.AutoSize = true;
             tooltipLabel.MaximumSize = new Size(230, 0);
             tooltipLabel.TextAlignment = ContentAlignment.MiddleLeft;
@@ -3819,7 +3820,7 @@ namespace SAI.SAI.App.Views.Pages
         private void UpdateClassButtonVisibility()
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
-            classBtn.Visible = !string.IsNullOrEmpty(class2.Text);
+            classBtn.Visible = !string.IsNullOrEmpty(class3.Text);
         }
 
         private void progress0_Click(object sender, EventArgs e)
@@ -3833,6 +3834,21 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         private void accuracyLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toastPopupPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void classBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void totalLevelpanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
