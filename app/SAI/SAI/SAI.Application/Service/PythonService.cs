@@ -186,6 +186,7 @@ namespace SAI.SAI.Application.Service
             public double InferenceTime { get; set; }
             public string Error { get; set; }
         }
+
         // 추론 실행 스크립트
         // 추론 탭에서 추론만 따로 실행할때 사용
         public InferenceResult RunInference(string imagePath, double conf)

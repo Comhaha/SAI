@@ -37,7 +37,6 @@ namespace SAI.SAI.App.Views.Pages
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.pError = new System.Windows.Forms.Panel();
-			this.pErrorToast.SuspendLayout();
             this.tpParentError = new System.Windows.Forms.TableLayoutPanel();
 			this.tpParentError.SuspendLayout();
 			this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
@@ -46,16 +45,16 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpErrorHeader.SuspendLayout();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
-            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pTopCode = new System.Windows.Forms.Panel();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnMinus = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
-            this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -63,8 +62,8 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
-            this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
+            this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
@@ -169,26 +168,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.lbErrorMessage.Name = "lbErrorMessage";
 			this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft; 
 			// 
-			// ibtnPlusCode
-			// 
-			this.ibtnPlusCode.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-			this.ibtnPlusCode.HoverState.ImageSize = new System.Drawing.Size(9, 9);
-			this.ibtnPlusCode.Image = global::SAI.Properties.Resources.btn_plus;
-			this.ibtnPlusCode.ImageOffset = new System.Drawing.Point(0, 0);
-			this.ibtnPlusCode.ImageRotate = 0F;
-			this.ibtnPlusCode.ImageSize = new System.Drawing.Size(14, 14);
-			resources.ApplyResources(this.ibtnPlusCode, "ibtnPlusCode");
-			this.ibtnPlusCode.Name = "ibtnPlusCode";
-			this.ibtnPlusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
-			// 
-			// pBlock
-			// 
-			this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
-			resources.ApplyResources(this.pBlock, "pBlock");
-			this.pBlock.Controls.Add(this.webViewblock);
-			this.pBlock.Controls.Add(this.pTopBlock);
-			this.pBlock.Name = "pBlock";
-			// 
 			// pTopBlock
 			// 
 			this.pTopBlock.BackColor = System.Drawing.Color.Transparent;
@@ -213,7 +192,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnRunModel.ImageSize = new System.Drawing.Size(0, 0);
 			this.btnRunModel.Name = "btnRunModel";
 			this.btnRunModel.Click += new System.EventHandler(this.btnRunModel_Click);
-
             // 
             // pMain
             // 
@@ -231,22 +209,14 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pCode.BackgroundImage = global::SAI.Properties.Resources.p_blockCode;
             resources.ApplyResources(this.pCode, "pCode");
-            this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.ibtnCloseInfer);
+            this.pCode.Controls.Add(this.pTopCode);
             this.pCode.Controls.Add(this.cAlertPanel);
             this.pCode.Controls.Add(this.btnCopy);
             this.pCode.Controls.Add(this.guna2Panel1);
             this.pCode.Controls.Add(this.ucCode２);
             this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Name = "pCode";
-            // 
-            // pTopCode
-            // 
-            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
-            this.pTopCode.BackgroundImage = global::SAI.Properties.Resources.p_topCode;
-            resources.ApplyResources(this.pTopCode, "pTopCode");
-            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pTopCode.Name = "pTopCode";
             // 
             // ibtnCloseInfer
             // 
@@ -261,6 +231,14 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnCloseInfer.Name = "ibtnCloseInfer";
             this.ibtnCloseInfer.PressedState.ImageSize = new System.Drawing.Size(58, 230);
             this.ibtnCloseInfer.Click += new System.EventHandler(this.ibtnCloseInfer_Click);
+            // 
+            // pTopCode
+            // 
+            this.pTopCode.BackColor = System.Drawing.Color.Transparent;
+            this.pTopCode.BackgroundImage = global::SAI.Properties.Resources.p_topCode;
+            resources.ApplyResources(this.pTopCode, "pTopCode");
+            this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pTopCode.Name = "pTopCode";
             // 
             // cAlertPanel
             // 
@@ -386,6 +364,26 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnMinusCode.Name = "ibtnMinusCode";
             this.ibtnMinusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
             this.ibtnMinusCode.UseTransparentBackground = true;
+            // 
+            // ibtnPlusCode
+            // 
+            this.ibtnPlusCode.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnPlusCode.HoverState.ImageSize = new System.Drawing.Size(9, 9);
+            this.ibtnPlusCode.Image = global::SAI.Properties.Resources.btn_plus;
+            this.ibtnPlusCode.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnPlusCode.ImageRotate = 0F;
+            this.ibtnPlusCode.ImageSize = new System.Drawing.Size(14, 14);
+            resources.ApplyResources(this.ibtnPlusCode, "ibtnPlusCode");
+            this.ibtnPlusCode.Name = "ibtnPlusCode";
+            this.ibtnPlusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
+            // 
+            // pBlock
+            // 
+            this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
+            resources.ApplyResources(this.pBlock, "pBlock");
+            this.pBlock.Controls.Add(this.webViewblock);
+            this.pBlock.Controls.Add(this.pTopBlock);
+            this.pBlock.Name = "pBlock";
             // 
             // webViewblock
             // 
@@ -778,7 +776,6 @@ namespace SAI.SAI.App.Views.Pages
             this.Name = "UcPracticeBlockCode";
             this.Load += new System.EventHandler(this.UcPracticeBlockCode_Load);
             this.pErrorToast.ResumeLayout(false);
-            this.pErrorToast.PerformLayout();
             this.pMain.ResumeLayout(false);
             this.pCode.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
@@ -803,6 +800,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpErrorHeader.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

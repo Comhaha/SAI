@@ -62,6 +62,11 @@ public class AiServiceImpl implements AiService {
     1. 즉시 적용 가능한 개선사항
     2. 중장기 개선 방안
     3. 추가 실험 제안
+    
+    ## 주의 사항
+    1. 피드백에 로그, 결과 image url이 노출되서는 안 됩니다.
+    2. 피드백 토큰은 최대 3000 토큰이니 잘 활용하여 작성해주시길 바랍니다.
+    
     """;
 
 // 2) user 프롬프트를 StringBuilder 로 조립
@@ -71,16 +76,15 @@ public class AiServiceImpl implements AiService {
             .append("### 로그 이미지\n")
             .append(logImageUrl).append("\n\n")
             .append("### 결과 이미지\n")
-            .append(resultImageUrl).append("\n\n")
-            .append("### 메모\n")
-            .append(dto.getMemo());
+            .append("모델 추론 threshold 수치 : ").append(dto.getThreshold()).append("\n")
+            .append(resultImageUrl).append("\n\n");
 
         String userPrompt = sb.toString();
 
 // 3) 최종 body 에는 messages 안에 Map.of("content", systemPrompt/userPrompt) 만
         Map<String,Object> body = Map.of(
             "model",       model,
-            "max_tokens",  700,
+            "max_tokens",  3000,
             "temperature", 0.4,
             "messages", List.of(
                 Map.of("role",    "system", "content", systemPrompt),
@@ -98,7 +102,11 @@ public class AiServiceImpl implements AiService {
 
         String feedbackId = UUID.randomUUID().toString();
 
-        AiLog log = new AiLog(feedbackId, dto.getCode(), logImageUrl, resultImageUrl, dto.getMemo(), feedback);
+        AiLog log = new AiLog(
+            feedbackId, dto.getCode(),
+            logImageUrl, dto.getThreshold(),
+            resultImageUrl, dto.getMemo(), feedback);
+
         aiFeedbackRepository.save(log);
 
         String notionRedirectUrl = notionService.generateAuthUrl(feedbackId);

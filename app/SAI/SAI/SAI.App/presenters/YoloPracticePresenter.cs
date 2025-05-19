@@ -1,32 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
-using System.Diagnostics;
 
 namespace SAI.SAI.App.Presenters
 {
-    public class YoloTutorialPresenter
+    public class YoloPracticePresenter
     {
-        private readonly ITutorialInferenceView _itutorialInferenceView;
-        private readonly IYoloTutorialView _yolotutorialview;
+        private readonly IPracticeInferenceView _practiceInferenceView;
+        private readonly IYoloPracticeView _yolopracticeview;
         private readonly PythonService _pythonService;
         private DialogModelProgress _progressDialog;
 
-        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
+        public YoloPracticePresenter(IYoloPracticeView yolopracticeview)
         {
-            _yolotutorialview = yolotutorialview;
+            _yolopracticeview = yolopracticeview;
+            _practiceInferenceView = yolopracticeview as IPracticeInferenceView;
             _pythonService = new PythonService();
 
-            _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
-
-            _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
+            _yolopracticeview.RunButtonClicked += OnRunButtonClicked;
         }
 
         private void OnRunButtonClicked(object sender, EventArgs e)
@@ -34,7 +30,7 @@ namespace SAI.SAI.App.Presenters
             try
             {
                 // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
-                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                if (_yolopracticeview is Control viewControl && viewControl.InvokeRequired)
                 {
                     viewControl.Invoke(new Action(() =>
                     {
@@ -67,7 +63,7 @@ namespace SAI.SAI.App.Presenters
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in OnRunButtonClicked: {ex}");
-                _yolotutorialview.ShowErrorMessage($"실행 중 오류가 발생했습니다: {ex.Message}");
+                _yolopracticeview.ShowErrorMessage($"실행 중 오류가 발생했습니다: {ex.Message}");
             }
         }
 
@@ -81,7 +77,7 @@ namespace SAI.SAI.App.Presenters
                     Console.WriteLine("[DEBUG] 표준 출력 스트림 설정 생략");
 
                     process = _pythonService.RunPythonScript(
-                        PythonService.Mode.Tutorial,
+                        PythonService.Mode.Practice, // 실습 모드
                         onOutput: text =>
                         {
                             try
@@ -90,13 +86,13 @@ namespace SAI.SAI.App.Presenters
 
                                 Console.WriteLine($"Python Output: {text}");
 
-                                if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                                if (_yolopracticeview is Control logControl && logControl.InvokeRequired)
                                 {
-                                    logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(text)));
+                                    logControl.Invoke(new Action(() => _yolopracticeview.AppendLog(text)));
                                 }
                                 else
                                 {
-                                    _yolotutorialview.AppendLog(text);
+                                    _yolopracticeview.AppendLog(text);
                                 }
 
                                 if (text.StartsWith("PROGRESS:"))
@@ -166,13 +162,13 @@ namespace SAI.SAI.App.Presenters
                             {
                                 Console.WriteLine($"Python Exception: {ex}");
 
-                                if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+                                if (_yolopracticeview is Control errorControl && errorControl.InvokeRequired)
                                 {
-                                    errorControl.Invoke(new Action(() => _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}")));
+                                    errorControl.Invoke(new Action(() => _yolopracticeview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}")));
                                 }
                                 else
                                 {
-                                    _yolotutorialview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}");
+                                    _yolopracticeview.ShowErrorMessage($"오류가 발생했습니다: {ex.Message}");
                                 }
                             }
                             catch (Exception innerEx)
@@ -191,15 +187,15 @@ namespace SAI.SAI.App.Presenters
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error in Python script execution: {ex}");
-                    if (_yolotutorialview is Control errorView && errorView.InvokeRequired)
+                    if (_yolopracticeview is Control errorView && errorView.InvokeRequired)
                     {
                         errorView.Invoke(new Action(() =>
-                            _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}")
+                            _yolopracticeview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}")
                         ));
                     }
                     else
                     {
-                        _yolotutorialview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}");
+                        _yolopracticeview.ShowErrorMessage($"스크립트 실행 중 오류가 발생했습니다: {ex.Message}");
                     }
                 }
                 finally
@@ -212,7 +208,6 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
-                                    _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
                                 }
@@ -220,7 +215,6 @@ namespace SAI.SAI.App.Presenters
                         }
                         else
                         {
-                            _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
                         }
@@ -234,7 +228,7 @@ namespace SAI.SAI.App.Presenters
         public void OnInferImageSelected(string imagePath, double conf)
         {
             var result = _pythonService.RunInference(imagePath, conf);
-            _itutorialInferenceView.ShowInferenceResult(result);
+            _practiceInferenceView.ShowPracticeInferResultImage(result);
         }
 
         public PythonService.InferenceResult RunInferenceDirect(string imagePath, double conf)

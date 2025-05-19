@@ -649,7 +649,7 @@
     <value>0, 0, 3, 3</value>
   </data>
   <data name="pTopCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 58</value>
+    <value>599, 58</value>
   </data>
   <data name="pTopCode.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -713,6 +713,24 @@
   </data>
   <data name="pBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="pErrorToast.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="lbErrorMessage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbErrorMessage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lbErrorMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR DemiLight, 9pt</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;pErrorImg.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="webViewblock.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 54</value>
@@ -899,29 +917,11 @@
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="pTopBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="pTopBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 3, 3</value>
-  </data>
-  <data name="pTopBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>480, 58</value>
-  </data>
-  <data name="pTopBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;pTopBlock.Parent" xml:space="preserve">
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>435, 50</value>
@@ -963,7 +963,42 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
+  </data>
+  <data name="pboxTodo2Done.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
+        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
+        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
+        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
+        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
+        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
+        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
+        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
+        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
+        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
+        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
+        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
+</value>
+  </data>
+  <data name="pTopBlock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="pTopBlock.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 3, 3</value>
+  </data>
+  <data name="pTopBlock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 58</value>
+  </data>
+  <data name="pTopBlock.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.Name" xml:space="preserve">
+    <value>pTopBlock</value>
+  </data>
+  <data name="&gt;&gt;pTopBlock.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="pErrorImg.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1663,9 +1698,6 @@
   <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="pErrorToast.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
   <data name="tpParentError.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
@@ -1812,18 +1844,6 @@
   </data>
   <data name="&gt;&gt;lbMissingType.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="lbErrorMessage.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbErrorMessage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lbErrorMessage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR DemiLight, 9pt</value>
-  </data>
-  <data name="lbErrorMessage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="lbErrorMessage.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 80</value>
