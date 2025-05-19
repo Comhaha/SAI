@@ -1188,7 +1188,6 @@ namespace SAI.SAI.App.Views.Pages
 							missingType = "파라미터 \"이미지 파일\"";
 							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
 							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
-							blockErrorMessage(block.type);
 							return true;
 						}
 					}
