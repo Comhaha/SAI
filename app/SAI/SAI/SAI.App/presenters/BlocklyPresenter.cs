@@ -297,7 +297,7 @@ namespace SAI.SAI.App.Presenters
                         var val = kvp.Value;
                         blocklyModel.model = val.ToString();
                     }
-					MessageBox.Show(blocklyModel.model);
+					//MessageBox.Show(blocklyModel.model);
 					break;
 				case "loadModelWithLayer":
 					foreach (var kvp in value)
@@ -309,7 +309,7 @@ namespace SAI.SAI.App.Presenters
 						    blocklyModel.model = val.ToString();
                         }
 					}
-					MessageBox.Show(blocklyModel.model);
+					//MessageBox.Show(blocklyModel.model);
 					break;
 				case "layer":
 					foreach (var kvp in value)
@@ -333,7 +333,7 @@ namespace SAI.SAI.App.Presenters
 						}
 
 					}
-					MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
+					//MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
 					break;
 
 				case "machineLearning":
@@ -352,7 +352,7 @@ namespace SAI.SAI.App.Presenters
                             blocklyModel.imgsz = int.Parse(imgsz);
                         }
                     }
-					MessageBox.Show(blocklyModel.epoch + "\n" + blocklyModel.imgsz);
+					//MessageBox.Show(blocklyModel.epoch + "\n" + blocklyModel.imgsz);
 					break;
                 case "modelInference":
                     foreach (var kvp in value)
@@ -365,7 +365,7 @@ namespace SAI.SAI.App.Presenters
                             blocklyModel.accuracy = Double.Parse(accuracy);
                         }
                     }
-                    MessageBox.Show(blocklyModel.accuracy.ToString());
+                    //MessageBox.Show(blocklyModel.accuracy.ToString());
 					break;
             }
         }

@@ -121,119 +121,31 @@
   <data name="pErrorToast.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="lbErrorMessage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbErrorMessage.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbErrorMessage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 5pt</value>
-  </data>
-  <data name="lbErrorMessage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbErrorMessage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 55</value>
-  </data>
-  <data name="lbErrorMessage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 40</value>
-  </data>
-  <data name="lbErrorMessage.TabIndex" type="System.Int32, mscorlib">
+  <data name="tpParentError.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="lbErrorMessage.Text" xml:space="preserve">
-    <value>“모델 불러오기” 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.
-[pip install] - [모델 불러오기] - [데이터셋 불러오기]</value>
-  </data>
-  <data name="&gt;&gt;lbErrorMessage.Name" xml:space="preserve">
-    <value>lbErrorMessage</value>
-  </data>
-  <data name="&gt;&gt;lbErrorMessage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbErrorMessage.Parent" xml:space="preserve">
-    <value>pErrorToast</value>
-  </data>
-  <data name="&gt;&gt;lbErrorMessage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pErrorImg.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="pErrorImg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 12</value>
-  </data>
-  <data name="pErrorImg.Size" type="System.Drawing.Size, System.Drawing">
-    <value>11, 9</value>
-  </data>
-  <data name="pErrorImg.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;pErrorImg.Name" xml:space="preserve">
-    <value>pErrorImg</value>
-  </data>
-  <data name="&gt;&gt;pErrorImg.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pErrorImg.Parent" xml:space="preserve">
-    <value>pErrorToast</value>
-  </data>
-  <data name="&gt;&gt;pErrorImg.ZOrder" xml:space="preserve">
+  <data name="tpContentError.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="lbMissingType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbMissingType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 6pt</value>
-  </data>
-  <data name="lbMissingType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbMissingType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 29</value>
-  </data>
-  <data name="lbMissingType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 20</value>
-  </data>
-  <data name="lbMissingType.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lbMissingType.Text" xml:space="preserve">
-    <value>Missing "모델 불러오기"</value>
-  </data>
-  <data name="&gt;&gt;lbMissingType.Name" xml:space="preserve">
-    <value>lbMissingType</value>
-  </data>
-  <data name="&gt;&gt;lbMissingType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbMissingType.Parent" xml:space="preserve">
-    <value>pErrorToast</value>
-  </data>
-  <data name="&gt;&gt;lbMissingType.ZOrder" xml:space="preserve">
+  <data name="tpErrorHeader.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="lbErrorType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="lbErrorType.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbErrorType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 5pt</value>
-  </data>
-  <data name="lbErrorType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+    <value>Noto Sans KR, 7.8pt</value>
   </data>
   <data name="lbErrorType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 6</value>
+    <value>38, 0</value>
   </data>
   <data name="lbErrorType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="lbErrorType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 20</value>
+    <value>722, 31</value>
   </data>
   <data name="lbErrorType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -245,22 +157,209 @@
     <value>lbErrorType</value>
   </data>
   <data name="&gt;&gt;lbErrorType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lbErrorType.Parent" xml:space="preserve">
-    <value>pErrorToast</value>
+    <value>tpErrorHeader</value>
   </data>
   <data name="&gt;&gt;lbErrorType.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pError.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="pError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="pError.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="pError.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 31</value>
+  </data>
+  <data name="pError.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;pError.Name" xml:space="preserve">
+    <value>pError</value>
+  </data>
+  <data name="&gt;&gt;pError.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pError.Parent" xml:space="preserve">
+    <value>tpErrorHeader</value>
+  </data>
+  <data name="&gt;&gt;pError.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tpErrorHeader.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tpErrorHeader.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tpErrorHeader.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tpErrorHeader.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tpErrorHeader.Size" type="System.Drawing.Size, System.Drawing">
+    <value>760, 31</value>
+  </data>
+  <data name="tpErrorHeader.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tpErrorHeader.Name" xml:space="preserve">
+    <value>tpErrorHeader</value>
+  </data>
+  <data name="&gt;&gt;tpErrorHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpErrorHeader.Parent" xml:space="preserve">
+    <value>tpContentError</value>
+  </data>
+  <data name="&gt;&gt;tpErrorHeader.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tpErrorHeader.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lbErrorType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="pError" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,95" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="lbMissingType.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lbMissingType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR SemiBold, 10pt</value>
+  </data>
+  <data name="lbMissingType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 34</value>
+  </data>
+  <data name="lbMissingType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>754, 40</value>
+  </data>
+  <data name="lbMissingType.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lbMissingType.Text" xml:space="preserve">
+    <value>MISSING "모델 불러오기"</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Name" xml:space="preserve">
+    <value>lbMissingType</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.Parent" xml:space="preserve">
+    <value>tpContentError</value>
+  </data>
+  <data name="&gt;&gt;lbMissingType.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbErrorMessage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lbErrorMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR DemiLight, 9pt</value>
+  </data>
+  <data name="lbErrorMessage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 80</value>
+  </data>
+  <data name="lbErrorMessage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>754, 72</value>
+  </data>
+  <data name="lbErrorMessage.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lbErrorMessage.Text" xml:space="preserve">
+    <value>“모델 불러오기” 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.
+[pip install] - [모델 불러오기] - [데이터셋 불러오기]</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Name" xml:space="preserve">
+    <value>lbErrorMessage</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.Parent" xml:space="preserve">
+    <value>tpContentError</value>
+  </data>
+  <data name="&gt;&gt;lbErrorMessage.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tpContentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tpContentError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 19</value>
+  </data>
+  <data name="tpContentError.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tpContentError.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="tpContentError.Size" type="System.Drawing.Size, System.Drawing">
+    <value>760, 155</value>
+  </data>
+  <data name="tpContentError.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tpContentError.Name" xml:space="preserve">
+    <value>tpContentError</value>
+  </data>
+  <data name="&gt;&gt;tpContentError.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpContentError.Parent" xml:space="preserve">
+    <value>tpParentError</value>
+  </data>
+  <data name="&gt;&gt;tpContentError.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tpParentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tpParentError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tpParentError.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tpParentError.Size" type="System.Drawing.Size, System.Drawing">
+    <value>845, 194</value>
+  </data>
+  <data name="tpParentError.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tpParentError.Name" xml:space="preserve">
+    <value>tpParentError</value>
+  </data>
+  <data name="&gt;&gt;tpParentError.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpParentError.Parent" xml:space="preserve">
+    <value>pErrorToast</value>
+  </data>
+  <data name="&gt;&gt;tpParentError.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tpParentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpContentError" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,90,Percent,5" /&gt;&lt;Rows Styles="Percent,10,Percent,80,Percent,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="pErrorToast.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 62</value>
+    <value>218, 45</value>
   </data>
   <data name="pErrorToast.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="pErrorToast.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 114</value>
+    <value>845, 194</value>
   </data>
   <data name="pErrorToast.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -275,7 +374,7 @@
     <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="&gt;&gt;pErrorToast.Parent" xml:space="preserve">
-    <value>pBlock</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -668,7 +767,7 @@
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -856,7 +955,7 @@
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;pTopBlock.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="pBlock.Location" type="System.Drawing.Point, System.Drawing">
     <value>435, 50</value>
@@ -967,7 +1066,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="ibtnMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -991,7 +1090,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnMemo.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ibtnInfer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -1015,7 +1114,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnInfer.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
     <value>201, 69</value>
@@ -1039,7 +1138,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnHome.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1063,7 +1162,7 @@
     <value>293, 69</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 56</value>
+    <value>47, 36</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1081,7 +1180,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="pSideInfer.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1413,7 +1512,7 @@
     <value>79, 1024</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 53</value>
+    <value>210, 34</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1440,7 +1539,7 @@
     <value>54, 109</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 37</value>
+    <value>79, 23</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1467,7 +1566,7 @@
     <value>50, 45</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 53</value>
+    <value>93, 34</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1530,7 +1629,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1659,7 +1758,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
