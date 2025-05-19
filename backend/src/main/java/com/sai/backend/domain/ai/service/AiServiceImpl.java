@@ -30,52 +30,61 @@ public class AiServiceImpl implements AiService {
 
     @Override
     public AiFeedbackResponseDto feedback(AiFeedbackRequestDto dto) {
-        //이미지 변환
-        String dataUrl = s3Service.uploadImage(dto.getImage());
+        //log image 저장
+        String logImageUrl = s3Service.uploadImage(dto.getLogImage());
+        //result image 저장
+        String resultImageUrl = s3Service.uploadImage(dto.getResultImage());
 
+        String systemPrompt = """
+    당신은 머신 러닝 모델 평가 전문가야.
+
+    ## 분석 목표
+    1. 제공된 코드와 학습 로그를 분석하여 모델의 학습 과정을 이해
+    2. 결과 이미지를 분석하여 모델의 성능과 문제점 파악
+    3. 구체적이고 실행 가능한 개선 방안 제시
+
+    ## 분석 결과 형식
+    분석 결과는 다음과 같은 구조로 제공해주세요:
+
+    # 모델 분석 결과
+
+    ## 현재 모델 현황
+    - 모델 타입: [분석된 모델 타입]
+    - 학습 방식: [학습 방법 설명]
+    - 주요 특징: [코드에서 발견된 특징들]
+
+    ## 성능 분석
+    - 강점: [잘 수행된 부분]
+    - 약점: [개선이 필요한 부분]
+    - 결과 해석: [이미지 결과 분석]
+
+    ## 개선 방안
+    1. 즉시 적용 가능한 개선사항
+    2. 중장기 개선 방안
+    3. 추가 실험 제안
+    """;
+
+// 2) user 프롬프트를 StringBuilder 로 조립
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 코드\n```python\n")
+            .append(dto.getCode()).append("\n```\n\n")
+            .append("### 로그 이미지\n")
+            .append(logImageUrl).append("\n\n")
+            .append("### 결과 이미지\n")
+            .append(resultImageUrl).append("\n\n")
+            .append("### 메모\n")
+            .append(dto.getMemo());
+
+        String userPrompt = sb.toString();
+
+// 3) 최종 body 에는 messages 안에 Map.of("content", systemPrompt/userPrompt) 만
         Map<String,Object> body = Map.of(
-            "model", model,
-            "max_tokens", 600,
+            "model",       model,
+            "max_tokens",  700,
             "temperature", 0.4,
             "messages", List.of(
-                Map.of("role", "system",
-                    "content", """
-                            당신은 머신 러닝 모델 평가 전문가야.
-                            \s
-                             ## 분석 목표
-                             1. 제공된 코드와 학습 로그를 분석하여 모델의 학습 과정을 이해
-                             2. 결과 이미지를 분석하여 모델의 성능과 문제점 파악
-                             3. 구체적이고 실행 가능한 개선 방안 제시
-                            \s
-                             ## 분석 결과 형식
-                             분석 결과는 다음과 같은 구조로 제공해주세요:
-                            \s
-                             # 모델 분석 결과
-                            \s
-                             ## 현재 모델 현황
-                             - 모델 타입: [분석된 모델 타입]
-                             - 학습 방식: [학습 방법 설명]
-                             - 주요 특징: [코드에서 발견된 특징들]
-                            \s
-                             ## 성능 분석
-                             - 강점: [잘 수행된 부분]
-                             - 약점: [개선이 필요한 부분]
-                             - 결과 해석: [이미지 결과 분석]
-                            \s
-                             ## 개선 방안
-                             1. 즉시 적용 가능한 개선사항
-                             2. 중장기 개선 방안
-                             3. 추가 실험 제안
-                        """),
-
-                Map.of("role", "user",
-                    "content", List.of(
-                        Map.of("type", "text",
-                            "text", "### 코드\n```python\n" + dto.getCode() + "\n```\n"
-                                + "### 로그\n```\n" + dto.getLog() + "\n```"),
-                        Map.of("type", "image_url",
-                            "image_url", Map.of("url", dataUrl))
-                    ))
+                Map.of("role",    "system", "content", systemPrompt),
+                Map.of("role",    "user",   "content", userPrompt)
             )
         );
 
@@ -89,7 +98,7 @@ public class AiServiceImpl implements AiService {
 
         String feedbackId = UUID.randomUUID().toString();
 
-        AiLog log = new AiLog(feedbackId, dto.getCode(), dto.getLog(), dataUrl, feedback);
+        AiLog log = new AiLog(feedbackId, dto.getCode(), logImageUrl, resultImageUrl, dto.getMemo(), feedback);
         aiFeedbackRepository.save(log);
 
         String notionRedirectUrl = notionService.generateAuthUrl(feedbackId);

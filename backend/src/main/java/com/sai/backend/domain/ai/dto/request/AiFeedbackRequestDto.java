@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class AiFeedbackRequestDto {
     private String code;
-    private String log;
-    private MultipartFile image;
+    private MultipartFile logImage;
+    private MultipartFile resultImage;
+    private String memo;
 }

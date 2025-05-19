@@ -44,6 +44,18 @@ public class AdminServiceImpl implements AdminService {
                 return false;
             }
 
+            // 기존 세션 무효화 (있다면)
+            HttpSession existingSession = request.getSession(false);
+            if (existingSession != null) {
+                log.info("Invalidating existing session: {}", existingSession.getId());
+                existingSession.invalidate();
+                SecurityContextHolder.clearContext();
+            }
+
+            // 새 세션 생성
+            HttpSession newSession = request.getSession(true);
+            newSession.setMaxInactiveInterval(10); // 5분 (300초)
+
             // 인증 객체 생성 - ADMIN 권한 부여
             Authentication auth = new UsernamePasswordAuthenticationToken(
                 ADMIN, null,
@@ -52,13 +64,11 @@ public class AdminServiceImpl implements AdminService {
 
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            // 세션 생성 및 설정
-            HttpSession session = request.getSession(true);
-            session.setMaxInactiveInterval(300); // 5분 (300초)
-            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+            // 세션에 SecurityContext 저장
+            newSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                 SecurityContextHolder.getContext());
 
-            log.info("Admin login successful, session created with 5-minute timeout");
+            log.info("Admin login successful, new session created: {} with 5-minute timeout", newSession.getId());
             return true;
 
         } catch (Exception e) {
