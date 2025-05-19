@@ -14,7 +14,8 @@ public class AiLog {
     @Id
     private String id;
     private String code;
-    private String log;
-    private String imageUrl;
+    private String logImageUrl;
+    private String resultImageUrl;
+    private String memo;
     private String feedback;
 }

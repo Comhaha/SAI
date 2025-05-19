@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -48,17 +47,16 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain adminChain(HttpSecurity http) throws Exception {
 
-        http.securityMatcher("/api/admin/**", "/api/token/**")                  // admin 하위 URL만
+        http.securityMatcher("/api/admin/**", "/api/token/**")
             .csrf(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
             .sessionManagement(s -> s
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .sessionFixation().migrateSession()  // 로그인 시 세션 ID 변경
-                .invalidSessionStrategy(customInvalidSessionStrategy())  // 사용자 정의 세션 무효화 전략
-                .maximumSessions(1)  // 동시 세션 1개만 허용
-                .maxSessionsPreventsLogin(false)  // 새 로그인 시 이전 세션 무효화
+                .sessionFixation().migrateSession()
+                .invalidSessionStrategy(customInvalidSessionStrategy())
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
                 .expiredSessionStrategy(event -> {
-                    // 만료된 세션 정리
                     HttpServletResponse response = event.getResponse();
                     HttpServletRequest request = event.getRequest();
 
@@ -75,7 +73,7 @@ public class SecurityConfig {
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         response.setContentType("application/json;charset=UTF-8");
                         response.getWriter().write(
-                            "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다.\",\"code\":401}"
+                            "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401,\"needLogin\":true}"
                         );
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -84,11 +82,11 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/admin/login", "/api/admin/register", "/api/admin/change").permitAll()
-                .requestMatchers("/api/admin/**", "/api/token/**").hasAuthority("ADMIN")  // ADMIN 권한 필요
+                .requestMatchers("/api/admin/**", "/api/token/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form                         // HTML form 대신 JSON-API 사용 시 커스터마이즈
-                .usernameParameter("password")  // 실제로는 password만 받으므로
+            .formLogin(form -> form
+                .usernameParameter("password")
                 .passwordParameter("password")
                 .successHandler(customAuthenticationSuccessHandler())
                 .failureHandler(customAuthenticationFailureHandler())
@@ -103,22 +101,22 @@ public class SecurityConfig {
             )
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((request, response, authException) -> {
-                    // 인증이 필요한 경우 401 응답
+                    // 세션이 만료되었거나 인증이 필요한 경우
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(
-                        "{\"isSuccess\":false,\"message\":\"로그인이 필요합니다.\",\"code\":401}"
+                        "{\"isSuccess\":false,\"message\":\"로그인이 필요합니다.\",\"code\":401,\"needLogin\":true}"
                     );
                 })
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    // 권한이 부족한 경우 403 응답
+                    // 권한이 부족한 경우
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(
                         "{\"isSuccess\":false,\"message\":\"권한이 부족합니다.\",\"code\":403}"
                     );
                 })
-        );
+            );
 
         return http.build();
     }
@@ -142,7 +140,6 @@ public class SecurityConfig {
                 org.springframework.security.web.authentication.
                     UsernamePasswordAuthenticationFilter.class);
 
-
         return http.build();
     }
 
@@ -162,11 +159,17 @@ public class SecurityConfig {
                 // SecurityContext 완전히 클리어
                 SecurityContextHolder.clearContext();
 
+                // /api/admin/login 요청인 경우는 세션 만료 응답을 하지 않고 통과
+                if ("/api/admin/login".equals(request.getRequestURI())) {
+                    // 로그인 요청은 세션이 없어도 정상 처리되어야 함
+                    return;
+                }
+
                 // 세션이 무효화되었을 때의 처리
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(
-                    "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401}"
+                    "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401,\"needLogin\":true}"
                 );
             }
         };
@@ -238,6 +241,5 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
-
     }
 }
