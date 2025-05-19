@@ -174,50 +174,50 @@ def install_packages_block(block_params=None):
 # ================== 2. GPU 확인 및 모델 로드 블록 함수 ==================
 def check_gpu_yolo_load_block(block_params=None):
     """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
-    start_time = time.time()
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', start_time, 0)
-    
-    # install_packages 모듈의 GPU 확인 함수 사용
-    gpu_info = install_packages.check_gpu(start_time)
-    
-    # PyTorch CUDA 설치 확인
-    if not gpu_info.get("available", False):
-        show_tagged_progress('TRAIN', 'GPU를 감지할 수 없습니다. PyTorch CUDA 설치를 시도합니다...', start_time, 30)
-        cuda_success, device = install_packages.install_torch_cuda(start_time)
-        if cuda_success:
-            show_tagged_progress('TRAIN', 'PyTorch CUDA 설치 성공', start_time, 40)
-            # GPU 정보 다시 확인
-            gpu_info = install_packages.check_gpu(start_time)
-        else:
-            show_tagged_progress('TRAIN', 'PyTorch CUDA 설치 실패, CPU 모드로 계속합니다', start_time, 40)
-    
-    # YOLO 모델 로드
-    show_tagged_progress('TRAIN', 'YOLOv8 모델 로드 중...', start_time, 50)
+    # 1. GPU 확인 프로그레스
+    gpu_start_time = time.time()
+    show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', gpu_start_time, 0)
+    gpu_info = install_packages.check_gpu(gpu_start_time)
+    time.sleep(0.5)  # 실제 확인 시간 대체(시뮬레이션)
+    show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
+
+    # 2. block_params에서 model_type 받기 (기본값: 'n')
+    model_type = 'n'
+    if block_params and 'model_type' in block_params:
+        if block_params['model_type'] in ['n', 's', 'm', 'l']:
+            model_type = block_params['model_type']
+
+    # 3. 모델 로드 프로그레스 (별도 start_time 사용)
+    model_load_time = time.time()
+    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
     try:
         from ultralytics import YOLO
-        model_path = os.path.join(base_dir, "yolov8n.pt")
+        model_filename = f'yolov8{model_type}.pt'
+        model_path = os.path.join(base_dir, model_filename)
+        # 모델 로딩 진행 시뮬레이션
+        for progress in [10, 30, 50, 70, 90]:
+            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
+            time.sleep(0.2)
         model = YOLO(model_path)
-        
+        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
+
         # 전역 상태 업데이트
         tutorial_state["model"] = model
         tutorial_state["model_path"] = model_path
-        
-        model_elapsed = time.time() - start_time
-        show_tagged_progress('TRAIN', f'YOLOv8 모델 로드 완료! (소요 시간: {int(model_elapsed)}초)', start_time, 100)
+
+        return {
+            "success": True,
+            "gpu_info": gpu_info,
+            "model_path": model_path,
+            "elapsed_time": time.time() - gpu_start_time
+        }
     except Exception as e:
-        show_tagged_progress('ERROR', f'모델 로드 오류: {e}', start_time, 100)
+        show_tagged_progress('ERROR', f'모델 로드 오류: {e}', model_load_time, 100)
         return {
             "success": False,
             "error": str(e),
             "gpu_info": gpu_info
         }
-    
-    return {
-        "success": True,
-        "gpu_info": gpu_info,
-        "model_path": model_path,
-        "elapsed_time": time.time() - start_time
-    }
 
 # ================== 3. 데이터셋 다운로드 블록 함수 ==================
 def download_dataset_block(block_params=None):
