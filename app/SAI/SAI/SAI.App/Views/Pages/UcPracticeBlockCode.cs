@@ -22,12 +22,13 @@ using System.Diagnostics;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloPracticeView, IPracticeInferenceView
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
     {
         private BlocklyPresenter blocklyPresenter;
         private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
         private YoloPracticePresenter yoloPracticePresenter;
+        private YoloTutorialPresenter yoloTutorialPresenter;
 
         private readonly IMainView mainView;
 
@@ -64,6 +65,7 @@ namespace SAI.SAI.App.Views.Pages
             InitializeComponent();
 
             yoloPracticePresenter = new YoloPracticePresenter(this);
+            yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
@@ -92,7 +94,6 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
-            btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
 
             pInferAccuracy.MouseEnter += (s, e) =>
             {
@@ -337,8 +338,42 @@ namespace SAI.SAI.App.Views.Pages
             ThresholdUtilsPractice.Setup(
                 tbarThreshold,
                 tboxThreshold,
-                (newValue) => currentThreshold = newValue,
+                (newValue) => 
+                {
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
+
+                    // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
+                    Task.Run(() =>
+                    {
+                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                            selectedImagePath,
+                            currentThreshold
+                        );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
+
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            ShowPracticeInferResultImage(result);
+                        }));
+                    });
+                },
                 this
+
             );
         }
 
