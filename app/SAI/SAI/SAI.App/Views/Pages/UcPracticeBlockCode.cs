@@ -61,6 +61,7 @@ namespace SAI.SAI.App.Views.Pages
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
         private PythonService.InferenceResult _result;
+
         public event EventHandler RunButtonClicked;
 
         public UcPracticeBlockCode(IMainView view)
