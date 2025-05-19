@@ -781,7 +781,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             jsBridge = new JsBridge((message, type) =>
             {
-                blocklyPresenter.HandleJsMessage(message, type);
+                blocklyPresenter.HandleJsMessage(message, type, "tutorial");
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -814,9 +814,7 @@ namespace SAI.SAI.App.Views.Pages
                                         string filePath = dialog.FileName.Replace("\\", "/");
                                         string escapedFilePath = JsonSerializer.Serialize(filePath);
                                         string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
-
-                                        blocklyModel.imgPath = filePath;
-
+                                        
                                         string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
