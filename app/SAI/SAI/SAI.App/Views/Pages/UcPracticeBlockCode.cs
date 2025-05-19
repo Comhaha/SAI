@@ -1179,13 +1179,23 @@ namespace SAI.SAI.App.Views.Pages
             {
                 folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
                 folderDialog.ShowNewFolderButton = true;
-                
+
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
 
+                    // 비동기 복사 (UI 멈춤 방지)
+                    await CopyModelAsync(_modelPath, destPath);
 
-                throw new NotImplementedException();
+                    MessageBox.Show(
+                        $"모델이 복사되었습니다.\n{destPath}",
+                        "완료",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+
+                    throw new NotImplementedException();
+                }
             }
         }
 
@@ -1198,15 +1208,8 @@ namespace SAI.SAI.App.Views.Pages
         public void SetLogVisible(bool visible)
         {
         }
-                    // 비동기 복사 (UI 멈춤 방지)
-                    await CopyModelAsync(_modelPath, destPath);
-
-                    MessageBox.Show(
-                        $"모델이 복사되었습니다.\n{destPath}",
-                        "완료",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
+                    
+                
         public void ShowErrorMessage(string message)
         {
             if (InvokeRequired)
