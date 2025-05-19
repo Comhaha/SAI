@@ -16,22 +16,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
+using SAI.SAI.Application.Service;
+using System.Diagnostics;
 
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IPracticeInferenceView
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
     {
         private BlocklyPresenter blocklyPresenter;
         private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
+        private YoloPracticePresenter yoloPracticePresenter;
+        private YoloTutorialPresenter yoloTutorialPresenter;
 
         private readonly IMainView mainView;
 
         private BlocklyModel blocklyModel;
 
         public event EventHandler HomeButtonClicked;
-
         public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
         public event EventHandler AddBlockButtonDoubleClicked;
         private JsBridge jsBridge;
@@ -55,9 +58,14 @@ namespace SAI.SAI.App.Views.Pages
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
+        public event EventHandler RunButtonClicked;
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
+
+            yoloPracticePresenter = new YoloPracticePresenter(this);
+            yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
@@ -331,8 +339,42 @@ namespace SAI.SAI.App.Views.Pages
             ThresholdUtilsPractice.Setup(
                 tbarThreshold,
                 tboxThreshold,
-                (newValue) => currentThreshold = newValue,
+                (newValue) => 
+                {
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
+
+                    // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
+                    Task.Run(() =>
+                    {
+                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                            selectedImagePath,
+                            currentThreshold
+                        );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
+
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            ShowPracticeInferResultImage(result);
+                        }));
+                    });
+                },
                 this
+
             );
         }
 
@@ -840,13 +882,12 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			if (blocklyModel.blockTypes != null)
 			{
-				// 블록 순서가 맞는지 판단
-				if (!isBlockError()) // 순서가 맞을 떄
+				if (!isBlockError()) // 순서가 맞을 때
 				{
 					// 파이썬 코드 실행
-					//RunButtonClicked?.Invoke(sender, e);
+					RunButtonClicked?.Invoke(sender, e);
 				}
-				else // 순서가 틀릴 때
+				else
 				{
 					ShowToastMessage(errorType, missingType, errorMessage);
 				}
@@ -1008,25 +1049,57 @@ namespace SAI.SAI.App.Views.Pages
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
             //var practiceView = new UcPracticeBlockCode(mainView);
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
-        public void ShowPracticeInferResultImage(System.Drawing.Image resultImage)
+        public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowPracticeInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowPracticeInferResultImage(result)));
                 return;
             }
 
             dialogLoadingInfer?.Close();
             dialogLoadingInfer = null;
 
-            if (resultImage != null)
+            if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(494, 278);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
+                if (File.Exists(result.ResultImage))
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+
+                            // ✅ 직접 PictureBox에 표시
+                            pboxInferAccuracy.Size = new Size(494, 278);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = image;
+                            pboxInferAccuracy.Visible = true;
+                            btnSelectInferImage.Visible = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+        
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
@@ -1119,7 +1192,33 @@ namespace SAI.SAI.App.Views.Pages
                         "완료",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
+
+
+                    throw new NotImplementedException();
                 }
+            }
+        }
+
+        public void ClearLog()
+        {
+            // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Debug.WriteLine("\n" + new string('-', 50) + "\n");
+        }
+
+        public void SetLogVisible(bool visible)
+        {
+        }
+                    
+                
+        public void ShowErrorMessage(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1130,6 +1229,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 존재할 경우 덮어쓰기(true)
                 File.Copy(source, destination, overwrite: true);
             });
+        }
+
+        public void AppendLog(string text)
+        {
+            Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
     }
 }
