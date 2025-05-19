@@ -257,7 +257,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            guna2ImageButton1.Click += (s, e) =>
+            btnMinus.Click += (s, e) =>
             {
                 try
                 {
@@ -899,12 +899,6 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
         }
-
-        private void webViewCode_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
@@ -1085,6 +1079,5 @@ namespace SAI.SAI.App.Views.Pages
             };
             timer.Start();
         }
-
     }
 }
