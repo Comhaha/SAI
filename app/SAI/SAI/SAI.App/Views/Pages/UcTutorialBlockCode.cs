@@ -1173,13 +1173,6 @@ namespace SAI.SAI.App.Views.Pages
                     if (block == null) continue;
 
                     string blockType = block.type;
-                    if (!checkBlockPosition(blockType, i))
-                    {
-                        blockErrorMessage(blockType);
-                        return true;
-                    }
-
-
 					if (blockType == "imgPath")
 					{
 						if (string.IsNullOrEmpty(blocklyModel.imgPath))
@@ -1192,6 +1185,13 @@ namespace SAI.SAI.App.Views.Pages
 							return true;
 						}
 					}
+                    if (!checkBlockPosition(blockType, i))
+                    {
+                        blockErrorMessage(blockType);
+                        return true;
+                    }
+
+
 				}
             }
             else if (blocklyModel.blockTypes.Count < 9)

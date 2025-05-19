@@ -1085,6 +1085,5 @@ namespace SAI.SAI.App.Views.Pages
             };
             timer.Start();
         }
-
-    }
+	}
 }

@@ -385,7 +385,6 @@ namespace SAI.SAI.App.Presenters
                             if(file == "파일 선택" || file == "")
                             {
                                 file = null;
-                                break;
                             }
                             blocklyModel.imgPath = file;
 						}
