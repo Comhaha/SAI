@@ -30,76 +30,19 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void InitializeComponent()
         {
-			this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
-			this.tpParentError = new System.Windows.Forms.TableLayoutPanel();
-			this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
-			this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
-			this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.pError = new System.Windows.Forms.Panel();
-			this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.pErrorToast.SuspendLayout();
-			this.tpParentError.SuspendLayout();
-			this.tpContentError.SuspendLayout();
-			this.tpErrorHeader.SuspendLayout();
-			// 
-			// pErrorToast
-			// 
-			this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
-			resources.ApplyResources(this.pErrorToast, "pErrorToast");
-			this.pErrorToast.Controls.Add(this.tpParentError);
-			this.pErrorToast.Name = "pErrorToast";
-			// 
-			// tpParentError
-			// 
-			resources.ApplyResources(this.tpParentError, "tpParentError");
-			this.tpParentError.Controls.Add(this.tpContentError, 1, 1);
-			this.tpParentError.Name = "tpParentError";
-			// 
-			// tpContentError
-			// 
-			resources.ApplyResources(this.tpContentError, "tpContentError");
-			this.tpContentError.Controls.Add(this.tpErrorHeader, 0, 0);
-			this.tpContentError.Controls.Add(this.lbMissingType, 0, 1);
-			this.tpContentError.Controls.Add(this.lbErrorMessage, 0, 2);
-			this.tpContentError.Name = "tpContentError";
-			// 
-			// tpErrorHeader
-			// 
-			resources.ApplyResources(this.tpErrorHeader, "tpErrorHeader");
-			this.tpErrorHeader.Controls.Add(this.lbErrorType, 1, 0);
-			this.tpErrorHeader.Controls.Add(this.pError, 0, 0);
-			this.tpErrorHeader.Name = "tpErrorHeader";
-			// 
-			// lbErrorType
-			// 
-			resources.ApplyResources(this.lbErrorType, "lbErrorType");
-			this.lbErrorType.Name = "lbErrorType";
-			this.lbErrorType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// pError
-			// 
-			this.pError.BackgroundImage = global::SAI.Properties.Resources.icon_error;
-			resources.ApplyResources(this.pError, "pError");
-			this.pError.Name = "pError";
-			// 
-			// lbMissingType
-			// 
-			resources.ApplyResources(this.lbMissingType, "lbMissingType");
-			this.lbMissingType.Name = "lbMissingType";
-			this.lbMissingType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lbErrorMessage
-			// 
-			resources.ApplyResources(this.lbErrorMessage, "lbErrorMessage");
-			this.lbErrorMessage.Name = "lbErrorMessage";
-			this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.Controls.Add(this.pErrorToast);
-			this.pErrorToast.ResumeLayout(false);
-			this.tpParentError.ResumeLayout(false);
-			this.tpContentError.ResumeLayout(false);
-			this.tpErrorHeader.ResumeLayout(false);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
+            this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
+            this.tpParentError = new System.Windows.Forms.TableLayoutPanel();
+            this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
+            this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
+            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.pError = new System.Windows.Forms.Panel();
+            this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.pErrorToast.SuspendLayout();
+            this.tpParentError.SuspendLayout();
+            this.tpContentError.SuspendLayout();
+            this.tpErrorHeader.SuspendLayout();
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pToDoList = new Guna.UI2.WinForms.Guna2Panel();
@@ -127,7 +70,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.pErrorImg = new Guna.UI2.WinForms.Guna2Panel();
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
@@ -191,10 +133,68 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.pMemo.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+
+			// 
+			// pErrorToast
+			// 
+			this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
+			resources.ApplyResources(this.pErrorToast, "pErrorToast");
+			this.pErrorToast.Controls.Add(this.tpParentError);
+			this.pErrorToast.Name = "pErrorToast";
+			// 
+			// tpParentError
+			// 
+			resources.ApplyResources(this.tpParentError, "tpParentError");
+			this.tpParentError.Controls.Add(this.tpContentError, 1, 1);
+			this.tpParentError.Name = "tpParentError";
+			// 
+			// tpContentError
+			// 
+			resources.ApplyResources(this.tpContentError, "tpContentError");
+			this.tpContentError.Controls.Add(this.tpErrorHeader, 0, 0);
+			this.tpContentError.Controls.Add(this.lbMissingType, 0, 1);
+			this.tpContentError.Controls.Add(this.lbErrorMessage, 0, 2);
+			this.tpContentError.Name = "tpContentError";
+			// 
+			// tpErrorHeader
+			// 
+			resources.ApplyResources(this.tpErrorHeader, "tpErrorHeader");
+			this.tpErrorHeader.Controls.Add(this.lbErrorType, 1, 0);
+			this.tpErrorHeader.Controls.Add(this.pError, 0, 0);
+			this.tpErrorHeader.Name = "tpErrorHeader";
+			// 
+			// lbErrorType
+			// 
+			resources.ApplyResources(this.lbErrorType, "lbErrorType");
+			this.lbErrorType.Name = "lbErrorType";
+			this.lbErrorType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pError
+			// 
+			this.pError.BackgroundImage = global::SAI.Properties.Resources.icon_error;
+			resources.ApplyResources(this.pError, "pError");
+			this.pError.Name = "pError";
+			// 
+			// lbMissingType
+			// 
+			resources.ApplyResources(this.lbMissingType, "lbMissingType");
+			this.lbMissingType.Name = "lbMissingType";
+			this.lbMissingType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lbErrorMessage
+			// 
+			resources.ApplyResources(this.lbErrorMessage, "lbErrorMessage");
+			this.lbErrorMessage.Name = "lbErrorMessage";
+			this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.Controls.Add(this.pErrorToast);
+			this.pErrorToast.ResumeLayout(false);
+			this.tpParentError.ResumeLayout(false);
+			this.tpContentError.ResumeLayout(false);
+			this.tpErrorHeader.ResumeLayout(false);
+			// 
+			// lblTitle
+			// 
+			this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.lblTitle, "lblTitle");
             this.lblTitle.Name = "lblTitle";
             // 
@@ -474,7 +474,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
             resources.ApplyResources(this.pErrorToast, "pErrorToast");
             this.pErrorToast.Controls.Add(this.lbErrorMessage);
-            this.pErrorToast.Controls.Add(this.pErrorImg);
             this.pErrorToast.Controls.Add(this.lbMissingType);
             this.pErrorToast.Controls.Add(this.lbErrorType);
             this.pErrorToast.Name = "pErrorToast";
@@ -485,12 +484,6 @@ namespace SAI.SAI.App.Views.Pages
             this.lbErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.lbErrorMessage.Name = "lbErrorMessage";
             this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pErrorImg
-            // 
-            this.pErrorImg.BackgroundImage = global::SAI.Properties.Resources.icon_error;
-            resources.ApplyResources(this.pErrorImg, "pErrorImg");
-            this.pErrorImg.Name = "pErrorImg";
             // 
             // lbMissingType
             // 
@@ -1031,7 +1024,7 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel pMemo;
         private Guna.UI2.WinForms.Guna2TextBox tboxMemo;
         private Guna.UI2.WinForms.Guna2Panel pThreshold;
-	private Guna.UI2.WinForms.Guna2Button btnRunModel;
+        private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private UcCsvChart ucCsvChart1;
         private SAI.App.Views.Pages.UcCode ucCode1;
         private Guna.UI2.WinForms.Guna2Button btnTrash;
@@ -1047,12 +1040,13 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel cAlertPanel;
         private Guna.UI2.WinForms.Guna2Panel mAlertPanel;
         private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
-		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
-		private System.Windows.Forms.TableLayoutPanel tpParentError;
-		private System.Windows.Forms.TableLayoutPanel tpContentError;
-		private System.Windows.Forms.TableLayoutPanel tpErrorHeader;
-		private SAI.App.Views.Pages.AutoSizeLabel lbErrorType;
-		private System.Windows.Forms.Panel pError;
-		private SAI.App.Views.Pages.AutoSizeLabel lbMissingType;
-		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
+        private Guna.UI2.WinForms.Guna2Panel pErrorToast;
+        private System.Windows.Forms.TableLayoutPanel tpParentError;
+        private System.Windows.Forms.TableLayoutPanel tpContentError;
+        private System.Windows.Forms.TableLayoutPanel tpErrorHeader;
+        private SAI.App.Views.Pages.AutoSizeLabel lbErrorType;
+        private System.Windows.Forms.Panel pError;
+        private SAI.App.Views.Pages.AutoSizeLabel lbMissingType;
+        private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
+    }
 }
