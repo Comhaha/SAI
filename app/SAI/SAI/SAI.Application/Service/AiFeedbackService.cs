@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SAI.SAI.Application.Dto;
 using System.IO;
 using System.Web.Script.Serialization;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.Application.Service
 {
@@ -31,29 +32,18 @@ namespace SAI.SAI.Application.Service
 
             using (var form = new MultipartFormDataContent())
             {
-                form.Add(new StringContent(dto.code, Encoding.UTF8), nameof(dto.code));
-                form.Add(new StringContent(dto.log, Encoding.UTF8), nameof(dto.log));
-
-                if (!string.IsNullOrWhiteSpace(dto.image) && File.Exists(dto.image))
+                var codePath = Path.GetFullPath(dto.code);
+                if (File.Exists(codePath))
                 {
-                    var fileStream = File.OpenRead(dto.image);
-                    var streamPart = new StreamContent(fileStream);
-
-                    // 파일 확장자 기반으로 Content-Type 설정
-                    var extension = Path.GetExtension(dto.image)?.ToLower();
-                    string contentType = "application/octet-stream"; // 기본값
-
-                    if (extension == ".jpg" || extension == ".jpeg")
-                        contentType = "image/jpeg";
-                    else if (extension == ".png")
-                        contentType = "image/png";
-                    else if (extension == ".gif")
-                        contentType = "image/gif";
-
-                    streamPart.Headers.ContentType = new MediaTypeHeaderValue(contentType);
-
-                    form.Add(streamPart, nameof(dto.image), Path.GetFileName(dto.image));
+                    // (A) 텍스트로 읽어서 StringContent
+                    var codeText = File.ReadAllText(codePath, Encoding.UTF8);
+                    form.Add(new StringContent(codeText, Encoding.UTF8), "code");
                 }
+
+                AddImagePart(form, dto.logImage, "logImage");
+                AddImagePart(form, dto.resultImage, "resultImage");
+
+                form.Add(new StringContent(dto.memo, Encoding.UTF8), "memo");
 
                 var response = await _http.PostAsync("/api/ai/feedback", form)
                                           .ConfigureAwait(false);
@@ -66,6 +56,38 @@ namespace SAI.SAI.Application.Service
                 var serializer = new JavaScriptSerializer();
                 return serializer.Deserialize<BaseResponse<AiFeedbackResponseDto>>(json);
             }
+        }
+
+        private void AddImagePart(MultipartFormDataContent form, string path, string partName)
+        {
+            Console.WriteLine($"[DEBUG] Attaching image part '{partName}', relative-path='{path}'");
+
+            if (string.IsNullOrWhiteSpace(path))
+                return;
+
+            var fullPath = Path.GetFullPath(path);
+
+            Console.WriteLine($"[DEBUG] → fullPath = '{fullPath}', Exists = {File.Exists(fullPath)}");
+            if (!File.Exists(fullPath))
+                return;
+
+            var fileStream = File.OpenRead(fullPath);
+            var streamContent = new StreamContent(fileStream);
+
+            var extension = Path.GetExtension(fullPath)?.ToLower();
+            string contentType = "application/octet-stream"; // 기본값
+
+            if (extension == ".jpg" || extension == ".jpeg")
+                contentType = "image/jpeg";
+            else if (extension == ".png")
+                contentType = "image/png";
+            else if (extension == ".gif")
+                contentType = "image/gif";
+
+            streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
+            // form 필드에 추가 (form.Dispose() 시 streamContent, fileStream 모두 닫힙니다)
+            form.Add(streamContent, partName, Path.GetFileName(fullPath));
         }
 
         public void Dispose() => _http.Dispose();
