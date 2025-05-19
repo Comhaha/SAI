@@ -34,7 +34,7 @@ function Content3() {
               </a>
             </div>
           </div>
-          <div className="flex-shrink-0 w-1/2 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
+          <div className="flex-shrink-0 w-1/3 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
             <img
               src={content11}
               alt="기초 튜토리얼"
@@ -65,7 +65,7 @@ function Content3() {
               />
             </a>
           </div>
-          <div className="flex-shrink-0 w-1/2 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
+          <div className="flex-shrink-0 w-1/3 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
             <img src={content22} alt="실전 연습" className="w-full h-auto object-cover rounded-4" />
           </div>
         </div>
@@ -92,7 +92,7 @@ function Content3() {
               />
             </a>
           </div>
-          <div className="flex-shrink-0 w-1/2 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
+          <div className="flex-shrink-0 w-1/3 max-[900px]:w-full max-[900px]:mx-auto flex items-center justify-center bg-gray-200 shadow-md select-none">
             <img
               src={content23}
               alt="보고서 작성"

@@ -40,14 +40,14 @@ function Content2() {
               {...fadeInUpImg}
               src={content11_1}
               alt="AI 곡선 그래프 1"
-              className="w-full h-auto max-[900px]:w-1/2"
+              className="w-4/5 h-auto max-[900px]:w-1/2"
               style={{ minHeight: 0 }}
             />
             <motion.img
               {...fadeInUpImg}
               src={content11_2}
               alt="AI 곡선 그래프 2"
-              className="w-full h-auto max-[900px]:w-1/2"
+              className="w-4/5 h-auto max-[900px]:w-1/2"
               style={{ minHeight: 0 }}
             />
           </div>
