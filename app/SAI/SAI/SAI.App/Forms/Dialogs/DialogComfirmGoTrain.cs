@@ -1,4 +1,5 @@
-﻿using SAI.SAI.App.Presenters;
+﻿using SAI.SAI.App.Models;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,10 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
 			btnOk.Click += (s, e) => { 
+				var blocklyModel = BlocklyModel.Instance;
+				blocklyModel.blockAllCode = "";
+				blocklyModel.blockCode = "";
+				blocklyModel.imgPath = "";
 				presenter.clickGoTrain();
 				this.Close();
 			};

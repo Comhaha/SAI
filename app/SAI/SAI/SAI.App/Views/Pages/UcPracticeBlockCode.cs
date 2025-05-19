@@ -16,22 +16,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
+using SAI.SAI.Application.Service;
+using System.Diagnostics;
 
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IPracticeInferenceView
+    public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
     {
         private BlocklyPresenter blocklyPresenter;
         private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
+        private YoloPracticePresenter yoloPracticePresenter;
+        private YoloTutorialPresenter yoloTutorialPresenter;
 
         private readonly IMainView mainView;
 
         private BlocklyModel blocklyModel;
 
         public event EventHandler HomeButtonClicked;
-
         public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
         public event EventHandler AddBlockButtonDoubleClicked;
         private JsBridge jsBridge;
@@ -50,16 +53,28 @@ namespace SAI.SAI.App.Views.Pages
 		private string missingType = "";
 		private string errorType = "";
 
+        private MemoPresenter memoPresenter;
+
 		private CancellationTokenSource _toastCancellationSource;
 
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
+        private PythonService.InferenceResult _result;
+        public event EventHandler RunButtonClicked;
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
+            yoloPracticePresenter = new YoloPracticePresenter(this);
+            yoloTutorialPresenter = new YoloTutorialPresenter(this);
+
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+            memoPresenter = new MemoPresenter();
+
+            tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
@@ -82,7 +97,7 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
-            btnSelectInferImage.Size = new Size(329, 185);  // pInferAccuracy와 동일한 크기
+            btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
@@ -257,7 +272,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            guna2ImageButton1.Click += (s, e) =>
+            btnMinus.Click += (s, e) =>
             {
                 try
                 {
@@ -331,8 +346,42 @@ namespace SAI.SAI.App.Views.Pages
             ThresholdUtilsPractice.Setup(
                 tbarThreshold,
                 tboxThreshold,
-                (newValue) => currentThreshold = newValue,
+                (newValue) => 
+                {
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
+
+                    // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
+                    Task.Run(() =>
+                    {
+                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                            selectedImagePath,
+                            currentThreshold
+                        );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
+
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            ShowPracticeInferResultImage(result);
+                        }));
+                    });
+                },
                 this
+
             );
         }
 
@@ -371,14 +420,13 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion())
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value/100.0;
+
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
-        }
-        private void ibtnDone_Click(object sender, EventArgs e)
-        {
-            ucShowDialogPresenter.clickFinish();
         }
 
         public void showDialog(Form dialog)
@@ -392,7 +440,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             jsBridge = new JsBridge((message, type) =>
             {
-                blocklyPresenter.HandleJsMessage(message, type);
+                blocklyPresenter.HandleJsMessage(message, type, "practice");
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -593,7 +641,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion())
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
+
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -840,13 +891,12 @@ namespace SAI.SAI.App.Views.Pages
 		{
 			if (blocklyModel.blockTypes != null)
 			{
-				// 블록 순서가 맞는지 판단
-				if (!isBlockError()) // 순서가 맞을 떄
+				if (!isBlockError()) // 순서가 맞을 때
 				{
 					// 파이썬 코드 실행
-					//RunButtonClicked?.Invoke(sender, e);
+					RunButtonClicked?.Invoke(sender, e);
 				}
-				else // 순서가 틀릴 때
+				else
 				{
 					ShowToastMessage(errorType, missingType, errorMessage);
 				}
@@ -903,12 +953,6 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
         }
-
-        private void webViewCode_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
@@ -980,7 +1024,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -1014,24 +1058,65 @@ namespace SAI.SAI.App.Views.Pages
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
             //var practiceView = new UcPracticeBlockCode(mainView);
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
-        public void ShowPracticeInferResultImage(System.Drawing.Image resultImage)
+        public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowPracticeInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowPracticeInferResultImage(result)));
                 return;
             }
 
             dialogLoadingInfer?.Close();
             dialogLoadingInfer = null;
 
-            if (resultImage != null)
+            if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(287, 185);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
+                if (File.Exists(result.ResultImage))
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+
+                            // ✅ 직접 PictureBox에 표시
+                            pboxInferAccuracy.Size = new Size(494, 278);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = image;
+                            pboxInferAccuracy.Visible = true;
+                            btnSelectInferImage.Visible = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+        
+        }
+
+        private void tboxMemo_TextChanged(object sender, EventArgs e)
+        {
+            // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
+            if (memoPresenter != null)
+            {
+                memoPresenter.SaveMemoText(tboxMemo.Text);
             }
         }
 
@@ -1088,6 +1173,85 @@ namespace SAI.SAI.App.Views.Pages
                 timer.Dispose();
             };
             timer.Start();
+        }
+
+        private async void btnSaveModel_Click(object sender, EventArgs e)
+        {
+            string modelFileName = "best.pt";
+
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            //모델 경로 다시 물어보기
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+            if (!File.Exists(_modelPath))
+            {
+                MessageBox.Show(
+                    $"모델 파일을 찾을 수 없습니다.\n{_modelPath}",
+                    "오류",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
+                folderDialog.ShowNewFolderButton = true;
+
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
+
+                    // 비동기 복사 (UI 멈춤 방지)
+                    await CopyModelAsync(_modelPath, destPath);
+
+                    MessageBox.Show(
+                        $"모델이 복사되었습니다.\n{destPath}",
+                        "완료",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        public void ClearLog()
+        {
+            // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Debug.WriteLine("\n" + new string('-', 50) + "\n");
+        }
+
+        public void SetLogVisible(bool visible)
+        {
+        }
+                    
+                
+        public void ShowErrorMessage(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Task CopyModelAsync(string source, string destination)
+        {
+            return Task.Run(() =>
+            {
+                // 존재할 경우 덮어쓰기(true)
+                File.Copy(source, destination, overwrite: true);
+            });
+        }
+
+        public void AppendLog(string text)
+        {
+            Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
     }
 }

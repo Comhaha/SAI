@@ -39,7 +39,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             // 초기값 설정
             Accuracy = accuracy;
-            annotationText.Text = initialText;
+            annotationText1.Text = initialText;
             pleaseNamePanel.Visible = false; // 초기에는 경고 패널 숨김
 
             // 초기 상태 설정
@@ -50,50 +50,28 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.MouseDown += AnnotationEditorForm_MouseDown;
             this.MouseMove += AnnotationEditorForm_MouseMove;
             this.MouseUp += AnnotationEditorForm_MouseUp;
-            // ------------------------------------
-
-            // 만약 폼 전체가 아니라 특정 Panel 위에서만 드래그하고 싶다면,
-            // 그 Panel의 MouseDown, MouseMove, MouseUp 이벤트를 등록.
-            // 예를 들어, 'titlePanel'이라는 Panel이 있다면 아래처럼:
-            // titlePanel.MouseDown += AnnotationEditorForm_MouseDown;
-            // titlePanel.MouseMove += AnnotationEditorForm_MouseMove;
-            // titlePanel.MouseUp += AnnotationEditorForm_MouseUp;
-        }
-
-        // 정확도 라벨 업데이트 메서드
-        public void UpdateAccuracyLabel()
-        {
-            // TODO: 정확도 표시 라벨이 필요하면 디자이너에서 추가하고 코드 업데이트
-            // 예시: if (accuracyLabel != null) accuracyLabel.Text = $"정확도: {Accuracy:P2}";
         }
 
         // 정확도 설정 메서드
         public void SetAccuracy(double accuracy)
         {
             Accuracy = accuracy;
-            UpdateAccuracyLabel();
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {   
-            if (!annotationText.Text.Trim().Any())
+            if (!annotationText1.Text.Trim().Any())
             {
                 pleaseNamePanel.Visible = true; // 텍스트가 비어있으면 경고 패널 표시
                 return;
             }
-            AnnotationText = annotationText.Text;
+            AnnotationText = annotationText1.Text;
             IsSaved = true;
 
             // 저장 이벤트 발생 - 텍스트 전달
             SaveClicked?.Invoke(this, AnnotationText);
 
             this.Close();
-        }
-
-        private void AnnotationEditorForm_Load(object sender, EventArgs e)
-        {
-            // 폼 로드 시 초기화
-            UpdateAccuracyLabel(); // 폼 로드 시 정확도 라벨 업데이트
         }
 
         // --- 폼 드래그 이벤트 핸들러 구현 ---
@@ -130,6 +108,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
 
         }
+
+        private void AnnotationEditorForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
         // ------------------------------------
     }
 }

@@ -25,7 +25,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             ButtonUtils.SetupButton(btnClose, "btn_yellow_close_train_clicked", "btn_yellow_close_train");
             btnClose.Click += btnClose_Click;  // 이벤트 핸들러 등록
 
-            guna2ProgressBar1.ProgressColor = ColorTranslator.FromHtml("#55A605"); // 내부 진행 색상
+            progressBarModelLearning.ProgressColor = ColorTranslator.FromHtml("#55A605"); // 내부 진행 색상
         }
 
         public void UpdateProgress(double progress, string message)
@@ -36,7 +36,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            guna2ProgressBar1.Value = (int)progress;
+            progressBarModelLearning.Value = (int)progress;
             lblStatus.Text = message;
         }
 
@@ -48,7 +48,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            guna2ProgressBar1.Value = 0;
+			progressBarModelLearning.Value = 0;
             lblStatus.Text = "준비 중...";
         }
 

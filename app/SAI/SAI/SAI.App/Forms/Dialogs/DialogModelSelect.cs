@@ -18,7 +18,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             InitializeComponent();
 
-			DialogUtils.ApplyDefaultStyle(this, Color.Gray);
+			DialogUtils.ApplyDefaultStyle(this, Color.Beige);
 
 			string clicked = "btnYolo";
 			clicked = "btnYolo";
@@ -227,6 +227,6 @@ namespace SAI.SAI.App.Forms.Dialogs
 			var view = this.Owner as IMainView;
 			presenter = new DialogLoadPagePresenter(view);
 		}
-	}
+    }
 
 }

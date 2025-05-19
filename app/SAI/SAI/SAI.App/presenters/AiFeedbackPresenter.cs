@@ -31,8 +31,10 @@ namespace SAI.SAI.App.Presenters
                 var dto = new AiFeedbackRequestDto
                 {
                     code = _view.CodeText,
-                    log = _view.LogText,
-                    image = _view.ImagePath
+                    logImage = _view.LogImagePath,
+                    resultImage = _view.ResultImagePath,
+                    memo = _view.memo,
+                    threshold = _view.thresholdValue
                 };
 
                 var result = await _service.SendAsync(dto);

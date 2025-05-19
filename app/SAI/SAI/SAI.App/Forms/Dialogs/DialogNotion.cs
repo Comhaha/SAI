@@ -23,13 +23,17 @@ namespace SAI.SAI.App.Forms.Dialogs
     {
         //webView2.Visible = false 되어 있어요. 로직 작성하실 때
         // secretkey 입력하고 맞으면 pInfo.Visible = false; webView2.Visible = true; 하고
+
+        private readonly string _initialMemo;
+        private readonly double _thresholdValue;
+        private readonly string _resultImagePath;
         private AiFeedbackPresenter _feedPresenter;
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
 
         private const string redirectBase = "http://localhost:8080/api/notion/callback";
 
-        public DialogNotion()
+        public DialogNotion(string memo, double thresholdValue, string resultImagePath)
         {
             InitializeComponent();
             pInfo.BackColor = ColorTranslator.FromHtml("#1D1D1D");
@@ -40,14 +44,25 @@ namespace SAI.SAI.App.Forms.Dialogs
             btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(authButton, "btn_auth_clicked", "btn_auth");
 
+            _initialMemo = memo;
+            _thresholdValue = thresholdValue;
+            _resultImagePath = resultImagePath;
+
             InitWebOnce();
         }
 
         /* ---------------- IAiFeedbackView ---------------- */
-        //경로 넣기
-        public string CodeText => "print(\"hello world\")";
-        public string LogText => "log";
-        public string ImagePath => "C:\\Users\\SSAFY\\Downloads\\logo.jpg";
+        //Code 경로
+        public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
+        //log 사진 경로
+        public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
+        //무슨 사진이 결과 사진인지?
+        public string ResultImagePath => Path.GetFullPath(_resultImagePath);
+        public string memo => _initialMemo;
+
+        public double thresholdValue => _thresholdValue;
+
 
         public event EventHandler SendRequested;
         private void ibtnEnter_Click(object sender, EventArgs e)
@@ -265,12 +280,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         //        }
         //    };
         //}
-
-
-        private void DialogNotion_Load(object sender, EventArgs e)
-        {
-            
-        }
 
         private void ibtnClose_Click(object sender, EventArgs e)
         {
