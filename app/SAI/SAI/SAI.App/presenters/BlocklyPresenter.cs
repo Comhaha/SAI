@@ -226,12 +226,19 @@ namespace SAI.SAI.App.Presenters
         }
 
         // presenter가 view와 service에게 전달해주기 위한 메소드
-        public void HandleJsMessage(string code, string type)
+        public void HandleJsMessage(string code, string type, string where)
         {
             if (type == "blockAllCode")
             {
 				blocklyModel.blockAllCode = code;
-                blocklyService.SaveCodeToFileInTutorial();
+                if(where == "practice")
+                {
+					blocklyService.SaveCodeToFileInTrain();
+				}
+                else if(where == "tutorial")
+                {
+					blocklyService.SaveCodeToFileInTutorial();
+                }
 
                 //--------혜정언니 꺼 develop에 있던 코드 ----------------------------
                 // 여기도 codeView 사용
@@ -367,7 +374,25 @@ namespace SAI.SAI.App.Presenters
                     }
                     //MessageBox.Show(blocklyModel.accuracy.ToString());
 					break;
-            }
+				case "imgPath":
+					foreach (var kvp in value)
+					{
+                        MessageBox.Show(kvp.Key + "\n" + kvp.Value);
+						var key = kvp.Key;
+						var val = kvp.Value;
+						if (key == "FILE_PATH")
+						{
+							var file = val.ToString();
+                            if(file == "파일 선택" )
+                            {
+                                file = String.Empty;
+                            }
+                            blocklyModel.imgPath = file;
+						}
+					}
+					//MessageBox.Show(blocklyModel.imgPath.ToString());
+                    break;
+			}
         }
 	}
 }
