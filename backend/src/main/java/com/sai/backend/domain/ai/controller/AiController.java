@@ -18,9 +18,10 @@ public class AiController implements AiApi{
 
     @Override
     public ResponseEntity<BaseResponse<AiFeedbackResponseDto>> feedback(
-        String code, String log, MultipartFile image) {
+        String code, MultipartFile logImage,
+        MultipartFile resultImage, String memo) {
 
-        AiFeedbackRequestDto requestDto = new AiFeedbackRequestDto(code, log, image);
+        AiFeedbackRequestDto requestDto = new AiFeedbackRequestDto(code, logImage, resultImage, memo);
         return ResponseEntity.ok(new BaseResponse<>(aiService.feedback(requestDto)));
     }
 }
