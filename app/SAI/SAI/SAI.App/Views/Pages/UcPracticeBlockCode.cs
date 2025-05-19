@@ -371,7 +371,9 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion(""))
+            string memo = tboxMemo.Text;
+
+            using (var dialog = new DialogNotion(memo))
             {
                 dialog.ShowDialog();
             }
@@ -589,7 +591,9 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion(""))
+            string memo = tboxMemo.Text;
+
+            using (var dialog = new DialogNotion(memo))
             {
                 dialog.ShowDialog();
             }
@@ -1078,6 +1082,54 @@ namespace SAI.SAI.App.Views.Pages
                 timer.Dispose();
             };
             timer.Start();
+        }
+
+        private async void btnSaveModel_Click(object sender, EventArgs e)
+        {
+            string modelFileName = "best.pt";
+
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            //모델 경로 다시 물어보기
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+            if (!File.Exists(_modelPath))
+            {
+                MessageBox.Show(
+                    $"모델 파일을 찾을 수 없습니다.\n{_modelPath}",
+                    "오류",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
+                folderDialog.ShowNewFolderButton = true;
+
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
+
+                    // 비동기 복사 (UI 멈춤 방지)
+                    await CopyModelAsync(_modelPath, destPath);
+
+                    MessageBox.Show(
+                        $"모델이 복사되었습니다.\n{destPath}",
+                        "완료",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private Task CopyModelAsync(string source, string destination)
+        {
+            return Task.Run(() =>
+            {
+                // 존재할 경우 덮어쓰기(true)
+                File.Copy(source, destination, overwrite: true);
+            });
         }
     }
 }

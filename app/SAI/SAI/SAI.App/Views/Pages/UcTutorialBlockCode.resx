@@ -1006,7 +1006,7 @@
     <value>0, 0</value>
   </data>
   <data name="lbErrorMessage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>845, 194</value>
+    <value>754, 72</value>
   </data>
   <data name="lbErrorMessage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>

@@ -35,19 +35,19 @@ namespace SAI.SAI.App.Views.Pages
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
+			this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
-            this.pTopCode = new System.Windows.Forms.Panel();
-            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
+            this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnMinus = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
+            this.pTopCode = new System.Windows.Forms.Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -55,8 +55,8 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
-            this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
             this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
             this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
@@ -98,6 +98,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pZoomCode.SuspendLayout();
             this.pBlock.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
+            this.webViewblock.SuspendLayout();
             this.pTopBlock.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pSelectBlock.SuspendLayout();
@@ -336,6 +337,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.webViewblock.AllowExternalDrop = true;
             this.webViewblock.BackColor = System.Drawing.Color.White;
+            this.webViewblock.Controls.Add(this.pErrorToast);
             this.webViewblock.CreationProperties = null;
             this.webViewblock.DefaultBackgroundColor = System.Drawing.Color.White;
             resources.ApplyResources(this.webViewblock, "webViewblock");
@@ -558,7 +560,8 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnDownloadAIModel.ImageSize = new System.Drawing.Size(240, 75);
             resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
             this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
-            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(240, 75);
+            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnDownloadAIModel.Click += new System.EventHandler(this.btnSaveModel_Click);
             // 
             // ibtnGoNotion
             // 
@@ -755,6 +758,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pZoomCode.ResumeLayout(false);
             this.pBlock.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
+            this.webViewblock.ResumeLayout(false);
             this.pTopBlock.ResumeLayout(false);
             this.pBlockList.ResumeLayout(false);
             this.pSelectBlock.ResumeLayout(false);
