@@ -13,7 +13,5 @@ namespace SAI.SAI.App.Views.Interfaces
         void ClearLog();
         void SetLogVisible(bool visible);
         void ShowErrorMessage(string message);
-        void ShowPracticeInferResultImage(System.Drawing.Image resultImage);
-        // 필요시 추가 메서드
     }
 }

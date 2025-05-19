@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 using SAI.SAI.Application.Service;
+using System.Diagnostics;
 
 
 namespace SAI.SAI.App.Views.Pages
@@ -1022,25 +1023,57 @@ namespace SAI.SAI.App.Views.Pages
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
             //var practiceView = new UcPracticeBlockCode(mainView);
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
-        public void ShowPracticeInferResultImage(System.Drawing.Image resultImage)
+        public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowPracticeInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowPracticeInferResultImage(result)));
                 return;
             }
 
             dialogLoadingInfer?.Close();
             dialogLoadingInfer = null;
 
-            if (resultImage != null)
+            if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(287, 185);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
+                if (File.Exists(result.ResultImage))
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+
+                            // ✅ 직접 PictureBox에 표시
+                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = image;
+                            pboxInferAccuracy.Visible = true;
+                            btnSelectInferImage.Visible = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+        
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
@@ -1121,40 +1154,29 @@ namespace SAI.SAI.App.Views.Pages
                 folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
                 folderDialog.ShowNewFolderButton = true;
 
-            throw new NotImplementedException();
+                throw new NotImplementedException();
+            }
         }
 
         public void ClearLog()
         {
-            throw new NotImplementedException();
+            // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
+            Debug.WriteLine("\n" + new string('-', 50) + "\n");
         }
 
         public void SetLogVisible(bool visible)
         {
-            throw new NotImplementedException();
         }
 
         public void ShowErrorMessage(string message)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
-        {
-            throw new NotImplementedException();
-                if (folderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
-
-                    // 비동기 복사 (UI 멈춤 방지)
-                    await CopyModelAsync(_modelPath, destPath);
-
-                    MessageBox.Show(
-                        $"모델이 복사되었습니다.\n{destPath}",
-                        "완료",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1169,7 +1191,7 @@ namespace SAI.SAI.App.Views.Pages
 
         public void AppendLog(string text)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
     }
 }
