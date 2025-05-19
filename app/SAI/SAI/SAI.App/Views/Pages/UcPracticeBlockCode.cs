@@ -388,7 +388,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             jsBridge = new JsBridge((message, type) =>
             {
-                blocklyPresenter.HandleJsMessage(message, type);
+                blocklyPresenter.HandleJsMessage(message, type, "practice");
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
