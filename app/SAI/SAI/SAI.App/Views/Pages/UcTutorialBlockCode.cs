@@ -61,6 +61,8 @@ namespace SAI.SAI.App.Views.Pages
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
+        private PythonService.InferenceResult _result;
+
         public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -616,15 +618,15 @@ namespace SAI.SAI.App.Views.Pages
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
                     Task.Run(() =>
                     {
-                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = yoloTutorialPresenter.RunInferenceDirect(
                             selectedImagePath,
                             currentThreshold
                         );
 
-                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
-                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={_result.Success}, image={_result.ResultImage}, error={_result.Error}");
+                        if (!string.IsNullOrEmpty(_result.ResultImage))
                         {
-                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            bool fileExists = System.IO.File.Exists(_result.ResultImage);
                             Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
                         }
                         else
@@ -635,7 +637,7 @@ namespace SAI.SAI.App.Views.Pages
                         // 결과는 UI 스레드로 전달
                         this.Invoke(new Action(() =>
                         {
-                            ShowInferenceResult(result);
+                            ShowInferenceResult(_result);
                         }));
                     });
                 },
@@ -763,9 +765,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value/100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -1028,9 +1031,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
