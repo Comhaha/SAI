@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Messaging;
 using System.Threading.Tasks;
 using System.Linq;
+using SAI.SAI.Application.Service;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 
@@ -45,7 +46,7 @@ namespace SAI.SAI.App.Views.Pages
         private double currentThreshold = 0.5;
         private bool isMemoPanelVisible = false;
         private MemoPresenter memoPresenter;
-        private string selectedImagePath = string.Empty; //추론 이미지 저장할 변수
+        private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
 
         private int undoCount = 0; // 뒤로가기 카운트
         private int blockCount = 0; // 블럭 개수
@@ -598,14 +599,49 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        // threshold 바에서 threshold 값을 생성
+        // 마우스 떼면 추론 스크립트 실행
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
-				tbarThreshold,                
-				tboxThreshold,                     
-				(newValue) => currentThreshold = newValue,  
-				this                             
-			);
+                tbarThreshold,
+                tboxThreshold,
+                (newValue) =>
+                {
+                    currentThreshold = newValue;
+
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
+
+                    // 추론은 백그라운드에서 실행
+                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
+                    Task.Run(() =>
+                    {
+                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                            selectedImagePath,
+                            currentThreshold
+                        );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
+
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            ShowInferenceResult(result);
+                        }));
+                    });
+                },
+                this
+            );
         }
         private void ShowpSIdeInfer()
         {
@@ -659,8 +695,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
+                    Console.WriteLine($"[DEBUG] 전달된 blocklyModel이 null인가? {(blocklyModel == null)}");
+                    Console.WriteLine($"[DEBUG] blockTypes count: {(blocklyModel?.blockTypes?.Count ?? -1)}");
+
                     // 파이썬 코드 실행
-                    //RunButtonClicked?.Invoke(sender, e);
+                    RunButtonClicked?.Invoke(sender, e);
 			    }
                 else // 순서가 틀릴 때
                 {
@@ -812,6 +851,19 @@ namespace SAI.SAI.App.Views.Pages
 							case "blockCount":
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
+								break;
+							case "blockCreated":
+								var blockType = root.GetProperty("blockType").ToString();
+                                var newValue = root.GetProperty("allValues");
+								var value = JsonSerializer.Deserialize <Dictionary<string, object>>(newValue.GetRawText());
+                                blocklyPresenter.setFieldValue(blockType, value);
+								break;
+
+							case "blockFieldUpdated":
+								blockType = root.GetProperty("blockType").ToString();
+								var allValues = root.GetProperty("allValues");
+								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
+								blocklyPresenter.setFieldValue(blockType, value);
 								break;
 						}
 					}
@@ -1057,8 +1109,6 @@ namespace SAI.SAI.App.Views.Pages
 					missingType = "\"pipInstall\"";
 				    errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 				    errorMessage += "[시작] - [패키지 설치]";
-					//errorMessage = "시작블록이 맨 앞에 있어야 합니다.\n";
-					//	errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 					break;
 				case "pipInstall":
 					errorType = "블록 배치 오류";
@@ -1196,13 +1246,15 @@ namespace SAI.SAI.App.Views.Pages
 
         public void ShowDialogInferenceLoading()
         {
-            using (var dialog = new DialogInferenceLoading())
+            if (dialogLoadingInfer == null || dialogLoadingInfer.IsDisposed)
             {
-                dialog.ShowDialog();
+                dialogLoadingInfer = new DialogInferenceLoading();
+                dialogLoadingInfer.Show();  // 비동기적으로 띄움
             }
         }
 
-        // 추론 이미지 불러오기
+        // 추론 이미지 불러오기 버튼 클릭시
+        // 사용자 지정 이미지 경로를 blockly.imagepath에 던져줌
         private void btnSelectInferImage_Click(object sender, EventArgs e)
         {
             try
@@ -1220,32 +1272,11 @@ namespace SAI.SAI.App.Views.Pages
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = absolutePath;
 
-                        // 프로젝트 루트의 inference_images 디렉토리 경로 설정
-                        string projectDir = AppDomain.CurrentDomain.BaseDirectory;
-                        string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
+                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
+                        selectedImagePath = absolutePath.Replace("\\", "/");
 
-                        // inference_images 디렉토리가 없으면 생성
-                        if (!Directory.Exists(inferenceImagesDir))
-                        {
-                            Directory.CreateDirectory(inferenceImagesDir);
-                            Console.WriteLine($"[INFO] inference_images 디렉토리 생성됨: {inferenceImagesDir}");
-                        }
-
-                        string fileName = Path.GetFileName(absolutePath);
-                        string destinationPath = Path.Combine(inferenceImagesDir, fileName);
-
-                        // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
-                        File.Copy(absolutePath, destinationPath, true);
-
-                        // inference_images 기준 상대 경로 설정
-                        string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
-
-                        // BlocklyModel에 상대 경로 설정
-                        BlocklyModel.Instance.imgPath = relativePath;
-                        Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
-
+                        // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
@@ -1257,11 +1288,7 @@ namespace SAI.SAI.App.Views.Pages
 
                         btnSelectInferImage.Visible = false;
                     }
-                }
-                else
-                {
-                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
                 }
             }
             catch (Exception ex)
@@ -1271,30 +1298,59 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
         // var tutorialView = new UcTutorialBlockCode(mainView);
         //tutorialView.ShowTutorialInferResultImage(resultImage);
-
-        public void ShowTutorialInferResultImage(System.Drawing.Image resultImage)
+        public void ShowInferenceResult(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => ShowTutorialInferResultImage(resultImage)));
+                Invoke(new Action(() => ShowInferenceResult(result)));
                 return;
             }
 
             dialogLoadingInfer?.Close();
             dialogLoadingInfer = null;
 
-            if (resultImage != null)
+            if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(431, 275);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
+                if (File.Exists(result.ResultImage))
+                {
+                    try
+                    {
+                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        {
+                            var image = System.Drawing.Image.FromStream(stream);
+
+                            // ✅ 직접 PictureBox에 표시
+                            pboxInferAccuracy.Size = new Size(431, 275);
+                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            pboxInferAccuracy.Image = image;
+                            pboxInferAccuracy.Visible = true;
+                            btnSelectInferImage.Visible = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
+                        MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else
+            {
+                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)

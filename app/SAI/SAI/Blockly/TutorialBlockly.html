@@ -220,6 +220,19 @@
 			}
 		}
 
+		function getBlockFieldValues(block) {
+			const fieldValues = {};
+			block.inputList.forEach(input => {
+				input.fieldRow.forEach(field => {
+					if (field.name) {
+						fieldValues[field.name] = field.getValue();
+					}
+				});
+			});
+			return fieldValues;
+		}
+
+
 		// 가장 마지막으로 생성된 블럭
 		let lastCreatedBlockId = null;
 
@@ -230,6 +243,34 @@
 					// 여러 개가 생성될 수 있으므로 마지막 ID만 저장
 					const ids = event.ids;
 					lastCreatedBlockId = ids[ids.length - 1];
+
+					// 블록 생성될 때 필드값 전달
+					ids.forEach(id => {
+						const block = workspace.getBlockById(id);
+						if (!block) return;
+
+						const fieldValues = getBlockFieldValues(block);
+
+						window.chrome.webview.postMessage({
+							type: "blockCreated",
+							blockType: block.type,
+							allValues: fieldValues
+						});
+					});
+				}
+
+				// 필드값 변경되었을 때 (드롭다운, 넘버 등)
+				if (event.type === Blockly.Events.CHANGE && event.element === 'field') {
+					const block = workspace.getBlockById(event.blockId);
+					if (!block) return;
+
+					const fieldValues = getBlockFieldValues(block);
+
+					window.chrome.webview.postMessage({
+						type: "blockFieldUpdated",
+						blockType: block.type,
+						allValues: fieldValues
+					});
 				}
 
 				if (
@@ -292,6 +333,7 @@
 				filePickerField.setImagePath(filePath);
 			}
 		});
+
 
 		// 나만의 필드 타입(드롭다운)
 		class CustomDropdown extends Blockly.FieldDropdown {

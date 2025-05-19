@@ -210,12 +210,6 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogNotion.Designer.cs">
       <DependentUpon>DialogNotion.cs</DependentUpon>
     </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SAI.App\Forms\Dialogs\ProgressDialog.Designer.cs">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="SAI.App\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

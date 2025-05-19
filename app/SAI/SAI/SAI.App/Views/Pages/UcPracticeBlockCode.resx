@@ -188,7 +188,7 @@
     <value>True</value>
   </data>
   <data name="lbMissingType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR SemiBold, 6pt</value>
+    <value>Microsoft Sans Serif, 6pt</value>
   </data>
   <data name="lbMissingType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -275,7 +275,7 @@
     <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="&gt;&gt;pErrorToast.Parent" xml:space="preserve">
-    <value>webViewblock</value>
+    <value>pBlock</value>
   </data>
   <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -668,7 +668,7 @@
     <value>pBlock</value>
   </data>
   <data name="&gt;&gt;webViewblock.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="pTopBlock.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -949,7 +949,7 @@
     <value>2</value>
   </data>
   <data name="pMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>165, 105</value>
+    <value>165, 150</value>
   </data>
   <data name="pMain.Size" type="System.Drawing.Size, System.Drawing">
     <value>1596, 875</value>
@@ -973,7 +973,7 @@
     <value>Zoom</value>
   </data>
   <data name="ibtnMemo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>42, 892</value>
+    <value>42, 927</value>
   </data>
   <data name="ibtnMemo.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 87</value>
@@ -997,7 +997,7 @@
     <value>None</value>
   </data>
   <data name="ibtnInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1862, 134</value>
+    <value>1862, 179</value>
   </data>
   <data name="ibtnInfer.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 230</value>
@@ -1018,7 +1018,7 @@
     <value>5</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>201, 24</value>
+    <value>201, 69</value>
   </data>
   <data name="ibtnHome.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1057,13 +1057,13 @@
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lblTitle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 13.1999989pt, style=Bold</value>
+    <value>Noto Sans KR Medium, 13.8749981pt, style=Bold</value>
   </data>
   <data name="lblTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 24</value>
+    <value>293, 69</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 34</value>
+    <value>71, 56</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1413,7 +1413,7 @@
     <value>79, 1024</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>210, 34</value>
+    <value>315, 53</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1437,10 +1437,10 @@
     <value>Noto Sans KR Medium, 9pt, style=Bold</value>
   </data>
   <data name="lblThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>64, 136</value>
+    <value>54, 109</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 23</value>
+    <value>116, 37</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1467,7 +1467,7 @@
     <value>50, 45</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 34</value>
+    <value>139, 53</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1512,10 +1512,10 @@
     <value>Right</value>
   </data>
   <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1132, 0</value>
+    <value>1290, 0</value>
   </data>
   <data name="pSideInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>788, 1080</value>
+    <value>630, 1080</value>
   </data>
   <data name="pSideInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
