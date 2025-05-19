@@ -34,20 +34,12 @@ namespace SAI.SAI.App.Presenters
 
         private void LoadData()
         {
-            try
-            {
-                if (!File.Exists(_csvPath))
-                {
-                    _view.ShowErrorMessage("CSV 파일을 찾을 수 없습니다.");
-                    return;
-                }
+            if (!File.Exists(_csvPath))
+                throw new FileNotFoundException("CSV 파일을 찾을 수 없습니다.", _csvPath);
 
-                var lines = File.ReadAllLines(_csvPath);
-                if (lines.Length < 2)
-                {
-                    _view.ShowErrorMessage("CSV에 데이터가 없습니다.");
-                    return;
-                }
+            var lines = File.ReadAllLines(_csvPath);
+            if (lines.Length < 2)
+                throw new InvalidDataException("CSV에 데이터가 없습니다.");
 
                 // 1) 헤더 파싱 (epoch 제외)
                 var headers = lines[0].Split(',');
@@ -69,15 +61,16 @@ namespace SAI.SAI.App.Presenters
                     // lineIndex = r+1 (데이터 시작)
                     var parts = lines[r + 1].Split(',');
 
-                    // parts[0] = epoch, 필요하면 int.Parse(parts[0]) 가능
-                    for (int c = 0; c < colCount; c++)
-                    {
-                        if (double.TryParse(parts[c + 1], NumberStyles.Any, culture, out double v))
-                            values[c][r] = v;
-                        else
-                            values[c][r] = double.NaN;  // 파싱 실패 시 NaN
-                    }
+                // parts[0] = epoch, 필요하면 int.Parse(parts[0]) 가능
+                for (int c = 0; c < colCount; c++)
+                {
+                    if (double.TryParse(parts[c + 1], NumberStyles.Any, culture, out double v))
+                        values[c][r] = v;
+                    else
+                        values[c][r] = double.NaN;  // 파싱 실패 시 NaN
                 }
+
+            }
 
                 double[][] smoothes = new double[colCount][];
                 for (int c = 0; c < colCount; c++)
@@ -96,15 +89,11 @@ namespace SAI.SAI.App.Presenters
                     smoothes[c] = dst;
                 }
 
-                // 3) 모델에 저장
-                LogCsvModel.instance.titles = titles;
-                LogCsvModel.instance.values = values;
-                LogCsvModel.instance.smoothes = smoothes;
-            }
-            catch (Exception ex)
-            {
-                _view.ShowErrorMessage($"CSV 파일 처리 중 오류가 발생했습니다: {ex.Message}");
-            }
+            // 3) 모델에 저장
+            LogCsvModel.instance.titles = titles;
+            LogCsvModel.instance.values = values;
+            LogCsvModel.instance.smoothes = smoothes;
+
         }
     }
 }
