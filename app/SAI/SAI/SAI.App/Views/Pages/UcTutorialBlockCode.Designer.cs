@@ -30,7 +30,6 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void InitializeComponent()
         {
-<<<<<<< HEAD
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
@@ -58,10 +57,10 @@ namespace SAI.SAI.App.Views.Pages
             this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
-            this.lbErrorMessage = new System.Windows.Forms.Label();
+            this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pErrorImg = new Guna.UI2.WinForms.Guna2Panel();
-            this.lbMissingType = new System.Windows.Forms.Label();
-            this.lbErrorType = new System.Windows.Forms.Label();
+            this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
             this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
@@ -983,5 +982,6 @@ namespace SAI.SAI.App.Views.Pages
 		private System.Windows.Forms.Panel pError;
 		private SAI.App.Views.Pages.AutoSizeLabel lbMissingType;
 		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
-	}
+        private Guna.UI2.WinForms.Guna2Panel pErrorImg;
+    }
 }

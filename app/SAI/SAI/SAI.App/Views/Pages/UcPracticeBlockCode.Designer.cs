@@ -33,10 +33,9 @@ namespace SAI.SAI.App.Views.Pages
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcPracticeBlockCode));
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
-            this.lbErrorMessage = new System.Windows.Forms.Label();
-            this.pErrorImg = new Guna.UI2.WinForms.Guna2Panel();
-            this.lbMissingType = new System.Windows.Forms.Label();
-            this.lbErrorType = new System.Windows.Forms.Label();
+            this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
             this.pTopCode = new System.Windows.Forms.Panel();
@@ -114,7 +113,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
             resources.ApplyResources(this.pErrorToast, "pErrorToast");
             this.pErrorToast.Controls.Add(this.lbErrorMessage);
-            this.pErrorToast.Controls.Add(this.pErrorImg);
             this.pErrorToast.Controls.Add(this.lbMissingType);
             this.pErrorToast.Controls.Add(this.lbErrorType);
             this.pErrorToast.Name = "pErrorToast";
@@ -124,12 +122,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lbErrorMessage, "lbErrorMessage");
             this.lbErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.lbErrorMessage.Name = "lbErrorMessage";
-            // 
-            // pErrorImg
-            // 
-            this.pErrorImg.BackgroundImage = global::SAI.Properties.Resources.icon_error;
-            resources.ApplyResources(this.pErrorImg, "pErrorImg");
-            this.pErrorImg.Name = "pErrorImg";
             // 
             // lbMissingType
             // 
