@@ -20,19 +20,19 @@ function Content1() {
     },
   };
   return (
-    <div className="w-full h-[630px] max-[1130px]:h-[440px] max-[920px]:h-[360px] max-[720px]:h-[720px] pt-[80px] relative overflow-hidden">
+    <div className="w-full h-[540px] max-[1130px]:h-[440px] max-[920px]:h-[360px] max-[720px]:h-[720px] pt-[80px] relative overflow-hidden">
       <img
         src={background}
         alt="background"
         className="w-full h-full object-cover absolute top-0 left-0 z-0"
       />
       <div className="relative z-10 flex justify-between items-center w-full h-full max-w-[1200px] mx-auto px-8 max-[720px]:flex-col max-[720px]:justify-center max-[720px]:items-center">
-        <div className="flex flex-col justify-center h-full max-w-[520px] max-[720px]:max-w-full">
+        <div className="flex flex-col justify-center h-full max-w-[592px] max-[720px]:max-w-full">
           <motion.h1
             {...fadeInUpTitle}
             whileInView="animate"
             viewport={{ once: true, amount: 0.3 }}
-            className="text-[55px] font-bold leading-tight text-gray-800 mb-4 max-[1130px]:text-[44px] max-[900px]:text-[32px] max-[720px]:text-[28px] max-[720px]:mt-4"
+            className="text-[40px] font-bold leading-tight text-gray-800 mb-4 max-[900px]:text-[28px] font-['Noto_Sans_KR']"
           >
             AI와 우리의 사이
             <br />
@@ -42,7 +42,7 @@ function Content1() {
             {...fadeInUpDesc}
             whileInView="animate"
             viewport={{ once: true, amount: 0.3 }}
-            className="text-[21px] text-gray-700 mb-6 max-[1130px]:text-[18px] max-[900px]:text-[15px] max-[720px]:text-[16px] max-[720px]:mt-2"
+            className="text-[18px] text-gray-700 mb-6 max-[900px]:text-[14px] font-['Noto_Sans_KR']"
           >
             SSAFY 교육생을 위한
             <br />
@@ -62,7 +62,7 @@ function Content1() {
         <motion.img
           src={character}
           alt="character"
-          className="w-[500px] h-auto object-contain drop-shadow-xl max-[1130px]:w-1/2 max-[720px]:w-3/4 max-[720px]:my-10"
+          className="w-[520px] h-auto object-contain drop-shadow-xl max-[1130px]:w-1/2 max-[720px]:w-3/4 max-[720px]:my-10"
           {...floatMotion}
         />
       </div>
