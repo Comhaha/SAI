@@ -774,7 +774,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -824,10 +823,6 @@ namespace SAI.SAI.App.Views.Pages
 		private Guna.UI2.WinForms.Guna2Panel pSelectBlock;
 		private Guna.UI2.WinForms.Guna2VScrollBar pSelectBlockvScrollBar;
 		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
-		private System.Windows.Forms.Label lbErrorMessage;
-		private Guna.UI2.WinForms.Guna2Panel pErrorImg;
-		private System.Windows.Forms.Label lbMissingType;
-		private System.Windows.Forms.Label lbErrorType;
         private SAI.App.Views.Pages.UcCode ucCode２;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
@@ -838,5 +833,12 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel mAlertPanel;
         private Guna.UI2.WinForms.Guna2Panel cAlertPanel;
         private SAI.App.Views.Pages.UcCsvChart ucCsvChart1;
-    }
+		private System.Windows.Forms.TableLayoutPanel tpParentError;
+		private System.Windows.Forms.TableLayoutPanel tpContentError;
+		private System.Windows.Forms.TableLayoutPanel tpErrorHeader;
+		private SAI.App.Views.Pages.AutoSizeLabel lbErrorType;
+		private System.Windows.Forms.Panel pError;
+		private SAI.App.Views.Pages.AutoSizeLabel lbMissingType;
+		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
+	}
 }

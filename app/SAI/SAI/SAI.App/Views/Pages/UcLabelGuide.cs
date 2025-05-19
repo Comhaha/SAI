@@ -1334,13 +1334,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 정확도 표시 업데이트
                 if (imageAccuracies.ContainsKey(currentImageIndex))
                 {
-                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
                     accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
 
                 }
                 else
                 {
-                    accuracyLabel.Text = "Accuracy: 0%";
                     accuracyLabel1.Text = "Accuracy: 0%";
                 }   
 
@@ -1392,12 +1390,10 @@ namespace SAI.SAI.App.Views.Pages
                 // 정확도 표시 업데이트
                 if (imageAccuracies.ContainsKey(currentImageIndex))
                 {
-                    accuracyLabel.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
                     accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
                 }
                 else
                 {
-                    accuracyLabel.Text = "Accuracy: 0%";
                     accuracyLabel1.Text = "Accuracy: 0%";
                 }
 
@@ -3168,13 +3164,11 @@ namespace SAI.SAI.App.Views.Pages
                         double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
                         double accuracy = iou * 100;
 
-                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
                     {
-                        accuracyLabel.Text = "Accuracy: 0%";
                         accuracyLabel1.Text = "Accuracy: 0%";
                         imageAccuracies[currentImageIndex] = 0;
                     }
@@ -3192,13 +3186,11 @@ namespace SAI.SAI.App.Views.Pages
                         double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
                         double accuracy = ioa * 100;
 
-                        accuracyLabel.Text = $"Accuracy: {accuracy:F0}%";
                         accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
                     {
-                        accuracyLabel.Text = "Accuracy: 0%";
                         accuracyLabel1.Text = "Accuracy: 0%";
                         imageAccuracies[currentImageIndex] = 0;
                     }
@@ -3210,7 +3202,6 @@ namespace SAI.SAI.App.Views.Pages
             catch (Exception ex)
             {
                 MessageBox.Show($"정확도 계산 중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                accuracyLabel.Text = "Accuracy: 0%";
                 accuracyLabel1.Text = "Accuracy: 0%";
                 imageAccuracies[currentImageIndex] = 0;
             }
@@ -3320,7 +3311,6 @@ namespace SAI.SAI.App.Views.Pages
                         if (imageAccuracies.ContainsKey(currentImageIndex))
                             imageAccuracies[currentImageIndex] = 0;
 
-                        accuracyLabel.Text = "Accuracy: 0%";
                         accuracyLabel1.Text = "Accuracy: 0%";
 
                         // 화면 갱신
@@ -3374,7 +3364,6 @@ namespace SAI.SAI.App.Views.Pages
                         if (imageAccuracies.ContainsKey(currentImageIndex))
                             imageAccuracies[currentImageIndex] = 0;
 
-                        accuracyLabel.Text = "Accuracy: 0%";
                         accuracyLabel1.Text = "Accuracy: 0%";
 
                         // 화면 갱신

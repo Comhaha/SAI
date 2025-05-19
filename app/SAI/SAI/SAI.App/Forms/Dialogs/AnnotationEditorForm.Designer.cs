@@ -28,35 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.annotationText = new Guna.UI2.WinForms.Guna2TextBox();
             this.saveBtn = new Guna.UI2.WinForms.Guna2Button();
             this.xBtn = new Guna.UI2.WinForms.Guna2Button();
             this.cancelBtn = new Guna.UI2.WinForms.Guna2Button();
             this.pleaseNamePanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.annotationText1 = new System.Windows.Forms.TextBox();
+            this.guna2Panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // annotationText
-            // 
-            this.annotationText.BorderColor = System.Drawing.Color.Transparent;
-            this.annotationText.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.annotationText.DefaultText = "";
-            this.annotationText.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.annotationText.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.annotationText.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.annotationText.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.annotationText.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText.Font = new System.Drawing.Font("Noto Sans KR", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.annotationText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.annotationText.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText.Location = new System.Drawing.Point(39, 82);
-            this.annotationText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.annotationText.Name = "annotationText";
-            this.annotationText.PlaceholderForeColor = System.Drawing.Color.DarkGray;
-            this.annotationText.PlaceholderText = "클래스 입력";
-            this.annotationText.SelectedText = "";
-            this.annotationText.Size = new System.Drawing.Size(420, 45);
-            this.annotationText.TabIndex = 0;
-            this.annotationText.TextChanged += new System.EventHandler(this.annotationText_TextChanged);
             // 
             // saveBtn
             // 
@@ -119,11 +100,44 @@
             this.pleaseNamePanel.BackgroundImage = global::SAI.Properties.Resources.bg_warning_empty;
             this.pleaseNamePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pleaseNamePanel.FillColor = System.Drawing.Color.Transparent;
-            this.pleaseNamePanel.Location = new System.Drawing.Point(39, 130);
+            this.pleaseNamePanel.Location = new System.Drawing.Point(43, 130);
             this.pleaseNamePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pleaseNamePanel.Name = "pleaseNamePanel";
             this.pleaseNamePanel.Size = new System.Drawing.Size(157, 14);
             this.pleaseNamePanel.TabIndex = 4;
+            // 
+            // guna2Panel1
+            // 
+            this.guna2Panel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Panel1.BorderColor = System.Drawing.Color.Transparent;
+            this.guna2Panel1.BorderThickness = 1;
+            this.guna2Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.guna2Panel1.Location = new System.Drawing.Point(40, 83);
+            this.guna2Panel1.Name = "guna2Panel1";
+            this.guna2Panel1.Size = new System.Drawing.Size(421, 42);
+            this.guna2Panel1.TabIndex = 6;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.annotationText1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(421, 42);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // annotationText1
+            // 
+            this.annotationText1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.annotationText1.Font = new System.Drawing.Font("Noto Sans KR", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.annotationText1.Location = new System.Drawing.Point(3, 3);
+            this.annotationText1.Name = "annotationText1";
+            this.annotationText1.Size = new System.Drawing.Size(415, 38);
+            this.annotationText1.TabIndex = 7;
             // 
             // AnnotationEditorForm
             // 
@@ -134,25 +148,30 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.xBtn;
             this.ClientSize = new System.Drawing.Size(499, 228);
+            this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.pleaseNamePanel);
             this.Controls.Add(this.xBtn);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.annotationText);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AnnotationEditorForm";
             this.TransparencyKey = System.Drawing.Color.DimGray;
+            this.Load += new System.EventHandler(this.AnnotationEditorForm_Load);
+            this.guna2Panel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2TextBox annotationText;
         private Guna.UI2.WinForms.Guna2Button saveBtn;
         private Guna.UI2.WinForms.Guna2Button xBtn;
         private Guna.UI2.WinForms.Guna2Button cancelBtn;
         private Guna.UI2.WinForms.Guna2Panel pleaseNamePanel;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TextBox annotationText1;
     }
 }

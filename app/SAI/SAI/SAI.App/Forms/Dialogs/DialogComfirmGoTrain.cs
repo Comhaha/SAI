@@ -63,6 +63,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 				var blocklyModel = BlocklyModel.Instance;
 				blocklyModel.blockAllCode = "";
 				blocklyModel.blockCode = "";
+				blocklyModel.imgPath = "";
 				presenter.clickGoTrain();
 				this.Close();
 			};

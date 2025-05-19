@@ -39,7 +39,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             // 초기값 설정
             Accuracy = accuracy;
-            annotationText.Text = initialText;
+            annotationText1.Text = initialText;
             pleaseNamePanel.Visible = false; // 초기에는 경고 패널 숨김
 
             // 초기 상태 설정
@@ -60,12 +60,12 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void SaveButton_Click(object sender, EventArgs e)
         {   
-            if (!annotationText.Text.Trim().Any())
+            if (!annotationText1.Text.Trim().Any())
             {
                 pleaseNamePanel.Visible = true; // 텍스트가 비어있으면 경고 패널 표시
                 return;
             }
-            AnnotationText = annotationText.Text;
+            AnnotationText = annotationText1.Text;
             IsSaved = true;
 
             // 저장 이벤트 발생 - 텍스트 전달
@@ -105,6 +105,11 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         private void annotationText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AnnotationEditorForm_Load(object sender, EventArgs e)
         {
 
         }

@@ -30,6 +30,7 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void InitializeComponent()
         {
+<<<<<<< HEAD
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcTutorialBlockCode));
             this.lblTitle = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.pMain = new Guna.UI2.WinForms.Guna2Panel();
@@ -905,7 +906,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -976,9 +976,12 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel mAlertPanel;
         private Guna.UI2.WinForms.Guna2Panel pTxtDescription;
 		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
-		private Guna.UI2.WinForms.Guna2Panel pErrorImg;
-		private System.Windows.Forms.Label lbMissingType;
-		private System.Windows.Forms.Label lbErrorType;
-		private System.Windows.Forms.Label lbErrorMessage;
+		private System.Windows.Forms.TableLayoutPanel tpParentError;
+		private System.Windows.Forms.TableLayoutPanel tpContentError;
+		private System.Windows.Forms.TableLayoutPanel tpErrorHeader;
+		private SAI.App.Views.Pages.AutoSizeLabel lbErrorType;
+		private System.Windows.Forms.Panel pError;
+		private SAI.App.Views.Pages.AutoSizeLabel lbMissingType;
+		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
 	}
 }
