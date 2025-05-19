@@ -54,6 +54,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
+            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.pErrorToast = new Guna.UI2.WinForms.Guna2Panel();
             this.lbErrorMessage = new System.Windows.Forms.Label();
@@ -83,6 +84,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
+            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -100,8 +102,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCloseMemo = new Guna.UI2.WinForms.Guna2Button();
             this.btnQuestionMemo = new Guna.UI2.WinForms.Guna2Button();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
-            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -315,10 +315,10 @@ namespace SAI.SAI.App.Views.Pages
             // pZoomCode
             // 
             this.pZoomCode.BackgroundImage = global::SAI.Properties.Resources.btn_zoom;
+            resources.ApplyResources(this.pZoomCode, "pZoomCode");
             this.pZoomCode.Controls.Add(this.tboxZoomCode);
             this.pZoomCode.Controls.Add(this.ibtnMinusCode);
             this.pZoomCode.Controls.Add(this.ibtnPlusCode);
-            resources.ApplyResources(this.pZoomCode, "pZoomCode");
             this.pZoomCode.Name = "pZoomCode";
             // 
             // tboxZoomCode
@@ -345,7 +345,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnMinusCode.Image = global::SAI.Properties.Resources.btn_minus;
             this.ibtnMinusCode.ImageOffset = new System.Drawing.Point(0, 0);
             this.ibtnMinusCode.ImageRotate = 0F;
-            this.ibtnMinusCode.ImageSize = new System.Drawing.Size(9, 9);
+            this.ibtnMinusCode.ImageSize = new System.Drawing.Size(14, 14);
             resources.ApplyResources(this.ibtnMinusCode, "ibtnMinusCode");
             this.ibtnMinusCode.Name = "ibtnMinusCode";
             this.ibtnMinusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
@@ -358,7 +358,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode.Image = global::SAI.Properties.Resources.btn_plus;
             this.ibtnPlusCode.ImageOffset = new System.Drawing.Point(0, 0);
             this.ibtnPlusCode.ImageRotate = 0F;
-            this.ibtnPlusCode.ImageSize = new System.Drawing.Size(9, 9);
+            this.ibtnPlusCode.ImageSize = new System.Drawing.Size(14, 14);
             resources.ApplyResources(this.ibtnPlusCode, "ibtnPlusCode");
             this.ibtnPlusCode.Name = "ibtnPlusCode";
             this.ibtnPlusCode.PressedState.ImageSize = new System.Drawing.Size(9, 9);
@@ -384,6 +384,12 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pTopCode, "pTopCode");
             this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pTopCode.Name = "pTopCode";
+            // 
+            // ucCode1
+            // 
+            resources.ApplyResources(this.ucCode1, "ucCode1");
+            this.ucCode1.Name = "ucCode1";
+            this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // pBlock
             // 
@@ -671,6 +677,11 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pFake, "pFake");
             this.pFake.Name = "pFake";
             // 
+            // ucCsvChart1
+            // 
+            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
+            this.ucCsvChart1.Name = "ucCsvChart1";
+            // 
             // pThreshold
             // 
             this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
@@ -853,17 +864,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
             this.tboxMemo.PlaceholderText = "";
             this.tboxMemo.SelectedText = "";
-            // 
-            // ucCsvChart1
-            // 
-            resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
-            this.ucCsvChart1.Name = "ucCsvChart1";
-            // 
-            // ucCode1
-            // 
-            resources.ApplyResources(this.ucCode1, "ucCode1");
-            this.ucCode1.Name = "ucCode1";
-            this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
             // 
             // UcTutorialBlockCode
             // 

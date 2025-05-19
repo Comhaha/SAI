@@ -61,8 +61,9 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.ImageSize = new System.Drawing.Size(24, 24);
             this.btnClose.Location = new System.Drawing.Point(1558, 603);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(6);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(49, 49);
             this.btnClose.TabIndex = 3;
@@ -79,10 +80,11 @@
             this.btnPre.FillColor = System.Drawing.Color.Transparent;
             this.btnPre.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnPre.ForeColor = System.Drawing.Color.White;
+            this.btnPre.ImageSize = new System.Drawing.Size(45, 45);
             this.btnPre.Location = new System.Drawing.Point(1327, 687);
-            this.btnPre.Margin = new System.Windows.Forms.Padding(6);
+            this.btnPre.Margin = new System.Windows.Forms.Padding(0);
             this.btnPre.Name = "btnPre";
-            this.btnPre.Size = new System.Drawing.Size(49, 49);
+            this.btnPre.Size = new System.Drawing.Size(45, 45);
             this.btnPre.TabIndex = 2;
             // 
             // btnNext
@@ -97,10 +99,11 @@
             this.btnNext.FillColor = System.Drawing.Color.Transparent;
             this.btnNext.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnNext.ForeColor = System.Drawing.Color.White;
+            this.btnNext.ImageSize = new System.Drawing.Size(45, 45);
             this.btnNext.Location = new System.Drawing.Point(1589, 510);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(6);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(49, 49);
+            this.btnNext.Size = new System.Drawing.Size(45, 45);
             this.btnNext.TabIndex = 1;
             // 
             // UcBlockGuide
@@ -112,7 +115,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnPre);
             this.Controls.Add(this.btnNext);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "UcBlockGuide";
             this.Size = new System.Drawing.Size(1920, 1080);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
