@@ -223,14 +223,14 @@ def check_gpu_yolo_load_block(block_params=None):
 def download_dataset_block(block_params=None):
     """데이터셋 다운로드 블록 실행 함수"""
     start_time = time.time()
-    show_tagged_progress('DATASET', '서버에서 데이터셋 다운로드 중...', start_time, 0)
+    show_tagged_progress('DEBUG', '서버에서 데이터셋 다운로드 중...', start_time)
     
     # API 서버에서 데이터셋 다운로드
     try:
         import requests
         from tqdm import tqdm
     except ImportError:
-        show_tagged_progress('ERROR', '필요한 패키지 설치 중...', start_time, 5)
+        show_tagged_progress('ERROR', '필요한 패키지 설치 중...', start_time)
         install_packages.install_packages_with_progress(["requests", "tqdm"], start_time)
         import requests
         from tqdm import tqdm
@@ -238,12 +238,12 @@ def download_dataset_block(block_params=None):
     # 데이터셋 저장 경로 설정
     dataset_dir = os.path.join(base_dir, "dataset")
     os.makedirs(dataset_dir, exist_ok=True)
-    show_tagged_progress('DATASET', f'데이터셋 기본 경로: {dataset_dir}', start_time, 10)
+    show_tagged_progress('DEBUG', f'데이터셋 기본 경로: {dataset_dir}', start_time)
     
     # 환경 변수에서 서버 주소 가져오기
     server_url = os.environ.get("API_SERVER_URL")
     if not server_url:
-        show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time, 15)
+        show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time)
         
         # 테스트용 더미 데이터 생성
         tutorial_state["dataset_path"] = dataset_dir
@@ -259,7 +259,7 @@ def download_dataset_block(block_params=None):
     
     # API 엔드포인트 URL 구성
     api_url = f"{server_url}/api/download/tutorial"
-    show_tagged_progress('DATASET', 'API에서 다운로드 URL 요청 중...', start_time, 20)
+    show_tagged_progress('DEBUG', 'API에서 다운로드 URL 요청 중...', start_time)
     
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
     
@@ -269,9 +269,9 @@ def download_dataset_block(block_params=None):
         if response.status_code == 200:
             data = response.json()
             download_url = data['result']
-            show_tagged_progress('DATASET', '다운로드 URL 획득 성공', start_time, 30)
+            show_tagged_progress('DEBUG', '다운로드 URL 획득 성공', start_time)
         else:
-            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time, 30)
+            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time)
             tutorial_state["dataset_path"] = dataset_dir
             return {
                 "success": False,
@@ -279,7 +279,7 @@ def download_dataset_block(block_params=None):
                 "location": dataset_dir
             }
     except Exception as e:
-        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time, 30)
+        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time)
         tutorial_state["dataset_path"] = dataset_dir
         return {
             "success": False,
@@ -288,7 +288,7 @@ def download_dataset_block(block_params=None):
         }
     
     # 파일 다운로드 (진행률 표시)
-    show_tagged_progress('DATASET', '데이터셋 다운로드 시작...', start_time, 40)
+    show_tagged_progress('DATASET', '데이터셋 다운로드 시작...', start_time, 0)
     try:
         response = requests.get(download_url, stream=True)
         total_size = int(response.headers.get('content-length', 0))
@@ -300,12 +300,12 @@ def download_dataset_block(block_params=None):
                 if chunk:
                     f.write(chunk)
                     downloaded += len(chunk)
-                    progress = min(40 + (downloaded / total_size * 30), 70)  # 40% ~ 70% 범위
+                    progress = min(0 + (downloaded / total_size * 30), 70)  # 40% ~ 70% 범위
                     show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
         
-        show_tagged_progress('DATASET', '데이터셋 다운로드 완료', start_time, 70)
+        show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
-        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time, 70)
+        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
         tutorial_state["dataset_path"] = dataset_dir
         return {
             "success": False,
@@ -321,7 +321,7 @@ def download_dataset_block(block_params=None):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 file_list = zip_ref.namelist()
                 total_files = len(file_list)
-                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 75)
+                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 70)
                 
                 # 첫 번째 파일의 경로에서 최상위 디렉토리 확인 (있는 경우)
                 if file_list and '/' in file_list[0]:
@@ -335,24 +335,24 @@ def download_dataset_block(block_params=None):
                 for i, file in enumerate(file_list):
                     zip_ref.extract(file, dataset_dir)
                     if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
-                        extract_progress = 75 + (i / total_files) * 20  # 75% ~ 95% 범위
+                        extract_progress = 70 + (i / total_files) * 25  # 75% ~ 95% 범위
                         show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                 
                 # 압축 해제 후 실제 추출 디렉토리 확인
                 if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
                     extracted_dir = potential_extracted_dir
-                    show_tagged_progress('DATASET', f'데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}', start_time, 95)
+                    show_tagged_progress('DEBUG', f'데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}', start_time)
             
-            show_tagged_progress('DATASET', '압축 해제 완료', start_time, 95)
+            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
             
             # 임시 ZIP 파일 삭제
             try:
                 os.remove(zip_path)
-                show_tagged_progress('DATASET', '임시 ZIP 파일 삭제 완료', start_time, 100)
+                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time, 100)
             except:
-                show_tagged_progress('ERROR', '임시 ZIP 파일 삭제 실패', start_time, 100)
+                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 실패', start_time, 100)
         except Exception as e:
-            show_tagged_progress('ERROR', f'ZIP 파일 압축 해제 오류: {e}', start_time, 95)
+            show_tagged_progress('DEBUG', f'ZIP 파일 압축 해제 오류: {e}', start_time, 95)
     else:
         show_tagged_progress('ERROR', '다운로드된 ZIP 파일을 찾을 수 없습니다.', start_time, 95)
     

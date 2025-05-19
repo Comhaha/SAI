@@ -133,6 +133,7 @@ namespace SAI.SAI.App.Presenters
                                                 _progressDialog.Invoke(new Action(() =>
                                                 {
                                                     if (!_progressDialog.IsDisposed)
+
                                                     {
                                                         _progressDialog.UpdateProgress(progress, message);
                                                     }
@@ -165,13 +166,13 @@ namespace SAI.SAI.App.Presenters
                                         {
                                             if (!_progressDialog.IsDisposed)
                                             {
-                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                                //_progressDialog.UpdateProgress(0, $"오류: {text}");
                                             }
                                         }));
                                     }
                                     else
                                     {
-                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                        //_progressDialog.UpdateProgress(0, $"오류: {text}");
                                     }
                                 }
                             }
