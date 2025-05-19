@@ -415,6 +415,7 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lbErrorMessage, "lbErrorMessage");
             this.lbErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.lbErrorMessage.Name = "lbErrorMessage";
+            this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pErrorImg
             // 
@@ -427,12 +428,14 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lbMissingType, "lbMissingType");
             this.lbMissingType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.lbMissingType.Name = "lbMissingType";
+            this.lbMissingType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbErrorType
             // 
             resources.ApplyResources(this.lbErrorType, "lbErrorType");
             this.lbErrorType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.lbErrorType.Name = "lbErrorType";
+            this.lbErrorType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // webViewblock
             // 
@@ -905,6 +908,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pMemo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

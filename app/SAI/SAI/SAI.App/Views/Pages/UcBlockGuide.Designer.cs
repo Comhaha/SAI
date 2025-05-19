@@ -61,11 +61,11 @@
             this.btnClose.FillColor = System.Drawing.Color.Transparent;
             this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.ImageSize = new System.Drawing.Size(24, 24);
+            this.btnClose.ImageSize = new System.Drawing.Size(22, 22);
             this.btnClose.Location = new System.Drawing.Point(1558, 603);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(49, 49);
+            this.btnClose.Size = new System.Drawing.Size(45, 45);
             this.btnClose.TabIndex = 3;
             // 
             // btnPre
