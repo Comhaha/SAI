@@ -100,7 +100,6 @@ namespace SAI.SAI.App.Views.Pages
                 if (pSideInfer.Visible)
                 {
                     btnSelectInferImage.Visible = true;
-                    btnSelectInferImage.BringToFront();
                     btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
                 }
             };
@@ -151,7 +150,6 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
-            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
 
 			blockCount = 0; // 블럭 개수 초기화
@@ -990,7 +988,10 @@ namespace SAI.SAI.App.Views.Pages
                         // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
                         selectedImagePath = absolutePath.Replace("\\", "/");
 
-                        // UI 표시용 이미지
+                        // 1. 현재 스크롤 위치 저장
+                        var scrollPos = pSideInfer.AutoScrollPosition;
+
+                        // 2. 이미지 표시
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
@@ -999,10 +1000,19 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
                         }
-
                         btnSelectInferImage.Visible = false;
-                    }
 
+                        // 3. 레이아웃이 끝난 뒤 스크롤 복원 (BeginInvoke 사용)
+                        pSideInfer.BeginInvoke(new Action(() =>
+                        {
+                            try
+                            {
+                                // AutoScrollPosition은 음수값으로 저장됨에 주의!
+                                pSideInfer.AutoScrollPosition = new Point(-scrollPos.X, -scrollPos.Y);
+                            }
+                            catch { }
+                        }));
+                    }
                 }
             }
             catch (Exception ex)
