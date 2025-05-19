@@ -9,5 +9,6 @@ namespace SAI.SAI.App.Views.Interfaces
     public interface ICsvChartView
     {
         void SetData();
+        void ShowErrorMessage(string message);
     }
 }

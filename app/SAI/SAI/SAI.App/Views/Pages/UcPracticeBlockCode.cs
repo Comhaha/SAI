@@ -1039,9 +1039,10 @@ namespace SAI.SAI.App.Views.Pages
 
         public void ShowDialogInferenceLoading()
         {
-            using (var dialog = new DialogInferenceLoading())
+            if (dialogLoadingInfer == null || dialogLoadingInfer.IsDisposed)
             {
-                dialog.ShowDialog();
+                dialogLoadingInfer = new DialogInferenceLoading();
+                dialogLoadingInfer.Show();  // 비동기적으로 띄움
             }
         }
 
