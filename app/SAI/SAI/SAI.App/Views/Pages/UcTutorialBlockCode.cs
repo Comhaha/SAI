@@ -62,6 +62,8 @@ namespace SAI.SAI.App.Views.Pages
         private PythonService.InferenceResult _result;
 
 
+        private PythonService.InferenceResult _result;
+
         public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -766,9 +768,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value/100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -1029,9 +1032,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }

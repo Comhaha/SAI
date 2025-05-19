@@ -13,6 +13,8 @@ namespace SAI.SAI.App.Views.Interfaces
         string ResultImagePath { get; }
         string memo { get; }
 
+        double thresholdValue { get; }
+
         event EventHandler SendRequested;
 
         void ShowSendResult(bool isSuccess, string feedbackId, string feedback);

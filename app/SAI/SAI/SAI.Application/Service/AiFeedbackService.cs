@@ -10,6 +10,8 @@ using SAI.SAI.Application.Dto;
 using System.IO;
 using System.Web.Script.Serialization;
 using SAI.SAI.App.Models;
+using System.Security.Cryptography;
+using System.Globalization;
 
 namespace SAI.SAI.Application.Service
 {
@@ -44,6 +46,7 @@ namespace SAI.SAI.Application.Service
                 AddImagePart(form, dto.resultImage, "resultImage");
 
                 form.Add(new StringContent(dto.memo, Encoding.UTF8), "memo");
+                form.Add(new StringContent(dto.threshold.ToString(CultureInfo.InvariantCulture), Encoding.UTF8), "threshold");
 
                 var response = await _http.PostAsync("/api/ai/feedback", form)
                                           .ConfigureAwait(false);

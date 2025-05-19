@@ -33,7 +33,8 @@ namespace SAI.SAI.App.Presenters
                     code = _view.CodeText,
                     logImage = _view.LogImagePath,
                     resultImage = _view.ResultImagePath,
-                    memo = _view.memo == null ? "" : _view.memo
+                    memo = _view.memo,
+                    threshold = _view.thresholdValue
                 };
 
                 var result = await _service.SendAsync(dto);
