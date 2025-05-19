@@ -97,13 +97,13 @@ namespace SAI.SAI.App.Views.Pages
             this.goLabelingBtn.ForeColor = System.Drawing.Color.White;
             this.goLabelingBtn.HoverState.Image = global::SAI.Properties.Resources.btn_goLabelingHover;
             this.goLabelingBtn.Image = ((System.Drawing.Image)(resources.GetObject("goLabelingBtn.Image")));
-            this.goLabelingBtn.ImageSize = new System.Drawing.Size(168, 38);
-            this.goLabelingBtn.Location = new System.Drawing.Point(1423, 813);
+            this.goLabelingBtn.ImageSize = new System.Drawing.Size(201, 47);
+            this.goLabelingBtn.Location = new System.Drawing.Point(1390, 809);
             this.goLabelingBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goLabelingBtn.Name = "goLabelingBtn";
             this.goLabelingBtn.PressedColor = System.Drawing.Color.Transparent;
             this.goLabelingBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.goLabelingBtn.Size = new System.Drawing.Size(170, 38);
+            this.goLabelingBtn.Size = new System.Drawing.Size(206, 58);
             this.goLabelingBtn.TabIndex = 2;
             this.goLabelingBtn.Visible = false;
             this.goLabelingBtn.Click += new System.EventHandler(this.goLabelingBtn_Click_1);
