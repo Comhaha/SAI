@@ -1,4 +1,6 @@
-﻿namespace SAI.SAI.App.Views.Pages
+﻿using System.Windows.Forms;
+
+namespace SAI.SAI.App.Views.Pages
 {
     partial class UcLabelGuide
     {
@@ -35,7 +37,8 @@
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
-            this.class2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.class3 = new SAI.App.Views.Pages.AutoSizeLabel();
             this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
@@ -51,13 +54,15 @@
             this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.accuracyLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.accuracyLabel1 = new SAI.App.Views.Pages.AutoSizeLabel();
             this.levelPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.questBoxPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.questClassificationPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.questSegPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.toolZoom = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.ZoomCurrent = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.ZoomOutBtn = new Guna.UI2.WinForms.Guna2Button();
             this.ZoomInBtn = new Guna.UI2.WinForms.Guna2Button();
@@ -71,23 +76,25 @@
             this.toolLabelingPolygon = new Guna.UI2.WinForms.Guna2ImageButton();
             this.toolHand = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pictureBoxImage = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.showLevel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.goModel = new Guna.UI2.WinForms.Guna2Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
             this.imageContainer.SuspendLayout();
             this.toastPopupPanel.SuspendLayout();
             this.accuracyPanel.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.levelPanel.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.toolZoom.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.toolBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // homeBtn
@@ -178,7 +185,7 @@
             this.leftPanel.BackgroundImage = global::SAI.Properties.Resources.Frame_1000004304;
             this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.leftPanel.BorderColor = System.Drawing.Color.Transparent;
-            this.leftPanel.Controls.Add(this.class2);
+            this.leftPanel.Controls.Add(this.panel1);
             this.leftPanel.Controls.Add(this.classBtn);
             this.leftPanel.Controls.Add(this.guna2CustomGradientPanel1);
             this.leftPanel.CustomBorderColor = System.Drawing.Color.DimGray;
@@ -191,17 +198,24 @@
             this.leftPanel.TabIndex = 4;
             this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
             // 
-            // class2
+            // panel1
             // 
-            this.class2.BackColor = System.Drawing.Color.Transparent;
-            this.class2.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.class2.Location = new System.Drawing.Point(34, 75);
-            this.class2.Name = "class2";
-            this.class2.Size = new System.Drawing.Size(92, 29);
-            this.class2.TabIndex = 14;
-            this.class2.Text = "라벨링 예시";
-            this.class2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            this.class2.Click += new System.EventHandler(this.class2_Click);
+            this.panel1.Controls.Add(this.class3);
+            this.panel1.Location = new System.Drawing.Point(31, 79);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(184, 39);
+            this.panel1.TabIndex = 15;
+            // 
+            // class3
+            // 
+            this.class3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.class3.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.class3.Location = new System.Drawing.Point(0, 0);
+            this.class3.Name = "class3";
+            this.class3.Size = new System.Drawing.Size(184, 39);
+            this.class3.TabIndex = 0;
+            this.class3.Text = "autoSizeLabel2";
+            this.class3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // classBtn
             // 
@@ -217,7 +231,7 @@
             this.classBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.classBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
             this.classBtn.HoverState.ForeColor = System.Drawing.Color.Transparent;
-            this.classBtn.Location = new System.Drawing.Point(1, 84);
+            this.classBtn.Location = new System.Drawing.Point(1, 89);
             this.classBtn.Name = "classBtn";
             this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.classBtn.Size = new System.Drawing.Size(24, 24);
@@ -428,7 +442,7 @@
             this.accuracyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.accuracyPanel.BorderColor = System.Drawing.Color.Black;
             this.accuracyPanel.BorderThickness = 1;
-            this.accuracyPanel.Controls.Add(this.tableLayoutPanel1);
+            this.accuracyPanel.Controls.Add(this.tableLayoutPanel2);
             this.accuracyPanel.CustomBorderThickness = new System.Windows.Forms.Padding(0, 1, 1, 1);
             this.accuracyPanel.FillColor = System.Drawing.Color.Transparent;
             this.accuracyPanel.Location = new System.Drawing.Point(0, 134);
@@ -437,21 +451,32 @@
             this.accuracyPanel.TabIndex = 14;
             this.accuracyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.accuracyPanel_Paint);
             // 
-            // accuracyLabel
+            // tableLayoutPanel2
             // 
-            this.accuracyLabel.AutoSize = false;
-            this.accuracyLabel.BackColor = System.Drawing.Color.Transparent;
-            this.accuracyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accuracyLabel.Font = new System.Drawing.Font("Noto Sans KR Medium", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.accuracyLabel.Location = new System.Drawing.Point(0, 0);
-            this.accuracyLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.accuracyLabel.Name = "accuracyLabel";
-            this.accuracyLabel.Size = new System.Drawing.Size(302, 81);
-            this.accuracyLabel.TabIndex = 13;
-            this.accuracyLabel.Text = "Accuracy : 100%";
-            this.accuracyLabel.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.accuracyLabel.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            this.accuracyLabel.Click += new System.EventHandler(this.accuracyLabel_Click);
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.04348F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.95652F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Controls.Add(this.accuracyLabel1, 1, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 4);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.18182F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.81818F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 76);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // accuracyLabel1
+            // 
+            this.accuracyLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accuracyLabel1.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.accuracyLabel1.Location = new System.Drawing.Point(37, 14);
+            this.accuracyLabel1.Name = "accuracyLabel1";
+            this.accuracyLabel1.Size = new System.Drawing.Size(225, 45);
+            this.accuracyLabel1.TabIndex = 16;
+            this.accuracyLabel1.Text = "autoSizeLabel1";
+            this.accuracyLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // levelPanel
             // 
@@ -514,7 +539,7 @@
             this.toolZoom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolZoom.BorderColor = System.Drawing.Color.Transparent;
             this.toolZoom.BorderThickness = 3;
-            this.toolZoom.Controls.Add(this.ZoomCurrent);
+            this.toolZoom.Controls.Add(this.tableLayoutPanel3);
             this.toolZoom.Controls.Add(this.ZoomOutBtn);
             this.toolZoom.Controls.Add(this.ZoomInBtn);
             this.toolZoom.Controls.Add(this.guna2HtmlLabel4);
@@ -526,15 +551,31 @@
             this.toolZoom.TabIndex = 11;
             this.toolZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.toolZoom_Paint);
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.ZoomCurrent, 0, 1);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 48);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.13514F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.86487F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(47, 48);
+            this.tableLayoutPanel3.TabIndex = 11;
+            // 
             // ZoomCurrent
             // 
             this.ZoomCurrent.BackColor = System.Drawing.Color.Transparent;
+            this.ZoomCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.ZoomCurrent.Location = new System.Drawing.Point(5, 64);
+            this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
             this.ZoomCurrent.Size = new System.Drawing.Size(35, 19);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
+            this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.ZoomCurrent.Click += new System.EventHandler(this.guna2HtmlLabel1_Click);
             // 
             // ZoomOutBtn
@@ -731,6 +772,13 @@
             this.pictureBoxImage.WaitOnLoad = true;
             this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click_1);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 100);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
             // showLevel1
             // 
             this.showLevel1.BackColor = System.Drawing.Color.Transparent;
@@ -783,19 +831,6 @@
             this.goModel.TabIndex = 11;
             this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.accuracyLabel, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(302, 81);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -812,18 +847,20 @@
             this.Size = new System.Drawing.Size(1920, 1080);
             this.mainpanel.ResumeLayout(false);
             this.leftPanel.ResumeLayout(false);
-            this.leftPanel.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.imageContainer.ResumeLayout(false);
             this.toastPopupPanel.ResumeLayout(false);
             this.accuracyPanel.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.levelPanel.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
             this.toolZoom.ResumeLayout(false);
             this.toolZoom.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.toolBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -839,7 +876,6 @@
         private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
         private Guna.UI2.WinForms.Guna2GradientPanel imageContainer;
         private Guna.UI2.WinForms.Guna2Panel accuracyPanel;
-        private Guna.UI2.WinForms.Guna2HtmlLabel accuracyLabel;
         private Guna.UI2.WinForms.Guna2Panel levelPanel;
         private Guna.UI2.WinForms.Guna2GradientPanel toolZoom;
         private Guna.UI2.WinForms.Guna2HtmlLabel ZoomCurrent;
@@ -854,7 +890,6 @@
         private Guna.UI2.WinForms.Guna2ImageButton toolLabelingPolygon;
         private Guna.UI2.WinForms.Guna2ImageButton toolHand;
         private Guna.UI2.WinForms.Guna2PictureBox pictureBoxImage;
-        private Guna.UI2.WinForms.Guna2HtmlLabel class2;
         private Guna.UI2.WinForms.Guna2CircleButton classBtn;
         private Guna.UI2.WinForms.Guna2Panel showLevel1;
         private Guna.UI2.WinForms.Guna2Panel totalLevelpanel;
@@ -877,5 +912,10 @@
         private Guna.UI2.WinForms.Guna2Button goModel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private Panel panel1;
+        private SAI.App.Views.Pages.AutoSizeLabel class3;
+        private TableLayoutPanel tableLayoutPanel2;
+        private SAI.App.Views.Pages.AutoSizeLabel accuracyLabel1;
+        private TableLayoutPanel tableLayoutPanel3;
     }
 }
