@@ -19,7 +19,6 @@ import glob
 import io
 import re
 from datetime import datetime
-import csv
 # 로깅 레벨 설정
 logging.getLogger().setLevel(logging.INFO)
 
@@ -183,24 +182,24 @@ def check_gpu_yolo_load_block(block_params=None):
     show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
 
     # 2. block_params에서 model_type 받기 (기본값: 'n')
-    model_type = 'yolov8n.pt'
+    model_type = 'n'
     if block_params and 'model_type' in block_params:
-        if block_params['model_type'] in ['yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt']:
+        if block_params['model_type'] in ['n', 's', 'm', 'l']:
             model_type = block_params['model_type']
 
     # 3. 모델 로드 프로그레스 (별도 start_time 사용)
     model_load_time = time.time()
-    show_tagged_progress('TRAIN', f'{model_type} 모델 로드 중...', model_load_time, 0)
+    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
     try:
         from ultralytics import YOLO
-        model_filename = f'{model_type}'
+        model_filename = f'yolov8{model_type}.pt'
         model_path = os.path.join(base_dir, model_filename)
         # 모델 로딩 진행 시뮬레이션
         for progress in [10, 30, 50, 70, 90]:
-            show_tagged_progress('TRAIN', f'{model_type} 모델 로드 중...', model_load_time, progress)
+            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
             time.sleep(0.2)
         model = YOLO(model_path)
-        show_tagged_progress('TRAIN', f'{model_type} 모델 로드 완료!', model_load_time, 100)
+        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
 
         # 전역 상태 업데이트
         tutorial_state["model"] = model
@@ -501,113 +500,81 @@ def train_model_block(block_params=None):
             show_tagged_progress('ERROR', f'유효하지 않은 이미지 크기입니다. 기본값 640을 사용합니다.', start_time, 15)
             imgsz = 640
     
-    # 여기가 로그로 나옴
     show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
-    show_detailed_train_progress(
-    epoch=0,
-    total_epochs=epochs,
-    total_progress=0.0,
-    start_time=start_time,
-    block_progress=20,
-    tag="TRAIN"
-)
     
     try:
         # 학습 시작 시간 기록
         epoch_start_time = time.time()
-        results_csv_path = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
-        stop_monitor = threading.Event()
-
-        def monitor_progress():
-            while not stop_monitor.is_set():
-                if os.path.exists(results_csv_path):
-                    with open(results_csv_path, "r", encoding="utf-8") as f:
-                        reader = list(csv.reader(f))
-                        completed_epochs = len(reader) - 1  # 첫 줄은 헤더
-                        if completed_epochs > 0:
-                            print_train_progress(
-                                completed_epochs,
-                                epochs,
-                                (completed_epochs / epochs) * 100,
-                                epoch_start_time
-                            )
-                time.sleep(2)  # 2초마다 체크
-
-        monitor_thread = threading.Thread(target=monitor_progress)
-        monitor_thread.daemon = True
-        monitor_thread.start()
-
-        # 실제 학습 실행
+        last_progress_update = time.time()
+        
+        # 학습 진행 상태를 모니터링할 변수들
+        completed_epochs = 0
+        total_epochs = epochs
+        
+        # 학습 실행 (클래스 속성을 사용하여 진행 상황 업데이트)
+        class ProgressCallback:
+            def __init__(self):
+                self.start_time = time.time()
+            
+            def on_train_epoch_end(self, trainer):
+                nonlocal completed_epochs
+                completed_epochs = trainer.epoch + 1
+                progress = (completed_epochs / total_epochs) * 100
+                elapsed = time.time() - self.start_time
+                minutes, seconds = divmod(elapsed, 60)
+                
+                # 잔여 시간 추정
+                if completed_epochs > 1:
+                    time_per_epoch = elapsed / completed_epochs
+                    remaining_epochs = total_epochs - completed_epochs
+                    remaining_time = time_per_epoch * remaining_epochs
+                    rem_minutes, rem_seconds = divmod(remaining_time, 60)
+                    bar = make_progress_bar(progress)
+                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과 | {int(rem_minutes):02d}:{int(rem_seconds):02d} 남음] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
+                else:
+                    bar = make_progress_bar(progress)
+                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
+        
+        # 콜백 객체 생성
+        callbacks = [ProgressCallback()]
+        
+        # 학습 실행
         model = tutorial_state["model"]
         data_yaml_path = tutorial_state["data_yaml_path"]
         
         # YOLOv8 학습 실행
-        train_cmd = [
-            sys.executable, "-m", "ultralytics", "train",
-            "--data", data_yaml_path,
-            "--epochs", str(epochs),
-            "--batch", str(batch_size),
-            "--imgsz", str(imgsz),
-            "--device", device,
-            "--project", os.path.join(base_dir, "runs"),
-            "--name", "detect/train",
-            "--exist-ok"
-        ]
-        
-        show_tagged_progress('TRAIN', f'실행 명령: {" ".join(train_cmd)}', start_time, 40)
-        
-        # 프로세스 실행
-        process = subprocess.Popen(
-            train_cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            universal_newlines=True,
-            bufsize=1,
-            encoding='utf-8'
+        results = model.train(
+            data=data_yaml_path,
+            epochs=epochs,
+            batch=batch_size,
+            imgsz=imgsz,
+            device=device,
+            project=os.path.join(base_dir, "runs"),
+            name="detect/train",  # 하위 폴더 구조 지정
+            exist_ok=True, 
         )
         
-        # 출력 처리
-        inference_result = None
-        for line in iter(process.stdout.readline, ''):
-            line = line.strip()
-            print(line)  # 로그 확인용
-            
-            # 결과 JSON 찾기
-            if line.startswith("INFERENCE_RESULT:"):
-                result_json = line[len("INFERENCE_RESULT:"):]
-                try:
-                    inference_result = json.loads(result_json)
-                    show_tagged_progress('TRAIN', '추론 결과 JSON 파싱 성공', start_time, 70)
-                except json.JSONDecodeError:
-                    show_tagged_progress('ERROR', f'추론 결과 JSON 파싱 실패: {result_json}', start_time, 70)
-            
-            # 진행 상황 메시지 확인
-            elif line.startswith("[INFERENCE]"):
-                progress_msg = line[len("[INFERENCE] "):]
-                show_tagged_progress('TRAIN', f'추론 진행 중: {progress_msg}', start_time, 60)
+        # 결과 경로 설정
+        results_dir = find_latest_results_dir()
+        model_path = os.path.join(results_dir, "weights", "best.pt")
         
-        # 프로세스 완료 대기
-        process.wait()
+        # 전역 상태 업데이트
+        tutorial_state["model_path"] = model_path
+        tutorial_state["results_dir"] = results_dir
+        tutorial_state["training_completed"] = True
         
-        # 결과 확인
-        if process.returncode != 0:
-            stderr = process.stderr.read()
-            show_tagged_progress('ERROR', f'추론 실행 오류 (반환 코드: {process.returncode}): {stderr}', start_time, 80)
-            return {
-                "success": False,
-                "error": f"추론 실행 오류 (반환 코드: {process.returncode}): {stderr}",
-                "elapsed_time": time.time() - start_time
-            }
+        train_elapsed = time.time() - start_time
+        minutes, seconds = divmod(train_elapsed, 60)
+        show_tagged_progress('TRAIN', f'모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
         
-        # 결과 이미지 경로 저장
-        if "result_image" in inference_result:
-            tutorial_state["result_image_path"] = inference_result["result_image"]
-        
-        show_tagged_progress('TRAIN', f'추론 완료: {inference_result.get("success", False)}', start_time, 100)
         return {
-            "success": inference_result.get("success", False),
-            "result": inference_result,
-            "elapsed_time": time.time() - start_time
+            "success": True,
+            "model_path": model_path,
+            "results_dir": results_dir,
+            "epochs": epochs,
+            "imgsz": imgsz,
+            "device": device,
+            "elapsed_time": train_elapsed
         }
     except Exception as e:
         show_tagged_progress('ERROR', f'학습 중 오류 발생: {e}', start_time, 70)
@@ -1188,25 +1155,11 @@ def print_train_progress(epoch, total_epochs, total_progress, start_time, tag="T
     detail = f"({epoch}/{total_epochs} 에폭) 학습 중"
     print(f"PROGRESS:{block_progress:.1f}:[{tag}] {bar} {block_progress:.1f}% ({epoch}/{total_epochs} 에폭) 학습 중 | 전체 {total_progress:.1f}% | 경과 {elapsed} | 남음 {remain}", flush=True)
 
-# ==================== 학습 전용 상세 로그 출력 함수 ====================
-def show_detailed_train_progress(epoch, total_epochs, total_progress, start_time, block_progress=0, tag="TRAIN"):
-    bar = make_progress_bar(block_progress)
-    elapsed = format_time(time.time() - start_time)
-    if epoch > 0:
-        avg_time = (time.time() - start_time) / epoch
-        remain_sec = avg_time * (total_epochs - epoch)
-        remain = format_time(remain_sec)
-    else:
-        remain = "??:??"
-    detail = f"({epoch}/{total_epochs} 에폭) 학습 중"
-    status = format_status(total_progress, elapsed, remain, tag, block_progress, bar, detail)
-    print(f"PROGRESS:{block_progress:.1f}:{status}", flush=True)
 
 # progressbar만 채우는 함수
 def print_block_progress(block_progress, message):
     # C#에서 progressbar만 채우고, 텍스트는 간단하게
     print(f"PROGRESS:{block_progress:.1f}:{message}", flush=True)
-
 
 if __name__ == "__main__":
     # 명령행 인수 확인
