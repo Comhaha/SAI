@@ -1,19 +1,17 @@
 package com.sai.backend.domain.notion.service;
 
 import com.sai.backend.domain.ai.model.AiLog;
-import java.util.HashMap;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class NotionContentParsingService {
+
+    /*────────────────────── public API ──────────────────────*/
 
     /** AI 로그를 Notion 블록 목록으로 변환 */
     public List<Map<String, Object>> buildAiLogContent(AiLog aiLog) {
@@ -34,6 +32,12 @@ public class NotionContentParsingService {
         /* ③ 결과 이미지 */
         if (isNotBlank(aiLog.getResultImageUrl())) {
             children.add(createHeadingBlock("결과 이미지", 2));
+
+            if (aiLog.getThreshold() != null) {
+                String th = String.format("threshold : %.4f", aiLog.getThreshold());
+                children.add(createBulletedListItem(th));
+            }
+
             children.add(createImageBlock(aiLog.getResultImageUrl()));
         }
 
@@ -52,113 +56,111 @@ public class NotionContentParsingService {
         return children;
     }
 
-    /**
-     * 마크다운 텍스트를 줄 단위로 Notion 블록으로 변환
-     */
+    /** 마크다운 텍스트를 줄 단위로 Notion 블록으로 변환 */
     public List<Map<String, Object>> parseMarkdownToNotionBlocksLineByLine(String markdown) {
         List<Map<String, Object>> blocks = new ArrayList<>();
-
         String[] lines = markdown.split("\n");
 
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
 
-            // 빈 줄은 빈 문단 블록으로 변환
+            /* 빈 줄 → 빈 문단 */
             if (line.trim().isEmpty()) {
                 blocks.add(createParagraphBlock(""));
                 continue;
             }
 
-            // 가로선 처리 (--- 또는 여러 개의 -)
+            /* 수평선(---) */
             if (line.trim().matches("^-{3,}$")) {
                 blocks.add(createDividerBlock());
                 continue;
             }
 
-            // 헤딩 처리 - 각 줄을 개별적으로 처리
+            /* 헤딩 */
             if (line.startsWith("###")) {
                 blocks.add(createHeadingBlock(line.substring(3).trim(), 3));
+                continue;
             } else if (line.startsWith("##")) {
                 blocks.add(createHeadingBlock(line.substring(2).trim(), 2));
+                continue;
             } else if (line.startsWith("#")) {
                 blocks.add(createHeadingBlock(line.substring(1).trim(), 1));
+                continue;
             }
-            // 코드 블록 시작 처리
-            else if (line.startsWith("```")) {
-                // 코드 언어 추출
-                String language = line.substring(3).trim();
-                if (language.isEmpty()) {
-                    language = "plain text";
-                }
 
-                // 코드 블록 내용 수집
-                StringBuilder codeContent = new StringBuilder();
-                i++; // 다음 줄로 이동
+            /* 코드 블록 */
+            if (line.startsWith("```")) {
+                String language = line.substring(3).trim();
+                if (language.isEmpty()) language = "plain text";
+
+                StringBuilder code = new StringBuilder();
+                i++; // 다음 줄
                 while (i < lines.length && !lines[i].startsWith("```")) {
-                    if (codeContent.length() > 0) {
-                        codeContent.append("\n");
-                    }
-                    codeContent.append(lines[i]);
+                    if (code.length() > 0) code.append("\n");
+                    code.append(lines[i]);
                     i++;
                 }
+                blocks.add(createCodeBlock(code.toString(), language));
+                continue;
+            }
 
-                blocks.add(createCodeBlock(codeContent.toString(), language));
+            /* 불릿 리스트 */
+            if (line.trim().startsWith("- ")) {
+                blocks.add(createBulletedListItem(line.trim().substring(2)));
+                continue;
             }
-            // 불릿 포인트 처리 - 각 줄을 개별적으로 처리
-            else if (line.trim().startsWith("- ")) {
-                blocks.add(createBulletedListItem(line.trim().substring(2).trim()));
-            }
-            // 그 외 모든 줄은 마크다운 문단으로 처리
-            else {
-                blocks.add(createParagraphFromMarkdown(line));
-            }
+
+            /* 일반 문단 */
+            blocks.add(createParagraphBlock(line));
         }
 
         return blocks;
     }
 
-    /*────────────────────── Block 생성 헬퍼 메서드 ──────────────────────*/
+    /*────────────────────── Block 생성 메서드 ──────────────────────*/
+
     public Map<String,Object> createHeadingBlock(String text,int level){
-        level=Math.max(1,Math.min(level,3));           // Notion은 1~3
+        level = Math.max(1, Math.min(level, 3));  // Notion은 1~3
         return Map.of(
             "object","block",
             "type","heading_"+level,
             "heading_"+level, Map.of(
-                "rich_text",List.of(Map.of(
-                    "type","text",
-                    "text",Map.of("content",text==null?"":text)
-                ))
+                "rich_text", parseInlineMarkdown(text)
             )
         );
     }
-    public Map<String,Object> createParagraphBlock(String text){ return createParagraphFromMarkdown(text); }
 
-    public Map<String,Object> createDividerBlock(){ return Map.of("object","block","type","divider","divider",Map.of()); }
+    public Map<String,Object> createParagraphBlock(String text){
+        return Map.of(
+            "object","block","type","paragraph",
+            "paragraph", Map.of("rich_text", parseInlineMarkdown(text))
+        );
+    }
+
+    public Map<String,Object> createDividerBlock(){
+        return Map.of("object","block","type","divider","divider",Map.of());
+    }
 
     public Map<String,Object> createBulletedListItem(String text){
         return Map.of(
             "object","block","type","bulleted_list_item",
-            "bulleted_list_item", Map.of("rich_text",List.of(Map.of(
-                "type","text","text",Map.of("content",text)
-            )))
+            "bulleted_list_item", Map.of("rich_text", parseInlineMarkdown(text))
         );
     }
 
     public Map<String,Object> createCodeBlock(String code,String lang){
-        List<Map<String,Object>> richTextList = new ArrayList<>();
-        int maxLength = 2000;
-        for (int i = 0; i < code.length(); i += maxLength) {
-            String chunk = code.substring(i, Math.min(i + maxLength, code.length()));
-            richTextList.add(Map.of(
-                "type", "text",
-                "text", Map.of("content", chunk)
+        List<Map<String,Object>> richText = new ArrayList<>();
+        int MAX = 2000;
+        for (int i = 0; i < code.length(); i += MAX) {
+            richText.add(Map.of(
+                "type","text",
+                "text", Map.of("content", code.substring(i, Math.min(i+MAX, code.length())))
             ));
         }
         return Map.of(
-            "object", "block",
-            "type",   "code",
-            "code",   Map.of(
-                "rich_text", richTextList,
+            "object","block","type","code",
+            "code", Map.of(
+                "rich_text", richText,
                 "language",  lang
             )
         );
@@ -167,45 +169,42 @@ public class NotionContentParsingService {
     public Map<String,Object> createImageBlock(String url){
         return Map.of(
             "object","block","type","image",
-            "image",Map.of("type","external","external",Map.of("url",url))
+            "image", Map.of("type","external","external",Map.of("url",url))
         );
     }
 
-    /* 인라인 마크다운(**,*,_,`) 파싱 → Rich Text 리스트 */
-    public Map<String,Object> createParagraphFromMarkdown(String text){
-        List<Map<String,Object>> rich=new ArrayList<>();
-        Pattern p=Pattern.compile("(`[^`\\n]+`|\\*\\*[^*\\n]+\\*\\*|__[^_\\n]+__|\\*[^*\\n]+\\*|_[^_\\n]+_|[^*_`]+)");
-        Matcher m=p.matcher(text==null?"":text);
-        while(m.find()){
-            String part=m.group(1);
-            if(part.startsWith("`")&&part.endsWith("`")){
-                rich.add(richText(part.substring(1,part.length()-1),Map.of("code",true)));
-            }else if((part.startsWith("**")&&part.endsWith("**"))||(part.startsWith("__")&&part.endsWith("__"))){
-                rich.add(richText(part.substring(2,part.length()-2),Map.of("bold",true)));
-            }else if((part.startsWith("*")&&part.endsWith("*"))||(part.startsWith("_")&&part.endsWith("_"))){
-                rich.add(richText(part.substring(1,part.length()-1),Map.of("italic",true)));
-            }else{
-                rich.add(richText(part,null));
+    /*────────────────────── 인라인 마크다운 파서 ──────────────────────*/
+
+    private List<Map<String,Object>> parseInlineMarkdown(String text){
+        List<Map<String,Object>> rich = new ArrayList<>();
+        Pattern p = Pattern.compile("(`[^`\\n]+`|\\*\\*[^*\\n]+\\*\\*|__[^_\\n]+__|\\*[^*\\n]+\\*|_[^_\\n]+_|[^*_`]+)");
+        Matcher m = p.matcher(text == null ? "" : text);
+        while (m.find()) {
+            String part = m.group(1);
+            Map<String,Object> node;
+            if (part.startsWith("`") && part.endsWith("`")) {            // code
+                node = richTextNode(part.substring(1, part.length()-1), Map.of("code", true));
+            } else if ((part.startsWith("**") && part.endsWith("**")) || (part.startsWith("__") && part.endsWith("__"))) { // bold
+                node = richTextNode(part.substring(2, part.length()-2), Map.of("bold", true));
+            } else if ((part.startsWith("*") && part.endsWith("*")) || (part.startsWith("_") && part.endsWith("_"))) {     // italic
+                node = richTextNode(part.substring(1, part.length()-1), Map.of("italic", true));
+            } else {                                                      // plain
+                node = richTextNode(part, null);
             }
+            rich.add(node);
         }
-        return Map.of(
-            "object","block","type","paragraph",
-            "paragraph",Map.of("rich_text",rich)
-        );
+        return rich;
     }
 
-    private Map<String,Object> richText(String content, Map<String,Boolean> annotations){
-        Map<String,Object> node=Map.of(
-            "type","text",
-            "text",Map.of("content",content)
-        );
-        if(annotations!=null) node=new HashMap<>(node){{
-            put("annotations",annotations);
-        }};
+    private Map<String,Object> richTextNode(String content, Map<String,Boolean> ann){
+        Map<String,Object> node = new HashMap<>();
+        node.put("type","text");
+        node.put("text", Map.of("content", content));
+        if (ann != null) node.put("annotations", ann);
         return node;
     }
 
-    private boolean isNotBlank(String s){
-        return s!=null && !s.trim().isEmpty();
-    }
+    /*────────────────────── Util ──────────────────────*/
+
+    private boolean isNotBlank(String s){ return s != null && !s.trim().isEmpty(); }
 }

@@ -61,7 +61,6 @@ namespace SAI.SAI.App.Views.Pages
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
         private PythonService.InferenceResult _result;
 
-
         public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -730,7 +729,7 @@ namespace SAI.SAI.App.Views.Pages
                 pErrorToast.Visible = true;
                 pErrorToast.FillColor = Color.FromArgb(0, pErrorToast.FillColor);
                 lbErrorType.Text = errorType;
-                lbMissingType.Text = missingType;
+                lbMissingType.Text = "MISSING " + missingType;
                 lbErrorMessage.Text = errorMessage;
 
                 // 2초 대기 (취소 가능)
@@ -766,9 +765,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value/100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -1029,9 +1029,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }

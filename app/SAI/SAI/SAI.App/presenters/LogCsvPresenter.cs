@@ -15,6 +15,7 @@ namespace SAI.SAI.App.Presenters
     {
         private readonly ICsvChartView _view;
 
+        private string errorMessage = "";
 
         private string _csvPath;
 
@@ -35,11 +36,18 @@ namespace SAI.SAI.App.Presenters
         private void LoadData()
         {
             if (!File.Exists(_csvPath))
-                throw new FileNotFoundException("CSV 파일을 찾을 수 없습니다.", _csvPath);
+            {
+                Console.WriteLine("[DEBUG] CSV 파일을 찾을 수 없습니다.\n" + _csvPath);
+                return;
+            }
+               
 
             var lines = File.ReadAllLines(_csvPath);
             if (lines.Length < 2)
-                throw new InvalidDataException("CSV에 데이터가 없습니다.");
+            {
+                Console.WriteLine("[DEBUG] CSV에 데이터가 없습니다..\n" + _csvPath);
+                return;
+            }
 
                 // 1) 헤더 파싱 (epoch 제외)
                 var headers = lines[0].Split(',');

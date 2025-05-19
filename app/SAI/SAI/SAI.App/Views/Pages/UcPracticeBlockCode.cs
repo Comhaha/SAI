@@ -53,11 +53,14 @@ namespace SAI.SAI.App.Views.Pages
 		private string missingType = "";
 		private string errorType = "";
 
+        private MemoPresenter memoPresenter;
+
 		private CancellationTokenSource _toastCancellationSource;
 
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
+        private PythonService.InferenceResult _result;
         public event EventHandler RunButtonClicked;
 
         public UcPracticeBlockCode(IMainView view)
@@ -68,6 +71,10 @@ namespace SAI.SAI.App.Views.Pages
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
+
+            memoPresenter = new MemoPresenter();
+
+            tboxMemo.TextChanged += tboxMemo_TextChanged;
 
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
@@ -411,9 +418,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value/100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -631,9 +639,10 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            string memo = tboxMemo.Text;
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -1086,6 +1095,15 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
             Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
         
+        }
+
+        private void tboxMemo_TextChanged(object sender, EventArgs e)
+        {
+            // MemoPresenter를 통해 텍스트 변경 사항을 모델에 저장
+            if (memoPresenter != null)
+            {
+                memoPresenter.SaveMemoText(tboxMemo.Text);
+            }
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
