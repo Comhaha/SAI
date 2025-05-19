@@ -40,9 +40,9 @@
             this.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.logo.FillColor = System.Drawing.Color.Transparent;
             this.logo.ImageRotate = 0F;
-            this.logo.Location = new System.Drawing.Point(227, 40);
+            this.logo.Location = new System.Drawing.Point(340, 15);
             this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(810, 622);
+            this.logo.Size = new System.Drawing.Size(1215, 933);
             this.logo.TabIndex = 0;
             this.logo.TabStop = false;
             // 
@@ -53,14 +53,14 @@
             this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
             this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(1262, 30);
+            this.panelTitleBar.Size = new System.Drawing.Size(1920, 45);
             this.panelTitleBar.TabIndex = 1;
             // 
             // SplashForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ClientSize = new System.Drawing.Size(1894, 1009);
             this.Controls.Add(this.panelTitleBar);
             this.Controls.Add(this.logo);
             this.Name = "SplashForm";

@@ -15,7 +15,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(btnClose, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
+            ButtonUtils.SetupButton(btnClose, "btn_close_prepare_clicked", "btn_close_prepare");
             btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(btnOk, "btn_yellow_ok_clicked", "btn_yellow_ok");
             btnOk.Click += (s, e) => { this.Close(); };

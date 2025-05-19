@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SAI.SAI.App.Models;
+using SAI.SAI.App.Presenters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +16,8 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogCompleteTutorial : Form
 	{
+		private DialogLoadPagePresenter presenter;
+
 		public DialogCompleteTutorial()
 		{
 			InitializeComponent();
@@ -54,7 +58,14 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnLearnModel.CheckedState.FillColor = Color.Transparent;
 			btnLearnModel.HoverState.FillColor = Color.Transparent;
 			btnLearnModel.BackColor = Color.Transparent;
-			btnLearnModel.Click += (s, e) => { System.Windows.Forms.Application.Exit(); }; // <- 여기 페이지 이동으로 수정!!!!!!!
+			btnLearnModel.Click += (s, e) => {
+				var blocklyModel = BlocklyModel.Instance;
+				blocklyModel.blockAllCode = "";
+				blocklyModel.blockCode = "";
+				blocklyModel.imgPath = "";
+				presenter.clickGoTrain();
+				this.Close();
+			}; // <- 여기 페이지 이동으로 수정!!!!!!!
 			// btnOk 마우스 입력 될 때
 			btnLearnModel.MouseEnter += (s, e) =>
 			{

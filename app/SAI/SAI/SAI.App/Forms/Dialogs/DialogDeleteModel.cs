@@ -61,9 +61,9 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.BackColor = Color.Transparent;
 			//btnOk.Click += (s, e) => { System.Windows.Forms.Application.Exit(); };
 			btnOk.Click += (s, e) => {
-				if (guna2CheckBox1.Checked)
+				if (cBoxDontShow.Checked)
 				{
-					presenter.DialogDeleteModelEvent(guna2CheckBox1.Checked);
+					presenter.DialogDeleteModelEvent(cBoxDontShow.Checked);
 				}
 				this.Close();
 			};
@@ -72,13 +72,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.MouseEnter += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_blue_ok_clicked;
+				btnOk.BackgroundImage = Properties.Resources.btn_yellow_ok_clicked;
 			};
 			// btnOk 마우스 떠날때
 			btnOk.MouseLeave += (s, e) =>
 			{
 				btnOk.BackColor = Color.Transparent;
-				btnOk.BackgroundImage = Properties.Resources.btn_blue_ok;
+				btnOk.BackgroundImage = Properties.Resources.btn_yellow_ok;
 			};
 
 			// btnCancel

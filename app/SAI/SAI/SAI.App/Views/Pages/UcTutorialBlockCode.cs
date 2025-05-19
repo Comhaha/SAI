@@ -19,7 +19,6 @@ using System.Messaging;
 using System.Threading.Tasks;
 using System.Linq;
 using SAI.SAI.Application.Service;
-using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 
@@ -120,7 +119,7 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
-            btnSelectInferImage.Size = new Size(329, 185);  // pInferAccuracy와 동일한 크기
+            btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
@@ -184,6 +183,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnDone.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
+            pZoomCode.BackColor = Color.Transparent;
 
             pSideInfer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
 
@@ -208,6 +208,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+
 
             // 복사 버튼 클릭 이벤트 추가
             btnCopy.Click += (s, e) =>
@@ -782,7 +783,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             jsBridge = new JsBridge((message, type) =>
             {
-                blocklyPresenter.HandleJsMessage(message, type);
+                blocklyPresenter.HandleJsMessage(message, type, "tutorial");
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -815,9 +816,7 @@ namespace SAI.SAI.App.Views.Pages
                                         string filePath = dialog.FileName.Replace("\\", "/");
                                         string escapedFilePath = JsonSerializer.Serialize(filePath);
                                         string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
-
-                                        blocklyModel.imgPath = filePath;
-
+                                        
                                         string json = $@"{{
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
@@ -1178,12 +1177,26 @@ namespace SAI.SAI.App.Views.Pages
                     if (block == null) continue;
 
                     string blockType = block.type;
+					if (blockType == "imgPath")
+					{
+						if (string.IsNullOrEmpty(blocklyModel.imgPath))
+						{
+							errorType = "파라미터 오류";
+							missingType = "파라미터 \"이미지 파일\"";
+							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+							blockErrorMessage(block.type);
+							return true;
+						}
+					}
                     if (!checkBlockPosition(blockType, i))
                     {
                         blockErrorMessage(blockType);
                         return true;
                     }
-                }
+
+
+				}
             }
             else if (blocklyModel.blockTypes.Count < 9)
             {
@@ -1283,7 +1296,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -1326,7 +1339,7 @@ namespace SAI.SAI.App.Views.Pages
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;

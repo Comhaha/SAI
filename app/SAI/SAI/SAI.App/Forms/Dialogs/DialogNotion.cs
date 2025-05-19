@@ -275,12 +275,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         //    };
         //}
 
-
-        private void DialogNotion_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void ibtnClose_Click(object sender, EventArgs e)
         {
             this.Close();
