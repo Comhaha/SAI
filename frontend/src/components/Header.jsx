@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '@/assets/images/logo.svg';
-import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import useScrollToTop from '@/hooks/useScrollToTop';
@@ -42,28 +41,14 @@ function Header() {
             </li>
             <li>
               <button
-                onClick={() => handleNav('/screenshots')}
+                onClick={() => {
+                  scrollToTop();
+                  navigate('/', { state: { scrollTo: 'content2' } });
+                  setMenuOpen(false);
+                }}
                 className="text-[18px] hover:text-custom-300 font-medium bg-transparent border-none cursor-pointer"
               >
                 Screenshots
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => handleNav('/docs')}
-                className="text-[18px] hover:text-custom-300 font-medium bg-transparent border-none cursor-pointer"
-              >
-                Docs
-              </button>
-            </li>
-            <li className="flex">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20"
-              />
-              <button className="w-[40px] h-[40px] rounded-r-md bg-black/70 text-white">
-                <SearchIcon />
               </button>
             </li>
           </ul>
@@ -96,27 +81,15 @@ function Header() {
                   Download
                 </button>
                 <button
-                  onClick={() => handleNav('/screenshots')}
+                  onClick={() => {
+                    scrollToTop();
+                    navigate('/', { state: { scrollTo: 'content2' } });
+                    setMenuOpen(false);
+                  }}
                   className="text-xl font-bold text-gray-800 hover:text-[#FF8000] bg-transparent border-none text-left cursor-pointer"
                 >
                   Screenshots
                 </button>
-                <button
-                  onClick={() => handleNav('/docs')}
-                  className="text-xl font-bold text-gray-800 hover:text-[#FF8000] bg-transparent border-none text-left cursor-pointer"
-                >
-                  Docs
-                </button>
-                <div className="flex mt-4">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="w-[100px] h-[40px] px-3 rounded-l-md border border-black/20"
-                  />
-                  <button className="w-[40px] h-[40px] rounded-r-md bg-black/70 text-white">
-                    <SearchIcon />
-                  </button>
-                </div>
               </nav>
             </div>
             {/* 클릭시 메뉴 닫기용 오버레이 */}

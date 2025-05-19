@@ -23,13 +23,15 @@ namespace SAI.SAI.App.Forms.Dialogs
     {
         //webView2.Visible = false 되어 있어요. 로직 작성하실 때
         // secretkey 입력하고 맞으면 pInfo.Visible = false; webView2.Visible = true; 하고
+
+        private readonly string _initialMemo;
         private AiFeedbackPresenter _feedPresenter;
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
 
         private const string redirectBase = "http://localhost:8080/api/notion/callback";
 
-        public DialogNotion()
+        public DialogNotion(string memo)
         {
             InitializeComponent();
             pInfo.BackColor = ColorTranslator.FromHtml("#1D1D1D");
@@ -40,14 +42,21 @@ namespace SAI.SAI.App.Forms.Dialogs
             btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(authButton, "btn_auth_clicked", "btn_auth");
 
+            _initialMemo = memo;
+
             InitWebOnce();
         }
 
         /* ---------------- IAiFeedbackView ---------------- */
-        //경로 넣기
-        public string CodeText => "print(\"hello world\")";
-        public string LogText => "log";
-        public string ImagePath => "C:\\Users\\SSAFY\\Downloads\\logo.jpg";
+        //Code 경로
+        public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_train_script.py"));
+        //log 사진 경로
+        public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
+        //무슨 사진이 결과 사진인지?
+        public string ResultImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\val_batch0_labels.jpg"));
+        public string memo => _initialMemo;
+
 
         public event EventHandler SendRequested;
         private void ibtnEnter_Click(object sender, EventArgs e)

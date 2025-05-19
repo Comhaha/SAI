@@ -17,6 +17,7 @@ public interface AiApi {
     @PostMapping(value = "/feedback", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<BaseResponse<AiFeedbackResponseDto>> feedback(
         @RequestPart("code") String code,
-        @RequestPart("log")  String log,
-        @RequestPart("image") MultipartFile image);
+        @RequestPart("logImage")  MultipartFile logImage,
+        @RequestPart("resultImage") MultipartFile resultImage,
+        @RequestPart("memo") String memo);
 }

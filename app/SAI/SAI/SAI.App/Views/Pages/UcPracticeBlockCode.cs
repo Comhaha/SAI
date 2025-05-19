@@ -371,7 +371,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnGoNotion_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion())
+            using (var dialog = new DialogNotion(""))
             {
                 dialog.ShowDialog();
             }
@@ -589,7 +589,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
-            using (var dialog = new DialogNotion())
+            using (var dialog = new DialogNotion(""))
             {
                 dialog.ShowDialog();
             }
