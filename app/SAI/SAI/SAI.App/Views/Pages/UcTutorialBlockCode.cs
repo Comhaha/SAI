@@ -19,7 +19,6 @@ using System.Messaging;
 using System.Threading.Tasks;
 using System.Linq;
 using SAI.SAI.Application.Service;
-using System.Threading.Tasks;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 
@@ -1315,11 +1314,6 @@ namespace SAI.SAI.App.Views.Pages
 
             if (result.Success)
             {
-                pboxInferAccuracy.Size = new Size(431, 275);
-                pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                pboxInferAccuracy.Image = resultImage;
-                pboxInferAccuracy.Visible = true;
-                btnSelectInferImage.Visible = false;
                 if (File.Exists(result.ResultImage))
                 {
                     try
@@ -1329,7 +1323,7 @@ namespace SAI.SAI.App.Views.Pages
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxInferAccuracy.Size = new Size(287, 185);
+                            pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;

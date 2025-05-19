@@ -218,7 +218,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SAI.App\Models\YoloModel.cs" />
     <Compile Include="SAI.App\Forms\SplashForm.cs">
       <SubType>Form</SubType>
     </Compile>

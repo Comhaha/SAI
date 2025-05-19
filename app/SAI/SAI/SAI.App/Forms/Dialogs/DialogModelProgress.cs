@@ -36,7 +36,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            guna2ProgressBar1.Value = (int)progress;
+            progressBarModelLearning.Value = (int)progress;
             lblStatus.Text = message;
         }
 
@@ -48,7 +48,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            guna2ProgressBar1.Value = 0;
+			progressBarModelLearning.Value = 0;
             lblStatus.Text = "준비 중...";
         }
 
