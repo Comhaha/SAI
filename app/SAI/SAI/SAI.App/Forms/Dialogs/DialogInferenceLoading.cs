@@ -28,7 +28,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(guna2Button1, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
+            //ButtonUtils.SetupButton(guna2Button1, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
             guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록
 
             // 폼 스타일 설정
