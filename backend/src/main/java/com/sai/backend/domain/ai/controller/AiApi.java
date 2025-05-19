@@ -19,5 +19,7 @@ public interface AiApi {
         @RequestPart("code") String code,
         @RequestPart("logImage")  MultipartFile logImage,
         @RequestPart("resultImage") MultipartFile resultImage,
-        @RequestPart("memo") String memo);
+        @RequestPart("memo") String memo,
+        @RequestPart("threshold") Double threshold
+    );
 }
