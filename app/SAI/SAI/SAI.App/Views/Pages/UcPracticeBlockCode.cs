@@ -57,14 +57,16 @@ namespace SAI.SAI.App.Views.Pages
 
 		private CancellationTokenSource _toastCancellationSource;
 
-        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private int currentZoomLevel = 80; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
         private PythonService.InferenceResult _result;
 
         public event EventHandler RunButtonClicked;
 
-        public UcPracticeBlockCode(IMainView view)
+		private UcPracticeBlockList ucPracticeBlockList;
+
+		public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
@@ -190,7 +192,7 @@ namespace SAI.SAI.App.Views.Pages
                 btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
             };
             // 스크롤바 설정-------------------
-            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
             pSelectBlock.Controls.Add(ucPracticeBlockList);
             pSelectBlock.AutoScroll = false;
             ucPracticeBlockList.AutoScroll = false;
@@ -552,6 +554,15 @@ namespace SAI.SAI.App.Views.Pages
 								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
 								blocklyPresenter.setFieldValue(blockType, value);
 								break;
+							case "blocksAllTypes":
+								jsonTypes = root.GetProperty("types");
+								blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.loadBlockEvent(blockTypes, ucPracticeBlockList);
+								break;
+							case "undoCount":
+								var jsonUndoCount = root.GetProperty("cnt").ToString();
+								var undoCnt = int.Parse(jsonUndoCount);
+                                break;
 						}
 					}
 				}
@@ -822,30 +833,37 @@ namespace SAI.SAI.App.Views.Pages
 					if (block == null) continue;
 					
 					string blockType = block.type;
-					if (!checkBlockPosition(blockType, i))
+					if (blockType == "imgPath")
 					{
-						blockErrorMessage(blockType);
-						return true;
-					}
-
-					if(blockType == "loadModelWithLayer")
-					{
-						if(block.children != null)
+						if (string.IsNullOrEmpty(blocklyModel.imgPath))
 						{
-							if(block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 9개 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
+							errorType = "파라미터 오류";
+							missingType = "파라미터 \"이미지 파일\"";
+							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+							return true;
 						}
-						else
+					}
+					else if (blockType == "loadModelWithLayer")
+					{
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							MessageBox.Show("블럭 9개 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
 					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
+					}
+
+
+					if (!checkBlockPosition(blockType, i))
+                    {
+                        blockErrorMessage(blockType);
+                        return true;
+                    }
 				}
 			}
 			else if (blocklyModel.blockTypes.Count < 11)
@@ -864,15 +882,12 @@ namespace SAI.SAI.App.Views.Pages
 					string blockType = blockInfo.type;
 					if (!checkBlockPosition(blockType, i))
 					{
-						if (i > 0)
+						blockInfo = blocklyModel.blockTypes[i - 1];
+						if (blockInfo != null)
 						{
-							blockInfo = blocklyModel.blockTypes[i - 1];
-							if (blockInfo != null)
-							{
-								blockType = blockInfo.type;
-								blockErrorMessage(blockType);
-								return true;
-							}
+							blockType = blockInfo.type;
+							blockErrorMessage(blockType);
+							return true;
 						}
 					}
 
@@ -889,21 +904,16 @@ namespace SAI.SAI.App.Views.Pages
 					}
 					else if (blockType == "loadModelWithLayer")
 					{
-						if (block.children != null)
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							if (block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 11개 보다 적은 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
-						}
-						else
-						{
-							MessageBox.Show("블럭 11개 보다 적은 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
+					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
 					}
 				}
 				blockErrorMessage(block.type);
@@ -920,8 +930,21 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				if (!isBlockError()) // 순서가 맞을 때
 				{
-					// 파이썬 코드 실행
-					RunButtonClicked?.Invoke(sender, e);
+					// 생성한 모델 삭제
+					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+					var mainModel = MainModel.Instance;
+
+					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+					{
+						runModel(sender, e);
+					}
+					else
+					{
+						var dialog = new DialogDeleteModel(runModel);
+						dialog.ShowDialog(this);
+					}
 				}
 				else
 				{
@@ -936,6 +959,12 @@ namespace SAI.SAI.App.Views.Pages
 				errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 				ShowToastMessage(errorType, missingType, errorMessage);
 			}
+		}
+
+		public void runModel(object sender, EventArgs e)
+		{
+			// 파이썬 코드 실행
+			RunButtonClicked?.Invoke(sender, e);
 		}
 
 		private async void ShowToastMessage(string errorType, string missingType, string errorMessage)

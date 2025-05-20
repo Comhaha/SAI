@@ -1,6 +1,7 @@
 ﻿using SAI.SAI.App.Models;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +18,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogDeleteModel : Form, IDialogDeleteModelView
 	{
+		private readonly Action<object, EventArgs> _runModel;
 		private DialogDeleteModelPresenter presenter;
-		public DialogDeleteModel()
+		public DialogDeleteModel(Action<object, EventArgs> runModel)
 		{
 			InitializeComponent();
 			presenter = new DialogDeleteModelPresenter(this);
+			_runModel = runModel;
 
 			// 부모 기준 중앙
 			this.StartPosition = FormStartPosition.CenterParent;
@@ -65,6 +68,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 				{
 					presenter.DialogDeleteModelEvent(cBoxDontShow.Checked);
 				}
+				_runModel?.Invoke(s, e);
 				this.Close();
 			};
 			

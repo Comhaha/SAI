@@ -1916,7 +1916,7 @@
     <value>2</value>
   </data>
   <data name="tboxMemo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 6pt</value>
+    <value>Noto Sans KR, 14pt</value>
   </data>
   <data name="tboxMemo.Location" type="System.Drawing.Point, System.Drawing">
     <value>25, 78</value>

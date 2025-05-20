@@ -41,7 +41,7 @@ namespace SAI.SAI.App.Views.Pages
                 // 기본 설정
                 scintilla1.StyleResetDefault();
                 scintilla1.Styles[Style.Default].Font = "Consolas";
-                scintilla1.Styles[Style.Default].Size = 6;
+                scintilla1.Styles[Style.Default].Size = 14;
                 scintilla1.Styles[Style.Default].BackColor = Color.FromArgb(255, 255, 255);
                 scintilla1.Styles[Style.Default].ForeColor = Color.Black; // 기본 텍스트 색상: 검정
 
@@ -112,7 +112,7 @@ namespace SAI.SAI.App.Views.Pages
             codeTextBox.Dock = DockStyle.Fill;
             codeTextBox.Multiline = true;
             codeTextBox.ScrollBars = ScrollBars.Both;
-            codeTextBox.Font = new Font("Consolas", 10F);
+            codeTextBox.Font = new Font("Noto Sans Kr", 16.0f);
             codeTextBox.BackColor = Color.FromArgb(45, 45, 48);
             codeTextBox.ForeColor = Color.White;
             codeTextBox.WordWrap = false;
@@ -777,7 +777,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 if (scintilla1 != null)
                 {
-                    float baseFontSize = 10.0f;
+                    float baseFontSize = 16.0f;
                     float newFontSize = baseFontSize * (zoomLevel / 100.0f);
 
                     scintilla1.Styles[ScintillaNET.Style.Default].Size = (int)newFontSize;
