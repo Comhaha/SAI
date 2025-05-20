@@ -634,7 +634,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     currentThreshold = newValue;
 
-                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {blocklyModel.imgPath}");
                     Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
@@ -642,7 +642,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(() =>
                     {
                         _result = yoloTutorialPresenter.RunInferenceDirect(
-                            selectedImagePath,
+                            blocklyModel.imgPath,
                             currentThreshold
                         );
 
@@ -1265,6 +1265,7 @@ namespace SAI.SAI.App.Views.Pages
 
                         // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
                         selectedImagePath = absolutePath.Replace("\\", "/");
+                        blocklyModel.imgPath = selectedImagePath;
 
                         // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
