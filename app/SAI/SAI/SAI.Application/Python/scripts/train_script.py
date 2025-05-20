@@ -33,7 +33,7 @@ from IPython.display import Image, display
 display(Image(filename = 'runs/detect/train/results.png'))
 
 
-img_path ='파일 선택'))
+img_path ='C:/Users/SSAFY/Pictures/6.jpg'))
 
 
 # 추론 실행
@@ -53,11 +53,3 @@ plt.imshow(result_img) # 출력
 plt.axis("off")
 plt.title("YOLOv8 Prediction")
 plt.show()
-
-
-
-# 모델 불러오기
-from ultralytics import YOLO
-
-model = YOLO("yolov8n.pt")   # YOLOv8 모델 불러오기
-print("✅ YOLOv8 설치 및 yolov8n.pt 모델 로드 완료!")')
