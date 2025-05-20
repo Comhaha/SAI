@@ -17,8 +17,16 @@ namespace SAI.SAI.App.Models
 
         // 개별 블록 코드 변경시 발생하는 이벤트
         public event Action<string> BlockCodeChanged;
-        // 개별 블록 코드
-        private string _blockCode;
+
+		// 이미지 경로 변경 이벤트
+		public event Action<string> ImgPathChanged;
+
+		// 정확도 변경 이벤트
+		public event Action<double> AccuracyChanged;
+
+
+		// 개별 블록 코드
+		private string _blockCode;
 
         // 이미지 경로
         private string _imgPath;
@@ -104,7 +112,8 @@ namespace SAI.SAI.App.Models
                 {
                     _imgPath = value;
                     Console.WriteLine($"[INFO] 새로운 이미지 경로 설정됨: {value}");
-                }
+					ImgPathChanged?.Invoke(_imgPath); // 이벤트 발생
+				}
             }
         }
         public class BlockInfo
@@ -135,7 +144,8 @@ namespace SAI.SAI.App.Models
                 if (_accuracy != value)
                 {
                     _accuracy = value;
-                }
+					AccuracyChanged?.Invoke(_accuracy); // 이벤트 발생
+				}
             }
         }
 

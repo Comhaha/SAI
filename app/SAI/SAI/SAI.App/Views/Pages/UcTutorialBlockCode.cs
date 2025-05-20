@@ -21,10 +21,12 @@ using System.Linq;
 using SAI.SAI.Application.Service;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using CefSharp.DevTools.IndexedDB;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView, IDisposable
     {
         private YoloTutorialPresenter yoloTutorialPresenter;
         private BlocklyPresenter blocklyPresenter;
@@ -59,9 +61,6 @@ namespace SAI.SAI.App.Views.Pages
 
         private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
-        private PythonService.InferenceResult _result;
-
-
         private PythonService.InferenceResult _result;
 
         public UcTutorialBlockCode(IMainView view)
@@ -193,6 +192,7 @@ namespace SAI.SAI.App.Views.Pages
 
             // 홈페이지로 이동
             ibtnHome.Click += (s, e) => {
+                LogCsvModel.instance.clear();
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
@@ -339,11 +339,33 @@ namespace SAI.SAI.App.Views.Pages
             mAlertPanel.Visible = false;
             // btnQuestionMemo 클릭 이벤트 핸들러 등록
             btnQuestionMemo.Click += btnQuestionMemo_Click;
-        }
+
+
+			///////////////////////////////////////////////////
+			/// 재영 언니 여기야아아
+			// 이미지 경로가 바뀌면 블록에서도 적용되게
+			blocklyModel.ImgPathChanged += (newPath) => {
+				// 웹뷰에 이미지 경로 전달
+				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
 
 
 
-        private void setButtonVisible(Guna2Button button)
+			};
+
+			// threshold가 바뀌면 블록에서도 적용되게
+			blocklyModel.AccuracyChanged += (newAccuracy) => {
+				// 웹뷰에 threshold 전달
+				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
+
+
+
+			};
+			///////////////////////////////////////////////////
+		}
+
+
+
+		private void setButtonVisible(Guna2Button button)
         {
             button.Visible = true;
         }
@@ -732,7 +754,7 @@ namespace SAI.SAI.App.Views.Pages
                 pErrorToast.Visible = true;
                 pErrorToast.FillColor = Color.FromArgb(0, pErrorToast.FillColor);
                 lbErrorType.Text = errorType;
-                lbMissingType.Text = missingType;
+                lbMissingType.Text = "MISSING " + missingType;
                 lbErrorMessage.Text = errorMessage;
 
                 // 2초 대기 (취소 가능)
@@ -771,6 +793,10 @@ namespace SAI.SAI.App.Views.Pages
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value/100.0;
 
+            Console.WriteLine("[DEBUG] memo : " + memo + " !");
+            Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
+            Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
+
             using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
                 dialog.ShowDialog();
@@ -786,7 +812,7 @@ namespace SAI.SAI.App.Views.Pages
         // webview에 blockly tutorial html 붙이기
         private async void InitializeWebView2()
         {
-            jsBridge = new JsBridge((message, type) =>
+			jsBridge = new JsBridge((message, type) =>
             {
                 blocklyPresenter.HandleJsMessage(message, type, "tutorial");
             });
@@ -1191,7 +1217,6 @@ namespace SAI.SAI.App.Views.Pages
 							missingType = "파라미터 \"이미지 파일\"";
 							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
 							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
-							blockErrorMessage(block.type);
 							return true;
 						}
 					}
@@ -1475,6 +1500,31 @@ namespace SAI.SAI.App.Views.Pages
                 // 존재할 경우 덮어쓰기(true)
                 File.Copy(source, destination, overwrite: true);
             });
+        }
+
+        /* 이미 있는 ucCsvChart1을 재활용 */
+        public void ShowTutorialTrainingChart(string csvPath)
+        {
+            try
+            {
+                if (!File.Exists(csvPath))
+                {
+                    ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
+                    return;
+                }
+
+                /* ① CSV → LogCsvModel 채우기 */
+                var model = LogCsvModel.instance;
+                new LogCsvPresenter(null).LoadCsv(csvPath);   // 데이터만 채우는 전용 메서드(아래 4-b) 참고)
+
+                /* ② 차트 갱신 */
+                ucCsvChart1.SetData();      // 내부에서 model 값을 읽어 그림
+                ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+            }
         }
     }
 }
