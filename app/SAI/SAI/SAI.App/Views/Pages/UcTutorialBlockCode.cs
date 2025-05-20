@@ -26,7 +26,7 @@ using CefSharp.DevTools.IndexedDB;
 
 namespace SAI.SAI.App.Views.Pages
 {
-    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView, IDisposable
+    public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {
         private YoloTutorialPresenter yoloTutorialPresenter;
         private BlocklyPresenter blocklyPresenter;
@@ -71,6 +71,7 @@ namespace SAI.SAI.App.Views.Pages
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
             blocklyModel = BlocklyModel.Instance;
+            pSideInfer.Visible = false;
 
             errorMessage = "";
             missingType = "";
