@@ -70,6 +70,7 @@ namespace SAI.SAI.App.Views.Pages
             memoPresenter = new MemoPresenter(); // MemoPresenter 초기화
 
             blocklyModel = BlocklyModel.Instance;
+            pSideInfer.Visible = false;
 
             errorMessage = "";
             missingType = "";
