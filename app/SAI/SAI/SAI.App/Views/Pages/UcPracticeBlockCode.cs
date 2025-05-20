@@ -92,24 +92,25 @@ namespace SAI.SAI.App.Views.Pages
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
+            cAlertPanel.BackColor = Color.Transparent;
             ButtonUtils.SetTransparentStyle(btnCopy);
 
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
             pMemo.Visible = false;
-            pboxInferAccuracy.Visible = false;
             cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
-
+            ucCode２.Controls.Add(cAlertPanel);
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
             btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
-            btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
+            pboxInferAccuracy.Controls.Add(btnSelectInferImage);
+            btnSelectInferImage.Location = new Point(0, 0);
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
 
-            pInferAccuracy.MouseEnter += (s, e) =>
+            pboxInferAccuracy.MouseEnter += (s, e) =>
             {
                 if (pSideInfer.Visible)
                 {
@@ -118,7 +119,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            pInferAccuracy.MouseLeave += (s, e) =>
+            pboxInferAccuracy.MouseLeave += (s, e) =>
             {
                 if (!btnSelectInferImage.ClientRectangle.Contains(btnSelectInferImage.PointToClient(Control.MousePosition)))
                 {
@@ -136,7 +137,7 @@ namespace SAI.SAI.App.Views.Pages
 
             btnSelectInferImage.MouseLeave += (s, e) =>
             {
-                if (!pInferAccuracy.ClientRectangle.Contains(pInferAccuracy.PointToClient(Control.MousePosition)))
+                if (!pboxInferAccuracy.ClientRectangle.Contains(pboxInferAccuracy.PointToClient(Control.MousePosition)))
                 {
                     btnSelectInferImage.Visible = false;
                     btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
@@ -165,7 +166,8 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
 
-			blockCount = 0; // 블럭 개수 초기화
+
+            blockCount = 0; // 블럭 개수 초기화
 			undoCount = 0;
 			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
 			btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
@@ -343,7 +345,7 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.Image?.Dispose();
 
                     // string 경로를 Image 객체로 변환
-                    pboxInferAccuracy.Size = new Size(431, 275);
+                    pboxInferAccuracy.Size = new Size(494,278);
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                     pboxInferAccuracy.Image = Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
@@ -1004,7 +1006,6 @@ namespace SAI.SAI.App.Views.Pages
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
-            pboxInferAccuracy.Visible = false;
             pMemo.Visible = false;
             cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
 
@@ -1058,7 +1059,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(431, 275);
+                            pboxInferAccuracy.Size = new Size(494,278);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -1191,7 +1192,7 @@ namespace SAI.SAI.App.Views.Pages
             timer.Start();
         }
 
-        private void ibtnCopy_Click(object sender, EventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
             try
             {

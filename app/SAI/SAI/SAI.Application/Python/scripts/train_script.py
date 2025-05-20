@@ -33,7 +33,7 @@ from IPython.display import Image, display
 display(Image(filename = 'runs/detect/train/results.png'))
 
 
-img_path ='파일 선택'))
+img_path ='C:/Users/SSAFY/Pictures/6.jpg'))
 
 
 # 추론 실행
