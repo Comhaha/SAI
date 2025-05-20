@@ -66,6 +66,8 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
@@ -103,6 +105,7 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pTopBlock.SuspendLayout();
             this.pSideInfer.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
             this.pThreshold.SuspendLayout();
             this.pInferAccuracy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
@@ -487,6 +490,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.guna2Panel1);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
             this.pSideInfer.Controls.Add(this.btnInfoThreshold);
             this.pSideInfer.Controls.Add(this.pFake);
@@ -502,6 +506,20 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.lblInfer);
             this.pSideInfer.Name = "pSideInfer";
             this.pSideInfer.Paint += new System.Windows.Forms.PaintEventHandler(this.pSideInfer_Paint_1);
+            // 
+            // guna2Panel1
+            // 
+            this.guna2Panel1.Controls.Add(this.pleaseControlThreshold);
+            this.guna2Panel1.ForeColor = System.Drawing.Color.Tomato;
+            resources.ApplyResources(this.guna2Panel1, "guna2Panel1");
+            this.guna2Panel1.Name = "guna2Panel1";
+            // 
+            // pleaseControlThreshold
+            // 
+            resources.ApplyResources(this.pleaseControlThreshold, "pleaseControlThreshold");
+            this.pleaseControlThreshold.ForeColor = System.Drawing.Color.Tomato;
+            this.pleaseControlThreshold.Name = "pleaseControlThreshold";
+            this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnInfoGraph
             // 
@@ -633,12 +651,12 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // pboxInferAccuracy
             // 
+            this.pboxInferAccuracy.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
             this.pboxInferAccuracy.ImageRotate = 0F;
             this.pboxInferAccuracy.Name = "pboxInferAccuracy";
             this.pboxInferAccuracy.TabStop = false;
             this.pboxInferAccuracy.Click += new System.EventHandler(this.pboxInferAccuracy_Click);
-            this.pboxInferAccuracy.Cursor = System.Windows.Forms.Cursors.Hand;
             // 
             // lblInferGraph
             // 
@@ -806,6 +824,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopBlock.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
             this.pSideInfer.PerformLayout();
+            this.guna2Panel1.ResumeLayout(false);
             this.pThreshold.ResumeLayout(false);
             this.pInferAccuracy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
@@ -886,5 +905,7 @@ namespace SAI.SAI.App.Views.Pages
 		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
         private Guna.UI2.WinForms.Guna2Panel pErrorImg;
 		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
-	}
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private SAI.App.Views.Pages.AutoSizeLabel pleaseControlThreshold;
+    }
 }
