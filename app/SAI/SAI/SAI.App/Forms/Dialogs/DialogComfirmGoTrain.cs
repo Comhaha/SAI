@@ -59,13 +59,16 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.CheckedState.FillColor = Color.Transparent;
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
-			btnOk.Click += (s, e) => { 
+			btnOk.Click += (s, e) => {
+				LogCsvModel.instance.clear();
+
 				var blocklyModel = BlocklyModel.Instance;
 				blocklyModel.blockAllCode = "";
 				blocklyModel.blockCode = "";
 				blocklyModel.imgPath = "";
 				presenter.clickGoTrain();
 				this.Close();
+				this.Dispose();
 			};
 			// btnOk 마우스 입력 될 때
 			btnOk.MouseEnter += (s, e) =>
@@ -86,7 +89,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnCancel.CheckedState.FillColor = Color.Transparent;
 			btnCancel.DisabledState.FillColor = Color.Transparent;
 			btnCancel.HoverState.FillColor = Color.Transparent;
-			btnCancel.Click += (s, e) => { this.Close(); };
+			btnCancel.Click += (s, e) => { this.Close(); this.Dispose(); };
 			// btnCancel 마우스 입력 될 때
 			btnCancel.MouseEnter += (s, e) =>
 			{

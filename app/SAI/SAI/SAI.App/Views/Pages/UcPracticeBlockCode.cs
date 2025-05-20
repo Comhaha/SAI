@@ -334,20 +334,27 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyModel.ImgPathChanged += (newPath) => {
 				// 웹뷰에 이미지 경로 전달
 				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
-                
 
+                if (File.Exists(newPath))
+                {
+                    // 기존 이미지 정리
+                    pboxInferAccuracy.Image?.Dispose();
 
-			};
+                    // string 경로를 Image 객체로 변환
+                    pboxInferAccuracy.Size = new Size(431, 275);
+                    pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                    pboxInferAccuracy.Image = Image.FromFile(newPath);
+                    pboxInferAccuracy.Visible = true;
+                }
+            };
 
 			// threshold가 바뀌면 블록에서도 적용되게
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
-
-
-
-			};
-			///////////////////////////////////////////////////
+                tboxThreshold.Text = newAccuracy.ToString();
+                tbarThreshold.Value = (int)(newAccuracy * 100);
+            };
 		}
 
 		private void ShowpSIdeInfer()
@@ -380,15 +387,15 @@ namespace SAI.SAI.App.Views.Pages
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
                     Task.Run(() =>
                     {
-                        var result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = yoloTutorialPresenter.RunInferenceDirect(
                             selectedImagePath,
                             currentThreshold
                         );
 
-                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
-                        if (!string.IsNullOrEmpty(result.ResultImage))
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={_result.Success}, image={_result.ResultImage}, error={_result.Error}");
+                        if (!string.IsNullOrEmpty(_result.ResultImage))
                         {
-                            bool fileExists = System.IO.File.Exists(result.ResultImage);
+                            bool fileExists = System.IO.File.Exists(_result.ResultImage);
                             Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
                         }
                         else
@@ -399,7 +406,7 @@ namespace SAI.SAI.App.Views.Pages
                         // 결과는 UI 스레드로 전달
                         this.Invoke(new Action(() =>
                         {
-                            ShowPracticeInferResultImage(result);
+                            ShowPracticeInferResultImage(_result);
                         }));
                     });
                 },
@@ -1261,6 +1268,35 @@ namespace SAI.SAI.App.Views.Pages
         public void AppendLog(string text)
         {
             Debug.WriteLine($"[YOLO Tutorial] {text}");
+        }
+
+         public void ShowTutorialTrainingChart(string csvPath)
+        {
+            try
+            {
+                if (!File.Exists(csvPath))
+                {
+                    ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
+                    return;
+                }
+
+                /* ① CSV → LogCsvModel 채우기 */
+                var model = LogCsvModel.instance;
+                new LogCsvPresenter(null).LoadCsv(csvPath);   // 데이터만 채우는 전용 메서드(아래 4-b) 참고)
+
+                /* ② 차트 갱신 */
+                ucCsvChart1.SetData();      // 내부에서 model 값을 읽어 그림
+                ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+            }
+        }
+
+        public void ShowTrainingChart(string csvPath)
+        {
+            return;
         }
     }
 }

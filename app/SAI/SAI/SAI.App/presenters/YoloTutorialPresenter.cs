@@ -10,6 +10,7 @@ using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.IO;
 using System.Drawing;
 
 namespace SAI.SAI.App.Presenters
@@ -233,9 +234,16 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
+
                                     _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
+
+                                    var baseDir   = AppDomain.CurrentDomain.BaseDirectory;
+                                    var csvPath   = Path.Combine(baseDir,
+                                        @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                                    csvPath       = Path.GetFullPath(csvPath);
+                                    _yolotutorialview.ShowTutorialTrainingChart(csvPath);
                                 }
                             }));
                         }
