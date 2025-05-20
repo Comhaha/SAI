@@ -64,7 +64,9 @@ namespace SAI.SAI.App.Views.Pages
 
         public event EventHandler RunButtonClicked;
 
-        public UcPracticeBlockCode(IMainView view)
+		private UcPracticeBlockList ucPracticeBlockList;
+
+		public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
@@ -190,7 +192,7 @@ namespace SAI.SAI.App.Views.Pages
                 btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
             };
             // 스크롤바 설정-------------------
-            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
             pSelectBlock.Controls.Add(ucPracticeBlockList);
             pSelectBlock.AutoScroll = false;
             ucPracticeBlockList.AutoScroll = false;
@@ -552,6 +554,15 @@ namespace SAI.SAI.App.Views.Pages
 								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
 								blocklyPresenter.setFieldValue(blockType, value);
 								break;
+							case "blocksAllTypes":
+								jsonTypes = root.GetProperty("types");
+								blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.loadBlockEvent(blockTypes, ucPracticeBlockList);
+								break;
+							case "undoCount":
+								var jsonUndoCount = root.GetProperty("cnt").ToString();
+								var undoCnt = int.Parse(jsonUndoCount);
+                                break;
 						}
 					}
 				}
