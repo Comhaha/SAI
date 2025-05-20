@@ -41,6 +41,65 @@ print("[DEBUG] 로깅 설정 완료", flush=True)
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(f"[DEBUG] base_dir 설정됨: {base_dir}", flush=True)
 
+# CUDA 감지 함수 추가
+def detect_cuda():
+    """시스템의 CUDA 버전 감지"""
+    print("CUDA 버전 감지 중...")
+    try:
+        if platform.system() == "Windows":
+            # nvcc로 CUDA 버전 확인 시도
+            try:
+                nvcc_result = subprocess.run("nvcc --version", shell=True, capture_output=True, text=True)
+                if nvcc_result.returncode == 0:
+                    match = re.search(r"release (\d+\.\d+)", nvcc_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"NVCC로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+
+            # NVIDIA 드라이버 확인
+            try:
+                nvidia_smi_result = subprocess.run("nvidia-smi", shell=True, capture_output=True, text=True)
+                if nvidia_smi_result.returncode == 0:
+                    match = re.search(r"CUDA Version: (\d+\.\d+)", nvidia_smi_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"nvidia-smi로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+        
+        # Linux에서 CUDA 버전 확인
+        elif platform.system() == "Linux":
+            try:
+                nvidia_smi_result = subprocess.run("nvidia-smi", shell=True, capture_output=True, text=True)
+                if nvidia_smi_result.returncode == 0:
+                    match = re.search(r"CUDA Version: (\d+\.\d+)", nvidia_smi_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"nvidia-smi로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+            
+            # nvcc 확인
+            try:
+                nvcc_result = subprocess.run("nvcc --version", shell=True, capture_output=True, text=True)
+                if nvcc_result.returncode == 0:
+                    match = re.search(r"release (\d+\.\d+)", nvcc_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"NVCC로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+    except Exception as e:
+        print(f"CUDA 버전 감지 중 오류 발생: {e}")
+    
+    return None
+
 def show_progress(message, start_time=None, progress=None):
     try:
         elapsed_str = ""
@@ -470,7 +529,7 @@ def clean_pytorch_installation():
     print("PyTorch 설치 정리 완료")
 
 
-def install_pytorch_cuda(start_time=None):
+def install_torch_cuda(start_time=None):
     """
     CUDA 지원 PyTorch 설치 래퍼 함수
     
@@ -668,7 +727,7 @@ if __name__ == "__main__":
         if sys.argv[1] == "install_pytorch":
             # PyTorch 설치 테스트
             start_time = time.time()
-            success, device = install_pytorch_cuda(start_time)
+            success, device = install_torch_cuda(start_time)
             print(f"PyTorch 설치 결과: 성공={success}, 장치={device}")
         
         elif sys.argv[1] == "check_gpu":
@@ -714,4 +773,3 @@ if __name__ == "__main__":
         print("  python install_packages.py install_packages [패키지1 패키지2 ...]")
         print("  python install_packages.py install_if_needed [패키지1 패키지2 ...]")
         print("  python install_packages.py profile [basic|yolo|viz|data|all]")
-
