@@ -561,6 +561,19 @@ namespace SAI.SAI.App.Views.Pages
 								blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
 								blocklyPresenter.loadBlockEvent(blockTypes, ucPracticeBlockList);
 								break;
+							case "undoCount":
+								var jsonUndoCount = root.GetProperty("cnt").ToString();
+								var undoCnt = int.Parse(jsonUndoCount);
+                                MessageBox.Show("C# : " + undoCount.ToString() + "\n JS : " + undoCnt.ToString());
+                                if (undoCount > undoCnt)
+                                {
+                                    redo();
+                                }
+                                else if (undoCount < undoCnt)
+                                {
+									undo();
+                                }
+                               break;
 						}
 					}
 				}
@@ -605,28 +618,37 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 다시 실행하기
 		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
-			--undoCount;
 			webViewblock.ExecuteScriptAsync($"redo()");
-
-            if (undoCount == 0)
-            {
-                btnNextBlock.Visible = false;
-                btnPreBlock.Visible = true;
-            }
-            else
-            {
-                btnNextBlock.Visible = true;
-                btnPreBlock.Visible = true;
-            }
+            redo();
         }
+		private void redo()
+		{
+			--undoCount;
+            webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
+			
+            if (undoCount == 0)
+			{
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+		}
 
 		// JS 함수 호출 = 되돌리기
 		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
-			++undoCount;
 			webViewblock.ExecuteScriptAsync($"undo()");
 			webViewblock.ExecuteScriptAsync($"getblockCount()");
-
+            undo();
+		}
+        private void undo()
+        {
+			++undoCount;
+			webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
 			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
 			{
 				btnNextBlock.Visible = true;
@@ -645,7 +667,7 @@ namespace SAI.SAI.App.Views.Pages
 			webViewblock.ExecuteScriptAsync($"clear()");
 		}
 
-        private void ibtnAiFeedback_Click(object sender, EventArgs e)
+		private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;

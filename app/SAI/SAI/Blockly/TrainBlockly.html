@@ -119,6 +119,20 @@
 			}
 		}
 
+		var undoCount = 0;
+
+		function setUndoCount(cnt) {
+			if (cnt != undoCount) {
+				undoCount = cnt;
+			}
+		}
+		function sendUndoCount() {
+			window.chrome.webview.postMessage({
+				type: "undoCount",
+				cnt: undoCount
+			});
+		}
+
 		// 모든 블럭 삭제
 		function clear() {
 			workspace.clear();
@@ -126,11 +140,13 @@
 
 		// 이전 상태로 되돌리기(ctrl+z)
 		function undo() {
+			++undoCount;
 			workspace.undo(false);
 		}
 
 		// 이전 상태 다시 실행하기(ctrl+y)
 		function redo() {
+			--undoCount;
 			workspace.undo(true);
 		}
 
@@ -427,6 +443,37 @@
 		}
 
 		Blockly.fieldRegistry.register('field_custom_dropdown', CustomDropdown);
+
+		document.addEventListener("keydown", function (e) {
+			// Ctrl+Z (Undo)
+			if (e.ctrlKey && !e.shiftKey && e.key === 'z') {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+
+			// Ctrl+Y (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.key === 'y') {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+
+			// Ctrl+Shift+Z (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.shiftKey && e.key === 'Z') {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+
+
+			// delete (delete, 일부 브라우저)
+			if (e.key === 'Delete') {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		}, true);
     </script>
 
 </body>
