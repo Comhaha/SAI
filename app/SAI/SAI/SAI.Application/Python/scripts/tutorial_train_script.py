@@ -234,6 +234,7 @@ def download_dataset_block(block_params=None):
     # 1. 캐싱: 완료 파일이 있으면 스킵
     if os.path.exists(done_file):
         show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
+        time.sleep(1.5)  # 메시지 인지 시간 확보
         # data.yaml 경로도 찾아서 반환
         extracted_dir = dataset_dir
         data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
