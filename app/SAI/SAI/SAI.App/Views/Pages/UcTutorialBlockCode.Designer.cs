@@ -53,7 +53,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
-            this.ucCode1 = new SAI.App.Views.Pages.UcCode();
+            this.ucCode1 = new SAI.SAI.App.Views.Pages.UcCode();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
@@ -65,18 +65,18 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
-            this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
+            this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.ptxtThreshold = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.ptxtGraphe = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblInferGraph = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblInferGraph = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.ptxtInfer = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblinfer = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblinfer = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
-            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
+            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -93,11 +93,11 @@ namespace SAI.SAI.App.Views.Pages
             this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
             this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pError = new System.Windows.Forms.Panel();
-            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbMissingType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorMessage = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblTitle = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -321,6 +321,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxZoomCode.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.tboxZoomCode.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             resources.ApplyResources(this.tboxZoomCode, "tboxZoomCode");
+            this.tboxZoomCode.ForeColor = System.Drawing.Color.Black;
             this.tboxZoomCode.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tboxZoomCode.Name = "tboxZoomCode";
             this.tboxZoomCode.PlaceholderText = "";
@@ -489,6 +490,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.btnSelectInferImage);
             this.pSideInfer.Controls.Add(this.pboxInferAccuracy);
             this.pSideInfer.Controls.Add(this.ptxtThreshold);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
@@ -504,17 +506,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
             this.pSideInfer.Name = "pSideInfer";
             // 
-            // pboxInferAccuracy
-            // 
-            this.pboxInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
-            resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
-            this.pboxInferAccuracy.Controls.Add(btnSelectInferImage);
-            this.pboxInferAccuracy.FillColor = System.Drawing.Color.Transparent;
-            this.pboxInferAccuracy.ImageRotate = 0F;
-            this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
-            this.pboxInferAccuracy.Name = "pboxInferAccuracy";
-            this.pboxInferAccuracy.TabStop = false;
-            // 
             // btnSelectInferImage
             // 
             this.btnSelectInferImage.BackgroundImage = global::SAI.Properties.Resources.btn_selectinferimage;
@@ -526,6 +517,16 @@ namespace SAI.SAI.App.Views.Pages
             this.btnSelectInferImage.FillColor = System.Drawing.Color.Transparent;
             this.btnSelectInferImage.ForeColor = System.Drawing.Color.White;
             this.btnSelectInferImage.Name = "btnSelectInferImage";
+            // 
+            // pboxInferAccuracy
+            // 
+            this.pboxInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.FillColor = System.Drawing.Color.Transparent;
+            this.pboxInferAccuracy.ImageRotate = 0F;
+            this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            this.pboxInferAccuracy.Name = "pboxInferAccuracy";
+            this.pboxInferAccuracy.TabStop = false;
             // 
             // ptxtThreshold
             // 
