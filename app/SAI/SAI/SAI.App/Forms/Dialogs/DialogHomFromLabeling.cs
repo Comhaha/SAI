@@ -1,4 +1,5 @@
-﻿using SAI.SAI.App.Presenters;
+﻿using SAI.SAI.App.Models;
+using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Pages;
 using System;
@@ -61,6 +62,11 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.BackColor = Color.Transparent;
 			btnOk.Click += (s, e) =>
 			{
+				var blocklyModel = BlocklyModel.Instance;
+				blocklyModel.blockAllCode = "";
+				blocklyModel.blockCode = "";
+				blocklyModel.imgPath = "";
+
 				var view = this.Owner as IMainView;
 				presenter = new DialogLoadPagePresenter(view);
 				// 생성한 모델 삭제
