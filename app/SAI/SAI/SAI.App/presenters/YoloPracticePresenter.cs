@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAI.SAI.App.Forms.Dialogs;
@@ -210,6 +211,12 @@ namespace SAI.SAI.App.Presenters
                                 {
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
+
+                                    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                                    var csvPath = Path.Combine(baseDir,
+                                        @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                                    csvPath = Path.GetFullPath(csvPath);
+                                    _yolopracticeview.ShowTrainingChart(csvPath);
                                 }
                             }));
                         }

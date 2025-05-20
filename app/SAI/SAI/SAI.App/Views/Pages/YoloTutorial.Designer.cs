@@ -30,6 +30,7 @@
         {
             this.YoloTutorialRun = new Guna.UI2.WinForms.Guna2Button();
             this.logOutput = new Guna.UI2.WinForms.Guna2TextBox();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // YoloTutorialRun
@@ -71,21 +72,33 @@
             this.logOutput.TabIndex = 1;
             this.logOutput.Visible = false;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(282, 180);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(180, 24);
+            this.lblStatus.TabIndex = 2;
+            this.lblStatus.Text = "";
+            // 
             // YoloTutorial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.logOutput);
             this.Controls.Add(this.YoloTutorialRun);
             this.Name = "YoloTutorial";
             this.Size = new System.Drawing.Size(775, 521);
             this.Load += new System.EventHandler(this.YoloTutorial_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
 
         private Guna.UI2.WinForms.Guna2Button YoloTutorialRun;
         private Guna.UI2.WinForms.Guna2TextBox logOutput;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

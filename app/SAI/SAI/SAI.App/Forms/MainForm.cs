@@ -142,9 +142,16 @@ namespace SAI
 		// 이건 Presenter가 호출할 메서드(UI에 있는 패널에 있던 페이지를 지우고, 크기를 채우고, 페이지를 넣는다.)
 		public void LoadPage(UserControl page)
 		{
-			page.Size = new Size(pageWidth, pageHeight);
-			mainPanel.Controls.Clear();
-			mainPanel.Controls.Add(page);
+            //// ① 기존 페이지 정리
+            //foreach (Control ctl in mainPanel.Controls)
+            //{
+            //    ctl.Dispose();          // 비관리 리소스·핸들 해제
+            //}
+            // // 참조 제거
+
+            page.Size = new Size(pageWidth, pageHeight);
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(page);
 			mainPanel.BringToFront();
 		}
 

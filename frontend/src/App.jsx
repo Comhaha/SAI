@@ -6,6 +6,7 @@ import Download from '@/pages/download/Download';
 import Admin from '@/pages/ad/Admin';
 import Login from '@/pages/ad/Login';
 import ErrorPage from '@/pages/ad/ErrorPage';
+import AdminRe from '@/pages/ad/AdminRe';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/download" element={<Download />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/login" element={<Login />} />
+          <Route path="/test" element={<AdminRe />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Layout>

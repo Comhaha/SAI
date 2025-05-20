@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CefSharp.DevTools.Storage;
 
 namespace SAI.SAI.App.Models
 {
@@ -34,5 +35,12 @@ namespace SAI.SAI.App.Models
         { get { return _values; } set { _values = value; } }
 
         public double[][] smoothes { get { return _smoothes; } set { _smoothes = value; } }
+
+        public void clear()
+        {
+            _titles = null;
+            _values = null;
+            _smoothes = null;
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace SAI.SAI.App.Presenters
                     code = _view.CodeText,
                     logImage = _view.LogImagePath,
                     resultImage = _view.ResultImagePath,
-                    memo = _view.memo,
+                    memo = _view.memo.Equals(string.Empty) ? "Memo가 비어있습니다." : _view.memo,
                     threshold = _view.thresholdValue
                 };
 
@@ -63,6 +63,7 @@ namespace SAI.SAI.App.Presenters
         {
             _view.SendRequested -= OnSendRequested;
             _service.Dispose();
+            //this.Dispose();
         }
     }
 }

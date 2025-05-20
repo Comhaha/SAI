@@ -2,6 +2,7 @@ package com.sai.backend.domain.notion.service;
 
 import com.sai.backend.domain.ai.model.AiLog;
 import com.sai.backend.domain.notion.dto.response.ExportResponseDto;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,159 +20,336 @@ import java.util.Map;
 @Slf4j
 public class NotionExportService {
 
+    private static final int MAX_CHILDREN_PER_REQUEST = 100;
+
     private final WebClient notionWebClient;
     private final NotionContentParsingService contentParsingService;
 
     /**
-     * 데이터베이스에 페이지를 추가하는 메서드
-     */
-    public ExportResponseDto exportToDatabasePage(AiLog aiLog, String accessToken, String databaseId) {
-        try {
-            log.info("데이터베이스에 페이지 추가: {}", databaseId);
-            Map<String, Object> pageContent = buildNotionPageContentForDatabase(aiLog, databaseId);
-
-            Map<String, Object> response = notionWebClient
-                .post()
-                .uri("/v1/pages")
-                .header("Authorization", "Bearer " + accessToken)
-                .header("Notion-Version", "2022-06-28")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(pageContent)
-                .retrieve()
-                .onStatus(httpStatus -> httpStatus.value() >= 400, clientResponse -> {
-                    return clientResponse.bodyToMono(String.class)
-                        .doOnNext(errorBody -> log.error("데이터베이스 페이지 생성 실패 - Status: {}, Body: {}",
-                            clientResponse.statusCode(), errorBody))
-                        .then(Mono.error(new RuntimeException("데이터베이스 페이지 생성 실패: " + clientResponse.statusCode())));
-                })
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
-                .block();
-
-            if (response != null) {
-                String pageUrl = (String) response.get("url");
-                log.info("데이터베이스에 페이지 성공적으로 생성됨. URL: {}", pageUrl);
-
-                return ExportResponseDto.builder()
-                    .success(true)
-                    .message("기존 데이터베이스에 페이지가 추가되었습니다.")
-                    .status(true)
-                    .url(pageUrl)
-                    .build();
-            }
-        } catch (Exception e) {
-            log.error("데이터베이스 페이지 추가 실패", e);
-        }
-
-        return ExportResponseDto.builder()
-            .success(false)
-            .message("데이터베이스 페이지 추가에 실패했습니다.")
-            .build();
-    }
-
-    /**
-     * 페이지의 하위 페이지로 추가하는 메서드
+     * 페이지의 하위 페이지로 추가 (children 100 초과 시 자동 append)
      */
     public ExportResponseDto exportToPageChild(AiLog aiLog, String accessToken, String pageId) {
-        try {
-            log.info("페이지의 하위 페이지로 추가: {}", pageId);
-            Map<String, Object> pageContent = buildNotionPageContentForPage(aiLog, pageId);
 
-            Map<String, Object> response = notionWebClient
-                .post()
-                .uri("/v1/pages")
-                .header("Authorization", "Bearer " + accessToken)
-                .header("Notion-Version", "2022-06-28")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(pageContent)
-                .retrieve()
-                .onStatus(httpStatus -> httpStatus.value() >= 400, clientResponse -> {
-                    return clientResponse.bodyToMono(String.class)
-                        .doOnNext(errorBody -> log.error("하위 페이지 생성 실패 - Status: {}, Body: {}",
-                            clientResponse.statusCode(), errorBody))
-                        .then(Mono.error(new RuntimeException("하위 페이지 생성 실패: " + clientResponse.statusCode())));
-                })
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
-                .block();
+        /* 1) 전체 children 생성 */
+        List<Map<String, Object>> allChildren = contentParsingService.buildAiLogContent(aiLog);
 
-            if (response != null) {
-                String pageUrl = (String) response.get("url");
-                log.info("페이지의 하위 페이지 성공적으로 생성됨. URL: {}", pageUrl);
+        /* 2) 100 개씩 분할 */
+        List<List<Map<String, Object>>> chunks = chunk(allChildren, MAX_CHILDREN_PER_REQUEST);
 
-                return ExportResponseDto.builder()
-                    .success(true)
-                    .message("기존 페이지의 하위 페이지로 추가되었습니다.")
-                    .status(true)
-                    .url(pageUrl)
-                    .build();
-            }
-        } catch (Exception e) {
-            log.error("하위 페이지 추가 실패", e);
+        /* 3-1) 첫 chunk 로 새 하위 페이지 생성 */
+        Map<String, Object> firstChunkRequest = buildNotionPageContentForPage(aiLog, pageId);
+        firstChunkRequest.put("children", chunks.get(0));
+
+        Map<String, Object> createRes = postJson("/v1/pages", accessToken, firstChunkRequest);
+        if (createRes == null) {
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("하위 페이지 생성 실패")
+                .build();
+        }
+
+        String newPageId = (String) createRes.get("id");
+        String pageUrl   = (String) createRes.get("url");
+        log.info("하위 페이지 생성 성공: {}", pageUrl);
+
+        /* 3-2) 남은 chunk 들을 append */
+        for (int i = 1; i < chunks.size(); i++) {
+            Map<String, Object> appendReq = Map.of("children", chunks.get(i));
+            patchJson("/v1/blocks/" + newPageId + "/children", accessToken, appendReq);
         }
 
         return ExportResponseDto.builder()
-            .success(false)
-            .message("하위 페이지 추가에 실패했습니다.")
+            .success(true)
+            .message("페이지 하위로 내보내기가 완료되었습니다.")
+            .status(true)
+            .url(pageUrl)
             .build();
     }
 
     /**
-     * 독립적인 페이지 생성 (워크스페이스에 직접 생성)
+     * 데이터베이스에 페이지 추가 (children 100 초과 시 append)
+     */
+    public ExportResponseDto exportToDatabasePage(AiLog aiLog, String accessToken, String databaseId) {
+
+        List<Map<String, Object>> allChildren = contentParsingService.buildAiLogContent(aiLog);
+        List<List<Map<String, Object>>> chunks = chunk(allChildren, MAX_CHILDREN_PER_REQUEST);
+
+        /* 1) 첫 chunk 로 row 생성 */
+        Map<String, Object> firstPageReq = buildNotionPageContentForDatabase(aiLog, databaseId);
+        firstPageReq.put("children", chunks.get(0));
+
+        Map<String, Object> createRes = postJson("/v1/pages", accessToken, firstPageReq);
+        if (createRes == null) {
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("데이터베이스 페이지 생성 실패")
+                .build();
+        }
+
+        String newPageId = (String) createRes.get("id");
+        String pageUrl   = (String) createRes.get("url");
+        log.info("데이터베이스 페이지 생성 성공: {}", pageUrl);
+
+        /* 2) 나머지 chunk append */
+        for (int i = 1; i < chunks.size(); i++) {
+            Map<String, Object> appendReq = Map.of("children", chunks.get(i));
+            patchJson("/v1/blocks/" + newPageId + "/children", accessToken, appendReq);
+        }
+
+        return ExportResponseDto.builder()
+            .success(true)
+            .message("데이터베이스에 내보내기가 완료되었습니다.")
+            .status(true)
+            .url(pageUrl)
+            .build();
+    }
+
+    /**
+     * 워크스페이스 직접 생성 (children 100 초과 시 append)
+     * ※ 기본 동작은 동일, chunk 로직 통일
      */
     public ExportResponseDto createStandalonePageFallback(AiLog aiLog, String accessToken) {
-        try {
-            log.info("워크스페이스에 독립 페이지 생성 시도");
 
-            Map<String, Object> pageRequest = new HashMap<>();
+        List<Map<String, Object>> allChildren = contentParsingService.buildAiLogContent(aiLog);
+        List<List<Map<String, Object>>> chunks = chunk(allChildren, MAX_CHILDREN_PER_REQUEST);
 
-            // 워크스페이스에 직접 생성 (parent 설정 없음)
-            pageRequest.put("parent", Map.of("type", "workspace", "workspace", true));
-
-            // 페이지 속성 설정
-            Map<String, Object> properties = new HashMap<>();
-            properties.put("title", Map.of(
+        /* 1) 첫 chunk 로 stand-alone page 생성 */
+        Map<String, Object> firstPageReq = new HashMap<>();
+        firstPageReq.put("parent", Map.of("type", "workspace", "workspace", true));
+        firstPageReq.put("properties", Map.of(
+            "title", Map.of(
                 "type", "title",
                 "title", List.of(Map.of(
                     "type", "text",
                     "text", Map.of("content", "AI 분석 결과: " + aiLog.getId())
                 ))
-            ));
-            pageRequest.put("properties", properties);
+            )
+        ));
+        firstPageReq.put("children", chunks.get(0));
 
-            // 페이지 내용 추가
-            List<Map<String, Object>> children = contentParsingService.buildAiLogContent(aiLog);
-            pageRequest.put("children", children);
+        Map<String, Object> createRes = postJson("/v1/pages", accessToken, firstPageReq);
+        if (createRes == null) {
+            return ExportResponseDto.builder()
+                .success(false)
+                .message("페이지 생성 실패")
+                .build();
+        }
 
-            Map<String, Object> response = notionWebClient
-                .post()
-                .uri("/v1/pages")
-                .header("Authorization", "Bearer " + accessToken)
-                .header("Notion-Version", "2022-06-28")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(pageRequest)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
-                .block();
+        String newPageId = (String) createRes.get("id");
+        String pageUrl   = (String) createRes.get("url");
+        log.info("독립 페이지 생성 성공: {}", pageUrl);
 
-            if (response != null) {
-                String pageUrl = (String) response.get("url");
-                log.info("워크스페이스에 페이지 성공적으로 생성됨. URL: {}", pageUrl);
-
-                return ExportResponseDto.builder()
-                    .success(true)
-                    .message("워크스페이스에 새 페이지로 내보내기가 완료되었습니다.")
-                    .status(true)
-                    .url(pageUrl)
-                    .build();
-            }
-        } catch (Exception e) {
-            log.error("독립 페이지 생성 실패", e);
+        /* 2) 나머지 chunks append */
+        for (int i = 1; i < chunks.size(); i++) {
+            Map<String, Object> appendReq = Map.of("children", chunks.get(i));
+            patchJson("/v1/blocks/" + newPageId + "/children", accessToken, appendReq);
         }
 
         return ExportResponseDto.builder()
-            .success(false)
-            .message("페이지 생성에 실패했습니다. Notion 권한을 확인해주세요.")
+            .success(true)
+            .message("워크스페이스에 새 페이지로 내보내기가 완료되었습니다.")
+            .status(true)
+            .url(pageUrl)
             .build();
     }
+
+    /*─────────────────────── PRIVATE UTIL ───────────────────────*/
+
+    /** POST helper (error 로그/예외 처리 공통) */
+    private Map<String, Object> postJson(String uri, String accessToken, Object body) {
+        return notionWebClient
+            .post()
+            .uri(uri)
+            .header("Authorization", "Bearer " + accessToken)
+            .header("Notion-Version", "2022-06-28")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(body)
+            .retrieve()
+            .onStatus(httpStatus -> httpStatus.value() >= 400, clientResp ->
+                clientResp.bodyToMono(String.class)
+                    .doOnNext(err -> log.error("{} 실패 - Status: {}, Body: {}", uri, clientResp.statusCode(), err))
+                    .then(Mono.error(new RuntimeException(uri + " 호출 실패"))))
+            .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+            .block();
+    }
+
+    /** list → N 크기씩 분할 */
+    private <T> List<List<T>> chunk(List<T> src, int size) {
+        List<List<T>> out = new ArrayList<>();
+        for (int i = 0; i < src.size(); i += size) {
+            out.add(src.subList(i, Math.min(i + size, src.size())));
+        }
+        return out;
+    }
+
+    private Map<String, Object> patchJson(String uri, String accessToken, Object body) {
+        return notionWebClient
+            .patch()                                                       // ★ PATCH
+            .uri(uri)
+            .header("Authorization", "Bearer " + accessToken)
+            .header("Notion-Version", "2022-06-28")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(body)
+            .retrieve()
+            .onStatus(httpStatus -> httpStatus.value() >= 400, clientResp ->
+                clientResp.bodyToMono(String.class)
+                    .doOnNext(err -> log.error("{} 실패 - Status: {}, Body: {}", uri,
+                        clientResp.statusCode(), err))
+                    .then(Mono.error(new RuntimeException(uri + " 호출 실패"))))
+            .bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {})
+            .block();
+    }
+
+    /**
+     * 데이터베이스에 페이지를 추가하는 메서드
+     */
+//    public ExportResponseDto exportToDatabasePage(AiLog aiLog, String accessToken, String databaseId) {
+//        try {
+//            log.info("데이터베이스에 페이지 추가: {}", databaseId);
+//            Map<String, Object> pageContent = buildNotionPageContentForDatabase(aiLog, databaseId);
+//
+//            Map<String, Object> response = notionWebClient
+//                .post()
+//                .uri("/v1/pages")
+//                .header("Authorization", "Bearer " + accessToken)
+//                .header("Notion-Version", "2022-06-28")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .bodyValue(pageContent)
+//                .retrieve()
+//                .onStatus(httpStatus -> httpStatus.value() >= 400, clientResponse -> {
+//                    return clientResponse.bodyToMono(String.class)
+//                        .doOnNext(errorBody -> log.error("데이터베이스 페이지 생성 실패 - Status: {}, Body: {}",
+//                            clientResponse.statusCode(), errorBody))
+//                        .then(Mono.error(new RuntimeException("데이터베이스 페이지 생성 실패: " + clientResponse.statusCode())));
+//                })
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+//                .block();
+//
+//            if (response != null) {
+//                String pageUrl = (String) response.get("url");
+//                log.info("데이터베이스에 페이지 성공적으로 생성됨. URL: {}", pageUrl);
+//
+//                return ExportResponseDto.builder()
+//                    .success(true)
+//                    .message("기존 데이터베이스에 페이지가 추가되었습니다.")
+//                    .status(true)
+//                    .url(pageUrl)
+//                    .build();
+//            }
+//        } catch (Exception e) {
+//            log.error("데이터베이스 페이지 추가 실패", e);
+//        }
+//
+//        return ExportResponseDto.builder()
+//            .success(false)
+//            .message("데이터베이스 페이지 추가에 실패했습니다.")
+//            .build();
+//    }
+//
+//    /**
+//     * 페이지의 하위 페이지로 추가하는 메서드
+//     */
+//    public ExportResponseDto exportToPageChild(AiLog aiLog, String accessToken, String pageId) {
+//        try {
+//            log.info("페이지의 하위 페이지로 추가: {}", pageId);
+//            Map<String, Object> pageContent = buildNotionPageContentForPage(aiLog, pageId);
+//
+//            Map<String, Object> response = notionWebClient
+//                .post()
+//                .uri("/v1/pages")
+//                .header("Authorization", "Bearer " + accessToken)
+//                .header("Notion-Version", "2022-06-28")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .bodyValue(pageContent)
+//                .retrieve()
+//                .onStatus(httpStatus -> httpStatus.value() >= 400, clientResponse -> {
+//                    return clientResponse.bodyToMono(String.class)
+//                        .doOnNext(errorBody -> log.error("하위 페이지 생성 실패 - Status: {}, Body: {}",
+//                            clientResponse.statusCode(), errorBody))
+//                        .then(Mono.error(new RuntimeException("하위 페이지 생성 실패: " + clientResponse.statusCode())));
+//                })
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+//                .block();
+//
+//            if (response != null) {
+//                String pageUrl = (String) response.get("url");
+//                log.info("페이지의 하위 페이지 성공적으로 생성됨. URL: {}", pageUrl);
+//
+//                return ExportResponseDto.builder()
+//                    .success(true)
+//                    .message("기존 페이지의 하위 페이지로 추가되었습니다.")
+//                    .status(true)
+//                    .url(pageUrl)
+//                    .build();
+//            }
+//        } catch (Exception e) {
+//            log.error("하위 페이지 추가 실패", e);
+//        }
+//
+//        return ExportResponseDto.builder()
+//            .success(false)
+//            .message("하위 페이지 추가에 실패했습니다.")
+//            .build();
+//    }
+//
+//    /**
+//     * 독립적인 페이지 생성 (워크스페이스에 직접 생성)
+//     */
+//    public ExportResponseDto createStandalonePageFallback(AiLog aiLog, String accessToken) {
+//        try {
+//            log.info("워크스페이스에 독립 페이지 생성 시도");
+//
+//            Map<String, Object> pageRequest = new HashMap<>();
+//
+//            // 워크스페이스에 직접 생성 (parent 설정 없음)
+//            pageRequest.put("parent", Map.of("type", "workspace", "workspace", true));
+//
+//            // 페이지 속성 설정
+//            Map<String, Object> properties = new HashMap<>();
+//            properties.put("title", Map.of(
+//                "type", "title",
+//                "title", List.of(Map.of(
+//                    "type", "text",
+//                    "text", Map.of("content", "AI 분석 결과: " + aiLog.getId())
+//                ))
+//            ));
+//            pageRequest.put("properties", properties);
+//
+//            // 페이지 내용 추가
+//            List<Map<String, Object>> children = contentParsingService.buildAiLogContent(aiLog);
+//            pageRequest.put("children", children);
+//
+//            Map<String, Object> response = notionWebClient
+//                .post()
+//                .uri("/v1/pages")
+//                .header("Authorization", "Bearer " + accessToken)
+//                .header("Notion-Version", "2022-06-28")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .bodyValue(pageRequest)
+//                .retrieve()
+//                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+//                .block();
+//
+//            if (response != null) {
+//                String pageUrl = (String) response.get("url");
+//                log.info("워크스페이스에 페이지 성공적으로 생성됨. URL: {}", pageUrl);
+//
+//                return ExportResponseDto.builder()
+//                    .success(true)
+//                    .message("워크스페이스에 새 페이지로 내보내기가 완료되었습니다.")
+//                    .status(true)
+//                    .url(pageUrl)
+//                    .build();
+//            }
+//        } catch (Exception e) {
+//            log.error("독립 페이지 생성 실패", e);
+//        }
+//
+//        return ExportResponseDto.builder()
+//            .success(false)
+//            .message("페이지 생성에 실패했습니다. Notion 권한을 확인해주세요.")
+//            .build();
+//    }
 
     /**
      * 기본 내보내기 페이지 찾기

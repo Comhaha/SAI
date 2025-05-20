@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SAI.SAI.Application.Service;
+using System.Windows.Forms;
 
 namespace SAI.SAI.App.Views.Interfaces
 {
@@ -15,6 +16,7 @@ namespace SAI.SAI.App.Views.Interfaces
         void ClearLog();
         void SetLogVisible(bool visible);
         void ShowErrorMessage(string message);
-        
+
+        void ShowTutorialTrainingChart(string csvPath);
     }
 }

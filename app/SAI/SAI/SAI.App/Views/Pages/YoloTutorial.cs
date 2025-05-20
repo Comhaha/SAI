@@ -85,5 +85,15 @@ namespace SAI.SAI.App.Views.Pages
         {
             throw new NotImplementedException();
         }
+
+        public void ShowTrainingChart(string csvPath)
+        {
+            return;
+        }
+
+        public void ShowTutorialTrainingChart(string csvPath)
+        {
+            return;
+        }
     }
 }
