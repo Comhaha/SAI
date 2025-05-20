@@ -82,6 +82,8 @@ namespace SAI.SAI.App.Views.Pages
 
             tboxMemo.TextChanged += tboxMemo_TextChanged;
 
+            pleaseControlThreshold.Visible = false;
+
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
             {
@@ -349,6 +351,7 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                     pboxInferAccuracy.Image = Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
+                    pleaseControlThreshold.Visible = true;
                 }
             };
 
@@ -358,6 +361,7 @@ namespace SAI.SAI.App.Views.Pages
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
                 tboxThreshold.Text = newAccuracy.ToString();
                 tbarThreshold.Value = (int)(newAccuracy * 100);
+                pleaseControlThreshold.Visible = false;
             };
 		}
 
@@ -1063,6 +1067,7 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
+                            pleaseControlThreshold.Visible = true;
                         }
                         btnSelectInferImage.Visible = false;
 

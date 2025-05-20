@@ -73,7 +73,7 @@ namespace SAI.SAI.App.Views.Pages
 
             blocklyModel = BlocklyModel.Instance;
             pSideInfer.Visible = false;
-
+            pleaseControlThreshold.Visible = false;
             errorMessage = "";
             missingType = "";
 
@@ -355,6 +355,7 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                     pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
+                    pleaseControlThreshold.Visible = true;
                 }
             };
 
@@ -364,6 +365,7 @@ namespace SAI.SAI.App.Views.Pages
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({newAccuracy})");
                 tboxThreshold.Text = newAccuracy.ToString();
                 tbarThreshold.Value = (int)(newAccuracy * 100);
+                pleaseControlThreshold.Visible = false;
             };
 			///////////////////////////////////////////////////
 		}
