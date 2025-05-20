@@ -285,49 +285,23 @@ namespace SAI.SAI.App.Presenters
                 }
                 
                 Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
-                Console.WriteLine($"[DEBUG] 스크립트 시작 시간: {_scriptStartTime}");
                 
-                // 결과 이미지 디렉토리 경로
-                string resultDirectory = Path.Combine(
+                // 결과 이미지 경로 생성 (inference.py 스크립트와 동일한 방식으로)
+                string resultImagePath = null;
+                string directory = Path.GetDirectoryName(imagePath);
+                string filename = Path.GetFileNameWithoutExtension(imagePath);
+                string extension = Path.GetExtension(imagePath);
+                resultImagePath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
-                    @"..\..\SAI.Application\Python\runs\result");
-                resultDirectory = Path.GetFullPath(resultDirectory);
+                    @"..\..\SAI.Application\Python\runs\result",
+                    $"{filename}_result{extension}");
+                resultImagePath = Path.GetFullPath(resultImagePath);
                 
-                Console.WriteLine($"[DEBUG] 결과 이미지 디렉토리: {resultDirectory}");
+                Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
                 
-                // 디렉토리가 존재하는지 확인
-                if (!Directory.Exists(resultDirectory))
-                {
-                    Console.WriteLine($"[WARNING] 결과 이미지 디렉토리가 존재하지 않습니다: {resultDirectory}");
-                    return;
-                }
-                
-                // 파일명과 확장자 추출
-                string originalFilename = Path.GetFileNameWithoutExtension(imagePath);
-                string originalExtension = Path.GetExtension(imagePath);
-                
-                Console.WriteLine($"[DEBUG] 원본 파일명: {originalFilename}, 확장자: {originalExtension}");
-                
-                // 결과 이미지 패턴
-                string resultPattern = "*_result" + originalExtension;
-                
-                // 디렉토리의 모든 파일 중 스크립트 실행 시작 이후에 생성된 결과 이미지 찾기
-                var resultFiles = Directory.GetFiles(resultDirectory, resultPattern)
-                    .Select(f => new FileInfo(f))
-                    .Where(f => f.CreationTime > _scriptStartTime)
-                    .OrderByDescending(f => f.CreationTime);
-                
-                // 디버깅을 위해 발견된 파일 수 로깅
-                Console.WriteLine($"[DEBUG] 스크립트 실행 시작 이후 생성된 결과 이미지 수: {resultFiles.Count()}");
-                
-                // 가장 최근에 생성된 파일 선택
-                var latestFile = resultFiles.FirstOrDefault();
-                string resultImagePath = latestFile?.FullName;
-                
-                if (latestFile != null && File.Exists(resultImagePath))
+                if (File.Exists(resultImagePath))
                 {
                     Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
-                    Console.WriteLine($"[INFO] 결과 이미지 생성 시간: {latestFile.CreationTime}, 스크립트 시작 시간: {_scriptStartTime}");
                     
                     // 추론 결과 객체 생성
                     var result = new PythonService.InferenceResult
@@ -394,5 +368,7 @@ namespace SAI.SAI.App.Presenters
                 view.RunButtonClicked -= OnRunButtonClicked;
             }
         }
+
+       
     }
 }
