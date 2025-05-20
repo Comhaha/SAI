@@ -230,70 +230,58 @@ namespace SAI.SAI.App.Presenters
         {
             if (type == "blockAllCode")
             {
-				blocklyModel.blockAllCode = code;
-                if(where == "practice")
+                blocklyModel.blockAllCode = code;
+                if (where == "practice")
                 {
-					blocklyService.SaveCodeToFileInTrain();
-				}
-                else if(where == "tutorial")
-                {
-					blocklyService.SaveCodeToFileInTutorial();
+                    blocklyService.SaveCodeToFileInTrain();
                 }
-
-                //--------혜정언니 꺼 develop에 있던 코드 ----------------------------
-                // 여기도 codeView 사용
-                // codeView 사용
-                if (codeView != null)
+                else if (where == "tutorial")
                 {
-                    try
-                    {
-                        Console.WriteLine($"[DEBUG] BlocklyPresenter: codeView로 전체 코드 전달 시도 ({code?.Length ?? 0}자)");
-                        if (codeView is UcCode ucCode)
-                        {
-                            ucCode.SetAccumulateMode(false);
-                        }
-                        codeView.UpdateCode(code);
-                        Console.WriteLine("[DEBUG] BlocklyPresenter: codeView로 코드 업데이트 완료");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] BlocklyPresenter: codeView 업데이트 오류 - {ex.Message}");
-                        Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
-                    }
+                    blocklyService.SaveCodeToFileInTutorial();
                 }
-                else
-                {
-                    Console.WriteLine("[WARNING] BlocklyPresenter: codeView가 null입니다 - 코드는 유지됨");
-                }
-            }
-            else if (type == "blockCode")
-            {
-                Console.WriteLine($"[DEBUG] 개별 블록 코드 변경 감지: {code?.Length ?? 0}자");
-                blocklyModel.blockCode = code;
             }
         }
 
         public void setBlockTypes(List<BlockInfo> blockTypes)
         {
             blocklyModel.blockTypes = blockTypes;
-
-            // 잘 들어왔는지 확인용 <- (삭제요망)
-            //string message = "";
-            //foreach (var types in blocklyModel.blockTypes)
-            //{
-            //    message += "type: " + types.type + "\n";
-            //    if (types.children != null)
-            //    {
-            //        foreach (var children in types.children)
-            //        {
-            //            message += "children: " + children.type + "\n";
-            //        }
-            //    }
-            //}
-            //MessageBox.Show(message);
         }
 
-        public void setFieldValue(string blockType, Dictionary<string, object> value)
+		public void loadBlockEvent(List<BlockInfo> blockTypes, UcPracticeBlockList ucPracticeBlockList)
+		{
+			if (ucPracticeBlockList != null)
+			{
+                if(blockTypes == null || blockTypes.Count == 0)
+                {
+					ucPracticeBlockList.isThereNothing();
+				}
+                else
+                {
+                    bool nothing = true;
+                    foreach (var types in blockTypes)
+                    {
+                        if (types.type == "loadModel")
+                        {
+                            nothing = false;
+                            ucPracticeBlockList.isThereLoadModel();
+                            break;
+                        }
+                        else if (types.type == "loadModelWithLayer" || types.type == "layer")
+                        {
+							nothing = false;
+							ucPracticeBlockList.isThereLoadModelWithLayer();
+                            break;
+                        }
+                    }
+                    if (nothing)
+                    {
+                        ucPracticeBlockList.isThereNothing();
+                    }
+                }
+			}
+		}
+
+		public void setFieldValue(string blockType, Dictionary<string, object> value)
         {
             switch (blockType)
             {

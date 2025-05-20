@@ -235,6 +235,7 @@
 			return types;
 		}
 
+
 		// C#에게 블록 타입 배열 전송
 		function sendBlockTypesToCSharp() {
 			const types = getConnectedBlockTypesFromStart();
@@ -254,6 +255,40 @@
 			});
 			return fieldValues;
 		}
+
+		function getAllBlocksTypeInWorkspace() {
+			const blocksInWorkspace = workspace.getAllBlocks(false); // shadow 제외
+			const result = blocksInWorkspace.map(block => buildBlockTree(block));
+
+			window.chrome.webview.postMessage({
+				type: 'blocksAllTypes',
+				types: result
+			});
+		}
+
+		function buildBlockTree(block) {
+			const blockInfo = {
+				type: block.type,
+				children: [] // 여러 child를 담기 위해 배열로 초기화
+			};
+
+			// input 필드마다 연결된 자식 블록 확인
+			for (let input of block.inputList) {
+				const child = input.connection && input.connection.targetBlock();
+				if (child) {
+					blockInfo.children.push(buildBlockTree(child));
+				}
+			}
+
+			// 자식이 없으면 null로 설정
+			if (blockInfo.children.length === 0) {
+				blockInfo.children = null;
+			}
+
+			return blockInfo;
+		}
+
+
 
 		// 가장 마지막으로 생성된 블럭
 		let lastCreatedBlockId = null;
@@ -302,10 +337,12 @@
 					event.type === Blockly.Events.BLOCK_CHANGE ||
 					event.type === Blockly.Events.BLOCK_MOVE
 				) {
+
 					const allBlocks = workspace.getAllBlocks(false);
 					for (const block of allBlocks) {
 						registerDoubleClickEventRecursively(block);
 					}
+					getAllBlocksTypeInWorkspace(allBlocks);
 
 					// 안전하게 확인
 					if (Blockly.Python && Blockly.Python.workspaceToCode) {

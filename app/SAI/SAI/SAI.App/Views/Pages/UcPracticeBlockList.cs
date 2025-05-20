@@ -1,4 +1,5 @@
-﻿using SAI.SAI.App.Models.Events;
+﻿using SAI.SAI.App.Models;
+using SAI.SAI.App.Models.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +28,27 @@ namespace SAI.SAI.App.Views.Pages
 			imgPathEvent(parent, AddBlockButtonClicked);
 			modelInferenceEvent(parent, AddBlockButtonClicked);
 			resultVisualizeEvent(parent, AddBlockButtonClicked);
+		}
+
+		public void isThereLoadModel()
+		{
+			this.btnLoadModel.Visible = true;
+			this.btnLoadModelWithLayer.Visible = false;
+			this.btnLayer.Visible = false;
+		}
+
+		public void isThereLoadModelWithLayer()
+		{
+			this.btnLoadModel.Visible = false;
+			this.btnLoadModelWithLayer.Visible = true;
+			this.btnLayer.Visible = true;
+		}
+
+		public void isThereNothing()
+		{
+			this.btnLoadModel.Visible = true;
+			this.btnLoadModelWithLayer.Visible = true;
+			this.btnLayer.Visible = true;
 		}
 
 		private void startEvent(UcPracticeBlockCode parent, EventHandler<BlockEventArgs> AddBlockButtonClicked)

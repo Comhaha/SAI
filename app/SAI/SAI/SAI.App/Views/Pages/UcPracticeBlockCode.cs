@@ -63,6 +63,8 @@ namespace SAI.SAI.App.Views.Pages
         private PythonService.InferenceResult _result;
         public event EventHandler RunButtonClicked;
 
+        private UcPracticeBlockList ucPracticeBlockList;
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -189,7 +191,7 @@ namespace SAI.SAI.App.Views.Pages
                 btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
             };
             // 스크롤바 설정-------------------
-            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
             pSelectBlock.Controls.Add(ucPracticeBlockList);
             pSelectBlock.AutoScroll = false;
             ucPracticeBlockList.AutoScroll = false;
@@ -544,6 +546,11 @@ namespace SAI.SAI.App.Views.Pages
 								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
 								blocklyPresenter.setFieldValue(blockType, value);
 								break;
+							case "blocksAllTypes":
+								jsonTypes = root.GetProperty("types");
+								blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.loadBlockEvent(blockTypes, ucPracticeBlockList);
+								break;
 						}
 					}
 				}
@@ -553,39 +560,9 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-            webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
+            webViewblock.ZoomFactor = 0.7; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
-
-			// 단축키 이벤트 등록
-			webViewblock.KeyDown += (sender, e) =>
-			{
-				if (e.Control)
-				{
-					if (e.KeyCode == Keys.Z && !e.Shift) // Ctrl + Z
-					{
-						if (btnPreBlock.Visible)
-						{
-							btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
-							e.Handled = true;
-						}
-					}
-					else if (e.KeyCode == Keys.Y || (e.KeyCode == Keys.Z && e.Shift)) // Ctrl + Y 또는 Ctrl + Shift + Z
-					{
-						if (btnNextBlock.Visible)
-						{
-							btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-							e.Handled = true;
-						}
-					}
-				}
-				// Delete 키는 WebView2로 전파되도록 함
-				else if (e.KeyCode == Keys.Delete)
-				{
-					e.Handled = false;
-					e.SuppressKeyPress = false;
-				}
-			};
 
 			webViewblock.Source = new Uri(uri);
 		}
@@ -612,7 +589,7 @@ namespace SAI.SAI.App.Views.Pages
         // blockly 웹뷰 확대 조절 함수
         private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
         {
-            webViewblock.ZoomFactor = 0.5;
+            webViewblock.ZoomFactor = 0.7;
         }
 
 		// JS 함수 호출 = 다시 실행하기
