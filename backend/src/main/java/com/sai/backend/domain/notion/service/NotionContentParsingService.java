@@ -34,7 +34,7 @@ public class NotionContentParsingService {
             children.add(createHeadingBlock("결과 이미지", 2));
 
             if (aiLog.getThreshold() != null) {
-                String th = String.format("threshold : %.4f", aiLog.getThreshold());
+                String th = "threshold : " + aiLog.getThreshold();
                 children.add(createBulletedListItem(th));
             }
 
