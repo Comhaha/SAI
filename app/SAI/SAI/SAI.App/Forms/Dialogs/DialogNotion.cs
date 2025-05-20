@@ -31,7 +31,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
 
-        private const string redirectBase = "http://localhost:8080/api/notion/callback";
+        private const string redirectBase = "https://k12d201.p.ssafy.io/api/notion/callback";
 
         public DialogNotion(string memo, double thresholdValue, string resultImagePath)
         {
@@ -40,7 +40,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
+            ButtonUtils.SetupButton(btnClose, "btn_close_zoomChart_clicked", "btn_close_zoomChart");
             btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(authButton, "btn_auth_clicked", "btn_auth");
 
@@ -76,7 +76,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            var service = new AiFeedbackService("http://localhost:8080", token);
+            var service = new AiFeedbackService("https://k12d201.p.ssafy.io", token);
             _feedPresenter = new AiFeedbackPresenter(this, service);
 
             SendRequested?.Invoke(this, new EventArgs());
@@ -284,6 +284,11 @@ namespace SAI.SAI.App.Forms.Dialogs
         private void ibtnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void DialogNotion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

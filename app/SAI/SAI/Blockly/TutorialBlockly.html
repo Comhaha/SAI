@@ -5,6 +5,17 @@
 	<script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
 	<script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
 	<script src="TutorialBlocks.js"></script>
+
+	<style>
+		.blocklyTooltipDiv {
+			font-size: 28px !important; /* 원하는 크기로 설정 */
+			font-family: 'Noto Sans KR', sans-serif; /* 원하는 글꼴 */
+			color: rgb(255, 255, 255);
+			background-color: rgb(50, 50, 50) !important;
+			padding: 10px 10px !important;
+			border: 1px solid rgb(50, 50, 50) !important;
+		}
+	</style>
 </head>
 <body>
 	<div id="blocklyDiv" style="height: 96vh; width: 96vw; "></div>
@@ -141,12 +152,13 @@
 		}
 
 		// 이미지 경로가 바뀜
-		function imgPathChanged(newPath) {
+		function imgPathChanged(escapedPath) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'imgPath') {
-					if (newPath != block.getValue('FILE_PATH')) {
-						showCustomAlert(newPath);
-						block.setFieldValue(newPath, 'FILE_PATH');
+				if (block.type == "imgPath") {
+					if (escapedPath != "") {
+						if (escapedPath != block.getField('FILE_PATH').getValue()) {
+							block.setFieldValue(escapedPath, 'FILE_PATH');
+						}
 					}
 				}
 			});
@@ -155,11 +167,10 @@
 		// threshold 값이 바뀜
 		function thresholdChanged(newAccuracy) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'modelInference') {
-					showCustomAlert(newAccuracy);
-					if (newAccuracy != block.getValue('THRESHOLD')) {
-						block.setFieldValue(newAccuracy, 'THRESHOLD');
-					}
+				if (block.type == "modelInference") {
+						if (newAccuracy != block.getField('THRESHOLD').getValue()) {
+							block.setFieldValue(newAccuracy, 'THRESHOLD');
+						}
 				}
 			});
 		}
@@ -392,6 +403,39 @@
 
 		Blockly.fieldRegistry.register('field_custom_dropdown', CustomDropdown);
 
+		document.addEventListener("keydown", function (e) {
+			// Ctrl+Z (Undo)
+			if (e.ctrlKey && !e.shiftKey && e.key === 'z') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("ctrl+z")
+				return false;
+			}
+
+			// Ctrl+Y (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.key === 'y') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Ctrl+Y")
+				return false;
+			}
+
+			// Ctrl+Shift+Z (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.shiftKey && e.key === 'Z') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Ctrl+Shift+Z")
+				return false;
+			}
+
+			// Delete key
+			if (e.key === 'Delete') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Delete key")
+				return false;
+			}
+		}, true);
 	</script>
 
 </body>

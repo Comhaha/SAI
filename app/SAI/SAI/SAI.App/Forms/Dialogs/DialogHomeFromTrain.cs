@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using System.IO;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -63,6 +64,14 @@ namespace SAI.SAI.App.Forms.Dialogs
 			{
 				var view = this.Owner as IMainView;
 				presenter = new DialogLoadPagePresenter(view);
+				// 생성한 모델 삭제
+				string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+				string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+				if (File.Exists(modelPath))
+				{
+					File.Delete(modelPath);
+				}
 				presenter.clickFinish();
 				this.Close();
 			};
@@ -97,12 +106,6 @@ namespace SAI.SAI.App.Forms.Dialogs
 			{
 				btnCancel.BackgroundImage = Properties.Resources.btn_white_cancel;
 			};
-		}
-
-		private void DialogHomeFromTrain_Load(object sender, EventArgs e)
-		{
-			var view = this.Owner as IMainView;
-			presenter = new DialogLoadPagePresenter(view);
 		}
 	}
 }
