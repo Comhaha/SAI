@@ -173,8 +173,10 @@
 		function imgPathChanged(escapedPath) {
 			workspace.getAllBlocks(false).forEach(block => {
 				if (block.type == "imgPath") {
-					if (escapedPath != block.getField('FILE_PATH').getValue()) {
-						block.setFieldValue(escapedPath, 'FILE_PATH');
+					if (escapedPath != "") {
+						if (escapedPath != block.getField('FILE_PATH').getValue()) {
+							block.setFieldValue(escapedPath, 'FILE_PATH');
+						}
 					}
 				}
 			});

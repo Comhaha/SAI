@@ -823,30 +823,37 @@ namespace SAI.SAI.App.Views.Pages
 					if (block == null) continue;
 					
 					string blockType = block.type;
-					if (!checkBlockPosition(blockType, i))
+					if (blockType == "imgPath")
 					{
-						blockErrorMessage(blockType);
-						return true;
-					}
-
-					if(blockType == "loadModelWithLayer")
-					{
-						if(block.children != null)
+						if (string.IsNullOrEmpty(blocklyModel.imgPath))
 						{
-							if(block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 9개 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
+							errorType = "파라미터 오류";
+							missingType = "파라미터 \"이미지 파일\"";
+							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+							return true;
 						}
-						else
+					}
+					else if (blockType == "loadModelWithLayer")
+					{
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							MessageBox.Show("블럭 9개 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
 					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
+					}
+
+
+					if (!checkBlockPosition(blockType, i))
+                    {
+                        blockErrorMessage(blockType);
+                        return true;
+                    }
 				}
 			}
 			else if (blocklyModel.blockTypes.Count < 11)
@@ -865,15 +872,12 @@ namespace SAI.SAI.App.Views.Pages
 					string blockType = blockInfo.type;
 					if (!checkBlockPosition(blockType, i))
 					{
-						if (i > 0)
+						blockInfo = blocklyModel.blockTypes[i - 1];
+						if (blockInfo != null)
 						{
-							blockInfo = blocklyModel.blockTypes[i - 1];
-							if (blockInfo != null)
-							{
-								blockType = blockInfo.type;
-								blockErrorMessage(blockType);
-								return true;
-							}
+							blockType = blockInfo.type;
+							blockErrorMessage(blockType);
+							return true;
 						}
 					}
 
@@ -890,21 +894,16 @@ namespace SAI.SAI.App.Views.Pages
 					}
 					else if (blockType == "loadModelWithLayer")
 					{
-						if (block.children != null)
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							if (block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 11개 보다 적은 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
-						}
-						else
-						{
-							MessageBox.Show("블럭 11개 보다 적은 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
+					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
 					}
 				}
 				blockErrorMessage(block.type);
