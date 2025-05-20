@@ -464,7 +464,7 @@ def install_with_profile(profile_name, start_time=None):
     return install_if_needed(profiles[profile_name], start_time)
 
 
-def check_pytorch_cuda_compatibility():
+def check_torch_cuda_compatibility():
     """현재 설치된 PyTorch가 CUDA와 호환되는지 확인"""
     try:
         import torch
@@ -503,7 +503,7 @@ def check_pytorch_cuda_compatibility():
         return False, "not_installed", None
 
 
-def clean_pytorch_installation():
+def clean_torch_installation():
     """기존 PyTorch 설치 완전 제거"""
     print("기존 PyTorch 설치 제거 중...")
     
@@ -545,7 +545,7 @@ def install_torch_cuda(start_time=None):
     show_progress("CUDA 지원 PyTorch 설치 준비 중...", start_time, 0)
     
     # 현재 설치 확인
-    compatible, status, current_version = check_pytorch_cuda_compatibility()
+    compatible, status, current_version = check_torch_cuda_compatibility()
     
     if compatible and status == "cuda":
         show_progress(f"이미 호환되는 PyTorch({current_version})가 설치되어 있습니다. 재설치하지 않습니다.", start_time, 100)
@@ -560,7 +560,7 @@ def install_torch_cuda(start_time=None):
     # 호환되지 않거나 CPU 버전인 경우에만 기존 설치 제거
     if not compatible or status == "cpu":
         show_progress("호환되지 않는 PyTorch 설치 제거 중...", start_time, 30)
-        clean_pytorch_installation()
+        clean_torch_installation()
     
     if cuda_version:
         major_version = int(float(cuda_version))
@@ -577,14 +577,32 @@ def install_torch_cuda(start_time=None):
         show_progress("CUDA 버전을 감지할 수 없습니다. CUDA 11.8로 시도합니다.", start_time, 40)
         cuda_tag = "cu118"
     
-    # 안정적인 PyTorch 버전 설치
-    show_progress(f"{cuda_tag} 버전의 PyTorch 2.2.0 설치 중...", start_time, 50)
+   # 안정적인 PyTorch 버전 설치 - 버전 다운그레이드
+    show_progress(f"{cuda_tag} 버전의 PyTorch 1.13.1 설치 중...", start_time, 50)  # 더 안정적인 버전으로 변경
     torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
-    install_cmd = [
-        sys.executable, "-m", "pip", "install", 
-        "torch==2.2.0", "torchvision==0.17.0", "torchaudio==2.2.0", 
-        "--index-url", torch_url
-    ]
+    
+    # 버전 선택 - 더 안정적인 조합 사용
+    if cuda_tag == "cu121":
+        # CUDA 12.1 호환 버전
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==2.0.1", "torchvision==0.15.2", "torchaudio==2.0.2",
+            "--index-url", torch_url
+        ]
+    elif cuda_tag == "cu118":
+        # CUDA 11.8 호환 버전 (매우 안정적)
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "--index-url", torch_url
+        ]
+    else:
+        # 기타 CUDA 버전
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "--index-url", torch_url
+        ]
     
     # 설치 명령 실행
     try:
@@ -639,6 +657,15 @@ def install_torch_cuda(start_time=None):
     # 설치 확인
     show_progress("PyTorch 설치 확인 중...", start_time, 95)
     try:
+        # 모듈 캐시 초기화 및 재로드
+        import importlib
+        importlib.invalidate_caches()
+        
+        # 이미 로드된 torch 모듈 제거 (필요한 경우)
+        if 'torch' in sys.modules:
+            del sys.modules['torch']
+
+    
         import torch
         if torch.cuda.is_available():
             show_progress(f"CUDA 사용 가능: {torch.cuda.get_device_name(0)}", start_time, 100)

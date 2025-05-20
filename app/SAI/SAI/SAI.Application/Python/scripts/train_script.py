@@ -25,31 +25,3 @@ model.train(
    "imgsz": 512,  # 이미지의 크기(가로와 세로)를 지정
    "device": "cuda"    # CPU, GPU(cuda) 지정
 )
-
-
-# 학습 결과 그래프 출력
-from IPython.display import Image, display
-
-display(Image(filename = 'runs/detect/train/results.png'))
-
-
-img_path ='C:/Users/SSAFY/Downloads/logo.jpg'))
-
-
-# 추론 실행
-model = YOLO("/home/.../best.pt")
-results = model.predict(source=img_path, save=False, show=False, conf=0.25)
-
-
-# 결과 시각화
-import cv2
-import matplotlib.pyplot as plt
-
-# bounding box 그려진 이미지 추출 (BGR)
-result_img = results[0].plot()
-result_img = cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB)   # matplotlib용 RGB로 변환
-
-plt.imshow(result_img) # 출력
-plt.axis("off")
-plt.title("YOLOv8 Prediction")
-plt.show()
