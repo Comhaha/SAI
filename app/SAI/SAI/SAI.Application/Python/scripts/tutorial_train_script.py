@@ -249,16 +249,21 @@ def download_dataset_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-    # 2. 기존 데이터셋 폴더 내부 파일 전체 삭제
-    for filename in os.listdir(dataset_dir):
+    # 2. 기존 tutorial 데이터셋 관련 파일만 삭제
+    tutorial_specific_files = ["tutorial_dataset", "tutorial_dataset.zip", "tutorial_dataset_done.txt"]
+    for filename in tutorial_specific_files:
         file_path = os.path.join(dataset_dir, filename)
         try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+            if os.path.exists(file_path):
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                    show_tagged_progress('DEBUG', f'기존 파일 삭제: {file_path}', start_time)
+                elif os.path.isdir(file_path):
+                    import shutil
+                    shutil.rmtree(file_path)
+                    show_tagged_progress('DEBUG', f'기존 폴더 삭제: {file_path}', start_time)
         except Exception as e:
-            show_tagged_progress('ERROR', f'기존 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
+            show_tagged_progress('ERROR', f'기존 tutorial 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
 
     # 3. 데이터셋 다운로드 및 압축 해제 (기존 로직)
     try:
@@ -330,7 +335,7 @@ def download_dataset_block(block_params=None):
                 if chunk:
                     f.write(chunk)
                     downloaded += len(chunk)
-                    progress = min(0 + (downloaded / total_size * 30), 70)
+                    progress = min(0 + (downloaded / total_size * 30), 50)
                     show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
         show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
@@ -351,7 +356,7 @@ def download_dataset_block(block_params=None):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 file_list = zip_ref.namelist()
                 total_files = len(file_list)
-                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 70)
+                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 55)
 
                 # zip 내부에 tutorial_dataset/ 폴더가 있는지 확인
                 has_top_dir = False
