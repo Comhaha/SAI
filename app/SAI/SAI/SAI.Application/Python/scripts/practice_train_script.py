@@ -361,60 +361,62 @@ def download_dataset_block(block_params=None):
                     if top_dir == "practice_dataset":
                         has_top_dir = True
 
-                # 압축 해제 폴더 준비
-            os.makedirs(target_subdir, exist_ok=True)
-
-            if has_top_dir:
-                # 이미 폴더가 있으면 기존대로 압축 해제
-                for i, file in enumerate(file_list):
-                    zip_ref.extract(file, dataset_dir)
-                    if i % 50 == 0 or i == total_files - 1:
-                        extract_progress = 75 + (i / total_files) * 20
-                        show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                extracted_dir = os.path.join(dataset_dir, "practice_dataset")
-            else:
-                # 폴더가 없으면 직접 파일 구조 생성
-                for i, file in enumerate(file_list):
-                    # 대상 파일 경로 생성
-                    dest_path = os.path.join(target_subdir, file)
-                    dest_folder = os.path.dirname(dest_path)
-                    
-                    # 필요한 폴더 생성
-                    os.makedirs(dest_folder, exist_ok=True)
-                    
-                    # 파일 복사
-                    with zip_ref.open(file) as source, open(dest_path, "wb") as target:
-                        target.write(source.read())
+                if has_top_dir:
+                    # 이미 폴더가 있으면 기존대로 압축 해제
+                    potential_extracted_dir = os.path.join(dataset_dir, "practice_dataset")
+                    for i, file in enumerate(file_list):
+                        zip_ref.extract(file, dataset_dir)
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 75 + (i / total_files) * 20
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                    extracted_dir = potential_extracted_dir
+                else:
+                    # 폴더가 없으면 dataset/practice_dataset/에 압축 해제
+                    os.makedirs(target_subdir, exist_ok=True)
+                    for i, file in enumerate(file_list):
+                        # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
+                        dest_path = os.path.join(target_subdir, file)
+                        dest_folder = os.path.dirname(dest_path)
+                        os.makedirs(dest_folder, exist_ok=True)
                         
-                    if i % 50 == 0 or i == total_files - 1:
-                        extract_progress = 75 + (i / total_files) * 20
-                        show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                
-                extracted_dir = target_subdir
-                show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
+                        # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
+                        if file.endswith('/'):
+                            continue
+                        
+                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
+                            target.write(source.read())
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 75 + (i / total_files) * 20
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                    extracted_dir = target_subdir
+                    show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
 
-            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
-            # 임시 ZIP 파일 삭제
-            try:
-                os.remove(zip_path)
-                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time)
-            except:
-                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 실패', start_time)
+                show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
+                # 임시 ZIP 파일 삭제
+                try:
+                    os.remove(zip_path)
+                    show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time)
+                except Exception as e:
+                    show_tagged_progress('DEBUG', f'임시 ZIP 파일 삭제 실패: {str(e)}', start_time)
+            
         except Exception as e:
             show_tagged_progress('DEBUG', f'ZIP 파일 압축 해제 오류: {e}', start_time)
     else:
         show_tagged_progress('ERROR', '다운로드된 ZIP 파일을 찾을 수 없습니다.', start_time)
-    
+
     # 데이터셋 경로 저장
     tutorial_state["dataset_path"] = extracted_dir
-    
+
     # data.yaml 파일 찾기
     data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+    if data_yaml_path is None:
+        show_tagged_progress('ERROR', 'data.yaml 파일을 찾을 수 없습니다. 기본 경로를 사용합니다.', start_time)
+        data_yaml_path = os.path.join(extracted_dir, 'data.yaml')  # 기본 경로 설정
+
     tutorial_state["data_yaml_path"] = data_yaml_path
-    
     show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
 
-    # 4. 완료 파일 생성
+    # 완료 파일 생성
     try:
         with open(done_file, "w") as f:
             f.write("done")
@@ -423,12 +425,12 @@ def download_dataset_block(block_params=None):
         show_tagged_progress('ERROR', f'완료 파일 생성 실패: {e}', start_time)
 
     return {
-        "success": True,
-        "location": extracted_dir,
-        "extracted_dir": extracted_dir,
-        "data_yaml_path": data_yaml_path,
-        "elapsed_time": time.time() - start_time
-    }
+            "success": True,
+            "location": extracted_dir,
+            "extracted_dir": extracted_dir,
+            "data_yaml_path": data_yaml_path,
+            "elapsed_time": time.time() - start_time
+        }   
 
 # data.yaml 파일 찾기 도우미 함수
 def find_yaml_file(dataset_dir, extracted_dir, start_time):
