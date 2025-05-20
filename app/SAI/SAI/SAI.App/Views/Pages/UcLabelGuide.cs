@@ -3212,36 +3212,6 @@ namespace SAI.SAI.App.Views.Pages
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 기존 이벤트 핸들러들 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void guna2HtmlLabel1_Click_4(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void mainPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2GradientPanel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBoxImage_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolUndo_Click(object sender, EventArgs e)
         {
             Undo();
@@ -3404,31 +3374,6 @@ namespace SAI.SAI.App.Views.Pages
                                MessageBoxIcon.Error);
             }
         }
-
-        private void nextBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolZoom_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void currentLevel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void currentLevel_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mainpanel_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
         private void toolVisible_Click(object sender, EventArgs e)
         {
             try
@@ -3476,25 +3421,6 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void levelPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void class2_Click(object sender, EventArgs e)
-        {
-
-        }
         private void ZoomOutBtn_Click(object sender, EventArgs e)
         {
             ApplyZoom(-0.1f);
@@ -3503,21 +3429,6 @@ namespace SAI.SAI.App.Views.Pages
         private void ZoomInBtn_Click(object sender, EventArgs e)
         {
             ApplyZoom(0.1f);
-        }
-
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void accuracyPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         // 툴팁 패널 초기화 메서드
@@ -3533,14 +3444,14 @@ namespace SAI.SAI.App.Views.Pages
             tooltipPanel.AutoSize = true;
             tooltipPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tooltipPanel.MinimumSize = new Size(150, 0);
-            tooltipPanel.MaximumSize = new Size(250, 0);
+            tooltipPanel.MaximumSize = new Size(500, 0);
             
             // 툴팁 레이블 생성
             tooltipLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             tooltipLabel.ForeColor = System.Drawing.Color.White;
             tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 13F);
             tooltipLabel.AutoSize = true;
-            tooltipLabel.MaximumSize = new Size(230, 0);
+            tooltipLabel.MaximumSize = new Size(2000, 0);
             tooltipLabel.TextAlignment = ContentAlignment.MiddleLeft;
             
             // 패널에 레이블 추가
@@ -3552,7 +3463,7 @@ namespace SAI.SAI.App.Views.Pages
             
             // 툴팁 타이머 초기화
             tooltipTimer = new System.Windows.Forms.Timer();
-            tooltipTimer.Interval = 300;
+            tooltipTimer.Interval = 50;
             tooltipTimer.Tick += TooltipTimer_Tick;
         }
         
@@ -3821,36 +3732,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class3.Text);
-        }
-
-        private void progress0_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progress8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void accuracyLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toastPopupPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void classBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void totalLevelpanel_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

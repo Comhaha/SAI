@@ -132,7 +132,6 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(105, 105);
             this.nextBtn.TabIndex = 5;
-            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // preBtn
             // 
@@ -160,7 +159,7 @@ namespace SAI.SAI.App.Views.Pages
             this.class1.ForeColor = System.Drawing.Color.Black;
             this.class1.Location = new System.Drawing.Point(0, 0);
             this.class1.Name = "class1";
-            this.class1.Size = new System.Drawing.Size(92, 29);
+            this.class1.Size = new System.Drawing.Size(160, 50);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
             this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -177,7 +176,6 @@ namespace SAI.SAI.App.Views.Pages
             this.mainpanel.Name = "mainpanel";
             this.mainpanel.Size = new System.Drawing.Size(1601, 875);
             this.mainpanel.TabIndex = 7;
-            this.mainpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainpanel_Paint_1);
             // 
             // leftPanel
             // 
@@ -196,7 +194,6 @@ namespace SAI.SAI.App.Views.Pages
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Size = new System.Drawing.Size(351, 696);
             this.leftPanel.TabIndex = 4;
-            this.leftPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint);
             // 
             // panel1
             // 
@@ -236,7 +233,6 @@ namespace SAI.SAI.App.Views.Pages
             this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.classBtn.Size = new System.Drawing.Size(24, 24);
             this.classBtn.TabIndex = 12;
-            this.classBtn.Click += new System.EventHandler(this.classBtn_Click);
             // 
             // guna2CustomGradientPanel1
             // 
@@ -404,7 +400,6 @@ namespace SAI.SAI.App.Views.Pages
             this.imageContainer.Name = "imageContainer";
             this.imageContainer.Size = new System.Drawing.Size(1182, 875);
             this.imageContainer.TabIndex = 3;
-            this.imageContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             // 
             // toastPopupPanel
             // 
@@ -449,7 +444,6 @@ namespace SAI.SAI.App.Views.Pages
             this.accuracyPanel.Name = "accuracyPanel";
             this.accuracyPanel.Size = new System.Drawing.Size(302, 81);
             this.accuracyPanel.TabIndex = 14;
-            this.accuracyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.accuracyPanel_Paint);
             // 
             // tableLayoutPanel2
             // 
@@ -493,7 +487,6 @@ namespace SAI.SAI.App.Views.Pages
             this.levelPanel.Name = "levelPanel";
             this.levelPanel.Size = new System.Drawing.Size(341, 98);
             this.levelPanel.TabIndex = 13;
-            this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
             // 
             // guna2Panel1
             // 
@@ -549,7 +542,6 @@ namespace SAI.SAI.App.Views.Pages
             this.toolZoom.Name = "toolZoom";
             this.toolZoom.Size = new System.Drawing.Size(51, 149);
             this.toolZoom.TabIndex = 11;
-            this.toolZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.toolZoom_Paint);
             // 
             // tableLayoutPanel3
             // 
@@ -572,11 +564,10 @@ namespace SAI.SAI.App.Views.Pages
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
-            this.ZoomCurrent.Size = new System.Drawing.Size(35, 19);
+            this.ZoomCurrent.Size = new System.Drawing.Size(59, 32);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
             this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ZoomCurrent.Click += new System.EventHandler(this.guna2HtmlLabel1_Click);
             // 
             // ZoomOutBtn
             // 
@@ -637,7 +628,6 @@ namespace SAI.SAI.App.Views.Pages
             this.toolBox.Name = "toolBox";
             this.toolBox.Size = new System.Drawing.Size(51, 476);
             this.toolBox.TabIndex = 10;
-            this.toolBox.Paint += new System.Windows.Forms.PaintEventHandler(this.guna2GradientPanel1_Paint_1);
             // 
             // toolRedo
             // 
@@ -770,7 +760,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pictureBoxImage.TabIndex = 0;
             this.pictureBoxImage.TabStop = false;
             this.pictureBoxImage.WaitOnLoad = true;
-            this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click_1);
             // 
             // tableLayoutPanel1
             // 
@@ -798,7 +787,6 @@ namespace SAI.SAI.App.Views.Pages
             this.totalLevelpanel.Name = "totalLevelpanel";
             this.totalLevelpanel.Size = new System.Drawing.Size(220, 39);
             this.totalLevelpanel.TabIndex = 9;
-            this.totalLevelpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.totalLevelpanel_Paint);
             // 
             // nextBtnVisible
             // 
