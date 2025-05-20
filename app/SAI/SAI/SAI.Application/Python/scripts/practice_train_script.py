@@ -235,11 +235,40 @@ def download_dataset_block(block_params=None):
         import requests
         from tqdm import tqdm
     
-    # 데이터셋 저장 경로 설정
+    # 데이터셋 저장 경로 및 완료 파일 경로 설정
     dataset_dir = os.path.join(base_dir, "dataset")
     os.makedirs(dataset_dir, exist_ok=True)
-    show_tagged_progress('DEBUG', f'데이터셋 기본 경로: {dataset_dir}', start_time)
-    
+    done_file = os.path.join(dataset_dir, "practice_dataset_done.txt")
+
+    # 1. 캐싱: 완료 파일이 있으면 스킵
+    if os.path.exists(done_file):
+        show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
+        time.sleep(1.5)  # 메시지 인지 시간 확보
+        extracted_dir = os.path.join(dataset_dir, "practice_dataset")
+        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+        tutorial_state["dataset_path"] = extracted_dir
+        tutorial_state["data_yaml_path"] = data_yaml_path
+        return {
+            "success": True,
+            "location": extracted_dir,
+            "extracted_dir": extracted_dir,
+            "data_yaml_path": data_yaml_path,
+            "cached": True,
+            "elapsed_time": time.time() - start_time
+        }
+
+    # 2. 기존 데이터셋 폴더 내부 파일 전체 삭제
+    for filename in os.listdir(dataset_dir):
+        file_path = os.path.join(dataset_dir, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                import shutil
+                shutil.rmtree(file_path)
+        except Exception as e:
+            show_tagged_progress('ERROR', f'기존 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
+
     # 환경 변수에서 서버 주소 가져오기
     server_url = os.environ.get("API_SERVER_URL")
     if not server_url:
@@ -315,36 +344,47 @@ def download_dataset_block(block_params=None):
     
     # ZIP 파일 압축 해제
     extracted_dir = dataset_dir  # 기본값 설정
-    
+    target_subdir = os.path.join(dataset_dir, "practice_dataset")
+
     if os.path.exists(zip_path):
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 file_list = zip_ref.namelist()
                 total_files = len(file_list)
                 show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 70)
-                
-                # 첫 번째 파일의 경로에서 최상위 디렉토리 확인 (있는 경우)
-                if file_list and '/' in file_list[0]:
+
+                # zip 내부에 practice_dataset/ 폴더가 있는지 확인
+                has_top_dir = False
+                if file_list and file_list[0].count('/') > 0:
                     top_dir = file_list[0].split('/')[0]
-                    # 최상위 디렉토리가 있는 경우, 이를 추출 디렉토리로 설정
-                    potential_extracted_dir = os.path.join(dataset_dir, top_dir)
-                else:
-                    potential_extracted_dir = dataset_dir
-                
-                # 압축 해제 진행률 표시
-                for i, file in enumerate(file_list):
-                    zip_ref.extract(file, dataset_dir)
-                    if i % 50 == 0 or i == total_files - 1:  # 50개 파일마다 또는 마지막 파일에서 진행률 표시
-                        extract_progress = 75 + (i / total_files) * 20  # 75% ~ 95% 범위
-                        show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                
-                # 압축 해제 후 실제 추출 디렉토리 확인
-                if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
+                    if top_dir == "practice_dataset":
+                        has_top_dir = True
+
+                if has_top_dir:
+                    # 이미 폴더가 있으면 기존대로 압축 해제
+                    potential_extracted_dir = os.path.join(dataset_dir, "practice_dataset")
+                    for i, file in enumerate(file_list):
+                        zip_ref.extract(file, dataset_dir)
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 75 + (i / total_files) * 20
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = potential_extracted_dir
-                    show_tagged_progress('DEBUG', f'데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}', start_time)
-            
+                else:
+                    # 폴더가 없으면 dataset/practice_dataset/에 압축 해제
+                    os.makedirs(target_subdir, exist_ok=True)
+                    for i, file in enumerate(file_list):
+                        dest_path = os.path.join(target_subdir, file)
+                        dest_folder = os.path.dirname(dest_path)
+                        os.makedirs(dest_folder, exist_ok=True)
+                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
+                            target.write(source.read())
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 75 + (i / total_files) * 20
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                    extracted_dir = target_subdir
+                    show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
+
             show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
-            
             # 임시 ZIP 파일 삭제
             try:
                 os.remove(zip_path)
@@ -364,6 +404,15 @@ def download_dataset_block(block_params=None):
     tutorial_state["data_yaml_path"] = data_yaml_path
     
     show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
+
+    # 4. 완료 파일 생성
+    try:
+        with open(done_file, "w") as f:
+            f.write("done")
+        show_tagged_progress('DEBUG', '데이터셋 완료 파일 생성', start_time, 100)
+    except Exception as e:
+        show_tagged_progress('ERROR', f'완료 파일 생성 실패: {e}', start_time)
+
     return {
         "success": True,
         "location": extracted_dir,
