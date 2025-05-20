@@ -321,6 +321,12 @@
     <Compile Include="SAI.App\Views\Pages\UcPracticeBlockList.Designer.cs">
       <DependentUpon>UcPracticeBlockList.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Views\Pages\UcPracticeGuide.Designer.cs">
+      <DependentUpon>UcPracticeGuide.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Views\Pages\UcTutorialBlockCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -448,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcLabelGuide.resx">
       <DependentUpon>UcLabelGuide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Views\Pages\UcPracticeGuide.resx">
+      <DependentUpon>UcPracticeGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Views\Pages\UcTutorialBlockCode.resx">
       <DependentUpon>UcTutorialBlockCode.cs</DependentUpon>
@@ -885,6 +894,7 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_modelProgress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_homeFromLabeling.png" />
+    <None Include="SAI.App\Resources\Images\bg_practiceGuide.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
