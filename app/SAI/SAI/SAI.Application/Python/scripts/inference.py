@@ -85,15 +85,15 @@ def run_inference(model_path, image_path, conf=0.25):
         # 한글이 포함된 경로는 C#에서 읽어오지 못하는 문제를 해결하기 위해 경로 처리
         original_name = image_name  # 원본 파일명 보존
         
-        # 한글이 포함된 경로인지 확인
-        if any(ord(char) > 127 for char in image_name):
-            # 한글이 포함된 경우 고유한 영문 파일명 생성
-            safe_name = f"result_{uuid.uuid4().hex[:8]}"
-            log_message(f"한글 파일명 감지: {image_name} → {safe_name}로 변환")
-        else:
-            safe_name = image_name
+        # # 한글이 포함된 경로인지 확인
+        # if any(ord(char) > 127 for char in image_name):
+        #     # 한글이 포함된 경우 고유한 영문 파일명 생성
+        #     safe_name = f"result_{uuid.uuid4().hex[:8]}"
+        #     log_message(f"한글 파일명 감지: {image_name} → {safe_name}로 변환")
+        # else:
+        #     safe_name = image_name
             
-        result_image_name = f"{safe_name}_result{image_ext}"
+        result_image_name = f"{original_name}_result{image_ext}"
         result_image_path = os.path.join(result_dir, result_image_name)
         
         # 추론 실행 (save=True로 저장)
