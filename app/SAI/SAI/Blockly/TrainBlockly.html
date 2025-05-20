@@ -142,6 +142,28 @@
 			});
 		}
 
+		// 이미지 경로가 바뀜
+		function imgPathChanged(newPath) {
+			workspace.getAllBlocks(false).forEach(block => {
+				if (block.type === 'imgPath') {
+					if (block.getField('FILE_PATH') != newPath) {
+						block.getField('FILE_PATH').setValue(newPath);
+					}
+				}
+			});
+		}
+
+		// threshold 값이 바뀜
+		function thresholdChanged(newAccuracy) {
+			workspace.getAllBlocks(false).forEach(block => {
+				if (block.type === 'modelInference') {
+					if (block.getField('THRESHOLD') != newAccuracy) {
+						block.getField('THRESHOLD').setValue(newAccuracy);
+					}
+				}
+			});
+		}
+
 		// 더블 클릭 이벤트 등록 및 이벤트 처리
 		function registerDoubleClickEventRecursively(block) {
 			if (!block) return;

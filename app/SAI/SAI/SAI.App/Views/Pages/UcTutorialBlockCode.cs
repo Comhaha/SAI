@@ -21,6 +21,8 @@ using System.Linq;
 using SAI.SAI.Application.Service;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using CefSharp.DevTools.IndexedDB;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -336,11 +338,33 @@ namespace SAI.SAI.App.Views.Pages
             mAlertPanel.Visible = false;
             // btnQuestionMemo 클릭 이벤트 핸들러 등록
             btnQuestionMemo.Click += btnQuestionMemo_Click;
-        }
+
+
+			///////////////////////////////////////////////////
+			/// 재영 언니 여기야아아
+			// 이미지 경로가 바뀌면 블록에서도 적용되게
+			blocklyModel.ImgPathChanged += (newPath) => {
+				// 웹뷰에 이미지 경로 전달
+				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
 
 
 
-        private void setButtonVisible(Guna2Button button)
+			};
+
+			// threshold가 바뀌면 블록에서도 적용되게
+			blocklyModel.AccuracyChanged += (newAccuracy) => {
+				// 웹뷰에 threshold 전달
+				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
+
+
+
+			};
+			///////////////////////////////////////////////////
+		}
+
+
+
+		private void setButtonVisible(Guna2Button button)
         {
             button.Visible = true;
         }
@@ -783,7 +807,7 @@ namespace SAI.SAI.App.Views.Pages
         // webview에 blockly tutorial html 붙이기
         private async void InitializeWebView2()
         {
-            jsBridge = new JsBridge((message, type) =>
+			jsBridge = new JsBridge((message, type) =>
             {
                 blocklyPresenter.HandleJsMessage(message, type, "tutorial");
             });

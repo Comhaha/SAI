@@ -137,9 +137,9 @@ namespace SAI.SAI.App.Presenters
                     Console.WriteLine($"[ERROR] 스택 트레이스: {ex.StackTrace}");
                 }
             };
-        }
+		}
 
-        public void OnAddBlockDoubleClicked(string code)
+		public void OnAddBlockDoubleClicked(string code)
         {
             // blockCode 초기화
             blocklyModel.blockCode = "";
@@ -377,7 +377,6 @@ namespace SAI.SAI.App.Presenters
 				case "imgPath":
 					foreach (var kvp in value)
 					{
-                        MessageBox.Show(kvp.Key + "\n" + kvp.Value);
 						var key = kvp.Key;
 						var val = kvp.Value;
 						if (key == "FILE_PATH")
