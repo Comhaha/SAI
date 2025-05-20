@@ -97,6 +97,8 @@ namespace SAI.SAI.App.Views.Pages
 			this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.pMain.SuspendLayout();
 			this.pBlockList.SuspendLayout();
 			this.pCode.SuspendLayout();
@@ -115,6 +117,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpParentError.SuspendLayout();
 			this.tpContentError.SuspendLayout();
 			this.tpErrorHeader.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pMain
@@ -793,10 +796,32 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.lblTitle, "lblTitle");
 			this.lblTitle.Name = "lblTitle";
 			this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+    
+            // 
+            // pSideInfer
+            // 
+
+            this.pSideInfer.Controls.Add(this.guna2Panel1);
+
+            // 
+            // guna2Panel1
+            // 
+            this.guna2Panel1.Controls.Add(this.pleaseControlThreshold);
+            this.guna2Panel1.ForeColor = System.Drawing.Color.Tomato;
+            resources.ApplyResources(this.guna2Panel1, "guna2Panel1");
+            this.guna2Panel1.Name = "guna2Panel1";
+            // 
+            // pleaseControlThreshold
+            // 
+            resources.ApplyResources(this.pleaseControlThreshold, "pleaseControlThreshold");
+            this.pleaseControlThreshold.ForeColor = System.Drawing.Color.Tomato;
+            this.pleaseControlThreshold.Name = "pleaseControlThreshold";
+            this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// UcTutorialBlockCode
-			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            // UcTutorialBlockCode
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.Color.Transparent;
 			this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
 			resources.ApplyResources(this, "$this");
@@ -832,8 +857,8 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpContentError.PerformLayout();
 			this.tpErrorHeader.ResumeLayout(false);
 			this.tpErrorHeader.PerformLayout();
+            this.guna2Panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
-
         }
 
         #endregion
@@ -894,6 +919,8 @@ namespace SAI.SAI.App.Views.Pages
 		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
         private Guna.UI2.WinForms.Guna2Panel pErrorImg;
 		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private SAI.App.Views.Pages.AutoSizeLabel pleaseControlThreshold;
         private Guna.UI2.WinForms.Guna2Panel ptxtInfer;
         private SAI.App.Views.Pages.AutoSizeLabel lblinfer;
         private Guna.UI2.WinForms.Guna2Panel ptxtGraphe;
