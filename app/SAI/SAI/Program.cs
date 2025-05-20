@@ -13,6 +13,7 @@ namespace SAI
 		[STAThread]
 		static void Main()
 		{
+			
 			CefSharpSettings.WcfEnabled = true;
 
 			Application.EnableVisualStyles();
