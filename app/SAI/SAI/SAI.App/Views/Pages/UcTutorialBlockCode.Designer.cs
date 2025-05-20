@@ -400,9 +400,6 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pTopBlock.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.pTopBlock, "pTopBlock");
-            this.pTopBlock.Controls.Add(this.btnPreBlock);
-            this.pTopBlock.Controls.Add(this.btnNextBlock);
-            this.pTopBlock.Controls.Add(this.btnTrash);
             this.pTopBlock.Controls.Add(this.btnRunModel);
             this.pTopBlock.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pTopBlock.Name = "pTopBlock";
