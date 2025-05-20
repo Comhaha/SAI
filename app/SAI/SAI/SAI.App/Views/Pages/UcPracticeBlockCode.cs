@@ -327,9 +327,30 @@ namespace SAI.SAI.App.Views.Pages
             {
                 Console.WriteLine($"[ERROR] UcPracticeBlockCode: ICodeView 설정 중 오류 - {ex.Message}");
             }
-        }
 
-        private void ShowpSIdeInfer()
+			///////////////////////////////////////////////////
+			/// 재영 언니 여기야아아
+			// 이미지 경로가 바뀌면 블록에서도 적용되게
+			blocklyModel.ImgPathChanged += (newPath) => {
+				// 웹뷰에 이미지 경로 전달
+				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+                
+
+
+			};
+
+			// threshold가 바뀌면 블록에서도 적용되게
+			blocklyModel.AccuracyChanged += (newAccuracy) => {
+				// 웹뷰에 threshold 전달
+				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
+
+
+
+			};
+			///////////////////////////////////////////////////
+		}
+
+		private void ShowpSIdeInfer()
         {
             pSideInfer.Visible = true;
             ibtnCloseInfer.Visible = true;
@@ -475,8 +496,6 @@ namespace SAI.SAI.App.Views.Pages
                                         string filePath = dialog.FileName.Replace("\\", "/");
                                         string escapedFilePath = JsonSerializer.Serialize(filePath);
                                         string escapedBlockId = JsonSerializer.Serialize(blockId); // 이건 위에서 받은 blockId
-
-                                        blocklyModel.imgPath = filePath;
 
                                         string json = $@"{{
 											""blockId"": {escapedBlockId},

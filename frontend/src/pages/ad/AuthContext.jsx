@@ -1,9 +1,11 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const AuthContext = createContext();
-export function useAuth() { return useContext(AuthContext); }
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -16,9 +18,19 @@ export function AuthProvider({ children }) {
     localStorage.setItem('isLoggedIn', val ? 'true' : 'false');
   };
 
+  // 5분 후 자동 로그아웃 타이머
+  useEffect(() => {
+    if (isLoggedIn) {
+      const timer = setTimeout(() => {
+        setLoginState(false);
+      }, 5 * 60 * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoggedIn]);
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn: setLoginState }}>
       {children}
     </AuthContext.Provider>
   );
-} 
+}
