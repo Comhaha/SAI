@@ -57,7 +57,7 @@ namespace SAI.SAI.App.Views.Pages
 
 		private CancellationTokenSource _toastCancellationSource;
 
-        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private int currentZoomLevel = 80; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
         private PythonService.InferenceResult _result;
