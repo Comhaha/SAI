@@ -1272,7 +1272,7 @@ namespace SAI.SAI.App.Views.Pages
 
         public void AppendLog(string text)
         {
-            Debug.WriteLine($"[YOLO Tutorial] {text}");
+            //Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
 
          public void ShowTutorialTrainingChart(string csvPath)

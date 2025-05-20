@@ -971,13 +971,13 @@ namespace SAI.SAI.App.Views.Pages
 
         public void AppendLog(string text)
         {
-            Debug.WriteLine($"[YOLO Tutorial] {text}");
+            //Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
 
         public void ClearLog()
         {
             // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
-            Debug.WriteLine("\n" + new string('-', 50) + "\n");
+            //Debug.WriteLine("\n" + new string('-', 50) + "\n");
         }
 
         public void SetLogVisible(bool visible)
