@@ -41,6 +41,65 @@ print("[DEBUG] 로깅 설정 완료", flush=True)
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(f"[DEBUG] base_dir 설정됨: {base_dir}", flush=True)
 
+# CUDA 감지 함수 추가
+def detect_cuda():
+    """시스템의 CUDA 버전 감지"""
+    print("CUDA 버전 감지 중...")
+    try:
+        if platform.system() == "Windows":
+            # nvcc로 CUDA 버전 확인 시도
+            try:
+                nvcc_result = subprocess.run("nvcc --version", shell=True, capture_output=True, text=True)
+                if nvcc_result.returncode == 0:
+                    match = re.search(r"release (\d+\.\d+)", nvcc_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"NVCC로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+
+            # NVIDIA 드라이버 확인
+            try:
+                nvidia_smi_result = subprocess.run("nvidia-smi", shell=True, capture_output=True, text=True)
+                if nvidia_smi_result.returncode == 0:
+                    match = re.search(r"CUDA Version: (\d+\.\d+)", nvidia_smi_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"nvidia-smi로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+        
+        # Linux에서 CUDA 버전 확인
+        elif platform.system() == "Linux":
+            try:
+                nvidia_smi_result = subprocess.run("nvidia-smi", shell=True, capture_output=True, text=True)
+                if nvidia_smi_result.returncode == 0:
+                    match = re.search(r"CUDA Version: (\d+\.\d+)", nvidia_smi_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"nvidia-smi로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+            
+            # nvcc 확인
+            try:
+                nvcc_result = subprocess.run("nvcc --version", shell=True, capture_output=True, text=True)
+                if nvcc_result.returncode == 0:
+                    match = re.search(r"release (\d+\.\d+)", nvcc_result.stdout)
+                    if match:
+                        cuda_version = match.group(1)
+                        print(f"NVCC로 감지한 CUDA 버전: {cuda_version}")
+                        return cuda_version
+            except:
+                pass
+    except Exception as e:
+        print(f"CUDA 버전 감지 중 오류 발생: {e}")
+    
+    return None
+
 def show_progress(message, start_time=None, progress=None):
     try:
         elapsed_str = ""
@@ -405,7 +464,7 @@ def install_with_profile(profile_name, start_time=None):
     return install_if_needed(profiles[profile_name], start_time)
 
 
-def check_pytorch_cuda_compatibility():
+def check_torch_cuda_compatibility():
     """현재 설치된 PyTorch가 CUDA와 호환되는지 확인"""
     try:
         import torch
@@ -444,7 +503,7 @@ def check_pytorch_cuda_compatibility():
         return False, "not_installed", None
 
 
-def clean_pytorch_installation():
+def clean_torch_installation():
     """기존 PyTorch 설치 완전 제거"""
     print("기존 PyTorch 설치 제거 중...")
     
@@ -470,7 +529,7 @@ def clean_pytorch_installation():
     print("PyTorch 설치 정리 완료")
 
 
-def install_pytorch_cuda(start_time=None):
+def install_torch_cuda(start_time=None):
     """
     CUDA 지원 PyTorch 설치 래퍼 함수
     
@@ -486,7 +545,7 @@ def install_pytorch_cuda(start_time=None):
     show_progress("CUDA 지원 PyTorch 설치 준비 중...", start_time, 0)
     
     # 현재 설치 확인
-    compatible, status, current_version = check_pytorch_cuda_compatibility()
+    compatible, status, current_version = check_torch_cuda_compatibility()
     
     if compatible and status == "cuda":
         show_progress(f"이미 호환되는 PyTorch({current_version})가 설치되어 있습니다. 재설치하지 않습니다.", start_time, 100)
@@ -501,7 +560,7 @@ def install_pytorch_cuda(start_time=None):
     # 호환되지 않거나 CPU 버전인 경우에만 기존 설치 제거
     if not compatible or status == "cpu":
         show_progress("호환되지 않는 PyTorch 설치 제거 중...", start_time, 30)
-        clean_pytorch_installation()
+        clean_torch_installation()
     
     if cuda_version:
         major_version = int(float(cuda_version))
@@ -518,14 +577,32 @@ def install_pytorch_cuda(start_time=None):
         show_progress("CUDA 버전을 감지할 수 없습니다. CUDA 11.8로 시도합니다.", start_time, 40)
         cuda_tag = "cu118"
     
-    # 안정적인 PyTorch 버전 설치
-    show_progress(f"{cuda_tag} 버전의 PyTorch 2.2.0 설치 중...", start_time, 50)
+   # 안정적인 PyTorch 버전 설치 - 버전 다운그레이드
+    show_progress(f"{cuda_tag} 버전의 PyTorch 1.13.1 설치 중...", start_time, 50)  # 더 안정적인 버전으로 변경
     torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
-    install_cmd = [
-        sys.executable, "-m", "pip", "install", 
-        "torch==2.2.0", "torchvision==0.17.0", "torchaudio==2.2.0", 
-        "--index-url", torch_url
-    ]
+    
+    # 버전 선택 - 더 안정적인 조합 사용
+    if cuda_tag == "cu121":
+        # CUDA 12.1 호환 버전
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==2.0.1", "torchvision==0.15.2", "torchaudio==2.0.2",
+            "--index-url", torch_url
+        ]
+    elif cuda_tag == "cu118":
+        # CUDA 11.8 호환 버전 (매우 안정적)
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "--index-url", torch_url
+        ]
+    else:
+        # 기타 CUDA 버전
+        install_cmd = [
+            sys.executable, "-m", "pip", "install", 
+            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "--index-url", torch_url
+        ]
     
     # 설치 명령 실행
     try:
@@ -580,6 +657,15 @@ def install_pytorch_cuda(start_time=None):
     # 설치 확인
     show_progress("PyTorch 설치 확인 중...", start_time, 95)
     try:
+        # 모듈 캐시 초기화 및 재로드
+        import importlib
+        importlib.invalidate_caches()
+        
+        # 이미 로드된 torch 모듈 제거 (필요한 경우)
+        if 'torch' in sys.modules:
+            del sys.modules['torch']
+
+    
         import torch
         if torch.cuda.is_available():
             show_progress(f"CUDA 사용 가능: {torch.cuda.get_device_name(0)}", start_time, 100)
@@ -668,7 +754,7 @@ if __name__ == "__main__":
         if sys.argv[1] == "install_pytorch":
             # PyTorch 설치 테스트
             start_time = time.time()
-            success, device = install_pytorch_cuda(start_time)
+            success, device = install_torch_cuda(start_time)
             print(f"PyTorch 설치 결과: 성공={success}, 장치={device}")
         
         elif sys.argv[1] == "check_gpu":
@@ -714,4 +800,3 @@ if __name__ == "__main__":
         print("  python install_packages.py install_packages [패키지1 패키지2 ...]")
         print("  python install_packages.py install_if_needed [패키지1 패키지2 ...]")
         print("  python install_packages.py profile [basic|yolo|viz|data|all]")
-
