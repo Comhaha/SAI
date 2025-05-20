@@ -231,6 +231,7 @@ namespace SAI.SAI.App.Presenters
             if (type == "blockAllCode")
             {
 				blocklyModel.blockAllCode = code;
+                //MessageBox.Show(blocklyModel.blockAllCode);
                 if(where == "practice")
                 {
 					blocklyService.SaveCodeToFileInTrain();
