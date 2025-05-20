@@ -15,7 +15,7 @@ public class AiLog {
     private String id;
     private String code;
     private String logImageUrl;
-    private Double threshold;
+    private String threshold;
     private String resultImageUrl;
     private String memo;
     private String feedback;

@@ -122,8 +122,21 @@ def show_progress(message, start_time=None, progress=None):
         logger.error(f"show_progress 오류: {e}", exc_info=True)
         print(f"PROGRESS::show_progress 오류: {str(e)}", flush=True)
 
+        
+# ================ 태그 프로그래스 출력 함수 ================
+def show_tagged_progress(tag, message, start_time=None, progress=None):
+    """
+    태그를 자동으로 붙여서 show_progress를 호출하는 래퍼 함수
+    tag: 문자열(예: 'INFO', 'ERROR', 'DATASET', 'TRAIN', 'INFER' 등)
+    message: 실제 메시지
+    start_time, progress: 기존 show_progress와 동일
+    """
+    tagged_message = f"[{tag}] {message}"
+    show_progress(tagged_message, start_time, progress)
+
 print("[DEBUG] install_packages.py 초기화 완료", flush=True)
 
+# ================ 패키지 설치 함수 ================
 def install_packages_with_progress(packages=None, start_time=None):
     print("[DEBUG] install_packages_with_progress 진입")
     if start_time is None:
@@ -132,6 +145,7 @@ def install_packages_with_progress(packages=None, start_time=None):
     if packages is None:
         packages = ["ultralytics", "opencv-python"]
 
+    print(f"PROGRESS::패키지 설치 시작...")
     show_progress("패키지 설치 시작...", start_time, 0)
 
     results = {
@@ -142,19 +156,24 @@ def install_packages_with_progress(packages=None, start_time=None):
     }
 
     try:
-        numpy_result = _install_single_package("numpy==1.24.3", start_time, 10)
-        if numpy_result["success"]:
-            results["installed_packages"].append("numpy==1.24.3")
-            results["versions"]["numpy"] = numpy_result.get("version")
-        else:
-            results["failed_packages"].append("numpy==1.24.3")
-            show_progress("NumPy 다운그레이드 실패, 계속 진행합니다.", start_time, 20)
+        # numpy가 packages 리스트에 있는지 확인
+        numpy_in_packages = any(pkg.startswith("numpy") for pkg in packages)
+        
+        # numpy가 packages 리스트에 없으면 먼저 설치
+        if not numpy_in_packages:
+            numpy_result = _install_single_package("numpy==1.24.3", start_time, 10)
+            if numpy_result["success"]:
+                results["installed_packages"].append("numpy==1.24.3")
+                results["versions"]["numpy"] = numpy_result.get("version")
+            else:
+                results["failed_packages"].append("numpy==1.24.3")
+                print(f"PROGRESS::NumPy 다운그레이드 실패, 계속 진행합니다.")
 
         total_packages = len(packages)
         progress_per_package = 70 / total_packages
 
         for i, package in enumerate(packages):
-            print(f"[DEBUG] {package} 설치 시작")
+            print(f"PROGRESS::{package} 설치 시작 ({i+1}/{total_packages})")
             progress_start = 20 + (i * progress_per_package)
             progress_end = 20 + ((i + 1) * progress_per_package)
             show_progress(f"{package} 설치 중... ({i+1}/{total_packages})", start_time, progress_start)
@@ -163,10 +182,13 @@ def install_packages_with_progress(packages=None, start_time=None):
             if pkg_result["success"]:
                 results["installed_packages"].append(package)
                 results["versions"][package] = pkg_result.get("version")
-                show_progress(f"{package} 설치 완료", start_time, progress_end)
+                print(f"PROGRESS::{package} 설치 완료")
             else:
                 results["failed_packages"].append(package)
-                show_progress(f"{package} 설치 실패, 계속 진행합니다.", start_time, progress_end)
+                print(f"PROGRESS::{package} 설치 실패, 계속 진행합니다.")
+
+        # 패키지 설치 다하고 이 로그 뜸
+        print(f"PROGRESS::설치 상태 확인 및 의존성 검사 중...")
 
         show_progress("설치 상태 확인 및 의존성 검사 중...", start_time, 90)
         cuda_support = _check_cuda_support()
@@ -180,10 +202,10 @@ def install_packages_with_progress(packages=None, start_time=None):
                     results["versions"][pkg_name] = version
 
         if not results["failed_packages"]:
-            show_progress("모든 패키지 설치 완료!", start_time, 100)
+            print(f"PROGRESS::모든 패키지 설치 완료!")
         else:
             failed_count = len(results["failed_packages"])
-            show_progress(f"패키지 설치 부분 완료 ({failed_count}개 패키지 설치 실패)", start_time, 100)
+            print(f"PROGRESS::패키지 설치 부분 완료 ({failed_count}개 패키지 설치 실패)")
             results["success"] = False
 
         results["elapsed_time"] = time.time() - start_time
@@ -191,21 +213,23 @@ def install_packages_with_progress(packages=None, start_time=None):
 
     except Exception as e:
         error_msg = f"패키지 설치 중 오류 발생: {e}"
-        show_progress(error_msg, start_time, 100)
+        print(f"PROGRESS::{error_msg}")
+        show_tagged_progress('ERROR', error_msg, start_time, 100)
         results["success"] = False
         results["error"] = error_msg
         results["elapsed_time"] = time.time() - start_time
         return results
 
+# ================ 단일 패키지 설치 함수 ================
 def _install_single_package(package, start_time, progress_base=0):
-    print(f"[DEBUG] _install_single_package 진입: {package}")
+    show_tagged_progress('INSTALL', '패키지 블럭을 실행합니다', start_time, progress_base)
     try:
         install_cmd = [
             sys.executable, "-m", "pip", "install",
             package,
             "--verbose"
         ]
-        show_progress(f"{package} 설치 명령 실행 중...", start_time, progress_base + 2)
+        show_tagged_progress('INSTALL', f'{package} 설치 중...', start_time, progress_base + 2)
         process = subprocess.Popen(
             install_cmd,
             stdout=subprocess.PIPE,
@@ -218,36 +242,40 @@ def _install_single_package(package, start_time, progress_base=0):
 
         for line in iter(process.stdout.readline, ''):
             line = line.strip()
-            print(f"[DEBUG] pip output: {line}")
             if "Collecting" in line:
                 progress = 20
-                show_progress(f"{package} 다운로드 중: {line}", start_time, progress_base + progress)
+                show_tagged_progress('DOWNLOAD', f'{package} 다운로드 중: {line}', start_time, progress_base + progress)
             elif "Downloading" in line:
                 progress = 40
-                show_progress(f"{package} 다운로드 중: {line}", start_time, progress_base + progress)
+                show_tagged_progress('DOWNLOAD', f'{package} 다운로드 중: {line}', start_time, progress_base + progress)
             elif "Installing" in line:
                 progress = 60
-                show_progress(f"{package} 설치 중: {line}", start_time, progress_base + progress)
+                show_tagged_progress('INSTALL', f'{package} 설치 중: {line}', start_time, progress_base + progress)
             elif "Successfully installed" in line:
                 progress = 100
-                show_progress(f"{package} 설치 완료: {line}", start_time, progress_base + progress)
+                show_tagged_progress('SUCCESS', f'{package} 설치 완료: {line}', start_time, progress_base + progress)
 
             if time.time() - last_progress_time > 5:
-                show_progress(f"{package} 설치 진행 중...", start_time, progress_base + progress)
+                show_tagged_progress('INSTALL', f'{package} 설치 진행 중...', start_time, progress_base + progress)
                 last_progress_time = time.time()
 
         process.wait()
 
         if process.returncode == 0:
             version = _get_package_version(package.split('==')[0])
+            show_tagged_progress('SUCCESS', f'패키지 설치 성공: {package} (버전: {version})', start_time, progress_base + 100)
             return {"success": True, "version": version}
         else:
-            return {"success": False, "error": f"pip 명령 실패 (반환 코드: {process.returncode})"}
+            error_msg = f"pip 명령 실패 (반환 코드: {process.returncode})"
+            show_tagged_progress('ERROR', f'패키지 설치 실패: {package} - {error_msg}', start_time, progress_base + 100)
+            return {"success": False, "error": error_msg}
 
     except Exception as e:
-        print(f"[DEBUG] _install_single_package 예외: {e}")
-        return {"success": False, "error": str(e)}
+        error_msg = str(e)
+        show_tagged_progress('ERROR', f'패키지 설치 중 오류 발생: {package} - {error_msg}', start_time, progress_base + 100)
+        return {"success": False, "error": error_msg}
     
+# ================ 패키지 버전 확인 함수 ================
 def _get_package_version(package_name):
     """
     설치된 패키지의 버전 확인 (내부 헬퍼 함수)
@@ -278,7 +306,7 @@ def _get_package_version(package_name):
     except Exception:
         return None
 
-
+# ================ CUDA 지원 여부 확인 함수 ================
 def _check_cuda_support():
     """
     CUDA 지원 여부 확인 (내부 헬퍼 함수)
@@ -345,7 +373,7 @@ def _is_package_installed(package):
     except Exception:
         return False  # 확인 중 오류 발생
 
-
+# ================ 여러 패키지의 설치 상태 확인 함수 ================
 def check_installed_packages(packages):
     """
     여러 패키지의 설치 상태 확인
@@ -374,7 +402,7 @@ def check_installed_packages(packages):
     
     return results
 
-
+# ================ 필요한 패키지만 설치 함수 ================
 def install_if_needed(packages=None, start_time=None):
     """
     필요한 패키지만 설치 (이미 설치된 패키지는 건너뜀)
@@ -460,10 +488,10 @@ def install_with_profile(profile_name, start_time=None):
             "error": f"알 수 없는 프로필: {profile_name}. 사용 가능한 프로필: {', '.join(profiles.keys())}"
         }
     
-    show_progress(f"'{profile_name}' 프로필 패키지 설치 중...", start_time, 0)
+    show_tagged_progress('INSTALL', f"'{profile_name}' 프로필 패키지 설치 중...", start_time, 0)
     return install_if_needed(profiles[profile_name], start_time)
 
-
+# ================ PyTorch CUDA 호환성 확인 함수 ================
 def check_torch_cuda_compatibility():
     """현재 설치된 PyTorch가 CUDA와 호환되는지 확인"""
     try:
@@ -502,7 +530,7 @@ def check_torch_cuda_compatibility():
         print("PyTorch가 설치되어 있지 않습니다.")
         return False, "not_installed", None
 
-
+# ================ PyTorch 설치 정리 함수 ================
 def clean_torch_installation():
     """기존 PyTorch 설치 완전 제거"""
     print("기존 PyTorch 설치 제거 중...")
@@ -542,7 +570,7 @@ def install_torch_cuda(start_time=None):
     if start_time is None:
         start_time = time.time()
     
-    show_progress("CUDA 지원 PyTorch 설치 준비 중...", start_time, 0)
+    show_tagged_progress('INSTALL', 'CUDA 지원 PyTorch 설치 준비 중...', start_time, 0)
     
     # 현재 설치 확인
     compatible, status, current_version = check_torch_cuda_compatibility()

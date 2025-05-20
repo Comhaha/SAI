@@ -192,6 +192,7 @@ namespace SAI.SAI.App.Views.Pages
 
             // 홈페이지로 이동
             ibtnHome.Click += (s, e) => {
+                LogCsvModel.instance.clear();
                 mainView.LoadPage(new UcSelectType(mainView));
             };
 
@@ -347,18 +348,26 @@ namespace SAI.SAI.App.Views.Pages
 				// 웹뷰에 이미지 경로 전달
 				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
 
+                if (File.Exists(newPath))
+                {
+                    // 기존 이미지 정리
+                    pboxInferAccuracy.Image?.Dispose();
 
-
-			};
+                    // string 경로를 Image 객체로 변환
+                    pboxInferAccuracy.Size = new Size(431, 275);
+                    pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
+                    pboxInferAccuracy.Visible = true;
+                }
+            };
 
 			// threshold가 바뀌면 블록에서도 적용되게
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
-
-
-
-			};
+                tboxThreshold.Text = newAccuracy.ToString();
+                tbarThreshold.Value = (int)(newAccuracy * 100);
+            };
 			///////////////////////////////////////////////////
 		}
 
@@ -791,6 +800,10 @@ namespace SAI.SAI.App.Views.Pages
         {
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value/100.0;
+
+            Console.WriteLine("[DEBUG] memo : " + memo + " !");
+            Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
+            Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
 
             using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
@@ -1495,6 +1508,31 @@ namespace SAI.SAI.App.Views.Pages
                 // 존재할 경우 덮어쓰기(true)
                 File.Copy(source, destination, overwrite: true);
             });
+        }
+
+        /* 이미 있는 ucCsvChart1을 재활용 */
+        public void ShowTutorialTrainingChart(string csvPath)
+        {
+            try
+            {
+                if (!File.Exists(csvPath))
+                {
+                    ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
+                    return;
+                }
+
+                /* ① CSV → LogCsvModel 채우기 */
+                var model = LogCsvModel.instance;
+                new LogCsvPresenter(null).LoadCsv(csvPath);   // 데이터만 채우는 전용 메서드(아래 4-b) 참고)
+
+                /* ② 차트 갱신 */
+                ucCsvChart1.SetData();      // 내부에서 model 값을 읽어 그림
+                ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+            }
         }
     }
 }

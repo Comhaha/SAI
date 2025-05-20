@@ -903,7 +903,7 @@
     <value>293, 69</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 36</value>
+    <value>71, 56</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -963,13 +963,13 @@
     <value>Noto Sans KR, 7.875pt</value>
   </data>
   <data name="tboxThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 8</value>
+    <value>7, 8</value>
   </data>
   <data name="tboxThreshold.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
   </data>
   <data name="tboxThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 19</value>
+    <value>58, 19</value>
   </data>
   <data name="tboxThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1253,7 +1253,7 @@
     <value>40, 524</value>
   </data>
   <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>210, 34</value>
+    <value>315, 53</value>
   </data>
   <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1280,7 +1280,7 @@
     <value>54, 109</value>
   </data>
   <data name="lblThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 23</value>
+    <value>116, 37</value>
   </data>
   <data name="lblThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1307,7 +1307,7 @@
     <value>50, 45</value>
   </data>
   <data name="lblInfer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 34</value>
+    <value>139, 53</value>
   </data>
   <data name="lblInfer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

@@ -18,7 +18,7 @@ namespace SAI.SAI.App.Presenters
 		}
 
 		public void clickTutorial()
-		{			
+		{
 			mainView.LoadPage(new UcTutorialGuide(mainView));			
 		}
 

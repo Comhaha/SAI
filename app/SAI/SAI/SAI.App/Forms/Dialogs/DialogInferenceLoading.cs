@@ -58,7 +58,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.MouseMove += DialogInferenceLoading_MouseMove;
             this.MouseUp += DialogInferenceLoading_MouseUp;
         }
-
         public void UpdateProgress(double progress, string message)
         {
             if (this.InvokeRequired)
@@ -67,7 +66,6 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
         }
-
         public void Reset()
         {
             if (this.InvokeRequired)
