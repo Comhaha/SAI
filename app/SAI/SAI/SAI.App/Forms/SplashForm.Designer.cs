@@ -53,7 +53,7 @@
             this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
             this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(1920, 45);
+            this.panelTitleBar.Size = new System.Drawing.Size(1894, 45);
             this.panelTitleBar.TabIndex = 1;
             // 
             // SplashForm
