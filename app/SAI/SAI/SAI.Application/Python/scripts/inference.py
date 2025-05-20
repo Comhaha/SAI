@@ -83,6 +83,7 @@ def run_inference(model_path, image_path, conf=0.25):
         
         # 결과 이미지 경로 정의 - 한글 파일명 문제 해결
         # 한글이 포함된 경로는 C#에서 읽어오지 못하는 문제를 해결하기 위해 경로 처리
+        original_name = image_name  # 원본 파일명 보존
         
         # 한글이 포함된 경로인지 확인
         if any(ord(char) > 127 for char in image_name):
@@ -152,6 +153,7 @@ def run_inference(model_path, image_path, conf=0.25):
         result = {
             "success": True,
             "result_image": result_image_path,
+            "original_name": original_name,  # 원본 한글 파일명 추가
             "detections": detections,
             "inference_time": inference_time
         }

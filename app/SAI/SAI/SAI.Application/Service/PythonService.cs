@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Text.Encodings.Web;
 using SAI.SAI.App.Models;
 
 namespace SAI.SAI.Application.Service
@@ -183,6 +184,7 @@ namespace SAI.SAI.Application.Service
         {
             public bool Success { get; set; }
             public string ResultImage { get; set; }
+            public string OriginalName { get; set; }
             public double InferenceTime { get; set; }
             public string Error { get; set; }
         }
@@ -235,11 +237,31 @@ namespace SAI.SAI.Application.Service
                     }
                     if (jsonResult == null)
                         return new InferenceResult { Success = false, Error = "INFERENCE_RESULT가 출력에 없습니다." };
-                    var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonResult);
+                    
+                    // 원본 JSON 로깅
+                    Console.WriteLine($"[DEBUG] 원본 JSON: {jsonResult}");
+                    
+                    // 직접 바이트 처리 시도
+                    byte[] bytes = Encoding.UTF8.GetBytes(jsonResult);
+                    string decodedJson = Encoding.UTF8.GetString(bytes);
+                    Console.WriteLine($"[DEBUG] 재인코딩 JSON: {decodedJson}");
+                    
+                    // JSON 역직렬화 시 UTF-8 인코딩 옵션 추가
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+                    
+                    var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(decodedJson, options);
                     if (result["success"].GetBoolean())
                     {
                         // 이미지 경로에서 한글 처리 문제 해결
                         string resultImagePath = result["result_image"].GetString();
+                        
+                        // 원본 파일명을 입력 경로에서 직접 추출 (JSON에서 가져오지 않고)
+                        string originalName = Path.GetFileNameWithoutExtension(imagePath);
+                        Console.WriteLine($"[DEBUG] 직접 추출한 원본 파일명: {originalName}");
                         
                         // 파일 존재 여부 확인
                         if (!File.Exists(resultImagePath))
@@ -254,6 +276,7 @@ namespace SAI.SAI.Application.Service
                         {
                             Success = true,
                             ResultImage = resultImagePath,
+                            OriginalName = originalName,
                             InferenceTime = result.ContainsKey("inference_time") ? result["inference_time"].GetDouble() : 0
                         };
                     }

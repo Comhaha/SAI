@@ -1103,7 +1103,7 @@ def main(block_params=None):
     }
     
     # JSON으로 결과 출력 (C# 프로그램에서 파싱)
-    print(f"RESULT_JSON:{json.dumps(result)}")
+    print(f"RESULT_JSON:{json.dumps(result, ensure_ascii=False)}")
     return result
 
 #================ 추론탭에서 추론하는 함수입니다 ==================
@@ -1123,7 +1123,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
     
     # inference.py 실행
@@ -1165,7 +1165,7 @@ def infer_image(model_path, image_path, show=False):
                     pass
         
         if inference_result:
-            print(f"INFERENCE_RESULT:{json.dumps(inference_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(inference_result, ensure_ascii=False)}")
             return inference_result
         else:
             error_result = {
@@ -1174,7 +1174,7 @@ def infer_image(model_path, image_path, show=False):
                 "image_path": image_path,
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
             return error_result
     except Exception as e:
         error_result = {
@@ -1183,7 +1183,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
 
 # =========== 프로그레스 바 관련 함수입니다 ============= #
@@ -1238,7 +1238,7 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
     else:
         # 일반 모드: 전체 튜토리얼 파이프라인 실행
         try:
@@ -1251,3 +1251,4 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
