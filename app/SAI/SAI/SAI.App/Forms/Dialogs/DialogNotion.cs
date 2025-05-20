@@ -40,7 +40,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
+            ButtonUtils.SetupButton(btnClose, "btn_close_zoomChart_clicked", "btn_close_zoomChart");
             btnClose.Click += (s, e) => { this.Close(); };
             ButtonUtils.SetupButton(authButton, "btn_auth_clicked", "btn_auth");
 
@@ -284,6 +284,11 @@ namespace SAI.SAI.App.Forms.Dialogs
         private void ibtnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void DialogNotion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
