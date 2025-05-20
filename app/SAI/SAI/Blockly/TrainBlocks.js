@@ -221,7 +221,6 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "imgsz",
                 "options": [
-                    ["512", "512"],
                     ["640", "640"],
                     ["960", "960"],
                     ["1024", "1024"],
