@@ -28,7 +28,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             new Point(1763, 890), // 1번 next 버튼 위치
             new Point(1101, 423), // 2번 
-            new Point(1649, 677), // 3번 
+            new Point(1649, 518), // 3번 
             new Point(998, 518), // 4번 
             new Point(1124, 482), // 5번 
             new Point(1073, 899), // 6번 
@@ -39,7 +39,7 @@ namespace SAI.SAI.App.Views.Pages
         {
             new Point(1694, 890), // 1번 pre 버튼 위치
             new Point(1032, 423), // 2번
-            new Point(1580, 677), // 3번 
+            new Point(1580, 518), // 3번 
             new Point(929, 518), // 4번
             new Point(1055, 482), // 5번 
             new Point(1004, 899), // 6번 
