@@ -61,6 +61,7 @@ namespace SAI.SAI.App.Views.Pages
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
         private PythonService.InferenceResult _result;
+
         public event EventHandler RunButtonClicked;
 
         public UcPracticeBlockCode(IMainView view)
@@ -69,6 +70,9 @@ namespace SAI.SAI.App.Views.Pages
 
             yoloPracticePresenter = new YoloPracticePresenter(this);
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            
+            // RunButtonClicked 이벤트를 yoloTutorialPresenter에서 해제
+            yoloTutorialPresenter.UnsubscribeFromRunButtonClicked(this);
 
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
@@ -101,14 +105,12 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
-            btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
 
             pInferAccuracy.MouseEnter += (s, e) =>
             {
                 if (pSideInfer.Visible)
                 {
                     btnSelectInferImage.Visible = true;
-                    btnSelectInferImage.BringToFront();
                     btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
                 }
             };
@@ -1021,48 +1023,35 @@ namespace SAI.SAI.App.Views.Pages
                     if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = Path.GetFullPath(absolutePath).Trim();
 
-                        // 프로젝트 루트의 inference_images 디렉토리 경로 설정
-                        string projectDir = AppDomain.CurrentDomain.BaseDirectory;
-                        string inferenceImagesDir = Path.Combine(projectDir, "..", "..", "inference_images");
+                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
+                        selectedImagePath = absolutePath.Replace("\\", "/");
 
-                        // inference_images 디렉토리가 없으면 생성
-                        if (!Directory.Exists(inferenceImagesDir))
-                        {
-                            Directory.CreateDirectory(inferenceImagesDir);
-                            Console.WriteLine($"[INFO] inference_images 디렉토리 생성됨: {inferenceImagesDir}");
-                        }
+                        // 1. 현재 스크롤 위치 저장
+                        var scrollPos = pSideInfer.AutoScrollPosition;
 
-                        string fileName = Path.GetFileName(absolutePath);
-                        string destinationPath = Path.Combine(inferenceImagesDir, fileName);
-
-                        // 파일 복사 (같은 이름의 파일이 있으면 덮어쓰기)
-                        File.Copy(absolutePath, destinationPath, true);
-
-                        // inference_images 기준 상대 경로 설정
-                        string relativePath = Path.Combine("inference_images", fileName).Replace("\\", "/");
-
-                        // BlocklyModel에 상대 경로 설정
-                        BlocklyModel.Instance.imgPath = relativePath;
-                        Console.WriteLine($"[INFO] 이미지가 {relativePath}에 저장되었습니다.");
-
+                        // 2. 이미지 표시
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
-                            var originalImage = Image.FromStream(stream);
+                            var originalImage = System.Drawing.Image.FromStream(stream);
                             pboxInferAccuracy.Size = new Size(431, 275);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
                         }
-
                         btnSelectInferImage.Visible = false;
+
+                        // 3. 레이아웃이 끝난 뒤 스크롤 복원 (BeginInvoke 사용)
+                        pSideInfer.BeginInvoke(new Action(() =>
+                        {
+                            try
+                            {
+                                // AutoScrollPosition은 음수값으로 저장됨에 주의!
+                                pSideInfer.AutoScrollPosition = new Point(-scrollPos.X, -scrollPos.Y);
+                            }
+                            catch { }
+                        }));
                     }
-                }
-                else
-                {
-                    MessageBox.Show("부모 폼을 찾을 수 없습니다.", "오류",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -1074,9 +1063,10 @@ namespace SAI.SAI.App.Views.Pages
 
         public void ShowDialogInferenceLoading()
         {
-            using (var dialog = new DialogInferenceLoading())
+            if (dialogLoadingInfer == null || dialogLoadingInfer.IsDisposed)
             {
-                dialog.ShowDialog();
+                dialogLoadingInfer = new DialogInferenceLoading();
+                dialogLoadingInfer.Show();  // 비동기적으로 띄움
             }
         }
 

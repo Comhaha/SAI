@@ -36,7 +36,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.StartPosition = FormStartPosition.CenterScreen;
             this.TopMost = true;
         }
-
         public void UpdateProgress(double progress, string message)
         {
             if (this.InvokeRequired)
@@ -45,7 +44,6 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
         }
-
         public void Reset()
         {
             if (this.InvokeRequired)

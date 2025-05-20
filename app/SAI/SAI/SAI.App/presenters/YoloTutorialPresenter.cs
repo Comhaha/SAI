@@ -9,7 +9,9 @@ using SAI.SAI.App.Models;
 using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.IO;
+using System.Drawing;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -81,6 +83,7 @@ namespace SAI.SAI.App.Presenters
                 {
                     Console.WriteLine("[DEBUG] 표준 출력 스트림 설정 생략");
 
+                    // 스크립트 진행률 파싱
                     process = _pythonService.RunPythonScript(
                         PythonService.Mode.Tutorial,
                         onOutput: text =>
@@ -100,12 +103,29 @@ namespace SAI.SAI.App.Presenters
                                     _yolotutorialview.AppendLog(text);
                                 }
 
+                                // PROGRESS: 로 시작하는 로그 찾아서 : 기준으로 끊고, 왼쪽은 progress, 오른쪽은 message로 파싱
+                                // updateprogress 호출
                                 if (text.StartsWith("PROGRESS:"))
                                 {
                                     var parts = text.Substring(9).Split(new[] { ':' }, 2);
                                     if (parts.Length == 2 && double.TryParse(parts[0], out double progress))
                                     {
                                         string message = parts[1];
+
+                                        // 태그 추출
+                                        // "TRAIN" "DATASET" "ERROR" "INFO"
+                                        string tag = "";
+                                        var tagMatch = Regex.Match(message, @"\[(\w+)\]");
+                                        if (tagMatch.Success)
+                                        {
+                                            tag = tagMatch.Groups[1].Value; 
+                                        }
+
+                                        //if (!string.IsNullOrEmpty(tag))
+                                        //{
+                                        //    // 태그 부분([TAG] )만 제거
+                                        //    message = message.Substring(tagMatch.Length).Trim();
+                                        //}
 
                                         if (_progressDialog != null && !_progressDialog.IsDisposed)
                                         {
@@ -114,6 +134,7 @@ namespace SAI.SAI.App.Presenters
                                                 _progressDialog.Invoke(new Action(() =>
                                                 {
                                                     if (!_progressDialog.IsDisposed)
+
                                                     {
                                                         _progressDialog.UpdateProgress(progress, message);
                                                     }
@@ -146,13 +167,13 @@ namespace SAI.SAI.App.Presenters
                                         {
                                             if (!_progressDialog.IsDisposed)
                                             {
-                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                                //_progressDialog.UpdateProgress(0, $"오류: {text}");
                                             }
                                         }));
                                     }
                                     else
                                     {
-                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                        //_progressDialog.UpdateProgress(0, $"오류: {text}");
                                     }
                                 }
                             }
@@ -251,6 +272,15 @@ namespace SAI.SAI.App.Presenters
             var result = _pythonService.RunInference(imagePath, conf);
             Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}");
             return result;
+        }
+
+        // RunButtonClicked 이벤트 구독 해제 메서드 추가
+        public void UnsubscribeFromRunButtonClicked(IYoloTutorialView view)
+        {
+            if (view != null)
+            {
+                view.RunButtonClicked -= OnRunButtonClicked;
+            }
         }
     }
 }

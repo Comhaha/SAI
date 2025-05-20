@@ -72,6 +72,18 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
+        public void ShowErrorMessage(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => ShowErrorMessage(message)));
+            }
+            else
+            {
+                MessageBox.Show(message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         /* ----------- UI 빌드 ----------- */
         private void BuildGrid()
         {
