@@ -13,5 +13,5 @@ public class AiFeedbackRequestDto {
     private MultipartFile logImage;
     private MultipartFile resultImage;
     private String memo;
-    private Double threshold;
+    private String threshold;
 }

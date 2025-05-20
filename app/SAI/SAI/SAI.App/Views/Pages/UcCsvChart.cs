@@ -41,13 +41,18 @@ namespace SAI.SAI.App.Views.Pages
                      == System.ComponentModel.LicenseUsageMode.Designtime)
                 return;                     // 디자이너에서 열 때는 중단
 
+
             BuildGrid();
             _presenter = new LogCsvPresenter(this);
-            _presenter.SetData();
+            //_presenter.SetData();
+
+            Console.WriteLine("UcCsvChart 로드 완료");
         }
 
         public void SetData()
         {
+            if (_grid == null) BuildGrid();
+
             var m = LogCsvModel.instance;
             if (m.titles == null || m.values == null || m.smoothes == null) return;
 
