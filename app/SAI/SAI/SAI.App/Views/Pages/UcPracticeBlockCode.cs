@@ -64,6 +64,8 @@ namespace SAI.SAI.App.Views.Pages
 
         public event EventHandler RunButtonClicked;
 
+        private UcPracticeBlockList ucPracticeBlockList;
+
         public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -83,8 +85,9 @@ namespace SAI.SAI.App.Views.Pages
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
             {
-                mainView.LoadPage(new UcSelectType(mainView));
-            };
+				var dialog = new DialogHomeFromTrain();
+				dialog.ShowDialog(this);
+			};
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
@@ -191,7 +194,7 @@ namespace SAI.SAI.App.Views.Pages
                 btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
             };
             // 스크롤바 설정-------------------
-            var ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
+            ucPracticeBlockList = new UcPracticeBlockList(this, AddBlockButtonClicked);
             pSelectBlock.Controls.Add(ucPracticeBlockList);
             pSelectBlock.AutoScroll = false;
             ucPracticeBlockList.AutoScroll = false;
@@ -333,9 +336,10 @@ namespace SAI.SAI.App.Views.Pages
 			// 이미지 경로가 바뀌면 블록에서도 적용되게
 			blocklyModel.ImgPathChanged += (newPath) => {
 				// 웹뷰에 이미지 경로 전달
-				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+				string escapedPath = JsonSerializer.Serialize(newPath);
+				webViewblock.ExecuteScriptAsync($"imgPathChanged({escapedPath})");
 
-                if (File.Exists(newPath))
+				if (File.Exists(newPath))
                 {
                     // 기존 이미지 정리
                     pboxInferAccuracy.Image?.Dispose();
@@ -351,8 +355,8 @@ namespace SAI.SAI.App.Views.Pages
 			// threshold가 바뀌면 블록에서도 적용되게
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
-				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
-                tboxThreshold.Text = newAccuracy.ToString();
+				webViewblock.ExecuteScriptAsync($"thresholdChanged({newAccuracy})");
+				tboxThreshold.Text = newAccuracy.ToString();
                 tbarThreshold.Value = (int)(newAccuracy * 100);
             };
 		}
@@ -380,7 +384,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     currentThreshold = newValue;
 
-                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {blocklyModel.imgPath}");
                     Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
@@ -388,7 +392,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(() =>
                     {
                         _result = yoloTutorialPresenter.RunInferenceDirect(
-                            selectedImagePath,
+							blocklyModel.imgPath,
                             currentThreshold
                         );
 
@@ -481,7 +485,6 @@ namespace SAI.SAI.App.Views.Pages
             {
                 try
                 {
-                    // 먼저 시도: 객체 기반 JSON 메시지 처리
                     var doc = JsonDocument.Parse(e.WebMessageAsJson);
                     var root = doc.RootElement;
 
@@ -553,6 +556,24 @@ namespace SAI.SAI.App.Views.Pages
 								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
 								blocklyPresenter.setFieldValue(blockType, value);
 								break;
+							case "blocksAllTypes":
+								jsonTypes = root.GetProperty("types");
+								blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
+								blocklyPresenter.loadBlockEvent(blockTypes, ucPracticeBlockList);
+								break;
+							case "undoCount":
+								var jsonUndoCount = root.GetProperty("cnt").ToString();
+								var undoCnt = int.Parse(jsonUndoCount);
+                                MessageBox.Show("C# : " + undoCount.ToString() + "\n JS : " + undoCnt.ToString());
+                                if (undoCount > undoCnt)
+                                {
+                                    redo();
+                                }
+                                else if (undoCount < undoCnt)
+                                {
+									undo();
+                                }
+                               break;
 						}
 					}
 				}
@@ -565,36 +586,6 @@ namespace SAI.SAI.App.Views.Pages
             webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
-
-			// 단축키 이벤트 등록
-			webViewblock.KeyDown += (sender, e) =>
-			{
-				if (e.Control)
-				{
-					if (e.KeyCode == Keys.Z && !e.Shift) // Ctrl + Z
-					{
-						if (btnPreBlock.Visible)
-						{
-							btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
-							e.Handled = true;
-						}
-					}
-					else if (e.KeyCode == Keys.Y || (e.KeyCode == Keys.Z && e.Shift)) // Ctrl + Y 또는 Ctrl + Shift + Z
-					{
-						if (btnNextBlock.Visible)
-						{
-							btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-							e.Handled = true;
-						}
-					}
-				}
-				// Delete 키는 WebView2로 전파되도록 함
-				else if (e.KeyCode == Keys.Delete)
-				{
-					e.Handled = false;
-					e.SuppressKeyPress = false;
-				}
-			};
 
 			webViewblock.Source = new Uri(uri);
 		}
@@ -627,28 +618,37 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 다시 실행하기
 		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
-			--undoCount;
 			webViewblock.ExecuteScriptAsync($"redo()");
-
-            if (undoCount == 0)
-            {
-                btnNextBlock.Visible = false;
-                btnPreBlock.Visible = true;
-            }
-            else
-            {
-                btnNextBlock.Visible = true;
-                btnPreBlock.Visible = true;
-            }
+            redo();
         }
+		private void redo()
+		{
+			--undoCount;
+            webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
+			
+            if (undoCount == 0)
+			{
+				btnNextBlock.Visible = false;
+				btnPreBlock.Visible = true;
+			}
+			else
+			{
+				btnNextBlock.Visible = true;
+				btnPreBlock.Visible = true;
+			}
+		}
 
 		// JS 함수 호출 = 되돌리기
 		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
-			++undoCount;
 			webViewblock.ExecuteScriptAsync($"undo()");
 			webViewblock.ExecuteScriptAsync($"getblockCount()");
-
+            undo();
+		}
+        private void undo()
+        {
+			++undoCount;
+			webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
 			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
 			{
 				btnNextBlock.Visible = true;
@@ -667,7 +667,7 @@ namespace SAI.SAI.App.Views.Pages
 			webViewblock.ExecuteScriptAsync($"clear()");
 		}
 
-        private void ibtnAiFeedback_Click(object sender, EventArgs e)
+		private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;
@@ -1026,6 +1026,7 @@ namespace SAI.SAI.App.Views.Pages
 
                         // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
                         selectedImagePath = absolutePath.Replace("\\", "/");
+                        blocklyModel.imgPath = selectedImagePath;
 
                         // 1. 현재 스크롤 위치 저장
                         var scrollPos = pSideInfer.AutoScrollPosition;
