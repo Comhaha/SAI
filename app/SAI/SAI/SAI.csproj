@@ -830,13 +830,13 @@
     <None Include="Resources\memo_alert.png" />
     <None Include="Resources\bg_dialog_model_inference.png" />
     <None Include="Resources\bg_dialog_quit_inference.png" />
-    <None Include="Resources\bg_dialog_error_inference.png" />
     <None Include="Resources\img_tooltip_toolHand_gif.gif" />
     <None Include="Resources\img_tooltip_toolLabelingPolygon_gif.gif" />
     <None Include="Resources\img_tooltip_toolLabelingSquare_gif.gif" />
     <None Include="Resources\img_tooltip_toolHand.png" />
     <None Include="Resources\img_tooltip_toolLabelingPolygon.png" />
     <None Include="Resources\img_tooltip_toolLabelingSquare.png" />
+    <None Include="Resources\bg_dialog_error_inference.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

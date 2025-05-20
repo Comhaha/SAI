@@ -21,25 +21,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.BackColor = Color.Gray;           // 투명 처리할 색
             this.TransparencyKey = Color.Gray;
 
-            // btnClose
-            btnClose.BackColor = Color.Transparent;
-            btnClose.PressedColor = Color.Transparent;
-            btnClose.CheckedState.FillColor = Color.Transparent;
-            btnClose.DisabledState.FillColor = Color.Transparent;
-            btnClose.HoverState.FillColor = Color.Transparent;
-            btnClose.Click += (s, e) => { this.Close(); };
-            // btnClose 마우스 입력 될 때
-            btnClose.MouseEnter += (s, e) =>
-            {
-                btnClose.BackColor = Color.Transparent;
-                btnClose.BackgroundImage = Properties.Resources.bg_btn_close_clicked_8060;
-            };
-            // btnClose 마우스 떠날때
-            btnClose.MouseLeave += (s, e) =>
-            {
-                btnClose.BackgroundImage = Properties.Resources.bg_btn_close_8060;
-            };
-
             // btnOk
             btnOk.HoverState.FillColor = Color.Transparent;
             btnOk.PressedColor = Color.Transparent;
