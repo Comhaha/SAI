@@ -265,7 +265,15 @@ namespace SAI.SAI.App.Views.Pages
                 string filePath = Path.Combine(folderPath, $"{i}.jpg");
                 if (File.Exists(filePath))
                 {
-                    images.Add(Image.FromFile(filePath));
+                    string absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+                    if (File.Exists(absolutePath))
+                    {
+                        images.Add(Image.FromFile(absolutePath));
+                    }
+                    else
+                    {
+                        images.Add(Image.FromFile(filePath));
+                    }
                 }
             }
 
@@ -1288,7 +1296,15 @@ namespace SAI.SAI.App.Views.Pages
                     string filePath = Path.Combine(folderPath, $"level {i}-9.png");
                     if (File.Exists(filePath))
                     {
-                        levelImages.Add(Image.FromFile(filePath));
+                        string absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+                        if (File.Exists(absolutePath))
+                        {
+                            levelImages.Add(Image.FromFile(absolutePath));
+                        }
+                        else
+                        {
+                            levelImages.Add(Image.FromFile(filePath));
+                        }
                     }
                 }
             }
@@ -1432,7 +1448,15 @@ namespace SAI.SAI.App.Views.Pages
                         string filePath = Path.Combine(devPath, $"class{i}.png");
                         if (File.Exists(filePath))
                         {
-                            classImages.Add(Image.FromFile(filePath));
+                            string absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+                            if (File.Exists(absolutePath))
+                            {
+                                classImages.Add(Image.FromFile(absolutePath));
+                            }
+                            else
+                            {
+                                classImages.Add(Image.FromFile(filePath));
+                            }
                         }
                         else
                         {

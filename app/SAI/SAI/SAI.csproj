@@ -918,5 +918,21 @@
     <None Include="SAI.App\Resources\Images\bg_practiceGuide.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
+
+    <!--빌드 준비-->
+<ItemGroup>
+  <None Remove="Resources\**\*.*" />
+  <None Remove="SAI.App\Resources\Images\**\*.*" />
+</ItemGroup>
+
+<ItemGroup>
+  <Content Include="Resources\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+  <Content Include="SAI.App\Resources\Images\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

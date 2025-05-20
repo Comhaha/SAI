@@ -351,9 +351,17 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.Image?.Dispose();
 
                     // string 경로를 Image 객체로 변환
+                    string absolutePath = Path.IsPathRooted(newPath) ? newPath : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, newPath);
+                    if (File.Exists(absolutePath))
+                    {
+                        pboxInferAccuracy.Image = System.Drawing.Image.FromFile(absolutePath);
+                    }
+                    else
+                    {
+                        pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
+                    }
                     pboxInferAccuracy.Size = new Size(494, 278);
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
                 }
             };
@@ -1311,8 +1319,19 @@ namespace SAI.SAI.App.Views.Pages
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
                         
+                        // 경로를 절대 경로로 변환
+                        string absolutePath = Path.IsPathRooted(result.ResultImage) 
+                            ? result.ResultImage 
+                            : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, result.ResultImage);
+                        
+                        // 절대 경로 파일 확인
+                        if (!File.Exists(absolutePath) && File.Exists(result.ResultImage))
+                        {
+                            absolutePath = result.ResultImage;
+                        }
+                        
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
-                        using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
+                        using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var image = System.Drawing.Image.FromStream(stream);
 
