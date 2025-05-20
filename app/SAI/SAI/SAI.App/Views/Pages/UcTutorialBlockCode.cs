@@ -348,18 +348,26 @@ namespace SAI.SAI.App.Views.Pages
 				// 웹뷰에 이미지 경로 전달
 				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
 
+                if (File.Exists(newPath))
+                {
+                    // 기존 이미지 정리
+                    pboxInferAccuracy.Image?.Dispose();
 
-
-			};
+                    // string 경로를 Image 객체로 변환
+                    pboxInferAccuracy.Size = new Size(431, 275);
+                    pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
+                    pboxInferAccuracy.Visible = true;
+                }
+            };
 
 			// threshold가 바뀌면 블록에서도 적용되게
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
-
-
-
-			};
+                tboxThreshold.Text = newAccuracy.ToString();
+                tbarThreshold.Value = (int)(newAccuracy * 100);
+            };
 			///////////////////////////////////////////////////
 		}
 
