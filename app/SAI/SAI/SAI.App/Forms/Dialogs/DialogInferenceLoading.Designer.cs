@@ -48,18 +48,26 @@
             // 
             // guna2Button1
             // 
+            this.guna2Button1.BackgroundImage = global::SAI.Properties.Resources.btn_close_prepare;
+            this.guna2Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.guna2Button1.CustomImages.ImageAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.guna2Button1.CustomImages.ImageSize = new System.Drawing.Size(90, 59);
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.HoverState.BorderColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.guna2Button1.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.HoverState.Image = global::SAI.Properties.Resources.bg_yellow_btn_close_clicked;
-            this.guna2Button1.Image = global::SAI.Properties.Resources.bg_yellow_btn_close;
-            this.guna2Button1.ImageSize = new System.Drawing.Size(90, 59);
+            this.guna2Button1.ImageSize = new System.Drawing.Size(90, 60);
             this.guna2Button1.Location = new System.Drawing.Point(791, 0);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.PressedColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.Size = new System.Drawing.Size(90, 59);
-            this.guna2Button1.TabIndex = 2;
+            this.guna2Button1.Size = new System.Drawing.Size(90, 60);
+            this.guna2Button1.TabIndex = 3;
             // 
             // DialogInferenceLoading
             // 
@@ -77,6 +85,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ㅅ";
+            this.Load += new System.EventHandler(this.DialogInferenceLoading_Load);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -85,5 +94,6 @@
         #endregion
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
     }
 }

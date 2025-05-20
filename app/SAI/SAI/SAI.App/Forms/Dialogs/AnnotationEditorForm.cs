@@ -50,6 +50,13 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.MouseDown += AnnotationEditorForm_MouseDown;
             this.MouseMove += AnnotationEditorForm_MouseMove;
             this.MouseUp += AnnotationEditorForm_MouseUp;
+
+            // 폼이 화면에 표시된 후 포커스 설정
+            this.Shown += (s, args) => 
+            {
+                annotationText1.Focus();
+                annotationText1.SelectAll();
+            };
         }
 
         // 정확도 설정 메서드
@@ -103,17 +110,6 @@ namespace SAI.SAI.App.Forms.Dialogs
                 dragging = false;
             }
         }
-
-        private void annotationText_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AnnotationEditorForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         // ------------------------------------
     }
 }
