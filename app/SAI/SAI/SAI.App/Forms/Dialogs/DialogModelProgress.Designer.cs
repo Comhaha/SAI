@@ -32,7 +32,7 @@
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.progressBarModelLearning = new Guna.UI2.WinForms.Guna2ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblStatus = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblStatus = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.panelTitleBar.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -113,7 +113,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "DialogModelProgress";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DialogModelProgress";
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;

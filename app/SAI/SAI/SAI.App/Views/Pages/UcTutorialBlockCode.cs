@@ -62,6 +62,8 @@ namespace SAI.SAI.App.Views.Pages
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
         private PythonService.InferenceResult _result;
 
+        private string currentImagePath = string.Empty; // 현재 표시 중인 이미지 경로
+
         public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -1266,22 +1268,16 @@ namespace SAI.SAI.App.Views.Pages
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Title = "이미지 파일 선택";
-                openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                openFileDialog.Multiselect = false;
-                openFileDialog.RestoreDirectory = true;
-
-                Form parentForm = this.FindForm();
-                if (parentForm != null)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
+                    openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                    openFileDialog.Title = "이미지 파일 선택";
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-
-                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
-                        selectedImagePath = absolutePath.Replace("\\", "/");
+                        selectedImagePath = absolutePath;
+                        currentImagePath = absolutePath; // 현재 이미지 경로 저장
                         blocklyModel.imgPath = selectedImagePath;
 
                         // UI 표시용 이미지
@@ -1326,6 +1322,10 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     try
                     {
+                        // 결과 이미지 경로 저장
+                        currentImagePath = result.ResultImage;
+                        
+                        // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
                         {
                             var image = System.Drawing.Image.FromStream(stream);
@@ -1336,29 +1336,56 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
                             btnSelectInferImage.Visible = false;
+                            
+                            // 추론 패널이 현재 표시되어 있지 않다면 표시
+                            if (!isInferPanelVisible)
+                            {
+                                ShowpSIdeInfer();
+                                Console.WriteLine("[DEBUG] 추론 패널 표시됨");
+                            }
+                            
+                            // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
+                            ToolTip toolTip = new ToolTip();
+                            toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
+                            
+                            // 원본 파일명 정보 표시 (필요한 경우)
+                            if (!string.IsNullOrEmpty(result.OriginalName))
+                            {
+                                Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
+                                // 여기에 원본 파일명을 표시하는 코드 추가 가능
+                                // 예: lblOriginalFilename.Text = result.OriginalName;
+                            }
+                            
+                            Console.WriteLine($"[DEBUG] 추론 결과 이미지 표시 완료: {result.ResultImage}");
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
                         MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
                 else
                 {
-                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"결과 이미지 파일을 찾을 수 없습니다: {result.ResultImage}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // 추론 실패 다이얼로그 생성 및 표시
+                btnSelectInferImage.Visible = true;
+                pboxInferAccuracy.Visible = false;
+
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
+                dialog.ShowDialog(this); // 현재 폼을 부모로 지정
             }
 
             Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
             Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
             Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
             Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
@@ -1485,6 +1512,24 @@ namespace SAI.SAI.App.Views.Pages
             catch (Exception ex)
             {
                 ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+            }
+        }
+
+        private void pboxInferAccuracy_Click(object sender, EventArgs e)
+        {
+            // 이미지가 있고 경로가 있으면 이미지 뷰어로 열기
+            if (pboxInferAccuracy.Image != null && !string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
+            {
+                try
+                {
+                    // 기본 이미지 뷰어로 이미지 열기
+                    Process.Start(currentImagePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"이미지를 여는 중 오류가 발생했습니다: {ex.Message}", "오류", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }
