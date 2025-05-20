@@ -237,7 +237,7 @@ def download_dataset_block(block_params=None):
         time.sleep(1.5)  # 메시지 인지 시간 확보
         # data.yaml 경로도 찾아서 반환
         extracted_dir = dataset_dir
-        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial")
         tutorial_state["dataset_path"] = extracted_dir
         tutorial_state["data_yaml_path"] = data_yaml_path
         return {
@@ -406,7 +406,7 @@ def download_dataset_block(block_params=None):
     tutorial_state["dataset_path"] = extracted_dir
     
     # data.yaml 파일 찾기
-    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial")
     tutorial_state["data_yaml_path"] = data_yaml_path
     # 4. 완료 파일 생성
     try:
@@ -425,36 +425,46 @@ def download_dataset_block(block_params=None):
         "elapsed_time": time.time() - start_time
     }
 
-# data.yaml 파일 찾기 도우미 함수
-def find_yaml_file(dataset_dir, extracted_dir, start_time):
-    """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
-    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir}', start_time)
+# data.yaml 파일 찾기 도우미 함수 수정
+def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial"):
+    """
+    데이터셋 디렉토리에서 data.yaml 파일 찾기
     
-    # 압축 해제된 디렉토리에서 data.yaml 찾기
+    Args:
+        dataset_dir: 기본 데이터셋 디렉토리
+        extracted_dir: 압축 해제된 디렉토리
+        start_time: 시작 시간 (로깅용)
+        mode: 검색 모드 ('tutorial' 또는 'practice')
+    """
+    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
+    
+    # 모드별 디렉토리 설정
+    target_dir = os.path.join(dataset_dir, f"{mode}_dataset")
+    show_tagged_progress('DEBUG', f'타겟 디렉토리: {target_dir}', start_time)
+    
+    # 1. 직접 지정된 경로에서 찾기
     yaml_path = os.path.join(extracted_dir, "data.yaml")
-    
-    # data.yaml 파일이 있는지 확인
     if os.path.exists(yaml_path):
         show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
         return yaml_path
     
-    # 압축 해제된 디렉토리의 하위 폴더들에서 data.yaml 찾기
-    for root, dirs, files in os.walk(extracted_dir):
-        for file in files:
-            if file == "data.yaml":
-                yaml_path = os.path.join(root, file)
-                show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-                return yaml_path
+    # 2. 모드별 디렉토리에서 찾기
+    yaml_path = os.path.join(target_dir, "data.yaml")
+    if os.path.exists(yaml_path):
+        show_tagged_progress('DEBUG', f'모드별 디렉토리에서 데이터 파일 확인됨: {yaml_path}', start_time)
+        return yaml_path
     
-    # 기본 dataset 디렉토리에서 데이터 찾기 (압축 해제 경로에서 찾지 못했을 경우)
-    if dataset_dir != extracted_dir:
-        yaml_path = os.path.join(dataset_dir, "data.yaml")
-        if os.path.exists(yaml_path):
-            show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-            return yaml_path
+    # 3. 모드별 디렉토리의 하위 폴더들에서만 data.yaml 찾기
+    if os.path.exists(target_dir):
+        for root, dirs, files in os.walk(target_dir):
+            for file in files:
+                if file == "data.yaml":
+                    yaml_path = os.path.join(root, file)
+                    show_tagged_progress('DEBUG', f'모드별 하위 폴더에서 데이터 파일 확인됨: {yaml_path}', start_time)
+                    return yaml_path
     
     # 파일을 찾지 못했을 경우
-    show_tagged_progress('ERROR', f'data.yaml 파일을 찾을 수 없습니다: {yaml_path}', start_time)
+    show_tagged_progress('ERROR', f'{mode}_dataset에서 data.yaml 파일을 찾을 수 없습니다', start_time)
     return None
 
 # ================== 4. 모델 학습 블럭 ==================
@@ -471,8 +481,7 @@ def train_model_block(block_params=None):
 
     epochs = block_params.get("epoch") if block_params else None
     imgsz = block_params.get("imgsz") if block_params else None
-    if "accuracy" in block_params:
-        accuracy = block_params["accuracy"]
+    
     if "model" in block_params:
         model_name = block_params["model"]
     if "Conv" in block_params:
@@ -840,7 +849,7 @@ def visualize_training_results_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-# 6. 사용자 이미지 경로 받는 블럭
+# ============== 6. 사용자 이미지 경로 받는 블럭====================
 # 이미지 경로를 inference.py 파일로 던져준다
 def set_image_path_block(image_path=None, block_params=None):
     """
@@ -892,12 +901,15 @@ def run_inference_block(block_params=None):
     start_time = time.time()
     show_tagged_progress('INFER', '모델 추론 실행 중...', start_time, 0)
     
-    # 필요한 정보가 있는지 확인
-    model_path = tutorial_state.get("model_path")
-    if not model_path:
-        # 학습된 모델이 없다면 기본 모델 사용
-        model_path = os.path.join(base_dir, "yolov8n.pt")
-        show_tagged_progress('TRAIN', f'학습된 모델 경로가 설정되지 않았습니다. 기본 모델을 사용합니다: {model_path}', start_time, 10)
+    # best.pt 경로 설정 (inference.py의 구현과 일치하도록)
+    model_path = os.path.join(base_dir, "runs", "detect", "train", "weights", "best.pt")
+    
+    # 모델 파일이 실제로 존재하는지 확인
+    if not os.path.exists(model_path):
+        show_tagged_progress('WARN', f'학습된 모델(best.pt)을 찾을 수 없습니다: {model_path}', start_time, 10)
+        show_tagged_progress('WARN', 'inference.py가 내부적으로 best.pt를 찾을 수 있는지 시도합니다.', start_time, 15)
+    else:
+        show_tagged_progress('INFER', f'학습된 모델 경로: {model_path}', start_time, 15)
     
     image_path = tutorial_state.get("image_path")
     if not image_path:
@@ -906,6 +918,21 @@ def run_inference_block(block_params=None):
             "success": False,
             "error": "테스트 이미지 경로 없음"
         }
+    
+    # conf 값 설정 (accuracy 파라미터로부터)
+    conf = "0.25"  # 기본값
+    if block_params and "accuracy" in block_params:
+        try:
+            # accuracy를 float으로 변환 (0-1 사이 값으로 가정)
+            acc_value = float(block_params["accuracy"])
+            if 0 <= acc_value <= 1:
+                conf = str(acc_value)
+            else:
+                show_tagged_progress('WARN', f'유효하지 않은 accuracy 값({acc_value})입니다. 기본값 0.25를 사용합니다.', start_time, 20)
+        except (ValueError, TypeError):
+            show_tagged_progress('WARN', f'accuracy 값({block_params["accuracy"]})을 변환할 수 없습니다. 기본값 0.25를 사용합니다.', start_time, 20)
+    
+    show_tagged_progress('INFER', f'신뢰도 임계값(conf): {conf}', start_time, 25)
     
     # inference.py 파일 경로 확인
     inference_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inference.py")
@@ -929,7 +956,7 @@ def run_inference_block(block_params=None):
             inference_script_path,
             "--model", model_path,
             "--image", image_path,
-            "--conf", "0.25"
+            "--conf", conf
         ]
         
         show_tagged_progress('INFER', f'실행 명령: {" ".join(cmd)}', start_time, 40)
@@ -1093,7 +1120,7 @@ def main(block_params=None):
     }
     
     # JSON으로 결과 출력 (C# 프로그램에서 파싱)
-    print(f"RESULT_JSON:{json.dumps(result)}")
+    print(f"RESULT_JSON:{json.dumps(result, ensure_ascii=False)}")
     return result
 
 #================ 추론탭에서 추론하는 함수입니다 ==================
@@ -1113,7 +1140,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
     
     # inference.py 실행
@@ -1155,7 +1182,7 @@ def infer_image(model_path, image_path, show=False):
                     pass
         
         if inference_result:
-            print(f"INFERENCE_RESULT:{json.dumps(inference_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(inference_result, ensure_ascii=False)}")
             return inference_result
         else:
             error_result = {
@@ -1164,7 +1191,7 @@ def infer_image(model_path, image_path, show=False):
                 "image_path": image_path,
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
             return error_result
     except Exception as e:
         error_result = {
@@ -1173,7 +1200,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
 
 # =========== 프로그레스 바 관련 함수입니다 ============= #
@@ -1228,7 +1255,7 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
     else:
         # 일반 모드: 전체 튜토리얼 파이프라인 실행
         try:
@@ -1241,3 +1268,4 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
