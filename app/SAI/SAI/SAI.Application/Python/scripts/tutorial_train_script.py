@@ -19,6 +19,7 @@ import glob
 import io
 import re
 from datetime import datetime
+import shutil
 # 로깅 레벨 설정
 logging.getLogger().setLevel(logging.INFO)
 
@@ -224,8 +225,41 @@ def download_dataset_block(block_params=None):
     """데이터셋 다운로드 블록 실행 함수"""
     start_time = time.time()
     show_tagged_progress('DEBUG', '서버에서 데이터셋 다운로드 중...', start_time)
-    
-    # API 서버에서 데이터셋 다운로드
+
+    # 데이터셋 저장 경로 및 완료 파일 경로 설정
+    dataset_dir = os.path.join(base_dir, "dataset")
+    os.makedirs(dataset_dir, exist_ok=True)
+    done_file = os.path.join(dataset_dir, "tutorial_dataset_done.txt")
+
+    # 1. 캐싱: 완료 파일이 있으면 스킵
+    if os.path.exists(done_file):
+        show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
+        # data.yaml 경로도 찾아서 반환
+        extracted_dir = dataset_dir
+        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+        tutorial_state["dataset_path"] = extracted_dir
+        tutorial_state["data_yaml_path"] = data_yaml_path
+        return {
+            "success": True,
+            "location": extracted_dir,
+            "extracted_dir": extracted_dir,
+            "data_yaml_path": data_yaml_path,
+            "cached": True,
+            "elapsed_time": time.time() - start_time
+        }
+
+    # 2. 기존 데이터셋 폴더 내부 파일 전체 삭제
+    for filename in os.listdir(dataset_dir):
+        file_path = os.path.join(dataset_dir, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            show_tagged_progress('ERROR', f'기존 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
+
+    # 3. 데이터셋 다운로드 및 압축 해제 (기존 로직)
     try:
         import requests
         from tqdm import tqdm
@@ -234,13 +268,9 @@ def download_dataset_block(block_params=None):
         install_packages.install_packages_with_progress(["requests", "tqdm"], start_time)
         import requests
         from tqdm import tqdm
-    
-    # 데이터셋 저장 경로 설정
-    dataset_dir = os.path.join(base_dir, "dataset")
-    os.makedirs(dataset_dir, exist_ok=True)
+
     show_tagged_progress('DEBUG', f'데이터셋 기본 경로: {dataset_dir}', start_time)
-    
-    # 환경 변수에서 서버 주소 가져오기
+
     server_url = os.environ.get("API_SERVER_URL")
     if not server_url:
         show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time)
@@ -260,7 +290,6 @@ def download_dataset_block(block_params=None):
     # API 엔드포인트 URL 구성
     api_url = f"{server_url}/api/download/tutorial"
     show_tagged_progress('DEBUG', 'API에서 다운로드 URL 요청 중...', start_time)
-    
     zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
     
     # API 호출하여 presigned URL 받기
@@ -296,13 +325,12 @@ def download_dataset_block(block_params=None):
         # 다운로드 진행률 표시 및 파일 저장
         with open(zip_path, 'wb') as f:
             downloaded = 0
-            for chunk in response.iter_content(chunk_size=1024*1024):  # 1MB 단위로 청크 다운로드
+            for chunk in response.iter_content(chunk_size=1024*1024):
                 if chunk:
                     f.write(chunk)
                     downloaded += len(chunk)
-                    progress = min(0 + (downloaded / total_size * 30), 70)  # 40% ~ 70% 범위
+                    progress = min(0 + (downloaded / total_size * 30), 70)
                     show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
-        
         show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
         show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
@@ -342,7 +370,6 @@ def download_dataset_block(block_params=None):
                 if os.path.exists(potential_extracted_dir) and os.path.isdir(potential_extracted_dir):
                     extracted_dir = potential_extracted_dir
                     show_tagged_progress('DEBUG', f'데이터셋이 하위 디렉토리에 압축 해제됨: {extracted_dir}', start_time)
-            
             show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
             
             # 임시 ZIP 파일 삭제
@@ -362,13 +389,20 @@ def download_dataset_block(block_params=None):
     # data.yaml 파일 찾기
     data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
     tutorial_state["data_yaml_path"] = data_yaml_path
-    
+    # 4. 완료 파일 생성
+    try:
+        with open(done_file, "w") as f:
+            f.write("done")
+        show_tagged_progress('DEBUG', '데이터셋 완료 파일 생성', start_time, 100)
+    except Exception as e:
+        show_tagged_progress('ERROR', f'완료 파일 생성 실패: {e}', start_time)
     show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
     return {
         "success": True,
         "location": extracted_dir,
         "extracted_dir": extracted_dir,
         "data_yaml_path": data_yaml_path,
+        "cached": False,
         "elapsed_time": time.time() - start_time
     }
 
