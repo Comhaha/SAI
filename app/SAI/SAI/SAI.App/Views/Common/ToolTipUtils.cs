@@ -18,7 +18,7 @@ namespace SAI.SAI.App.Views.Common
 
             toolTip.Draw += (s, e) =>
             {
-                using (Font notoSans = new Font("Noto Sans KR", 9))
+                using (Font notoSans = new Font("Noto Sans KR", 13))
                 {
                     e.DrawBackground();
                     e.DrawBorder();

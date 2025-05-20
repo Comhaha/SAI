@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
-    <script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
-    <script src="TrainBlocks.js"></script>
+	<meta charset="utf-8">
+	<script src="https://unpkg.com/blockly@10.3.1/blockly_compressed.js"></script>
+	<script src="https://unpkg.com/blockly@10.3.1/python_compressed.js"></script>
+	<script src="TrainBlocks.js"></script>
+
+	<style>
+		.blocklyTooltipDiv {
+			font-size: 28px !important; /* 원하는 크기로 설정 */
+			font-family: 'Noto Sans KR', sans-serif; /* 원하는 글꼴 */
+			color: rgb(255, 255, 255);
+			background-color: rgb(50, 50, 50) !important;
+			padding: 10px 10px !important;
+			border: 1px solid rgb(50, 50, 50) !important;
+		}
+	</style>
 </head>
 <body>
     <div id="blocklyDiv" style="height: 97vh; width: 97vw;"></div>
@@ -461,14 +472,6 @@
 
 			// Ctrl+Shift+Z (Redo, 일부 브라우저)
 			if (e.ctrlKey && e.shiftKey && e.key === 'Z') {
-				e.preventDefault();
-				e.stopPropagation();
-				return false;
-			}
-
-
-			// delete (delete, 일부 브라우저)
-			if (e.key === 'Delete') {
 				e.preventDefault();
 				e.stopPropagation();
 				return false;

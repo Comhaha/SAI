@@ -1,8 +1,12 @@
-﻿using System;
+﻿using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +18,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
 	public partial class DialogHomeFromLabeling : Form
 	{
+		private DialogLoadPagePresenter presenter;
 		public DialogHomeFromLabeling()
 		{
 			InitializeComponent();
@@ -54,7 +59,21 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.CheckedState.FillColor = Color.Transparent;
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
-			btnOk.Click += (s, e) => { System.Windows.Forms.Application.Exit(); };
+			btnOk.Click += (s, e) =>
+			{
+				var view = this.Owner as IMainView;
+				presenter = new DialogLoadPagePresenter(view);
+				// 생성한 모델 삭제
+				string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+				string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+				if (File.Exists(modelPath))
+				{
+					File.Delete(modelPath);
+				}
+				presenter.clickFinish();
+				this.Close();
+			};
 			// btnOk 마우스 입력 될 때
 			btnOk.MouseEnter += (s, e) =>
 			{

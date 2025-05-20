@@ -85,8 +85,9 @@ namespace SAI.SAI.App.Views.Pages
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
             {
-                mainView.LoadPage(new UcSelectType(mainView));
-            };
+				var dialog = new DialogHomeFromTrain();
+				dialog.ShowDialog(this);
+			};
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
@@ -484,7 +485,6 @@ namespace SAI.SAI.App.Views.Pages
             {
                 try
                 {
-                    // 먼저 시도: 객체 기반 JSON 메시지 처리
                     var doc = JsonDocument.Parse(e.WebMessageAsJson);
                     var root = doc.RootElement;
 
@@ -583,7 +583,7 @@ namespace SAI.SAI.App.Views.Pages
 				}
 			};
 
-            webViewblock.ZoomFactor = 0.7; // 줌 비율 설정
+            webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
 
@@ -612,7 +612,7 @@ namespace SAI.SAI.App.Views.Pages
         // blockly 웹뷰 확대 조절 함수
         private void webViewblock_ZoomFactorChanged(object sender, EventArgs e)
         {
-            webViewblock.ZoomFactor = 0.7;
+            webViewblock.ZoomFactor = 0.5;
         }
 
 		// JS 함수 호출 = 다시 실행하기

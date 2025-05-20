@@ -186,8 +186,9 @@ namespace SAI.SAI.App.Views.Pages
 
             // 홈페이지로 이동
             ibtnHome.Click += (s, e) => {
+                var dialog = new DialogHomeFromLabeling();
+                dialog.ShowDialog(this);
                 LogCsvModel.instance.clear();
-                mainView.LoadPage(new UcSelectType(mainView));
             };
 
             //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
@@ -715,9 +716,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             if(blocklyModel.blockTypes != null)
             {
-                pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
-                pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
@@ -726,6 +724,8 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 파이썬 코드 실행
                     RunButtonClicked?.Invoke(sender, e);
+                    pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+                    pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 			    }
                 else // 순서가 틀릴 때
                 {
@@ -1170,8 +1170,6 @@ namespace SAI.SAI.App.Views.Pages
                         blockErrorMessage(blockType);
                         return true;
                     }
-
-
 				}
             }
             else if (blocklyModel.blockTypes.Count < 9)
@@ -1188,6 +1186,7 @@ namespace SAI.SAI.App.Views.Pages
                     if (blockInfo == null) continue;
 
                     string blockType = blockInfo.type;
+
                     if (!checkBlockPosition(blockType, i))
                     {
                         blockInfo = blocklyModel.blockTypes[i - 1];

@@ -477,7 +477,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnHome, "ibtnHome");
             this.ibtnHome.Name = "ibtnHome";
             this.ibtnHome.PressedState.ImageSize = new System.Drawing.Size(59, 59);
-            this.ibtnHome.Click += new System.EventHandler(this.guna2ImageButton1_Click_1);
             // 
             // panel2
             // 
