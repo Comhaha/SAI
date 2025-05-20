@@ -18,20 +18,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         // 파이썬 스크립트 종료 감지를 위함
         private Process pythonProcess;
         
-        // --- 폼 드래그를 위한 멤버 변수 추가 ---
-        private bool dragging = false;
-        private Point dragCursorPoint;
-        private Point dragFormPoint;
-        // ------------------------------------
-        
-        // 버튼 원래 이미지 저장용 변수
-        private Image originalButtonImage;
-        
-        public void SetProcess(Process process)
-        {
-            pythonProcess = process;
-        }
-
         public DialogInferenceLoading()
         {
             InitializeComponent();
@@ -39,25 +25,14 @@ namespace SAI.SAI.App.Forms.Dialogs
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
             //ButtonUtils.SetupButton(guna2Button1, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
-            guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록
-            
-            // 호버 이벤트 핸들러 등록
-            guna2Button1.MouseEnter += Guna2Button1_MouseEnter;
-            guna2Button1.MouseLeave += Guna2Button1_MouseLeave;
-            
-            // 원래 이미지 저장
-            originalButtonImage = guna2Button1.BackgroundImage;
+            guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록 
 
             // 폼 스타일 설정
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.TopMost = true;
-            
-            // --- 폼 드래그 이벤트 핸들러 등록 ---
-            this.MouseDown += DialogInferenceLoading_MouseDown;
-            this.MouseMove += DialogInferenceLoading_MouseMove;
-            this.MouseUp += DialogInferenceLoading_MouseUp;
         }
+
         public void UpdateProgress(double progress, string message)
         {
             if (this.InvokeRequired)
@@ -66,6 +41,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
         }
+
         public void Reset()
         {
             if (this.InvokeRequired)
@@ -108,49 +84,6 @@ namespace SAI.SAI.App.Forms.Dialogs
         private void DialogInferenceLoading_Load(object sender, EventArgs e)
         {
 
-        }
-        
-        // --- 폼 드래그 이벤트 핸들러 구현 ---
-        private void DialogInferenceLoading_MouseDown(object sender, MouseEventArgs e)
-        {
-            // 왼쪽 마우스 버튼 클릭 시에만 드래그 시작
-            if (e.Button == MouseButtons.Left)
-            {
-                dragging = true;
-                dragCursorPoint = Cursor.Position; // 현재 마우스 커서의 화면상 위치
-                dragFormPoint = this.Location;     // 현재 폼의 화면상 위치
-            }
-        }
-
-        private void DialogInferenceLoading_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (dragging)
-            {
-                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint)); // 마우스 이동량 계산
-                this.Location = Point.Add(dragFormPoint, new Size(dif)); // 폼 위치 변경
-            }
-        }
-
-        private void DialogInferenceLoading_MouseUp(object sender, MouseEventArgs e)
-        {
-            // 왼쪽 마우스 버튼을 뗄 때 드래그 종료
-            if (e.Button == MouseButtons.Left)
-            {
-                dragging = false;
-            }
-        }
-        // ------------------------------------
-
-        // 마우스가 버튼 위에 올라갔을 때 이미지 변경
-        private void Guna2Button1_MouseEnter(object sender, EventArgs e)
-        {
-            guna2Button1.BackgroundImage = global::SAI.Properties.Resources.btn_close_prepare_clicked;
-        }
-
-        // 마우스가 버튼에서 벗어났을 때 원래 이미지로 복원
-        private void Guna2Button1_MouseLeave(object sender, EventArgs e)
-        {
-            guna2Button1.BackgroundImage = originalButtonImage;
         }
     }
 }

@@ -247,7 +247,7 @@ def download_dataset_block(block_params=None):
         show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
         time.sleep(1.5)  # 메시지 인지 시간 확보
         extracted_dir = os.path.join(dataset_dir, "practice_dataset")
-        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
         tutorial_state["dataset_path"] = extracted_dir
         tutorial_state["data_yaml_path"] = data_yaml_path
         return {
@@ -416,7 +416,7 @@ def download_dataset_block(block_params=None):
     tutorial_state["dataset_path"] = extracted_dir
 
     # data.yaml 파일 찾기
-    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time)
+    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
     if data_yaml_path is None:
         show_tagged_progress('ERROR', 'data.yaml 파일을 찾을 수 없습니다. 기본 경로를 사용합니다.', start_time)
         data_yaml_path = os.path.join(extracted_dir, 'data.yaml')  # 기본 경로 설정
@@ -440,36 +440,46 @@ def download_dataset_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }   
 
-# data.yaml 파일 찾기 도우미 함수
-def find_yaml_file(dataset_dir, extracted_dir, start_time):
-    """데이터셋 디렉토리에서 data.yaml 파일 찾기"""
-    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir}', start_time)
+# data.yaml 파일 찾기 도우미 함수 수정
+def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice"):
+    """
+    데이터셋 디렉토리에서 data.yaml 파일 찾기
     
-    # 압축 해제된 디렉토리에서 data.yaml 찾기
+    Args:
+        dataset_dir: 기본 데이터셋 디렉토리
+        extracted_dir: 압축 해제된 디렉토리
+        start_time: 시작 시간 (로깅용)
+        mode: 검색 모드 ('tutorial' 또는 'practice')
+    """
+    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
+    
+    # 모드별 디렉토리 설정
+    target_dir = os.path.join(dataset_dir, f"{mode}_dataset")
+    show_tagged_progress('DEBUG', f'타겟 디렉토리: {target_dir}', start_time)
+    
+    # 1. 직접 지정된 경로에서 찾기
     yaml_path = os.path.join(extracted_dir, "data.yaml")
-    
-    # data.yaml 파일이 있는지 확인
     if os.path.exists(yaml_path):
         show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
         return yaml_path
     
-    # 압축 해제된 디렉토리의 하위 폴더들에서 data.yaml 찾기
-    for root, dirs, files in os.walk(extracted_dir):
-        for file in files:
-            if file == "data.yaml":
-                yaml_path = os.path.join(root, file)
-                show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-                return yaml_path
+    # 2. 모드별 디렉토리에서 찾기
+    yaml_path = os.path.join(target_dir, "data.yaml")
+    if os.path.exists(yaml_path):
+        show_tagged_progress('DEBUG', f'모드별 디렉토리에서 데이터 파일 확인됨: {yaml_path}', start_time)
+        return yaml_path
     
-    # 기본 dataset 디렉토리에서 데이터 찾기 (압축 해제 경로에서 찾지 못했을 경우)
-    if dataset_dir != extracted_dir:
-        yaml_path = os.path.join(dataset_dir, "data.yaml")
-        if os.path.exists(yaml_path):
-            show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-            return yaml_path
+    # 3. 모드별 디렉토리의 하위 폴더들에서만 data.yaml 찾기
+    if os.path.exists(target_dir):
+        for root, dirs, files in os.walk(target_dir):
+            for file in files:
+                if file == "data.yaml":
+                    yaml_path = os.path.join(root, file)
+                    show_tagged_progress('DEBUG', f'모드별 하위 폴더에서 데이터 파일 확인됨: {yaml_path}', start_time)
+                    return yaml_path
     
     # 파일을 찾지 못했을 경우
-    show_tagged_progress('ERROR', f'data.yaml 파일을 찾을 수 없습니다: {yaml_path}', start_time)
+    show_tagged_progress('ERROR', f'{mode}_dataset에서 data.yaml 파일을 찾을 수 없습니다', start_time)
     return None
 
 # ================== 4. 모델 학습 블럭 ==================
@@ -1108,7 +1118,7 @@ def main(block_params=None):
     }
     
     # JSON으로 결과 출력 (C# 프로그램에서 파싱)
-    print(f"RESULT_JSON:{json.dumps(result)}")
+    print(f"RESULT_JSON:{json.dumps(result, ensure_ascii=False)}")
     return result
 
 #================ 추론탭에서 추론하는 함수입니다 ==================
@@ -1128,7 +1138,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
     
     # inference.py 실행
@@ -1170,7 +1180,7 @@ def infer_image(model_path, image_path, show=False):
                     pass
         
         if inference_result:
-            print(f"INFERENCE_RESULT:{json.dumps(inference_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(inference_result, ensure_ascii=False)}")
             return inference_result
         else:
             error_result = {
@@ -1179,7 +1189,7 @@ def infer_image(model_path, image_path, show=False):
                 "image_path": image_path,
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
             return error_result
     except Exception as e:
         error_result = {
@@ -1188,7 +1198,7 @@ def infer_image(model_path, image_path, show=False):
             "image_path": image_path,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+        print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
         return error_result
 
 # =========== 프로그레스 바 관련 함수입니다 ============= #
@@ -1243,7 +1253,7 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
-            print(f"INFERENCE_RESULT:{json.dumps(error_result)}")
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")
     else:
         # 일반 모드: 전체 튜토리얼 파이프라인 실행
         try:
@@ -1256,3 +1266,4 @@ if __name__ == "__main__":
                 "error": str(e),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
+            print(f"INFERENCE_RESULT:{json.dumps(error_result, ensure_ascii=False)}")

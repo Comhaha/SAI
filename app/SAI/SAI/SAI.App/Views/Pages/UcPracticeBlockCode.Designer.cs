@@ -1,5 +1,4 @@
-﻿
-using Guna.UI2.WinForms.Enums;
+﻿using Guna.UI2.WinForms.Enums;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -43,7 +42,6 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ucCode２ = new SAI.App.Views.Pages.UcCode();
             this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -100,8 +98,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.ucCode２.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).BeginInit();
-            this.webViewCode.SuspendLayout();
             this.pZoomCode.SuspendLayout();
             this.pBlock.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
@@ -143,7 +139,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.Controls.Add(this.btnCopy);
             this.pCode.Controls.Add(this.guna2Panel1);
             this.pCode.Controls.Add(this.ucCode２);
-            this.pCode.Controls.Add(this.webViewCode);
             this.pCode.Name = "pCode";
             // 
             // ibtnCloseInfer
@@ -246,16 +241,6 @@ namespace SAI.SAI.App.Views.Pages
             this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.p_copy_alarm;
             resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
             this.cAlertPanel.Name = "cAlertPanel";
-            // 
-            // webViewCode
-            // 
-            this.webViewCode.AllowExternalDrop = true;
-            this.webViewCode.Controls.Add(this.pZoomCode);
-            this.webViewCode.CreationProperties = null;
-            this.webViewCode.DefaultBackgroundColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.webViewCode, "webViewCode");
-            this.webViewCode.Name = "webViewCode";
-            this.webViewCode.ZoomFactor = 1D;
             // 
             // pZoomCode
             // 
@@ -660,69 +645,6 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.pFake, "pFake");
             this.pFake.Name = "pFake";
             // 
-            // pMemo
-            // 
-            this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
-            resources.ApplyResources(this.pMemo, "pMemo");
-            this.pMemo.Controls.Add(this.mAlertPanel);
-            this.pMemo.Controls.Add(this.tboxMemo);
-            this.pMemo.Controls.Add(this.btnQuestionMemo);
-            this.pMemo.Controls.Add(this.btnCloseMemo);
-            this.pMemo.Name = "pMemo";
-            // 
-            // mAlertPanel
-            // 
-            this.mAlertPanel.BackgroundImage = global::SAI.Properties.Resources.memo_alert;
-            resources.ApplyResources(this.mAlertPanel, "mAlertPanel");
-            this.mAlertPanel.Name = "mAlertPanel";
-            // 
-            // tboxMemo
-            // 
-            this.tboxMemo.BorderColor = System.Drawing.Color.Transparent;
-            this.tboxMemo.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tboxMemo.DefaultText = "";
-            this.tboxMemo.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.tboxMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.tboxMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tboxMemo.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tboxMemo.FillColor = System.Drawing.Color.Transparent;
-            this.tboxMemo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            resources.ApplyResources(this.tboxMemo, "tboxMemo");
-            this.tboxMemo.ForeColor = System.Drawing.Color.Black;
-            this.tboxMemo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tboxMemo.Name = "tboxMemo";
-            this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
-            this.tboxMemo.PlaceholderText = "";
-            this.tboxMemo.SelectedText = "";
-            // 
-            // btnQuestionMemo
-            // 
-            this.btnQuestionMemo.BackgroundImage = global::SAI.Properties.Resources.btn_question_memo;
-            resources.ApplyResources(this.btnQuestionMemo, "btnQuestionMemo");
-            this.btnQuestionMemo.BorderColor = System.Drawing.Color.Transparent;
-            this.btnQuestionMemo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnQuestionMemo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnQuestionMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnQuestionMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnQuestionMemo.FillColor = System.Drawing.Color.Transparent;
-            this.btnQuestionMemo.ForeColor = System.Drawing.Color.White;
-            this.btnQuestionMemo.Name = "btnQuestionMemo";
-            // 
-            // btnCloseMemo
-            // 
-            this.btnCloseMemo.BackgroundImage = global::SAI.Properties.Resources.btn_close_25;
-            resources.ApplyResources(this.btnCloseMemo, "btnCloseMemo");
-            this.btnCloseMemo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCloseMemo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCloseMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCloseMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCloseMemo.FillColor = System.Drawing.Color.Transparent;
-            this.btnCloseMemo.ForeColor = System.Drawing.Color.Transparent;
-            this.btnCloseMemo.Name = "btnCloseMemo";
-            this.btnCloseMemo.PressedColor = System.Drawing.Color.Transparent;
-            this.btnCloseMemo.PressedDepth = 0;
-            this.btnCloseMemo.Click += new System.EventHandler(this.btnCloseMemo_Click);
-            // 
             // pErrorToast
             // 
             this.pErrorToast.BackgroundImage = global::SAI.Properties.Resources.bg_toast_error;
@@ -789,6 +711,63 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lblTitle, "lblTitle");
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pMemo
+			// 
+			this.pMemo.BackgroundImage = global::SAI.Properties.Resources.p_memo;
+			resources.ApplyResources(this.pMemo, "pMemo");
+			this.pMemo.Controls.Add(this.mAlertPanel);
+			this.pMemo.Controls.Add(this.tboxMemo);
+			this.pMemo.Controls.Add(this.btnQuestionMemo);
+			this.pMemo.Controls.Add(this.btnCloseMemo);
+			this.pMemo.Name = "pMemo";
+			// 
+			// tboxMemo
+			// 
+			this.tboxMemo.BorderColor = System.Drawing.Color.Transparent;
+			this.tboxMemo.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.tboxMemo.DefaultText = "";
+			this.tboxMemo.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+			this.tboxMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+			this.tboxMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.tboxMemo.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+			this.tboxMemo.FillColor = System.Drawing.Color.Transparent;
+			this.tboxMemo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			resources.ApplyResources(this.tboxMemo, "tboxMemo");
+			this.tboxMemo.ForeColor = System.Drawing.Color.Black;
+			this.tboxMemo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+			this.tboxMemo.Name = "tboxMemo";
+			this.tboxMemo.PlaceholderForeColor = System.Drawing.Color.Transparent;
+			this.tboxMemo.PlaceholderText = "";
+			this.tboxMemo.SelectedText = "";
+			// 
+			// btnQuestionMemo
+			// 
+			this.btnQuestionMemo.BackgroundImage = global::SAI.Properties.Resources.btn_question_memo;
+			resources.ApplyResources(this.btnQuestionMemo, "btnQuestionMemo");
+			this.btnQuestionMemo.BorderColor = System.Drawing.Color.Transparent;
+			this.btnQuestionMemo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnQuestionMemo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnQuestionMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnQuestionMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnQuestionMemo.FillColor = System.Drawing.Color.Transparent;
+			this.btnQuestionMemo.ForeColor = System.Drawing.Color.White;
+			this.btnQuestionMemo.Name = "btnQuestionMemo";
+			// 
+			// btnCloseMemo
+			// 
+			this.btnCloseMemo.BackgroundImage = global::SAI.Properties.Resources.btn_close_25;
+			resources.ApplyResources(this.btnCloseMemo, "btnCloseMemo");
+			this.btnCloseMemo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+			this.btnCloseMemo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+			this.btnCloseMemo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+			this.btnCloseMemo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+			this.btnCloseMemo.FillColor = System.Drawing.Color.Transparent;
+			this.btnCloseMemo.ForeColor = System.Drawing.Color.Transparent;
+			this.btnCloseMemo.Name = "btnCloseMemo";
+			this.btnCloseMemo.PressedColor = System.Drawing.Color.Transparent;
+			this.btnCloseMemo.PressedDepth = 0;
+			this.btnCloseMemo.Click += new System.EventHandler(this.btnCloseMemo_Click);
             // 
             // UcPracticeBlockCode
             // 
@@ -796,8 +775,8 @@ namespace SAI.SAI.App.Views.Pages
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.pTitle);
             this.Controls.Add(this.pErrorToast);
+            this.Controls.Add(this.pTitle);
             this.Controls.Add(this.pMemo);
             this.Controls.Add(this.pSideInfer);
             this.Controls.Add(this.pMain);
@@ -811,8 +790,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
             this.ucCode２.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.webViewCode)).EndInit();
-            this.webViewCode.ResumeLayout(false);
             this.pZoomCode.ResumeLayout(false);
             this.pBlock.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
@@ -834,7 +811,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tpErrorHeader.PerformLayout();
             this.pTitle.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion

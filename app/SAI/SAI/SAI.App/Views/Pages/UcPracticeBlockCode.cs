@@ -19,7 +19,6 @@ using Timer = System.Windows.Forms.Timer;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
 
-
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
@@ -45,6 +44,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private double currentThreshold = 0.5; // threshold 기본값 0.5
         private string selectedImagePath = string.Empty; // 추론 이미지 경로를 저장할 변수
+        private string currentImagePath = string.Empty; // 현재 표시 중인 이미지 경로
 
 		private int undoCount = 0; // 뒤로가기 카운트
 		private int blockCount = 0; // 블럭 개수
@@ -57,16 +57,16 @@ namespace SAI.SAI.App.Views.Pages
 
 		private CancellationTokenSource _toastCancellationSource;
 
-        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private int currentZoomLevel = 80; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
 
         private PythonService.InferenceResult _result;
 
         public event EventHandler RunButtonClicked;
 
-        private UcPracticeBlockList ucPracticeBlockList;
+		private UcPracticeBlockList ucPracticeBlockList;
 
-        public UcPracticeBlockCode(IMainView view)
+		public UcPracticeBlockCode(IMainView view)
         {
             InitializeComponent();
 
@@ -87,7 +87,7 @@ namespace SAI.SAI.App.Views.Pages
             {
 				var dialog = new DialogHomeFromTrain();
 				dialog.ShowDialog(this);
-			};
+		    };
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
@@ -145,7 +145,6 @@ namespace SAI.SAI.App.Views.Pages
             };
 
             MemoUtils.ApplyStyle(tboxMemo);
-            SetupThresholdControls();
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
 
@@ -338,10 +337,9 @@ namespace SAI.SAI.App.Views.Pages
 			// 이미지 경로가 바뀌면 블록에서도 적용되게
 			blocklyModel.ImgPathChanged += (newPath) => {
 				// 웹뷰에 이미지 경로 전달
-				string escapedPath = JsonSerializer.Serialize(newPath);
-				webViewblock.ExecuteScriptAsync($"imgPathChanged({escapedPath})");
+				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
 
-				if (File.Exists(newPath))
+                if (File.Exists(newPath))
                 {
                     // 기존 이미지 정리
                     pboxInferAccuracy.Image?.Dispose();
@@ -357,8 +355,8 @@ namespace SAI.SAI.App.Views.Pages
 			// threshold가 바뀌면 블록에서도 적용되게
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
-				webViewblock.ExecuteScriptAsync($"thresholdChanged({newAccuracy})");
-				tboxThreshold.Text = newAccuracy.ToString();
+				webViewblock.ExecuteScriptAsync($"thresholdChanged({{newAccuracy}})");
+                tboxThreshold.Text = newAccuracy.ToString();
                 tbarThreshold.Value = (int)(newAccuracy * 100);
             };
 		}
@@ -386,7 +384,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     currentThreshold = newValue;
 
-                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {blocklyModel.imgPath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
                     Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
@@ -394,7 +392,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(() =>
                     {
                         _result = yoloTutorialPresenter.RunInferenceDirect(
-							blocklyModel.imgPath,
+                            selectedImagePath,
                             currentThreshold
                         );
 
@@ -487,6 +485,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 try
                 {
+                    // 먼저 시도: 객체 기반 JSON 메시지 처리
                     var doc = JsonDocument.Parse(e.WebMessageAsJson);
                     var root = doc.RootElement;
 
@@ -566,16 +565,7 @@ namespace SAI.SAI.App.Views.Pages
 							case "undoCount":
 								var jsonUndoCount = root.GetProperty("cnt").ToString();
 								var undoCnt = int.Parse(jsonUndoCount);
-                                MessageBox.Show("C# : " + undoCount.ToString() + "\n JS : " + undoCnt.ToString());
-                                if (undoCount > undoCnt)
-                                {
-                                    redo();
-                                }
-                                else if (undoCount < undoCnt)
-                                {
-									undo();
-                                }
-                               break;
+                                break;
 						}
 					}
 				}
@@ -588,6 +578,36 @@ namespace SAI.SAI.App.Views.Pages
             webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
 			await webViewblock.EnsureCoreWebView2Async();
+
+			// 단축키 이벤트 등록
+			webViewblock.KeyDown += (sender, e) =>
+			{
+				if (e.Control)
+				{
+					if (e.KeyCode == Keys.Z && !e.Shift) // Ctrl + Z
+					{
+						if (btnPreBlock.Visible)
+						{
+							btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
+							e.Handled = true;
+						}
+					}
+					else if (e.KeyCode == Keys.Y || (e.KeyCode == Keys.Z && e.Shift)) // Ctrl + Y 또는 Ctrl + Shift + Z
+					{
+						if (btnNextBlock.Visible)
+						{
+							btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
+							e.Handled = true;
+						}
+					}
+				}
+				// Delete 키는 WebView2로 전파되도록 함
+				else if (e.KeyCode == Keys.Delete)
+				{
+					e.Handled = false;
+					e.SuppressKeyPress = false;
+				}
+			};
 
 			webViewblock.Source = new Uri(uri);
 		}
@@ -620,37 +640,28 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 다시 실행하기
 		private void btnNextBlock_Click(object sender, EventArgs e)
 		{
-			webViewblock.ExecuteScriptAsync($"redo()");
-            redo();
-        }
-		private void redo()
-		{
 			--undoCount;
-            webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
-			
+			webViewblock.ExecuteScriptAsync($"redo()");
+
             if (undoCount == 0)
-			{
-				btnNextBlock.Visible = false;
-				btnPreBlock.Visible = true;
-			}
-			else
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = true;
-			}
-		}
+            {
+                btnNextBlock.Visible = false;
+                btnPreBlock.Visible = true;
+            }
+            else
+            {
+                btnNextBlock.Visible = true;
+                btnPreBlock.Visible = true;
+            }
+        }
 
 		// JS 함수 호출 = 되돌리기
 		private void btnPreBlock_Click(object sender, EventArgs e)
 		{
+			++undoCount;
 			webViewblock.ExecuteScriptAsync($"undo()");
 			webViewblock.ExecuteScriptAsync($"getblockCount()");
-            undo();
-		}
-        private void undo()
-        {
-			++undoCount;
-			webViewblock.ExecuteScriptAsync($"setUndoCount({undoCount})");
+
 			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
 			{
 				btnNextBlock.Visible = true;
@@ -669,7 +680,7 @@ namespace SAI.SAI.App.Views.Pages
 			webViewblock.ExecuteScriptAsync($"clear()");
 		}
 
-		private void ibtnAiFeedback_Click(object sender, EventArgs e)
+        private void ibtnAiFeedback_Click(object sender, EventArgs e)
         {
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;
@@ -825,30 +836,37 @@ namespace SAI.SAI.App.Views.Pages
 					if (block == null) continue;
 					
 					string blockType = block.type;
-					if (!checkBlockPosition(blockType, i))
+					if (blockType == "imgPath")
 					{
-						blockErrorMessage(blockType);
-						return true;
-					}
-
-					if(blockType == "loadModelWithLayer")
-					{
-						if(block.children != null)
+						if (string.IsNullOrEmpty(blocklyModel.imgPath))
 						{
-							if(block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 9개 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
+							errorType = "파라미터 오류";
+							missingType = "파라미터 \"이미지 파일\"";
+							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+							return true;
 						}
-						else
+					}
+					else if (blockType == "loadModelWithLayer")
+					{
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							MessageBox.Show("블럭 9개 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
 					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
+					}
+
+
+					if (!checkBlockPosition(blockType, i))
+                    {
+                        blockErrorMessage(blockType);
+                        return true;
+                    }
 				}
 			}
 			else if (blocklyModel.blockTypes.Count < 11)
@@ -867,15 +885,12 @@ namespace SAI.SAI.App.Views.Pages
 					string blockType = blockInfo.type;
 					if (!checkBlockPosition(blockType, i))
 					{
-						if (i > 0)
+						blockInfo = blocklyModel.blockTypes[i - 1];
+						if (blockInfo != null)
 						{
-							blockInfo = blocklyModel.blockTypes[i - 1];
-							if (blockInfo != null)
-							{
-								blockType = blockInfo.type;
-								blockErrorMessage(blockType);
-								return true;
-							}
+							blockType = blockInfo.type;
+							blockErrorMessage(blockType);
+							return true;
 						}
 					}
 
@@ -892,21 +907,16 @@ namespace SAI.SAI.App.Views.Pages
 					}
 					else if (blockType == "loadModelWithLayer")
 					{
-						if (block.children != null)
+						if (block.children == null || block.children.Count != 1 || block.children[0].type != "layer")
 						{
-							if (block.children.Count > 1)
-							{
-								MessageBox.Show("블럭 11개 보다 적은 block child");
-								blockErrorMessage("layer");
-								return true;
-							}
-						}
-						else
-						{
-							MessageBox.Show("블럭 11개 보다 적은 block child null");
 							blockErrorMessage("layer");
 							return true;
 						}
+					}
+					else if (blockType == "layer")
+					{
+						blockErrorMessage("layer");
+						return true;
 					}
 				}
 				blockErrorMessage(block.type);
@@ -923,8 +933,21 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				if (!isBlockError()) // 순서가 맞을 때
 				{
-					// 파이썬 코드 실행
-					RunButtonClicked?.Invoke(sender, e);
+					// 생성한 모델 삭제
+					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+					var mainModel = MainModel.Instance;
+
+					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+					{
+						runModel(sender, e);
+					}
+					else
+					{
+						var dialog = new DialogDeleteModel(runModel);
+						dialog.ShowDialog(this);
+					}
 				}
 				else
 				{
@@ -939,6 +962,12 @@ namespace SAI.SAI.App.Views.Pages
 				errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 				ShowToastMessage(errorType, missingType, errorMessage);
 			}
+		}
+
+		public void runModel(object sender, EventArgs e)
+		{
+			// 파이썬 코드 실행
+			RunButtonClicked?.Invoke(sender, e);
 		}
 
 		private async void ShowToastMessage(string errorType, string missingType, string errorMessage)
@@ -957,7 +986,7 @@ namespace SAI.SAI.App.Views.Pages
 				lbErrorMessage.Text = errorMessage;
 
 				// 2초 대기 (취소 가능)
-				await Task.Delay(2000, token);
+				await Task.Delay(5000, token);
 				pErrorToast.Visible = false;
 			}
 			catch (OperationCanceledException)
@@ -1011,23 +1040,16 @@ namespace SAI.SAI.App.Views.Pages
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Title = "이미지 파일 선택";
-                openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                openFileDialog.Multiselect = false;
-                openFileDialog.RestoreDirectory = true;
-
-                Form parentForm = this.FindForm();
-                if (parentForm != null)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    if (openFileDialog.ShowDialog(parentForm) == DialogResult.OK)
+                    openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                    openFileDialog.Title = "이미지 파일 선택";
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         string absolutePath = openFileDialog.FileName;
-
-                        // 사용자 지정 이미지 경로를 저장 없이 바로 selectedImagePath로 받음
-                        selectedImagePath = absolutePath.Replace("\\", "/");
-                        blocklyModel.imgPath = selectedImagePath;
+                        selectedImagePath = absolutePath;
+                        currentImagePath = absolutePath; // 현재 이미지 경로 저장
 
                         // 1. 현재 스크롤 위치 저장
                         var scrollPos = pSideInfer.AutoScrollPosition;
@@ -1093,6 +1115,10 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     try
                     {
+                        // 결과 이미지 경로 저장
+                        currentImagePath = result.ResultImage;
+                        
+                        // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
                         {
                             var image = System.Drawing.Image.FromStream(stream);
@@ -1103,30 +1129,40 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
                             btnSelectInferImage.Visible = false;
+                            
+                            // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
+                            ToolTip toolTip = new ToolTip();
+                            toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
+                            
+                            // 원본 파일명 정보 표시 (필요한 경우)
+                            if (!string.IsNullOrEmpty(result.OriginalName))
+                            {
+                                Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
+                                // 여기에 원본 파일명을 표시하는 코드 추가 가능
+                                // 예: lblOriginalFilename.Text = result.OriginalName;
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
                         MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
                 else
                 {
-                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"결과 이미지 파일을 찾을 수 없습니다: {result.ResultImage}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                btnSelectInferImage.Visible = true;
+                pboxInferAccuracy.Visible = false;
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error);
+                dialog.ShowDialog(this);
 
-            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
-            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
-            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
-            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
-        
+            }
         }
 
         private void tboxMemo_TextChanged(object sender, EventArgs e)
@@ -1300,5 +1336,23 @@ namespace SAI.SAI.App.Views.Pages
         {
             return;
         }
-    }
+
+        private void pboxInferAccuracy_Click(object sender, EventArgs e)
+        {
+            // 이미지가 있고 경로가 있으면 이미지 뷰어로 열기
+            if (pboxInferAccuracy.Image != null && !string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
+            {
+                try
+                {
+                    // 기본 이미지 뷰어로 이미지 열기
+                    Process.Start(currentImagePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"이미지를 여는 중 오류가 발생했습니다: {ex.Message}", "오류", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+	}
 }

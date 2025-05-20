@@ -242,7 +242,10 @@ namespace SAI.SAI.App.Presenters
         {
             Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
             var result = _pythonService.RunInference(imagePath, conf);
-            Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}");
+            Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+            Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {File.Exists(result.ResultImage)}");
+            Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
             return result;
         }
     }

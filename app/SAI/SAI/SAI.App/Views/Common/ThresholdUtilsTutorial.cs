@@ -11,14 +11,14 @@ namespace SAI.SAI.App.Views.Common
     {
         public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged, ITutorialInferenceView view)
         {
-            double currentThreshold = 0.5;
+            double currentThreshold = 0.25;
             var blocklyModel = BlocklyModel.Instance;
 
             trackBar.Minimum = 1;
             trackBar.Maximum = 100;
             trackBar.Value = 50;
 
-            textBox.Text = "0.50";
+            textBox.Text = "0.25";
             textBox.TextAlign = HorizontalAlignment.Center;
             textBox.ReadOnly = true;
             textBox.TabStop = false;
@@ -46,7 +46,6 @@ namespace SAI.SAI.App.Views.Common
                 Console.WriteLine($"[MouseUp] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
                 view.ShowDialogInferenceLoading();
-
             };
         }
     }

@@ -36,7 +36,6 @@ namespace SAI.SAI.App.Views.Pages
             this.goLabelingBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.exit = new Guna.UI2.WinForms.Guna2Button();
             this.goToLabeling = new Guna.UI2.WinForms.Guna2Button();
-            this.tutorialDoneBtn = new Guna.UI2.WinForms.Guna2Button();
             this.SuspendLayout();
             // 
             // nextBtn
@@ -153,36 +152,11 @@ namespace SAI.SAI.App.Views.Pages
             this.goToLabeling.TabIndex = 5;
             this.goToLabeling.Click += new System.EventHandler(this.goToLabeling_Click_2);
             // 
-            // tutorialDoneBtn
-            // 
-            this.tutorialDoneBtn.BackColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.tutorialDoneBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.tutorialDoneBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.tutorialDoneBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.tutorialDoneBtn.FillColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.tutorialDoneBtn.ForeColor = System.Drawing.Color.White;
-            this.tutorialDoneBtn.HoverState.BorderColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.HoverState.Image = global::SAI.Properties.Resources.btn_done_click;
-            this.tutorialDoneBtn.Image = global::SAI.Properties.Resources.btn_done1;
-            this.tutorialDoneBtn.ImageSize = new System.Drawing.Size(77, 35);
-            this.tutorialDoneBtn.Location = new System.Drawing.Point(1610, 288);
-            this.tutorialDoneBtn.Name = "tutorialDoneBtn";
-            this.tutorialDoneBtn.PressedColor = System.Drawing.Color.Transparent;
-            this.tutorialDoneBtn.Size = new System.Drawing.Size(90, 45);
-            this.tutorialDoneBtn.TabIndex = 6;
-            this.tutorialDoneBtn.Visible = false;
-            this.tutorialDoneBtn.Click += new System.EventHandler(this.guna2Button1_Click);
-            // 
             // UcTutorialGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.전체튜토리얼가이드1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.tutorialDoneBtn);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.goLabelingBtn);
             this.Controls.Add(this.preBtn);
@@ -204,6 +178,5 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2CircleButton goLabelingBtn;
         private Guna.UI2.WinForms.Guna2Button exit;
         private Guna.UI2.WinForms.Guna2Button goToLabeling;
-        private Guna.UI2.WinForms.Guna2Button tutorialDoneBtn;
     }
 }

@@ -113,7 +113,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "DialogModelProgress";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DialogModelProgress";
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;

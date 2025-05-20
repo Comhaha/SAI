@@ -1556,7 +1556,7 @@
     <value>2</value>
   </data>
   <data name="tboxMemo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 6pt</value>
+    <value>Noto Sans KR, 14pt</value>
   </data>
   <data name="tboxMemo.Location" type="System.Drawing.Point, System.Drawing">
     <value>25, 78</value>
@@ -1628,7 +1628,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="pError.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 31</value>
+    <value>38, 31</value>
   </data>
   <data name="pError.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1658,13 +1658,13 @@
     <value>NoControl</value>
   </data>
   <data name="lbErrorType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 0</value>
+    <value>38, 0</value>
   </data>
   <data name="lbErrorType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="lbErrorType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>728, 31</value>
+    <value>722, 31</value>
   </data>
   <data name="lbErrorType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1715,7 +1715,7 @@
     <value>0</value>
   </data>
   <data name="tpErrorHeader.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pError" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,4.210526,Percent,95.78947" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pError" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorType" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,95" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="lbMissingType.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1877,20 +1877,17 @@
   <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lblTitle.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
   <data name="lblTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR Medium, 13.7999992pt, style=Bold</value>
   </data>
   <data name="lblTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+    <value>267, 48</value>
   </data>
   <data name="lblTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 55</value>
+    <value>249, 54</value>
   </data>
   <data name="lblTitle.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>13</value>
   </data>
   <data name="lblTitle.Text" xml:space="preserve">
     <value>1단계 모델학습</value>
@@ -1902,30 +1899,9 @@
     <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lblTitle.Parent" xml:space="preserve">
-    <value>pTitle</value>
-  </data>
-  <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>282, 50</value>
-  </data>
-  <data name="pTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 55</value>
-  </data>
-  <data name="pTitle.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;pTitle.Name" xml:space="preserve">
-    <value>pTitle</value>
-  </data>
-  <data name="&gt;&gt;pTitle.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;pTitle.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pTitle.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblTitle.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

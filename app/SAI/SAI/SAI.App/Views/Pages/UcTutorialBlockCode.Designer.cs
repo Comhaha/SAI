@@ -96,7 +96,6 @@ namespace SAI.SAI.App.Views.Pages
             this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
             this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
@@ -116,7 +115,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tpParentError.SuspendLayout();
             this.tpContentError.SuspendLayout();
             this.tpErrorHeader.SuspendLayout();
-            this.pTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // pMain
@@ -790,17 +788,11 @@ namespace SAI.SAI.App.Views.Pages
             this.lbErrorMessage.Name = "lbErrorMessage";
             this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pTitle
-            // 
-            this.pTitle.Controls.Add(this.lblTitle);
-            resources.ApplyResources(this.pTitle, "pTitle");
-            this.pTitle.Name = "pTitle";
-            // 
             // lblTitle
             // 
             resources.ApplyResources(this.lblTitle, "lblTitle");
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UcTutorialBlockCode
             // 
@@ -808,10 +800,10 @@ namespace SAI.SAI.App.Views.Pages
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.pTitle);
+            this.Controls.Add(this.pErrorToast);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pMemo);
             this.Controls.Add(this.pSideInfer);
-            this.Controls.Add(this.pErrorToast);
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.ibtnMemo);
             this.Controls.Add(this.ibtnDone);
@@ -840,7 +832,6 @@ namespace SAI.SAI.App.Views.Pages
             this.tpContentError.PerformLayout();
             this.tpErrorHeader.ResumeLayout(false);
             this.tpErrorHeader.PerformLayout();
-            this.pTitle.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -903,8 +894,6 @@ namespace SAI.SAI.App.Views.Pages
 		private SAI.App.Views.Pages.AutoSizeLabel lbErrorMessage;
         private Guna.UI2.WinForms.Guna2Panel pErrorImg;
 		private Guna.UI2.WinForms.Guna2Panel pErrorToast;
-        private Guna.UI2.WinForms.Guna2Panel pTitle;
-        private SAI.App.Views.Pages.AutoSizeLabel lblTitle;
         private Guna.UI2.WinForms.Guna2Panel ptxtInfer;
         private SAI.App.Views.Pages.AutoSizeLabel lblinfer;
         private Guna.UI2.WinForms.Guna2Panel ptxtGraphe;
@@ -913,5 +902,6 @@ namespace SAI.SAI.App.Views.Pages
         private SAI.App.Views.Pages.AutoSizeLabel lblThreshold;
         private Guna.UI2.WinForms.Guna2Button btnSelectInferImage;
         private Guna.UI2.WinForms.Guna2PictureBox pboxInferAccuracy;
+        private SAI.App.Views.Pages.AutoSizeLabel lblTitle;
     }
 }
