@@ -22,7 +22,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(btnClose, "btn_yellow_close_train_clicked", "btn_yellow_close_train");
+            ButtonUtils.SetupButton(btnClose, "btn_close_modelProgress_clicked", "btn_close_modelProgress");
             btnClose.Click += btnClose_Click;  // 이벤트 핸들러 등록
 
             progressBarModelLearning.ProgressColor = ColorTranslator.FromHtml("#55A605"); // 내부 진행 색상
@@ -36,7 +36,9 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            progressBarModelLearning.Value = (int)progress;
+            // 좌측 라운드 안먹는 이슈 해결
+            int adjustedValue = Math.Max((int)progress, 3);
+            progressBarModelLearning.Value = (int)adjustedValue; //(int)progress
             lblStatus.Text = message;
         }
 
@@ -80,7 +82,5 @@ namespace SAI.SAI.App.Forms.Dialogs
             this.Close();
 
         }
-
-        
     }
 }
