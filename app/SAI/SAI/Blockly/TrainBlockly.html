@@ -143,11 +143,11 @@
 		}
 
 		// 이미지 경로가 바뀜
-		function imgPathChanged(newPath) {
+		function imgPathChanged(escapedPath) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'imgPath') {
-					if (block.getField('FILE_PATH') != newPath) {
-						block.getField('FILE_PATH').setValue(newPath);
+				if (block.type == "imgPath") {
+					if (escapedPath != block.getField('FILE_PATH').getValue()) {
+						block.setFieldValue(escapedPath, 'FILE_PATH');
 					}
 				}
 			});
@@ -156,9 +156,9 @@
 		// threshold 값이 바뀜
 		function thresholdChanged(newAccuracy) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'modelInference') {
-					if (block.getField('THRESHOLD') != newAccuracy) {
-						block.getField('THRESHOLD').setValue(newAccuracy);
+				if (block.type == "modelInference") {
+					if (newAccuracy != block.getField('THRESHOLD').getValue()) {
+						block.setFieldValue(newAccuracy, 'THRESHOLD');
 					}
 				}
 			});

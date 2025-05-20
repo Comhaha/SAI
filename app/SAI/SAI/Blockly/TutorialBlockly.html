@@ -141,12 +141,13 @@
 		}
 
 		// 이미지 경로가 바뀜
-		function imgPathChanged(newPath) {
+		function imgPathChanged(escapedPath) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'imgPath') {
-					if (newPath != block.getValue('FILE_PATH')) {
-						showCustomAlert(newPath);
-						block.setFieldValue(newPath, 'FILE_PATH');
+				if (block.type == "imgPath") {
+					if (escapedPath != "") {
+						if (escapedPath != block.getField('FILE_PATH').getValue()) {
+							block.setFieldValue(escapedPath, 'FILE_PATH');
+						}
 					}
 				}
 			});
@@ -155,11 +156,10 @@
 		// threshold 값이 바뀜
 		function thresholdChanged(newAccuracy) {
 			workspace.getAllBlocks(false).forEach(block => {
-				if (block.type === 'modelInference') {
-					showCustomAlert(newAccuracy);
-					if (newAccuracy != block.getValue('THRESHOLD')) {
-						block.setFieldValue(newAccuracy, 'THRESHOLD');
-					}
+				if (block.type == "modelInference") {
+						if (newAccuracy != block.getField('THRESHOLD').getValue()) {
+							block.setFieldValue(newAccuracy, 'THRESHOLD');
+						}
 				}
 			});
 		}
