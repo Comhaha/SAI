@@ -116,7 +116,6 @@ namespace SAI.SAI.App.Views.Pages
             currentZoomLevel = 60;
             UpdateCodeZoom();
 
-            pboxInferAccuracy.Visible = false;
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
@@ -126,7 +125,7 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Cursor = Cursors.Hand;
             btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
 
-            pInferAccuracy.MouseEnter += (s, e) =>
+            pboxInferAccuracy.MouseEnter += (s, e) =>
             {
                 if (pSideInfer.Visible)
                 {
@@ -136,7 +135,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            pInferAccuracy.MouseLeave += (s, e) =>
+            pboxInferAccuracy.MouseLeave += (s, e) =>
             {
                 if (!btnSelectInferImage.ClientRectangle.Contains(btnSelectInferImage.PointToClient(Control.MousePosition)))
                 {
@@ -145,7 +144,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             };
 
-            // 버튼에도 MouseEnter/Leave 이벤트 추가
+            //// 버튼에도 MouseEnter/Leave 이벤트 추가
             btnSelectInferImage.MouseEnter += (s, e) =>
             {
                 btnSelectInferImage.Visible = true;
@@ -154,7 +153,7 @@ namespace SAI.SAI.App.Views.Pages
 
             btnSelectInferImage.MouseLeave += (s, e) =>
             {
-                if (!pInferAccuracy.ClientRectangle.Contains(pInferAccuracy.PointToClient(Control.MousePosition)))
+                if (!pboxInferAccuracy.ClientRectangle.Contains(pboxInferAccuracy.PointToClient(Control.MousePosition)))
                 {
                     btnSelectInferImage.Visible = false;
                     btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
@@ -181,6 +180,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
             pZoomCode.BackColor = Color.Transparent;
+            cAlertPanel.BackColor = Color.Transparent;
 
             pSideInfer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
 
@@ -204,6 +204,7 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
+            ButtonUtils.SetTransparentStyle(btnSelectInferImage);
 
 
             // 복사 버튼 클릭 이벤트 추가
@@ -347,7 +348,7 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.Image?.Dispose();
 
                     // string 경로를 Image 객체로 변환
-                    pboxInferAccuracy.Size = new Size(431, 275);
+                    pboxInferAccuracy.Size = new Size(494, 278);
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                     pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
@@ -617,7 +618,6 @@ namespace SAI.SAI.App.Views.Pages
             // 초기에는 숨기길 패널들
             pSideInfer.Visible = false;
             ibtnCloseInfer.Visible = false;
-            pboxInferAccuracy.Visible = false;
             pMemo.Visible = false;
             cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
 
@@ -1020,21 +1020,6 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void pSideInfer_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ucCode1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private bool checkBlockPosition(string blockType, int nowPosition)
         {
             int correctPosition;
@@ -1272,7 +1257,7 @@ namespace SAI.SAI.App.Views.Pages
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(431, 275);
+                            pboxInferAccuracy.Size = new Size(494, 278);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
@@ -1315,7 +1300,7 @@ namespace SAI.SAI.App.Views.Pages
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxInferAccuracy.Size = new Size(431, 275);
+                            pboxInferAccuracy.Size = new Size(494, 278);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
@@ -1362,7 +1347,7 @@ namespace SAI.SAI.App.Views.Pages
             timer.Start();
         }
 
-        private void ibtnCopy_Click(object sender, EventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
             try
             {

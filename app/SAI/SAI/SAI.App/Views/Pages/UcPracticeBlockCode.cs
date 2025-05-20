@@ -92,6 +92,7 @@ namespace SAI.SAI.App.Views.Pages
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
+            cAlertPanel.BackColor = Color.Transparent;
             ButtonUtils.SetTransparentStyle(btnCopy);
 
             // 초기에는 숨기길 패널들

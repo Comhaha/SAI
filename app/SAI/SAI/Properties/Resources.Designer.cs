@@ -3343,6 +3343,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap p_copy_alarm {
+            get {
+                object obj = ResourceManager.GetObject("p_copy_alarm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap p_memo {
             get {
                 object obj = ResourceManager.GetObject("p_memo", resourceCulture);
