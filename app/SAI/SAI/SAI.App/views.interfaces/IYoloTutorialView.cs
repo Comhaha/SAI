@@ -15,6 +15,7 @@ namespace SAI.SAI.App.Views.Interfaces
         void ClearLog();
         void SetLogVisible(bool visible);
         void ShowErrorMessage(string message);
-        
+
+        void ShowTutorialTrainingChart(string csvPath);
     }
 }
