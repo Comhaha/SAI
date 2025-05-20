@@ -85,8 +85,9 @@ namespace SAI.SAI.App.Views.Pages
             // 홈페이지 이동
             ibtnHome.Click += (s, e) =>
             {
-                mainView.LoadPage(new UcSelectType(mainView));
-            };
+				var dialog = new DialogHomeFromTrain();
+				dialog.ShowDialog(this);
+		    };
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
