@@ -850,7 +850,7 @@ def visualize_training_results_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-# 6. 사용자 이미지 경로 받는 블럭
+# ============== 6. 사용자 이미지 경로 받는 블럭====================
 # 이미지 경로를 inference.py 파일로 던져준다
 def set_image_path_block(image_path=None, block_params=None):
     """

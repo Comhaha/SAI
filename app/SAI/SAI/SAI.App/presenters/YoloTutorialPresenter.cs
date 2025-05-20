@@ -21,6 +21,7 @@ namespace SAI.SAI.App.Presenters
         private readonly IYoloTutorialView _yolotutorialview;
         private readonly PythonService _pythonService;
         private DialogModelProgress _progressDialog;
+        private DateTime _scriptStartTime; // 스크립트 실행 시작 시간
 
         public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
         {
@@ -30,12 +31,17 @@ namespace SAI.SAI.App.Presenters
             _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
 
             _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
+       
         }
 
         private void OnRunButtonClicked(object sender, EventArgs e)
         {
             try
             {
+                // 스크립트 실행 시작 시간 기록
+                _scriptStartTime = DateTime.Now;
+                Console.WriteLine($"[INFO] 스크립트 실행 시작 시간: {_scriptStartTime}");
+                
                 // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
                 if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
                 {
@@ -234,7 +240,6 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
-
                                     _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
@@ -244,6 +249,9 @@ namespace SAI.SAI.App.Presenters
                                         @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
                                     csvPath       = Path.GetFullPath(csvPath);
                                     _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                    
+                            // 스크립트 종료시 추론 결과 이미지 확인 및 표시
+                                    CheckAndShowInferenceResult();
                                 }
                             }));
                         }
@@ -252,10 +260,111 @@ namespace SAI.SAI.App.Presenters
                             _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
+                            
+                            // 스크립트 종료시 추론 결과 이미지 확인 및 표시
+                            CheckAndShowInferenceResult();
                         }
                     }
                 }
             });
+        }
+
+        // 추론 결과를 확인하고 UI에 표시하는 메서드
+        private void CheckAndShowInferenceResult()
+        {
+            try
+            {
+                // 블록 모델에서 이미지 경로 가져오기
+                var model = BlocklyModel.Instance;
+                string imagePath = model?.imgPath;
+                
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("[WARNING] 이미지 경로가 없습니다.");
+                    return;
+                }
+                
+                Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
+                Console.WriteLine($"[DEBUG] 스크립트 시작 시간: {_scriptStartTime}");
+                
+                // 결과 이미지 디렉토리 경로
+                string resultDirectory = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\SAI.Application\Python\runs\result");
+                resultDirectory = Path.GetFullPath(resultDirectory);
+                
+                Console.WriteLine($"[DEBUG] 결과 이미지 디렉토리: {resultDirectory}");
+                
+                // 디렉토리가 존재하는지 확인
+                if (!Directory.Exists(resultDirectory))
+                {
+                    Console.WriteLine($"[WARNING] 결과 이미지 디렉토리가 존재하지 않습니다: {resultDirectory}");
+                    return;
+                }
+                
+                // 파일명과 확장자 추출
+                string originalFilename = Path.GetFileNameWithoutExtension(imagePath);
+                string originalExtension = Path.GetExtension(imagePath);
+                
+                Console.WriteLine($"[DEBUG] 원본 파일명: {originalFilename}, 확장자: {originalExtension}");
+                
+                // 결과 이미지 패턴
+                string resultPattern = "*_result" + originalExtension;
+                
+                // 디렉토리의 모든 파일 중 스크립트 실행 시작 이후에 생성된 결과 이미지 찾기
+                var resultFiles = Directory.GetFiles(resultDirectory, resultPattern)
+                    .Select(f => new FileInfo(f))
+                    .Where(f => f.CreationTime > _scriptStartTime)
+                    .OrderByDescending(f => f.CreationTime);
+                
+                // 디버깅을 위해 발견된 파일 수 로깅
+                Console.WriteLine($"[DEBUG] 스크립트 실행 시작 이후 생성된 결과 이미지 수: {resultFiles.Count()}");
+                
+                // 가장 최근에 생성된 파일 선택
+                var latestFile = resultFiles.FirstOrDefault();
+                string resultImagePath = latestFile?.FullName;
+                
+                if (latestFile != null && File.Exists(resultImagePath))
+                {
+                    Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
+                    Console.WriteLine($"[INFO] 결과 이미지 생성 시간: {latestFile.CreationTime}, 스크립트 시작 시간: {_scriptStartTime}");
+                    
+                    // 추론 결과 객체 생성
+                    var result = new PythonService.InferenceResult
+                    {
+                        Success = true,
+                        ResultImage = resultImagePath,
+                        OriginalName = Path.GetFileName(imagePath)
+                    };
+                    
+                    // UI 스레드에서 결과 표시
+                    if (_itutorialInferenceView != null)
+                    {
+                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                        {
+                            viewControl.Invoke(new Action(() => {
+                                _itutorialInferenceView.ShowInferenceResult(result);
+                            }));
+                        }
+                        else
+                        {
+                            _itutorialInferenceView.ShowInferenceResult(result);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"[WARNING] 결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 추론 결과 확인 중 오류 발생: {ex.Message}");
+            }
         }
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행

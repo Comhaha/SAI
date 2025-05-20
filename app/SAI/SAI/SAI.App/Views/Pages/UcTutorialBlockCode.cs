@@ -728,6 +728,9 @@ namespace SAI.SAI.App.Views.Pages
                     RunButtonClicked?.Invoke(sender, e);
                     pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
                     pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
+                    
+                    // 이제 스크립트 실행이 완료된 후 YoloTutorialPresenter의 CheckAndShowInferenceResult 메서드가 
+                    // 자동으로 호출되어 추론 결과를 확인하고 표시합니다.
 			    }
                 else // 순서가 틀릴 때
                 {
@@ -1321,6 +1324,13 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Visible = true;
                             btnSelectInferImage.Visible = false;
                             
+                            // 추론 패널이 현재 표시되어 있지 않다면 표시
+                            if (!isInferPanelVisible)
+                            {
+                                ShowpSIdeInfer();
+                                Console.WriteLine("[DEBUG] 추론 패널 표시됨");
+                            }
+                            
                             // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
                             ToolTip toolTip = new ToolTip();
                             toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
@@ -1332,6 +1342,8 @@ namespace SAI.SAI.App.Views.Pages
                                 // 여기에 원본 파일명을 표시하는 코드 추가 가능
                                 // 예: lblOriginalFilename.Text = result.OriginalName;
                             }
+                            
+                            Console.WriteLine($"[DEBUG] 추론 결과 이미지 표시 완료: {result.ResultImage}");
                         }
                     }
                     catch (Exception ex)
