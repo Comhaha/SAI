@@ -427,5 +427,5 @@ namespace SAI.SAI.App.Views.Pages
 				pAccodionResultVisualize.BackgroundImage = global::SAI.Properties.Resources.btnAccordionShow;
 			}
 		}
-	}
+    }
 }
