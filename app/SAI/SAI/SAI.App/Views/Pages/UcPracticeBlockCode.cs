@@ -1091,6 +1091,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     try
                     {
+                        // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
                         {
                             var image = System.Drawing.Image.FromStream(stream);
@@ -1107,24 +1108,19 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         Console.WriteLine("[ERROR] 이미지 로드 실패: " + ex.Message);
                         MessageBox.Show($"이미지를 로드하는 도중 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
                 else
                 {
-                    MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"결과 이미지 파일을 찾을 수 없습니다: {result.ResultImage}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
+                btnSelectInferImage.Visible = true;
+                pboxInferAccuracy.Visible = false;
                 MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
-            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
-            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
-            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
-        
         }
 
         private void tboxMemo_TextChanged(object sender, EventArgs e)

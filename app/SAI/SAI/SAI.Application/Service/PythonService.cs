@@ -238,10 +238,22 @@ namespace SAI.SAI.Application.Service
                     var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonResult);
                     if (result["success"].GetBoolean())
                     {
+                        // 이미지 경로에서 한글 처리 문제 해결
+                        string resultImagePath = result["result_image"].GetString();
+                        
+                        // 파일 존재 여부 확인
+                        if (!File.Exists(resultImagePath))
+                        {
+                            return new InferenceResult { 
+                                Success = false, 
+                                Error = $"결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}" 
+                            };
+                        }
+                        
                         return new InferenceResult
                         {
                             Success = true,
-                            ResultImage = result["result_image"].GetString(),
+                            ResultImage = resultImagePath,
                             InferenceTime = result.ContainsKey("inference_time") ? result["inference_time"].GetDouble() : 0
                         };
                     }
