@@ -51,6 +51,12 @@ namespace SAI.SAI.App.Views.Pages
             this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
             this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
             this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.toolHandPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.toolHandGif = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.toolLabelingPolygonPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.toolLabelingPolygonGif = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.toolLabelingSquarePanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.toolLabelingSquareGif = new Guna.UI2.WinForms.Guna2PictureBox();
             this.toastPopupPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.popupCloseBtn = new Guna.UI2.WinForms.Guna2Button();
             this.accuracyPanel = new Guna.UI2.WinForms.Guna2Panel();
@@ -86,6 +92,12 @@ namespace SAI.SAI.App.Views.Pages
             this.panel1.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
             this.imageContainer.SuspendLayout();
+            this.toolHandPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toolHandGif)).BeginInit();
+            this.toolLabelingPolygonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toolLabelingPolygonGif)).BeginInit();
+            this.toolLabelingSquarePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.toolLabelingSquareGif)).BeginInit();
             this.toastPopupPanel.SuspendLayout();
             this.accuracyPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -108,8 +120,7 @@ namespace SAI.SAI.App.Views.Pages
             this.homeBtn.FillColor = System.Drawing.Color.Transparent;
             this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.homeBtn.ForeColor = System.Drawing.Color.White;
-            this.homeBtn.HoverState.Image = ((System.Drawing.Image)(resources.GetObject("resource.Image")));
-            this.homeBtn.Image = global::SAI.Properties.Resources.ic_home;
+            this.homeBtn.Image = ((System.Drawing.Image)(resources.GetObject("homeBtn.Image")));
             this.homeBtn.ImageSize = new System.Drawing.Size(58, 58);
             this.homeBtn.Location = new System.Drawing.Point(202, 48);
             this.homeBtn.Name = "homeBtn";
@@ -125,8 +136,7 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtn.FillColor = System.Drawing.Color.Transparent;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nextBtn.ForeColor = System.Drawing.Color.White;
-            this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
-            this.nextBtn.Image = global::SAI.Properties.Resources.ic_next;
+            this.nextBtn.Image = ((System.Drawing.Image)(resources.GetObject("nextBtn.Image")));
             this.nextBtn.ImageSize = new System.Drawing.Size(102, 102);
             this.nextBtn.Location = new System.Drawing.Point(1793, 489);
             this.nextBtn.Name = "nextBtn";
@@ -143,8 +153,7 @@ namespace SAI.SAI.App.Views.Pages
             this.preBtn.HoverState.BorderColor = System.Drawing.Color.Transparent;
             this.preBtn.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.preBtn.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverL;
-            this.preBtn.Image = global::SAI.Properties.Resources.ic_pre;
+            this.preBtn.Image = ((System.Drawing.Image)(resources.GetObject("preBtn.Image")));
             this.preBtn.ImageSize = new System.Drawing.Size(102, 102);
             this.preBtn.Location = new System.Drawing.Point(26, 489);
             this.preBtn.Name = "preBtn";
@@ -167,7 +176,7 @@ namespace SAI.SAI.App.Views.Pages
             // mainpanel
             // 
             this.mainpanel.BackColor = System.Drawing.Color.Transparent;
-            this.mainpanel.BackgroundImage = global::SAI.Properties.Resources.내부_박스;
+            this.mainpanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("mainpanel.BackgroundImage")));
             this.mainpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.mainpanel.Controls.Add(this.leftPanel);
             this.mainpanel.Controls.Add(this.imageContainer);
@@ -180,7 +189,7 @@ namespace SAI.SAI.App.Views.Pages
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.Transparent;
-            this.leftPanel.BackgroundImage = global::SAI.Properties.Resources.Frame_1000004304;
+            this.leftPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("leftPanel.BackgroundImage")));
             this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.leftPanel.BorderColor = System.Drawing.Color.Transparent;
             this.leftPanel.Controls.Add(this.panel1);
@@ -385,6 +394,9 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.imageContainer.BackColor = System.Drawing.Color.Transparent;
             this.imageContainer.BorderColor = System.Drawing.Color.Transparent;
+            this.imageContainer.Controls.Add(this.toolHandPanel);
+            this.imageContainer.Controls.Add(this.toolLabelingPolygonPanel);
+            this.imageContainer.Controls.Add(this.toolLabelingSquarePanel);
             this.imageContainer.Controls.Add(this.toastPopupPanel);
             this.imageContainer.Controls.Add(this.accuracyPanel);
             this.imageContainer.Controls.Add(this.levelPanel);
@@ -401,9 +413,75 @@ namespace SAI.SAI.App.Views.Pages
             this.imageContainer.Size = new System.Drawing.Size(1182, 875);
             this.imageContainer.TabIndex = 3;
             // 
+            // toolHandPanel
+            // 
+            this.toolHandPanel.BackgroundImage = global::SAI.Properties.Resources.img_tooltip_toolHand;
+            this.toolHandPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolHandPanel.Controls.Add(this.toolHandGif);
+            this.toolHandPanel.Location = new System.Drawing.Point(658, 103);
+            this.toolHandPanel.Name = "toolHandPanel";
+            this.toolHandPanel.Size = new System.Drawing.Size(421, 329);
+            this.toolHandPanel.TabIndex = 18;
+            this.toolHandPanel.Visible = false;
+            // 
+            // toolHandGif
+            // 
+            this.toolHandGif.FillColor = System.Drawing.Color.Transparent;
+            this.toolHandGif.Image = global::SAI.Properties.Resources.img_tooltip_toolHand_gif;
+            this.toolHandGif.ImageRotate = 0F;
+            this.toolHandGif.Location = new System.Drawing.Point(6, 0);
+            this.toolHandGif.Name = "toolHandGif";
+            this.toolHandGif.Size = new System.Drawing.Size(421, 248);
+            this.toolHandGif.TabIndex = 0;
+            this.toolHandGif.TabStop = false;
+            // 
+            // toolLabelingPolygonPanel
+            // 
+            this.toolLabelingPolygonPanel.BackgroundImage = global::SAI.Properties.Resources.img_tooltip_toolLabelingPolygon;
+            this.toolLabelingPolygonPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolLabelingPolygonPanel.Controls.Add(this.toolLabelingPolygonGif);
+            this.toolLabelingPolygonPanel.Location = new System.Drawing.Point(658, 210);
+            this.toolLabelingPolygonPanel.Name = "toolLabelingPolygonPanel";
+            this.toolLabelingPolygonPanel.Size = new System.Drawing.Size(421, 329);
+            this.toolLabelingPolygonPanel.TabIndex = 17;
+            this.toolLabelingPolygonPanel.Visible = false;
+            // 
+            // toolLabelingPolygonGif
+            // 
+            this.toolLabelingPolygonGif.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolLabelingPolygonGif.Image = global::SAI.Properties.Resources.img_tooltip_toolLabelingPolygon_gif;
+            this.toolLabelingPolygonGif.ImageRotate = 0F;
+            this.toolLabelingPolygonGif.Location = new System.Drawing.Point(0, 0);
+            this.toolLabelingPolygonGif.Name = "toolLabelingPolygonGif";
+            this.toolLabelingPolygonGif.Size = new System.Drawing.Size(421, 220);
+            this.toolLabelingPolygonGif.TabIndex = 0;
+            this.toolLabelingPolygonGif.TabStop = false;
+            // 
+            // toolLabelingSquarePanel
+            // 
+            this.toolLabelingSquarePanel.BackgroundImage = global::SAI.Properties.Resources.img_tooltip_toolLabelingSquare;
+            this.toolLabelingSquarePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolLabelingSquarePanel.Controls.Add(this.toolLabelingSquareGif);
+            this.toolLabelingSquarePanel.Location = new System.Drawing.Point(658, 152);
+            this.toolLabelingSquarePanel.Name = "toolLabelingSquarePanel";
+            this.toolLabelingSquarePanel.Size = new System.Drawing.Size(421, 329);
+            this.toolLabelingSquarePanel.TabIndex = 18;
+            this.toolLabelingSquarePanel.Visible = false;
+            // 
+            // toolLabelingSquareGif
+            // 
+            this.toolLabelingSquareGif.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolLabelingSquareGif.Image = global::SAI.Properties.Resources.img_tooltip_toolLabelingSquare_gif;
+            this.toolLabelingSquareGif.ImageRotate = 0F;
+            this.toolLabelingSquareGif.Location = new System.Drawing.Point(0, 0);
+            this.toolLabelingSquareGif.Name = "toolLabelingSquareGif";
+            this.toolLabelingSquareGif.Size = new System.Drawing.Size(421, 220);
+            this.toolLabelingSquareGif.TabIndex = 0;
+            this.toolLabelingSquareGif.TabStop = false;
+            // 
             // toastPopupPanel
             // 
-            this.toastPopupPanel.BackgroundImage = global::SAI.Properties.Resources.toastPopupS;
+            this.toastPopupPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("toastPopupPanel.BackgroundImage")));
             this.toastPopupPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toastPopupPanel.Controls.Add(this.popupCloseBtn);
             this.toastPopupPanel.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -415,7 +493,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // popupCloseBtn
             // 
-            this.popupCloseBtn.BackgroundImage = global::SAI.Properties.Resources.BtnClose3030;
+            this.popupCloseBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("popupCloseBtn.BackgroundImage")));
             this.popupCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.popupCloseBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.popupCloseBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -475,7 +553,7 @@ namespace SAI.SAI.App.Views.Pages
             // levelPanel
             // 
             this.levelPanel.BackColor = System.Drawing.Color.Transparent;
-            this.levelPanel.BackgroundImage = global::SAI.Properties.Resources.class1;
+            this.levelPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("levelPanel.BackgroundImage")));
             this.levelPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.levelPanel.BorderColor = System.Drawing.Color.Transparent;
             this.levelPanel.BorderThickness = 1;
@@ -500,7 +578,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // questBoxPanel
             // 
-            this.questBoxPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questBoxPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("questBoxPanel.BackgroundImage")));
             this.questBoxPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.questBoxPanel.Location = new System.Drawing.Point(4, 4);
             this.questBoxPanel.Name = "questBoxPanel";
@@ -509,7 +587,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // questClassificationPanel
             // 
-            this.questClassificationPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questClassificationPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("questClassificationPanel.BackgroundImage")));
             this.questClassificationPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.questClassificationPanel.Location = new System.Drawing.Point(3, 5);
             this.questClassificationPanel.Name = "questClassificationPanel";
@@ -518,7 +596,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // questSegPanel
             // 
-            this.questSegPanel.BackgroundImage = global::SAI.Properties.Resources.btn_question;
+            this.questSegPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("questSegPanel.BackgroundImage")));
             this.questSegPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.questSegPanel.Location = new System.Drawing.Point(4, 4);
             this.questSegPanel.Name = "questSegPanel";
@@ -528,7 +606,7 @@ namespace SAI.SAI.App.Views.Pages
             // toolZoom
             // 
             this.toolZoom.BackColor = System.Drawing.Color.Transparent;
-            this.toolZoom.BackgroundImage = global::SAI.Properties.Resources.확대_축소;
+            this.toolZoom.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("toolZoom.BackgroundImage")));
             this.toolZoom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolZoom.BorderColor = System.Drawing.Color.Transparent;
             this.toolZoom.BorderThickness = 3;
@@ -612,7 +690,7 @@ namespace SAI.SAI.App.Views.Pages
             // toolBox
             // 
             this.toolBox.BackColor = System.Drawing.Color.Transparent;
-            this.toolBox.BackgroundImage = global::SAI.Properties.Resources.도구창２;
+            this.toolBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("toolBox.BackgroundImage")));
             this.toolBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolBox.BorderColor = System.Drawing.Color.Transparent;
             this.toolBox.BorderRadius = 10;
@@ -633,15 +711,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolRedo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolRedo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolRedo.HoverState.Image = global::SAI.Properties.Resources.toolRedoHover;
             this.toolRedo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolRedo.Image = global::SAI.Properties.Resources.tool_redo_basic;
+            this.toolRedo.Image = ((System.Drawing.Image)(resources.GetObject("toolRedo.Image")));
             this.toolRedo.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolRedo.ImageRotate = 0F;
             this.toolRedo.ImageSize = new System.Drawing.Size(30, 30);
             this.toolRedo.Location = new System.Drawing.Point(7, 274);
             this.toolRedo.Name = "toolRedo";
-            this.toolRedo.PressedState.Image = global::SAI.Properties.Resources.toolRedoClick;
             this.toolRedo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolRedo.Size = new System.Drawing.Size(35, 35);
             this.toolRedo.TabIndex = 15;
@@ -650,15 +726,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolUndo.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolUndo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolUndo.HoverState.Image = global::SAI.Properties.Resources.toolUndoHover;
             this.toolUndo.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolUndo.Image = global::SAI.Properties.Resources.tool_undo_basic;
+            this.toolUndo.Image = ((System.Drawing.Image)(resources.GetObject("toolUndo.Image")));
             this.toolUndo.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolUndo.ImageRotate = 0F;
             this.toolUndo.ImageSize = new System.Drawing.Size(30, 30);
             this.toolUndo.Location = new System.Drawing.Point(6, 220);
             this.toolUndo.Name = "toolUndo";
-            this.toolUndo.PressedState.Image = global::SAI.Properties.Resources.toolUndoClick;
             this.toolUndo.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolUndo.Size = new System.Drawing.Size(35, 35);
             this.toolUndo.TabIndex = 14;
@@ -667,15 +741,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolVisible.CheckedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolVisible.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolVisible.HoverState.Image = global::SAI.Properties.Resources.toolVHover;
             this.toolVisible.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolVisible.Image = global::SAI.Properties.Resources.tool_visible_basic;
+            this.toolVisible.Image = ((System.Drawing.Image)(resources.GetObject("toolVisible.Image")));
             this.toolVisible.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolVisible.ImageRotate = 0F;
             this.toolVisible.ImageSize = new System.Drawing.Size(30, 30);
             this.toolVisible.Location = new System.Drawing.Point(6, 416);
             this.toolVisible.Name = "toolVisible";
-            this.toolVisible.PressedState.Image = global::SAI.Properties.Resources.toolVClick;
             this.toolVisible.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolVisible.Size = new System.Drawing.Size(35, 35);
             this.toolVisible.TabIndex = 13;
@@ -684,15 +756,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolLabelingSquare.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolLabelingSquare.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolLabelingSquare.HoverState.Image = global::SAI.Properties.Resources.toolLabelHover;
             this.toolLabelingSquare.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolLabelingSquare.Image = global::SAI.Properties.Resources.tool_square_basic;
+            this.toolLabelingSquare.Image = ((System.Drawing.Image)(resources.GetObject("toolLabelingSquare.Image")));
             this.toolLabelingSquare.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolLabelingSquare.ImageRotate = 0F;
             this.toolLabelingSquare.ImageSize = new System.Drawing.Size(30, 30);
             this.toolLabelingSquare.Location = new System.Drawing.Point(6, 73);
             this.toolLabelingSquare.Name = "toolLabelingSquare";
-            this.toolLabelingSquare.PressedState.Image = global::SAI.Properties.Resources.toolLabelClick;
             this.toolLabelingSquare.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingSquare.Size = new System.Drawing.Size(35, 35);
             this.toolLabelingSquare.TabIndex = 12;
@@ -701,15 +771,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolDelete.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolDelete.HoverState.Image = global::SAI.Properties.Resources.toolDelHover;
             this.toolDelete.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolDelete.Image = global::SAI.Properties.Resources.tool_del_basic;
+            this.toolDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolDelete.Image")));
             this.toolDelete.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolDelete.ImageRotate = 0F;
             this.toolDelete.ImageSize = new System.Drawing.Size(30, 30);
             this.toolDelete.Location = new System.Drawing.Point(6, 355);
             this.toolDelete.Name = "toolDelete";
-            this.toolDelete.PressedState.Image = global::SAI.Properties.Resources.toolDelClick;
             this.toolDelete.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolDelete.Size = new System.Drawing.Size(35, 35);
             this.toolDelete.TabIndex = 11;
@@ -718,15 +786,13 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolLabelingPolygon.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolLabelingPolygon.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolLabelingPolygon.HoverState.Image = global::SAI.Properties.Resources.toolPolHover;
             this.toolLabelingPolygon.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolLabelingPolygon.Image = global::SAI.Properties.Resources.tool_pol_basic;
+            this.toolLabelingPolygon.Image = ((System.Drawing.Image)(resources.GetObject("toolLabelingPolygon.Image")));
             this.toolLabelingPolygon.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolLabelingPolygon.ImageRotate = 0F;
             this.toolLabelingPolygon.ImageSize = new System.Drawing.Size(30, 30);
             this.toolLabelingPolygon.Location = new System.Drawing.Point(6, 132);
             this.toolLabelingPolygon.Name = "toolLabelingPolygon";
-            this.toolLabelingPolygon.PressedState.Image = global::SAI.Properties.Resources.toolPolClick;
             this.toolLabelingPolygon.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolLabelingPolygon.Size = new System.Drawing.Size(35, 35);
             this.toolLabelingPolygon.TabIndex = 10;
@@ -735,22 +801,20 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.toolHand.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.toolHand.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.toolHand.HoverState.Image = global::SAI.Properties.Resources.toolHandHover;
             this.toolHand.HoverState.ImageSize = new System.Drawing.Size(0, 0);
-            this.toolHand.Image = global::SAI.Properties.Resources.tool_hand_basic;
+            this.toolHand.Image = ((System.Drawing.Image)(resources.GetObject("toolHand.Image")));
             this.toolHand.ImageOffset = new System.Drawing.Point(0, 0);
             this.toolHand.ImageRotate = 0F;
             this.toolHand.ImageSize = new System.Drawing.Size(30, 30);
             this.toolHand.Location = new System.Drawing.Point(6, 24);
             this.toolHand.Name = "toolHand";
-            this.toolHand.PressedState.Image = global::SAI.Properties.Resources.toolHandClick;
             this.toolHand.PressedState.ImageSize = new System.Drawing.Size(0, 0);
             this.toolHand.Size = new System.Drawing.Size(35, 35);
             this.toolHand.TabIndex = 0;
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.BackgroundImage = global::SAI.Properties.Resources._1;
+            this.pictureBoxImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxImage.BackgroundImage")));
             this.pictureBoxImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBoxImage.FillColor = System.Drawing.Color.Transparent;
             this.pictureBoxImage.ImageRotate = 0F;
@@ -771,7 +835,7 @@ namespace SAI.SAI.App.Views.Pages
             // showLevel1
             // 
             this.showLevel1.BackColor = System.Drawing.Color.Transparent;
-            this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_9;
+            this.showLevel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("showLevel1.BackgroundImage")));
             this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.showLevel1.Location = new System.Drawing.Point(932, 58);
             this.showLevel1.Name = "showLevel1";
@@ -809,8 +873,7 @@ namespace SAI.SAI.App.Views.Pages
             this.goModel.HoverState.BorderColor = System.Drawing.Color.Transparent;
             this.goModel.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.goModel.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.goModel.HoverState.Image = global::SAI.Properties.Resources.btn_go_model_hover;
-            this.goModel.Image = global::SAI.Properties.Resources.btn_go_model;
+            this.goModel.Image = ((System.Drawing.Image)(resources.GetObject("goModel.Image")));
             this.goModel.ImageSize = new System.Drawing.Size(251, 53);
             this.goModel.Location = new System.Drawing.Point(1473, 50);
             this.goModel.Name = "goModel";
@@ -822,7 +885,8 @@ namespace SAI.SAI.App.Views.Pages
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::SAI.Properties.Resources.img_background;
+            this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.goModel);
             this.Controls.Add(this.totalLevelpanel);
             this.Controls.Add(this.showLevel1);
@@ -831,6 +895,7 @@ namespace SAI.SAI.App.Views.Pages
             this.Controls.Add(this.mainpanel);
             this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.nextBtnVisible);
+            this.DoubleBuffered = true;
             this.Name = "UcLabelGuide";
             this.Size = new System.Drawing.Size(1920, 1080);
             this.mainpanel.ResumeLayout(false);
@@ -838,6 +903,12 @@ namespace SAI.SAI.App.Views.Pages
             this.panel1.ResumeLayout(false);
             this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.imageContainer.ResumeLayout(false);
+            this.toolHandPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.toolHandGif)).EndInit();
+            this.toolLabelingPolygonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.toolLabelingPolygonGif)).EndInit();
+            this.toolLabelingSquarePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.toolLabelingSquareGif)).EndInit();
             this.toastPopupPanel.ResumeLayout(false);
             this.accuracyPanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -905,5 +976,11 @@ namespace SAI.SAI.App.Views.Pages
         private TableLayoutPanel tableLayoutPanel2;
         private SAI.App.Views.Pages.AutoSizeLabel accuracyLabel1;
         private TableLayoutPanel tableLayoutPanel3;
+        private Guna.UI2.WinForms.Guna2Panel toolLabelingPolygonPanel;
+        private Guna.UI2.WinForms.Guna2PictureBox toolLabelingPolygonGif;
+        private Guna.UI2.WinForms.Guna2Panel toolLabelingSquarePanel;
+        private Guna.UI2.WinForms.Guna2PictureBox toolLabelingSquareGif;
+        private Guna.UI2.WinForms.Guna2Panel toolHandPanel;
+        private Guna.UI2.WinForms.Guna2PictureBox toolHandGif;
     }
 }

@@ -162,6 +162,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.Designer.cs">
       <DependentUpon>DialogPrepare.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogErrorInference.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogErrorInference.Designer.cs">
+      <DependentUpon>DialogErrorInference.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogQuitInference.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -400,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogPrepare.resx">
       <DependentUpon>DialogPrepare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogErrorInference.resx">
+      <DependentUpon>DialogErrorInference.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogQuitInference.resx">
       <DependentUpon>DialogQuitInference.cs</DependentUpon>
@@ -816,6 +825,13 @@
     <None Include="Resources\memo_alert.png" />
     <None Include="Resources\bg_dialog_model_inference.png" />
     <None Include="Resources\bg_dialog_quit_inference.png" />
+    <None Include="Resources\bg_dialog_error_inference.png" />
+    <None Include="Resources\img_tooltip_toolHand_gif.gif" />
+    <None Include="Resources\img_tooltip_toolLabelingPolygon_gif.gif" />
+    <None Include="Resources\img_tooltip_toolLabelingSquare_gif.gif" />
+    <None Include="Resources\img_tooltip_toolHand.png" />
+    <None Include="Resources\img_tooltip_toolLabelingPolygon.png" />
+    <None Include="Resources\img_tooltip_toolLabelingSquare.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />

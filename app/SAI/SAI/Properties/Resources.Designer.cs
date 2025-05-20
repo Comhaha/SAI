@@ -423,6 +423,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_dialog_error_inference {
+            get {
+                object obj = ResourceManager.GetObject("bg_dialog_error_inference", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_dialog_home_from_train {
             get {
                 object obj = ResourceManager.GetObject("bg_dialog_home_from_train", resourceCulture);
@@ -2846,6 +2856,66 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap img_level_0 {
             get {
                 object obj = ResourceManager.GetObject("img_level_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolHand {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolHand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolHand_gif {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolHand_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolLabelingPolygon {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolLabelingPolygon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolLabelingPolygon_gif {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolLabelingPolygon_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolLabelingSquare {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolLabelingSquare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tooltip_toolLabelingSquare_gif {
+            get {
+                object obj = ResourceManager.GetObject("img_tooltip_toolLabelingSquare_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1397,10 +1397,13 @@ namespace SAI.SAI.App.Views.Pages
                     MessageBox.Show("결과 이미지를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                else
+                {
+                    // 추론 실패 다이얼로그 생성 및 표시
+                    var dialog = new DialogErrorInference();
+                    dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
+                    dialog.ShowDialog(this); // 현재 폼을 부모로 지정
+                }
 
             Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
             Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");

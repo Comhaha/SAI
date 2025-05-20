@@ -19,7 +19,6 @@ using Timer = System.Windows.Forms.Timer;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
 
-
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
@@ -1117,7 +1116,10 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error);
+                dialog.ShowDialog(this);
             }
 
             Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
