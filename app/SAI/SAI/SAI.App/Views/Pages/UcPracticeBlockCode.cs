@@ -19,7 +19,6 @@ using Timer = System.Windows.Forms.Timer;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
 
-
 namespace SAI.SAI.App.Views.Pages
 {
     public partial class UcPracticeBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, IYoloPracticeView, IPracticeInferenceView
@@ -1128,7 +1127,10 @@ namespace SAI.SAI.App.Views.Pages
             {
                 btnSelectInferImage.Visible = true;
                 pboxInferAccuracy.Visible = false;
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error);
+                dialog.ShowDialog(this);
+
             }
         }
 

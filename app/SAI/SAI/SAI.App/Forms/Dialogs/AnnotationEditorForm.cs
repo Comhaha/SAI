@@ -110,6 +110,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 dragging = false;
             }
         }
+
         // ------------------------------------
     }
 }

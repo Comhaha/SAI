@@ -1359,10 +1359,20 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
+                // 추론 실패 다이얼로그 생성 및 표시
                 btnSelectInferImage.Visible = true;
                 pboxInferAccuracy.Visible = false;
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
+                dialog.ShowDialog(this); // 현재 폼을 부모로 지정
             }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
