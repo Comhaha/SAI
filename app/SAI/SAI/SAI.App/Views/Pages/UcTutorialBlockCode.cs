@@ -719,14 +719,22 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
-                    Console.WriteLine($"[DEBUG] 전달된 blocklyModel이 null인가? {(blocklyModel == null)}");
-                    Console.WriteLine($"[DEBUG] blockTypes count: {(blocklyModel?.blockTypes?.Count ?? -1)}");
+					// 생성한 모델 삭제
+					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
 
-                    // 파이썬 코드 실행
-                    RunButtonClicked?.Invoke(sender, e);
-                    pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
-                    pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-			    }
+					var mainModel = MainModel.Instance;
+
+					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+					{
+						runModel(sender, e);
+					}
+					else
+					{
+						var dialog = new DialogDeleteModel(runModel);
+						dialog.ShowDialog(this);
+					}
+				}
                 else // 순서가 틀릴 때
                 {
                     ShowToastMessage(errorType, missingType, errorMessage);
@@ -740,6 +748,14 @@ namespace SAI.SAI.App.Views.Pages
                 errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
                 ShowToastMessage(errorType, missingType, errorMessage);
 			}
+		}
+
+        public void runModel(object sender, EventArgs e)
+        {
+			// 파이썬 코드 실행
+			RunButtonClicked?.Invoke(sender, e);
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 		}
 
         private async void ShowToastMessage(string errorType, string missingType, string errorMessage)

@@ -921,8 +921,21 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				if (!isBlockError()) // 순서가 맞을 때
 				{
-					// 파이썬 코드 실행
-					RunButtonClicked?.Invoke(sender, e);
+					// 생성한 모델 삭제
+					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+
+					var mainModel = MainModel.Instance;
+
+					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+					{
+						runModel(sender, e);
+					}
+					else
+					{
+						var dialog = new DialogDeleteModel(runModel);
+						dialog.ShowDialog(this);
+					}
 				}
 				else
 				{
@@ -937,6 +950,12 @@ namespace SAI.SAI.App.Views.Pages
 				errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
 				ShowToastMessage(errorType, missingType, errorMessage);
 			}
+		}
+
+		public void runModel(object sender, EventArgs e)
+		{
+			// 파이썬 코드 실행
+			RunButtonClicked?.Invoke(sender, e);
 		}
 
 		private async void ShowToastMessage(string errorType, string missingType, string errorMessage)
