@@ -50,7 +50,6 @@ namespace SAI.SAI.App.Views.Pages
             goLabelingBtn.Click += goLabelingBtn_Click;
             goToLabeling.Click += goToLabeling_Click;
             exit.Click += exit_Click;
-            tutorialDoneBtn.Click += exit_Click;
         }
         private void InitializeProgressIndicators()
         { 
@@ -175,8 +174,6 @@ namespace SAI.SAI.App.Views.Pages
                 
                 case 10: // 마지막 페이지
                     preBtn.Location = prevButtonPositions[10];
-                    tutorialDoneBtn.Visible = true;
-
                     preBtn.Visible = true;
                     break;
                 
@@ -185,7 +182,6 @@ namespace SAI.SAI.App.Views.Pages
                     nextBtn.Location = nextButtonPositions[currentPage];
                     preBtn.Visible = true;
                     nextBtn.Visible = true;
-                    tutorialDoneBtn.Visible = false;
                     break;
             }
         }

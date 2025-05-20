@@ -58,7 +58,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private CancellationTokenSource _toastCancellationSource;
 
-        private int currentZoomLevel = 60; // 현재 확대/축소 레벨 (기본값 60%)
+        private int currentZoomLevel = 80; // 현재 확대/축소 레벨 (기본값 60%)
         private readonly int[] zoomLevels = { 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200 }; // 가능한 확대/축소 레벨
         private PythonService.InferenceResult _result;
 
@@ -721,12 +721,21 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
-                    // 파이썬 코드 실행
-                    RunButtonClicked?.Invoke(sender, e);
-                    pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
-                    pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-                 
-			    }
+					// 생성한 모델 삭제
+					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+					var mainModel = MainModel.Instance;
+
+					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+					{
+						runModel(sender, e);
+					}
+					else
+					{
+						var dialog = new DialogDeleteModel(runModel);
+						dialog.ShowDialog(this);
+					}
+				}
                 else // 순서가 틀릴 때
                 {
                     ShowToastMessage(errorType, missingType, errorMessage);
@@ -740,6 +749,14 @@ namespace SAI.SAI.App.Views.Pages
                 errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
                 ShowToastMessage(errorType, missingType, errorMessage);
 			}
+		}
+
+        public void runModel(object sender, EventArgs e)
+        {
+			// 파이썬 코드 실행
+			RunButtonClicked?.Invoke(sender, e);
+			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 		}
 
         private async void ShowToastMessage(string errorType, string missingType, string errorMessage)
@@ -758,7 +775,7 @@ namespace SAI.SAI.App.Views.Pages
                 lbErrorMessage.Text = errorMessage;
 
                 // 2초 대기 (취소 가능)
-                await Task.Delay(2000, token);
+                await Task.Delay(5000, token);
                 pErrorToast.Visible = false;
             }
             catch (OperationCanceledException)
@@ -1354,10 +1371,20 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
+                // 추론 실패 다이얼로그 생성 및 표시
                 btnSelectInferImage.Visible = true;
                 pboxInferAccuracy.Visible = false;
-                MessageBox.Show($"추론 실패: {result.Error}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                var dialog = new DialogErrorInference();
+                dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
+                dialog.ShowDialog(this); // 현재 폼을 부모로 지정
             }
+
+            Console.WriteLine("[DEBUG] ShowInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
+
         }
 
         private void btnQuestionMemo_Click(object sender, EventArgs e)
@@ -1504,5 +1531,5 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
-    }
+	}
 }
