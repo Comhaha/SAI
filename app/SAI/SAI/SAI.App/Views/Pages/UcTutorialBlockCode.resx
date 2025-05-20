@@ -788,87 +788,6 @@
   <data name="pTopBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="btnPreBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnPreBlock.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnPreBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 10</value>
-  </data>
-  <data name="btnPreBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
-  </data>
-  <data name="btnPreBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Name" xml:space="preserve">
-    <value>btnPreBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnPreBlock.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btnNextBlock.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnNextBlock.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnNextBlock.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 10</value>
-  </data>
-  <data name="btnNextBlock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
-  </data>
-  <data name="btnNextBlock.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Name" xml:space="preserve">
-    <value>btnNextBlock</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnNextBlock.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnTrash.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnTrash.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="btnTrash.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 10</value>
-  </data>
-  <data name="btnTrash.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 30</value>
-  </data>
-  <data name="btnTrash.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Name" xml:space="preserve">
-    <value>btnTrash</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnTrash.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="btnRunModel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -894,7 +813,7 @@
     <value>pTopBlock</value>
   </data>
   <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="pTopBlock.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>

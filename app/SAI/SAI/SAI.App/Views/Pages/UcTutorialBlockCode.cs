@@ -50,7 +50,6 @@ namespace SAI.SAI.App.Views.Pages
         private MemoPresenter memoPresenter;
         private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
 
-        private int undoCount = 0; // 뒤로가기 카운트
         private int blockCount = 0; // 블럭 개수
 
         private string errorMessage = "";
@@ -77,7 +76,6 @@ namespace SAI.SAI.App.Views.Pages
 
             tboxMemo.TextChanged += tboxMemo_TextChanged;
 
-            //btnRunModel.Click += (s, e) => RunButtonClicked?.Invoke(s, e);
             // 확대/축소 버튼 이벤트 추가
             ibtnPlusCode.Click += (s, e) =>
             {
@@ -117,7 +115,6 @@ namespace SAI.SAI.App.Views.Pages
             currentZoomLevel = 60;
             UpdateCodeZoom();
 
-            btnNextBlock.Visible = false; // 초기화 시 보이지 않게 설정
             pboxInferAccuracy.Visible = false;
             btnSelectInferImage.Visible = false;
 
@@ -177,10 +174,6 @@ namespace SAI.SAI.App.Views.Pages
             ucShowDialogPresenter = new UcShowDialogPresenter(this);
 
             blockCount = 0; // 블럭 개수 초기화
-            undoCount = 0;
-            btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
-            btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
-            btnTrash.Visible = false; // 처음에는 보이지 않게 설정
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
@@ -204,9 +197,6 @@ namespace SAI.SAI.App.Views.Pages
             ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
 
             ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
-            ButtonUtils.SetupButton(btnNextBlock, "btn_next_block_clicked", "btn_next_block1");
-            ButtonUtils.SetupButton(btnPreBlock, "btn_pre_block_clicked", "btn_pre_block1");
-            ButtonUtils.SetupButton(btnTrash, "btn_trash_clicked", "btn_trash_block");
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
@@ -909,21 +899,15 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
 				{
-					if (btnPreBlock.Visible)
-					{
-						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
-					}
+
 				}
 				else if (e.KeyCode == Keys.Y && e.Control)
 				{
-					if (btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
+
 				}
 				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
 				{
-					MessageBox.Show("와 ctrl + shift + z 누름");
+
 				}
 			};
 
@@ -931,21 +915,15 @@ namespace SAI.SAI.App.Views.Pages
 			{
 				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
 				{
-					if (btnPreBlock.Visible)
-					{
-						btnPreBlock_Click(btnPreBlock, EventArgs.Empty);
-					}
+
 				}
 				else if (e.KeyCode == Keys.Y && e.Control)
 				{
-					if (btnNextBlock.Visible)
-					{
-						btnNextBlock_Click(btnNextBlock, EventArgs.Empty);
-					}
+
 				}
 				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
 				{
-					MessageBox.Show("와 ctrl + shift + z 누름");
+
 				}
 			};
 
@@ -955,12 +933,6 @@ namespace SAI.SAI.App.Views.Pages
 		// JS 함수 호출 = 블럭 넣기
 		public void addBlock(string blockType)
 		{
-			if (btnPreBlock.Visible == false)
-			{
-				btnPreBlock.Visible = true;
-				btnNextBlock.Visible = false;
-				undoCount = 0;
-			}
 			webViewblock.ExecuteScriptAsync($"addBlock('{blockType}')");
 			webViewblock.ExecuteScriptAsync($"getblockCount()");
 		}
@@ -976,43 +948,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             webViewblock.ZoomFactor = 0.5;
         }
-
-		// JS 함수 호출 = 다시 실행하기
-		private void btnNextBlock_Click(object sender, EventArgs e)
-		{
-			--undoCount;
-			webViewblock.ExecuteScriptAsync($"redo()");
-
-			if (undoCount == 0)
-			{
-				btnNextBlock.Visible = false;
-				btnPreBlock.Visible = true;
-			}
-			else
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = true;
-			}
-		}
-
-		// JS 함수 호출 = 되돌리기
-		private void btnPreBlock_Click(object sender, EventArgs e)
-		{
-			++undoCount;
-			webViewblock.ExecuteScriptAsync($"undo()");
-			webViewblock.ExecuteScriptAsync($"getblockCount()");
-
-			if (undoCount < 10 && undoCount > 0 && blockCount > 1) // <- 이거 왜 1이여야하지?
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = true;
-			}
-			else
-			{
-				btnNextBlock.Visible = true;
-				btnPreBlock.Visible = false;
-			}
-		}
 
         public void AppendLog(string text)
         {

@@ -54,12 +54,10 @@ namespace SAI.SAI.App.Views.Pages
 			this.ibtnPlusCode = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.pTopCode = new System.Windows.Forms.Panel();
+			this.ucCode1 = new SAI.App.Views.Pages.UcCode();
 			this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
 			this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
 			this.pTopBlock = new System.Windows.Forms.Panel();
-			this.btnPreBlock = new Guna.UI2.WinForms.Guna2Button();
-			this.btnNextBlock = new Guna.UI2.WinForms.Guna2Button();
-			this.btnTrash = new Guna.UI2.WinForms.Guna2Button();
 			this.btnRunModel = new Guna.UI2.WinForms.Guna2Button();
 			this.pErrorImg = new Guna.UI2.WinForms.Guna2Panel();
 			this.ibtnMemo = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -71,6 +69,7 @@ namespace SAI.SAI.App.Views.Pages
 			this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
 			this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
 			this.pFake = new Guna.UI2.WinForms.Guna2Panel();
+			this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
 			this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
 			this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
 			this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -93,11 +92,9 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
 			this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
 			this.pError = new System.Windows.Forms.Panel();
-			this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
 			this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.ucCode1 = new SAI.App.Views.Pages.UcCode();
 			this.pMain.SuspendLayout();
 			this.pBlockList.SuspendLayout();
 			this.pCode.SuspendLayout();
@@ -374,6 +371,12 @@ namespace SAI.SAI.App.Views.Pages
 			this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.pTopCode.Name = "pTopCode";
 			// 
+			// ucCode1
+			// 
+			resources.ApplyResources(this.ucCode1, "ucCode1");
+			this.ucCode1.Name = "ucCode1";
+			this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
+			// 
 			// pBlock
 			// 
 			this.pBlock.BackgroundImage = global::SAI.Properties.Resources.p_block;
@@ -397,52 +400,9 @@ namespace SAI.SAI.App.Views.Pages
 			// 
 			this.pTopBlock.BackColor = System.Drawing.Color.Transparent;
 			resources.ApplyResources(this.pTopBlock, "pTopBlock");
-			this.pTopBlock.Controls.Add(this.btnPreBlock);
-			this.pTopBlock.Controls.Add(this.btnNextBlock);
-			this.pTopBlock.Controls.Add(this.btnTrash);
 			this.pTopBlock.Controls.Add(this.btnRunModel);
 			this.pTopBlock.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.pTopBlock.Name = "pTopBlock";
-			// 
-			// btnPreBlock
-			// 
-			this.btnPreBlock.BackgroundImage = global::SAI.Properties.Resources.btn_pre_block1;
-			resources.ApplyResources(this.btnPreBlock, "btnPreBlock");
-			this.btnPreBlock.BorderColor = System.Drawing.Color.Transparent;
-			this.btnPreBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnPreBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnPreBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnPreBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnPreBlock.FillColor = System.Drawing.Color.Transparent;
-			this.btnPreBlock.ForeColor = System.Drawing.Color.White;
-			this.btnPreBlock.Name = "btnPreBlock";
-			this.btnPreBlock.Click += new System.EventHandler(this.btnPreBlock_Click);
-			// 
-			// btnNextBlock
-			// 
-			this.btnNextBlock.BackgroundImage = global::SAI.Properties.Resources.btn_next_block1;
-			resources.ApplyResources(this.btnNextBlock, "btnNextBlock");
-			this.btnNextBlock.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnNextBlock.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnNextBlock.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnNextBlock.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnNextBlock.FillColor = System.Drawing.Color.Transparent;
-			this.btnNextBlock.ForeColor = System.Drawing.Color.White;
-			this.btnNextBlock.Name = "btnNextBlock";
-			this.btnNextBlock.Click += new System.EventHandler(this.btnNextBlock_Click);
-			// 
-			// btnTrash
-			// 
-			this.btnTrash.BackgroundImage = global::SAI.Properties.Resources.btn_trash_block;
-			resources.ApplyResources(this.btnTrash, "btnTrash");
-			this.btnTrash.BorderColor = System.Drawing.Color.Transparent;
-			this.btnTrash.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-			this.btnTrash.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-			this.btnTrash.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-			this.btnTrash.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-			this.btnTrash.FillColor = System.Drawing.Color.Transparent;
-			this.btnTrash.ForeColor = System.Drawing.Color.White;
-			this.btnTrash.Name = "btnTrash";
 			// 
 			// btnRunModel
 			// 
@@ -574,6 +534,11 @@ namespace SAI.SAI.App.Views.Pages
 			this.pFake.BorderColor = System.Drawing.Color.Transparent;
 			resources.ApplyResources(this.pFake, "pFake");
 			this.pFake.Name = "pFake";
+			// 
+			// ucCsvChart1
+			// 
+			resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
+			this.ucCsvChart1.Name = "ucCsvChart1";
 			// 
 			// pThreshold
 			// 
@@ -792,11 +757,6 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.pError, "pError");
 			this.pError.Name = "pError";
 			// 
-			// ucCsvChart1
-			// 
-			resources.ApplyResources(this.ucCsvChart1, "ucCsvChart1");
-			this.ucCsvChart1.Name = "ucCsvChart1";
-			// 
 			// lbErrorType
 			// 
 			resources.ApplyResources(this.lbErrorType, "lbErrorType");
@@ -817,12 +777,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.lbErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
 			this.lbErrorMessage.Name = "lbErrorMessage";
 			this.lbErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// ucCode1
-			// 
-			resources.ApplyResources(this.ucCode1, "ucCode1");
-			this.ucCode1.Name = "ucCode1";
-			this.ucCode1.Load += new System.EventHandler(this.ucCode1_Load);
 			// 
 			// UcTutorialBlockCode
 			// 
@@ -912,9 +866,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button btnRunModel;
         private UcCsvChart ucCsvChart1;
         private SAI.App.Views.Pages.UcCode ucCode1;
-        private Guna.UI2.WinForms.Guna2Button btnTrash;
-        private Guna.UI2.WinForms.Guna2Button btnNextBlock;
-        private Guna.UI2.WinForms.Guna2Button btnPreBlock;
         private Guna.UI2.WinForms.Guna2Button btnQuestionMemo;
         private Guna.UI2.WinForms.Guna2Button btnCloseMemo;
         private Guna.UI2.WinForms.Guna2Panel pFake;

@@ -392,6 +392,39 @@
 
 		Blockly.fieldRegistry.register('field_custom_dropdown', CustomDropdown);
 
+		document.addEventListener("keydown", function (e) {
+			// Ctrl+Z (Undo)
+			if (e.ctrlKey && !e.shiftKey && e.key === 'z') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("ctrl+z")
+				return false;
+			}
+
+			// Ctrl+Y (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.key === 'y') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Ctrl+Y")
+				return false;
+			}
+
+			// Ctrl+Shift+Z (Redo, 일부 브라우저)
+			if (e.ctrlKey && e.shiftKey && e.key === 'Z') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Ctrl+Shift+Z")
+				return false;
+			}
+
+			// Delete key
+			if (e.key === 'Delete') {
+				e.preventDefault();
+				e.stopPropagation();
+				//showCustomAlert("Delete key")
+				return false;
+			}
+		}, true);
 	</script>
 
 </body>
