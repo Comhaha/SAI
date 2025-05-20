@@ -34,9 +34,7 @@ function Content1() {
       />
       <div className="relative z-10 flex justify-center items-center w-full h-full max-w-[1200px] mx-auto px-8 gap-x-12">
         <div className="flex flex-col justify-center h-full max-w-[420px]">
-          <h1 className="text-[40px] font-bold leading-tight text-gray-800 mb-4">
-            SAI Download
-          </h1>
+          <h1 className="text-[40px] font-bold leading-tight text-gray-800 mb-4">SAI Download</h1>
           <button
             className="mt-[50px] text-white text-[18px] font-medium px-6 py-2 rounded shadow transition-all w-fit bg-[#2878BD] hover:bg-[#4F96D3]"
             onClick={handleDownload}
