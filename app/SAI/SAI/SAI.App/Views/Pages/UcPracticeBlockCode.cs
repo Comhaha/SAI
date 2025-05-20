@@ -142,7 +142,6 @@ namespace SAI.SAI.App.Views.Pages
             };
 
             MemoUtils.ApplyStyle(tboxMemo);
-            SetupThresholdControls();
             ScrollUtils.AdjustPanelScroll(pSideInfer);
 
 
