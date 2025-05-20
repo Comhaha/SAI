@@ -884,6 +884,7 @@
     <None Include="SAI.App\Resources\Images\bg_blockGuide7.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_train_progress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_modelProgress.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_homeFromLabeling.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
