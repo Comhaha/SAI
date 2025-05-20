@@ -41,5 +41,10 @@ namespace SAI.SAI.App.Presenters
 		{
 			mainView.LoadPage(new UcSelectType(mainView));
 		}
-	}
+
+        public void clickGoPracticeGuide()
+        {
+            mainView.LoadPage(new UcPracticeGuide(mainView));
+        }
+    }
 }

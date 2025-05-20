@@ -67,7 +67,8 @@ namespace SAI.SAI.App.Forms.Dialogs
 				blocklyModel.blockAllCode = "";
 				blocklyModel.blockCode = "";
 				blocklyModel.imgPath = "";
-				presenter.clickGoTrain();
+				presenter.clickGoPracticeGuide();
+
 
 				// tutorial에서 생성한 모델 삭제
 				string baseDir = AppDomain.CurrentDomain.BaseDirectory;
