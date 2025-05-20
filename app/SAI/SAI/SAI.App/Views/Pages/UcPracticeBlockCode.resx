@@ -181,7 +181,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnCopy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>533, 80</value>
+    <value>511, 80</value>
   </data>
   <data name="btnCopy.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 44</value>
@@ -205,7 +205,7 @@
     <value>Stretch</value>
   </data>
   <data name="guna2TextBox1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 12pt</value>
+    <value>Noto Sans KR Medium, 12pt, style=Bold</value>
   </data>
   <data name="guna2TextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 39</value>
@@ -277,7 +277,7 @@
     <value>2</value>
   </data>
   <data name="guna2Panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>533, 554</value>
+    <value>511, 554</value>
   </data>
   <data name="guna2Panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 126</value>
@@ -1011,7 +1011,7 @@
     <value>0</value>
   </data>
   <data name="ptxtThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 103</value>
+    <value>50, 103</value>
   </data>
   <data name="ptxtThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 32</value>
@@ -1038,7 +1038,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 114</value>
+    <value>180, 114</value>
   </data>
   <data name="btnInfoThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 15</value>
@@ -1111,23 +1111,6 @@
   </data>
   <data name="pboxInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
-  </data>
-  <data name="pboxInferAccuracy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
-        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
-        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
-        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
-        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
-        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
-        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
-        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
-        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
-        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
-        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
-        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
-</value>
   </data>
   <data name="pboxInferAccuracy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

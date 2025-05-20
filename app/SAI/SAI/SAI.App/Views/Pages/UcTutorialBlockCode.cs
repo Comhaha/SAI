@@ -120,7 +120,8 @@ namespace SAI.SAI.App.Views.Pages
 
             // 새 이미지 불러오기 버튼 설정
             btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
-            //btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
+            pboxInferAccuracy.Controls.Add(btnSelectInferImage);
+            btnSelectInferImage.Location = new Point(0, 0);
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
             btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);

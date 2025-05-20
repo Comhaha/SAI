@@ -100,12 +100,13 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             pMemo.Visible = false;
             cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
-
+            ucCode２.Controls.Add(cAlertPanel);
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
             btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
-            //btnSelectInferImage.Location = new Point(0, 0); // pInferAccuracy 내에서의 위치
+            pboxInferAccuracy.Controls.Add(btnSelectInferImage);
+            btnSelectInferImage.Location = new Point(0, 0);
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
 
@@ -166,7 +167,8 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
 
-			blockCount = 0; // 블럭 개수 초기화
+
+            blockCount = 0; // 블럭 개수 초기화
 			undoCount = 0;
 			btnNextBlock.Visible = false; // 처음에는 보이지 않게 설정
 			btnPreBlock.Visible = false; // 처음에는 보이지 않게 설정
@@ -1153,7 +1155,7 @@ namespace SAI.SAI.App.Views.Pages
             timer.Start();
         }
 
-        private void ibtnCopy_Click(object sender, EventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
             try
             {

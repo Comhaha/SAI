@@ -36,13 +36,13 @@ namespace SAI.SAI.App.Views.Pages
             this.pCode = new Guna.UI2.WinForms.Guna2Panel();
             this.ibtnCloseInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pTopCode = new System.Windows.Forms.Panel();
-            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.btnCopy = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnMinus = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.ucCode２ = new SAI.SAI.App.Views.Pages.UcCode();
+            this.ucCode２ = new SAI.App.Views.Pages.UcCode();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewCode = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
@@ -65,15 +65,15 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.ptxtGraphe = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblInferGraph = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblInferGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.ptxtThreshold = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.ptxtInfer = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblinfer = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblinfer = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
-            this.ucCsvChart1 = new SAI.SAI.App.Views.Pages.UcCsvChart();
+            this.ucCsvChart1 = new SAI.App.Views.Pages.UcCsvChart();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
@@ -91,11 +91,11 @@ namespace SAI.SAI.App.Views.Pages
             this.tpContentError = new System.Windows.Forms.TableLayoutPanel();
             this.tpErrorHeader = new System.Windows.Forms.TableLayoutPanel();
             this.pError = new System.Windows.Forms.Panel();
-            this.lbErrorType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
-            this.lbMissingType = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
-            this.lbErrorMessage = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblTitle = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -168,12 +168,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pTopCode.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pTopCode.Name = "pTopCode";
             // 
-            // cAlertPanel
-            // 
-            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.p_copy_alarm;
-            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
-            this.cAlertPanel.Name = "cAlertPanel";
-            // 
             // btnCopy
             // 
             this.btnCopy.BackgroundImage = global::SAI.Properties.Resources.btn_copy;
@@ -185,6 +179,7 @@ namespace SAI.SAI.App.Views.Pages
             this.btnCopy.FillColor = System.Drawing.Color.Transparent;
             this.btnCopy.ForeColor = System.Drawing.Color.White;
             this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // guna2Panel1
             // 
@@ -245,6 +240,12 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ucCode２, "ucCode２");
             this.ucCode２.Name = "ucCode２";
             this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
+            // 
+            // cAlertPanel
+            // 
+            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.p_copy_alarm;
+            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
+            this.cAlertPanel.Name = "cAlertPanel";
             // 
             // webViewCode
             // 
@@ -554,6 +555,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.pboxInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.ErrorImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             this.pboxInferAccuracy.ImageRotate = 0F;
             this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             this.pboxInferAccuracy.Name = "pboxInferAccuracy";
