@@ -12,6 +12,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
 using System.IO;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -62,6 +63,11 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.BackColor = Color.Transparent;
 			btnOk.Click += (s, e) =>
 			{
+				var blocklyModel = BlocklyModel.Instance;
+				blocklyModel.blockAllCode = "";
+				blocklyModel.blockCode = "";
+				blocklyModel.imgPath = "";
+
 				var view = this.Owner as IMainView;
 				presenter = new DialogLoadPagePresenter(view);
 				// 생성한 모델 삭제
