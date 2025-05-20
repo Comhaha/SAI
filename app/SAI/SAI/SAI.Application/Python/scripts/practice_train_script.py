@@ -397,18 +397,21 @@ def download_dataset_block(block_params=None):
                     show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
 
                 show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
-                # 임시 ZIP 파일 삭제
+                
+                # 임시 ZIP 파일 삭제 (잠시 기다린 후 시도)
+                time.sleep(1)  # 파일 핸들이 모두 닫힐 시간을 줍니다
                 try:
                     os.remove(zip_path)
                     show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time)
                 except Exception as e:
                     show_tagged_progress('DEBUG', f'임시 ZIP 파일 삭제 실패: {str(e)}', start_time)
-            
+        
         except Exception as e:
             show_tagged_progress('DEBUG', f'ZIP 파일 압축 해제 오류: {e}', start_time)
     else:
         show_tagged_progress('ERROR', '다운로드된 ZIP 파일을 찾을 수 없습니다.', start_time)
-
+                
+        
     # 데이터셋 경로 저장
     tutorial_state["dataset_path"] = extracted_dir
 

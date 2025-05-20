@@ -335,7 +335,7 @@ def download_dataset_block(block_params=None):
                 if chunk:
                     f.write(chunk)
                     downloaded += len(chunk)
-                    progress = min(0 + (downloaded / total_size * 30), 50)
+                    progress = min(0 + (downloaded / total_size * 50), 50)
                     show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
         show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
@@ -371,7 +371,7 @@ def download_dataset_block(block_params=None):
                     for i, file in enumerate(file_list):
                         zip_ref.extract(file, dataset_dir)
                         if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 75 + (i / total_files) * 20
+                            extract_progress = 55 + (i / total_files) * 40
                             show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = potential_extracted_dir
                 else:
@@ -385,12 +385,12 @@ def download_dataset_block(block_params=None):
                         with zip_ref.open(file) as source, open(dest_path, "wb") as target:
                             target.write(source.read())
                         if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 75 + (i / total_files) * 20
+                            extract_progress = 55 + (i / total_files) * 40
                             show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = target_subdir
                     show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
 
-            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
+            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 95)
             # 임시 ZIP 파일 삭제
             try:
                 os.remove(zip_path)
