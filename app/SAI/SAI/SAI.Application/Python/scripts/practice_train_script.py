@@ -259,16 +259,21 @@ def download_dataset_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-    # 2. 기존 데이터셋 폴더 내부 파일 전체 삭제
-    for filename in os.listdir(dataset_dir):
+    # 2. 기존 practice 데이터셋 관련 파일만 삭제
+    practice_specific_files = ["practice_dataset", "practice_dataset.zip", "practice_dataset_done.txt"]
+    for filename in practice_specific_files:
         file_path = os.path.join(dataset_dir, filename)
         try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+            if os.path.exists(file_path):
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                    show_tagged_progress('DEBUG', f'기존 파일 삭제: {file_path}', start_time)
+                elif os.path.isdir(file_path):
+                    import shutil
+                    shutil.rmtree(file_path)
+                    show_tagged_progress('DEBUG', f'기존 폴더 삭제: {file_path}', start_time)
         except Exception as e:
-            show_tagged_progress('ERROR', f'기존 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
+            show_tagged_progress('ERROR', f'기존 practice 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
 
     # 환경 변수에서 서버 주소 가져오기
     server_url = os.environ.get("API_SERVER_URL")
