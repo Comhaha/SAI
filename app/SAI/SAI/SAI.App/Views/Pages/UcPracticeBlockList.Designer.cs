@@ -106,7 +106,7 @@
             this.pTitleStart.Location = new System.Drawing.Point(0, 0);
             this.pTitleStart.Margin = new System.Windows.Forms.Padding(0);
             this.pTitleStart.Name = "pTitleStart";
-            this.pTitleStart.Size = new System.Drawing.Size(170, 30);
+            this.pTitleStart.Size = new System.Drawing.Size(118, 30);
             this.pTitleStart.TabIndex = 4;
             // 
             // pTitlePip
@@ -161,7 +161,7 @@
             this.fpParent.Location = new System.Drawing.Point(25, 3);
             this.fpParent.Margin = new System.Windows.Forms.Padding(5, 3, 3, 13);
             this.fpParent.Name = "fpParent";
-            this.fpParent.Size = new System.Drawing.Size(300, 1526);
+            this.fpParent.Size = new System.Drawing.Size(290, 1547);
             this.fpParent.TabIndex = 7;
             this.fpParent.WrapContents = false;
             // 
@@ -187,7 +187,7 @@
             this.pTitleLoadModel.Location = new System.Drawing.Point(0, 236);
             this.pTitleLoadModel.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleLoadModel.Name = "pTitleLoadModel";
-            this.pTitleLoadModel.Size = new System.Drawing.Size(160, 30);
+            this.pTitleLoadModel.Size = new System.Drawing.Size(150, 30);
             this.pTitleLoadModel.TabIndex = 8;
             // 
             // fpLoadModel
@@ -201,7 +201,7 @@
             this.fpLoadModel.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpLoadModel.Name = "fpLoadModel";
             this.fpLoadModel.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.fpLoadModel.Size = new System.Drawing.Size(290, 323);
+            this.fpLoadModel.Size = new System.Drawing.Size(290, 344);
             this.fpLoadModel.TabIndex = 9;
             this.fpLoadModel.WrapContents = false;
             // 
@@ -211,10 +211,10 @@
             this.pTitleLoadDataset.BackColor = System.Drawing.Color.Transparent;
             this.pTitleLoadDataset.Controls.Add(this.pAccodionLoadDataset);
             this.pTitleLoadDataset.Controls.Add(this.pTxtLoadDataset);
-            this.pTitleLoadDataset.Location = new System.Drawing.Point(0, 619);
+            this.pTitleLoadDataset.Location = new System.Drawing.Point(0, 640);
             this.pTitleLoadDataset.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleLoadDataset.Name = "pTitleLoadDataset";
-            this.pTitleLoadDataset.Size = new System.Drawing.Size(204, 30);
+            this.pTitleLoadDataset.Size = new System.Drawing.Size(190, 30);
             this.pTitleLoadDataset.TabIndex = 10;
             // 
             // fpLoadDataset
@@ -222,7 +222,7 @@
             this.fpLoadDataset.AutoSize = true;
             this.fpLoadDataset.Controls.Add(this.btnLoadDataset);
             this.fpLoadDataset.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpLoadDataset.Location = new System.Drawing.Point(0, 659);
+            this.fpLoadDataset.Location = new System.Drawing.Point(0, 680);
             this.fpLoadDataset.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpLoadDataset.Name = "fpLoadDataset";
             this.fpLoadDataset.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -236,7 +236,7 @@
             this.pTitleMachineLearning.BackColor = System.Drawing.Color.Transparent;
             this.pTitleMachineLearning.Controls.Add(this.pAccodionLearningMachine);
             this.pTitleMachineLearning.Controls.Add(this.pTxtMachineLearning);
-            this.pTitleMachineLearning.Location = new System.Drawing.Point(0, 742);
+            this.pTitleMachineLearning.Location = new System.Drawing.Point(0, 763);
             this.pTitleMachineLearning.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleMachineLearning.Name = "pTitleMachineLearning";
             this.pTitleMachineLearning.Size = new System.Drawing.Size(116, 30);
@@ -247,7 +247,7 @@
             this.fpMachineLearning.AutoSize = true;
             this.fpMachineLearning.Controls.Add(this.btnModelLearning);
             this.fpMachineLearning.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpMachineLearning.Location = new System.Drawing.Point(0, 782);
+            this.fpMachineLearning.Location = new System.Drawing.Point(0, 803);
             this.fpMachineLearning.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpMachineLearning.Name = "fpMachineLearning";
             this.fpMachineLearning.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -261,7 +261,7 @@
             this.pTitleResultCheck.BackColor = System.Drawing.Color.Transparent;
             this.pTitleResultCheck.Controls.Add(this.pAccodionResultCheck);
             this.pTitleResultCheck.Controls.Add(this.pTxtResultCheck);
-            this.pTitleResultCheck.Location = new System.Drawing.Point(0, 972);
+            this.pTitleResultCheck.Location = new System.Drawing.Point(0, 993);
             this.pTitleResultCheck.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleResultCheck.Name = "pTitleResultCheck";
             this.pTitleResultCheck.Size = new System.Drawing.Size(116, 30);
@@ -272,11 +272,11 @@
             this.fpResultCheck.AutoSize = true;
             this.fpResultCheck.Controls.Add(this.btnResultCheck);
             this.fpResultCheck.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpResultCheck.Location = new System.Drawing.Point(0, 1012);
+            this.fpResultCheck.Location = new System.Drawing.Point(0, 1033);
             this.fpResultCheck.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpResultCheck.Name = "fpResultCheck";
             this.fpResultCheck.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.fpResultCheck.Size = new System.Drawing.Size(300, 60);
+            this.fpResultCheck.Size = new System.Drawing.Size(290, 60);
             this.fpResultCheck.TabIndex = 15;
             this.fpResultCheck.WrapContents = false;
             // 
@@ -286,10 +286,10 @@
             this.pTitleImgPath.BackColor = System.Drawing.Color.Transparent;
             this.pTitleImgPath.Controls.Add(this.pAccodionImgPath);
             this.pTitleImgPath.Controls.Add(this.pTxtImgPath);
-            this.pTitleImgPath.Location = new System.Drawing.Point(0, 1092);
+            this.pTitleImgPath.Location = new System.Drawing.Point(0, 1113);
             this.pTitleImgPath.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleImgPath.Name = "pTitleImgPath";
-            this.pTitleImgPath.Size = new System.Drawing.Size(239, 30);
+            this.pTitleImgPath.Size = new System.Drawing.Size(220, 30);
             this.pTitleImgPath.TabIndex = 16;
             // 
             // fpImgPath
@@ -297,7 +297,7 @@
             this.fpImgPath.AutoSize = true;
             this.fpImgPath.Controls.Add(this.btnImgPath);
             this.fpImgPath.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpImgPath.Location = new System.Drawing.Point(0, 1132);
+            this.fpImgPath.Location = new System.Drawing.Point(0, 1153);
             this.fpImgPath.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpImgPath.Name = "fpImgPath";
             this.fpImgPath.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -311,7 +311,7 @@
             this.pTitleModelInference.BackColor = System.Drawing.Color.Transparent;
             this.pTitleModelInference.Controls.Add(this.pAccodionModelInference);
             this.pTitleModelInference.Controls.Add(this.pTxtModelInference);
-            this.pTitleModelInference.Location = new System.Drawing.Point(0, 1262);
+            this.pTitleModelInference.Location = new System.Drawing.Point(0, 1283);
             this.pTitleModelInference.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleModelInference.Name = "pTitleModelInference";
             this.pTitleModelInference.Size = new System.Drawing.Size(116, 30);
@@ -322,7 +322,7 @@
             this.fpModelInference.AutoSize = true;
             this.fpModelInference.Controls.Add(this.btnModelInference);
             this.fpModelInference.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpModelInference.Location = new System.Drawing.Point(0, 1302);
+            this.fpModelInference.Location = new System.Drawing.Point(0, 1323);
             this.fpModelInference.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpModelInference.Name = "fpModelInference";
             this.fpModelInference.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -336,7 +336,7 @@
             this.pTitleResultVisualize.BackColor = System.Drawing.Color.Transparent;
             this.pTitleResultVisualize.Controls.Add(this.pAccodionResultVisualize);
             this.pTitleResultVisualize.Controls.Add(this.pTxtResultVisualize);
-            this.pTitleResultVisualize.Location = new System.Drawing.Point(0, 1426);
+            this.pTitleResultVisualize.Location = new System.Drawing.Point(0, 1447);
             this.pTitleResultVisualize.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.pTitleResultVisualize.Name = "pTitleResultVisualize";
             this.pTitleResultVisualize.Size = new System.Drawing.Size(137, 30);
@@ -347,7 +347,7 @@
             this.fpResultVisualize.AutoSize = true;
             this.fpResultVisualize.Controls.Add(this.btnResultVisualize);
             this.fpResultVisualize.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.fpResultVisualize.Location = new System.Drawing.Point(0, 1466);
+            this.fpResultVisualize.Location = new System.Drawing.Point(0, 1487);
             this.fpResultVisualize.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.fpResultVisualize.Name = "fpResultVisualize";
             this.fpResultVisualize.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
@@ -362,7 +362,7 @@
             this.pAccodionStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pAccodionStart.Location = new System.Drawing.Point(0, 3);
             this.pAccodionStart.Name = "pAccodionStart";
-            this.pAccodionStart.Size = new System.Drawing.Size(20, 15);
+            this.pAccodionStart.Size = new System.Drawing.Size(10, 7);
             this.pAccodionStart.TabIndex = 8;
             // 
             // pTxtStart
@@ -375,7 +375,7 @@
             this.pTxtStart.Location = new System.Drawing.Point(20, 0);
             this.pTxtStart.Margin = new System.Windows.Forms.Padding(0);
             this.pTxtStart.Name = "pTxtStart";
-            this.pTxtStart.Size = new System.Drawing.Size(150, 30);
+            this.pTxtStart.Size = new System.Drawing.Size(98, 30);
             this.pTxtStart.TabIndex = 1;
             // 
             // btnStart
@@ -452,7 +452,7 @@
             this.pTxtLoadModel.Location = new System.Drawing.Point(20, 0);
             this.pTxtLoadModel.Margin = new System.Windows.Forms.Padding(0);
             this.pTxtLoadModel.Name = "pTxtLoadModel";
-            this.pTxtLoadModel.Size = new System.Drawing.Size(140, 30);
+            this.pTxtLoadModel.Size = new System.Drawing.Size(130, 30);
             this.pTxtLoadModel.TabIndex = 3;
             // 
             // btnLoadModel
@@ -488,7 +488,7 @@
             this.btnLoadModelWithLayer.Location = new System.Drawing.Point(20, 75);
             this.btnLoadModelWithLayer.Margin = new System.Windows.Forms.Padding(0, 15, 0, 0);
             this.btnLoadModelWithLayer.Name = "btnLoadModelWithLayer";
-            this.btnLoadModelWithLayer.Size = new System.Drawing.Size(270, 109);
+            this.btnLoadModelWithLayer.Size = new System.Drawing.Size(270, 130);
             this.btnLoadModelWithLayer.TabIndex = 10;
             this.btnLoadModelWithLayer.Text = " ";
             // 
@@ -504,7 +504,7 @@
             this.btnLayer.FillColor = System.Drawing.Color.Transparent;
             this.btnLayer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnLayer.ForeColor = System.Drawing.Color.White;
-            this.btnLayer.Location = new System.Drawing.Point(20, 199);
+            this.btnLayer.Location = new System.Drawing.Point(20, 220);
             this.btnLayer.Margin = new System.Windows.Forms.Padding(0, 15, 0, 0);
             this.btnLayer.Name = "btnLayer";
             this.btnLayer.Size = new System.Drawing.Size(228, 124);
@@ -529,7 +529,7 @@
             this.pTxtLoadDataset.Location = new System.Drawing.Point(20, 0);
             this.pTxtLoadDataset.Margin = new System.Windows.Forms.Padding(0);
             this.pTxtLoadDataset.Name = "pTxtLoadDataset";
-            this.pTxtLoadDataset.Size = new System.Drawing.Size(184, 30);
+            this.pTxtLoadDataset.Size = new System.Drawing.Size(170, 30);
             this.pTxtLoadDataset.TabIndex = 3;
             // 
             // btnLoadDataset
@@ -625,7 +625,7 @@
             this.btnResultCheck.Location = new System.Drawing.Point(20, 0);
             this.btnResultCheck.Margin = new System.Windows.Forms.Padding(0);
             this.btnResultCheck.Name = "btnResultCheck";
-            this.btnResultCheck.Size = new System.Drawing.Size(280, 60);
+            this.btnResultCheck.Size = new System.Drawing.Size(270, 60);
             this.btnResultCheck.TabIndex = 9;
             // 
             // pAccodionImgPath
@@ -646,7 +646,7 @@
             this.pTxtImgPath.Location = new System.Drawing.Point(20, 0);
             this.pTxtImgPath.Margin = new System.Windows.Forms.Padding(0);
             this.pTxtImgPath.Name = "pTxtImgPath";
-            this.pTxtImgPath.Size = new System.Drawing.Size(219, 30);
+            this.pTxtImgPath.Size = new System.Drawing.Size(200, 30);
             this.pTxtImgPath.TabIndex = 3;
             // 
             // btnImgPath
@@ -754,7 +754,7 @@
             this.Controls.Add(this.fpParent);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "UcPracticeBlockList";
-            this.Size = new System.Drawing.Size(328, 1542);
+            this.Size = new System.Drawing.Size(318, 1563);
             this.pTitleStart.ResumeLayout(false);
             this.pTitlePip.ResumeLayout(false);
             this.fpStart.ResumeLayout(false);
