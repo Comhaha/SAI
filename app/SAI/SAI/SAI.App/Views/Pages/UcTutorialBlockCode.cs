@@ -73,7 +73,7 @@ namespace SAI.SAI.App.Views.Pages
 
             blocklyModel = BlocklyModel.Instance;
             pSideInfer.Visible = false;
-
+            pleaseControlThreshold.Visible = false;
             errorMessage = "";
             missingType = "";
 
@@ -363,6 +363,7 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.Size = new Size(494, 278);
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                     pboxInferAccuracy.Visible = true;
+                    pleaseControlThreshold.Visible = true;
                 }
             };
 
@@ -372,6 +373,7 @@ namespace SAI.SAI.App.Views.Pages
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({newAccuracy})");
                 tboxThreshold.Text = newAccuracy.ToString();
                 tbarThreshold.Value = (int)(newAccuracy * 100);
+                pleaseControlThreshold.Visible = false;
             };
 			///////////////////////////////////////////////////
 		}
@@ -733,7 +735,6 @@ namespace SAI.SAI.App.Views.Pages
 					// 생성한 모델 삭제
 					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
-
 					var mainModel = MainModel.Instance;
 
 					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
@@ -993,13 +994,13 @@ namespace SAI.SAI.App.Views.Pages
 
         public void AppendLog(string text)
         {
-            Debug.WriteLine($"[YOLO Tutorial] {text}");
+            //Debug.WriteLine($"[YOLO Tutorial] {text}");
         }
 
         public void ClearLog()
         {
             // Debug 출력에서는 Clear() 대신 구분선을 출력하여 로그를 구분
-            Debug.WriteLine("\n" + new string('-', 50) + "\n");
+            //Debug.WriteLine("\n" + new string('-', 50) + "\n");
         }
 
         public void SetLogVisible(bool visible)

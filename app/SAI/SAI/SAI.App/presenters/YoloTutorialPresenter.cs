@@ -38,10 +38,6 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                // 스크립트 실행 시작 시간 기록
-                _scriptStartTime = DateTime.Now;
-                Console.WriteLine($"[INFO] 스크립트 실행 시작 시간: {_scriptStartTime}");
-                
                 // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
                 if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
                 {
