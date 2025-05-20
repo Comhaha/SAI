@@ -1365,7 +1365,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
-                
+
                 //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
                 //if (currentImageIndex == 0)
                 //{
@@ -1375,11 +1375,11 @@ namespace SAI.SAI.App.Views.Pages
                 //{
                 //    preBtn.Visible = true;
                 //}
-                
-                //// 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
-                //nextBtn.Enabled = true;
-                //nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                
+
+                // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
+                nextBtn.Enabled = true;
+                nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
+
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
