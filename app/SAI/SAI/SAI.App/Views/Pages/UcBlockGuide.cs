@@ -87,6 +87,11 @@ namespace SAI.SAI.App.Views.Pages
             btnNext.BringToFront();
             btnPre.BringToFront();
             btnClose.BringToFront();
+            btnNext.Size = new Size(45, 45);
+            btnPre.Size = new Size(45, 45);
+            btnClose.Size = new Size(35, 35);
+            
+
         }
 
         private void SetupButtonEvents()

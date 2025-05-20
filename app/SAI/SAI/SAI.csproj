@@ -837,6 +837,10 @@
     <None Include="Resources\img_tooltip_toolLabelingPolygon.png" />
     <None Include="Resources\img_tooltip_toolLabelingSquare.png" />
     <None Include="Resources\bg_dialog_error_inference.png" />
+    <None Include="Resources\btn_next_guide_clicked.png" />
+    <None Include="Resources\btn_pre_guide.png" />
+    <None Include="Resources\btn_next_guide.png" />
+    <None Include="Resources\btn_pre_guide_clicked.png" />
     <Content Include="SAI.App\Resources\Images\1.jpg" />
     <Content Include="SAI.App\Resources\Images\2.jpg" />
     <Content Include="SAI.App\Resources\Images\3.jpg" />
