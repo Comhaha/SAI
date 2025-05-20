@@ -918,13 +918,14 @@ namespace SAI.SAI.App.Views.Pages
 		private void btnRunModel_Click(object sender, EventArgs e)
 		{
 			if (blocklyModel.blockTypes != null)
-			{
+			{   
+                // 블럭 순서가 맞는지 판단
 				if (!isBlockError()) // 순서가 맞을 때
 				{
 					// 파이썬 코드 실행
 					RunButtonClicked?.Invoke(sender, e);
 				}
-				else
+				else // 순서가 틀릴때
 				{
 					ShowToastMessage(errorType, missingType, errorMessage);
 				}

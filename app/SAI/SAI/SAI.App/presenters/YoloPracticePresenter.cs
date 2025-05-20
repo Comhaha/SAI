@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAI.SAI.App.Forms.Dialogs;
@@ -96,12 +97,29 @@ namespace SAI.SAI.App.Presenters
                                     _yolopracticeview.AppendLog(text);
                                 }
 
+                                // PROGRESS: 로 시작하는 로그 찾아서 : 기준으로 끊고, 왼쪽은 progress, 오른쪽은 message로 파싱
+                                // updateprogress 호출
                                 if (text.StartsWith("PROGRESS:"))
                                 {
                                     var parts = text.Substring(9).Split(new[] { ':' }, 2);
                                     if (parts.Length == 2 && double.TryParse(parts[0], out double progress))
                                     {
                                         string message = parts[1];
+
+                                        // 태그 추출
+                                        // "TRAIN" "DATASET" "ERROR" "INFO"
+                                        string tag = "";
+                                        var tagMatch = Regex.Match(message, @"\[(\w+)\]");
+                                        if (tagMatch.Success)
+                                        {
+                                            tag = tagMatch.Groups[1].Value;
+                                        }
+
+                                        //if (!string.IsNullOrEmpty(tag))
+                                        //{
+                                        //    // 태그 부분([TAG] )만 제거
+                                        //    message = message.Substring(tagMatch.Length).Trim();
+                                        //}
 
                                         if (_progressDialog != null && !_progressDialog.IsDisposed)
                                         {
@@ -142,13 +160,13 @@ namespace SAI.SAI.App.Presenters
                                         {
                                             if (!_progressDialog.IsDisposed)
                                             {
-                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                               // _progressDialog.UpdateProgress(0, $"오류: {text}");
                                             }
                                         }));
                                     }
                                     else
                                     {
-                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                        //_progressDialog.UpdateProgress(0, $"오류: {text}");
                                     }
                                 }
                             }
@@ -217,6 +235,9 @@ namespace SAI.SAI.App.Presenters
                                         @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
                                     csvPath = Path.GetFullPath(csvPath);
                                     _yolopracticeview.ShowTrainingChart(csvPath);
+
+                                    // 스크립트 종료시 추론 결과 이미지 확인 및 표시
+                                    CheckAndShowPracticeInferenceResult();
                                 }
                             }));
                         }
@@ -224,10 +245,84 @@ namespace SAI.SAI.App.Presenters
                         {
                             _progressDialog.Close();
                             _progressDialog.Dispose();
+                            // 스크립트 종료시 추론 결과 이미지 확인 및 표시
+                            CheckAndShowPracticeInferenceResult();
                         }
                     }
                 }
             });
+        }
+
+        // 추론 결과를 확인하고 UI에 표시하는 메서드
+        private void CheckAndShowPracticeInferenceResult()
+        {
+            try
+            {
+                // 블록 모델에서 이미지 경로 가져오기
+                var model = BlocklyModel.Instance;
+                string imagePath = model?.imgPath;
+
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("[WARNING] 이미지 경로가 없습니다.");
+                    return;
+                }
+
+                Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
+
+                // 결과 이미지 경로 생성 (inference.py 스크립트와 동일한 방식으로)
+                string resultImagePath = null;
+                string directory = Path.GetDirectoryName(imagePath);
+                string filename = Path.GetFileNameWithoutExtension(imagePath);
+                string extension = Path.GetExtension(imagePath);
+                resultImagePath = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\SAI.Application\Python\runs\result",
+                    $"{filename}_result{extension}");
+                resultImagePath = Path.GetFullPath(resultImagePath);
+
+                Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
+
+                if (File.Exists(resultImagePath))
+                {
+                    Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
+
+                    // 추론 결과 객체 생성
+                    var result = new PythonService.InferenceResult
+                    {
+                        Success = true,
+                        ResultImage = resultImagePath,
+                        OriginalName = Path.GetFileName(imagePath)
+                    };
+
+                    // UI 스레드에서 결과 표시
+                    if (_practiceInferenceView != null)
+                    {
+                        if (_yolopracticeview is Control viewControl && viewControl.InvokeRequired)
+                        {
+                            viewControl.Invoke(new Action(() => {
+                                _practiceInferenceView.ShowPracticeInferResultImage(result);
+                            }));
+                        }
+                        else
+                        {
+                            _practiceInferenceView.ShowPracticeInferResultImage(result);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"[WARNING] 결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 추론 결과 확인 중 오류 발생: {ex.Message}");
+            }
         }
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행

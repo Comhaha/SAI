@@ -721,16 +721,11 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
-                    Console.WriteLine($"[DEBUG] 전달된 blocklyModel이 null인가? {(blocklyModel == null)}");
-                    Console.WriteLine($"[DEBUG] blockTypes count: {(blocklyModel?.blockTypes?.Count ?? -1)}");
-
                     // 파이썬 코드 실행
                     RunButtonClicked?.Invoke(sender, e);
                     pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
                     pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
-                    
-                    // 이제 스크립트 실행이 완료된 후 YoloTutorialPresenter의 CheckAndShowInferenceResult 메서드가 
-                    // 자동으로 호출되어 추론 결과를 확인하고 표시합니다.
+                 
 			    }
                 else // 순서가 틀릴 때
                 {
