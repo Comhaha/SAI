@@ -776,7 +776,7 @@ namespace SAI.SAI.App.Views.Pages
                 lbErrorMessage.Text = errorMessage;
 
                 // 2초 대기 (취소 가능)
-                await Task.Delay(2000, token);
+                await Task.Delay(5000, token);
                 pErrorToast.Visible = false;
             }
             catch (OperationCanceledException)
@@ -1532,5 +1532,5 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
-    }
+	}
 }

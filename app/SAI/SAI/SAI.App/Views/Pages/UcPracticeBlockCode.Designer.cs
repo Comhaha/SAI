@@ -614,11 +614,11 @@ namespace SAI.SAI.App.Views.Pages
 			// pboxInferAccuracy
 			// 
 			resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+			this.pboxInferAccuracy.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.pboxInferAccuracy.ImageRotate = 0F;
 			this.pboxInferAccuracy.Name = "pboxInferAccuracy";
 			this.pboxInferAccuracy.TabStop = false;
-            this.pboxInferAccuracy.Click += new System.EventHandler(this.pboxInferAccuracy_Click);
-            this.pboxInferAccuracy.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pboxInferAccuracy.Click += new System.EventHandler(this.pboxInferAccuracy_Click);
 			// 
 			// lblInferGraph
 			// 
