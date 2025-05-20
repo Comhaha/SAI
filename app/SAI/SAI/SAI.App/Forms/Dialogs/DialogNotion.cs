@@ -31,7 +31,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
 
-        private const string redirectBase = "http://localhost:8080/api/notion/callback";
+        private const string redirectBase = "https://k12d201.p.ssafy.io/api/notion/callback";
 
         public DialogNotion(string memo, double thresholdValue, string resultImagePath)
         {
@@ -76,7 +76,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            var service = new AiFeedbackService("http://localhost:8080", token);
+            var service = new AiFeedbackService("https://k12d201.p.ssafy.io", token);
             _feedPresenter = new AiFeedbackPresenter(this, service);
 
             SendRequested?.Invoke(this, new EventArgs());
