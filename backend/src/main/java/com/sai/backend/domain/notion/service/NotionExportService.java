@@ -258,13 +258,16 @@ public class NotionExportService {
         // 페이지를 부모로 설정
         content.put("parent", Map.of("page_id", pageId));
 
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String now = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(fmt);
+
         // properties 구조
         Map<String, Object> properties = new HashMap<>();
         properties.put("title", Map.of(
             "type", "title",
             "title", List.of(Map.of(
                 "type", "text",
-                "text", Map.of("content", "AI 분석 결과: " + aiLog.getId())
+                "text", Map.of("content", "AI 분석 결과: " + now)
             ))
         ));
 
@@ -288,11 +291,14 @@ public class NotionExportService {
         // 데이터베이스 속성 설정 (기존 속성이 있다면 사용, 없으면 기본값)
         Map<String, Object> properties = new HashMap<>();
 
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String now = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(fmt);
+
         // 제목 속성은 거의 모든 데이터베이스에 있음
         properties.put("제목", Map.of(
             "title", List.of(Map.of(
                 "type", "text",
-                "text", Map.of("content", "AI 분석 결과: " + aiLog.getId())
+                "text", Map.of("content", "AI 분석 결과: " + now)
             ))
         ));
 
