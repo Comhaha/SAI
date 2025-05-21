@@ -28,20 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnnotationEditorForm));
             this.saveBtn = new Guna.UI2.WinForms.Guna2Button();
             this.xBtn = new Guna.UI2.WinForms.Guna2Button();
             this.cancelBtn = new Guna.UI2.WinForms.Guna2Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.annotationText1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.pleaseNamePanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.annotationText1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveBtn
             // 
             this.saveBtn.BackColor = System.Drawing.Color.Transparent;
-            this.saveBtn.BackgroundImage = global::SAI.Properties.Resources.Frame_10789;
+            this.saveBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("saveBtn.BackgroundImage")));
             this.saveBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.saveBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.saveBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -59,7 +60,7 @@
             // xBtn
             // 
             this.xBtn.BackColor = System.Drawing.Color.Transparent;
-            this.xBtn.BackgroundImage = global::SAI.Properties.Resources.btn_close_pink;
+            this.xBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("xBtn.BackgroundImage")));
             this.xBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.xBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.xBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
@@ -78,7 +79,7 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.BackgroundImage = global::SAI.Properties.Resources.Frame_10788;
+            this.cancelBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("cancelBtn.BackgroundImage")));
             this.cancelBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.cancelBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.cancelBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -95,15 +96,44 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.annotationText1, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(40, 83);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(38, 80);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(421, 42);
             this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // annotationText1
+            // 
+            this.annotationText1.BackColor = System.Drawing.Color.Transparent;
+            this.annotationText1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.annotationText1.BorderColor = System.Drawing.Color.White;
+            this.annotationText1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.annotationText1.BorderThickness = 0;
+            this.annotationText1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.annotationText1.DefaultText = "";
+            this.annotationText1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.annotationText1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.annotationText1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.annotationText1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.annotationText1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.annotationText1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.annotationText1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.annotationText1.ForeColor = System.Drawing.Color.DimGray;
+            this.annotationText1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.annotationText1.Location = new System.Drawing.Point(5, 6);
+            this.annotationText1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.annotationText1.MaximumSize = new System.Drawing.Size(415, 36);
+            this.annotationText1.MinimumSize = new System.Drawing.Size(415, 36);
+            this.annotationText1.Name = "annotationText1";
+            this.annotationText1.PlaceholderText = "클래스 작성";
+            this.annotationText1.SelectedText = "";
+            this.annotationText1.Size = new System.Drawing.Size(415, 36);
+            this.annotationText1.TabIndex = 8;
             // 
             // guna2Panel1
             // 
@@ -118,7 +148,7 @@
             // pleaseNamePanel
             // 
             this.pleaseNamePanel.BackColor = System.Drawing.Color.Transparent;
-            this.pleaseNamePanel.BackgroundImage = global::SAI.Properties.Resources.bg_warning_empty;
+            this.pleaseNamePanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pleaseNamePanel.BackgroundImage")));
             this.pleaseNamePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pleaseNamePanel.FillColor = System.Drawing.Color.Transparent;
             this.pleaseNamePanel.Location = new System.Drawing.Point(43, 130);
@@ -127,33 +157,12 @@
             this.pleaseNamePanel.Size = new System.Drawing.Size(157, 14);
             this.pleaseNamePanel.TabIndex = 4;
             // 
-            // annotationText1
-            // 
-            this.annotationText1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.annotationText1.DefaultText = "";
-            this.annotationText1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.annotationText1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.annotationText1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.annotationText1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.annotationText1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.annotationText1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.annotationText1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText1.Location = new System.Drawing.Point(3, 3);
-            this.annotationText1.MaximumSize = new System.Drawing.Size(415, 36);
-            this.annotationText1.MinimumSize = new System.Drawing.Size(415, 36);
-            this.annotationText1.Name = "annotationText1";
-            this.annotationText1.PlaceholderText = "";
-            this.annotationText1.SelectedText = "";
-            this.annotationText1.Size = new System.Drawing.Size(415, 36);
-            this.annotationText1.TabIndex = 8;
-            // 
             // AnnotationEditorForm
             // 
             this.AcceptButton = this.saveBtn;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.BackgroundImage = global::SAI.Properties.Resources.annotation_모달;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.xBtn;
             this.ClientSize = new System.Drawing.Size(499, 228);
@@ -167,7 +176,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AnnotationEditorForm";
             this.TransparencyKey = System.Drawing.Color.DimGray;
-            this.Load += new System.EventHandler(this.AnnotationEditorForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

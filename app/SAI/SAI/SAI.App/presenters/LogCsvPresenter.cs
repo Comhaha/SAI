@@ -125,25 +125,25 @@ namespace SAI.SAI.App.Presenters
                 return;
             }
 
-            // 1) 헤더 파싱 (epoch 제외)
-            var headers = lines[0].Split(',');
-            int colCount = headers.Length - 1;          // epoch 제외
-            string[] titles = new string[colCount];
-            Array.Copy(headers, 1, titles, 0, colCount);
+                // 1) 헤더 파싱 (epoch 제외)
+                var headers = lines[0].Split(',');
+                int colCount = headers.Length - 1;          // epoch 제외
+                string[] titles = new string[colCount];
+                Array.Copy(headers, 1, titles, 0, colCount);
 
-            // 2) 데이터 파싱
-            int rowCount = lines.Length - 1;
-            double[][] values = new double[colCount][];
-            
-            for (int c = 0; c < colCount; c++)
-                values[c] = new double[rowCount];
+                // 2) 데이터 파싱
+                int rowCount = lines.Length - 1;
+                double[][] values = new double[colCount][];
+                
+                for (int c = 0; c < colCount; c++)
+                    values[c] = new double[rowCount];
 
-            var culture = CultureInfo.InvariantCulture;
+                var culture = CultureInfo.InvariantCulture;
 
-            for (int r = 0; r < rowCount; r++)
-            {
-                // lineIndex = r+1 (데이터 시작)
-                var parts = lines[r + 1].Split(',');
+                for (int r = 0; r < rowCount; r++)
+                {
+                    // lineIndex = r+1 (데이터 시작)
+                    var parts = lines[r + 1].Split(',');
 
                 // parts[0] = epoch, 필요하면 int.Parse(parts[0]) 가능
                 for (int c = 0; c < colCount; c++)
@@ -156,22 +156,22 @@ namespace SAI.SAI.App.Presenters
 
             }
 
-            double[][] smoothes = new double[colCount][];
-            for (int c = 0; c < colCount; c++)
-            {
-                int len = values[c].Length;
+                double[][] smoothes = new double[colCount][];
+                for (int c = 0; c < colCount; c++)
+                {
+                    int len = values[c].Length;
 
-                double alpha = 0.3;
-                double[] dst = new double[len];
+                    double alpha = 0.3;
+                    double[] dst = new double[len];
 
-                if (len == 0) continue;
+                    if (len == 0) continue;
 
-                dst[0] = values[c][0];
-                for(int i = 1; i < len; i++)
-                    dst[i] = alpha * values[c][i] + (1 - alpha) * dst[i - 1];
-                
-                smoothes[c] = dst;
-            }
+                    dst[0] = values[c][0];
+                    for(int i = 1; i < len; i++)
+                        dst[i] = alpha * values[c][i] + (1 - alpha) * dst[i - 1];
+                    
+                    smoothes[c] = dst;
+                }
 
             // 3) 모델에 저장
             LogCsvModel.instance.titles = titles;

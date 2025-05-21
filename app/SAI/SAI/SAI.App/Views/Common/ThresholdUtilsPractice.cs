@@ -35,7 +35,7 @@ namespace SAI.SAI.App.Views.Common
             {
                 currentThreshold = trackBar.Value / 100.0;
                 textBox.Text = currentThreshold.ToString("0.00");
-                Console.WriteLine($"[TrackBar] 현재 threshold 값: {currentThreshold:0.00}");
+                //Console.WriteLine($"[TrackBar] 현재 threshold 값: {currentThreshold:0.00}");
             };
 
             // 마우스를 뗄 때 BlocklyModel에 값을 반영
@@ -46,54 +46,7 @@ namespace SAI.SAI.App.Views.Common
                 Console.WriteLine($"[MouseUp] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
                 view.ShowDialogInferenceLoading();
-
             };
-
-            textBox.KeyPress += (s, e) =>
-            {
-                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
-                {
-                    e.Handled = true;
-                    return;
-                }
-                if (e.KeyChar == '.' && textBox.Text.Contains("."))
-                {
-                    e.Handled = true;
-                    return;
-                }
-                if (e.KeyChar == (char)Keys.Enter)
-                {
-                    UpdateFromTextBox(textBox, trackBar, ref currentThreshold, onThresholdChanged);
-                    e.Handled = true;
-                }
-            };
-
-            textBox.Leave += (s, e) =>
-            {
-                UpdateFromTextBox(textBox, trackBar, ref currentThreshold, onThresholdChanged);
-            };
-        }
-
-        private static void UpdateFromTextBox(Guna2TextBox textBox, Guna2TrackBar trackBar, ref double currentThreshold, Action<double> onThresholdChanged)
-        {
-            var blocklyModel = BlocklyModel.Instance;
-            if (double.TryParse(textBox.Text, out double value))
-            {
-                value = Math.Max(0.01, Math.Min(1.00, value));
-                currentThreshold = value;
-                textBox.Text = value.ToString("0.00");
-
-                trackBar.ValueChanged -= null;
-                trackBar.Value = (int)(value * 100);
-                blocklyModel.accuracy = currentThreshold;  // accuracy 값 업데이트
-                Console.WriteLine($"[TextBox] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
-                onThresholdChanged?.Invoke(currentThreshold);
-            }
-            else
-            {
-                textBox.Text = currentThreshold.ToString("0.00");
-                Console.WriteLine($"[TextBox] 잘못된 입력으로 인한 복원 값: {currentThreshold:0.00}");
-            }
         }
     }
 

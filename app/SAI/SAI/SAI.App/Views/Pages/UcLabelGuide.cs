@@ -107,16 +107,19 @@ namespace SAI.SAI.App.Views.Pages
 
         private string currentLevel = "0"; // 현재 레벨
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
-		/// <summary>
-		/// 초기 생성자
-		/// </summary>
-		/// 
 
-		public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 생성자 및 초기화 관련 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 초기 생성자
+        /// </summary>
+        /// 
+
+        public event EventHandler<BlockEventArgs> AddBlockButtonClicked;
 		public event EventHandler<BlockEventArgs> AddBlockButtonDoubleClicked;
 
 		public UcLabelGuide(IMainView view)
@@ -153,7 +156,7 @@ namespace SAI.SAI.App.Views.Pages
             this.classBtn.PressedColor = Color.Transparent;
             classBtn.Visible = false; // 분류 버튼 숨김
 
-            //// progress0 부터 8까지 호버 및 클리 효과 삭제
+            //// progress0 부터 8까지 호버 및 클릭 효과 삭제
             //for (int i = 0; i < 9; i++)
             //{
             //    var progressLabel = Controls.Find($"progress{i}", true).FirstOrDefault() as Guna.UI2.WinForms.Guna2CircleButton;
@@ -237,7 +240,7 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void LoadImages()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory; 
+
             string folderPath = Path.Combine(baseDir, "Resources", "Images");
 
             // 디렉터리가 존재하는지 확인
@@ -245,7 +248,6 @@ namespace SAI.SAI.App.Views.Pages
             {
                 // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
                 string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.APP\Resources\Images"));
-
                 if (Directory.Exists(devPath))
                 {
                     folderPath = devPath;
@@ -343,7 +345,7 @@ namespace SAI.SAI.App.Views.Pages
             // 홈으로 돌아가기
             homeBtn.Click += (s, e) =>
             {
-                var dialog = new DialogHomeFromTrain();
+                var dialog = new DialogHomeFromLabeling();
                 dialog.ShowDialog(this);
             };
             //// 좌표 내보내기 버튼 클릭 이벤트 등록
@@ -487,7 +489,7 @@ namespace SAI.SAI.App.Views.Pages
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 50 && currentImageIndex != 8)
+            else if (currentAccuracy >= 90 && currentImageIndex != 8)
             {
                 //임시 50
                 nextBtn.Enabled = true;
@@ -1365,7 +1367,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
-                
+
                 //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
                 //if (currentImageIndex == 0)
                 //{
@@ -1375,11 +1377,11 @@ namespace SAI.SAI.App.Views.Pages
                 //{
                 //    preBtn.Visible = true;
                 //}
-                
-                //// 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
-                //nextBtn.Enabled = true;
-                //nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                
+
+                // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
+                nextBtn.Enabled = true;
+                nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
+
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
                 ResetZoom(); // 줌 초기화
                 UpdateShowLevel(); // showLevel 업데이트
@@ -3212,36 +3214,6 @@ namespace SAI.SAI.App.Views.Pages
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 기존 이벤트 핸들러들 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void guna2HtmlLabel1_Click_4(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void mainPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2GradientPanel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBoxImage_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolUndo_Click(object sender, EventArgs e)
         {
             Undo();
@@ -3404,31 +3376,6 @@ namespace SAI.SAI.App.Views.Pages
                                MessageBoxIcon.Error);
             }
         }
-
-        private void nextBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolZoom_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void currentLevel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void currentLevel_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mainpanel_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
         private void toolVisible_Click(object sender, EventArgs e)
         {
             try
@@ -3476,25 +3423,6 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void guna2Panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2HtmlLabel2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void levelPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void class2_Click(object sender, EventArgs e)
-        {
-
-        }
         private void ZoomOutBtn_Click(object sender, EventArgs e)
         {
             ApplyZoom(-0.1f);
@@ -3505,25 +3433,10 @@ namespace SAI.SAI.App.Views.Pages
             ApplyZoom(0.1f);
         }
 
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void accuracyPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         // 툴팁 패널 초기화 메서드
         private void InitializeTooltipPanel()
         {
-            // 툴팁 패널 생성
+            // 기존 텍스트 툴팁 패널 생성
             tooltipPanel = new Guna.UI2.WinForms.Guna2Panel();
             tooltipPanel.BackColor = System.Drawing.Color.FromArgb(50, 50, 50);
             tooltipPanel.FillColor = System.Drawing.Color.FromArgb(50, 50, 50);
@@ -3533,14 +3446,14 @@ namespace SAI.SAI.App.Views.Pages
             tooltipPanel.AutoSize = true;
             tooltipPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tooltipPanel.MinimumSize = new Size(150, 0);
-            tooltipPanel.MaximumSize = new Size(250, 0);
+            tooltipPanel.MaximumSize = new Size(500, 0);
             
             // 툴팁 레이블 생성
             tooltipLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             tooltipLabel.ForeColor = System.Drawing.Color.White;
             tooltipLabel.Font = new System.Drawing.Font("Noto Sans KR", 13F);
             tooltipLabel.AutoSize = true;
-            tooltipLabel.MaximumSize = new Size(230, 0);
+            tooltipLabel.MaximumSize = new Size(2000, 0);
             tooltipLabel.TextAlignment = ContentAlignment.MiddleLeft;
             
             // 패널에 레이블 추가
@@ -3552,8 +3465,26 @@ namespace SAI.SAI.App.Views.Pages
             
             // 툴팁 타이머 초기화
             tooltipTimer = new System.Windows.Forms.Timer();
-            tooltipTimer.Interval = 300;
+            tooltipTimer.Interval = 50;
             tooltipTimer.Tick += TooltipTimer_Tick;
+
+            // 부모 컨트롤의 MouseMove 이벤트 캡처하여 툴팁 위치 업데이트
+            this.MouseMove += (s, e) => 
+            {
+                if (tooltipPanel.Visible)
+                {
+                    Point mousePos = this.PointToClient(Cursor.Position);
+                    int xOffset = -tooltipPanel.Width - 10;
+                    int yOffset = -(tooltipPanel.Height / 2);
+                    
+                    if (mousePos.X + xOffset < 0)
+                    {
+                        xOffset = 10;
+                    }
+                    
+                    tooltipPanel.Location = new Point(mousePos.X + xOffset, mousePos.Y + yOffset);
+                }
+            };
         }
         
         // 툴팁 타이머 이벤트 핸들러
@@ -3618,56 +3549,64 @@ namespace SAI.SAI.App.Views.Pages
             {
                 control.MouseEnter += (s, e) => 
                 {
-                    tooltipLabel.Text = tooltipText;
-                    int xOffset = 0;
-                    int yOffset = 0;
-                    // 툴팁 위치 계산 (마우스 좌측에 표시)
-                    Point mousePos = this.PointToClient(Cursor.Position);
-                    if (control == questClassificationPanel || control == questBoxPanel || control == questSegPanel)
-                    {
-                        xOffset = 20; // 마우스 우측에 20픽셀 간격으로 표시
-                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
-                    }
-                    else
-                    {
-                        xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 10픽셀 간격으로 표시
-                        yOffset = -(tooltipPanel.Height / 2); // 마우스 높이의 중앙에 표시
-                    }
-
-                    // 화면 경계를 넘어가지 않도록 조정
-                    if (mousePos.X + xOffset < 0)
-                    {
-                        xOffset = 10; // 마우스 우측에 표시
-                    }
+                    // 일반 툴팁을 보여줄 컨트롤인지 특수 패널을 보여줄 컨트롤인지 확인
+                    bool isSpecialControl = (control == toolHand || control == toolLabelingPolygon || control == toolLabelingSquare);
                     
-                    tooltipPanel.Location = new Point(mousePos.X + xOffset, mousePos.Y + yOffset);
-                    
-                    // 타이머 시작 (지연 표시)
-                    tooltipTimer.Start();
-                };
-                
-                control.MouseLeave += (s, e) => 
-                {
-                    tooltipTimer.Stop();
-                    tooltipPanel.Visible = false;
-                };
-                
-                // 부모 컨트롤의 MouseMove 이벤트 캡처하여 툴팁 위치 업데이트
-                this.MouseMove += (s, e) => 
-                {
-                    if (tooltipPanel.Visible)
+                    if (!isSpecialControl)
                     {
+                        tooltipLabel.Text = tooltipText;
                         Point mousePos = this.PointToClient(Cursor.Position);
-                        int xOffset = -tooltipPanel.Width - 10;
-                        int yOffset = -(tooltipPanel.Height / 2);
+                        int xOffset = 0;
+                        int yOffset = 0;
                         
+                        // 툴팁 위치 계산
+                        if (control == questClassificationPanel || control == questBoxPanel || control == questSegPanel)
+                        {
+                            xOffset = 20; // 마우스 우측에 표시
+                            yOffset = -(tooltipPanel.Height / 2);
+                        }
+                        else
+                        {
+                            xOffset = -tooltipPanel.Width - 10; // 마우스 좌측에 표시
+                            yOffset = -(tooltipPanel.Height / 2);
+                        }
+                        
+                        // 화면 경계 확인
                         if (mousePos.X + xOffset < 0)
                         {
                             xOffset = 10;
                         }
                         
+                        // 위치 설정 및 타이머 시작
                         tooltipPanel.Location = new Point(mousePos.X + xOffset, mousePos.Y + yOffset);
+                        tooltipTimer.Start();
                     }
+                    else
+                    {
+                        // 특수 컨트롤에 대한 처리
+                        if (control == toolHand)
+                        {
+                            toolHandPanel.Visible = true;
+                        }
+                        else if (control == toolLabelingPolygon)
+                        {
+                            toolLabelingPolygonPanel.Visible = true;
+                        }
+                        else if (control == toolLabelingSquare)
+                        {
+                            toolLabelingSquarePanel.Visible = true;
+                        }
+                    }
+                };
+                
+                // MouseLeave 이벤트는 그대로 유지
+                control.MouseLeave += (s, e) => 
+                {
+                    tooltipTimer.Stop();
+                    tooltipPanel.Visible = false;
+                    toolHandPanel.Visible = false;
+                    toolLabelingPolygonPanel.Visible = false;
+                    toolLabelingSquarePanel.Visible = false;
                 };
             }
         }
@@ -3821,36 +3760,6 @@ namespace SAI.SAI.App.Views.Pages
         {
             // class2에 텍스트가 있으면 버튼 표시, 없으면 숨김
             classBtn.Visible = !string.IsNullOrEmpty(class3.Text);
-        }
-
-        private void progress0_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progress8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void accuracyLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toastPopupPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void classBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void totalLevelpanel_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

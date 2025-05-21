@@ -17,11 +17,7 @@ namespace SAI.SAI.App.Forms.Dialogs
     {
         // 파이썬 스크립트 종료 감지를 위함
         private Process pythonProcess;
-        public void SetProcess(Process process)
-        {
-            pythonProcess = process;
-        }
-
+        
         public DialogInferenceLoading()
         {
             InitializeComponent();
@@ -29,7 +25,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
             //ButtonUtils.SetupButton(guna2Button1, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
-            guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록
+            guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록 
 
             // 폼 스타일 설정
             this.FormBorderStyle = FormBorderStyle.None;
@@ -83,6 +79,11 @@ namespace SAI.SAI.App.Forms.Dialogs
             {
                 MessageBox.Show($"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void DialogInferenceLoading_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

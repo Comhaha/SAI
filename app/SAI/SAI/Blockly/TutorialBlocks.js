@@ -81,7 +81,7 @@ Blockly.defineBlocksWithJsonArray([
         "previousStatement": null,
         "nextStatement": null,
         "colour": 150,
-        "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 딸기와 바나나 데이터셋이 제공됩니다.",
+        "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 바나나 데이터셋이 제공됩니다.",
         "helpUrl": ""
         , "deletable": false
     }

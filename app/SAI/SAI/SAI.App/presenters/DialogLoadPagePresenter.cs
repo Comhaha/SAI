@@ -24,7 +24,7 @@ namespace SAI.SAI.App.Presenters
 
 		public void clickTrainAtModelSelect()
 		{
-			mainView.LoadPage(new UcPracticeBlockCode(mainView));
+			mainView.LoadPage(new UcPracticeGuide(mainView));
 		}
 
 		//public void clickGoTutorialBlockCode()
@@ -41,5 +41,10 @@ namespace SAI.SAI.App.Presenters
 		{
 			mainView.LoadPage(new UcSelectType(mainView));
 		}
-	}
+
+        public void clickGoPracticeGuide()
+        {
+            mainView.LoadPage(new UcPracticeGuide(mainView));
+        }
+    }
 }
