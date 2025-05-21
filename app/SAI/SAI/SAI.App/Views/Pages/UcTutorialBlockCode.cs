@@ -1367,8 +1367,8 @@ namespace SAI.SAI.App.Views.Pages
             else
             {
                 // 추론 실패 다이얼로그 생성 및 표시
-                btnSelectInferImage.Visible = true;
-                pboxInferAccuracy.Visible = false;
+                //btnSelectInferImage.Visible = true;
+                //pboxInferAccuracy.Visible = false;
 
                 var dialog = new DialogErrorInference();
                 dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
@@ -1526,5 +1526,10 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
-	}
+
+        private void pErrorToastCloseBtn_Click(object sender, EventArgs e)
+        {
+            pErrorToast.Visible = false;
+        }
+    }
 }

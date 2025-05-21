@@ -1167,8 +1167,8 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
-                btnSelectInferImage.Visible = true;
-                pboxInferAccuracy.Visible = false;
+                //btnSelectInferImage.Visible = true;
+                //pboxInferAccuracy.Visible = false;
                 var dialog = new DialogErrorInference();
                 dialog.SetErrorMessage(result.Error);
                 dialog.ShowDialog(this);
@@ -1365,5 +1365,10 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
-	}
+
+        private void pErrorCloseBtn_Click(object sender, EventArgs e)
+        {
+            pErrorToast.Visible = false;
+        }
+    }
 }
