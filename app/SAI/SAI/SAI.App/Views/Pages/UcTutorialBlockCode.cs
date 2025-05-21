@@ -734,7 +734,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
 					// 생성한 모델 삭제
 					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "weights", "best.pt"));
 					var mainModel = MainModel.Instance;
 
 					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
@@ -1379,8 +1379,8 @@ namespace SAI.SAI.App.Views.Pages
             else
             {
                 // 추론 실패 다이얼로그 생성 및 표시
-                btnSelectInferImage.Visible = true;
-                pboxInferAccuracy.Visible = false;
+                //btnSelectInferImage.Visible = true;
+                //pboxInferAccuracy.Visible = false;
 
                 var dialog = new DialogErrorInference();
                 dialog.SetErrorMessage(result.Error); // 에러 메시지 설정
@@ -1455,7 +1455,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             //모델 경로 다시 물어보기
-            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "weights", "best.pt"));
 
             if (!File.Exists(_modelPath))
             {

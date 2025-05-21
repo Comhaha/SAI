@@ -1,6 +1,7 @@
 ﻿using SAI.SAI.App.Models;
 using SAI.SAI.App.Presenters;
 using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 	public partial class DialogComfirmGoTrain : Form
 	{
 		private DialogLoadPagePresenter presenter;
+		private IMainView mainView;
 		public DialogComfirmGoTrain()
 		{
 			InitializeComponent();
@@ -72,7 +74,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
 				// tutorial에서 생성한 모델 삭제
 				string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-				string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+				string modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "weights", "best.pt"));
 
 				if (File.Exists(modelPath))
 				{

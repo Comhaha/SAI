@@ -22,7 +22,7 @@ namespace SAI.SAI.App.Presenters
             this._view = view;
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            this._imagePath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train13\\results.png"));
+			this._imagePath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "results.png"));
         }
 
         public void SetImage()

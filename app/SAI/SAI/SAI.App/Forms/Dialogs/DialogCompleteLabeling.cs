@@ -62,7 +62,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 				if (mainForm != null)
 				{
 					// mainForm의 LoadPage 메서드를 호출하여 페이지를 변경
-					 mainForm.LoadPage(new UcTutorialBlockCode(mainView));
+					 mainForm.LoadPage(new UcBlockGuide(mainView));
 					this.Close();
 				}
 			}; // <- 여기 페이지 이동으로 수정!!!!!!!

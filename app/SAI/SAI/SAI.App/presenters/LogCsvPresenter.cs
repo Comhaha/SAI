@@ -25,7 +25,7 @@ namespace SAI.SAI.App.Presenters
             this._view = view;
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            this._csvPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.csv"));
+			this._csvPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "results.csv"));
         }
 
         public void LoadCsv(string csvPath)

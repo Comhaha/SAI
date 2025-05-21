@@ -478,6 +478,12 @@
 				e.stopPropagation();
 				return false;
 			}
+
+			if (e.key == 'delete') {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
 		}, true);
     </script>
 
