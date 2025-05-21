@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
             // 새 세션 생성
             HttpSession newSession = request.getSession(true);
             request.changeSessionId();
-            newSession.setMaxInactiveInterval(10); // 5분 (300초)
+            newSession.setMaxInactiveInterval(300); // 5분 (300초)
 
             // 인증 객체 생성 - ADMIN 권한 부여
             Authentication auth = new UsernamePasswordAuthenticationToken(
