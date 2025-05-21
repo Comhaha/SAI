@@ -99,7 +99,7 @@ namespace SAI.SAI.App.Views.Pages
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
-            this.guna2Panel1.SuspendLayout();;
+            this.guna2Panel1.SuspendLayout();
             this.pTitle = new Guna.UI2.WinForms.Guna2Panel();
             this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
             this.ucCode２.SuspendLayout();
