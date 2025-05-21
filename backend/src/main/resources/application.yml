@@ -17,3 +17,10 @@ spring:
     redis:
       repositories:
         enabled: true
+
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: None
+        secure: true

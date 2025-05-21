@@ -54,7 +54,8 @@ public class AdminServiceImpl implements AdminService {
 
             // 새 세션 생성
             HttpSession newSession = request.getSession(true);
-            newSession.setMaxInactiveInterval(10); // 5분 (300초)
+            request.changeSessionId();
+            newSession.setMaxInactiveInterval(300); // 5분 (300초)
 
             // 인증 객체 생성 - ADMIN 권한 부여
             Authentication auth = new UsernamePasswordAuthenticationToken(
@@ -93,12 +94,14 @@ public class AdminServiceImpl implements AdminService {
             long remainingTime = maxInactiveInterval * 1000L - (currentTime - lastAccessedTime);
 
             if (remainingTime <= 0) {
+                log.info("세션이 만료되었습니다.");
                 return "세션이 만료되었습니다.";
             }
 
             long remainingMinutes = remainingTime / (60 * 1000);
             long remainingSeconds = (remainingTime % (60 * 1000)) / 1000;
 
+            log.info("세션 유지 중 (ID: {}, 남은 시간: {}분 {}초)", sessionId, remainingMinutes, remainingSeconds);
             return String.format("세션 유지 중 (ID: %s, 남은 시간: %d분 %d초)",
                 sessionId, remainingMinutes, remainingSeconds);
 

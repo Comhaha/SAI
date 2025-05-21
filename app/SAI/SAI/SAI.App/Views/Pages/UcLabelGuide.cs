@@ -500,17 +500,16 @@ namespace SAI.SAI.App.Views.Pages
             }
             else if (currentAccuracy >= 90 && currentImageIndex != 8)
             {
-                //임시 50
                 nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 50 && currentImageIndex == 8)
+            else if (currentAccuracy >= 90 && currentImageIndex == 8)
             {
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (0 < currentAccuracy && currentAccuracy < 50)
+            else if (0 < currentAccuracy && currentAccuracy < 90)
             {
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
