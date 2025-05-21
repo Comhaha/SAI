@@ -930,6 +930,15 @@
     <Content Include="SAI.App\Resources\Images\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- Python 폴더 전체를 복사 -->
+   <Content Include="SAI.Application\Python\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+  <!-- Python 폴더 전체를 복사 -->
+  <Content Include="Blockly\**">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
   </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
