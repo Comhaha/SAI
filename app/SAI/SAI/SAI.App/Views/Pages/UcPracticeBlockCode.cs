@@ -1161,8 +1161,8 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
-                btnSelectInferImage.Visible = true;
-                pboxInferAccuracy.Visible = false;
+                //btnSelectInferImage.Visible = true;
+                //pboxInferAccuracy.Visible = false;
                 var dialog = new DialogErrorInference();
                 dialog.SetErrorMessage(result.Error);
                 dialog.ShowDialog(this);
