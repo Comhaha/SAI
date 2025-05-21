@@ -39,7 +39,7 @@ namespace SAI.SAI.Application.Service
                 onOutput?.Invoke($"Base Directory: {baseDir}");
 
                 // python 3.9 임베디드 경로
-                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
+                string pythonExe = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "venv", "python.exe"));
                 Console.WriteLine($"Python Executable Path: {pythonExe}");
                 onOutput?.Invoke($"Python Executable Path: {pythonExe}");
 
@@ -53,13 +53,13 @@ namespace SAI.SAI.Application.Service
 
                 if (mode == Mode.Tutorial) // 튜토리얼 모드
                 {
-                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_runner.py"));
-                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\tutorial_train_script.py"));
+                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "tutorial_runner.py"));
+                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "tutorial_train_script.py"));
                 }
                 else if (mode == Mode.Practice) // 실습 모드
                 {
-                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_runner.py"));
-                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\practice_train_script.py"));
+                    runnerPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "practice_runner.py"));
+                    trainScriptPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "practice_train_script.py"));
                 }
                 else
                 {
@@ -194,8 +194,8 @@ namespace SAI.SAI.Application.Service
         public InferenceResult RunInference(string imagePath, double conf)
         {
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\venv\python.exe"));
-            string scriptPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.Application\Python\scripts\inference.py"));
+            string pythonExe = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "venv", "python.exe"));
+            string scriptPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "inference.py"));
 
             Console.WriteLine($"[LOG] pythonExe: {pythonExe}, Exists: {File.Exists(pythonExe)}");
             Console.WriteLine($"[LOG] scriptPath: {scriptPath}, Exists: {File.Exists(scriptPath)}");

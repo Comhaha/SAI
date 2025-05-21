@@ -1243,7 +1243,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             //모델 경로 다시 물어보기
-            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "weights", "best.pt"));
 
             if (!File.Exists(_modelPath))
             {
