@@ -1362,5 +1362,10 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
         }
+
+        private void pErrorCloseBtn_Click(object sender, EventArgs e)
+        {
+            pErrorToast.Visible = false;
+        }
     }
 }

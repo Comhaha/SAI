@@ -1094,18 +1094,6 @@
   <data name="btnRunModel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
-    <value>btnRunModel</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="pErrorImg.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -2057,50 +2045,32 @@
   <data name="tpParentError.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;tpContentError.Name" xml:space="preserve">
-    <value>tpContentError</value>
+  <data name="pErrorToastCloseBtn.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
   </data>
-  <data name="&gt;&gt;tpContentError.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pErrorToastCloseBtn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
   </data>
-  <data name="&gt;&gt;tpContentError.Parent" xml:space="preserve">
+  <data name="pErrorToastCloseBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>805, 22</value>
+  </data>
+  <data name="pErrorToastCloseBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 35</value>
+  </data>
+  <data name="pErrorToastCloseBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Name" xml:space="preserve">
+    <value>pErrorToastCloseBtn</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Parent" xml:space="preserve">
     <value>tpParentError</value>
   </data>
-  <data name="&gt;&gt;tpContentError.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;pErrorToastCloseBtn.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="tpParentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tpParentError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tpParentError.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="tpParentError.Size" type="System.Drawing.Size, System.Drawing">
-    <value>845, 194</value>
-  </data>
-  <data name="tpParentError.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tpParentError.Name" xml:space="preserve">
-    <value>tpParentError</value>
-  </data>
-  <data name="&gt;&gt;tpParentError.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tpParentError.Parent" xml:space="preserve">
-    <value>pErrorToast</value>
-  </data>
-  <data name="&gt;&gt;tpParentError.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tpParentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpContentError" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,90,Percent,5" /&gt;&lt;Rows Styles="Percent,10,Percent,80,Percent,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tpContentError.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2170,12 +2140,6 @@
   </data>
   <data name="&gt;&gt;tpContentError.Parent" xml:space="preserve">
     <value>tpParentError</value>
-  </data>
-  <data name="&gt;&gt;tpContentError.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tpErrorHeader.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2375,6 +2339,27 @@
   </data>
   <data name="&gt;&gt;lbErrorMessage.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;tpContentError.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tpParentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tpParentError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tpParentError.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tpParentError.Size" type="System.Drawing.Size, System.Drawing">
+    <value>845, 194</value>
+  </data>
+  <data name="tpParentError.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="lblTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR Medium, 13.7999992pt, style=Bold</value>
