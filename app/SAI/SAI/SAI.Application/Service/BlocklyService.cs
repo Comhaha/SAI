@@ -17,9 +17,9 @@ namespace SAI.SAI.Application.Service
 
         public BlocklyService()
         {
-            baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            tutorialPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\scripts\\tutorial_script.py"));
-            trainPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\scripts\\train_script.py"));
+			baseDir = AppDomain.CurrentDomain.BaseDirectory;
+			tutorialPath = Path.Combine(baseDir, "Python", "scripts", "tutorial_script.py");
+			trainPath = Path.Combine(baseDir, "Python", "scripts", "train_script.py");
         }
 
         // 튜토리얼에서 블록을 통해 생성된 코드를 파일에 저장하는 메소드  
