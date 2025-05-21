@@ -18,6 +18,7 @@ using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 using SAI.SAI.Application.Service;
 using System.Diagnostics;
+using CefSharp.DevTools.IndexedDB;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -1161,8 +1162,8 @@ namespace SAI.SAI.App.Views.Pages
             }
             else
             {
-                btnSelectInferImage.Visible = true;
-                pboxInferAccuracy.Visible = false;
+                //btnSelectInferImage.Visible = true;
+                //pboxInferAccuracy.Visible = false;
                 var dialog = new DialogErrorInference();
                 dialog.SetErrorMessage(result.Error);
                 dialog.ShowDialog(this);
