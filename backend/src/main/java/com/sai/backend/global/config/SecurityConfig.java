@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -53,20 +54,27 @@ public class SecurityConfig {
             .sessionManagement(s -> s
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .sessionFixation().migrateSession()
-                .invalidSessionStrategy(customInvalidSessionStrategy())
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
                 .expiredSessionStrategy(event -> {
-                    HttpServletResponse response = event.getResponse();
                     HttpServletRequest request = event.getRequest();
+                    HttpServletResponse response = event.getResponse();
 
-                    // 기존 세션 완전 삭제
                     HttpSession session = request.getSession(false);
                     if (session != null) {
+                        System.out.println("[ExpiredSession] 기존 세션 만료: " + session.getId());
                         session.invalidate();
                     }
 
-                    // SecurityContext 클리어
+                    System.out.println("[ExpiredSession] 요청된 URI: " + request.getRequestURI());
+                    System.out.println("[ExpiredSession] 요청된 JSESSIONID: " +
+                        (request.getCookies() != null ?
+                            Arrays.stream(request.getCookies())
+                                .filter(cookie -> "JSESSIONID".equals(cookie.getName()))
+                                .map(cookie -> cookie.getValue())
+                                .findFirst().orElse("없음") :
+                            "쿠키 없음"));
+
                     SecurityContextHolder.clearContext();
 
                     try {
@@ -78,19 +86,33 @@ public class SecurityConfig {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+//                    HttpServletResponse response = event.getResponse();
+//                    HttpServletRequest request = event.getRequest();
+//
+//                    // 기존 세션 완전 삭제
+//                    HttpSession session = request.getSession(false);
+//                    if (session != null) {
+//                        session.invalidate();
+//                    }
+//
+//                    // SecurityContext 클리어
+//                    SecurityContextHolder.clearContext();
+//
+//                    try {
+//                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                        response.setContentType("application/json;charset=UTF-8");
+//                        response.getWriter().write(
+//                            "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401,\"needLogin\":true}"
+//                        );
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                 })
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/admin/login", "/api/admin/register", "/api/admin/change").permitAll()
                 .requestMatchers("/api/admin/**", "/api/token/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .usernameParameter("password")
-                .passwordParameter("password")
-                .successHandler(customAuthenticationSuccessHandler())
-                .failureHandler(customAuthenticationFailureHandler())
-                .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/api/admin/logout")
@@ -141,38 +163,6 @@ public class SecurityConfig {
                     UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Bean
-    public InvalidSessionStrategy customInvalidSessionStrategy() {
-        return new InvalidSessionStrategy() {
-            @Override
-            public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response)
-                throws IOException, ServletException {
-
-                // 세션 무효화 시 완전히 정리
-                HttpSession session = request.getSession(false);
-                if (session != null) {
-                    session.invalidate();
-                }
-
-                // SecurityContext 완전히 클리어
-                SecurityContextHolder.clearContext();
-
-                // /api/admin/login 요청인 경우는 세션 만료 응답을 하지 않고 통과
-                if ("/api/admin/login".equals(request.getRequestURI())) {
-                    // 로그인 요청은 세션이 없어도 정상 처리되어야 함
-                    return;
-                }
-
-                // 세션이 무효화되었을 때의 처리
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(
-                    "{\"isSuccess\":false,\"message\":\"세션이 만료되었습니다. 다시 로그인해주세요.\",\"code\":401,\"needLogin\":true}"
-                );
-            }
-        };
     }
 
     @Bean
