@@ -854,18 +854,6 @@
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;btnRunModel.Name" xml:space="preserve">
-    <value>btnRunModel</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.Parent" xml:space="preserve">
-    <value>pTopBlock</value>
-  </data>
-  <data name="&gt;&gt;btnRunModel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="pErrorImg.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
@@ -1000,63 +988,6 @@
   </data>
   <data name="pSideInfer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
-  </data>
-  <metadata name="pleaseControlThreshold.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="pleaseControlThreshold.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="pleaseControlThreshold.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 9pt</value>
-  </data>
-  <data name="pleaseControlThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="pleaseControlThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 30</value>
-  </data>
-  <data name="pleaseControlThreshold.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="pleaseControlThreshold.Text" xml:space="preserve">
-    <value>threshold를 설정해주세요</value>
-  </data>
-  <data name="pleaseControlThreshold.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;pleaseControlThreshold.Name" xml:space="preserve">
-    <value>pleaseControlThreshold</value>
-  </data>
-  <data name="&gt;&gt;pleaseControlThreshold.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;pleaseControlThreshold.Parent" xml:space="preserve">
-    <value>guna2Panel1</value>
-  </data>
-  <data name="&gt;&gt;pleaseControlThreshold.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="guna2Panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>285, 497</value>
-  </data>
-  <data name="guna2Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 30</value>
-  </data>
-  <data name="guna2Panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="&gt;&gt;guna2Panel1.Name" xml:space="preserve">
-    <value>guna2Panel1</value>
-  </data>
-  <data name="&gt;&gt;guna2Panel1.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;guna2Panel1.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;guna2Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1519,6 +1450,63 @@
   <data name="&gt;&gt;ibtnAiFeedback.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
+  <metadata name="pleaseControlThreshold.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="pleaseControlThreshold.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="pleaseControlThreshold.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 9pt</value>
+  </data>
+  <data name="pleaseControlThreshold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="pleaseControlThreshold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 30</value>
+  </data>
+  <data name="pleaseControlThreshold.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="pleaseControlThreshold.Text" xml:space="preserve">
+    <value>threshold를 설정해주세요</value>
+  </data>
+  <data name="pleaseControlThreshold.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pleaseControlThreshold.Name" xml:space="preserve">
+    <value>pleaseControlThreshold</value>
+  </data>
+  <data name="&gt;&gt;pleaseControlThreshold.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;pleaseControlThreshold.Parent" xml:space="preserve">
+    <value>guna2Panel1</value>
+  </data>
+  <data name="&gt;&gt;pleaseControlThreshold.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="guna2Panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 497</value>
+  </data>
+  <data name="guna2Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 30</value>
+  </data>
+  <data name="guna2Panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;guna2Panel1.Name" xml:space="preserve">
+    <value>guna2Panel1</value>
+  </data>
+  <data name="&gt;&gt;guna2Panel1.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;guna2Panel1.Parent" xml:space="preserve">
+    <value>pSideInfer</value>
+  </data>
+  <data name="&gt;&gt;guna2Panel1.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
   <data name="pSideInfer.Location" type="System.Drawing.Point, System.Drawing">
     <value>1290, 0</value>
   </data>
@@ -1677,6 +1665,33 @@
   </data>
   <data name="tpParentError.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="pErrorToastCloseBtn.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="pErrorToastCloseBtn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="pErrorToastCloseBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>805, 22</value>
+  </data>
+  <data name="pErrorToastCloseBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 35</value>
+  </data>
+  <data name="pErrorToastCloseBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Name" xml:space="preserve">
+    <value>pErrorToastCloseBtn</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Button, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.Parent" xml:space="preserve">
+    <value>tpParentError</value>
+  </data>
+  <data name="&gt;&gt;pErrorToastCloseBtn.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tpContentError.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1884,7 +1899,7 @@
     <value>tpParentError</value>
   </data>
   <data name="&gt;&gt;tpContentError.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -1917,7 +1932,7 @@
     <value>0</value>
   </data>
   <data name="tpParentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpContentError" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,90,Percent,5" /&gt;&lt;Rows Styles="Percent,10,Percent,80,Percent,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="pErrorToastCloseBtn" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="tpContentError" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,5,Percent,90,Percent,5" /&gt;&lt;Rows Styles="Percent,10,Percent,80,Percent,10" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="pErrorToast.Location" type="System.Drawing.Point, System.Drawing">
     <value>218, 36</value>
