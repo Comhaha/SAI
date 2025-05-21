@@ -367,8 +367,14 @@ namespace SAI.SAI.App.Views.Pages
                 tbarThreshold.Value = (int)(newAccuracy * 100);
                 pleaseControlThreshold.Visible = false;
             };
-			///////////////////////////////////////////////////
-		}
+            ///////////////////////////////////////////////////
+            
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var csvPath = Path.Combine(baseDir,
+                @"..\..\SAI.Application\Python\runs\detect\train\example.csv");
+            csvPath = Path.GetFullPath(csvPath);
+            ShowTutorialTrainingChart(csvPath);
+        }
 
 
 
@@ -1485,7 +1491,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 if (!File.Exists(csvPath))
                 {
-                    ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
+                    //ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
                     return;
                 }
 
@@ -1499,7 +1505,7 @@ namespace SAI.SAI.App.Views.Pages
             }
             catch (Exception ex)
             {
-                ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+                //ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
             }
         }
 

@@ -46,12 +46,21 @@ namespace SAI.SAI.App.Presenters
                 }
                 else
                 {
-                    _view.ShowSendResult(false, "", result.message);
+                    if(result.code == 401)
+                    {
+                        _view.ShowSendResult(false, "", "Secret Key가 만료되었습니다. 관리자에게 문의하세요.");
+                    }
+                    else
+                    {
+                        _view.ShowSendResult(false, "", "관리자에게 문의하세요.");
+                    }
+                        
                 }
             }
             catch (Exception ex)
             {
-                _view.ShowSendResult(false, "", "전송 실패: " + ex.Message);
+                //_view.ShowSendResult(false, "", "전송 실패");
+                Console.WriteLine("전송 실패");
             }
             finally
             {
