@@ -85,13 +85,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**", "/api/token/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form
-                .usernameParameter("password")
-                .passwordParameter("password")
-                .successHandler(customAuthenticationSuccessHandler())
-                .failureHandler(customAuthenticationFailureHandler())
-                .permitAll()
-            )
             .logout(logout -> logout
                 .logoutUrl("/api/admin/logout")
                 .logoutSuccessHandler(customLogoutSuccessHandler())
