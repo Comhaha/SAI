@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SAI.SAI.App.Models;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.Application.Dto;
-using SAI.SAI.Application.Service;
+using SAI.App.Models;
+using SAI.App.Views.Interfaces;
+using SAI.Application.Dto;
+using SAI.Application.Service;
 
-namespace SAI.SAI.App.Presenters
+namespace SAI.App.Presenters
 {
     public class AiFeedbackPresenter : IDisposable
     {

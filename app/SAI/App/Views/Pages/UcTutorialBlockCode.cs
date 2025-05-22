@@ -4,27 +4,27 @@ using System.IO;
 using System.Text.Json;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using SAI.SAI.App.Forms.Dialogs;
-using SAI.SAI.App.Models.Events;
-using SAI.SAI.App.Views.Common;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.Application.Interop;
+using SAI.App.Forms.Dialogs;
+using SAI.App.Models.Events;
+using SAI.App.Views.Common;
+using SAI.App.Presenters;
+using SAI.App.Views.Interfaces;
+using SAI.Application.Interop;
 using Guna.UI2.WinForms;
-using SAI.SAI.App.Models;
+using SAI.App.Models;
 using System.Diagnostics;
-using static SAI.SAI.App.Models.BlocklyModel;
+using static SAI.App.Models.BlocklyModel;
 using System.Collections.Generic;
 using System.Messaging;
 using System.Threading.Tasks;
 using System.Linq;
-using SAI.SAI.Application.Service;
+using SAI.Application.Service;
 using System.Threading;
 using Timer = System.Windows.Forms.Timer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using CefSharp.DevTools.IndexedDB;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcTutorialBlockCode : UserControl, IUcShowDialogView, IBlocklyView, IYoloTutorialView, ITutorialInferenceView
     {

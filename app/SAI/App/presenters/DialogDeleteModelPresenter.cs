@@ -1,13 +1,13 @@
-﻿using SAI.SAI.App.Models;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.App.Views.Pages;
+﻿using SAI.App.Models;
+using SAI.App.Views.Interfaces;
+using SAI.App.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.App.Presenters
+namespace SAI.App.Presenters
 {
 	internal class DialogDeleteModelPresenter
 	{

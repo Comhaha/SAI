@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Views.Pages;
+using SAI.App.Views.Pages;
 
-namespace SAI.SAI.App.Views.Common
+namespace SAI.App.Views.Common
 {
     public class TransparentOverlay : Panel
     {

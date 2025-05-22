@@ -337,7 +337,7 @@
     <value>ucCode２</value>
   </data>
   <data name="&gt;&gt;ucCode２.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.UcCode, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.UcCode, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ucCode２.Parent" xml:space="preserve">
     <value>pCode</value>
@@ -891,7 +891,7 @@
     <value>pleaseControlThreshold</value>
   </data>
   <data name="&gt;&gt;pleaseControlThreshold.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pleaseControlThreshold.Parent" xml:space="preserve">
     <value>guna2Panel2</value>
@@ -975,7 +975,7 @@
     <value>lblInferGraph</value>
   </data>
   <data name="&gt;&gt;lblInferGraph.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lblInferGraph.Parent" xml:space="preserve">
     <value>ptxtGraphe</value>
@@ -1026,7 +1026,7 @@
     <value>lblThreshold</value>
   </data>
   <data name="&gt;&gt;lblThreshold.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lblThreshold.Parent" xml:space="preserve">
     <value>ptxtThreshold</value>
@@ -1095,7 +1095,7 @@
     <value>lblInfer</value>
   </data>
   <data name="&gt;&gt;lblInfer.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lblInfer.Parent" xml:space="preserve">
     <value>ptxtInfer</value>
@@ -1194,7 +1194,7 @@
     <value>ucCsvChart1</value>
   </data>
   <data name="&gt;&gt;ucCsvChart1.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.UcCsvChart, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.UcCsvChart, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ucCsvChart1.Parent" xml:space="preserve">
     <value>pSideInfer</value>
@@ -1611,7 +1611,7 @@
     <value>lbErrorType</value>
   </data>
   <data name="&gt;&gt;lbErrorType.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lbErrorType.Parent" xml:space="preserve">
     <value>tpErrorHeader</value>
@@ -1680,7 +1680,7 @@
     <value>lbMissingType</value>
   </data>
   <data name="&gt;&gt;lbMissingType.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lbMissingType.Parent" xml:space="preserve">
     <value>tpContentError</value>
@@ -1714,7 +1714,7 @@
     <value>lbErrorMessage</value>
   </data>
   <data name="&gt;&gt;lbErrorMessage.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lbErrorMessage.Parent" xml:space="preserve">
     <value>tpContentError</value>
@@ -1834,7 +1834,7 @@
     <value>lblTitle</value>
   </data>
   <data name="&gt;&gt;lblTitle.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lblTitle.Parent" xml:space="preserve">
     <value>pTitle</value>

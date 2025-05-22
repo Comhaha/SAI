@@ -1,5 +1,5 @@
-﻿using SAI.SAI.App.Models;
-using SAI.SAI.App.Models.Events;
+﻿using SAI.App.Models;
+using SAI.App.Models.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
 	public partial class UcPracticeBlockList : UserControl
 	{

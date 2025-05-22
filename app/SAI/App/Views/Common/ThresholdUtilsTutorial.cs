@@ -1,11 +1,11 @@
 ﻿using System;
 using Guna.UI2.WinForms;
 using System.Windows.Forms;
-using SAI.SAI.App.Models;
-using SAI.SAI.App.Views.Pages;
-using SAI.SAI.App.Views.Interfaces;
+using SAI.App.Models;
+using SAI.App.Views.Pages;
+using SAI.App.Views.Interfaces;
 
-namespace SAI.SAI.App.Views.Common
+namespace SAI.App.Views.Common
 {
     internal class ThresholdUtilsTutorial
     {
