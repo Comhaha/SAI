@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.Application.Service;
+using SAI.App.Presenters;
+using SAI.App.Views.Interfaces;
+using SAI.Application.Service;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class YoloTutorial : UserControl, IYoloTutorialView
     {

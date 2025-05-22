@@ -1,12 +1,12 @@
-﻿using SAI.SAI.App.Models;
-using SAI.SAI.App.Models.Events;
+﻿using SAI.App.Models;
+using SAI.App.Models.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.App.Views.Interfaces
+namespace SAI.App.Views.Interfaces
 {
 	internal interface IBlocklyView
 	{

@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Encodings.Web;
-using SAI.SAI.App.Models;
+using SAI.App.Models;
 
-namespace SAI.SAI.Application.Service
+namespace SAI.Application.Service
 {
     public class PythonService
     {

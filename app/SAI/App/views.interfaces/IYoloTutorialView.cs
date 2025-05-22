@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SAI.SAI.Application.Service;
+using SAI.Application.Service;
 using System.Windows.Forms;
 
-namespace SAI.SAI.App.Views.Interfaces
+namespace SAI.App.Views.Interfaces
 {
     public interface IYoloTutorialView
     {   // view 에서 YoloTutorialRun 버튼 이벤트 발생시

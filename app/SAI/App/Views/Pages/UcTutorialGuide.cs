@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
+using SAI.App.Presenters;
+using SAI.App.Views.Interfaces;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 
 {
     public partial class UcTutorialGuide : UserControl

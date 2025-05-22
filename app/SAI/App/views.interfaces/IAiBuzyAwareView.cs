@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.App.Views.Interfaces
+namespace SAI.App.Views.Interfaces
 {
     public enum BusyContext { Feedback, OAuth }
     public interface IAiBuzyAwareView

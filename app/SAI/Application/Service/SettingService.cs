@@ -1,6 +1,6 @@
-﻿using SAI.SAI.App.Models;
+﻿using SAI.App.Models;
 
-namespace SAI.SAI.Application.Service
+namespace SAI.Application.Service
 {
     public class SettingService
     {

@@ -6,14 +6,14 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SAI.SAI.Application.Dto;
+using SAI.Application.Dto;
 using System.IO;
 using System.Web.Script.Serialization;
-using SAI.SAI.App.Models;
+using SAI.App.Models;
 using System.Security.Cryptography;
 using System.Globalization;
 
-namespace SAI.SAI.Application.Service
+namespace SAI.Application.Service
 {
     public class AiFeedbackService
     {

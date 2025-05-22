@@ -1,4 +1,4 @@
-﻿namespace SAI.SAI.App.Views.Pages
+﻿namespace SAI.App.Views.Pages
 {
     partial class YoloTutorial
     {

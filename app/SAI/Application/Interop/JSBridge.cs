@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.Application.Interop
+namespace SAI.Application.Interop
 {
 	public class JsBridge
 	{

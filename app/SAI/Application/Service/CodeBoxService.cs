@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SAI.SAI.Application.Service
+namespace SAI.Application.Service
 {
     public class CodeBoxService
     {

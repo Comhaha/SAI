@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.Application.Dto
+namespace SAI.Application.Dto
 {
     public sealed class AiFeedbackResponseDto
     {

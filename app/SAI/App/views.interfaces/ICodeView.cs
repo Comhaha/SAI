@@ -1,4 +1,4 @@
-﻿namespace SAI.SAI.App.Views.Interfaces
+﻿namespace SAI.App.Views.Interfaces
 {
     public interface ICodeView
     {

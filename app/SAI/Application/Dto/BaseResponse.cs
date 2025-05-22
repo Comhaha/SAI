@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAI.SAI.Application.Dto
+namespace SAI.Application.Dto
 {
     public class BaseResponse<T>
     {
