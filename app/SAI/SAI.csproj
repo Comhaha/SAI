@@ -89,11 +89,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Application\Dto\AiFeedbackRequestDto.cs" />
     <Compile Include="Application\Dto\AiFeedbackResponseDto.cs" />
     <Compile Include="Application\Dto\BaseResponse.cs" />
@@ -375,7 +370,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="App\Forms\Dialogs\AnnotationEditorForm.resx">
       <DependentUpon>AnnotationEditorForm.cs</DependentUpon>
