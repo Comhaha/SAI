@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
 	public partial class AutoSizeLabel : UserControl
 	{

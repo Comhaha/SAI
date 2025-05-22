@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.Charts.WinForms;
 using Guna.UI2.WinForms;
-using SAI.SAI.App.Forms.Dialogs;
-using SAI.SAI.App.Models;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Common;
-using SAI.SAI.App.Views.Interfaces;
+using SAI.App.Forms.Dialogs;
+using SAI.App.Models;
+using SAI.App.Presenters;
+using SAI.App.Views.Common;
+using SAI.App.Views.Interfaces;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcCsvChart : UserControl, ICsvChartView
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.App.Views.Common;
+using SAI.App.Views.Interfaces;
+using SAI.App.Views.Common;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcBlockGuide : UserControl
     {

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace SAI.SAI.App.Views.Common
+namespace SAI.App.Views.Common
 {
     internal class DialogUtils
     {

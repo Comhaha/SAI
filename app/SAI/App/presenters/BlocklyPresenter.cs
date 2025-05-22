@@ -1,7 +1,7 @@
-﻿using SAI.SAI.App.Models;
-using SAI.SAI.App.Models.Events;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.Application.Service;
+﻿using SAI.App.Models;
+using SAI.App.Models.Events;
+using SAI.App.Views.Interfaces;
+using SAI.Application.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,10 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAI.SAI.App.Views.Pages;
-using static SAI.SAI.App.Models.BlocklyModel; // 추가: UcCode 클래스 접근을 위해 추가
+using SAI.App.Views.Pages;
+using static SAI.App.Models.BlocklyModel; // 추가: UcCode 클래스 접근을 위해 추가
 
-namespace SAI.SAI.App.Presenters
+namespace SAI.App.Presenters
 {
     internal class BlocklyPresenter
     {

@@ -1,6 +1,6 @@
 ﻿using Guna.UI2.WinForms.Enums;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     partial class UcPracticeBlockCode
     {

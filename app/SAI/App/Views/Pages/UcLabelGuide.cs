@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clipper2Lib;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.App.Forms.Dialogs;
-using SAI.SAI.App.Models.Events;
-using SAI.SAI.App.Presenters;
+using SAI.App.Views.Interfaces;
+using SAI.App.Forms.Dialogs;
+using SAI.App.Models.Events;
+using SAI.App.Presenters;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcLabelGuide : UserControl, IUcShowDialogView
     {

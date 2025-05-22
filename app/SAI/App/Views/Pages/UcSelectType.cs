@@ -1,10 +1,10 @@
-﻿using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
+﻿using SAI.App.Presenters;
+using SAI.App.Views.Interfaces;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcSelectType : UserControl, IUcShowDialogView
     {

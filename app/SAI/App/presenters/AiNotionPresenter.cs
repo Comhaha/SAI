@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SAI.SAI.App.Views.Interfaces;
+using SAI.App.Views.Interfaces;
 
-namespace SAI.SAI.App.Presenters
+namespace SAI.App.Presenters
 {
     public class AiNotionPresenter
     {

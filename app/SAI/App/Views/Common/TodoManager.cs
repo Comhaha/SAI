@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Guna.UI2.WinForms;
 
-namespace SAI.SAI.App.Views.Common
+namespace SAI.App.Views.Common
 {
     internal class TodoManager
     {

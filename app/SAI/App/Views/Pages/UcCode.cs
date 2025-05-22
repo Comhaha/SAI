@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using SAI.SAI.App.Models;
-using SAI.SAI.App.Views.Interfaces;
+using SAI.App.Models;
+using SAI.App.Views.Interfaces;
 using ScintillaNET;
 using System.Text.RegularExpressions;
 using System.Linq;
 
-namespace SAI.SAI.App.Views.Pages
+namespace SAI.App.Views.Pages
 {
     public partial class UcCode : UserControl, ICodeView
     {
