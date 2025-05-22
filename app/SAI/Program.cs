@@ -1,7 +1,6 @@
 ﻿using CefSharp;
 using System;
-using System.Windows.Forms;
-using SAI.SAI.App.Forms;
+using SAI.App.Forms;
 
 namespace SAI
 {
@@ -16,8 +15,8 @@ namespace SAI
 			
 			CefSharpSettings.WcfEnabled = true;
 
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             // 스플래시 화면 먼저 실행
             using (var splash = new SplashForm())
@@ -25,7 +24,7 @@ namespace SAI
                 splash.ShowDialog();
             }
 
-            Application.Run(new MainForm());
+            System.Windows.Forms.Application.Run(new MainForm());
 		}
 	}
 }
