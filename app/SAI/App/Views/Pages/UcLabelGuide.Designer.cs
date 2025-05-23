@@ -168,7 +168,7 @@ namespace SAI.App.Views.Pages
             this.class1.ForeColor = System.Drawing.Color.Black;
             this.class1.Location = new System.Drawing.Point(0, 0);
             this.class1.Name = "class1";
-            this.class1.Size = new System.Drawing.Size(92, 29);
+            this.class1.Size = new System.Drawing.Size(113, 36);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
             this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -642,7 +642,7 @@ namespace SAI.App.Views.Pages
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
-            this.ZoomCurrent.Size = new System.Drawing.Size(35, 19);
+            this.ZoomCurrent.Size = new System.Drawing.Size(44, 23);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
             this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;

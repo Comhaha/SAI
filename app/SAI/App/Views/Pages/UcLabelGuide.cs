@@ -14,6 +14,7 @@ using SAI.App.Views.Interfaces;
 using SAI.App.Forms.Dialogs;
 using SAI.App.Models.Events;
 using SAI.App.Presenters;
+using SAI.Properties;
 
 namespace SAI.App.Views.Pages
 {
@@ -247,7 +248,7 @@ namespace SAI.App.Views.Pages
             if (!Directory.Exists(folderPath))
             {
                 // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
-                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.APP\Resources\Images"));
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\APP\Resources\Images"));
                 if (Directory.Exists(devPath))
                 {
                     folderPath = devPath;
