@@ -93,14 +93,17 @@
 ![전체_튜토리얼_가이드](/uploads/60740e2cc1d3624c29f8c77e10d92275/전체_튜토리얼_가이드.gif)
   
 ##### ⑵ 라벨링
-  - Bounding Box
-
   - Classification
+  ![classification](/uploads/63a3ee41090613cfedaf78f87ef5519b/classification.gif)
+
+  - Bounding Box
+  ![bounding_box](/uploads/de9c44089439ee2e04aca50495e5f107/bounding_box.gif)
 
   - Segmentation
+  ![segmentation](/uploads/413b776fdcf3fd057408736755741882/segmentation.gif)
 
   - 도구 설명 툴팁
-![라벨링툴팁](/uploads/e758a2490cbf99ae1c61c1b0fd35298b/라벨링툴팁.gif)
+  ![라벨링툴팁](/uploads/e758a2490cbf99ae1c61c1b0fd35298b/라벨링툴팁.gif)
 
 #### ⑶ 블록코드 
   - AI 모델 학습
@@ -110,8 +113,10 @@
     - 블록 설명 툴팁
   ![블럭_툴팁](/uploads/22679c584fc1922f5f6aa6fd03ad05e0/블럭_툴팁.gif)
     - 코드 하이라이트 
+  ![블록코드_하이라이트](/uploads/b6235d9716a747f82efe41cf8dbd7760/블록코드_하이라이트.gif)
     
     - 메모 
+  ![memo](/uploads/2de5a7498e9fd164a11d1dfdc6c7bb1d/memo.gif)
 
   - AI 추론
 ![추론차트](/uploads/f7c08dbb14c000c4ee8b45982874b517/추론차트.gif)
@@ -213,7 +218,7 @@
 
 ## 서비스 아키텍처
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/f4c4ef8fdbc0ef323a034dd45d7cd662/%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png">
+![63668DC8-431E-42D8-9666-3DFA96FFA0D0](/uploads/73c8bfaefc1c6f022dec14faff7393af/63668DC8-431E-42D8-9666-3DFA96FFA0D0.png)
 
 <br/>
 
