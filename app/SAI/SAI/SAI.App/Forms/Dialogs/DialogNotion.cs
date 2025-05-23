@@ -54,7 +54,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         /* ---------------- IAiFeedbackView ---------------- */
         //Code 경로
         public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
+        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_script.py"));
         //log 사진 경로
         public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
         //무슨 사진이 결과 사진인지?

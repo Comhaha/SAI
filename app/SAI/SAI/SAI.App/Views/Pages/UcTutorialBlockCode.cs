@@ -368,7 +368,9 @@ namespace SAI.SAI.App.Views.Pages
                 pleaseControlThreshold.Visible = false;
             };
             ///////////////////////////////////////////////////
-            
+
+            ibtnDownloadAIModel.Click += ibtnDownloadAIModel_Click;
+
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
                 @"..\..\SAI.Application\Python\runs\detect\train\example.csv");
@@ -822,7 +824,7 @@ namespace SAI.SAI.App.Views.Pages
 
             Console.WriteLine("[DEBUG] memo : " + memo + " !");
             Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
-            Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
+            Console.WriteLine("[DEBUG] _result.ResultImage : " + currentImagePath + " !");
 
             using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
@@ -1033,7 +1035,7 @@ namespace SAI.SAI.App.Views.Pages
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage == null ? currentImagePath : _result.ResultImage))
             {
                 dialog.ShowDialog();
             }
@@ -1443,7 +1445,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             //모델 경로 다시 물어보기
-            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\last.pt"));
 
             if (!File.Exists(_modelPath))
             {

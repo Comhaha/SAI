@@ -52,6 +52,8 @@ namespace SAI.SAI.App.Views.Pages
         public void SetData()
         {
             if (_grid == null) BuildGrid();
+            
+            _grid.Controls.Clear();
 
             var m = LogCsvModel.instance;
             if (m.titles == null || m.values == null || m.smoothes == null) return;
