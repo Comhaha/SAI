@@ -21,7 +21,7 @@ public class RedisToken {
     private Long useCount;
 
     @TimeToLive
-    private Long expiration = 10_800L;
+    private Long expiration = 86_400L;
 
     public Token toEntity() {
         return Token.builder()

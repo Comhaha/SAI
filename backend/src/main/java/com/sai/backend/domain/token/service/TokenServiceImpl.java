@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TokenServiceImpl implements TokenService {
 
     private static final String KEY = "singleton-current-token";
-    private static final Duration TTL = Duration.ofHours(3);
+    private static final Duration TTL = Duration.ofHours(24);
 
     private final TokenUtil tokenUtil;
     private final JpaTokenRepository jpaTokenRepository;
