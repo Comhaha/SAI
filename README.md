@@ -80,48 +80,53 @@
 ### 1. 랜딩페이지
 #### 1) 홈 화면
 ![랜딩페이지_홈_화면](/uploads/5cd702b35b9acc5ff1966ccd6b2fa06f/랜딩페이지_홈_화면.gif)
+
 #### 2) 다운로드 화면
 ![다운로드_화면](/uploads/c94f90a16f2f6f865d9677cdb803a9d9/다운로드_화면.gif)
+
 #### 3) 어드민 로그인 화면
 ![어드민페이지](/uploads/99fb040cf641b92a9deb8f788112c0ca/어드민페이지.gif)
 
 ### 2.SAI 응용 프로그램
 #### 1) 홈 화면
 ![오픈소스_진입화면](/uploads/9d88c40cf5f28b70b236cc5968e8b66f/오픈소스_진입화면.gif)
+
 #### 2) 튜토리얼 화면
 ##### ⑴ 학습 가이드 
 ![전체_튜토리얼_가이드](/uploads/60740e2cc1d3624c29f8c77e10d92275/전체_튜토리얼_가이드.gif)
   
 ##### ⑵ 라벨링
-  - Classification
+###### ① Classification
   ![classification](/uploads/63a3ee41090613cfedaf78f87ef5519b/classification.gif)
 
-  - Bounding Box
+###### ② Bounding Box
   ![bounding_box](/uploads/de9c44089439ee2e04aca50495e5f107/bounding_box.gif)
 
-  - Segmentation
+###### ③ Segmentation
   ![segmentation](/uploads/413b776fdcf3fd057408736755741882/segmentation.gif)
 
-  - 도구 설명 툴팁
+###### ④ 도구 설명 툴팁
   ![라벨링툴팁](/uploads/e758a2490cbf99ae1c61c1b0fd35298b/라벨링툴팁.gif)
 
 #### ⑶ 블록코드 
-  - AI 모델 학습
+##### ① AI 모델 학습
 
-    - 블록 배치 피드백 
-![튜토리얼_복사_오류에러](/uploads/9377fe204bcaf288fc9282d7cd449df5/튜토리얼_복사_오류에러.gif)
-    - 블록 설명 툴팁
+  • 블록 배치 피드백 
+  ![튜토리얼_복사_오류에러](/uploads/9377fe204bcaf288fc9282d7cd449df5/튜토리얼_복사_오류에러.gif)
+
+  • 블록 설명 툴팁
   ![블럭_툴팁](/uploads/22679c584fc1922f5f6aa6fd03ad05e0/블럭_툴팁.gif)
-    - 코드 하이라이트 
+  
+  • 코드 하이라이트 
   ![블록코드_하이라이트](/uploads/b6235d9716a747f82efe41cf8dbd7760/블록코드_하이라이트.gif)
     
-    - 메모 
+  • 메모 
   ![memo](/uploads/2de5a7498e9fd164a11d1dfdc6c7bb1d/memo.gif)
 
-  - AI 추론
+##### ② AI 추론
 ![추론차트](/uploads/f7c08dbb14c000c4ee8b45982874b517/추론차트.gif)
 
-  - Notion 보고서 추출
+##### ③ Notion 보고서 추출
 ![노션_export](/uploads/567a94032e0f49326b8ef4507aa8620b/노션_export.gif)
 
 #### 3) 실습 화면
