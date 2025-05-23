@@ -223,16 +223,19 @@
   </tr>
   <tr>
     <td>
-      - AI model design<br>
-      - Training pipeline implementation
+      - 팀장/ PM <br>
+      - AI 총괄<br>
+      - 실행 환경 설정
     </td>
     <td>
-      - Backend server development<br>
-      - Prompt-based Notion export implementation
+      - Infra <br>
+      - Backend 총괄 <br>
+      - Notion 내보내기 기능
     </td>
     <td>
-      - Block coding UI/UX design<br>
-      - Real-time code conversion
+      - Frontend 총괄 <br>
+      - 블록 UI/UX <br>
+      - 블록 기능
     </td>
   </tr>
   <tr>
@@ -254,17 +257,19 @@
   </tr>
   <tr>
     <td>
-      - Labeling interface UI/UX<br>
-      - Full labeling feature development
+      - Classification <br>
+      - Bounding box <br>
+      - Segmentation <br>
     </td>
     <td>
-      - WinForms UI screen implementation<br>
-      - Reusable component implementation
+      - Home <br>
+      - 튜토리얼 UI/UX<br>
+      - 실습 UI/UX    
     </td>
     <td>
-      - Memo editor development<br>
-      - Code highlighting feature<br>
-      - Landing page UI design
+      - 랜딩페이지 <br>
+      - Memo 기능 <br>
+      - Code 기능
     </td>
   </tr>
 </table>
@@ -272,6 +277,7 @@
 <br/>
 
 <div id="7"></div>
+
 
 # 📒 메뉴얼 및 상세 문서
 
