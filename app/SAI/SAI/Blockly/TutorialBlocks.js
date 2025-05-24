@@ -104,6 +104,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "epochs",
                 "options": [
+                    ["1", "1"],
                     ["50", "50"],
                 ]
             },

@@ -826,7 +826,7 @@ namespace SAI.SAI.App.Views.Pages
 
             using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
-                dialog.ShowDialog();
+                dialog.ShowDialog(this);
             }
         }
 
@@ -1035,15 +1035,15 @@ namespace SAI.SAI.App.Views.Pages
 
             using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
             {
-                dialog.ShowDialog();
-            }
+                dialog.ShowDialog(this);
+			}
         }
 
         private void pboxGraphe_Click(object sender, EventArgs e)
         {
             using (var dialog = new DialogModelPerformance())
             {
-                dialog.ShowDialog();
+                dialog.ShowDialog(this);
             }
         }
 
@@ -1509,27 +1509,9 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void pboxInferAccuracy_Click(object sender, EventArgs e)
-        {
-            // 이미지가 있고 경로가 있으면 이미지 뷰어로 열기
-            if (pboxInferAccuracy.Image != null && !string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
-            {
-                try
-                {
-                    // 기본 이미지 뷰어로 이미지 열기
-                    Process.Start(currentImagePath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"이미지를 여는 중 오류가 발생했습니다: {ex.Message}", "오류", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void pErrorToastCloseBtn_Click(object sender, EventArgs e)
         {
             pErrorToast.Visible = false;
         }
-    }
+	}
 }
