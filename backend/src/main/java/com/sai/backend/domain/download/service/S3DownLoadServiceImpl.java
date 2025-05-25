@@ -25,7 +25,7 @@ public class S3DownLoadServiceImpl implements S3DownloadService{
     public URL generatePresignedUrl() {
         GetObjectRequest get = GetObjectRequest.builder()
             .bucket(bucketName)
-            .key("SAISetup.exe")
+            .key("SAISetup.zip")
             .build();
 
         GetObjectPresignRequest presign = GetObjectPresignRequest.builder()
