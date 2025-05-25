@@ -20,6 +20,8 @@ import io
 import re
 from datetime import datetime
 import shutil
+
+import subprocess
 # 로깅 레벨 설정
 logging.getLogger().setLevel(logging.INFO)
 
@@ -147,7 +149,8 @@ def install_packages_block(block_params=None):
     # 패키지 설치 순서 변경 및 버전 명시
     packages = [
         "numpy==1.24.3",
-        "ultralytics==8.0.196",
+        "matplotlib==3.5.3",
+        "ultralytics",
         "opencv-python==4.8.0.76"
     ]
     
@@ -180,36 +183,152 @@ def check_gpu_yolo_load_block(block_params=None):
     show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', gpu_start_time, 0)
     gpu_info = install_packages.check_gpu(gpu_start_time)
     time.sleep(0.5)  # 실제 확인 시간 대체(시뮬레이션)
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
+    
+    # GPU 사용 여부 확인
+    use_gpu = True  # 기본값으로 GPU 사용
+    if gpu_info.get("available", False):
+        show_tagged_progress('TRAIN', f'GPU가 감지되었습니다. GPU 모드로 실행합니다.', gpu_start_time, 100)
+        device = "cuda"
+    else:
+        show_tagged_progress('TRAIN', 'GPU 감지되지 않음. CPU 모드로 실행합니다.', gpu_start_time, 100)
+        device = "cpu"
+    
+    # PyTorch 정보 확인
+    try:
+        import torch
+        pytorch_version = torch.__version__
+        show_tagged_progress('INFO', f'현재 PyTorch 버전: {pytorch_version}', gpu_start_time, 20)
+        
+        # PyTorch CUDA 사용 가능 여부 확인
+        if torch.cuda.is_available() and device == "cuda":
+            cuda_version = torch.version.cuda
+            device_count = torch.cuda.device_count()
+            device_name = torch.cuda.get_device_name(0) if device_count > 0 else "Unknown"
+            show_tagged_progress('INFO', f'CUDA 사용 가능: 버전 {cuda_version}, GPU {device_count}개, 장치: {device_name}', gpu_start_time, 25)
+            
+            # GPU 메모리가 충분한지 확인하고 설정 적용
+            try:
+                total_memory = torch.cuda.get_device_properties(0).total_memory / (1024**3)  # GB 단위
+                if total_memory < 6:
+                    # 메모리가 적은 경우 최적화 설정 적용
+                    torch.cuda.set_per_process_memory_fraction(0.7)  # 메모리 사용량 제한
+                    show_tagged_progress('INFO', f'GPU 메모리 제한적 ({total_memory:.1f}GB) - 메모리 최적화 설정 적용됨', gpu_start_time, 28)
+            except Exception as e:
+                show_tagged_progress('INFO', f'GPU 메모리 확인 중 오류: {e}. 기본 설정 사용', gpu_start_time, 28)
+            
+            # CUDA 관련 환경 변수 설정 - 안정성 향상
+            os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+        else:
+            if device == "cuda":
+                show_tagged_progress('WARN', 'GPU가 감지되었지만 PyTorch에서 CUDA를 사용할 수 없습니다. CPU 모드로 전환합니다.', gpu_start_time, 25)
+                device = "cpu"
+            else:
+                show_tagged_progress('INFO', 'CUDA 사용 불가능. CPU 모드로 실행합니다.', gpu_start_time, 25)
+    except ImportError:
+        show_tagged_progress('INFO', 'PyTorch가 설치되어 있지 않습니다. 패키지 설치 단계에서 설치되었어야 합니다.', gpu_start_time, 25)
+        show_tagged_progress('WARN', '패키지 설치 단계를 먼저 실행했는지 확인하세요.', gpu_start_time, 30)
 
     # 2. block_params에서 model_type 받기 (기본값: 'n')
-    model_type = 'n'
+    model_type = 'yolov8n.pt'
     if block_params and 'model_type' in block_params:
-        if block_params['model_type'] in ['n', 's', 'm', 'l']:
+        if block_params['model_type'] in ['yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt', 'yolov8vl.pt']:
             model_type = block_params['model_type']
 
     # 3. 모델 로드 프로그레스 (별도 start_time 사용)
     model_load_time = time.time()
-    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
+    show_tagged_progress('TRAIN', f'{model_type} 모델 로드 중...', model_load_time, 0)
+    
     try:
-        from ultralytics import YOLO
-        model_filename = f'yolov8{model_type}.pt'
+        # 환경 변수 설정
+        os.environ["PYTHONIOENCODING"] = "utf-8"
+        if device == "cpu":
+            os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+        
+        # ultralytics 설치 여부 확인
+        try:
+            from ultralytics import YOLO
+            show_tagged_progress('INFO', 'ultralytics 모듈 로드 성공', model_load_time, 20)
+        except ImportError:
+            show_tagged_progress('WARN', 'ultralytics 모듈을 찾을 수 없습니다. 설치 시도...', model_load_time, 20)
+            subprocess.run(
+                [sys.executable, "-m", "pip", "install", "ultralytics==7.0.0", "--force-reinstall", "--no-cache-dir"],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+            # 재시도
+            import importlib
+            importlib.invalidate_caches()
+            from ultralytics import YOLO
+            show_tagged_progress('INFO', 'ultralytics 모듈 설치 및 로드 성공', model_load_time, 30)
+        
+        # 모델 파일 경로 설정
+        model_filename = f'{model_type}'
         model_path = os.path.join(base_dir, model_filename)
-        # 모델 로딩 진행 시뮬레이션
-        for progress in [10, 30, 50, 70, 90]:
-            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
-            time.sleep(0.2)
-        model = YOLO(model_path)
-        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
-
+        
+        # 모델 로드 진행 표시
+        for progress in [40, 50, 60, 70, 80]:
+            show_tagged_progress('TRAIN', f'{model_type} 모델 로드 중...', model_load_time, progress)
+            time.sleep(0.1)
+        
+        # 모델 파일 존재 확인
+        if not os.path.exists(model_path):
+            show_tagged_progress('WARN', f'모델 파일을 찾을 수 없습니다: {model_path}', model_load_time, 85)
+            show_tagged_progress('INFO', '모델 다운로드 시도...', model_load_time, 86)
+            
+            # 모델 자동 다운로드 시도
+            try:
+                model = YOLO('yolov8n.pt')  # 자동 다운로드
+                show_tagged_progress('INFO', '모델 자동 다운로드 완료', model_load_time, 90)
+            except Exception as e:
+                show_tagged_progress('ERROR', f'모델 자동 다운로드 실패: {e}', model_load_time, 90)
+                # 수동 다운로드 시도
+                try:
+                    import urllib.request
+                    yolo_url = "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt"
+                    show_tagged_progress('INFO', f'모델 수동 다운로드 중: {yolo_url}', model_load_time, 92)
+                    urllib.request.urlretrieve(yolo_url, model_path)
+                    show_tagged_progress('INFO', '모델 수동 다운로드 완료', model_load_time, 95)
+                    # 다운로드 후 모델 로드 시도
+                    model = YOLO(model_path)
+                except Exception as e2:
+                    show_tagged_progress('ERROR', f'모델 수동 다운로드 실패: {e2}', model_load_time, 95)
+                    raise
+        else:
+            # 파일이 있으면 모델 로드 시도
+            try:
+                model = YOLO(model_path)
+                show_tagged_progress('INFO', f'모델 로드 완료: {model_path}', model_load_time, 95)
+            except Exception as e:
+                show_tagged_progress('ERROR', f'모델 로드 오류: {e}', model_load_time, 95)
+                # NumPy 호환성 문제 확인
+                if "_DTypeMeta" in str(e) or "subscriptable" in str(e):
+                    show_tagged_progress('WARN', 'NumPy 호환성 문제 감지됨. NumPy 재설치 시도...', model_load_time, 96)
+                    # NumPy 재설치
+                    subprocess.run(
+                        [sys.executable, "-m", "pip", "install", "numpy==1.24.3", "--force-reinstall", "--no-cache-dir"],
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                    )
+                    import importlib
+                    import numpy
+                    importlib.reload(numpy)
+                    # 다시 시도
+                    show_tagged_progress('INFO', 'NumPy 재설치 후 다시 시도...', model_load_time, 97)
+                    model = YOLO('yolov8n.pt')  # 기본 모델 시도
+                else:
+                    raise
+        
+        # 모델 설정
+        model.task = 'detect'
+        show_tagged_progress('TRAIN', f'{model_type} 모델 로드 완료! ({device.upper()} 모드)', model_load_time, 100)
+        
         # 전역 상태 업데이트
         tutorial_state["model"] = model
         tutorial_state["model_path"] = model_path
-
+        
         return {
             "success": True,
             "gpu_info": gpu_info,
             "model_path": model_path,
+            "device": device,
             "elapsed_time": time.time() - gpu_start_time
         }
     except Exception as e:
@@ -306,7 +425,7 @@ def download_dataset_block(block_params=None):
             download_url = data['result']
             show_tagged_progress('DEBUG', '다운로드 URL 획득 성공', start_time)
         else:
-            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time)
+            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time, 100)
             tutorial_state["dataset_path"] = dataset_dir
             return {
                 "success": False,
@@ -314,7 +433,7 @@ def download_dataset_block(block_params=None):
                 "location": dataset_dir
             }
     except Exception as e:
-        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time)
+        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time, 100)
         tutorial_state["dataset_path"] = dataset_dir
         return {
             "success": False,
@@ -339,7 +458,7 @@ def download_dataset_block(block_params=None):
                     show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
         show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
-        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
+        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time, 100)
         tutorial_state["dataset_path"] = dataset_dir
         return {
             "success": False,
@@ -515,33 +634,52 @@ def train_model_block(block_params=None):
             "error": "데이터셋 YAML 파일 없음"
         }
     
-    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨)
-    gpu_info = install_packages.check_gpu(start_time)
-    device = "cuda" if gpu_info.get("available", False) else "cpu"
+    # GPU 정보 확인 - check_gpu_yolo_load_block 함수와 일관성 유지
+    try:
+        import torch
+        gpu_available = torch.cuda.is_available()
+        device = "cuda" if gpu_available else "cpu"
+        
+        if gpu_available:
+            cuda_version = torch.version.cuda
+            device_count = torch.cuda.device_count()
+            device_name = torch.cuda.get_device_name(0) if device_count > 0 else "Unknown"
+            show_tagged_progress('TRAIN', f'GPU 사용 가능. CUDA 버전: {cuda_version}, 장치: {device_name}', start_time, 15)
+        else:
+            show_tagged_progress('TRAIN', 'GPU 사용 불가능. CPU 모드로 실행합니다.', start_time, 15)
+    except:
+        device = "cpu"
+        show_tagged_progress('TRAIN', 'PyTorch CUDA 확인 실패. CPU 모드로 실행합니다.', start_time, 15)
     
     # 학습 파라미터 설정
     batch_size = 16
-    if device == "cuda" and gpu_info.get("available", False):
-        # GPU 메모리에 따른 배치 크기 조정
-        memory = gpu_info.get("memory_gb", [0])[0]
-        if memory and memory < 6:
-            batch_size = 8
-            show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
+    if device == "cuda" and gpu_available:
+        # GPU 메모리에 따른 배치 크기 조정 (더 정확한 조정)
+        try:
+            total_memory = torch.cuda.get_device_properties(0).total_memory / (1024**3)  # GB 단위
+            if total_memory < 6:
+                batch_size = 8
+                show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정 (메모리: {total_memory:.1f}GB)', start_time, 18)
+            elif total_memory < 8:
+                batch_size = 12
+                show_tagged_progress('TRAIN', f'GPU 메모리에 맞게 배치 크기 {batch_size}로 조정 (메모리: {total_memory:.1f}GB)', start_time, 18)
+        except:
+            show_tagged_progress('TRAIN', f'GPU 메모리 확인 실패. 기본 배치 크기 {batch_size} 사용', start_time, 18)
     
     # 에폭 수 설정 - 사용자 지정 값 또는 기본값
     if epochs is None:
         # 기본 에폭 수 설정
-        epochs = 5 if device == "cuda" else 2
+        epochs = 10 if device == "cuda" else 5
     else:
         # 사용자 지정 에폭 수를 정수로 변환
         try:
             epochs = int(epochs)
             if epochs <= 0:
                 show_tagged_progress('ERROR', f'에폭 수는 양수여야 합니다. 기본값을 사용합니다.', start_time, 15)
-                epochs = 5 if device == "cuda" else 2
+                epochs = 10 if device == "cuda" else 5
         except ValueError:
             show_tagged_progress('ERROR', f'유효하지 않은 에폭 수입니다. 기본값을 사용합니다.', start_time, 15)
-            epochs = 5 if device == "cuda" else 2
+            epochs = 10 if device == "cuda" else 5
     
     # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
     if imgsz is None:
@@ -562,7 +700,7 @@ def train_model_block(block_params=None):
             show_tagged_progress('ERROR', f'유효하지 않은 이미지 크기입니다. 기본값 640을 사용합니다.', start_time, 15)
             imgsz = 640
     
-    show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
+    show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device.upper()}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
     
     try:
         # 학습 시작 시간 기록
@@ -610,7 +748,7 @@ def train_model_block(block_params=None):
             epochs=epochs,
             batch=batch_size,
             imgsz=imgsz,
-            device=device,
+            device=device,  # CPU 제약 해제
             project=os.path.join(base_dir, "runs"),
             name="detect/train",  # 하위 폴더 구조 지정
             exist_ok=True, 
@@ -657,7 +795,7 @@ def train_model_block(block_params=None):
                     epochs=epochs,
                     batch=reduced_batch,
                     imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
-                    device=device,
+                    device=device,  # 동일한 디바이스 유지
                     project=os.path.join(base_dir, "runs"),
                     name="detect/train",
                     exist_ok=True
@@ -688,56 +826,111 @@ def train_model_block(block_params=None):
                 }
             except Exception as e2:
                 show_tagged_progress('ERROR', f'재시도도 실패: {e2}', start_time, 85)
-                # CPU로 전환
-                show_tagged_progress('TRAIN', 'CPU 모드로 전환합니다...', start_time, 90)
                 
-                try:
-                    # CPU로 전환하고 에폭 수 줄임
-                    cpu_epochs = min(2, epochs)  # 원래 에폭보다 크지 않게
-                    model = tutorial_state["model"]
+                # GPU 오류가 계속되면 CPU로 전환
+                if "CUDA out of memory" in str(e2) or "CUDA error" in str(e2):
+                    show_tagged_progress('TRAIN', 'GPU 오류로 CPU 모드로 전환합니다...', start_time, 90)
                     
-                    results = model.train(
-                        data=tutorial_state["data_yaml_path"],
-                        epochs=cpu_epochs,
-                        batch=4,
-                        imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
-                        device="cpu",
-                        project=os.path.join(base_dir, "runs"),
-                        name="detect/train",
-                        exist_ok=True
-                    )
-                    
-                    # 결과 경로 설정
-                    results_dir = find_latest_results_dir()
-                    model_path = os.path.join(results_dir, "weights", "best.pt")
-                    
-                    # 전역 상태 업데이트
-                    tutorial_state["model_path"] = model_path
-                    tutorial_state["results_dir"] = results_dir
-                    tutorial_state["training_completed"] = True
-                    
-                    cpu_elapsed = time.time() - start_time
-                    minutes, seconds = divmod(cpu_elapsed, 60)
-                    show_tagged_progress('TRAIN', f'CPU로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
-                    
-                    return {
-                        "success": True,
-                        "model_path": model_path,
-                        "results_dir": results_dir,
-                        "epochs": cpu_epochs,
-                        "imgsz": imgsz,
-                        "device": "cpu",
-                        "elapsed_time": cpu_elapsed,
-                        "note": "CPU 모드로 전환하여 완료"
-                    }
-                except Exception as e3:
-                    show_tagged_progress('ERROR', f'CPU 모드도 실패: {e3}', start_time, 95)
-                    return {
-                        "success": False,
-                        "error": str(e3),
-                        "original_error": str(e)
-                    }
-        
+                    try:
+                        # CPU로 전환하고 에폭 수 줄임
+                        cpu_epochs = min(3, epochs)  # 원래 에폭보다 크지 않게
+                        model = tutorial_state["model"]
+                        
+                        results = model.train(
+                            data=tutorial_state["data_yaml_path"],
+                            epochs=cpu_epochs,
+                            batch=4,
+                            imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
+                            device="cpu",
+                            project=os.path.join(base_dir, "runs"),
+                            name="detect/train",
+                            exist_ok=True
+                        )
+                        
+                        # 결과 경로 설정
+                        results_dir = find_latest_results_dir()
+                        model_path = os.path.join(results_dir, "weights", "best.pt")
+                        
+                        # 전역 상태 업데이트
+                        tutorial_state["model_path"] = model_path
+                        tutorial_state["results_dir"] = results_dir
+                        tutorial_state["training_completed"] = True
+                        
+                        cpu_elapsed = time.time() - start_time
+                        minutes, seconds = divmod(cpu_elapsed, 60)
+                        show_tagged_progress('TRAIN', f'CPU로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
+                        
+                        return {
+                            "success": True,
+                            "model_path": model_path,
+                            "results_dir": results_dir,
+                            "epochs": cpu_epochs,
+                            "imgsz": imgsz,
+                            "device": "cpu",
+                            "elapsed_time": cpu_elapsed,
+                            "note": "CPU 모드로 전환하여 완료"
+                        }
+                    except Exception as e3:
+                        show_tagged_progress('ERROR', f'CPU 모드도 실패: {e3}', start_time, 95)
+                        return {
+                            "success": False,
+                            "error": str(e3),
+                            "original_error": str(e)
+                        }
+                return {
+                    "success": False,
+                    "error": str(e2),
+                    "original_error": str(e)
+                }
+        elif "CUDA error" in str(e):
+            # CUDA 에러 처리
+            show_tagged_progress('ERROR', f'CUDA 오류 발생: {e}. CPU 모드로 전환합니다.', start_time, 85)
+            try:
+                # CPU로 전환
+                cpu_epochs = min(5, epochs)  # 원래 에폭보다 크지 않게
+                model = tutorial_state["model"]
+                
+                results = model.train(
+                    data=tutorial_state["data_yaml_path"],
+                    epochs=cpu_epochs,
+                    batch=8,
+                    imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
+                    device="cpu",
+                    project=os.path.join(base_dir, "runs"),
+                    name="detect/train",
+                    exist_ok=True
+                )
+                
+                # 결과 경로 설정
+                results_dir = find_latest_results_dir()
+                model_path = os.path.join(results_dir, "weights", "best.pt")
+                
+                # 전역 상태 업데이트
+                tutorial_state["model_path"] = model_path
+                tutorial_state["results_dir"] = results_dir
+                tutorial_state["training_completed"] = True
+                
+                cpu_elapsed = time.time() - start_time
+                minutes, seconds = divmod(cpu_elapsed, 60)
+                show_tagged_progress('TRAIN', f'CPU로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
+                
+                return {
+                    "success": True,
+                    "model_path": model_path,
+                    "results_dir": results_dir,
+                    "epochs": cpu_epochs,
+                    "imgsz": imgsz,
+                    "device": "cpu",
+                    "elapsed_time": cpu_elapsed,
+                    "note": "CUDA 오류로 CPU 모드로 전환하여 완료"
+                }
+            except Exception as e2:
+                show_tagged_progress('ERROR', f'CPU 모드로 전환도 실패: {e2}', start_time, 95)
+                return {
+                    "success": False,
+                    "error": str(e2),
+                    "original_error": str(e)
+                }
         return {
             "success": False,
             "error": str(e)
@@ -948,9 +1141,6 @@ def run_inference_block(block_params=None):
         show_tagged_progress('INFER', 'inference.py를 사용하여 추론 실행 중...', start_time, 30)
         
         # subprocess를 사용하여 inference.py 실행
-        import subprocess
-        
-        # 명령 구성 - inference.py의 명령행 인자 형식에 맞춤
         cmd = [
             sys.executable,
             inference_script_path,
@@ -1145,15 +1335,12 @@ def infer_image(model_path, image_path, show=False):
     
     # inference.py 실행
     try:
-        import subprocess
-        
-        # 명령 구성
         cmd = [
             sys.executable,
             inference_script_path,
             "--model", model_path,
             "--image", image_path,
-            "--conf", "0.25"
+            "--conf", conf
         ]
         
         # 프로세스 실행

@@ -136,6 +136,16 @@ def show_tagged_progress(tag, message, start_time=None, progress=None):
 
 print("[DEBUG] install_packages.py 초기화 완료", flush=True)
 
+# CUDA 버전을 확인하는 함수 (tutorial_train_script.py에서 사용)
+def check_cuda_version():
+    """
+    시스템의 CUDA 버전을 확인하고 반환합니다.
+    
+    Returns:
+        str or None: CUDA 버전(예: "12.1") 또는 감지되지 않은 경우 None
+    """
+    return detect_cuda()
+
 # ================ 패키지 설치 함수 ================
 def install_packages_with_progress(packages=None, start_time=None):
     print("[DEBUG] install_packages_with_progress 진입")
@@ -222,20 +232,58 @@ def install_packages_with_progress(packages=None, start_time=None):
 
 # ================ 단일 패키지 설치 함수 ================
 def _install_single_package(package, start_time, progress_base=0):
-    show_tagged_progress('INSTALL', '패키지 블럭을 실행합니다', start_time, progress_base)
+    print(f"[DEBUG] _install_single_package 진입: {package}", flush=True)
     try:
-        install_cmd = [
-            sys.executable, "-m", "pip", "install",
-            package,
-            "--verbose"
-        ]
-        show_tagged_progress('INSTALL', f'{package} 설치 중...', start_time, progress_base + 2)
+        # 현재 프로세스의 환경 변수 복사
+        env = os.environ.copy()
+        
+        # Python과 Scripts 디렉토리 경로
+        python_dir = os.path.dirname(sys.executable)
+        scripts_dir = os.path.join(python_dir, "Scripts")
+        
+        # 가상환경 활성화 변수 설정
+        env['VIRTUAL_ENV'] = python_dir
+        
+        # PATH 환경 변수 설정 (가상환경의 python과 scripts를 우선 사용)
+        if 'PATH' in env:
+            env['PATH'] = f"{python_dir};{scripts_dir};{env['PATH']}"
+        else:
+            env['PATH'] = f"{python_dir};{scripts_dir}"
+        
+        # 시스템 파이썬을 가리는 PYTHONHOME 제거
+        if 'PYTHONHOME' in env:
+            del env['PYTHONHOME']
+        
+        # pip 실행 파일 경로 확인
+        pip_exe = os.path.join(scripts_dir, "pip.exe")
+        if os.path.exists(pip_exe):
+            # Windows에서 pip.exe 직접 실행
+            install_cmd = [
+                pip_exe, "install",
+                package,
+                "--verbose"
+            ]
+        else:
+            # pip.exe가 없으면 python -m pip 형태로 실행
+            install_cmd = [
+                sys.executable, "-m", "pip", "install",
+                package,
+                "--verbose"
+            ]
+        
+        show_progress(f"{package} 설치 명령 실행 중...", start_time, progress_base + 2)
+        print(f"[DEBUG] 실행할 명령: {' '.join(install_cmd)}", flush=True)
+        print(f"[DEBUG] 가상환경: {env.get('VIRTUAL_ENV')}", flush=True)
+        print(f"[DEBUG] PATH 환경 변수: {env['PATH']}", flush=True)
+        
+        # env 매개변수로 환경 변수 전달
         process = subprocess.Popen(
             install_cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             universal_newlines=True,
-            bufsize=1
+            bufsize=1,
+            env=env  # 여기서 환경 변수 전달
         )
         last_progress_time = time.time()
         progress = 0
@@ -581,15 +629,16 @@ def install_torch_cuda(start_time=None):
             f.write("CUDA_SUCCESS")
         return True, "cuda"
     
-    # CUDA 버전 감지
-    cuda_version = detect_cuda()
-    show_progress(f"감지된 CUDA 버전: {cuda_version}", start_time, 20)
-    
     # 호환되지 않거나 CPU 버전인 경우에만 기존 설치 제거
     if not compatible or status == "cpu":
         show_progress("호환되지 않는 PyTorch 설치 제거 중...", start_time, 30)
         clean_torch_installation()
     
+    # CUDA 버전 감지
+    cuda_version = detect_cuda()
+    show_progress(f"감지된 CUDA 버전: {cuda_version}", start_time, 40)
+    
+    # CUDA 태그 결정
     if cuda_version:
         major_version = int(float(cuda_version))
         if major_version >= 12:
@@ -599,83 +648,41 @@ def install_torch_cuda(start_time=None):
         elif major_version >= 10:
             cuda_tag = "cu102"
         else:
-            show_progress(f"감지된 CUDA 버전 {cuda_version}는 지원되지 않습니다. CUDA 11.8로 시도합니다.", start_time, 40)
+            show_progress(f"감지된 CUDA 버전 {cuda_version}는 지원되지 않습니다. CUDA 11.8로 시도합니다.", start_time, 50)
             cuda_tag = "cu118"
     else:
-        show_progress("CUDA 버전을 감지할 수 없습니다. CUDA 11.8로 시도합니다.", start_time, 40)
+        show_progress("CUDA 버전을 감지할 수 없습니다. CUDA 11.8로 시도합니다.", start_time, 50)
         cuda_tag = "cu118"
     
-   # 안정적인 PyTorch 버전 설치 - 버전 다운그레이드
-    show_progress(f"{cuda_tag} 버전의 PyTorch 1.13.1 설치 중...", start_time, 50)  # 더 안정적인 버전으로 변경
+    # 안정적인 PyTorch 버전 설치
+    show_progress(f"{cuda_tag} 버전의 PyTorch 2.2.0 설치 중...", start_time, 60)
     torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
     
-    # 버전 선택 - 더 안정적인 조합 사용
-    if cuda_tag == "cu121":
-        # CUDA 12.1 호환 버전
-        install_cmd = [
-            sys.executable, "-m", "pip", "install", 
-            "torch==2.0.1", "torchvision==0.15.2", "torchaudio==2.0.2",
-            "--index-url", torch_url
-        ]
-    elif cuda_tag == "cu118":
-        # CUDA 11.8 호환 버전 (매우 안정적)
-        install_cmd = [
-            sys.executable, "-m", "pip", "install", 
-            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
-            "--index-url", torch_url
-        ]
-    else:
-        # 기타 CUDA 버전
-        install_cmd = [
-            sys.executable, "-m", "pip", "install", 
-            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
-            "--index-url", torch_url
-        ]
+    # 설치 명령 구성
+    install_cmd = [
+        sys.executable, "-m", "pip", "install", 
+        "torch==2.2.0", "torchvision==0.17.0", "torchaudio==2.2.0", 
+        "--index-url", torch_url
+    ]
     
-    # 설치 명령 실행
     try:
-        process = subprocess.Popen(
-            install_cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            universal_newlines=True,
-            bufsize=1
-        )
+        show_progress(f"PyTorch 패키지 다운로드 및 설치 중...", start_time, 70)
+        result = subprocess.run(install_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
-        # 진행 상황 추적을 위한 변수들
-        last_progress_time = time.time()
-        progress = 50
-        
-        # 출력 처리
-        for line in iter(process.stdout.readline, ''):
-            line = line.strip()
-            
-            # 진행 단계 감지 및 진행률 업데이트
-            if "Collecting" in line:
-                progress = 60
-                show_progress(f"PyTorch 패키지 다운로드 중: {line}", start_time, progress)
-            elif "Downloading" in line:
-                progress = 70
-                show_progress(f"PyTorch 패키지 다운로드 중: {line}", start_time, progress)
-            elif "Installing" in line:
-                progress = 80
-                show_progress(f"PyTorch 패키지 설치 중: {line}", start_time, progress)
-            elif "Successfully installed" in line:
-                progress = 90
-                show_progress(f"PyTorch 패키지 설치 완료: {line}", start_time, progress)
-            
-            # 일정 시간 경과시 진행 중임을 표시
-            if time.time() - last_progress_time > 5:
-                show_progress(f"PyTorch 설치 진행 중...", start_time, progress)
-                last_progress_time = time.time()
-        
-        process.wait()
-        
-        if process.returncode != 0:
-            show_progress("PyTorch 설치 실패", start_time, 100)
-            with open("pytorch_install_result.txt", "w") as f:
-                f.write("INSTALL_ERROR")
-            return False, "cpu"
+        if result.returncode != 0:
+            show_progress(f"PyTorch 설치 실패: {result.stderr}", start_time, 90)
+            # CPU 버전 시도
+            show_progress("CPU 버전으로 대체 설치 시도 중...", start_time, 91)
+            cpu_cmd = [
+                sys.executable, "-m", "pip", "install",
+                "torch==2.2.0", "torchvision==0.17.0", "torchaudio==2.2.0"
+            ]
+            result = subprocess.run(cpu_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if result.returncode != 0:
+                show_progress("PyTorch 설치 실패", start_time, 100)
+                with open("pytorch_install_result.txt", "w") as f:
+                    f.write("INSTALL_ERROR")
+                return False, "cpu"
     except Exception as e:
         show_progress(f"PyTorch 설치 중 오류: {e}", start_time, 100)
         with open("pytorch_install_result.txt", "w") as f:
@@ -689,11 +696,12 @@ def install_torch_cuda(start_time=None):
         import importlib
         importlib.invalidate_caches()
         
-        # 이미 로드된 torch 모듈 제거 (필요한 경우)
-        if 'torch' in sys.modules:
-            del sys.modules['torch']
-
-    
+        # 이미 로드된 모듈 제거
+        for module in ['torch', 'torchvision', 'torchaudio']:
+            if module in sys.modules:
+                del sys.modules[module]
+        
+        # PyTorch 임포트 및 CUDA 확인
         import torch
         if torch.cuda.is_available():
             show_progress(f"CUDA 사용 가능: {torch.cuda.get_device_name(0)}", start_time, 100)
@@ -703,7 +711,7 @@ def install_torch_cuda(start_time=None):
                 f.write("CUDA_SUCCESS")
             return True, "cuda"
         else:
-            show_progress("PyTorch 설치는 됐지만 CUDA를 감지할 수 없습니다.", start_time, 100)
+            show_progress(f"PyTorch {torch.__version__} CPU 버전으로 설치됨", start_time, 100)
             with open("pytorch_install_result.txt", "w") as f:
                 f.write("GPU_NOT_DETECTED")
             return False, "cpu"
@@ -718,7 +726,7 @@ def install_torch_cuda(start_time=None):
 
 def check_gpu(start_time=None):
     """
-    GPU 상태 확인 및 정보 반환 래퍼 함수
+    GPU 상태 확인 및 정보 반환 래퍼 함수 - nvidia-smi 사용
     
     Args:
         start_time (float): 시작 시간
@@ -731,42 +739,66 @@ def check_gpu(start_time=None):
         
     show_progress("GPU 확인 중...", start_time, 0)
     
+    # nvidia-smi 명령을 사용하여 GPU 확인
     try:
-        import torch
-        show_progress("PyTorch GPU 기능 확인 중...", start_time, 25)
-        
-        if torch.cuda.is_available():
-            show_progress("CUDA 지원 확인됨", start_time, 50)
-            gpu_count = torch.cuda.device_count()
-            gpu_names = [torch.cuda.get_device_name(i) for i in range(gpu_count)]
-            cuda_version = torch.version.cuda
-            gpu_memory = []
+        # 먼저 CUDA 버전 확인 
+        cuda_version = detect_cuda()
+        if cuda_version:
+            show_progress(f"CUDA 버전 감지됨: {cuda_version}", start_time, 25)
             
-            show_progress(f"GPU {gpu_count}개 감지됨", start_time, 75)
-            
-            for i in range(gpu_count):
-                try:
-                    props = torch.cuda.get_device_properties(i)
-                    mem_gb = props.total_memory / (1024**3)
-                    gpu_memory.append(round(mem_gb, 1))
-                    show_progress(f"GPU {i}: {gpu_names[i]} ({gpu_memory[-1]} GB)", start_time, 80 + (i+1) * (20/gpu_count))
-                except:
-                    gpu_memory.append(None)
-                    show_progress(f"GPU {i}: {gpu_names[i]} (메모리 정보 없음)", start_time, 80 + (i+1) * (20/gpu_count))
-            
-            show_progress(f"CUDA 버전: {cuda_version}", start_time, 100)
-            
-            return {
-                "available": True,
-                "count": gpu_count,
-                "names": gpu_names,
-                "cuda_version": cuda_version,
-                "memory_gb": gpu_memory
-            }
+            # nvidia-smi 명령으로 GPU 정보 확인
+            show_progress("NVIDIA GPU 정보 확인 중...", start_time, 50)
+            try:
+                # GPU 모델명 및 개수 확인
+                nvidia_smi_result = subprocess.run("nvidia-smi --query-gpu=gpu_name,memory.total --format=csv,noheader", 
+                                                  shell=True, capture_output=True, text=True)
+                
+                if nvidia_smi_result.returncode == 0 and nvidia_smi_result.stdout.strip():
+                    # 결과 파싱
+                    gpu_info_lines = nvidia_smi_result.stdout.strip().split('\n')
+                    gpu_count = len(gpu_info_lines)
+                    gpu_names = []
+                    gpu_memory = []
+                    
+                    for i, line in enumerate(gpu_info_lines):
+                        parts = line.split(',')
+                        gpu_name = parts[0].strip()
+                        gpu_names.append(gpu_name)
+                        
+                        # 메모리 정보 추출 (MiB를 GB로 변환)
+                        try:
+                            mem_mib = float(parts[1].strip().split()[0])  # "12345 MiB" -> 12345
+                            mem_gb = mem_mib / 1024  # MiB를 GB로 변환
+                            gpu_memory.append(round(mem_gb, 1))
+                        except (IndexError, ValueError):
+                            gpu_memory.append(None)
+                            
+                        show_progress(f"GPU {i}: {gpu_name} ({gpu_memory[-1]} GB)", 
+                                      start_time, 75 + (i+1) * (25/max(1, gpu_count)))
+                    
+                    show_progress(f"GPU {gpu_count}개 감지됨, CUDA 버전: {cuda_version}", start_time, 100)
+                    return {
+                        "available": True,
+                        "count": gpu_count,
+                        "names": gpu_names,
+                        "cuda_version": cuda_version,
+                        "memory_gb": gpu_memory
+                    }
+                else:
+                    # nvidia-smi 명령은 성공했지만 GPU 정보를 얻지 못한 경우
+                    show_progress("nvidia-smi 명령은 성공했지만 GPU 정보를 얻지 못했습니다.", start_time, 75)
+                    return {"available": False}
+            except Exception as e:
+                # nvidia-smi 명령 실행 중 오류 발생
+                show_progress(f"nvidia-smi 명령 실행 오류: {e}", start_time, 75)
+                return {"available": False, "error": f"nvidia-smi 명령 오류: {str(e)}"}
         else:
-            show_progress("GPU 감지 안됨: CPU 모드로 실행합니다.", start_time, 100)
+            # CUDA 버전이 감지되지 않은 경우
+            show_progress("CUDA 버전을 감지할 수 없습니다. GPU가 없거나 드라이버가 설치되지 않았을 수 있습니다.", start_time, 100)
             return {"available": False}
+            
     except Exception as e:
+        # 전체 프로세스 오류
         show_progress(f"GPU 확인 오류: {e}", start_time, 100)
         return {"available": False, "error": str(e)}
 
