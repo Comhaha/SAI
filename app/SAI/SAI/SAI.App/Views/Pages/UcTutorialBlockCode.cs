@@ -824,7 +824,7 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
             Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
             {
                 dialog.ShowDialog(this);
             }
@@ -1033,7 +1033,7 @@ namespace SAI.SAI.App.Views.Pages
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
             {
                 dialog.ShowDialog(this);
 			}
