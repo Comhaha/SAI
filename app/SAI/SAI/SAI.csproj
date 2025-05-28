@@ -515,6 +515,11 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_unchecked.png" />
+    <None Include="SAI.App\Resources\Images\btn_checked.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_setting.png" />
     <None Include="SAI.App\Resources\Images\notionLoading.gif" />
     <None Include="SAI.App\Resources\Images\lottie_notion.gif" />
     <None Include="SAI.App\Resources\Images\btn_yellow_minimize_clicked.png" />

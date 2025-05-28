@@ -189,5 +189,11 @@ namespace SAI
 			// 최소화
 			this.WindowState = FormWindowState.Minimized;
 		}
-	}
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            var dialog = new DialogSetting();
+            dialog.ShowDialog(this);
+        }
+    }
 }
