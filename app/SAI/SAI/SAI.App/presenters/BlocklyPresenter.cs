@@ -329,7 +329,7 @@ namespace SAI.SAI.App.Presenters
 						}
 
 					}
-					//MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
+					MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
 					break;
 
 				case "machineLearning":
