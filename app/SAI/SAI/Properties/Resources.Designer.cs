@@ -783,6 +783,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_inference_loading {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_inference_loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_titlebar_modelPerformance {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_modelPerformance", resourceCulture);
