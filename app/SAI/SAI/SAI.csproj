@@ -516,6 +516,7 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_inference_loading.png" />
     <None Include="SAI.App\Resources\Images\btn_close_setting.png" />
     <None Include="SAI.App\Resources\Images\btn_close_setting_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_unchecked.png" />
@@ -926,6 +927,7 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_modelProgress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_homeFromLabeling.png" />
     <None Include="SAI.App\Resources\Images\bg_practiceGuide.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_model_inference_lodaing.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
