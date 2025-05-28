@@ -105,7 +105,6 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "epochs",
                 "options": [
                     ["1", "1"],
-                    ["50", "50"],
                 ]
             },
             {
