@@ -777,7 +777,7 @@ namespace SAI.SAI.App.Views.Pages
 
                 isHandToolActive = !isHandToolActive;
                 isSquareToolActive = false;
-                isPolygonToolActive = false; // 폴리곤 도구 비활성화
+                isPolygonToolActive = false; // 폴리곤 도구 비활성.화
 
                 // 손 도구가 활성화되면 현재 모드에 따라 적절한 편집 모드 설정
                 if (isHandToolActive) 
@@ -1504,7 +1504,7 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void ImageContainer_MouseDown(object sender, MouseEventArgs e)
         {
-            if (isHandToolActive && e.Button == MouseButtons.Left)
+            if ((isHandToolActive || (!isSquareToolActive && !isPolygonToolActive)) && e.Button == MouseButtons.Left)
             {
                 // 이미지 영역 밖에서도 드래그 시작
                 isDragging = true;
@@ -1542,7 +1542,7 @@ namespace SAI.SAI.App.Views.Pages
         /// </summary>
         private void PictureBoxImage_MouseDown(object sender, MouseEventArgs e)
         {
-            if (isHandToolActive && e.Button == MouseButtons.Left)
+            if ((isHandToolActive || (!isSquareToolActive && !isPolygonToolActive)) && e.Button == MouseButtons.Left)
             {
                 if (isEditingPolygon)
                 {
@@ -2394,7 +2394,7 @@ namespace SAI.SAI.App.Views.Pages
         // JSON 문자열에서 바운딩 박스 파싱
         private Tuple<Rectangle, string> ParseBoundingBoxFromJson(string json)
         {
-            // 간단한 JSON 파싱 (완전한 파서는 Newtonsoft.Json 사용 권장)
+            // 간단한 JSON 파싱
             int xStart = json.IndexOf("\"x\":") + 4;
             int yStart = json.IndexOf("\"y\":") + 4;
             int widthStart = json.IndexOf("\"width\":") + 8;
