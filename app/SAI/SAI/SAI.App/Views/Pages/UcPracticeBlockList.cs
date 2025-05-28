@@ -30,6 +30,17 @@ namespace SAI.SAI.App.Views.Pages
 			resultVisualizeEvent(parent, AddBlockButtonClicked);
 		}
 
+		public void isThereStart()
+		{
+			this.pTitleStart.Visible = false;
+			this.fpStart.Visible = false;
+		}
+		public void isNotThereStart()
+		{
+			this.pTitleStart.Visible = true;
+			this.fpStart.Visible = true;
+		}
+
 		public void isThereLoadModel()
 		{
 			this.btnLoadModel.Visible = true;
@@ -67,6 +78,7 @@ namespace SAI.SAI.App.Views.Pages
 			btnStart.Click += (s, e) =>
 			{
 				btnStart.BackgroundImage = Properties.Resources.btnBlockStartClicked;
+				isThereStart();
 				AddBlockButtonClicked?.Invoke(parent, new BlockEventArgs("start"));
 			};
 			// btnStart 마우스 입력 될 때

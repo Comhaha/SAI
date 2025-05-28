@@ -2323,6 +2323,26 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_yellow_minimize {
+            get {
+                object obj = ResourceManager.GetObject("btn_yellow_minimize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_yellow_minimize_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_yellow_minimize_clicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_yellow_ok {
             get {
                 object obj = ResourceManager.GetObject("btn_yellow_ok", resourceCulture);
@@ -3293,6 +3313,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap lottie_notion {
+            get {
+                object obj = ResourceManager.GetObject("lottie_notion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap memo_alert {
             get {
                 object obj = ResourceManager.GetObject("memo_alert", resourceCulture);
@@ -3376,6 +3406,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap NoCircleArrowR {
             get {
                 object obj = ResourceManager.GetObject("NoCircleArrowR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap notionLoading {
+            get {
+                object obj = ResourceManager.GetObject("notionLoading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

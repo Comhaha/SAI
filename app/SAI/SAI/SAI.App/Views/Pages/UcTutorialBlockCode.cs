@@ -730,18 +730,19 @@ namespace SAI.SAI.App.Views.Pages
                 // 블록 순서가 맞는지 판단
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
-					// 생성한 모델 삭제
 					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
 
 					var mainModel = MainModel.Instance;
 
+                    // 기존 모델 삭제 후 런 돌림
 					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
 					}
 					else
 					{
+                        // 기존모델 삭제하냐고 다이얼로그를 띄운다.
 						var dialog = new DialogDeleteModel(runModel);
 						dialog.ShowDialog(this);
 					}
@@ -754,9 +755,9 @@ namespace SAI.SAI.App.Views.Pages
             else
             {
 				errorType = "블록 배치 오류";
-				missingType = "MISSING \"시작\"";
-                errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
-                errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
+				missingType = "\"시작\"";
+                errorMessage = "\"시작\" 블록이 맨 앞에 있어야 합니다.\n";
+                errorMessage += "시작 블록에 다른 블록들을 연결해주세요.\n";
                 ShowToastMessage(errorType, missingType, errorMessage);
 			}
 		}
@@ -784,8 +785,8 @@ namespace SAI.SAI.App.Views.Pages
                 lbMissingType.Text = "MISSING " + missingType;
                 lbErrorMessage.Text = errorMessage;
 
-                // 2초 대기 (취소 가능)
-                await Task.Delay(5000, token);
+                // 4초 대기 (취소 가능)
+                await Task.Delay(4000, token);
                 pErrorToast.Visible = false;
             }
             catch (OperationCanceledException)
@@ -824,9 +825,9 @@ namespace SAI.SAI.App.Views.Pages
             Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
             Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
             {
-                dialog.ShowDialog();
+                dialog.ShowDialog(this);
             }
         }
 
@@ -844,16 +845,19 @@ namespace SAI.SAI.App.Views.Pages
                 blocklyPresenter.HandleJsMessage(message, type, "tutorial");
             });
 
+            // tutorial blockly html 가져오는 경로 설정
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TutorialBlockly.html"));
             string uri = new Uri(localPath).AbsoluteUri;
 
+
+            // webview에서 오는 메세지 처리 로직
             webViewblock.WebMessageReceived += async (s, e) =>
             {
                 try
                 {
-                    // 먼저 시도: 객체 기반 JSON 메시지 처리
-                    var doc = JsonDocument.Parse(e.WebMessageAsJson);
+					// webview 메세지 JSON 파싱
+					var doc = JsonDocument.Parse(e.WebMessageAsJson);
                     var root = doc.RootElement;
 
                     if (root.ValueKind == JsonValueKind.Object &&
@@ -863,7 +867,7 @@ namespace SAI.SAI.App.Views.Pages
 
                         switch (type)
                         {
-                            case "openFile":
+                            case "openFile": // 이미지 파일 불러와서 경로 js로 전달
                                 using (OpenFileDialog dialog = new OpenFileDialog())
                                 {
                                     dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
@@ -879,7 +883,7 @@ namespace SAI.SAI.App.Views.Pages
 											""blockId"": {escapedBlockId},
 											""filePath"": {escapedFilePath}
 										}}";
-
+                                        
                                         await webViewblock.ExecuteScriptAsync(
                                             $"window.dispatchEvent(new MessageEvent('message', {{ data: {json} }}));"
                                         );
@@ -887,37 +891,40 @@ namespace SAI.SAI.App.Views.Pages
                                 }
                                 break;
 
-                            case "blockAllCode":
+                            case "blockAllCode":    // 블럭 전체 코드
                                 string blockAllCode = root.GetProperty("code").GetString();
                                 jsBridge.receiveMessageFromJs(blockAllCode, type);
                                 break;
 
-                            case "blockCode":
+                            case "blockCode": // 하나의 블럭 코드
                                 string blockCode = root.GetProperty("code").GetString();
                                 jsBridge.receiveMessageFromJs(blockCode, type);
                                 break;
 
-							case "blockDoubleClick":
+							case "blockDoubleClick": // 하나의 블럭 더블 클릭
 								string eventCode = root.GetProperty("code").GetString();
 								blocklyPresenter.OnAddBlockDoubleClicked(eventCode);
 								break;
-							case "blockTypes":
+
+							case "blockTypes": // start 블럭에 연결된 전체 블럭 타입
 								var jsonTypes = root.GetProperty("types");
 								var blockTypes = JsonSerializer.Deserialize<List<BlockInfo>>(jsonTypes.GetRawText());
 								blocklyPresenter.setBlockTypes(blockTypes);
 								break;
-							case "blockCount":
+
+							case "blockCount": // 전체 꺼내져 있는 블럭 개수
 								var jsonCount = root.GetProperty("count").ToString();
 								blockCount = int.Parse(jsonCount);
 								break;
-							case "blockCreated":
+
+							case "blockCreated": // 전체 꺼내져 있는 블럭 타입
 								var blockType = root.GetProperty("blockType").ToString();
                                 var newValue = root.GetProperty("allValues");
 								var value = JsonSerializer.Deserialize <Dictionary<string, object>>(newValue.GetRawText());
                                 blocklyPresenter.setFieldValue(blockType, value);
 								break;
 
-							case "blockFieldUpdated":
+							case "blockFieldUpdated": // 필드 값 변경된 블럭
 								blockType = root.GetProperty("blockType").ToString();
 								var allValues = root.GetProperty("allValues");
 								value = JsonSerializer.Deserialize<Dictionary<string, object>>(allValues.GetRawText());
@@ -935,39 +942,6 @@ namespace SAI.SAI.App.Views.Pages
             webViewblock.ZoomFactor = 0.5; // 줌 비율 설정
 
             await webViewblock.EnsureCoreWebView2Async();
-
-			// 단축키 이벤트 등록
-			webViewblock.KeyDown += (sender, e) =>
-			{
-				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
-				{
-
-				}
-				else if (e.KeyCode == Keys.Y && e.Control)
-				{
-
-				}
-				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
-				{
-
-				}
-			};
-
-			this.KeyDown += (sender, e) =>
-			{
-				if (e.KeyCode == Keys.Z && e.Control) // Ctrl + Z
-				{
-
-				}
-				else if (e.KeyCode == Keys.Y && e.Control)
-				{
-
-				}
-				else if (e.KeyCode == Keys.Z && e.Control && e.Shift)
-				{
-
-				}
-			};
 
 			webViewblock.Source = new Uri(uri);
         }
@@ -1033,61 +1007,87 @@ namespace SAI.SAI.App.Views.Pages
             string memo = memoPresenter.GetMemoText();
             double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage))
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
             {
-                dialog.ShowDialog();
-            }
+                dialog.ShowDialog(this);
+			}
         }
 
         private void pboxGraphe_Click(object sender, EventArgs e)
         {
             using (var dialog = new DialogModelPerformance())
             {
-                dialog.ShowDialog();
+                dialog.ShowDialog(this);
             }
         }
 
         private bool checkBlockPosition(string blockType, int nowPosition)
         {
-            int correctPosition;
-			switch (blockType)
+            if(nowPosition == 1)
+            {
+                if(blockType != "pipInstall")
+				{
+					blockErrorMessage("start");
+					return false;
+				}
+			}
+			else if (nowPosition == 2)
 			{
-				case "start":
-                    correctPosition = 0;
-					break;
-				case "pipInstall":
-					correctPosition = 1;
-					break;
-				case "loadModel":
-					correctPosition = 2;
-					break;
-				case "loadDataset":
-					correctPosition = 3;
-					break;
-				case "machineLearning":
-					correctPosition = 4;
-					break;
-				case "resultGraph":
-					correctPosition = 5;
-					break;
-				case "imgPath":
-					correctPosition = 6;
-					break;
-				case "modelInference":
-					correctPosition = 7;
-					break;
-				case "visualizeResult":
-					correctPosition = 8;
-					break;
-				default:
-					correctPosition = -1;
-					break;
+				if (blockType != "loadModel")
+				{
+					blockErrorMessage("pipInstall");
+					return false;
+				}
+			}
+			else if (nowPosition == 3)
+			{
+				if (blockType != "loadDataset")
+				{
+					blockErrorMessage("loadModel");
+					return false;
+				}
+			}
+			else if (nowPosition == 4)
+			{
+				if (blockType != "machineLearning")
+				{
+					blockErrorMessage("loadDataset");
+					return false;
+				}
+			}
+			else if (nowPosition == 5)
+			{
+				if (blockType != "resultGraph")
+				{
+					blockErrorMessage("machineLearning");
+					return false;
+				}
+			}
+			else if (nowPosition == 6)
+			{
+				if (blockType != "imgPath")
+				{
+					blockErrorMessage("resultGraph");
+					return false;
+				}
+			}
+			else if (nowPosition == 7)
+			{
+				if (blockType != "modelInference")
+				{
+					blockErrorMessage("imgPath");
+					return false;
+				}
+			}
+			else if (nowPosition == 8)
+			{
+				if (blockType != "visualizeResult")
+				{
+					blockErrorMessage("modelInference");
+					return false;
+				}
 			}
 
-			if (correctPosition != nowPosition)
-			{
-				return false;
-			}
 			return true;
         }
 
@@ -1098,49 +1098,49 @@ namespace SAI.SAI.App.Views.Pages
 				case "start":
 					errorType = "블록 배치 오류";
 					missingType = "\"pipInstall\"";
-				    errorMessage = "\"패키지 설치\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+				    errorMessage = "\"패키지 설치\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 				    errorMessage += "[시작] - [패키지 설치]";
 					break;
 				case "pipInstall":
 					errorType = "블록 배치 오류";
 					missingType = "\"loadModel\"";
-					errorMessage = "\"모델 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage = "\"모델 불러오기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[패키지 설치] - [모델 불러오기]";
 					break;
 				case "loadModel":
-						errorType = "블록 배치 오류";
-						missingType = "\"loadDataset\"";
-					errorMessage = "\"데이터 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorType = "블록 배치 오류";
+					missingType = "\"loadDataset\"";
+					errorMessage = "\"데이터 불러오기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[모델 불러오기] - [데이터 불러오기]";
 					break;
 				case "loadDataset":
-						errorType = "블록 배치 오류";
-						missingType = "\"machineLearning\"";
-					errorMessage = "\"모델 학습하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorType = "블록 배치 오류";
+					missingType = "\"machineLearning\"";
+					errorMessage = "\"모델 학습하기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[데이터 불러오기] - [모델 학습하기]";
 					break;
 				case "machineLearning":
-						errorType = "블록 배치 오류";
-						missingType = "\"resultGraph\"";
-					errorMessage = "\"학습 결과 그래프 출력하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorType = "블록 배치 오류";
+					missingType = "\"resultGraph\"";
+					errorMessage = "\"학습 결과 그래프 출력하기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[모델 학습하기] - [학습 결과 그래프 출력하기]";
 					break;
 				case "resultGraph":
-						errorType = "블록 배치 오류";
-						missingType = "\"imgPath\"";
-					errorMessage = "\"이미지 불러오기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorType = "블록 배치 오류";
+					missingType = "\"imgPath\"";
+					errorMessage = "\"이미지 불러오기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[학습 결과 그래프 출력하기] - [이미지 불러오기]";
 					break;
 				case "imgPath":
-						errorType = "블록 배치 오류";
-						missingType = "\"modelInference\"";
-					errorMessage = "\"추론 실행하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorType = "블록 배치 오류";
+					missingType = "\"modelInference\"";
+					errorMessage = "\"추론 실행하기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[이미지 불러오기] - [추론 실행하기]";
 					break;
 				case "modelInference":
 					errorType = "블록 배치 오류";
 					missingType = "\"visualizeResult\"";
-					errorMessage = "\"결과 시각화하기\"블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
+					errorMessage = "\"결과 시각화하기\" 블록이 필요합니다. 아래 순서에 맞게 배치해주세요.\n";
 					errorMessage += "[추론 실행하기] - [결과 시각화하기]";
 					break;
 			}
@@ -1149,84 +1149,36 @@ namespace SAI.SAI.App.Views.Pages
         // 블록 에러 처리이이
         public bool isBlockError()
         {
-            if (blocklyModel == null || blocklyModel.blockTypes == null)
+            // start 블럭 밑에 붙어있는 블럭들의 순서를 판단
+            for(int i = 0; i < blocklyModel.blockTypes.Count; i++)
             {
-                errorType = "블록 배치 오류";
-                missingType = "MISSING \"시작\"";
-                errorMessage = "\"시작블록\"이 맨 앞에 있어야 합니다.\n";
-                errorMessage += "시작블록에 다른 블록들을 연결해주세요.\n";
-                return true;
-            }
-
-            if (blocklyModel.blockTypes.Count == 9)
-            {
-                for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
+				BlockInfo blockType = blocklyModel.blockTypes[i];
+				if (!checkBlockPosition(blockType.type, i))
                 {
-                    BlockInfo block = blocklyModel.blockTypes[i];
-                    if (block == null) continue;
-
-                    string blockType = block.type;
-					if (blockType == "imgPath")
-					{
-						if (string.IsNullOrEmpty(blocklyModel.imgPath))
-						{
-							errorType = "파라미터 오류";
-							missingType = "파라미터 \"이미지 파일\"";
-							errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
-							errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
-							return true;
-						}
-					}
-                    if (!checkBlockPosition(blockType, i))
-                    {
-                        blockErrorMessage(blockType);
-                        return true;
-                    }
-				}
-            }
-            else if (blocklyModel.blockTypes.Count < 9)
-            {
-                int lastBlock = blocklyModel.blockTypes.Count - 1;
-                if (lastBlock < 0) return true;
-
-                BlockInfo block = blocklyModel.blockTypes[lastBlock];
-                if (block == null) return true;
-
-                for (int i = 0; i < blocklyModel.blockTypes.Count; i++)
-                {
-                    BlockInfo blockInfo = blocklyModel.blockTypes[i];
-                    if (blockInfo == null) continue;
-
-                    string blockType = blockInfo.type;
-
-                    if (!checkBlockPosition(blockType, i))
-                    {
-                        blockInfo = blocklyModel.blockTypes[i - 1];
-                        if (blockInfo != null)
-                        {
-                            blockType = blockInfo.type;
-                            blockErrorMessage(blockType);
-                        }
-                        return true;
-                    }
-
-                    if (blockType == "imgPath")
-                    {
-                        if (string.IsNullOrEmpty(blocklyModel.imgPath))
-                        {
-                            errorType = "파라미터 오류";
-                            missingType = "파라미터 \"이미지 파일\"";
-                            errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
-                            errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
-                            return true;
-                        }
-                    }
+                    return true;
                 }
-                blockErrorMessage(block.type);
-                return true;
-            }
+                
+                if(blockType.type == "imgPath")
+				{
+					if (string.IsNullOrEmpty(blocklyModel.imgPath))
+					{
+						errorType = "파라미터 오류";
+						missingType = "파라미터 \"이미지 파일\"";
+						errorMessage = "\"이미지 불러오기\"블록의 필수 파라미터인 \"이미지 파일\"이 없습니다.\n";
+						errorMessage += "\"파일 선택\"버튼을 눌러 이미지를 선택해주세요.";
+						return true;
+					}
+				}
+			}
 
-            return false;
+            // 만약 count가 9개가 아니라면 마지막 블럭을 오류라고 처리.
+            if(blocklyModel.blockTypes.Count < 9)
+            {
+                blockErrorMessage(blocklyModel.blockTypes[blocklyModel.blockTypes.Count - 1].type);
+				return true;
+			}
+
+			return false;
         }
         private void UpdateCodeZoom()
         {
@@ -1509,27 +1461,9 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void pboxInferAccuracy_Click(object sender, EventArgs e)
-        {
-            // 이미지가 있고 경로가 있으면 이미지 뷰어로 열기
-            if (pboxInferAccuracy.Image != null && !string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
-            {
-                try
-                {
-                    // 기본 이미지 뷰어로 이미지 열기
-                    Process.Start(currentImagePath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"이미지를 여는 중 오류가 발생했습니다: {ex.Message}", "오류", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void pErrorToastCloseBtn_Click(object sender, EventArgs e)
         {
             pErrorToast.Visible = false;
         }
-    }
+	}
 }

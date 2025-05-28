@@ -27,10 +27,39 @@ namespace SAI.SAI.App.Forms.Dialogs
             ButtonUtils.SetupButton(btnClose, "btn_close_modelProgress_clicked", "btn_close_modelProgress");
             btnClose.Click += btnClose_Click;  // 이벤트 핸들러 등록
 
-            progressBarModelLearning.ProgressColor = ColorTranslator.FromHtml("#55A605"); // 내부 진행 색상
-        }
+			// btnMinimize
+			btnMinimize.BackColor = Color.Transparent;
+			btnMinimize.PressedColor = Color.Transparent;
+			btnMinimize.CheckedState.FillColor = Color.Transparent;
+			btnMinimize.DisabledState.FillColor = Color.Transparent;
+		    btnMinimize.Click += (s, e) => {
+                this.WindowState = FormWindowState.Minimized; // 최소화
+			};
+			// btnMinimize 마우스 입력 될 때
+			btnMinimize.MouseEnter += (s, e) =>
+			{
+				btnMinimize.BackColor = Color.Transparent;
+				btnMinimize.BackgroundImage = Properties.Resources.btn_yellow_minimize_clicked;
+			};
+			// btnMinimize 마우스 떠날때
+			btnMinimize.MouseLeave += (s, e) =>
+			{
+				btnMinimize.BackgroundImage = Properties.Resources.btn_yellow_minimize;
+			};
 
-        public void UpdateProgress(double progress, string message)
+			progressBarModelLearning.ProgressColor = ColorTranslator.FromHtml("#55A605"); // 내부 진행 색상
+
+			guna2DragControl1.TargetControl = panelTitleBar;
+			guna2DragControl1.TransparentWhileDrag = false;
+			guna2DragControl1.UseTransparentDrag = false;
+		}
+
+		private void BtnMinimize_Click(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UpdateProgress(double progress, string message)
         {
             if (this.InvokeRequired)
             {
@@ -82,7 +111,6 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             this.DialogResult = DialogResult.Cancel;
             this.Close();
-
         }
     }
 }

@@ -614,6 +614,7 @@ def train_model_block(block_params=None):
             project=os.path.join(base_dir, "runs"),
             name="detect/train",  # 하위 폴더 구조 지정
             exist_ok=True, 
+            workers = 0, # 정언이가 추가
         )
         
         # 결과 경로 설정
@@ -660,7 +661,8 @@ def train_model_block(block_params=None):
                     device=device,
                     project=os.path.join(base_dir, "runs"),
                     name="detect/train",
-                    exist_ok=True
+                    exist_ok=True,
+                    workers = 0, # 정언이가 추가
                 )
                 
                 # 결과 경로 설정
@@ -704,7 +706,8 @@ def train_model_block(block_params=None):
                         device="cpu",
                         project=os.path.join(base_dir, "runs"),
                         name="detect/train",
-                        exist_ok=True
+                        exist_ok=True,
+                        workers = 0,
                     )
                     
                     # 결과 경로 설정
