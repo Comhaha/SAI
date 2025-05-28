@@ -2,20 +2,14 @@
 using System.Drawing;
 using System.Windows.Forms;
 using SAI.SAI.App.Views.Common;
-using static SAI.SAI.Application.Service.PythonService;
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
     public partial class DialogSetting : Form
     {
-        private enum GpuMode
-        {
-            Local,
-            Server
-        }
 
-        // gpu 초기 상태 Local로 설정
-        private GpuMode selectedGpuMode = GpuMode.Local;
+        private GpuType selectedGpuType;
 
         public DialogSetting()
         {
@@ -28,8 +22,8 @@ namespace SAI.SAI.App.Forms.Dialogs
             ButtonUtils.SetTransparentStyle(btnLocal);
             ButtonUtils.SetTransparentStyle(btnServer);
 
-            // gpu 초기 상태 Local로 설정
-            SetRadioButtonState(selectedGpuMode);
+            selectedGpuType = BlocklyModel.Instance.gpuType;
+            SetRadioButtonState(selectedGpuType);
 
             btnLocal.Click += BtnLocal_Click;
             btnServer.Click += BtnServer_Click;
@@ -38,28 +32,35 @@ namespace SAI.SAI.App.Forms.Dialogs
         private void btnClose_Click(object sender, System.EventArgs e)
         {
             this.Close();
+            //Console.WriteLine($"[DEBUG] 저장된 GPU 타입: {BlocklyModel.Instance.gpuType}");
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            BlocklyModel.Instance.gpuType = selectedGpuType;
+            this.Close();
+            //Console.WriteLine($"[DEBUG] 저장된 GPU 타입: {BlocklyModel.Instance.gpuType}");
         }
 
         private void BtnLocal_Click(object sender, EventArgs e)
         {
-            selectedGpuMode = GpuMode.Local;
-            SetRadioButtonState(selectedGpuMode);
+            selectedGpuType = GpuType.Local;
+            SetRadioButtonState(selectedGpuType);
         }
 
         private void BtnServer_Click(object sender, EventArgs e)
         {
-            selectedGpuMode = GpuMode.Server;
-            SetRadioButtonState(selectedGpuMode);
+            selectedGpuType = GpuType.Server;
+            SetRadioButtonState(selectedGpuType);
         }
 
         // RadioButton처럼 사용하기 위한 메서드
-        private void SetRadioButtonState(GpuMode gpuMode)
+        private void SetRadioButtonState(GpuType gpuType)
         {
-            btnLocal.BackgroundImage = (gpuMode == GpuMode.Local)
+            btnLocal.BackgroundImage = (gpuType == GpuType.Local)
                 ? Properties.Resources.btn_checked
             : Properties.Resources.btn_unchecked;
 
-            btnServer.BackgroundImage = (gpuMode == GpuMode.Server)
+            btnServer.BackgroundImage = (gpuType == GpuType.Server)
                 ? Properties.Resources.btn_checked
                 : Properties.Resources.btn_unchecked;
         }
