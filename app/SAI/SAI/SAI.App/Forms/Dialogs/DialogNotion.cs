@@ -30,12 +30,16 @@ namespace SAI.SAI.App.Forms.Dialogs
         private AiFeedbackPresenter _feedPresenter;
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
+        private bool isTutorial;
 
         private const string redirectBase = "https://k12d201.p.ssafy.io/api/notion/callback";
 
-        public DialogNotion(string memo, double thresholdValue, string resultImagePath)
+        public DialogNotion(string memo, double thresholdValue, string resultImagePath, bool isTutorial)
         {
             InitializeComponent();
+
+            this.isTutorial = isTutorial;
+
             pInfo.BackColor = SystemColors.Control;
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
@@ -66,7 +70,9 @@ namespace SAI.SAI.App.Forms.Dialogs
 		/* ---------------- IAiFeedbackView ---------------- */
 		//Code 경로
 		public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_script.py"));
+        public string CodeText => this.isTutorial ? 
+                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_script.py")) :
+                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
         //log 사진 경로
         public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
         //무슨 사진이 결과 사진인지?
@@ -315,7 +321,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void DialogNotion_Load(object sender, EventArgs e)
         {
-
+            Console.WriteLine(CodeText);
         }
     }
 }
