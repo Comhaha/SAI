@@ -1,104 +1,68 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Views.Common;
-
+using SAI.SAI.App.Models;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-	public partial class DialogSetting : Form, ISettingView
-	{
+    public partial class DialogSetting : Form
+    {
 
-        private readonly SettingPresenter presenter;
-        private bool isLightTheme;
-        private bool originalTheme;
-        private string originalPath;
+        private GpuType selectedGpuType;
 
         public DialogSetting()
         {
             InitializeComponent();
-            presenter = new SettingPresenter(this);
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            // ToolTip 설정 (제대로 안됨)
-            ToolTipUtils.CustomToolTip(tboxPath, "모델 저장 경로를 변경하려면 클릭하세요.");
-
-            // 버튼 설정(버튼 이름, 호버 이미지, default 이미지)
-            ButtonUtils.SetupButton(btnClose, "btn_close_select_model_clicked", "btn_close_select_model");
             ButtonUtils.SetupButton(btnSave, "btn_save_clicked", "btn_save");
-            ButtonUtils.SetTransparentStyle(btnLight);
-            ButtonUtils.SetTransparentStyle(btnDark);
+            ButtonUtils.SetupButton(btnClose, "btn_close_setting_clicked", "btn_close_setting");
+            ButtonUtils.SetTransparentStyle(btnLocal);
+            ButtonUtils.SetTransparentStyle(btnServer);
 
-            presenter.OnViewLoaded();
+            selectedGpuType = BlocklyModel.Instance.gpuType;
+            SetRadioButtonState(selectedGpuType);
 
-            // 백업값 저장
-            originalTheme = isLightTheme;
-            originalPath = tboxPath.Text;
-
-            btnClose.Click += (s, e) =>
-            {
-                // 원래 상태 복원
-                presenter.OnThemeChanged(originalTheme);
-                presenter.OnPathChanged(originalPath);
-                SetTheme(originalTheme);
-                SetPath(originalPath);  
-
-                presenter.OnCancel();
-            };
-
-            btnSave.Click += (s, e) => presenter.OnSave();
-
-            btnLight.Click += (s, e) =>
-            {
-                isLightTheme = true;
-                UpdateThemeButtonUI();
-                presenter.OnThemeChanged(true);
-            };
-
-            btnDark.Click += (s, e) =>
-            {
-                isLightTheme = false;
-                UpdateThemeButtonUI();
-                presenter.OnThemeChanged(false);
-            };
-
-            tboxPath.Click += (s, e) =>
-            {
-                using (FolderBrowserDialog dlg = new FolderBrowserDialog())
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        tboxPath.Text = dlg.SelectedPath;
-                        presenter.OnPathChanged(dlg.SelectedPath);
-                    }
-                }
-            };
+            btnLocal.Click += BtnLocal_Click;
+            btnServer.Click += BtnServer_Click;
         }
 
-        private void UpdateThemeButtonUI()
+        private void btnClose_Click(object sender, System.EventArgs e)
         {
-            btnLight.BackgroundImage = isLightTheme ? Properties.Resources.btn_light_clicked : Properties.Resources.btn_light;
-            btnDark.BackgroundImage = isLightTheme ? Properties.Resources.btn_dark : Properties.Resources.btn_dark_clicked;
+            this.Close();
+            //Console.WriteLine($"[DEBUG] 저장된 GPU 타입: {BlocklyModel.Instance.gpuType}");
         }
-
-        // ISettingView 구현
-        public void SetTheme(bool isLight)
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            isLightTheme = isLight;
-            UpdateThemeButtonUI();
+            BlocklyModel.Instance.gpuType = selectedGpuType;
+            this.Close();
+            //Console.WriteLine($"[DEBUG] 저장된 GPU 타입: {BlocklyModel.Instance.gpuType}");
         }
 
-        public void SetPath(string path)
+        private void BtnLocal_Click(object sender, EventArgs e)
         {
-            tboxPath.Text = path;
+            selectedGpuType = GpuType.Local;
+            SetRadioButtonState(selectedGpuType);
         }
 
-        public bool IsLightThemeSelected() => isLightTheme;
+        private void BtnServer_Click(object sender, EventArgs e)
+        {
+            selectedGpuType = GpuType.Server;
+            SetRadioButtonState(selectedGpuType);
+        }
 
-        public string GetSelectedPath() => tboxPath.Text;
+        // RadioButton처럼 사용하기 위한 메서드
+        private void SetRadioButtonState(GpuType gpuType)
+        {
+            btnLocal.BackgroundImage = (gpuType == GpuType.Local)
+                ? Properties.Resources.btn_checked
+            : Properties.Resources.btn_unchecked;
 
-        public void CloseDialog() => this.Close();
+            btnServer.BackgroundImage = (gpuType == GpuType.Server)
+                ? Properties.Resources.btn_checked
+                : Properties.Resources.btn_unchecked;
+        }
     }
 }

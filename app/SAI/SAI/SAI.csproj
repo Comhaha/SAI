@@ -231,6 +231,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
+    <Compile Include="SAI.App\Models\GpuType.cs" />
     <Compile Include="SAI.App\Models\YoloModel.cs" />
     <Compile Include="SAI.App\Forms\SplashForm.cs">
       <SubType>Form</SubType>
@@ -515,6 +516,11 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_unchecked.png" />
+    <None Include="SAI.App\Resources\Images\btn_checked.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_setting.png" />
     <None Include="SAI.App\Resources\Images\notionLoading.gif" />
     <None Include="SAI.App\Resources\Images\lottie_notion.gif" />
     <None Include="SAI.App\Resources\Images\btn_yellow_minimize_clicked.png" />
