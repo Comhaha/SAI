@@ -31,7 +31,6 @@ namespace SAI.SAI.App.Views.Pages
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcLabelGuide));
-            this.homeBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.nextBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.preBtn = new Guna.UI2.WinForms.Guna2CircleButton();
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -87,6 +86,7 @@ namespace SAI.SAI.App.Views.Pages
             this.totalLevelpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.goModel = new Guna.UI2.WinForms.Guna2Button();
+            this.homeBtn = new Guna.UI2.WinForms.Guna2Button();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -108,26 +108,6 @@ namespace SAI.SAI.App.Views.Pages
             this.toolBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // homeBtn
-            // 
-            this.homeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.homeBtn.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.homeBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.homeBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.homeBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.homeBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.homeBtn.FillColor = System.Drawing.Color.Transparent;
-            this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.homeBtn.ForeColor = System.Drawing.Color.White;
-            this.homeBtn.Image = ((System.Drawing.Image)(resources.GetObject("homeBtn.Image")));
-            this.homeBtn.ImageSize = new System.Drawing.Size(58, 58);
-            this.homeBtn.Location = new System.Drawing.Point(202, 48);
-            this.homeBtn.Name = "homeBtn";
-            this.homeBtn.PressedColor = System.Drawing.Color.Transparent;
-            this.homeBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.homeBtn.Size = new System.Drawing.Size(62, 62);
-            this.homeBtn.TabIndex = 0;
             // 
             // nextBtn
             // 
@@ -168,7 +148,7 @@ namespace SAI.SAI.App.Views.Pages
             this.class1.ForeColor = System.Drawing.Color.Black;
             this.class1.Location = new System.Drawing.Point(0, 0);
             this.class1.Name = "class1";
-            this.class1.Size = new System.Drawing.Size(92, 29);
+            this.class1.Size = new System.Drawing.Size(113, 36);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
             this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -642,7 +622,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
-            this.ZoomCurrent.Size = new System.Drawing.Size(35, 19);
+            this.ZoomCurrent.Size = new System.Drawing.Size(44, 23);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
             this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
@@ -863,6 +843,8 @@ namespace SAI.SAI.App.Views.Pages
             // goModel
             // 
             this.goModel.BackColor = System.Drawing.Color.Transparent;
+            this.goModel.BackgroundImage = global::SAI.Properties.Resources.btn_goTutorialTrain;
+            this.goModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.goModel.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.goModel.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.goModel.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -873,8 +855,7 @@ namespace SAI.SAI.App.Views.Pages
             this.goModel.HoverState.BorderColor = System.Drawing.Color.Transparent;
             this.goModel.HoverState.CustomBorderColor = System.Drawing.Color.Transparent;
             this.goModel.HoverState.FillColor = System.Drawing.Color.Transparent;
-            this.goModel.Image = ((System.Drawing.Image)(resources.GetObject("goModel.Image")));
-            this.goModel.ImageSize = new System.Drawing.Size(251, 53);
+            this.goModel.ImageSize = new System.Drawing.Size(255, 53);
             this.goModel.Location = new System.Drawing.Point(1473, 50);
             this.goModel.Name = "goModel";
             this.goModel.PressedColor = System.Drawing.Color.Transparent;
@@ -882,18 +863,35 @@ namespace SAI.SAI.App.Views.Pages
             this.goModel.TabIndex = 11;
             this.goModel.Click += new System.EventHandler(this.guna2Panel1_Click);
             // 
+            // homeBtn
+            // 
+            this.homeBtn.BackgroundImage = global::SAI.Properties.Resources.btn_home;
+            this.homeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.homeBtn.BorderColor = System.Drawing.Color.Transparent;
+            this.homeBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.homeBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.homeBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.homeBtn.FillColor = System.Drawing.Color.Transparent;
+            this.homeBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.homeBtn.ForeColor = System.Drawing.Color.White;
+            this.homeBtn.Location = new System.Drawing.Point(202, 48);
+            this.homeBtn.Name = "homeBtn";
+            this.homeBtn.Size = new System.Drawing.Size(62, 62);
+            this.homeBtn.TabIndex = 13;
+            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.goModel);
             this.Controls.Add(this.totalLevelpanel);
             this.Controls.Add(this.showLevel1);
             this.Controls.Add(this.preBtn);
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.mainpanel);
-            this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.nextBtnVisible);
             this.DoubleBuffered = true;
             this.Name = "UcLabelGuide";
@@ -925,8 +923,6 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2CircleButton homeBtn;
         private Guna.UI2.WinForms.Guna2CircleButton nextBtn;
         private Guna.UI2.WinForms.Guna2CircleButton preBtn;
         private Guna.UI2.WinForms.Guna2HtmlLabel class1;
@@ -982,5 +978,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2PictureBox toolLabelingSquareGif;
         private Guna.UI2.WinForms.Guna2Panel toolHandPanel;
         private Guna.UI2.WinForms.Guna2PictureBox toolHandGif;
+        private Guna.UI2.WinForms.Guna2Button homeBtn;
     }
 }
