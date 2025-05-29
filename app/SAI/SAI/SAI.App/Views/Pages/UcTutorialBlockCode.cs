@@ -739,6 +739,8 @@ namespace SAI.SAI.App.Views.Pages
 					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
+                        btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
+                        btnRunModel.Enabled = false; // 실행 후 버튼 비활성화
 					}
 					else
 					{

@@ -65,6 +65,8 @@ namespace SAI.SAI.App.Views.Pages
 			this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.autoSizeLabel1 = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
 			this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
 			this.ptxtThreshold = new Guna.UI2.WinForms.Guna2Panel();
@@ -98,8 +100,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.autoSizeLabel1 = new SAI.App.Views.Pages.AutoSizeLabel();
 			this.pMain.SuspendLayout();
 			this.pBlockList.SuspendLayout();
 			this.pCode.SuspendLayout();
@@ -108,6 +108,7 @@ namespace SAI.SAI.App.Views.Pages
 			((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
 			this.pTopBlock.SuspendLayout();
 			this.pSideInfer.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
 			this.ptxtThreshold.SuspendLayout();
 			this.ptxtInfer.SuspendLayout();
@@ -118,7 +119,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpParentError.SuspendLayout();
 			this.tpContentError.SuspendLayout();
 			this.tpErrorHeader.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pMain
@@ -509,6 +509,18 @@ namespace SAI.SAI.App.Views.Pages
 			this.pSideInfer.Controls.Add(this.guna2Panel1);
 			this.pSideInfer.Name = "pSideInfer";
 			// 
+			// tableLayoutPanel1
+			// 
+			resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+			this.tableLayoutPanel1.Controls.Add(this.autoSizeLabel1, 0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			// 
+			// autoSizeLabel1
+			// 
+			resources.ApplyResources(this.autoSizeLabel1, "autoSizeLabel1");
+			this.autoSizeLabel1.Name = "autoSizeLabel1";
+			this.autoSizeLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// btnSelectInferImage
 			// 
 			this.btnSelectInferImage.BackgroundImage = global::SAI.Properties.Resources.btn_selectinferimage;
@@ -634,6 +646,7 @@ namespace SAI.SAI.App.Views.Pages
 			resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
 			this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
 			this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(240, 75);
+			this.ibtnDownloadAIModel.Click += new System.EventHandler(this.ibtnDownloadAIModel_Click);
 			// 
 			// ibtnGoNotion
 			// 
@@ -820,18 +833,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.lblTitle.Name = "lblTitle";
 			this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tableLayoutPanel1
-			// 
-			resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-			this.tableLayoutPanel1.Controls.Add(this.autoSizeLabel1, 0, 0);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			// 
-			// autoSizeLabel1
-			// 
-			resources.ApplyResources(this.autoSizeLabel1, "autoSizeLabel1");
-			this.autoSizeLabel1.Name = "autoSizeLabel1";
-			this.autoSizeLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// UcTutorialBlockCode
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -858,6 +859,7 @@ namespace SAI.SAI.App.Views.Pages
 			((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
 			this.pTopBlock.ResumeLayout(false);
 			this.pSideInfer.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
 			this.ptxtThreshold.ResumeLayout(false);
 			this.ptxtInfer.ResumeLayout(false);
@@ -870,7 +872,6 @@ namespace SAI.SAI.App.Views.Pages
 			this.tpContentError.PerformLayout();
 			this.tpErrorHeader.ResumeLayout(false);
 			this.tpErrorHeader.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }
