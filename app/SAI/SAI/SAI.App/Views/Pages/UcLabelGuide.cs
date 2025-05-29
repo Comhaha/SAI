@@ -14,6 +14,7 @@ using SAI.SAI.App.Views.Interfaces;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Views.Pages
 {
@@ -176,6 +177,10 @@ namespace SAI.SAI.App.Views.Pages
 
             // class2 초기 상태에 따라 classBtn 가시성 설정
             UpdateClassButtonVisibility();
+
+            // 호버 고쳐달라해서 추가하고갑니다
+            ButtonUtils.SetupButton(goModel, "btn_goTutorialTrain_clicked", "btn_goTutorialTrain");
+            ButtonUtils.SetupButton(homeBtn, "btn_home_clicked", "btn_home");
         }
         
         // 정답 데이터 초기화 메서드 
