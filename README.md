@@ -75,7 +75,7 @@
 
 <div id="4"></div>
 
-# 📚 기술 스택 (수정 예정)
+# 📚 기술 스택
 
 ### Backend
 
@@ -151,9 +151,9 @@
 
 ## 기술적 특징
 
-## 서비스 아키텍처
+## 시스템 아키텍처
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/f4c4ef8fdbc0ef323a034dd45d7cd662/%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png">
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ed9f4335e896c6d611bc5199bbf0022/image__6_.png">
 
 <br/>
 
