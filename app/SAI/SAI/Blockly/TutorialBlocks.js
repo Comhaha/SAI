@@ -69,7 +69,7 @@ Blockly.Python.forBlock['loadModel'] = function (block) {
         `# 모델 불러오기\n` +
         `from ultralytics import YOLO\n\n` +
         `model = YOLO("${modelFile}")   # YOLOv8 모델 불러오기\n` +
-        `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")')\n\n\n`
+        `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")\n\n\n`
     );
 };
 

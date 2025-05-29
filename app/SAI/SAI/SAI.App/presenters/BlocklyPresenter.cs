@@ -305,7 +305,7 @@ namespace SAI.SAI.App.Presenters
 						    blocklyModel.model = val.ToString();
                         }
 					}
-					//MessageBox.Show(blocklyModel.model);
+                    //MessageBox.Show(blocklyModel.model);
 					break;
 				case "layer":
 					foreach (var kvp in value)
@@ -329,7 +329,7 @@ namespace SAI.SAI.App.Presenters
 						}
 
 					}
-					MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
+					//MessageBox.Show(blocklyModel.Conv + "\n" + blocklyModel.C2f + "\n" + blocklyModel.Upsample_scale);
 					break;
 
 				case "machineLearning":
