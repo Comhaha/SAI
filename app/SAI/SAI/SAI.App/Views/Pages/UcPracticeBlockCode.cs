@@ -26,7 +26,7 @@ namespace SAI.SAI.App.Views.Pages
         private BlocklyPresenter blocklyPresenter;
         private UcShowDialogPresenter ucShowDialogPresenter;
         private DialogInferenceLoading dialogLoadingInfer;
-        private YoloPracticePresenter yoloPracticePresenter;
+        //private YoloPracticePresenter yoloPracticePresenter;
         private YoloTutorialPresenter yoloTutorialPresenter;
 
         private readonly IMainView mainView;
@@ -70,8 +70,9 @@ namespace SAI.SAI.App.Views.Pages
         {
             InitializeComponent();
 
-            yoloPracticePresenter = new YoloPracticePresenter(this);
+            //yoloPracticePresenter = new YoloPracticePresenter(this);
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
+            
 
             // RunButtonClicked 이벤트를 yoloTutorialPresenter에서 해제
             yoloTutorialPresenter.UnsubscribeFromRunButtonClicked(this);
@@ -339,7 +340,8 @@ namespace SAI.SAI.App.Views.Pages
             // 이미지 경로가 바뀌면 블록에서도 적용되게
             blocklyModel.ImgPathChanged += (newPath) => {
                 // 웹뷰에 이미지 경로 전달
-                webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+                string escapedPath = JsonSerializer.Serialize(newPath);
+                webViewblock.ExecuteScriptAsync($"imgPathChanged({escapedPath})");
 
                 if (File.Exists(newPath))
                 {
@@ -347,9 +349,17 @@ namespace SAI.SAI.App.Views.Pages
                     pboxInferAccuracy.Image?.Dispose();
 
                     // string 경로를 Image 객체로 변환
+                    string absolutePath = Path.IsPathRooted(newPath) ? newPath : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, newPath);
+                    if (File.Exists(absolutePath))
+                    {
+                        pboxInferAccuracy.Image = System.Drawing.Image.FromFile(absolutePath);
+                    }
+                    else
+                    {
+                        pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
+                    }
                     pboxInferAccuracy.Size = new Size(494, 278);
                     pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                    pboxInferAccuracy.Image = Image.FromFile(newPath);
                     pboxInferAccuracy.Visible = true;
                     pleaseControlThreshold.Visible = true;
                 }
@@ -366,7 +376,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                "SAI.Application", "Python", "runs", "detect", "train", "results.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTrainingChart(csvPath);
         }
@@ -394,7 +404,7 @@ namespace SAI.SAI.App.Views.Pages
                 {
                     currentThreshold = newValue;
 
-                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {selectedImagePath}");
+                    Console.WriteLine($"[LOG] SetupThresholdControls - selectedImagePath: {blocklyModel.imgPath}");
                     Console.WriteLine($"[LOG] SetupThresholdControls - currentThreshold: {currentThreshold}");
 
                     // 추론은 백그라운드에서 실행
@@ -402,7 +412,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(() =>
                     {
                         _result = yoloTutorialPresenter.RunInferenceDirect(
-                            selectedImagePath,
+                            blocklyModel.imgPath,
                             currentThreshold
                         );
 
@@ -1029,6 +1039,7 @@ namespace SAI.SAI.App.Views.Pages
                         string absolutePath = openFileDialog.FileName;
                         selectedImagePath = absolutePath;
                         currentImagePath = absolutePath; // 현재 이미지 경로 저장
+                        blocklyModel.imgPath = selectedImagePath;
 
                         // 1. 현재 스크롤 위치 저장
                         var scrollPos = pSideInfer.AutoScrollPosition;
@@ -1097,7 +1108,18 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
-                        
+
+                        // 경로를 절대 경로로 변환
+                        string absolutePath = Path.IsPathRooted(result.ResultImage)
+                            ? result.ResultImage
+                            : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, result.ResultImage);
+
+                        // 절대 경로 파일 확인
+                        if (!File.Exists(absolutePath) && File.Exists(result.ResultImage))
+                        {
+                            absolutePath = result.ResultImage;
+                        }
+
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
                         {
@@ -1143,6 +1165,11 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog(this);
 
             }
+
+            Console.WriteLine("[DEBUG] ShowPracticeInferenceResult() 호출됨");
+            Console.WriteLine($"[DEBUG] Result.Success = {result.Success}");
+            Console.WriteLine($"[DEBUG] Result.ResultImage = {result.ResultImage}");
+            Console.WriteLine($"[DEBUG] 파일 존재 여부: {File.Exists(result.ResultImage)}");
         }
 
         private void tboxMemo_TextChanged(object sender, EventArgs e)

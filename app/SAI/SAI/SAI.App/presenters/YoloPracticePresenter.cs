@@ -327,21 +327,21 @@ namespace SAI.SAI.App.Presenters
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행
         // 사용자 지정 imagePath와 conf값을 파이썬에 던져주면, 스크립트에서 그 값으로 추론을 진행
-        public void OnInferImageSelected(string imagePath, double conf)
-        {
-            var result = _pythonService.RunInference(imagePath, conf);
-            _practiceInferenceView.ShowPracticeInferResultImage(result);
-        }
+        //public void OnInferImageSelected(string imagePath, double conf)
+        //{
+        //    var result = _pythonService.RunInference(imagePath, conf);
+        //    _practiceInferenceView.ShowPracticeInferResultImage(result);
+        //}
 
-        public PythonService.InferenceResult RunInferenceDirect(string imagePath, double conf)
-        {
-            Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
-            var result = _pythonService.RunInference(imagePath, conf);
-            Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
-            Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
-            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {File.Exists(result.ResultImage)}");
-            Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
-            return result;
-        }
+        //public PythonService.InferenceResult RunInferenceDirect(string imagePath, double conf)
+        //{
+        //    Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
+        //    var result = _pythonService.RunInference(imagePath, conf);
+        //    Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+        //    Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+        //    Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {File.Exists(result.ResultImage)}");
+        //    Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
+        //    return result;
+        //}
     }
 }
