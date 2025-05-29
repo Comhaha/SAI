@@ -681,76 +681,79 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-		private bool checkBlockPosition(string blockType, int nowPosition)
-		{
-			if (nowPosition == 1)
+        private bool checkBlockPosition(string blockType, int nowPosition)
+        {
+            if (nowPosition == 1)
             {
-			{
-				if (blockType != "pipInstall")
-				{
-					blockErrorMessage("start");
-					return false;
-				}
-			}
-			else if (nowPosition == 2)
-			{
-				if(blockType != "loadModel" && blockType != "loadModelWithLayer")
-				{
-					blockErrorMessage("pipInstall");
-					return false;
-				}
-			}
-			else if (nowPosition == 3)
-			{
-				if (blockType != "loadDataset")
-				{
-					blockErrorMessage("loadModel");
-					return false;
-				}
-			}
-			else if (nowPosition == 4)
-			{
-				if (blockType != "machineLearning")
-				{
-					blockErrorMessage("loadDataset");
-					return false;
-				}
-			}
-			else if (nowPosition == 5)
-			{
-				if (blockType != "resultGraph")
-				{
-					blockErrorMessage("machineLearning");
-					return false;
-				}
-			}
-			else if (nowPosition == 6)
-			{
-				if (blockType != "imgPath")
-				{
-					blockErrorMessage("resultGraph");
-					return false;
-				}
-			}
-			else if (nowPosition == 7)
-			{
-				if (blockType != "modelInference")
-				{
-					blockErrorMessage("imgPath");
-					return false;
-				}
-			}
-			else if (nowPosition == 8)
-			{
-				if (blockType != "visualizeResult")
-				{
-					blockErrorMessage("modelInference");
-					return false;
-				}
-			}
+                {
+                    if (blockType != "pipInstall")
+                    {
+                        blockErrorMessage("start");
+                        return false;
+                    }
+                }
+            }
 
-            return true;
-        }
+            else if (nowPosition == 2)
+            {
+                if (blockType != "loadModel" && blockType != "loadModelWithLayer")
+                {
+                    blockErrorMessage("pipInstall");
+                    return false;
+                }
+            }
+            else if (nowPosition == 3)
+            {
+                if (blockType != "loadDataset")
+                {
+                    blockErrorMessage("loadModel");
+                    return false;
+                }
+            }
+            else if (nowPosition == 4)
+            {
+                if (blockType != "machineLearning")
+                {
+                    blockErrorMessage("loadDataset");
+                    return false;
+                }
+            }
+            else if (nowPosition == 5)
+            {
+                if (blockType != "resultGraph")
+                {
+                    blockErrorMessage("machineLearning");
+                    return false;
+                }
+            }
+            else if (nowPosition == 6)
+            {
+                if (blockType != "imgPath")
+                {
+                    blockErrorMessage("resultGraph");
+                    return false;
+                }
+            }
+            else if (nowPosition == 7)
+            {
+                if (blockType != "modelInference")
+                {
+                    blockErrorMessage("imgPath");
+                    return false;
+                }
+            }
+            else if (nowPosition == 8)
+            {
+                if (blockType != "visualizeResult")
+                {
+                    blockErrorMessage("modelInference");
+                    return false;
+                }
+            }
+
+                return true;
+            }
+        
 
 		private void blockErrorMessage(string blockType)
 		{
