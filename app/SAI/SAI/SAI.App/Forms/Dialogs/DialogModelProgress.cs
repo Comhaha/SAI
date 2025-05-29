@@ -11,11 +11,19 @@ namespace SAI.SAI.App.Forms.Dialogs
     {
         // 파이썬 스크립트 종료 감지를 위함
         private Process pythonProcess;
+        // 서버 모니터링 취소를 위한 Presenter 참조
+        private object serverPresenter; // YoloTutorialPresenter 또는 다른 Presenter
 
         
         public void SetProcess(Process process)
         {
             pythonProcess = process;
+        }
+
+        // 서버 모니터링을 취소할 수 있는 Presenter 설정
+        public void SetPresenter(object presenter)
+        {
+            serverPresenter = presenter;
         }
 
         public DialogModelProgress()
@@ -91,13 +99,37 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             try
             {
-                if (pythonProcess != null)
+                // DialogQuitInference의 인스턴스 생성
+                using (DialogQuitInference quitDialog = new DialogQuitInference())
                 {
-                    if (!pythonProcess.HasExited)
+                    // 다이얼로그 표시 및 결과 확인
+                    if (quitDialog.ShowDialog(this) == DialogResult.OK)
                     {
-                        pythonProcess.Kill();         // 프로세스 강제 종료
+                        // 사용자가 확인을 선택한 경우에만 프로세스 종료
+                        if (pythonProcess != null)
+                        {
+                            if (!pythonProcess.HasExited)
+                            {
+                                pythonProcess.Kill();         // 프로세스 강제 종료
+                            }
+                            pythonProcess.Dispose();      // 리소스 정리
+                        }
+
+                        // 서버 모니터링 취소 (YoloTutorialPresenter인 경우)
+                        if (serverPresenter != null)
+                        {
+                            // Reflection을 사용하여 CancelServerMonitoring 메서드 호출
+                            var cancelMethod = serverPresenter.GetType().GetMethod("CancelServerMonitoring");
+                            if (cancelMethod != null)
+                            {
+                                cancelMethod.Invoke(serverPresenter, null);
+                            }
+                        }
+
+                        this.DialogResult = DialogResult.Cancel;
+                        this.Close();
                     }
-                    pythonProcess.Dispose();      // 리소스 정리
+                    // 사용자가 취소를 선택한 경우 아무것도 하지 않음
                 }
             }
             catch (InvalidOperationException)
@@ -108,9 +140,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             {
                 MessageBox.Show($"프로세스를 종료하는 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
         }
     }
 }

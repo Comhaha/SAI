@@ -653,9 +653,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 추론은 백그라운드에서 실행
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
-                        _result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = await yoloTutorialPresenter.RunInferenceDirect(
                             blocklyModel.imgPath,
                             currentThreshold
                         );

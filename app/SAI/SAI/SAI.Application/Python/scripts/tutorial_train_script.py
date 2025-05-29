@@ -20,6 +20,7 @@ import io
 import re
 from datetime import datetime
 import shutil
+import torch
 # 로깅 레벨 설정
 logging.getLogger().setLevel(logging.INFO)
 
@@ -515,18 +516,19 @@ def train_model_block(block_params=None):
             "error": "데이터셋 YAML 파일 없음"
         }
     
-    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨)
-    gpu_info = install_packages.check_gpu(start_time)
-    device = "cuda" if gpu_info.get("available", False) else "cpu"
+    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨, 중복 호출 방지)
+    # GPU 사용 가능 여부만 간단히 확인
+    if torch.cuda.is_available():
+        device = 0  # YOLOv8에서는 디바이스 번호를 직접 사용
+    else:
+        device = "cpu"
     
     # 학습 파라미터 설정
     batch_size = 16
-    if device == "cuda" and gpu_info.get("available", False):
-        # GPU 메모리에 따른 배치 크기 조정
-        memory = gpu_info.get("memory_gb", [0])[0]
-        if memory and memory < 6:
-            batch_size = 8
-            show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
+    if torch.cuda.is_available():
+        # GPU 메모리에 따른 배치 크기 조정 (간단히 처리)
+        batch_size = 8
+        show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
     
     # 에폭 수 설정 - 사용자 지정 값 또는 기본값
     if epochs is None:

@@ -98,6 +98,7 @@
     <Compile Include="SAI.Application\Dto\AiFeedbackResponseDto.cs" />
     <Compile Include="SAI.Application\Dto\BaseResponse.cs" />
     <Compile Include="SAI.Application\Service\AiFeedbackService.cs" />
+    <Compile Include="SAI.Application\Service\ApiService.cs" />
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.Application\Service\CodeBoxService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />

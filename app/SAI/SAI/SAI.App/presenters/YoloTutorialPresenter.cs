@@ -12,6 +12,9 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Drawing;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -20,20 +23,76 @@ namespace SAI.SAI.App.Presenters
         private readonly ITutorialInferenceView _itutorialInferenceView;
         private readonly IYoloTutorialView _yolotutorialview;
         private readonly PythonService _pythonService;
+        private readonly ApiService _apiService;
         private DialogModelProgress _progressDialog;
         private DateTime _scriptStartTime; // 스크립트 실행 시작 시간
+        private CancellationTokenSource _monitoringCancellationTokenSource; // 서버 모니터링 취소용
 
-        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
+        //public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
+        //{
+        //    _yolotutorialview = yolotutorialview;
+        //    _pythonService = new PythonService();
+
+        //    _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
+
+        //    _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
+       
+        //}
+
+        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://127.0.0.1:8082")
         {
             _yolotutorialview = yolotutorialview;
             _pythonService = new PythonService();
-
+            _apiService = new ApiService(serverUrl);
             _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
-
             _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
-       
         }
 
+        //private void OnRunButtonClicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        // 스크립트 실행 시작 시간 기록
+        //        _scriptStartTime = DateTime.Now;
+        //        Console.WriteLine($"[INFO] 스크립트 실행 시작 시간: {_scriptStartTime}");
+
+        //        // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
+        //        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+        //        {
+        //            viewControl.Invoke(new Action(() =>
+        //            {
+        //                _progressDialog = new DialogModelProgress();
+        //                _progressDialog.FormClosing += (s, args) =>
+        //                {
+        //                    if (args.CloseReason == CloseReason.UserClosing)
+        //                    {
+        //                        args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
+        //                    }
+        //                };
+        //                _progressDialog.Show();  // 비모달로 표시
+        //                StartPythonScript();
+        //            }));
+        //        }
+        //        else
+        //        {
+        //            _progressDialog = new DialogModelProgress();
+        //            _progressDialog.FormClosing += (s, args) =>
+        //            {
+        //                if (args.CloseReason == CloseReason.UserClosing)
+        //                {
+        //                    args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
+        //                }
+        //            };
+        //            _progressDialog.Show();  // 비모달로 표시
+        //            StartPythonScript();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error in OnRunButtonClicked: {ex}");
+        //        _yolotutorialview.ShowErrorMessage($"실행 중 오류가 발생했습니다: {ex.Message}");
+        //    }
+        //}
         private void OnRunButtonClicked(object sender, EventArgs e)
         {
             try
@@ -41,11 +100,123 @@ namespace SAI.SAI.App.Presenters
                 // 스크립트 실행 시작 시간 기록
                 _scriptStartTime = DateTime.Now;
                 Console.WriteLine($"[INFO] 스크립트 실행 시작 시간: {_scriptStartTime}");
-                
-                // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
-                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+
+                // BlocklyModel에서 GpuType 가져오기
+                var model = BlocklyModel.Instance;
+                var gpuType = model.gpuType;
+
+                Console.WriteLine($"[INFO] 선택된 GPU 타입: {gpuType}");
+
+                // GpuType에 따라 로컬 또는 원격 실행 결정
+                if (gpuType == GpuType.Server)
                 {
-                    viewControl.Invoke(new Action(() =>
+                    Console.WriteLine("[INFO] 서버에서 모델 학습을 시작합니다.");
+
+                    // 다이얼로그 표시 (UI 스레드에서)
+                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                    {
+                        viewControl.Invoke(new Action(async () =>
+                        {
+                            _progressDialog = new DialogModelProgress();
+                            _progressDialog.SetPresenter(this); // 서버 모니터링 취소를 위한 Presenter 참조 설정
+                            _progressDialog.FormClosing += (s, args) =>
+                            {
+                                if (args.CloseReason == CloseReason.UserClosing)
+                                {
+                                    args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
+                                }
+                            };
+                            _progressDialog.Show();  // 비모달로 표시
+
+                            // 서버에 학습 요청 시작
+                            await Task.Run(async () => {
+                                try
+                                {
+                                    string taskId = await StartTrainingRemote(model);
+                                    if (string.IsNullOrEmpty(taskId))
+                                    {
+                                        throw new Exception("서버에서 작업 ID를 받지 못했습니다.");
+                                    }
+
+                                    Console.WriteLine($"[INFO] 서버 학습 작업 ID: {taskId}");
+                                    // MonitorTrainingProgress는 이미 내부적으로 호출됨
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine($"[ERROR] 원격 학습 시작 중 오류: {ex.Message}");
+                                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                    {
+                                        _progressDialog.Invoke(new Action(() => {
+                                            _progressDialog.Close();
+                                            _progressDialog.Dispose();
+                                            _yolotutorialview.ShowErrorMessage($"원격 학습 시작 중 오류가 발생했습니다: {ex.Message}");
+                                        }));
+                                    }
+                                }
+                            });
+                        }));
+                    }
+                    else
+                    {
+                        _progressDialog = new DialogModelProgress();
+                        _progressDialog.SetPresenter(this); // 서버 모니터링 취소를 위한 Presenter 참조 설정
+                        _progressDialog.FormClosing += (s, args) =>
+                        {
+                            if (args.CloseReason == CloseReason.UserClosing)
+                            {
+                                args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
+                            }
+                        };
+                        _progressDialog.Show();  // 비모달로 표시
+
+                        // 서버에 학습 요청 시작
+                        Task.Run(async () => {
+                            try
+                            {
+                                string taskId = await StartTrainingRemote(model);
+                                if (string.IsNullOrEmpty(taskId))
+                                {
+                                    throw new Exception("서버에서 작업 ID를 받지 못했습니다.");
+                                }
+
+                                Console.WriteLine($"[INFO] 서버 학습 작업 ID: {taskId}");
+                                // MonitorTrainingProgress는 이미 내부적으로 호출됨
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"[ERROR] 원격 학습 시작 중 오류: {ex.Message}");
+                                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                {
+                                    _progressDialog.Close();
+                                    _progressDialog.Dispose();
+                                    _yolotutorialview.ShowErrorMessage($"원격 학습 시작 중 오류가 발생했습니다: {ex.Message}");
+                                }
+                            }
+                        });
+                    }
+                }
+                else // GpuType.Local
+                {
+                    Console.WriteLine("[INFO] 로컬에서 모델 학습을 시작합니다.");
+
+                    // 다이얼로그는 반드시 UI 스레드에서 실행되어야 함
+                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                    {
+                        viewControl.Invoke(new Action(() =>
+                        {
+                            _progressDialog = new DialogModelProgress();
+                            _progressDialog.FormClosing += (s, args) =>
+                            {
+                                if (args.CloseReason == CloseReason.UserClosing)
+                                {
+                                    args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
+                                }
+                            };
+                            _progressDialog.Show();  // 비모달로 표시
+                            StartPythonScript();
+                        }));
+                    }
+                    else
                     {
                         _progressDialog = new DialogModelProgress();
                         _progressDialog.FormClosing += (s, args) =>
@@ -57,20 +228,7 @@ namespace SAI.SAI.App.Presenters
                         };
                         _progressDialog.Show();  // 비모달로 표시
                         StartPythonScript();
-                    }));
-                }
-                else
-                {
-                    _progressDialog = new DialogModelProgress();
-                    _progressDialog.FormClosing += (s, args) =>
-                    {
-                        if (args.CloseReason == CloseReason.UserClosing)
-                        {
-                            args.Cancel = true;  // 사용자가 닫으려고 할 때 취소
-                        }
-                    };
-                    _progressDialog.Show();  // 비모달로 표시
-                    StartPythonScript();
+                    }
                 }
             }
             catch (Exception ex)
@@ -343,12 +501,41 @@ namespace SAI.SAI.App.Presenters
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행
         // 사용자 지정 imagePath와 conf값을 파이썬에 던져주면, 스크립트에서 그 값으로 추론을 진행
-        public void OnInferImageSelected(string imagePath, double conf)
+        public async void OnInferImageSelected(string imagePath, double conf)
         {
-            var result = _pythonService.RunInference(imagePath, conf);
-            _itutorialInferenceView.ShowInferenceResult(result);
+            try
+            {
+                var model = BlocklyModel.Instance;
+                var gpuType = model.gpuType;
+
+                PythonService.InferenceResult result;
+
+                if (gpuType == GpuType.Server)
+                {
+                    Console.WriteLine("[INFO] 서버에서 추론을 수행합니다.");
+                    result = await RunInferenceDirectRemote(imagePath, conf);
+                }
+                else
+                {
+                    Console.WriteLine("[INFO] 로컬에서 추론을 수행합니다.");
+                    result = _pythonService.RunInference(imagePath, conf);
+                }
+
+                _itutorialInferenceView.ShowInferenceResult(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 추론 중 오류 발생: {ex.Message}");
+                var errorResult = new PythonService.InferenceResult
+                {
+                    Success = false,
+                    Error = $"추론 중 오류 발생: {ex.Message}"
+                };
+                _itutorialInferenceView.ShowInferenceResult(errorResult);
+            }
         }
 
+        /*
         public PythonService.InferenceResult RunInferenceDirect(string imagePath, double conf)
         {
             Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
@@ -359,7 +546,8 @@ namespace SAI.SAI.App.Presenters
             Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
             return result;
         }
-
+        */
+        
         // RunButtonClicked 이벤트 구독 해제 메서드 추가
         public void UnsubscribeFromRunButtonClicked(IYoloTutorialView view)
         {
@@ -369,6 +557,372 @@ namespace SAI.SAI.App.Presenters
             }
         }
 
-       
+        public async Task<PythonService.InferenceResult> RunInferenceDirect(string imagePath, double conf)
+        {
+            try
+            {
+                Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
+                
+                var model = BlocklyModel.Instance;
+                var gpuType = model.gpuType;
+
+                PythonService.InferenceResult result;
+
+                if (gpuType == GpuType.Server)
+                {
+                    Console.WriteLine("[INFO] 서버에서 추론을 수행합니다.");
+                    result = await RunInferenceDirectRemote(imagePath, conf);
+                }
+                else
+                {
+                    Console.WriteLine("[INFO] 로컬에서 추론을 수행합니다.");
+                    result = _pythonService.RunInference(imagePath, conf);
+                }
+
+                Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
+                
+                if (!string.IsNullOrEmpty(result.ResultImage))
+                {
+                    Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {File.Exists(result.ResultImage)}");
+                }
+                
+                Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] RunInferenceDirect 중 오류 발생: {ex.Message}");
+                return new PythonService.InferenceResult
+                {
+                    Success = false,
+                    Error = $"추론 중 오류 발생: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<PythonService.InferenceResult> RunInferenceDirectRemote(string imagePath, double conf)
+        {
+            try
+            {
+                var apiResult = await _apiService.RunInference(imagePath, conf);
+
+                // ApiService.InferenceResult를 PythonService.InferenceResult로 변환
+                return new PythonService.InferenceResult
+                {
+                    Success = apiResult.Success,
+                    ResultImage = apiResult.ResultImage,
+                    OriginalName = apiResult.OriginalName,
+                    InferenceTime = apiResult.InferenceTime,
+                    Error = apiResult.Error
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 원격 추론 중 오류 발생: {ex.Message}");
+                return new PythonService.InferenceResult
+                {
+                    Success = false,
+                    Error = $"원격 추론 중 오류 발생: {ex.Message}"
+                };
+            }
+        }
+        public async Task<string> StartTrainingRemote(BlocklyModel model)
+        {
+            try
+            {
+                // 모델 파라미터를 JSON으로 직렬화
+                var requestData = new
+                {
+                    name = model.model,
+                    epochs = model.epoch,
+                    image_size = model.imgsz,
+                    accuracy = model.accuracy,
+                    blocks = model.blockTypes.Select(b => b.type).ToArray()
+                };
+
+                // API 호출
+                var content = new StringContent(
+                    JsonSerializer.Serialize(requestData),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+                var response = await _apiService.PostAsync("/api/training/start", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"API 호출 실패: {response.StatusCode}");
+                }
+
+                // 응답 파싱
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"[DEBUG] 서버 응답: {responseContent}");
+                
+                var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(responseContent);
+                
+                if (result.TryGetValue("task_id", out var taskIdElement) && 
+                    taskIdElement.ValueKind == JsonValueKind.String)
+                {
+                    string taskId = taskIdElement.GetString();
+                    if (!string.IsNullOrEmpty(taskId))
+                    {
+                        // 학습 진행 상황을 모니터링하는 메서드 호출
+                        MonitorTrainingProgress(taskId);
+                        return taskId;
+                    }
+                }
+                
+                throw new Exception("응답에서 유효한 task_id를 찾을 수 없습니다.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 원격 학습 시작 중 오류 발생: {ex.Message}");
+                _yolotutorialview.ShowErrorMessage($"원격 학습 시작 중 오류가 발생했습니다: {ex.Message}");
+                return null;
+            }
+        }
+        private async void MonitorTrainingProgress(string taskId)
+        {
+            _monitoringCancellationTokenSource = new CancellationTokenSource();
+            // 전체 모니터링을 30분으로 제한
+            _monitoringCancellationTokenSource.CancelAfter(TimeSpan.FromMinutes(30));
+
+            try
+            {
+                bool isCompleted = false;
+                int consecutiveErrors = 0;
+                const int maxConsecutiveErrors = 5;
+
+                while (!isCompleted && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    try
+                    {
+                        // 진행 상황 요청
+                        var response = await _apiService.GetAsync($"/api/training/progress/{taskId}");
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            consecutiveErrors = 0; // 성공시 에러 카운트 리셋
+                            
+                            var content = await response.Content.ReadAsStringAsync();
+                            var progressData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(content);
+
+                            if (progressData.TryGetValue("progress", out var progressElement) &&
+                                progressData.TryGetValue("status", out var statusElement) &&
+                                progressData.TryGetValue("message", out var messageElement))
+                            {
+                                double progress = progressElement.GetDouble();
+                                string status = statusElement.GetString();
+                                string message = messageElement.GetString();
+
+                                Console.WriteLine($"[YOLO Tutorial] {progress}:{message}");
+
+                                // UI 업데이트
+                                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                {
+                                    if (_progressDialog.InvokeRequired)
+                                    {
+                                        _progressDialog.Invoke(new Action(() =>
+                                        {
+                                            if (!_progressDialog.IsDisposed)
+                                            {
+                                                _progressDialog.UpdateProgress(progress, message);
+                                            }
+                                        }));
+                                    }
+                                    else
+                                    {
+                                        _progressDialog.UpdateProgress(progress, message);
+                                    }
+                                }
+
+                                // 로그 추가
+                                if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                                {
+                                    logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(message)));
+                                }
+                                else
+                                {
+                                    _yolotutorialview.AppendLog(message);
+                                }
+
+                                // 완료 확인
+                                isCompleted = status == "completed" || status == "failed";
+
+                                if (isCompleted)
+                                {
+                                    Console.WriteLine($"[YOLO Tutorial] 학습 완료: {status}");
+
+                                    // 완료 처리
+                                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                    {
+                                        if (_progressDialog.InvokeRequired)
+                                        {
+                                            _progressDialog.Invoke(new Action(() =>
+                                            {
+                                                _progressDialog.Close();
+                                                _progressDialog.Dispose();
+                                            }));
+                                        }
+                                        else
+                                        {
+                                            _progressDialog.Close();
+                                            _progressDialog.Dispose();
+                                        }
+                                    }
+
+                                    // 결과 처리
+                                    if (status == "completed")
+                                    {
+                                        // CSV 파일 경로 가져오기 및 차트 표시
+                                        if (progressData.TryGetValue("result_csv", out var csvElement))
+                                        {
+                                            string csvBase64 = csvElement.GetString();
+                                            byte[] csvBytes = Convert.FromBase64String(csvBase64);
+
+                                            string csvPath = Path.Combine(
+                                                Path.GetTempPath(),
+                                                $"training_results_{taskId}.csv"
+                                            );
+
+                                            File.WriteAllBytes(csvPath, csvBytes);
+
+                                            if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
+                                            {
+                                                chartControl.Invoke(new Action(() =>
+                                                    _yolotutorialview.ShowTutorialTrainingChart(csvPath)
+                                                ));
+                                            }
+                                            else
+                                            {
+                                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                            }
+                                        }
+                                    }
+                                    else if (status == "failed")
+                                    {
+                                        // 실패 메시지 표시
+                                        string errorMessage = "학습이 실패했습니다.";
+                                        if (progressData.TryGetValue("error", out var errorElement))
+                                        {
+                                            errorMessage = errorElement.GetString();
+                                        }
+                                        Console.WriteLine($"[YOLO Tutorial] 학습 실패: {errorMessage}");
+                                        
+                                        if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+                                        {
+                                            errorControl.Invoke(new Action(() =>
+                                                _yolotutorialview.ShowErrorMessage(errorMessage)
+                                            ));
+                                        }
+                                        else
+                                        {
+                                            _yolotutorialview.ShowErrorMessage(errorMessage);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            consecutiveErrors++;
+                            Console.WriteLine($"[WARNING] API 응답 실패: {response.StatusCode}, 연속 오류: {consecutiveErrors}");
+                            
+                            if (consecutiveErrors >= maxConsecutiveErrors)
+                            {
+                                throw new Exception($"연속 {maxConsecutiveErrors}회 API 호출 실패");
+                            }
+                        }
+                    }
+                    catch (TaskCanceledException tcex) when (tcex.CancellationToken.IsCancellationRequested)
+                    {
+                        Console.WriteLine("[INFO] 학습 모니터링이 취소되었습니다.");
+                        break;
+                    }
+                    catch (Exception apiEx)
+                    {
+                        consecutiveErrors++;
+                        Console.WriteLine($"[WARNING] API 호출 중 오류: {apiEx.Message}, 연속 오류: {consecutiveErrors}");
+                        
+                        if (consecutiveErrors >= maxConsecutiveErrors)
+                        {
+                            throw new Exception($"연속 {maxConsecutiveErrors}회 API 오류: {apiEx.Message}");
+                        }
+                    }
+
+                    // 2초 대기 (이전보다 조금 더 길게)
+                    if (!isCompleted && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        await Task.Delay(2000, _monitoringCancellationTokenSource.Token);
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("[ERROR] 학습 모니터링이 타임아웃으로 취소되었습니다.");
+                if (_yolotutorialview is Control timeoutControl && timeoutControl.InvokeRequired)
+                {
+                    timeoutControl.Invoke(new Action(() =>
+                        _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.")
+                    ));
+                }
+                else
+                {
+                    _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 학습 진행 상황 모니터링 중 오류 발생: {ex.Message}");
+
+                if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+                {
+                    errorControl.Invoke(new Action(() =>
+                        _yolotutorialview.ShowErrorMessage($"학습 진행 상황 모니터링 중 오류 발생: {ex.Message}")
+                    ));
+                }
+                else
+                {
+                    _yolotutorialview.ShowErrorMessage($"학습 진행 상황 모니터링 중 오류 발생: {ex.Message}");
+                }
+            }
+            finally
+            {
+                // 다이얼로그 정리
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                {
+                    if (_progressDialog.InvokeRequired)
+                    {
+                        _progressDialog.Invoke(new Action(() =>
+                        {
+                            if (!_progressDialog.IsDisposed)
+                            {
+                                _progressDialog.Close();
+                                _progressDialog.Dispose();
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        _progressDialog.Close();
+                        _progressDialog.Dispose();
+                    }
+                }
+                
+                _monitoringCancellationTokenSource.Dispose();
+            }
+        }
+
+        // 서버 모니터링 취소 메서드 추가
+        public void CancelServerMonitoring()
+        {
+            if (_monitoringCancellationTokenSource != null && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+            {
+                Console.WriteLine("[INFO] 서버 모니터링을 취소합니다.");
+                _monitoringCancellationTokenSource.Cancel();
+            }
+        }
     }
 }
