@@ -23,7 +23,7 @@ public class TokenRotationScheduler {
     private final ThreadPoolTaskScheduler taskScheduler;
 
     private ScheduledFuture<?> scheduledTask;
-    private static final long ROTATION_PERIOD_MS = 10_800_000L;
+    private static final long ROTATION_PERIOD_MS = 86_400_000L;
 
     @PostConstruct
     public void init() {
@@ -36,10 +36,14 @@ public class TokenRotationScheduler {
             scheduledTask.cancel(false);
         }
 
-        scheduledTask = taskScheduler.scheduleAtFixedRate(() -> {
-            log.info("[Token] 3시간 주기 자동 재발급 시작");
-            tokenService.scheduleReloadToken(); // 자동 재발급 메서드 호출
-        }, ROTATION_PERIOD_MS);
+        PeriodicTrigger trigger =
+            new PeriodicTrigger(ROTATION_PERIOD_MS, TimeUnit.MILLISECONDS);
+        trigger.setInitialDelay(ROTATION_PERIOD_MS);
+
+        scheduledTask = taskScheduler.schedule(
+            () -> tokenService.scheduleReloadToken(),
+            trigger
+        );
 
         log.info("[Token] 스케줄링 재시작 - 다음 토큰 재발급: 3시간 후");
     }

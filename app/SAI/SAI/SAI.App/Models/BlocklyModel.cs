@@ -55,6 +55,8 @@ namespace SAI.SAI.App.Models
 		// _Upsample_scale
 		private double _Upsample_scale;
 
+        // GPU 환경설정
+        private GpuType _gpuType = GpuType.Local;
 
 		// private 생성자 -> 외부에서 생성 못하게.
 		private BlocklyModel()
@@ -221,5 +223,18 @@ namespace SAI.SAI.App.Models
 				}
 			}
 		}
-	}
+
+        // GPU 속성 추가
+        public GpuType gpuType
+        { 
+            get => _gpuType;
+            set 
+            {
+                if (_gpuType != value) 
+                {
+                    _gpuType = value;
+                }
+            }
+        }
+    }
 }

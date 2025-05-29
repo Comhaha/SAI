@@ -231,6 +231,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SAI.App\Models\BlocklyModel.cs" />
+    <Compile Include="SAI.App\Models\GpuType.cs" />
     <Compile Include="SAI.App\Models\YoloModel.cs" />
     <Compile Include="SAI.App\Forms\SplashForm.cs">
       <SubType>Form</SubType>
@@ -252,7 +253,6 @@
     <Compile Include="SAI.App\Presenters\LogImagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\LogCsvPresenter.cs" />
     <Compile Include="SAI.App\Presenters\MemoPresenter.cs" />
-    <Compile Include="SAI.App\Presenters\CodePresenter.cs" />
     <Compile Include="SAI.App\Presenters\DialogLoadPagePresenter.cs" />
     <Compile Include="SAI.App\Presenters\MainPresenter.cs" />
     <Compile Include="SAI.App\Presenters\AiNotionPresenter.cs" />
@@ -515,6 +515,19 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_home_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_goTutorialTrain_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_goTutorialTrain.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_inference_loading.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting.png" />
+    <None Include="SAI.App\Resources\Images\btn_close_setting_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_unchecked.png" />
+    <None Include="SAI.App\Resources\Images\btn_checked.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_setting.png" />
+    <None Include="SAI.App\Resources\Images\notionLoading.gif" />
+    <None Include="SAI.App\Resources\Images\lottie_notion.gif" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_minimize_clicked.png" />
+    <None Include="SAI.App\Resources\Images\btn_yellow_minimize.png" />
     <None Include="SAI.App\Resources\Images\p_copy_alarm.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_modelProgress.png" />
     <None Include="SAI.App\Resources\Images\btn_close_modelProgress_clicked.png" />
@@ -916,6 +929,7 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_modelProgress.png" />
     <None Include="SAI.App\Resources\Images\bg_dialog_homeFromLabeling.png" />
     <None Include="SAI.App\Resources\Images\bg_practiceGuide.png" />
+    <None Include="SAI.App\Resources\Images\bg_dialog_model_inference_lodaing.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
   <!--빌드 준비-->

@@ -51,6 +51,7 @@
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(45, 44);
             this.btnSetting.TabIndex = 0;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // btnMinScreen
             // 
