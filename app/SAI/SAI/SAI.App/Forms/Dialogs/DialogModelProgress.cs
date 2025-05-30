@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Models; // BlocklyModel 사용을 위해 추가
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -99,38 +100,44 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             try
             {
-                // DialogQuitInference의 인스턴스 생성
-                using (DialogQuitInference quitDialog = new DialogQuitInference())
+                var model = BlocklyModel.Instance;
+                var gpuType = model?.gpuType ?? GpuType.Local; // null일 경우 기본값은 Local
+
+                DialogResult result = DialogResult.Cancel;
+
+                using (DialogQuitTrain quitDialog = new DialogQuitTrain())
                 {
-                    // 다이얼로그 표시 및 결과 확인
-                    if (quitDialog.ShowDialog(this) == DialogResult.OK)
-                    {
-                        // 사용자가 확인을 선택한 경우에만 프로세스 종료
-                        if (pythonProcess != null)
-                        {
-                            if (!pythonProcess.HasExited)
-                            {
-                                pythonProcess.Kill();         // 프로세스 강제 종료
-                            }
-                            pythonProcess.Dispose();      // 리소스 정리
-                        }
-
-                        // 서버 모니터링 취소 (YoloTutorialPresenter인 경우)
-                        if (serverPresenter != null)
-                        {
-                            // Reflection을 사용하여 CancelServerMonitoring 메서드 호출
-                            var cancelMethod = serverPresenter.GetType().GetMethod("CancelServerMonitoring");
-                            if (cancelMethod != null)
-                            {
-                                cancelMethod.Invoke(serverPresenter, null);
-                            }
-                        }
-
-                        this.DialogResult = DialogResult.Cancel;
-                        this.Close();
-                    }
-                    // 사용자가 취소를 선택한 경우 아무것도 하지 않음
+                    result = quitDialog.ShowDialog(this);
                 }
+                
+                // 사용자가 확인을 선택한 경우에만 종료 처리
+                if (result == DialogResult.OK)
+                {
+                    // 로컬 프로세스 종료 (로컬 모드인 경우에만)
+                    if (pythonProcess != null && gpuType == GpuType.Local)
+                    {
+                        if (!pythonProcess.HasExited)
+                        {
+                            pythonProcess.Kill();         // 프로세스 강제 종료
+                        }
+                        pythonProcess.Dispose();      // 리소스 정리
+                    }
+
+                    // 서버 모니터링 및 학습 취소 (서버 모드인 경우 또는 서버 Presenter가 있는 경우)
+                    if (serverPresenter != null)
+                    {
+                        // Reflection을 사용하여 CancelServerMonitoring 메서드 호출
+                        var cancelMethod = serverPresenter.GetType().GetMethod("CancelServerMonitoring");
+                        if (cancelMethod != null)
+                        {
+                            cancelMethod.Invoke(serverPresenter, null);
+                        }
+                    }
+
+                    this.DialogResult = DialogResult.Cancel;
+                    this.Close();
+                }
+                // 사용자가 취소를 선택한 경우 아무것도 하지 않음
             }
             catch (InvalidOperationException)
             {

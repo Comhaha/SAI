@@ -27,6 +27,8 @@ namespace SAI.SAI.App.Presenters
         private DialogModelProgress _progressDialog;
         private DateTime _scriptStartTime; // 스크립트 실행 시작 시간
         private CancellationTokenSource _monitoringCancellationTokenSource; // 서버 모니터링 취소용
+        private string _currentTaskId; // 현재 실행 중인 서버 학습 작업 ID
+        private bool _userCancelled = false; // 사용자가 직접 취소했는지 여부
 
         //public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
         //{
@@ -668,6 +670,9 @@ namespace SAI.SAI.App.Presenters
                     string taskId = taskIdElement.GetString();
                     if (!string.IsNullOrEmpty(taskId))
                     {
+                        // 현재 실행 중인 taskId 저장
+                        _currentTaskId = taskId;
+                        
                         // 학습 진행 상황을 모니터링하는 메서드 호출
                         MonitorTrainingProgress(taskId);
                         return taskId;
@@ -784,28 +789,33 @@ namespace SAI.SAI.App.Presenters
                                             
                                             if (results.TryGetValue("csv_base64", out var csvElement) && 
                                                 csvElement.ValueKind == JsonValueKind.String)
-                                            {
-                                                string csvBase64 = csvElement.GetString();
+                                        {
+                                            string csvBase64 = csvElement.GetString();
                                                 if (!string.IsNullOrEmpty(csvBase64))
                                                 {
-                                                    byte[] csvBytes = Convert.FromBase64String(csvBase64);
+                                            byte[] csvBytes = Convert.FromBase64String(csvBase64);
 
-                                                    string csvPath = Path.Combine(
-                                                        Path.GetTempPath(),
-                                                        $"training_results_{taskId}.csv"
-                                                    );
+                                            string csvPath = Path.Combine(
+                                                Path.GetTempPath(),
+                                                $"training_results_{taskId}.csv"
+                                            );
 
-                                                    File.WriteAllBytes(csvPath, csvBytes);
+                                            File.WriteAllBytes(csvPath, csvBytes);
 
-                                                    if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
-                                                    {
-                                                        chartControl.Invoke(new Action(() =>
-                                                            _yolotutorialview.ShowTutorialTrainingChart(csvPath)
-                                                        ));
-                                                    }
-                                                    else
-                                                    {
-                                                        _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                            if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
+                                            {
+                                                chartControl.Invoke(new Action(() =>
+                                                        {
+                                                            _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                                            // 서버 모드에서 학습 완료 후 자동 추론 실행
+                                                            CheckAndShowInferenceResultRemote();
+                                                        }));
+                                            }
+                                            else
+                                            {
+                                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                                        // 서버 모드에서 학습 완료 후 자동 추론 실행
+                                                        CheckAndShowInferenceResultRemote();
                                                     }
                                                 }
                                             }
@@ -871,16 +881,24 @@ namespace SAI.SAI.App.Presenters
             }
             catch (OperationCanceledException)
             {
-                Console.WriteLine("[ERROR] 학습 모니터링이 타임아웃으로 취소되었습니다.");
-                if (_yolotutorialview is Control timeoutControl && timeoutControl.InvokeRequired)
+                // 사용자가 직접 취소한 경우에는 에러 메시지를 표시하지 않음
+                if (_userCancelled)
                 {
-                    timeoutControl.Invoke(new Action(() =>
-                        _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.")
-                    ));
+                    Console.WriteLine("[INFO] 사용자에 의해 학습 모니터링이 취소되었습니다.");
                 }
                 else
                 {
-                    _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.");
+                    Console.WriteLine("[ERROR] 학습 모니터링이 타임아웃으로 취소되었습니다.");
+                    if (_yolotutorialview is Control timeoutControl && timeoutControl.InvokeRequired)
+                    {
+                        timeoutControl.Invoke(new Action(() =>
+                            _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.")
+                        ));
+                    }
+                    else
+                    {
+                        _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -922,16 +940,158 @@ namespace SAI.SAI.App.Presenters
                 }
                 
                 _monitoringCancellationTokenSource.Dispose();
+                
+                // 작업 완료 시 taskId 초기화
+                _currentTaskId = null;
+                
+                // 사용자 취소 플래그 초기화
+                _userCancelled = false;
             }
         }
 
         // 서버 모니터링 취소 메서드 추가
-        public void CancelServerMonitoring()
+        public async void CancelServerMonitoring()
         {
-            if (_monitoringCancellationTokenSource != null && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+            try
             {
-                Console.WriteLine("[INFO] 서버 모니터링을 취소합니다.");
-                _monitoringCancellationTokenSource.Cancel();
+                // 사용자가 직접 취소했다는 플래그 설정
+                _userCancelled = true;
+                
+                // 모니터링 취소
+                if (_monitoringCancellationTokenSource != null && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    Console.WriteLine("[INFO] 서버 모니터링을 취소합니다.");
+                    _monitoringCancellationTokenSource.Cancel();
+                }
+
+                // 실제 서버 학습 취소
+                if (!string.IsNullOrEmpty(_currentTaskId))
+                {
+                    Console.WriteLine($"[INFO] 서버 학습 취소를 요청합니다. TaskId: {_currentTaskId}");
+                    bool cancelResult = await _apiService.CancelTraining(_currentTaskId);
+                    
+                    if (cancelResult)
+                    {
+                        Console.WriteLine("[INFO] 서버 학습이 성공적으로 취소되었습니다.");
+                        // UI에 취소 메시지 표시
+                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                        {
+                            viewControl.Invoke(new Action(() => 
+                                _yolotutorialview.AppendLog("[INFO] 서버 학습이 취소되었습니다.")
+                            ));
+                        }
+                        else
+                        {
+                            _yolotutorialview.AppendLog("[INFO] 서버 학습이 취소되었습니다.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] 서버 학습 취소 요청이 실패했습니다.");
+                        // UI에 실패 메시지 표시
+                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                        {
+                            viewControl.Invoke(new Action(() => 
+                                _yolotutorialview.AppendLog("[WARNING] 서버 학습 취소 요청이 실패했습니다.")
+                            ));
+                        }
+                        else
+                        {
+                            _yolotutorialview.AppendLog("[WARNING] 서버 학습 취소 요청이 실패했습니다.");
+                        }
+                    }
+                    
+                    // taskId 초기화
+                    _currentTaskId = null;
+                }
+                else
+                {
+                    Console.WriteLine("[INFO] 취소할 서버 학습 작업이 없습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}");
+                // UI에 오류 메시지 표시
+                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                {
+                    viewControl.Invoke(new Action(() => 
+                        _yolotutorialview.AppendLog($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}")
+                    ));
+                }
+                else
+                {
+                    _yolotutorialview.AppendLog($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}");
+                }
+            }
+        }
+
+        // 서버 모드에서 학습 완료 후 자동으로 추론 실행하는 메서드
+        private async void CheckAndShowInferenceResultRemote()
+        {
+            try
+            {
+                // 블록 모델에서 이미지 경로 가져오기
+                var model = BlocklyModel.Instance;
+                string imagePath = model?.imgPath;
+                double conf = model?.accuracy ?? 0.25;
+                
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("[WARNING] 서버 추론: 이미지 경로가 없습니다.");
+                    return;
+                }
+                
+                Console.WriteLine($"[INFO] 서버에서 자동 추론을 시작합니다: {imagePath}, conf={conf}");
+                
+                // 서버에서 추론 실행
+                var result = await RunInferenceDirectRemote(imagePath, conf);
+                
+                Console.WriteLine($"[DEBUG] 서버 추론 결과: success={result.Success}, error={result.Error}");
+                
+                // UI 스레드에서 결과 표시
+                if (_itutorialInferenceView != null)
+                {
+                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                    {
+                        viewControl.Invoke(new Action(() => {
+                            _itutorialInferenceView.ShowInferenceResult(result);
+                        }));
+                    }
+                    else
+                    {
+                        _itutorialInferenceView.ShowInferenceResult(result);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 서버 추론 실행 중 오류 발생: {ex.Message}");
+                
+                // 에러 결과 표시
+                var errorResult = new PythonService.InferenceResult
+                {
+                    Success = false,
+                    Error = $"서버 추론 실행 중 오류 발생: {ex.Message}"
+                };
+                
+                if (_itutorialInferenceView != null)
+                {
+                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                    {
+                        viewControl.Invoke(new Action(() => {
+                            _itutorialInferenceView.ShowInferenceResult(errorResult);
+                        }));
+                    }
+                    else
+                    {
+                        _itutorialInferenceView.ShowInferenceResult(errorResult);
+                    }
+                }
             }
         }
     }

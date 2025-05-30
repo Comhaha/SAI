@@ -36,6 +36,36 @@ namespace SAI.SAI.Application.Service
             return await _httpClient.GetAsync(endpoint);
         }
 
+        // 서버 학습 취소 메서드 추가
+        public async Task<bool> CancelTraining(string taskId)
+        {
+            try
+            {
+                Console.WriteLine($"[INFO] 서버 학습 취소 요청: taskId={taskId}");
+                
+                var response = await _httpClient.PostAsync(
+                    $"/api/training/cancel/{taskId}",
+                    new StringContent(string.Empty, Encoding.UTF8, "application/json")
+                );
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"[INFO] 서버 학습 취소 성공: taskId={taskId}");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"[WARNING] 서버 학습 취소 실패: taskId={taskId}, StatusCode={response.StatusCode}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 서버 학습 취소 중 오류 발생: taskId={taskId}, Error={ex.Message}");
+                return false;
+            }
+        }
+
         public async Task<InferenceResult> RunInference(string imagePath, double conf)
         {
             try
