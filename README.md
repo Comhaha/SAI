@@ -204,7 +204,7 @@
 
 ## 화면 설계서
 
-#### [피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
+#### [피그마 바로가기 ↗️](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/a75912d77c3294adb49049475234fefb/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.webp)
 
 <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6ca86df59c9883aa4ec0d7842de821a6/1920_1080_ver__1_.png" width="800">
 
