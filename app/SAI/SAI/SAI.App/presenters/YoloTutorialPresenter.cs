@@ -760,27 +760,28 @@ namespace SAI.SAI.App.Presenters
                                 {
                                     Console.WriteLine($"[YOLO Tutorial] 학습 완료: {status}");
 
-                                    // 완료 처리
-                                    if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                    {
-                                        if (_progressDialog.InvokeRequired)
-                                        {
-                                            _progressDialog.Invoke(new Action(() =>
-                                            {
-                                                _progressDialog.Close();
-                                                _progressDialog.Dispose();
-                                            }));
-                                        }
-                                        else
-                                        {
-                                            _progressDialog.Close();
-                                            _progressDialog.Dispose();
-                                        }
-                                    }
-
                                     // 결과 처리
                                     if (status == "completed")
                                     {
+                                        // 학습 완료 - 추론 시작 알림
+                                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                        {
+                                            if (_progressDialog.InvokeRequired)
+                                            {
+                                                _progressDialog.Invoke(new Action(() =>
+                                                {
+                                                    if (!_progressDialog.IsDisposed)
+                                                    {
+                                                        _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
+                                                    }
+                                                }));
+                                            }
+                                            else
+                                            {
+                                                _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
+                                            }
+                                        }
+
                                         // CSV 파일 경로 가져오기 및 차트 표시
                                         if (progressData.TryGetValue("results", out var resultsElement) &&
                                             resultsElement.ValueKind == JsonValueKind.Object)
@@ -807,22 +808,42 @@ namespace SAI.SAI.App.Presenters
                                                 chartControl.Invoke(new Action(() =>
                                                         {
                                                             _yolotutorialview.ShowTutorialTrainingChart(csvPath);
-                                                            // 서버 모드에서 학습 완료 후 자동 추론 실행
-                                                            CheckAndShowInferenceResultRemote();
                                                         }));
                                             }
                                             else
                                             {
                                                 _yolotutorialview.ShowTutorialTrainingChart(csvPath);
-                                                        // 서버 모드에서 학습 완료 후 자동 추론 실행
-                                                        CheckAndShowInferenceResultRemote();
                                                     }
                                                 }
                                             }
                                         }
+                                        
+                                        // 추론 실행 (다이얼로그는 유지)
+                                        _ = Task.Run(async () =>
+                                        {
+                                            await CheckAndShowInferenceResultRemoteWithDialog();
+                                        });
                                     }
                                     else if (status == "failed")
                                     {
+                                        // 실패 시에만 다이얼로그 닫기
+                                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                                        {
+                                            if (_progressDialog.InvokeRequired)
+                                            {
+                                                _progressDialog.Invoke(new Action(() =>
+                                                {
+                                                    _progressDialog.Close();
+                                                    _progressDialog.Dispose();
+                                                }));
+                                            }
+                                            else
+                                            {
+                                                _progressDialog.Close();
+                                                _progressDialog.Dispose();
+                                            }
+                                        }
+                                        
                                         // 실패 메시지 표시
                                         string errorMessage = "학습이 실패했습니다.";
                                         if (progressData.TryGetValue("error", out var errorElement))
@@ -1088,6 +1109,175 @@ namespace SAI.SAI.App.Presenters
                         }));
                     }
                     else
+                    {
+                        _itutorialInferenceView.ShowInferenceResult(errorResult);
+                    }
+                }
+            }
+        }
+
+        private async Task CheckAndShowInferenceResultRemoteWithDialog()
+        {
+            try
+            {
+                // 추론 진행 상황 업데이트
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                {
+                    if (_progressDialog.InvokeRequired)
+                    {
+                        _progressDialog.Invoke(new Action(() =>
+                        {
+                            if (!_progressDialog.IsDisposed)
+                            {
+                                _progressDialog.UpdateProgress(100, "추론을 진행하고 있습니다...");
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        _progressDialog.UpdateProgress(100, "추론을 진행하고 있습니다...");
+                    }
+                }
+                
+                // 블록 모델에서 이미지 경로 가져오기
+                var model = BlocklyModel.Instance;
+                string imagePath = model?.imgPath;
+                double conf = model?.accuracy ?? 0.25;
+                
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("[WARNING] 서버 추론: 이미지 경로가 없습니다.");
+                    
+                    // 다이얼로그 닫기
+                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                    {
+                        if (_progressDialog.InvokeRequired)
+                        {
+                            _progressDialog.Invoke(new Action(() =>
+                            {
+                                _progressDialog.Close();
+                                _progressDialog.Dispose();
+                            }));
+                        }
+                        else
+                        {
+                            _progressDialog.Close();
+                            _progressDialog.Dispose();
+                        }
+                    }
+                    return;
+                }
+                
+                Console.WriteLine($"[INFO] 서버에서 자동 추론을 시작합니다: {imagePath}, conf={conf}");
+                
+                // 서버에서 추론 실행
+                var result = await RunInferenceDirectRemote(imagePath, conf);
+                
+                Console.WriteLine($"[DEBUG] 서버 추론 결과: success={result.Success}, error={result.Error}");
+                
+                // 추론 완료 상태 업데이트
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
+                {
+                    if (_progressDialog.InvokeRequired)
+                    {
+                        _progressDialog.Invoke(new Action(() =>
+                        {
+                            if (!_progressDialog.IsDisposed)
+                            {
+                                _progressDialog.UpdateProgress(100, "추론이 완료되었습니다!");
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        _progressDialog.UpdateProgress(100, "추론이 완료되었습니다!");
+                    }
+                }
+                
+                // 잠시 대기 후 다이얼로그 닫기
+                await Task.Delay(1000);
+                
+                // UI 스레드에서 결과 표시 및 다이얼로그 닫기
+                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                {
+                    viewControl.Invoke(new Action(() => {
+                        // 다이얼로그 닫기
+                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                        {
+                            _progressDialog.Close();
+                            _progressDialog.Dispose();
+                        }
+                        
+                        // 추론 결과 표시
+                        if (_itutorialInferenceView != null)
+                        {
+                            _itutorialInferenceView.ShowInferenceResult(result);
+                        }
+                        else
+                        {
+                            Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                        }
+                    }));
+                }
+                else
+                {
+                    // 다이얼로그 닫기
+                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                    {
+                        _progressDialog.Close();
+                        _progressDialog.Dispose();
+                    }
+                    
+                    // 추론 결과 표시
+                    if (_itutorialInferenceView != null)
+                    {
+                        _itutorialInferenceView.ShowInferenceResult(result);
+                    }
+                    else
+                    {
+                        Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 서버 추론 실행 중 오류 발생: {ex.Message}");
+                
+                // 에러 결과 표시 및 다이얼로그 닫기
+                var errorResult = new PythonService.InferenceResult
+                {
+                    Success = false,
+                    Error = $"서버 추론 실행 중 오류 발생: {ex.Message}"
+                };
+                
+                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                {
+                    viewControl.Invoke(new Action(() => {
+                        // 다이얼로그 닫기
+                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                        {
+                            _progressDialog.Close();
+                            _progressDialog.Dispose();
+                        }
+                        
+                        // 에러 결과 표시
+                        if (_itutorialInferenceView != null)
+                        {
+                            _itutorialInferenceView.ShowInferenceResult(errorResult);
+                        }
+                    }));
+                }
+                else
+                {
+                    // 다이얼로그 닫기
+                    if (_progressDialog != null && !_progressDialog.IsDisposed)
+                    {
+                        _progressDialog.Close();
+                        _progressDialog.Dispose();
+                    }
+                    
+                    // 에러 결과 표시
+                    if (_itutorialInferenceView != null)
                     {
                         _itutorialInferenceView.ShowInferenceResult(errorResult);
                     }
