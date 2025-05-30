@@ -1275,6 +1275,7 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
+                        _result = result;
                         
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
