@@ -206,7 +206,9 @@
 
 #### [피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/a75912d77c3294adb49049475234fefb/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C.webp" width="800">
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/29f971cddc7fcff97fd9b0b9a64f22b9/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C1.webp" width="800">
+
+<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/3e038f0abfeed60fbf503280aa78ad9a/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C2.webp" width="800">
 
 ## API 명세서
 
