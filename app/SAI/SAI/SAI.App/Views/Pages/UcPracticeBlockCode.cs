@@ -914,7 +914,9 @@ namespace SAI.SAI.App.Views.Pages
 
 					var mainModel = MainModel.Instance;
 
-					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+                    btnRunModel.Enabled = false;
+
+                    if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
 					}
@@ -1076,6 +1078,8 @@ namespace SAI.SAI.App.Views.Pages
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
         public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
+            btnRunModel.Enabled = true;
+
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ShowPracticeInferResultImage(result)));
