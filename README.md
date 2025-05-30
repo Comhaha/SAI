@@ -70,8 +70,8 @@
 
 -   **라벨링 체험 가능**
 
--   이미지 탐지 모델 학습에 가장중요한 라벨링 (Classification, BoundingBox, Segmentation) 체험 가능
--   라벨링에서 사용한 데이터는 실제 학습에 포함되지 않음
+    -   이미지 탐지 모델 학습에 가장중요한 라벨링 (Classification, BoundingBox, Segmentation) 체험 가능
+    -   라벨링에서 사용한 데이터는 실제 학습에 포함되지 않음
 
 -   **실시간 파이썬 코드 변환**
 
