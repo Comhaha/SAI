@@ -208,6 +208,9 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
+            ButtonUtils.SetTransparentStyle(btnInfoGraph);
+            ButtonUtils.SetTransparentStyle(btnInfoThreshold);
+            pboxInferAccuracy.Image = null;
 
 
             // 복사 버튼 클릭 이벤트 추가
