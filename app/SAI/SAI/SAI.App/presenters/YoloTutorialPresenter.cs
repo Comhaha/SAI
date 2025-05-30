@@ -777,27 +777,37 @@ namespace SAI.SAI.App.Presenters
                                     if (status == "completed")
                                     {
                                         // CSV 파일 경로 가져오기 및 차트 표시
-                                        if (progressData.TryGetValue("result_csv", out var csvElement))
+                                        if (progressData.TryGetValue("results", out var resultsElement) &&
+                                            resultsElement.ValueKind == JsonValueKind.Object)
                                         {
-                                            string csvBase64 = csvElement.GetString();
-                                            byte[] csvBytes = Convert.FromBase64String(csvBase64);
-
-                                            string csvPath = Path.Combine(
-                                                Path.GetTempPath(),
-                                                $"training_results_{taskId}.csv"
-                                            );
-
-                                            File.WriteAllBytes(csvPath, csvBytes);
-
-                                            if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
+                                            var results = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsElement.GetRawText());
+                                            
+                                            if (results.TryGetValue("csv_base64", out var csvElement) && 
+                                                csvElement.ValueKind == JsonValueKind.String)
                                             {
-                                                chartControl.Invoke(new Action(() =>
-                                                    _yolotutorialview.ShowTutorialTrainingChart(csvPath)
-                                                ));
-                                            }
-                                            else
-                                            {
-                                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                                string csvBase64 = csvElement.GetString();
+                                                if (!string.IsNullOrEmpty(csvBase64))
+                                                {
+                                                    byte[] csvBytes = Convert.FromBase64String(csvBase64);
+
+                                                    string csvPath = Path.Combine(
+                                                        Path.GetTempPath(),
+                                                        $"training_results_{taskId}.csv"
+                                                    );
+
+                                                    File.WriteAllBytes(csvPath, csvBytes);
+
+                                                    if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
+                                                    {
+                                                        chartControl.Invoke(new Action(() =>
+                                                            _yolotutorialview.ShowTutorialTrainingChart(csvPath)
+                                                        ));
+                                                    }
+                                                    else
+                                                    {
+                                                        _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
