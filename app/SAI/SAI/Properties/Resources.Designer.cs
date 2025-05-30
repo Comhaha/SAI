@@ -783,6 +783,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_inference_loading {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_inference_loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_titlebar_modelPerformance {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_modelPerformance", resourceCulture);
@@ -836,6 +846,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap bg_titlebar_select_type {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_select_type", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_setting {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_setting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_setting1 {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_setting1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1043,6 +1073,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_checked {
+            get {
+                object obj = ResourceManager.GetObject("btn_checked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_close {
             get {
                 object obj = ResourceManager.GetObject("btn_close", resourceCulture);
@@ -1216,6 +1256,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_close_select_model_clicked {
             get {
                 object obj = ResourceManager.GetObject("btn_close_select_model_clicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_close_setting {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_setting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_close_setting_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_close_setting_clicked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1643,9 +1703,39 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_goTutorialTrain {
+            get {
+                object obj = ResourceManager.GetObject("btn_goTutorialTrain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_goTutorialTrain_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_goTutorialTrain_clicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_home {
             get {
                 object obj = ResourceManager.GetObject("btn_home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_home_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_home_clicked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2253,6 +2343,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_unchecked {
+            get {
+                object obj = ResourceManager.GetObject("btn_unchecked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_white_cancel {
             get {
                 object obj = ResourceManager.GetObject("btn_white_cancel", resourceCulture);
@@ -2316,6 +2416,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_yellow_close_train_clicked {
             get {
                 object obj = ResourceManager.GetObject("btn_yellow_close_train_clicked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_yellow_minimize {
+            get {
+                object obj = ResourceManager.GetObject("btn_yellow_minimize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_yellow_minimize_clicked {
+            get {
+                object obj = ResourceManager.GetObject("btn_yellow_minimize_clicked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3293,6 +3413,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap lottie_notion {
+            get {
+                object obj = ResourceManager.GetObject("lottie_notion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap memo_alert {
             get {
                 object obj = ResourceManager.GetObject("memo_alert", resourceCulture);
@@ -3376,6 +3506,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap NoCircleArrowR {
             get {
                 object obj = ResourceManager.GetObject("NoCircleArrowR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap notionLoading {
+            get {
+                object obj = ResourceManager.GetObject("notionLoading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

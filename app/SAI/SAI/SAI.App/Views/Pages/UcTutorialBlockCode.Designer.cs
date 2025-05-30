@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics.Tracing;
+
 namespace SAI.SAI.App.Views.Pages
 {
     partial class UcTutorialBlockCode
@@ -65,13 +67,13 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnHome = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.tpModelGraph = new System.Windows.Forms.TableLayoutPanel();
+            this.lblModelGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnSelectInferImage = new Guna.UI2.WinForms.Guna2Button();
             this.pboxInferAccuracy = new Guna.UI2.WinForms.Guna2PictureBox();
             this.ptxtThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
-            this.ptxtGraphe = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblInferGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.ptxtInfer = new Guna.UI2.WinForms.Guna2Panel();
             this.lblinfer = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
@@ -108,9 +110,9 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pTopBlock.SuspendLayout();
             this.pSideInfer.SuspendLayout();
+            this.tpModelGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
             this.ptxtThreshold.SuspendLayout();
-            this.ptxtGraphe.SuspendLayout();
             this.ptxtInfer.SuspendLayout();
             this.pThreshold.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
@@ -492,11 +494,11 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.tpModelGraph);
             this.pSideInfer.Controls.Add(this.btnSelectInferImage);
             this.pSideInfer.Controls.Add(this.pboxInferAccuracy);
             this.pSideInfer.Controls.Add(this.ptxtThreshold);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
-            this.pSideInfer.Controls.Add(this.ptxtGraphe);
             this.pSideInfer.Controls.Add(this.ptxtInfer);
             this.pSideInfer.Controls.Add(this.btnInfoThreshold);
             this.pSideInfer.Controls.Add(this.pFake);
@@ -508,6 +510,18 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
             this.pSideInfer.Controls.Add(this.guna2Panel1);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // tpModelGraph
+            // 
+            resources.ApplyResources(this.tpModelGraph, "tpModelGraph");
+            this.tpModelGraph.Controls.Add(this.lblModelGraph, 0, 0);
+            this.tpModelGraph.Name = "tpModelGraph";
+            // 
+            // lblModelGraph
+            // 
+            resources.ApplyResources(this.lblModelGraph, "lblModelGraph");
+            this.lblModelGraph.Name = "lblModelGraph";
+            this.lblModelGraph.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnSelectInferImage
             // 
@@ -554,18 +568,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph.FillColor = System.Drawing.Color.Transparent;
             this.btnInfoGraph.ForeColor = System.Drawing.Color.White;
             this.btnInfoGraph.Name = "btnInfoGraph";
-            // 
-            // ptxtGraphe
-            // 
-            this.ptxtGraphe.Controls.Add(this.lblInferGraph);
-            resources.ApplyResources(this.ptxtGraphe, "ptxtGraphe");
-            this.ptxtGraphe.Name = "ptxtGraphe";
-            // 
-            // lblInferGraph
-            // 
-            resources.ApplyResources(this.lblInferGraph, "lblInferGraph");
-            this.lblInferGraph.Name = "lblInferGraph";
-            this.lblInferGraph.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ptxtInfer
             // 
@@ -627,6 +629,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxThreshold.Name = "tboxThreshold";
             this.tboxThreshold.PlaceholderText = "";
             this.tboxThreshold.SelectedText = "";
+            this.tboxThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbarThreshold
             // 
@@ -646,6 +649,7 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
             this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
             this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(240, 75);
+            this.ibtnDownloadAIModel.Click += new System.EventHandler(this.ibtnDownloadAIModel_Click);
             // 
             // ibtnGoNotion
             // 
@@ -858,9 +862,9 @@ namespace SAI.SAI.App.Views.Pages
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
             this.pTopBlock.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
+            this.tpModelGraph.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
             this.ptxtThreshold.ResumeLayout(false);
-            this.ptxtGraphe.ResumeLayout(false);
             this.ptxtInfer.ResumeLayout(false);
             this.pThreshold.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
@@ -937,13 +941,13 @@ namespace SAI.SAI.App.Views.Pages
         private SAI.App.Views.Pages.AutoSizeLabel pleaseControlThreshold;
         private Guna.UI2.WinForms.Guna2Panel ptxtInfer;
         private SAI.App.Views.Pages.AutoSizeLabel lblinfer;
-        private Guna.UI2.WinForms.Guna2Panel ptxtGraphe;
-        private SAI.App.Views.Pages.AutoSizeLabel lblInferGraph;
         private Guna.UI2.WinForms.Guna2Panel ptxtThreshold;
         private SAI.App.Views.Pages.AutoSizeLabel lblThreshold;
         private Guna.UI2.WinForms.Guna2Button btnSelectInferImage;
         private Guna.UI2.WinForms.Guna2PictureBox pboxInferAccuracy;
         private SAI.App.Views.Pages.AutoSizeLabel lblTitle;
         private Guna.UI2.WinForms.Guna2Button pErrorToastCloseBtn;
-    }
+		private System.Windows.Forms.TableLayoutPanel tpModelGraph;
+		private SAI.App.Views.Pages.AutoSizeLabel lblModelGraph;
+	}
 }

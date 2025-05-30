@@ -24,7 +24,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            //ButtonUtils.SetupButton(guna2Button1, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
+            ButtonUtils.SetupButton(guna2Button1, "btn_close_prepare_clicked", "btn_close_prepare");
             guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록 
 
             // 폼 스타일 설정
@@ -79,11 +79,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             {
                 MessageBox.Show($"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void DialogInferenceLoading_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

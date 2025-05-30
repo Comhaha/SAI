@@ -11,14 +11,14 @@ namespace SAI.SAI.App.Views.Common
     {
         public static void Setup(Guna2TrackBar trackBar, Guna2TextBox textBox, Action<double> onThresholdChanged, IPracticeInferenceView view)
         {
-            double currentThreshold = 0.5;
             var blocklyModel = BlocklyModel.Instance;
+            double currentThreshold = 0.25;
 
             trackBar.Minimum = 1;
             trackBar.Maximum = 100;
-            trackBar.Value = 50;
+            trackBar.Value = 25;
 
-            textBox.Text = "0.50";
+            textBox.Text = "0.25";
             textBox.TextAlign = HorizontalAlignment.Center;
             textBox.ReadOnly = true;
             textBox.TabStop = false;

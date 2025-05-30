@@ -30,13 +30,17 @@ namespace SAI.SAI.App.Forms.Dialogs
         private AiFeedbackPresenter _feedPresenter;
         private AiNotionPresenter _notionPresenter;
         private bool _webInit;
+        private bool isTutorial;
 
         private const string redirectBase = "https://k12d201.p.ssafy.io/api/notion/callback";
 
-        public DialogNotion(string memo, double thresholdValue, string resultImagePath)
+        public DialogNotion(string memo, double thresholdValue, string resultImagePath, bool isTutorial)
         {
             InitializeComponent();
-            pInfo.BackColor = ColorTranslator.FromHtml("#1D1D1D");
+
+            this.isTutorial = isTutorial;
+
+            pInfo.BackColor = SystemColors.Control;
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
@@ -49,12 +53,26 @@ namespace SAI.SAI.App.Forms.Dialogs
             _resultImagePath = resultImagePath;
 
             InitWebOnce();
-        }
 
-        /* ---------------- IAiFeedbackView ---------------- */
-        //Code 경로
-        public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        public string CodeText => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
+            this.TopMost = false;
+			guna2DragControl1.TargetControl = pTitleBar;
+			guna2DragControl1.TransparentWhileDrag = false;
+			guna2DragControl1.UseTransparentDrag = false;
+
+			lbError.Visible = false;
+
+            pbGif.Visible = false;
+            pbGif.Image = Properties.Resources.notionLoading;
+            pbGif.SizeMode = PictureBoxSizeMode.Zoom;
+            pbGif.Padding = new Padding(0, 0, 0, 10);
+		}
+
+		/* ---------------- IAiFeedbackView ---------------- */
+		//Code 경로
+		public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        public string CodeText => this.isTutorial ? 
+                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_script.py")) :
+                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
         //log 사진 경로
         public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
         //무슨 사진이 결과 사진인지?
@@ -67,25 +85,32 @@ namespace SAI.SAI.App.Forms.Dialogs
         public event EventHandler SendRequested;
         private void ibtnEnter_Click(object sender, EventArgs e)
         {
+            ibtnEnter.BackgroundImage = Properties.Resources.btn_enter_hover;
+			string token = tboxSecretKey.Text;
 
-            string token = tboxSecretKey.Text;
+            // 로띠 뜨기
+            pbGif.Visible = true;
 
-            if (string.IsNullOrWhiteSpace(token))
+
+			if (string.IsNullOrWhiteSpace(token))
             {
-                MessageBox.Show("토큰을 입력해주세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+				lbError.Visible = true;
+				lbError.Text = "토큰을 입력해주세요.";
+				ibtnEnter.BackgroundImage = Properties.Resources.btn_enter;
+				return;
             }
 
             var service = new AiFeedbackService("https://k12d201.p.ssafy.io", token);
             _feedPresenter = new AiFeedbackPresenter(this, service);
 
             SendRequested?.Invoke(this, new EventArgs());
-
         }
 
         public void ShowSendResult(bool ok, string id, string md)
         {
             if (!ok) { ShowError(md); return; }
+
+
 
             string html = Markdig.Markdown.ToHtml(md);
             ShowMarkdown(html);
@@ -99,7 +124,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             switch (ctx)
             {
                 case BusyContext.Feedback:
-                    progressBar.Visible = on;
                     ibtnEnter.Enabled = !on;
                     break;
                 case BusyContext.OAuth:
@@ -113,9 +137,15 @@ namespace SAI.SAI.App.Forms.Dialogs
         public void ShowMarkdown(string html)
         {
             InitWebOnce();
-            webView2.NavigateToString(html);
-            webView2.Visible = true;
+
+			// 로띠 끄기
+			pbGif.Visible = false;
+
+			webView2.NavigateToString(html);
+			webView2.Visible = true;
             lblInfo.Visible = false;
+
+			ibtnEnter.BackgroundImage = Properties.Resources.btn_enter;
         }
 
         public void ShowAuthButton(bool on) => authButton.Visible = on;
@@ -123,7 +153,9 @@ namespace SAI.SAI.App.Forms.Dialogs
         public void ShowError(string msg)
         {
             webView2.Visible = false;
-            lblInfo.Text = msg;
+            lbError.Text = msg;
+            tpError.Visible = true;
+			lblInfo.Text = msg;
             lblInfo.Visible = true;
         }
 
@@ -148,7 +180,8 @@ namespace SAI.SAI.App.Forms.Dialogs
         public void RegisterWebNavigation(Action<string> handler)
         {
             InitWebOnce();
-            webView2.CoreWebView2.NavigationStarting += (s, e) => handler(e.Uri);
+            tpError.Visible = false;
+			webView2.CoreWebView2.NavigationStarting += (s, e) => handler(e.Uri);
         }
 
         public void RegisterWebResponse(Func<string, Task> onJsonReceived)
@@ -288,7 +321,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void DialogNotion_Load(object sender, EventArgs e)
         {
-
+            Console.WriteLine(CodeText);
         }
     }
 }
