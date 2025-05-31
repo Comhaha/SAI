@@ -412,7 +412,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(() =>
                     {
                         _result = yoloTutorialPresenter.RunInferenceDirect(
-                            blocklyModel.imgPath,
+                            selectedImagePath,
                             currentThreshold
                         );
 
