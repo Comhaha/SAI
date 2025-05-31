@@ -1241,65 +1241,47 @@
   <data name="pSideInfer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
-  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+  <data name="tpModelGraph.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="autoSizeLabel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;lblModelGraph.Name" xml:space="preserve">
+    <value>lblModelGraph</value>
   </data>
-  <data name="autoSizeLabel1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR, 9pt, style=Bold</value>
-  </data>
-  <data name="autoSizeLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="autoSizeLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>311, 52</value>
-  </data>
-  <data name="autoSizeLabel1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="autoSizeLabel1.Text" xml:space="preserve">
-    <value>모델 성능 지표 그래프</value>
-  </data>
-  <data name="&gt;&gt;autoSizeLabel1.Name" xml:space="preserve">
-    <value>autoSizeLabel1</value>
-  </data>
-  <data name="&gt;&gt;autoSizeLabel1.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblModelGraph.Type" xml:space="preserve">
     <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;autoSizeLabel1.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
+  <data name="&gt;&gt;lblModelGraph.Parent" xml:space="preserve">
+    <value>tpModelGraph</value>
   </data>
-  <data name="&gt;&gt;autoSizeLabel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblModelGraph.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tpModelGraph.Location" type="System.Drawing.Point, System.Drawing">
     <value>40, 524</value>
   </data>
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+  <data name="tpModelGraph.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tpModelGraph.Size" type="System.Drawing.Size, System.Drawing">
     <value>317, 58</value>
   </data>
-  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+  <data name="tpModelGraph.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
+  <data name="&gt;&gt;tpModelGraph.Name" xml:space="preserve">
+    <value>tpModelGraph</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+  <data name="&gt;&gt;tpModelGraph.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tpModelGraph.Parent" xml:space="preserve">
     <value>pSideInfer</value>
   </data>
-  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;tpModelGraph.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="autoSizeLabel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="tpModelGraph.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblModelGraph" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1331,22 +1313,8 @@
   <data name="pboxInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="pboxInferAccuracy.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
-        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
-        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
-        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
-        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
-        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
-        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
-        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
-        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
-        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
-        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
-        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
-</value>
+  <data name="pboxInferAccuracy.ErrorImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="pboxInferAccuracy.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1412,7 +1380,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>376, 543</value>
+    <value>362, 543</value>
   </data>
   <data name="btnInfoGraph.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 25</value>
@@ -1472,7 +1440,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 114</value>
+    <value>176, 114</value>
   </data>
   <data name="btnInfoThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 15</value>
@@ -1716,6 +1684,36 @@
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="lblModelGraph.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="lblModelGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 9pt, style=Bold</value>
+  </data>
+  <data name="lblModelGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="lblModelGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>311, 52</value>
+  </data>
+  <data name="lblModelGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblModelGraph.Text" xml:space="preserve">
+    <value>모델 성능 지표 그래프</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Name" xml:space="preserve">
+    <value>lblModelGraph</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Parent" xml:space="preserve">
+    <value>tpModelGraph</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="lblThreshold.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

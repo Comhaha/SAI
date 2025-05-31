@@ -626,7 +626,8 @@ def train_model_block(block_params=None):
             exist_ok=True,
             verbose=True,  # 상세 로그 출력 활성화
             save=True,     # 모델 저장 활성화
-            patience=50    # 조기 종료 방지
+            patience=50,    # 조기 종료 방지
+            workers = 0,
         )
         
         show_tagged_progress('TRAIN', 'YOLO 학습이 완료되었습니다', start_time, 90)
@@ -675,7 +676,8 @@ def train_model_block(block_params=None):
                     device=device,
                     project=os.path.join(base_dir, "runs"),
                     name="detect/train",
-                    exist_ok=True
+                    exist_ok=True,
+                    workers = 0,
                 )
                 
                 # 결과 경로 설정
@@ -719,7 +721,8 @@ def train_model_block(block_params=None):
                         device="cpu",
                         project=os.path.join(base_dir, "runs"),
                         name="detect/train",
-                        exist_ok=True
+                        exist_ok=True,
+                        workers = 0,
                     )
                     
                     # 결과 경로 설정

@@ -208,6 +208,9 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
+            ButtonUtils.SetTransparentStyle(btnInfoGraph);
+            ButtonUtils.SetTransparentStyle(btnInfoThreshold);
+            pboxInferAccuracy.Image = null;
 
 
             // 복사 버튼 클릭 이벤트 추가
@@ -735,10 +738,13 @@ namespace SAI.SAI.App.Views.Pages
 
 					var mainModel = MainModel.Instance;
 
+                    btnRunModel.Enabled = false; // 실행 후 버튼 비활성화
+
                     // 기존 모델 삭제 후 런 돌림
-					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+                    if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
+                        btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
 					}
 					else
 					{
@@ -766,7 +772,7 @@ namespace SAI.SAI.App.Views.Pages
         {
 			// 파이썬 코드 실행
 			RunButtonClicked?.Invoke(sender, e);
-			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+            pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 		}
 
@@ -1253,6 +1259,8 @@ namespace SAI.SAI.App.Views.Pages
         //tutorialView.ShowTutorialInferResultImage(resultImage);
         public void ShowInferenceResult(PythonService.InferenceResult result)
         {
+            btnRunModel.Enabled = true;
+
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ShowInferenceResult(result)));
@@ -1270,6 +1278,7 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
+                        _result = result;
                         
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))
