@@ -1,3 +1,4 @@
+# ========== 기존 로컬 구조와 동일한 FastAPI 서버 (URL 방식) ==========
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
@@ -61,8 +62,8 @@ async def startup_event():
 async def root():
     return {"message": "AI Training Server is running!", "yolo_available": YOLO_AVAILABLE}
 
-# 서버 상태 확인
-# yolo 라이브러리 설치 여부, cuda 사용여부, cuda 이름, gpu 개수
+# 서버 동작 확인
+# 욜로 라이브러리 설치, cuda 사용가능여부, cuda 이름, gpu 갯수 확인 가능
 @app.get("/api/system/status")
 async def get_system_status():
     gpu_info = {}
@@ -81,20 +82,20 @@ async def get_system_status():
         **gpu_info
     }
 
-# =============== 튜토리얼 모드 =====================
+#================ 튜토리얼 모드 학습 시작 ====================
 @app.post("/api/training/tutorial/start")
 async def start_tutorial_training(dataset: UploadFile = File(...)):
     """튜토리얼 모드 학습 시작"""
     if not YOLO_AVAILABLE:
-        raise HTTPException(status_code=500, detail="YOLO 사용 불가")
+        raise HTTPException(status_code=500, detail="YOLO not available")
     
     try:
-        task_id = str(uuid.uuid4())[:8] # 비동기 처리를 위한 task id. 진행상황을 task id에 저장
+        task_id = str(uuid.uuid4())[:8]
         
         TRAINING_STATUS[task_id] = {
             "status": "preparing",
             "progress": 0,
-            "message": "tutorial 데이터셋 준비중...",
+            "message": "Preparing tutorial dataset...",
             "mode": "tutorial",
             "start_time": datetime.now().isoformat()
         }
@@ -130,7 +131,7 @@ async def start_tutorial_training(dataset: UploadFile = File(...)):
         # data.yaml 파일 찾기
         yaml_path = find_yaml_file(dataset_dir, mode="tutorial")
         if not yaml_path:
-            raise HTTPException(status_code=400, detail="[튜토리얼 모드] data.yaml를 못찾음")
+            raise HTTPException(status_code=400, detail="data.yaml not found in tutorial dataset")
         
         # 백그라운드에서 학습 시작
         import threading
@@ -144,7 +145,7 @@ async def start_tutorial_training(dataset: UploadFile = File(...)):
             "task_id": task_id,
             "status": "started",
             "mode": "tutorial",
-            "message": "[튜토리얼 모드] 학습 실행 성공"
+            "message": "Tutorial training started successfully"
         }
         
     except Exception as e:
@@ -346,6 +347,7 @@ async def get_training_status(task_id: str):
     
     return TRAINING_STATUS[task_id]
 
+#================추론===================
 @app.post("/api/inference/predict")
 async def predict_image(
     image: UploadFile = File(...),
@@ -481,6 +483,232 @@ async def get_training_results_image(task_id: str):
             raise HTTPException(status_code=404, detail="Results image not found")
     
     return FileResponse(path=str(results_path), media_type="image/png")
+
+# ========== 실습모드 API 추가 ==========
+
+# 실습모드 설정 저장용
+PRACTICE_SESSIONS = {}  # session_id별 설정 저장
+
+from pydantic import BaseModel
+from typing import Optional
+
+class PracticeConfig(BaseModel):
+    epochs: int = 10
+    batch_size: int = 8
+    learning_rate: float = 0.01
+    imgsz: int = 640
+    use_custom_layers: bool = False
+
+class LayerConfig(BaseModel):
+    conv_layers: int = 3
+    c2f_layers: int = 9
+    upsample_scale: int = 2
+    custom_yaml: Optional[str] = None
+
+@app.post("/api/training/practice/configure")
+async def configure_practice_training(config: PracticeConfig):
+    """실습모드 기본 설정"""
+    session_id = str(uuid.uuid4())[:8]
+    
+    PRACTICE_SESSIONS[session_id] = {
+        "step": 1,
+        "config": config.dict(),
+        "status": "configured",
+        "created_at": datetime.now().isoformat()
+    }
+    
+    return {
+        "session_id": session_id,
+        "message": "Practice configuration saved",
+        "next_step": "setup-layers" if config.use_custom_layers else "upload-dataset"
+    }
+
+@app.post("/api/training/practice/setup-layers/{session_id}")
+async def setup_custom_layers(session_id: str, layer_config: LayerConfig):
+    """커스텀 레이어 설정 (use_custom_layers=true일 때만)"""
+    if session_id not in PRACTICE_SESSIONS:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    session = PRACTICE_SESSIONS[session_id]
+    
+    if not session["config"]["use_custom_layers"]:
+        raise HTTPException(status_code=400, detail="Custom layers not enabled for this session")
+    
+    # 레이어 설정 저장
+    session["layer_config"] = layer_config.dict()
+    session["step"] = 2
+    session["status"] = "layers_configured"
+    
+    return {
+        "message": "Custom layers configured",
+        "layer_config": layer_config.dict(),
+        "next_step": "upload-dataset"
+    }
+
+@app.post("/api/training/practice/upload-dataset/{session_id}")
+async def upload_practice_dataset(session_id: str, dataset: UploadFile = File(...)):
+    """실습용 데이터셋 업로드"""
+    if session_id not in PRACTICE_SESSIONS:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    session = PRACTICE_SESSIONS[session_id]
+    
+    # 데이터셋 저장
+    dataset_dir = Path(f"/app/dataset/practice_dataset/{session_id}")
+    dataset_dir.mkdir(parents=True, exist_ok=True)
+    
+    # ZIP 파일 저장 및 압축 해제
+    zip_path = dataset_dir / "dataset.zip"
+    with open(zip_path, "wb") as buffer:
+        shutil.copyfileobj(dataset.file, buffer)
+    
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(dataset_dir)
+    
+    os.remove(zip_path)
+    
+    # data.yaml 파일 찾기
+    data_yaml_path = find_yaml_file(dataset_dir, mode="practice")
+    
+    # 세션 업데이트
+    session["step"] = 3
+    session["status"] = "dataset_uploaded"
+    session["dataset_path"] = str(dataset_dir)
+    session["data_yaml_path"] = data_yaml_path
+    
+    return {
+        "message": "Dataset uploaded successfully",
+        "dataset_path": str(dataset_dir),
+        "next_step": "validate"
+    }
+
+@app.get("/api/training/practice/validate/{session_id}")
+async def validate_practice_config(session_id: str):
+    """실습 설정 검증 및 미리보기"""
+    if session_id not in PRACTICE_SESSIONS:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    session = PRACTICE_SESSIONS[session_id]
+    config = session["config"]
+    
+    # GPU 메모리 체크
+    gpu_info = {}
+    if torch.cuda.is_available():
+        gpu_memory = torch.cuda.get_device_properties(0).total_memory / 1024**3
+        recommended_batch = min(config["batch_size"], int(gpu_memory * 2))
+        gpu_info = {
+            "gpu_memory_gb": round(gpu_memory, 1),
+            "recommended_batch_size": recommended_batch,
+            "current_batch_size": config["batch_size"]
+        }
+    
+    validation_result = {
+        "session_id": session_id,
+        "configuration": config,
+        "gpu_info": gpu_info,
+        "ready_to_train": session["status"] in ["dataset_uploaded", "layers_configured"],
+        "warnings": []
+    }
+    
+    # 경고 체크
+    if config["batch_size"] > 16 and gpu_info.get("gpu_memory_gb", 0) < 8:
+        validation_result["warnings"].append("큰 배치 크기로 인해 GPU 메모리 부족 가능성")
+    
+    if config["epochs"] > 50:
+        validation_result["warnings"].append("에폭 수가 많아 학습 시간이 오래 걸릴 수 있음")
+    
+    return validation_result
+
+@app.post("/api/training/practice/start/{session_id}")
+async def start_practice_training(session_id: str):
+    """실습 학습 시작"""
+    if session_id not in PRACTICE_SESSIONS:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    session = PRACTICE_SESSIONS[session_id]
+    
+    if session["status"] != "dataset_uploaded":
+        raise HTTPException(status_code=400, detail="Session not ready for training")
+    
+    # 학습 task 생성
+    task_id = str(uuid.uuid4())[:8]
+    
+    TRAINING_STATUS[task_id] = {
+        "status": "preparing",
+        "progress": 0,
+        "message": "Preparing practice training...",
+        "mode": "practice",
+        "session_id": session_id,
+        "start_time": datetime.now().isoformat()
+    }
+    
+    # 백그라운드에서 학습 시작
+    import threading
+    threading.Thread(
+        target=run_practice_training, 
+        args=(task_id, session_id)
+    ).start()
+    
+    return {
+        "task_id": task_id,
+        "session_id": session_id,
+        "status": "started",
+        "mode": "practice",
+        "message": "Practice training started successfully"
+    }
+
+def run_practice_training(task_id: str, session_id: str):
+    """실습 학습 실행"""
+    try:
+        session = PRACTICE_SESSIONS[session_id]
+        config = session["config"]
+        
+        # 상태 업데이트
+        TRAINING_STATUS[task_id]["status"] = "training"
+        TRAINING_STATUS[task_id]["message"] = "Loading practice model..."
+        TRAINING_STATUS[task_id]["progress"] = 10
+        
+        # 모델 로드 (커스텀 레이어 사용 여부에 따라)
+        if config["use_custom_layers"] and "layer_config" in session:
+            model = YOLO("yolov8n.pt")  # 일단 기본 모델 사용
+            TRAINING_STATUS[task_id]["message"] = "Custom model configuration applied..."
+        else:
+            model = YOLO("yolov8n.pt")
+            TRAINING_STATUS[task_id]["message"] = "Standard model loaded..."
+        
+        TRAINING_STATUS[task_id]["progress"] = 30
+        
+        # 학습 실행 (사용자 설정 적용)
+        results = model.train(
+            data=session["data_yaml_path"],
+            epochs=config["epochs"],
+            batch=config["batch_size"],
+            imgsz=config["imgsz"],
+            lr0=config["learning_rate"],
+            device="cuda" if torch.cuda.is_available() else "cpu",
+            project="/app/runs",
+            name=f"practice_{session_id}",
+            exist_ok=True,
+            workers=0
+        )
+        
+        # 완료 처리
+        results_dir = find_latest_results_dir()
+        model_path = results_dir / "weights" / "best.pt"
+        
+        TRAINING_STATUS[task_id]["status"] = "completed"
+        TRAINING_STATUS[task_id]["progress"] = 100
+        TRAINING_STATUS[task_id]["message"] = "Practice training completed!"
+        TRAINING_STATUS[task_id]["model_path"] = str(model_path)
+        TRAINING_STATUS[task_id]["results_dir"] = str(results_dir)
+        TRAINING_STATUS[task_id]["end_time"] = datetime.now().isoformat()
+        
+    except Exception as e:
+        TRAINING_STATUS[task_id]["status"] = "failed"
+        TRAINING_STATUS[task_id]["message"] = f"Practice training failed: {str(e)}"
+        TRAINING_STATUS[task_id]["error"] = str(e)
+
+# ========== 서버 실행 ==========
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

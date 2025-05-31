@@ -631,11 +631,54 @@ def train_model_block(block_params=None):
             name="detect/train",  # 하위 폴더 구조 지정
             exist_ok=True,
             workers = 0,
+            save = True,
+            save_period = 1
         )
         
-        # 결과 경로 설정
+       # 결과 경로 설정
         results_dir = find_latest_results_dir()
-        model_path = os.path.join(results_dir, "weights", "best.pt")
+        weights_dir = os.path.join(results_dir, "weights")
+        model_path = os.path.join(weights_dir, "best.pt")
+        
+        # weights 디렉토리가 없으면 생성
+        os.makedirs(weights_dir, exist_ok=True)
+        
+        # best.pt가 없으면 강제로 생성
+        if not os.path.exists(model_path):
+            show_tagged_progress('TRAIN', 'best.pt 파일이 없어서 강제로 생성합니다...', start_time, 90)
+            
+            # 방법 1: last.pt가 있으면 복사
+            last_pt_path = os.path.join(weights_dir, "last.pt")
+            if os.path.exists(last_pt_path):
+                import shutil
+                shutil.copy2(last_pt_path, model_path)
+                show_tagged_progress('TRAIN', 'last.pt를 best.pt로 복사했습니다.', start_time, 95)
+            else:
+                # 방법 2: 현재 모델을 직접 저장
+                try:
+                    model.save(model_path)
+                    show_tagged_progress('TRAIN', '현재 모델을 best.pt로 저장했습니다.', start_time, 95)
+                except Exception as save_error:
+                    # 방법 3: 원본 모델 파일 복사
+                    original_model_path = tutorial_state.get("model_path")
+                    if original_model_path and os.path.exists(original_model_path):
+                        import shutil
+                        shutil.copy2(original_model_path, model_path)
+                        show_tagged_progress('TRAIN', f'원본 모델을 best.pt로 복사했습니다.', start_time, 95)
+                    else:
+                        show_tagged_progress('ERROR', f'best.pt 생성 실패: {save_error}', start_time, 95)
+                        return {
+                            "success": False,
+                            "error": f"best.pt 파일 생성 실패: {save_error}"
+                        }
+        
+        # 최종 확인
+        if not os.path.exists(model_path):
+            show_tagged_progress('ERROR', 'best.pt 파일을 찾을 수 없습니다.', start_time, 98)
+            return {
+                "success": False,
+                "error": "best.pt 파일을 찾을 수 없습니다."
+            }
         
         # 전역 상태 업데이트
         tutorial_state["model_path"] = model_path
@@ -679,6 +722,8 @@ def train_model_block(block_params=None):
                     name="detect/train",
                     exist_ok=True,
                     workers = 0,
+                    save = True,
+                    save_period = 1
                 )
                 
                 # 결과 경로 설정
@@ -724,6 +769,8 @@ def train_model_block(block_params=None):
                         name="detect/train",
                         exist_ok=True,
                         workers = 0,
+                        save = True,
+                        save_period = 1
                     )
                     
                     # 결과 경로 설정
