@@ -142,13 +142,13 @@ namespace SAI.SAI.App.Presenters
                                         {
                                             if (!_progressDialog.IsDisposed)
                                             {
-                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                                _progressDialog.UpdateProgress(0, $"{text}");
                                             }
                                         }));
                                     }
                                     else
                                     {
-                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                        _progressDialog.UpdateProgress(0, $"{text}");
                                     }
                                 }
                             }
