@@ -640,8 +640,23 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        /// <summary>
+        /// Run 버튼을 다시 활성화하는 메서드 (학습 취소 시 호출)
+        /// </summary>
+        public void EnableRunButton()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(EnableRunButton));
+                return;
+            }
+            
+            btnRunModel.Enabled = true;
+            btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            Console.WriteLine("[DEBUG] UcTutorialBlockCode: Run 버튼이 다시 활성화되었습니다.");
+        }
+
         // threshold 바에서 threshold 값을 생성
-        // 마우스 떼면 추론 스크립트 실행
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
@@ -656,9 +671,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 추론은 백그라운드에서 실행
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
-                        _result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = await yoloTutorialPresenter.RunInferenceDirect(
                             blocklyModel.imgPath,
                             currentThreshold
                         );

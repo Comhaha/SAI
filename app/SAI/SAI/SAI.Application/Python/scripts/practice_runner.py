@@ -179,29 +179,46 @@ def main():
     try:
         runner = TutorialRunner(args.train_script)
 
+        # 파라미터 초기화
         params = {}
+        blocks = args.blocks
+
+        # 개별 인자들 처리
         if args.image_path:
             params["image_path"] = args.image_path
         if args.epochs:
             params["epochs"] = args.epochs
         if args.imgsz:
             params["imgsz"] = args.imgsz
+
+        # JSON 파라미터 처리
         print(f"[DEBUG] args.params: {args.params}")
         if args.params:
-            params = json.loads(args.params)
+            json_params = json.loads(args.params)
+            params.update(json_params)
+            
+            # JSON에서 blocks를 추출 (개별 인자보다 우선)
+            if "blocks" in json_params and not blocks:
+                blocks = json_params["blocks"]
+                print(f"[DEBUG] JSON에서 blocks 추출: {blocks}")
         else:
             print("[DEBUG] --params 인자가 비어있음")
 
+        # blocks가 여전히 None이면 오류
+        if not blocks:
+            raise ValueError("blocks 파라미터가 제공되지 않았습니다.")
+
+        logger.debug(f"[Runner] 실행할 블록: {blocks}")
         logger.debug(f"[Runner] 전달할 최종 파라미터: {params}")
 
-        results = runner.execute_blocks(args.blocks, params)
-        print(f"RESULT_JSON:{json.dumps(results)}")
+        results = runner.execute_blocks(blocks, params)
+        print(f"TRAINING_RESULT:{json.dumps(results)}")
 
         return 0 if results["success"] else 1
 
     except Exception as e:
         logger.error(f"[Runner] 전체 실행 중 오류 발생: {e}", exc_info=True)
-        print(f"PROGRESS::오류 발생: {str(e)}", flush=True)
+        print(f"PROGRESS:0:오류 발생: {str(e)}", flush=True)
         return 1
 
 if __name__ == "__main__":
