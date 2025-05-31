@@ -1110,7 +1110,14 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
                             btnSelectInferImage.Visible = false;
-                            
+
+                            // 추론 패널이 현재 표시되어 있지 않다면 표시
+                            if (!isInferPanelVisible)
+                            {
+                                ShowpSIdeInfer();
+                                Console.WriteLine("[DEBUG] 추론 패널 표시됨");
+                            }
+
                             // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
                             ToolTip toolTip = new ToolTip();
                             toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
