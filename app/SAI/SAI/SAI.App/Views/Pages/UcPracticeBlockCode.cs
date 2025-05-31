@@ -103,7 +103,6 @@ namespace SAI.SAI.App.Views.Pages
             ibtnCloseInfer.Visible = false;
             pMemo.Visible = false;
             cAlertPanel.Visible = false;  // 복사 알림 패널도 초기에 숨김
-            ucCode２.Controls.Add(cAlertPanel);
             btnSelectInferImage.Visible = false;
 
             // 새 이미지 불러오기 버튼 설정
@@ -168,6 +167,9 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
             ButtonUtils.SetTransparentStyle(btnSelectInferImage);
+            ButtonUtils.SetTransparentStyle(btnInfoGraph);
+            ButtonUtils.SetTransparentStyle(btnInfoThreshold);
+            pboxInferAccuracy.Image = null;
 
 
             blockCount = 0; // 블럭 개수 초기화
@@ -928,7 +930,9 @@ namespace SAI.SAI.App.Views.Pages
 
 					var mainModel = MainModel.Instance;
 
-					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+                    btnRunModel.Enabled = false;
+
+                    if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
 					}
@@ -1091,6 +1095,8 @@ namespace SAI.SAI.App.Views.Pages
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
         public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
+            btnRunModel.Enabled = true;
+
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ShowPracticeInferResultImage(result)));
@@ -1108,6 +1114,7 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
+                        _result = result;
 
                         // 경로를 절대 경로로 변환
                         string absolutePath = Path.IsPathRooted(result.ResultImage)

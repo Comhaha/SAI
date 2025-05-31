@@ -297,30 +297,6 @@
   <data name="&gt;&gt;guna2Panel1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="cAlertPanel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="cAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1110, 44</value>
-  </data>
-  <data name="cAlertPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 80</value>
-  </data>
-  <data name="cAlertPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;cAlertPanel.Name" xml:space="preserve">
-    <value>cAlertPanel</value>
-  </data>
-  <data name="&gt;&gt;cAlertPanel.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;cAlertPanel.Parent" xml:space="preserve">
-    <value>ucCode２</value>
-  </data>
-  <data name="&gt;&gt;cAlertPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="ucCode２.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 62</value>
   </data>
@@ -687,7 +663,34 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMain.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
+  </data>
+  <data name="cAlertPanel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="cAlertPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1233, 160</value>
+  </data>
+  <data name="cAlertPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 80</value>
+  </data>
+  <data name="cAlertPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="cAlertPanel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;cAlertPanel.Name" xml:space="preserve">
+    <value>cAlertPanel</value>
+  </data>
+  <data name="&gt;&gt;cAlertPanel.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;cAlertPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cAlertPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="pZoomCode.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -801,7 +804,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnMemo.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="ibtnInfer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -825,7 +828,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnInfer.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="ibtnHome.Location" type="System.Drawing.Point, System.Drawing">
     <value>201, 48</value>
@@ -849,7 +852,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ibtnHome.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -918,13 +921,73 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;guna2Panel2.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="pSideInfer.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="pSideInfer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="tpModelGraph.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblModelGraph.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="lblModelGraph.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans KR, 9pt, style=Bold</value>
+  </data>
+  <data name="lblModelGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="lblModelGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>311, 52</value>
+  </data>
+  <data name="lblModelGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblModelGraph.Text" xml:space="preserve">
+    <value>모델 성능 지표 그래프</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Name" xml:space="preserve">
+    <value>lblModelGraph</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Type" xml:space="preserve">
+    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.Parent" xml:space="preserve">
+    <value>tpModelGraph</value>
+  </data>
+  <data name="&gt;&gt;lblModelGraph.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tpModelGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 524</value>
+  </data>
+  <data name="tpModelGraph.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tpModelGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 58</value>
+  </data>
+  <data name="tpModelGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;tpModelGraph.Name" xml:space="preserve">
+    <value>tpModelGraph</value>
+  </data>
+  <data name="&gt;&gt;tpModelGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tpModelGraph.Parent" xml:space="preserve">
+    <value>pSideInfer</value>
+  </data>
+  <data name="&gt;&gt;tpModelGraph.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tpModelGraph.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblModelGraph" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="btnInfoGraph.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -933,7 +996,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 539</value>
+    <value>359, 541</value>
   </data>
   <data name="btnInfoGraph.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 25</value>
@@ -951,57 +1014,6 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;btnInfoGraph.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="lblInferGraph.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lblInferGraph.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR Medium, 10.8pt, style=Bold</value>
-  </data>
-  <data name="lblInferGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="lblInferGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 55</value>
-  </data>
-  <data name="lblInferGraph.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lblInferGraph.Text" xml:space="preserve">
-    <value>모델 성능 지표 그래프</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Name" xml:space="preserve">
-    <value>lblInferGraph</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Type" xml:space="preserve">
-    <value>SAI.SAI.App.Views.Pages.AutoSizeLabel, SAI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.Parent" xml:space="preserve">
-    <value>ptxtGraphe</value>
-  </data>
-  <data name="&gt;&gt;lblInferGraph.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ptxtGraphe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 524</value>
-  </data>
-  <data name="ptxtGraphe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 55</value>
-  </data>
-  <data name="ptxtGraphe.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="&gt;&gt;ptxtGraphe.Name" xml:space="preserve">
-    <value>ptxtGraphe</value>
-  </data>
-  <data name="&gt;&gt;ptxtGraphe.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
-  </data>
-  <data name="&gt;&gt;ptxtGraphe.Parent" xml:space="preserve">
-    <value>pSideInfer</value>
-  </data>
-  <data name="&gt;&gt;ptxtGraphe.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="lblThreshold.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1062,7 +1074,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="btnInfoThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>180, 114</value>
+    <value>176, 114</value>
   </data>
   <data name="btnInfoThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 15</value>
@@ -1083,7 +1095,7 @@
     <value>4</value>
   </data>
   <data name="lblInfer.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Noto Sans KR SemiBold, 13.7999992pt, style=Bold</value>
+    <value>Noto Sans KR, 9pt, style=Bold</value>
   </data>
   <data name="lblInfer.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1377,7 +1389,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
     <value>251, 2350</value>
@@ -1518,7 +1530,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pMemo.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="pErrorToast.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1533,7 +1545,7 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="pErrorCloseBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>805, 24</value>
+    <value>805, 22</value>
   </data>
   <data name="pErrorCloseBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 35</value>
@@ -1572,7 +1584,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="pError.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 20</value>
+    <value>32, 31</value>
   </data>
   <data name="pError.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1602,13 +1614,13 @@
     <value>NoControl</value>
   </data>
   <data name="lbErrorType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 0</value>
+    <value>32, 0</value>
   </data>
   <data name="lbErrorType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="lbErrorType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>723, 20</value>
+    <value>728, 31</value>
   </data>
   <data name="lbErrorType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1641,7 +1653,7 @@
     <value>1</value>
   </data>
   <data name="tpErrorHeader.Size" type="System.Drawing.Size, System.Drawing">
-    <value>754, 20</value>
+    <value>760, 31</value>
   </data>
   <data name="tpErrorHeader.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1674,10 +1686,10 @@
     <value>NoControl</value>
   </data>
   <data name="lbMissingType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 23</value>
+    <value>3, 34</value>
   </data>
   <data name="lbMissingType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>748, 14</value>
+    <value>754, 40</value>
   </data>
   <data name="lbMissingType.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1707,10 +1719,10 @@
     <value>Noto Sans KR DemiLight, 9pt</value>
   </data>
   <data name="lbErrorMessage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 43</value>
+    <value>3, 80</value>
   </data>
   <data name="lbErrorMessage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>748, 109</value>
+    <value>754, 72</value>
   </data>
   <data name="lbErrorMessage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1731,14 +1743,20 @@
   <data name="&gt;&gt;lbErrorMessage.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="tpContentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="tpContentError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>45, 24</value>
+    <value>42, 19</value>
+  </data>
+  <data name="tpContentError.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="tpContentError.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="tpContentError.Size" type="System.Drawing.Size, System.Drawing">
-    <value>754, 155</value>
+    <value>760, 155</value>
   </data>
   <data name="tpContentError.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1756,10 +1774,16 @@
     <value>1</value>
   </data>
   <data name="tpContentError.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20" /&gt;&lt;Rows Styles="Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tpErrorHeader" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbMissingType" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbErrorMessage" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,20,Percent,30,Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="tpParentError.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="tpParentError.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
+  </data>
+  <data name="tpParentError.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="tpParentError.Size" type="System.Drawing.Size, System.Drawing">
     <value>845, 194</value>
@@ -1807,7 +1831,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pErrorToast.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="lblTitle.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1858,7 +1882,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pTitle.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

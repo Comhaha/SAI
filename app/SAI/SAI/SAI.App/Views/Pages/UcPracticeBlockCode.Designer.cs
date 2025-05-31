@@ -41,7 +41,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnMinus = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ucCode２ = new SAI.App.Views.Pages.UcCode();
-            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.pBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.webViewblock = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.pTopBlock = new System.Windows.Forms.Panel();
@@ -52,6 +51,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pBlockList = new Guna.UI2.WinForms.Guna2Panel();
             this.pSelectBlock = new Guna.UI2.WinForms.Guna2Panel();
             this.pSelectBlockvScrollBar = new Guna.UI2.WinForms.Guna2VScrollBar();
+            this.cAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.pZoomCode = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxZoomCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnMinusCode = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -63,9 +63,9 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.tpModelGraph = new System.Windows.Forms.TableLayoutPanel();
+            this.lblModelGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
-            this.ptxtGraphe = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblInferGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.ptxtThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
@@ -100,7 +100,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMain.SuspendLayout();
             this.pCode.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
-            this.ucCode２.SuspendLayout();
             this.pBlock.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).BeginInit();
             this.pTopBlock.SuspendLayout();
@@ -109,7 +108,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pZoomCode.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.pSideInfer.SuspendLayout();
-            this.ptxtGraphe.SuspendLayout();
+            this.tpModelGraph.SuspendLayout();
             this.ptxtThreshold.SuspendLayout();
             this.ptxtInfer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).BeginInit();
@@ -234,17 +233,10 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // ucCode２
             // 
-            this.ucCode２.Controls.Add(this.cAlertPanel);
             this.ucCode２.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.ucCode２, "ucCode２");
             this.ucCode２.Name = "ucCode２";
             this.ucCode２.Load += new System.EventHandler(this.ucCode1_Load);
-            // 
-            // cAlertPanel
-            // 
-            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.p_copy_alarm;
-            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
-            this.cAlertPanel.Name = "cAlertPanel";
             // 
             // pBlock
             // 
@@ -361,6 +353,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pSelectBlockvScrollBar.ThumbColor = System.Drawing.Color.DarkGray;
             this.pSelectBlockvScrollBar.ThumbStyle = Guna.UI2.WinForms.Enums.ThumbStyle.Inset;
             // 
+            // cAlertPanel
+            // 
+            this.cAlertPanel.BackgroundImage = global::SAI.Properties.Resources.p_copy_alarm;
+            resources.ApplyResources(this.cAlertPanel, "cAlertPanel");
+            this.cAlertPanel.Name = "cAlertPanel";
+            // 
             // pZoomCode
             // 
             this.pZoomCode.BackgroundImage = global::SAI.Properties.Resources.btn_zoom;
@@ -476,9 +474,9 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.tpModelGraph);
             this.pSideInfer.Controls.Add(this.guna2Panel2);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
-            this.pSideInfer.Controls.Add(this.ptxtGraphe);
             this.pSideInfer.Controls.Add(this.ptxtThreshold);
             this.pSideInfer.Controls.Add(this.btnInfoThreshold);
             this.pSideInfer.Controls.Add(this.ptxtInfer);
@@ -492,6 +490,18 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
             this.pSideInfer.Name = "pSideInfer";
             // 
+            // tpModelGraph
+            // 
+            resources.ApplyResources(this.tpModelGraph, "tpModelGraph");
+            this.tpModelGraph.Controls.Add(this.lblModelGraph, 0, 0);
+            this.tpModelGraph.Name = "tpModelGraph";
+            // 
+            // lblModelGraph
+            // 
+            resources.ApplyResources(this.lblModelGraph, "lblModelGraph");
+            this.lblModelGraph.Name = "lblModelGraph";
+            this.lblModelGraph.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // btnInfoGraph
             // 
             this.btnInfoGraph.BackgroundImage = global::SAI.Properties.Resources.btn_info_17;
@@ -503,18 +513,6 @@ namespace SAI.SAI.App.Views.Pages
             this.btnInfoGraph.FillColor = System.Drawing.Color.Transparent;
             this.btnInfoGraph.ForeColor = System.Drawing.Color.White;
             this.btnInfoGraph.Name = "btnInfoGraph";
-            // 
-            // ptxtGraphe
-            // 
-            this.ptxtGraphe.Controls.Add(this.lblInferGraph);
-            resources.ApplyResources(this.ptxtGraphe, "ptxtGraphe");
-            this.ptxtGraphe.Name = "ptxtGraphe";
-            // 
-            // lblInferGraph
-            // 
-            resources.ApplyResources(this.lblInferGraph, "lblInferGraph");
-            this.lblInferGraph.Name = "lblInferGraph";
-            this.lblInferGraph.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ptxtThreshold
             // 
@@ -552,15 +550,16 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lblInfer, "lblInfer");
             this.lblInfer.Name = "lblInfer";
             this.lblInfer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// pboxInferAccuracy
-			// 
-			this.pboxInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
-			resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
-			this.pboxInferAccuracy.ImageRotate = 0F;
-			this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
-			this.pboxInferAccuracy.Name = "pboxInferAccuracy";
-			this.pboxInferAccuracy.TabStop = false;
+            // 
+            // pboxInferAccuracy
+            // 
+            this.pboxInferAccuracy.BackgroundImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            resources.ApplyResources(this.pboxInferAccuracy, "pboxInferAccuracy");
+            this.pboxInferAccuracy.FillColor = System.Drawing.Color.Transparent;
+            this.pboxInferAccuracy.ImageRotate = 0F;
+            this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            this.pboxInferAccuracy.Name = "pboxInferAccuracy";
+            this.pboxInferAccuracy.TabStop = false;
             // 
             // btnSelectInferImage
             // 
@@ -606,6 +605,7 @@ namespace SAI.SAI.App.Views.Pages
             this.tboxThreshold.PlaceholderForeColor = System.Drawing.Color.Black;
             this.tboxThreshold.PlaceholderText = "";
             this.tboxThreshold.SelectedText = "";
+            this.tboxThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbarThreshold
             // 
@@ -814,6 +814,7 @@ namespace SAI.SAI.App.Views.Pages
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.cAlertPanel);
             this.Controls.Add(this.pErrorToast);
             this.Controls.Add(this.pTitle);
             this.Controls.Add(this.pMemo);
@@ -828,7 +829,6 @@ namespace SAI.SAI.App.Views.Pages
             this.pMain.ResumeLayout(false);
             this.pCode.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
-            this.ucCode２.ResumeLayout(false);
             this.pBlock.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.webViewblock)).EndInit();
             this.pTopBlock.ResumeLayout(false);
@@ -837,7 +837,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pZoomCode.ResumeLayout(false);
             this.guna2Panel2.ResumeLayout(false);
             this.pSideInfer.ResumeLayout(false);
-            this.ptxtGraphe.ResumeLayout(false);
+            this.tpModelGraph.ResumeLayout(false);
             this.ptxtThreshold.ResumeLayout(false);
             this.ptxtInfer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxInferAccuracy)).EndInit();
@@ -919,9 +919,9 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel ptxtThreshold;
         private SAI.App.Views.Pages.AutoSizeLabel lblThreshold;
         private Guna.UI2.WinForms.Guna2Button btnInfoThreshold;
-        private Guna.UI2.WinForms.Guna2Panel ptxtGraphe;
-        private SAI.App.Views.Pages.AutoSizeLabel lblInferGraph;
         private Guna.UI2.WinForms.Guna2Button btnInfoGraph;
         private Guna.UI2.WinForms.Guna2Button pErrorCloseBtn;
+        private System.Windows.Forms.TableLayoutPanel tpModelGraph;
+        private SAI.App.Views.Pages.AutoSizeLabel lblModelGraph;
     }
 }
