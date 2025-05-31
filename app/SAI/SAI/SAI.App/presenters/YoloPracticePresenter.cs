@@ -209,8 +209,10 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
+                                    _yolopracticeview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
+
 
                                     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                                     var csvPath = Path.Combine(baseDir,
@@ -222,6 +224,7 @@ namespace SAI.SAI.App.Presenters
                         }
                         else
                         {
+                            _yolopracticeview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
                         }
