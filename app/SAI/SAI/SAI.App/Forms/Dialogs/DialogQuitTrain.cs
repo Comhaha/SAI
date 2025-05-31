@@ -54,7 +54,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 			btnOk.CheckedState.FillColor = Color.Transparent;
 			btnOk.HoverState.FillColor = Color.Transparent;
 			btnOk.BackColor = Color.Transparent;
-			btnOk.Click += (s, e) => { System.Windows.Forms.Application.Exit(); };
+			btnOk.Click += (s, e) => { this.DialogResult = DialogResult.OK; this.Close(); };
 			// btnOk 마우스 입력 될 때
 			btnOk.MouseEnter += (s, e) =>
 			{
