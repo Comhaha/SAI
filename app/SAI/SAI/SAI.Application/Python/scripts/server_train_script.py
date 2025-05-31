@@ -39,13 +39,22 @@ def show_tagged_progress(tag, message, start_time=None, progress=None):
         start_time: 시작 시간 (경과 시간 계산용, 선택사항)
         progress: 진행률 (0-100, 선택사항)
     """
+    # 경과 시간 계산
+    elapsed_info = ""
+    if start_time is not None:
+        elapsed = time.time() - start_time
+        minutes, seconds = divmod(elapsed, 60)
+        elapsed_info = f" (경과: {int(minutes):02d}:{int(seconds):02d})"
+    
     # 진행률 정보
+    progress_info = ""
     if progress is not None:
+        progress_info = f" [{progress:.1f}%]"
         # PROGRESS: 형태로 출력하여 API 서버에서 파싱 가능하도록 함
-        print(f"PROGRESS:{progress:.1f}:[{tag}] {message} [{progress:.1f}%]", flush=True)
+        print(f"PROGRESS:{progress:.1f}:[{tag}] {message}{elapsed_info}{progress_info}", flush=True)
     else:
         # 진행률이 없는 경우 일반 로그
-        print(f"[{tag}] {message}", flush=True)
+        print(f"[{tag}] {message}{elapsed_info}", flush=True)
 
 def make_progress_bar(progress, bar_length=20):
     """시각적 진행률 바 생성"""
@@ -76,14 +85,14 @@ def print_train_progress(epoch, total_epochs, start_time, tag="TRAIN"):
 def check_dataset():
     """로컬 데이터셋 존재 확인 및 경로 수정"""
     start_time = time.time()
-    show_tagged_progress('DATASET', '바나나 데이터셋 디렉토리 검색 중...', start_time, 5)
+    show_tagged_progress('DATASET', '📁 바나나 데이터셋 디렉토리 검색 중...', start_time, 5)
     time.sleep(0.1)
     
     yaml_path = os.path.join(dataset_dir, "data.yaml")
     show_tagged_progress('DATASET', f'YAML 설정 파일 경로 확인: {yaml_path}', start_time, 6)
     
     if os.path.exists(yaml_path):
-        show_tagged_progress('DATASET', '바나나 데이터셋 YAML 파일 발견', start_time, 7)
+        show_tagged_progress('DATASET', '✅ 바나나 데이터셋 YAML 파일 발견', start_time, 7)
         
         # 데이터 디렉토리 구조 검사
         train_dir = os.path.join(dataset_dir, "train", "images")
@@ -92,32 +101,32 @@ def check_dataset():
         show_tagged_progress('DATASET', f'훈련 이미지 디렉토리 확인: {train_dir}', start_time, 15)
         if os.path.exists(train_dir):
             train_count = len([f for f in os.listdir(train_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
-            show_tagged_progress('DATASET', f'훈련 이미지 개수: {train_count}개', start_time, 20)
+            show_tagged_progress('DATASET', f'📸 훈련 이미지 개수: {train_count}개', start_time, 20)
         
         show_tagged_progress('DATASET', f'검증 이미지 디렉토리 확인: {valid_dir}', start_time, 25)
         if os.path.exists(valid_dir):
             valid_count = len([f for f in os.listdir(valid_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
-            show_tagged_progress('DATASET', f'검증 이미지 개수: {valid_count}개', start_time, 30)
+            show_tagged_progress('DATASET', f'📸 검증 이미지 개수: {valid_count}개', start_time, 30)
         
         # data.yaml 파일 내용을 Docker 환경에 맞게 수정
-        show_tagged_progress('DATASET', '데이터셋 경로 Docker 환경용으로 수정 중...', start_time, 40)
+        show_tagged_progress('DATASET', '⚙️ 데이터셋 경로 Docker 환경용으로 수정 중...', start_time, 40)
         try:
             with open(yaml_path, 'r') as f:
                 content = f.read()
             
-            show_tagged_progress('DATASET', 'YAML 파일 내용 읽기 완료', start_time, 50)
+            show_tagged_progress('DATASET', '📝 YAML 파일 내용 읽기 완료', start_time, 50)
             
             # 상대 경로를 절대 경로로 변경
-            show_tagged_progress('DATASET', '훈련 데이터 경로 업데이트 중...', start_time, 60)
+            show_tagged_progress('DATASET', '🔄 훈련 데이터 경로 업데이트 중...', start_time, 60)
             content = content.replace('../train/images', f'{dataset_dir}/train/images')
             
-            show_tagged_progress('DATASET', '검증 데이터 경로 업데이트 중...', start_time, 70)
+            show_tagged_progress('DATASET', '🔄 검증 데이터 경로 업데이트 중...', start_time, 70)
             content = content.replace('../valid/images', f'{dataset_dir}/valid/images') 
             
-            show_tagged_progress('DATASET', '테스트 데이터 경로 업데이트 중...', start_time, 80)
+            show_tagged_progress('DATASET', '🔄 테스트 데이터 경로 업데이트 중...', start_time, 80)
             content = content.replace('../test/images', f'{dataset_dir}/test/images')
             
-            show_tagged_progress('DATASET', '수정된 YAML 파일 저장 중...', start_time, 90)
+            show_tagged_progress('DATASET', '💾 수정된 YAML 파일 저장 중...', start_time, 90)
             with open(yaml_path, 'w') as f:
                 f.write(content)
                 
@@ -245,7 +254,7 @@ def train_model(epochs=10, imgsz=640, conf=0.25, model_type='n'):
         
         # === 7단계: 학습 시작 ===
         train_start_time = time.time()
-        show_tagged_progress('TRAIN', f'모델 학습 시작! 총 {epochs}개 에폭 예정', train_start_time, 41)
+        show_tagged_progress('TRAIN', f'🚀 모델 학습 시작! 총 {epochs}개 에폭 예정', train_start_time, 41)
         show_tagged_progress('TRAIN', '데이터로더 초기화 중...', train_start_time, 42)
         time.sleep(0.1)
         show_tagged_progress('TRAIN', '학습 데이터 전처리 설정 중...', train_start_time, 43)
@@ -254,108 +263,100 @@ def train_model(epochs=10, imgsz=640, conf=0.25, model_type='n'):
         time.sleep(0.1)
         show_tagged_progress('TRAIN', '학습 루프 시작...', train_start_time, 45)
         
-        # === 8단계: 실제 학습 실행 ===
-        show_tagged_progress('TRAIN', '딥러닝 학습 프로세스 시작...', train_start_time, 47)
-        
-        # 추가 학습 준비 로그
-        show_tagged_progress('PREPARE', '학습 설정 최종 확인 중...', train_start_time, 47.5)
-        time.sleep(0.1)
-        show_tagged_progress('PREPARE', '데이터 로더 최적화 중...', train_start_time, 48)
-        time.sleep(0.1)
-        show_tagged_progress('PREPARE', 'GPU 메모리 할당 중...', train_start_time, 48.5)
-        time.sleep(0.1)
-        
-        # 학습 실행 - 콜백 추가
-        show_tagged_progress('ENGINE', 'YOLO 학습 엔진 시작...', train_start_time, 49)
-        
-        # 학습을 별도 스레드에서 실행하여 진행률 모니터링
-        import threading
-        import queue
-        
-        # 결과를 저장할 큐
-        result_queue = queue.Queue()
-        training_active = threading.Event()
-        
-        def train_with_monitoring():
-            """학습을 실행하는 함수"""
-            try:
-                training_active.set()
-                results = model.train(
-                    data=yaml_path,
-                    epochs=epochs,
-                    imgsz=imgsz,
-                    device=device,
-                    project=runs_dir,
-                    name="detect/train",
-                    exist_ok=True,
-                    verbose=False,  # 자세한 출력 비활성화 (우리 커스텀 로그 사용)
-                    # 성능 최적화 파라미터
-                    workers=0,    # 워커 비활성화 (공유 메모리 문제 해결)
-                    batch=batch_size,
-                    cache='disk', # 디스크 캐싱 사용 (메모리 절약)
-                    amp=True,     # Mixed precision 활성화
-                    patience=10   # Early stopping patience 감소
-                )
-                result_queue.put(('success', results))
-            except Exception as e:
-                result_queue.put(('error', str(e)))
-            finally:
-                training_active.clear()
-        
-        # 학습 스레드 시작
-        train_thread = threading.Thread(target=train_with_monitoring)
-        train_thread.daemon = True
-        train_thread.start()
-        
-        # 진행률 모니터링
-        show_tagged_progress('MONITOR', '학습 진행률 모니터링 시작...', train_start_time, 50)
-        
-        # 학습 과정 시뮬레이션 로그
-        progress_steps = [
-            (52, 'INIT', '첫 번째 에폭 초기화 중...'),
-            (55, 'BATCH', '배치 처리 시작 (1/163)'),
-            (58, 'BATCH', '배치 처리 중... (20/163)'),
-            (62, 'MILESTONE', '학습 25% 완료'),
-            (66, 'BATCH', '배치 처리 중... (60/163)'),
-            (70, 'MILESTONE', '학습 50% 완료'),
-            (74, 'BATCH', '배치 처리 중... (100/163)'),
-            (78, 'MILESTONE', '학습 75% 완료'),
-            (82, 'BATCH', '배치 처리 중... (140/163)'),
-            (85, 'BATCH', '모든 배치 처리 완료 (163/163)'),
-            (87, 'VALIDATION', '모델 검증 시작...'),
-            (89, 'VALIDATION', '검증 완료')
-        ]
-        
-        step_index = 0
-        while training_active.is_set() or not result_queue.empty():
-            # 결과 확인
-            try:
-                result_type, result_data = result_queue.get_nowait()
-                if result_type == 'success':
-                    results = result_data
-                    break
-                elif result_type == 'error':
-                    raise Exception(result_data)
-            except queue.Empty:
-                pass
+        # 학습 진행률 모니터링을 위한 콜백 클래스 (더 상세한 로그)
+        class DetailedProgressCallback:
+            def __init__(self, start_time, total_epochs):
+                self.start_time = start_time
+                self.total_epochs = total_epochs
+                self.completed_epochs = 0
+                self.batch_count = 0
             
-            # 진행률 로그 출력
-            if step_index < len(progress_steps):
-                progress, tag, message = progress_steps[step_index]
-                show_tagged_progress(tag, message, train_start_time, progress)
-                step_index += 1
-                time.sleep(2)  # 2초마다 진행률 업데이트
-            else:
-                time.sleep(1)  # 학습 완료 대기
+            def on_train_start(self, trainer):
+                show_tagged_progress('TRAIN', '⚡ 학습 엔진 초기화 완료', self.start_time, 46)
+                show_tagged_progress('TRAIN', f'총 배치 수: {len(trainer.train_loader)}', self.start_time, 47)
+                
+            def on_train_epoch_start(self, trainer):
+                epoch = trainer.epoch + 1
+                show_tagged_progress('TRAIN', f'📈 에폭 {epoch}/{self.total_epochs} 시작', self.start_time, 48)
+                
+            def on_train_batch_end(self, trainer):
+                self.batch_count += 1
+                if self.batch_count % 20 == 0:  # 20배치마다 로그
+                    epoch_progress = (self.batch_count / len(trainer.train_loader)) * 100
+                    show_tagged_progress('TRAIN', 
+                        f'배치 {self.batch_count}/{len(trainer.train_loader)} 처리 중 ({epoch_progress:.1f}%)', 
+                        self.start_time, 48 + (epoch_progress * 0.4))
+            
+            def on_train_epoch_end(self, trainer):
+                self.completed_epochs = trainer.epoch + 1
+                # 48% (학습 시작) + 42% (학습 진행) = 90%까지 사용
+                base_progress = 48
+                training_progress = (self.completed_epochs / self.total_epochs) * 42
+                total_progress = base_progress + training_progress
+                
+                elapsed = time.time() - self.start_time
+                minutes, seconds = divmod(elapsed, 60)
+                
+                # 학습 통계 출력
+                if hasattr(trainer, 'loss_items') and trainer.loss_items:
+                    box_loss = trainer.loss_items.get('train/box_loss', 0)
+                    cls_loss = trainer.loss_items.get('train/cls_loss', 0) 
+                    dfl_loss = trainer.loss_items.get('train/dfl_loss', 0)
+                    show_tagged_progress('METRICS', 
+                        f'손실값 - Box: {box_loss:.3f}, Cls: {cls_loss:.3f}, DFL: {dfl_loss:.3f}', 
+                        self.start_time, total_progress)
+                
+                # 잔여 시간 추정
+                if self.completed_epochs > 0:
+                    time_per_epoch = elapsed / self.completed_epochs
+                    remaining_epochs = self.total_epochs - self.completed_epochs
+                    remaining_time = time_per_epoch * remaining_epochs
+                    rem_minutes, rem_seconds = divmod(remaining_time, 60)
+                    bar = make_progress_bar(training_progress)
+                    show_tagged_progress('PROGRESS', 
+                        f"{bar} ({self.completed_epochs}/{self.total_epochs} 에폭) | 경과: {int(minutes):02d}:{int(seconds):02d} | 남음: {int(rem_minutes):02d}:{int(rem_seconds):02d}", 
+                        self.start_time, total_progress)
+                else:
+                    bar = make_progress_bar(training_progress)
+                    show_tagged_progress('PROGRESS', 
+                        f"{bar} ({self.completed_epochs}/{self.total_epochs} 에폭) 완료", 
+                        self.start_time, total_progress)
+                
+                show_tagged_progress('TRAIN', f'✅ 에폭 {self.completed_epochs} 완료', self.start_time, total_progress)
+                self.batch_count = 0  # 배치 카운터 리셋
+                
+            def on_val_start(self, trainer):
+                show_tagged_progress('VALIDATION', '🔍 모델 검증 시작...', self.start_time, 85)
+                
+            def on_val_end(self, trainer):
+                show_tagged_progress('VALIDATION', '📊 검증 완료', self.start_time, 88)
         
-        # 스레드 완료 대기
-        train_thread.join(timeout=5)
+        # 콜백 설정
+        progress_callback = DetailedProgressCallback(train_start_time, epochs)
         
-        # 학습 완료 로그
-        show_tagged_progress('COMPLETE_TRAIN', '모델 학습 완료!', train_start_time, 89)
+        # === 8단계: 실제 학습 실행 ===
+        show_tagged_progress('TRAIN', '🎯 딥러닝 학습 프로세스 시작...', train_start_time, 47)
+        
+        # 학습 실행 - verbose=True로 설정하여 상세 출력 활성화
+        results = model.train(
+            data=yaml_path,
+            epochs=epochs,
+            imgsz=imgsz,
+            device=device,
+            project=runs_dir,
+            name="detect/train",
+            exist_ok=True,
+            verbose=True,  # 상세 출력 활성화
+            # 성능 최적화 파라미터
+            workers=0,    # 워커 비활성화 (공유 메모리 문제 해결)
+            batch=batch_size,
+            cache='disk', # 디스크 캐싱 사용 (메모리 절약)
+            amp=True,     # Mixed precision 활성화
+            patience=10   # Early stopping patience 감소
+        )
         
         # === 9단계: 학습 후 처리 ===
-        show_tagged_progress('POST', '학습 결과 정리 중...', train_start_time, 90)
+        show_tagged_progress('POST', '📋 학습 결과 정리 중...', train_start_time, 90)
         show_tagged_progress('POST', '모델 가중치 저장 확인 중...', train_start_time, 91)
         
         # 결과 저장 경로
@@ -367,10 +368,10 @@ def train_model(epochs=10, imgsz=640, conf=0.25, model_type='n'):
         show_tagged_progress('DEBUG', f'모델 파일 존재 여부: {os.path.exists(best_model_path)}', total_start_time, 92)
         
         if os.path.exists(best_model_path):
-            show_tagged_progress('POST', f' 학습된 모델 저장 확인: {best_model_path}', total_start_time, 93)
+            show_tagged_progress('POST', f'✅ 학습된 모델 저장 확인: {best_model_path}', total_start_time, 93)
             
             # === 10단계: 결과 파일 처리 ===
-            show_tagged_progress('POST', '학습 통계 CSV 파일 처리 중...', total_start_time, 94)
+            show_tagged_progress('POST', '📊 학습 통계 CSV 파일 처리 중...', total_start_time, 94)
             csv_path = os.path.join(runs_dir, "detect", "train", "results.csv")
             csv_base64 = None
             
@@ -451,13 +452,13 @@ def main():
     
     args = parser.parse_args()
     
-    show_tagged_progress('INIT', '서버용 YOLO 학습 스크립트 초기화', None, 0)
-    show_tagged_progress('INIT', '명령행 인수 파싱 완료', None, 0)
-    show_tagged_progress('INIT', f'학습 설정 - 에폭: {args.epochs}, 이미지크기: {args.imgsz}, 신뢰도: {args.conf}, 모델: yolov8{args.model}', None, 0)
-    show_tagged_progress('INIT', '실행 환경 준비 완료', None, 0)
+    show_tagged_progress('INIT', '🚀 서버용 YOLO 학습 스크립트 초기화', None, 0)
+    show_tagged_progress('INIT', '📋 명령행 인수 파싱 완료', None, 0)
+    show_tagged_progress('INIT', f'⚙️ 학습 설정 - 에폭: {args.epochs}, 이미지크기: {args.imgsz}, 신뢰도: {args.conf}, 모델: yolov8{args.model}', None, 0)
+    show_tagged_progress('INIT', '🔧 실행 환경 준비 완료', None, 0)
     
     # 학습 실행
-    show_tagged_progress('START', '모델 학습 프로세스 시작', None, 0)
+    show_tagged_progress('START', '🎯 모델 학습 프로세스 시작', None, 0)
     result = train_model(
         epochs=args.epochs,
         imgsz=args.imgsz,
@@ -467,11 +468,11 @@ def main():
     
     # 결과 출력
     if result["success"]:
-        show_tagged_progress('SUCCESS', '학습이 성공적으로 완료되었습니다!', None, 100)
-        show_tagged_progress('SUCCESS', '모든 프로세스가 정상적으로 종료됩니다', None, 100)
+        show_tagged_progress('SUCCESS', '🎉 학습이 성공적으로 완료되었습니다!', None, 100)
+        show_tagged_progress('SUCCESS', '✅ 모든 프로세스가 정상적으로 종료됩니다', None, 100)
     else:
-        show_tagged_progress('FAILURE', f'학습 실패: {result.get("error", "알 수 없는 오류")}', None, 100)
-        show_tagged_progress('FAILURE', '프로세스가 오류와 함께 종료됩니다', None, 100)
+        show_tagged_progress('FAILURE', f'❌ 학습 실패: {result.get("error", "알 수 없는 오류")}', None, 100)
+        show_tagged_progress('FAILURE', '💥 프로세스가 오류와 함께 종료됩니다', None, 100)
     
     # 종료 코드 설정
     sys.exit(0 if result["success"] else 1)
