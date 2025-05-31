@@ -77,6 +77,7 @@
             this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(160, 50);
             this.ibtnDownloadAIModel.Size = new System.Drawing.Size(240, 75);
             this.ibtnDownloadAIModel.TabIndex = 9;
+            this.ibtnDownloadAIModel.Click += new System.EventHandler(this.ibtnDownloadAIModel_Click);
             // 
             // ibtnGoNotion
             // 
@@ -93,6 +94,7 @@
             this.ibtnGoNotion.PressedState.ImageSize = new System.Drawing.Size(240, 75);
             this.ibtnGoNotion.Size = new System.Drawing.Size(240, 75);
             this.ibtnGoNotion.TabIndex = 10;
+            this.ibtnGoNotion.Click += new System.EventHandler(this.ibtnGoNotion_Click);
             // 
             // ibtnAiFeedback
             // 
@@ -154,6 +156,7 @@
             this.btnSelectInferImage.Name = "btnSelectInferImage";
             this.btnSelectInferImage.Size = new System.Drawing.Size(494, 278);
             this.btnSelectInferImage.TabIndex = 24;
+            this.btnSelectInferImage.Click += new System.EventHandler(this.btnSelectInferImage_Click);
             // 
             // pboxInferAccuracy
             // 
