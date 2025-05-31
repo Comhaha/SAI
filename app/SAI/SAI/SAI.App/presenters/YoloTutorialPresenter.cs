@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Net.WebSockets;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -696,293 +697,114 @@ namespace SAI.SAI.App.Presenters
 
             try
             {
-                bool isCompleted = false;
-                int consecutiveErrors = 0;
-                const int maxConsecutiveErrors = 5;
-                int lastLogCount = 0; // 마지막으로 처리한 로그 개수 추적
-
-                while (!isCompleted && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+                Console.WriteLine($"[INFO] WebSocket을 통한 학습 진행률 모니터링 시작: taskId={taskId}");
+                
+                // WebSocket 이벤트 핸들러 등록
+                _apiService.TrainingProgressReceived += OnTrainingProgressReceived;
+                _apiService.WebSocketError += OnWebSocketError;
+                _apiService.WebSocketDisconnected += OnWebSocketDisconnected;
+                
+                // WebSocket 연결 시도
+                bool connected = await _apiService.ConnectWebSocket(taskId);
+                
+                if (!connected)
                 {
-                    try
+                    Console.WriteLine($"[ERROR] WebSocket 연결 실패, HTTP 폴링으로 대체");
+                    // WebSocket 연결 실패시 기존 HTTP 폴링 방식으로 폴백
+                    await MonitorTrainingProgressHttp(taskId);
+                    return;
+                }
+                
+                Console.WriteLine($"[INFO] WebSocket 연결 성공, 실시간 모니터링 시작");
+                
+                // Ping 전송 루프 (연결 유지용)
+                _ = Task.Run(async () =>
+                {
+                    while (!_monitoringCancellationTokenSource.Token.IsCancellationRequested)
                     {
-                        // 진행 상황 요청
-                        var response = await _apiService.GetAsync($"/api/training/progress/{taskId}");
-
-                        if (response.IsSuccessStatusCode)
+                        try
                         {
-                            consecutiveErrors = 0; // 성공시 에러 카운트 리셋
-                            
-                            var content = await response.Content.ReadAsStringAsync();
-                            var progressData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(content);
-
-                            if (progressData.TryGetValue("progress", out var progressElement) &&
-                                progressData.TryGetValue("status", out var statusElement) &&
-                                progressData.TryGetValue("message", out var messageElement))
-                            {
-                                double progress = progressElement.GetDouble();
-                                string status = statusElement.GetString();
-                                string message = messageElement.GetString();
-
-                                Console.WriteLine($"[YOLO Tutorial] {progress}:{message}");
-
-                                // 새로운 로그 처리
-                                if (progressData.TryGetValue("logs", out var logsElement) && 
-                                    logsElement.ValueKind == JsonValueKind.Array)
-                                {
-                                    var logs = logsElement.EnumerateArray().Select(x => x.GetString()).ToList();
-                                    
-                                    // 새로운 로그만 표시 (차분 업데이트)
-                                    if (logs.Count > lastLogCount)
-                                    {
-                                        var newLogs = logs.Skip(lastLogCount).ToList();
-                                        foreach (var log in newLogs)
-                                        {
-                                            if (!string.IsNullOrEmpty(log))
-                                            {
-                                                // 로그 추가 (UI 스레드에서)
-                                                if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
-                                                {
-                                                    logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(log)));
-                                                }
-                                                else
-                                                {
-                                                    _yolotutorialview.AppendLog(log);
-                                                }
-                                            }
-                                        }
-                                        lastLogCount = logs.Count;
-                                    }
-                                }
-
-                                // UI 업데이트 (기존 코드 유지)
-                                if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                {
-                                    if (_progressDialog.InvokeRequired)
-                                    {
-                                        _progressDialog.Invoke(new Action(() =>
-                                        {
-                                            if (!_progressDialog.IsDisposed)
-                                            {
-                                                _progressDialog.UpdateProgress(progress, message);
-                                            }
-                                        }));
-                                    }
-                                    else
-                                    {
-                                        _progressDialog.UpdateProgress(progress, message);
-                                    }
-                                }
-
-                                // 완료 확인
-                                isCompleted = status == "completed" || status == "failed";
-
-                                if (isCompleted)
-                                {
-                                    Console.WriteLine($"[YOLO Tutorial] 학습 완료: {status}");
-
-                                    // 결과 처리
-                                    if (status == "completed")
-                                    {
-                                        // 학습 완료 - 추론 시작 알림
-                                        if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                        {
-                                            if (_progressDialog.InvokeRequired)
-                                            {
-                                                _progressDialog.Invoke(new Action(() =>
-                                                {
-                                                    if (!_progressDialog.IsDisposed)
-                                                    {
-                                                        _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
-                                                    }
-                                                }));
-                                            }
-                                            else
-                                            {
-                                                _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
-                                            }
-                                        }
-
-                                        // CSV 파일 경로 가져오기 및 차트 표시
-                                        if (progressData.TryGetValue("results", out var resultsElement) &&
-                                            resultsElement.ValueKind == JsonValueKind.Object)
-                                        {
-                                            var results = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsElement.GetRawText());
-                                            
-                                            if (results.TryGetValue("csv_base64", out var csvElement) && 
-                                                csvElement.ValueKind == JsonValueKind.String)
-                                        {
-                                            string csvBase64 = csvElement.GetString();
-                                                if (!string.IsNullOrEmpty(csvBase64))
-                                                {
-                                            byte[] csvBytes = Convert.FromBase64String(csvBase64);
-
-                                            string csvPath = Path.Combine(
-                                                Path.GetTempPath(),
-                                                $"training_results_{taskId}.csv"
-                                            );
-
-                                            File.WriteAllBytes(csvPath, csvBytes);
-
-                                            if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
-                                            {
-                                                chartControl.Invoke(new Action(() =>
-                                                        {
-                                                            _yolotutorialview.ShowTutorialTrainingChart(csvPath);
-                                                        }));
-                                            }
-                                            else
-                                            {
-                                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
-                                        // 추론 실행 (다이얼로그는 유지)
-                                        _ = Task.Run(async () =>
-                                        {
-                                            await CheckAndShowInferenceResultRemoteWithDialog();
-                                        });
-                                    }
-                                    else if (status == "failed")
-                                    {
-                                        // 실패 시에만 다이얼로그 닫기
-                                        if (_progressDialog != null && !_progressDialog.IsDisposed)
-                                        {
-                                            if (_progressDialog.InvokeRequired)
-                                            {
-                                                _progressDialog.Invoke(new Action(() =>
-                                                {
-                                                    _progressDialog.Close();
-                                                    _progressDialog.Dispose();
-                                                }));
-                                            }
-                                            else
-                                            {
-                                                _progressDialog.Close();
-                                                _progressDialog.Dispose();
-                                            }
-                                        }
-                                        
-                                        // 실패 메시지 표시
-                                        string errorMessage = "학습이 실패했습니다.";
-                                        if (progressData.TryGetValue("error", out var errorElement))
-                                        {
-                                            errorMessage = errorElement.GetString();
-                                        }
-                                        Console.WriteLine($"[YOLO Tutorial] 학습 실패: {errorMessage}");
-                                        
-                                        if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
-                                        {
-                                            errorControl.Invoke(new Action(() =>
-                                                _yolotutorialview.ShowErrorMessage(errorMessage)
-                                            ));
-                                        }
-                                        else
-                                        {
-                                            _yolotutorialview.ShowErrorMessage(errorMessage);
-                                        }
-                                    }
-                                }
-                            }
+                            await Task.Delay(30000, _monitoringCancellationTokenSource.Token); // 30초마다
+                            await _apiService.SendPing();
                         }
-                        else
+                        catch (OperationCanceledException)
                         {
-                            consecutiveErrors++;
-                            Console.WriteLine($"[WARNING] API 응답 실패: {response.StatusCode}, 연속 오류: {consecutiveErrors}");
-                            
-                            if (consecutiveErrors >= maxConsecutiveErrors)
-                            {
-                                throw new Exception($"연속 {maxConsecutiveErrors}회 API 호출 실패");
-                            }
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[WARNING] Ping 전송 실패: {ex.Message}");
                         }
                     }
-                    catch (TaskCanceledException tcex) when (tcex.CancellationToken.IsCancellationRequested)
-                    {
-                        Console.WriteLine("[INFO] 학습 모니터링이 취소되었습니다.");
-                        break;
-                    }
-                    catch (Exception apiEx)
-                    {
-                        consecutiveErrors++;
-                        Console.WriteLine($"[WARNING] API 호출 중 오류: {apiEx.Message}, 연속 오류: {consecutiveErrors}");
-                        
-                        if (consecutiveErrors >= maxConsecutiveErrors)
-                        {
-                            throw new Exception($"연속 {maxConsecutiveErrors}회 API 오류: {apiEx.Message}");
-                        }
-                    }
-
-                    // 0.5초 대기 (더 실시간에 가깝게)
-                    if (!isCompleted && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
-                    {
-                        await Task.Delay(500, _monitoringCancellationTokenSource.Token);
-                    }
+                });
+                
+                // 모니터링 완료까지 대기
+                while (!_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, _monitoringCancellationTokenSource.Token);
                 }
             }
             catch (OperationCanceledException)
             {
-                // 사용자가 직접 취소한 경우에는 에러 메시지를 표시하지 않음
-                if (_userCancelled)
-                {
-                    Console.WriteLine("[INFO] 사용자에 의해 학습 모니터링이 취소되었습니다.");
-                    
-                    // 사용자 취소 시 다이얼로그 즉시 정리
-                    if (_progressDialog != null && !_progressDialog.IsDisposed)
-                    {
-                        if (_progressDialog.InvokeRequired)
-                        {
-                            _progressDialog.Invoke(new Action(() =>
-                            {
-                                if (!_progressDialog.IsDisposed)
-                                {
-                                    _progressDialog.Close();
-                                    _progressDialog.Dispose();
-                                }
-                            }));
-                        }
-                        else
-                        {
-                            _progressDialog.Close();
-                            _progressDialog.Dispose();
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("[ERROR] 학습 모니터링이 타임아웃으로 취소되었습니다.");
-                    if (_yolotutorialview is Control timeoutControl && timeoutControl.InvokeRequired)
-                    {
-                        timeoutControl.Invoke(new Action(() =>
-                            _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.")
-                        ));
-                    }
-                    else
-                    {
-                        _yolotutorialview.ShowErrorMessage("학습 모니터링이 타임아웃되었습니다. 서버에서 학습이 계속 진행될 수 있습니다.");
-                    }
-                }
+                Console.WriteLine($"[INFO] 학습 모니터링이 취소되었습니다.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] 학습 진행 상황 모니터링 중 오류 발생: {ex.Message}");
-
-                if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+                Console.WriteLine($"[ERROR] 학습 모니터링 중 오류: {ex.Message}");
+                
+                // 오류 발생시 HTTP 폴링으로 대체
+                try
                 {
-                    errorControl.Invoke(new Action(() =>
-                        _yolotutorialview.ShowErrorMessage($"학습 진행 상황 모니터링 중 오류 발생: {ex.Message}")
-                    ));
+                    await MonitorTrainingProgressHttp(taskId);
                 }
-                else
+                catch (Exception fallbackEx)
                 {
-                    _yolotutorialview.ShowErrorMessage($"학습 진행 상황 모니터링 중 오류 발생: {ex.Message}");
+                    Console.WriteLine($"[ERROR] HTTP 폴링 대체도 실패: {fallbackEx.Message}");
                 }
             }
             finally
             {
-                // 다이얼로그 정리 (사용자 취소나 오류 발생 시에만)
-                if ((_userCancelled || _monitoringCancellationTokenSource.Token.IsCancellationRequested) && 
-                    _progressDialog != null && !_progressDialog.IsDisposed)
+                // WebSocket 이벤트 핸들러 해제
+                _apiService.TrainingProgressReceived -= OnTrainingProgressReceived;
+                _apiService.WebSocketError -= OnWebSocketError;
+                _apiService.WebSocketDisconnected -= OnWebSocketDisconnected;
+                
+                // WebSocket 연결 종료
+                await _apiService.DisconnectWebSocket();
+                
+                Console.WriteLine($"[INFO] 학습 모니터링 종료");
+            }
+        }
+
+        // WebSocket 진행률 수신 이벤트 핸들러
+        private void OnTrainingProgressReceived(object sender, TrainingProgressEventArgs e)
+        {
+            try
+            {
+                Console.WriteLine($"[YOLO Tutorial] {e.Progress}:{e.Message}");
+
+                // 새로운 로그 처리
+                if (e.Logs != null && e.Logs.Length > 0)
+                {
+                    foreach (var log in e.Logs)
+                    {
+                        if (!string.IsNullOrEmpty(log))
+                        {
+                            // 로그 추가 (UI 스레드에서)
+                            if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                            {
+                                logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(log)));
+                            }
+                            else
+                            {
+                                _yolotutorialview.AppendLog(log);
+                            }
+                        }
+                    }
+                }
+
+                // UI 업데이트
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
                 {
                     if (_progressDialog.InvokeRequired)
                     {
@@ -990,25 +812,410 @@ namespace SAI.SAI.App.Presenters
                         {
                             if (!_progressDialog.IsDisposed)
                             {
-                                _progressDialog.Close();
-                                _progressDialog.Dispose();
+                                _progressDialog.UpdateProgress(e.Progress, e.Message);
                             }
                         }));
                     }
                     else
                     {
-                        _progressDialog.Close();
-                        _progressDialog.Dispose();
+                        _progressDialog.UpdateProgress(e.Progress, e.Message);
                     }
                 }
-                
-                _monitoringCancellationTokenSource.Dispose();
-                
-                // 작업 완료 시 taskId 초기화
-                _currentTaskId = null;
-                
-                // 사용자 취소 플래그 초기화
-                _userCancelled = false;
+
+                // 완료 처리
+                if (e.Status == "completed" || e.Status == "failed")
+                {
+                    Console.WriteLine($"[YOLO Tutorial] 학습 완료: {e.Status}");
+
+                    if (e.Status == "completed")
+                    {
+                        HandleTrainingCompleted(e);
+                    }
+                    else if (e.Status == "failed")
+                    {
+                        HandleTrainingFailed(e);
+                    }
+                    
+                    // 모니터링 종료
+                    _monitoringCancellationTokenSource?.Cancel();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 진행률 수신 처리 중 오류: {ex.Message}");
+            }
+        }
+
+        // WebSocket 오류 이벤트 핸들러
+        private void OnWebSocketError(object sender, string error)
+        {
+            Console.WriteLine($"[ERROR] WebSocket 오류: {error}");
+            
+            // 오류 발생시 HTTP 폴링으로 대체할 수 있지만, 여기서는 로그만 출력
+        }
+
+        // WebSocket 연결 해제 이벤트 핸들러
+        private void OnWebSocketDisconnected(object sender, EventArgs e)
+        {
+            Console.WriteLine($"[INFO] WebSocket 연결이 해제되었습니다.");
+        }
+
+        // 학습 완료 처리
+        private async void HandleTrainingCompleted(TrainingProgressEventArgs e)
+        {
+            // 학습 완료 - 추론 시작 알림
+            if (_progressDialog != null && !_progressDialog.IsDisposed)
+            {
+                if (_progressDialog.InvokeRequired)
+                {
+                    _progressDialog.Invoke(new Action(() =>
+                    {
+                        if (!_progressDialog.IsDisposed)
+                        {
+                            _progressDialog.UpdateProgress(100, "학습 완료 - 결과 데이터 처리 중...");
+                        }
+                    }));
+                }
+                else
+                {
+                    _progressDialog.UpdateProgress(100, "학습 완료 - 결과 데이터 처리 중...");
+                }
+            }
+
+            // 결과 데이터 처리
+            object finalResults = e.Results;
+            
+            // 결과 데이터가 요약 정보만 있는 경우 전체 데이터 조회
+            if (e.Results != null)
+            {
+                try
+                {
+                    var resultsJson = JsonSerializer.Serialize(e.Results);
+                    var resultsSummary = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsJson);
+                    
+                    // data_available 플래그 확인
+                    if (resultsSummary.ContainsKey("data_available") && 
+                        resultsSummary["data_available"].GetBoolean())
+                    {
+                        Console.WriteLine($"[INFO] 큰 결과 데이터 감지, HTTP API로 전체 데이터 조회 중...");
+                        
+                        // 진행률 업데이트
+                        if (_progressDialog != null && !_progressDialog.IsDisposed)
+                        {
+                            if (_progressDialog.InvokeRequired)
+                            {
+                                _progressDialog.Invoke(new Action(() =>
+                                {
+                                    if (!_progressDialog.IsDisposed)
+                                    {
+                                        _progressDialog.UpdateProgress(100, "큰 결과 데이터 다운로드 중...");
+                                    }
+                                }));
+                            }
+                            else
+                            {
+                                _progressDialog.UpdateProgress(100, "큰 결과 데이터 다운로드 중...");
+                            }
+                        }
+                        
+                        // HTTP API로 전체 결과 조회
+                        var fullResultsResponse = await _apiService.GetAsync($"/api/training/results/{_currentTaskId}");
+                        
+                        if (fullResultsResponse.IsSuccessStatusCode)
+                        {
+                            var fullResultsContent = await fullResultsResponse.Content.ReadAsStringAsync();
+                            var fullResultsData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(fullResultsContent);
+                            
+                            if (fullResultsData.ContainsKey("results"))
+                            {
+                                finalResults = JsonSerializer.Deserialize<object>(fullResultsData["results"].GetRawText());
+                                Console.WriteLine($"[INFO] 전체 결과 데이터 조회 완료");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[WARNING] 전체 결과 데이터 조회 실패: {fullResultsResponse.StatusCode}");
+                            // 요약 데이터라도 사용
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] 결과 데이터 처리 중 오류: {ex.Message}");
+                    // 기존 결과 데이터 사용
+                }
+            }
+
+            // CSV 파일 처리 및 차트 표시
+            if (finalResults != null)
+            {
+                try
+                {
+                    var resultsJson = JsonSerializer.Serialize(finalResults);
+                    var results = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsJson);
+                    
+                    if (results.TryGetValue("csv_base64", out var csvElement) && 
+                        csvElement.ValueKind == JsonValueKind.String)
+                    {
+                        string csvBase64 = csvElement.GetString();
+                        if (!string.IsNullOrEmpty(csvBase64))
+                        {
+                            // 진행률 업데이트
+                            if (_progressDialog != null && !_progressDialog.IsDisposed)
+                            {
+                                if (_progressDialog.InvokeRequired)
+                                {
+                                    _progressDialog.Invoke(new Action(() =>
+                                    {
+                                        if (!_progressDialog.IsDisposed)
+                                        {
+                                            _progressDialog.UpdateProgress(100, "학습 차트 생성 중...");
+                                        }
+                                    }));
+                                }
+                                else
+                                {
+                                    _progressDialog.UpdateProgress(100, "학습 차트 생성 중...");
+                                }
+                            }
+                            
+                            byte[] csvBytes = Convert.FromBase64String(csvBase64);
+
+                            string csvPath = Path.Combine(
+                                Path.GetTempPath(),
+                                $"training_results_{_currentTaskId}.csv"
+                            );
+
+                            File.WriteAllBytes(csvPath, csvBytes);
+
+                            if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
+                            {
+                                chartControl.Invoke(new Action(() =>
+                                {
+                                    _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                }));
+                            }
+                            else
+                            {
+                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                            }
+                            
+                            Console.WriteLine($"[INFO] 학습 차트 생성 완료");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] 결과 처리 중 오류: {ex.Message}");
+                }
+            }
+            
+            // 최종 진행률 업데이트
+            if (_progressDialog != null && !_progressDialog.IsDisposed)
+            {
+                if (_progressDialog.InvokeRequired)
+                {
+                    _progressDialog.Invoke(new Action(() =>
+                    {
+                        if (!_progressDialog.IsDisposed)
+                        {
+                            _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
+                        }
+                    }));
+                }
+                else
+                {
+                    _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
+                }
+            }
+            
+            // 추론 실행 (다이얼로그는 유지)
+            _ = Task.Run(async () =>
+            {
+                await CheckAndShowInferenceResultRemoteWithDialog();
+            });
+        }
+
+        // 학습 실패 처리
+        private void HandleTrainingFailed(TrainingProgressEventArgs e)
+        {
+            // 실패 시에만 다이얼로그 닫기
+            if (_progressDialog != null && !_progressDialog.IsDisposed)
+            {
+                if (_progressDialog.InvokeRequired)
+                {
+                    _progressDialog.Invoke(new Action(() =>
+                    {
+                        _progressDialog.Close();
+                        _progressDialog.Dispose();
+                    }));
+                }
+                else
+                {
+                    _progressDialog.Close();
+                    _progressDialog.Dispose();
+                }
+            }
+            
+            // 실패 메시지 표시
+            string errorMessage = e.Error ?? "학습이 실패했습니다.";
+            Console.WriteLine($"[YOLO Tutorial] 학습 실패: {errorMessage}");
+            
+            if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
+            {
+                errorControl.Invoke(new Action(() =>
+                    _yolotutorialview.ShowErrorMessage(errorMessage)
+                ));
+            }
+            else
+            {
+                _yolotutorialview.ShowErrorMessage(errorMessage);
+            }
+        }
+
+        // HTTP 폴링 방식 (WebSocket 실패시 대체용)
+        private async Task MonitorTrainingProgressHttp(string taskId)
+        {
+            Console.WriteLine($"[INFO] HTTP 폴링 방식으로 학습 진행률 모니터링 시작");
+            
+            bool isCompleted = false;
+            int consecutiveErrors = 0;
+            const int maxConsecutiveErrors = 5;
+            int lastLogCount = 0;
+
+            while (!isCompleted && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
+            {
+                try
+                {
+                    // 진행 상황 요청
+                    var response = await _apiService.GetAsync($"/api/training/progress/{taskId}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        consecutiveErrors = 0;
+                        
+                        var content = await response.Content.ReadAsStringAsync();
+                        var progressData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(content);
+
+                        if (progressData.TryGetValue("progress", out var progressElement) &&
+                            progressData.TryGetValue("status", out var statusElement) &&
+                            progressData.TryGetValue("message", out var messageElement))
+                        {
+                            double progress = progressElement.GetDouble();
+                            string status = statusElement.GetString();
+                            string message = messageElement.GetString();
+
+                            Console.WriteLine($"[YOLO Tutorial] {progress}:{message}");
+
+                            // 새로운 로그 처리
+                            if (progressData.TryGetValue("logs", out var logsElement) && 
+                                logsElement.ValueKind == JsonValueKind.Array)
+                            {
+                                var logs = logsElement.EnumerateArray().Select(x => x.GetString()).ToList();
+                                
+                                if (logs.Count > lastLogCount)
+                                {
+                                    var newLogs = logs.Skip(lastLogCount).ToList();
+                                    foreach (var log in newLogs)
+                                    {
+                                        if (!string.IsNullOrEmpty(log))
+                                        {
+                                            if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                                            {
+                                                logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(log)));
+                                            }
+                                            else
+                                            {
+                                                _yolotutorialview.AppendLog(log);
+                                            }
+                                        }
+                                    }
+                                    lastLogCount = logs.Count;
+                                }
+                            }
+
+                            // UI 업데이트
+                            if (_progressDialog != null && !_progressDialog.IsDisposed)
+                            {
+                                if (_progressDialog.InvokeRequired)
+                                {
+                                    _progressDialog.Invoke(new Action(() =>
+                                    {
+                                        if (!_progressDialog.IsDisposed)
+                                        {
+                                            _progressDialog.UpdateProgress(progress, message);
+                                        }
+                                    }));
+                                }
+                                else
+                                {
+                                    _progressDialog.UpdateProgress(progress, message);
+                                }
+                            }
+
+                            // 완료 확인
+                            isCompleted = status == "completed" || status == "failed";
+
+                            if (isCompleted)
+                            {
+                                Console.WriteLine($"[YOLO Tutorial] 학습 완료: {status}");
+
+                                if (status == "completed")
+                                {
+                                    var fakeArgs = new TrainingProgressEventArgs
+                                    {
+                                        Status = status,
+                                        Progress = progress,
+                                        Message = message,
+                                        Results = progressData.ContainsKey("results") ? 
+                                            JsonSerializer.Deserialize<object>(progressData["results"].GetRawText()) : null
+                                    };
+                                    HandleTrainingCompleted(fakeArgs);
+                                }
+                                else if (status == "failed")
+                                {
+                                    var fakeArgs = new TrainingProgressEventArgs
+                                    {
+                                        Status = status,
+                                        Error = progressData.ContainsKey("error") ? progressData["error"].GetString() : "알 수 없는 오류"
+                                    };
+                                    HandleTrainingFailed(fakeArgs);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        consecutiveErrors++;
+                        Console.WriteLine($"[WARNING] 진행률 조회 실패: {response.StatusCode} (연속 오류: {consecutiveErrors}/{maxConsecutiveErrors})");
+
+                        if (consecutiveErrors >= maxConsecutiveErrors)
+                        {
+                            Console.WriteLine($"[ERROR] 연속 {maxConsecutiveErrors}회 실패로 모니터링 중단");
+                            break;
+                        }
+                    }
+
+                    // 2초 대기
+                    await Task.Delay(2000, _monitoringCancellationTokenSource.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    consecutiveErrors++;
+                    Console.WriteLine($"[ERROR] 진행률 조회 중 오류: {ex.Message} (연속 오류: {consecutiveErrors}/{maxConsecutiveErrors})");
+
+                    if (consecutiveErrors >= maxConsecutiveErrors)
+                    {
+                        Console.WriteLine($"[ERROR] 연속 {maxConsecutiveErrors}회 실패로 모니터링 중단");
+                        break;
+                    }
+
+                    await Task.Delay(5000, _monitoringCancellationTokenSource.Token);
+                }
             }
         }
 
@@ -1017,147 +1224,187 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                // 사용자가 직접 취소했다는 플래그 설정
+                Console.WriteLine("[INFO] 서버 모니터링을 취소합니다.");
                 _userCancelled = true;
-                
-                // 모니터링 취소
+
+                // 1단계: 모니터링 취소 신호 전송
                 if (_monitoringCancellationTokenSource != null && !_monitoringCancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    Console.WriteLine("[INFO] 서버 모니터링을 취소합니다.");
                     _monitoringCancellationTokenSource.Cancel();
                 }
 
-                // 실제 서버 학습 취소
+                // 2단계: 서버에 학습 취소 요청 (WebSocket이 살아있을 때)
                 if (!string.IsNullOrEmpty(_currentTaskId))
                 {
                     Console.WriteLine($"[INFO] 서버 학습 취소를 요청합니다. TaskId: {_currentTaskId}");
-                    bool cancelResult = await _apiService.CancelTraining(_currentTaskId);
                     
-                    if (cancelResult)
+                    try
                     {
-                        Console.WriteLine("[INFO] 서버 학습이 성공적으로 취소되었습니다.");
-                        // UI에 취소 메시지 표시
-                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                        // 타임아웃을 짧게 설정하여 빠른 응답
+                        using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
                         {
-                            viewControl.Invoke(new Action(() => 
-                                _yolotutorialview.AppendLog("[INFO] 서버 학습이 취소되었습니다.")
-                            ));
-                        }
-                        else
-                        {
-                            _yolotutorialview.AppendLog("[INFO] 서버 학습이 취소되었습니다.");
+                            var success = await _apiService.CancelTraining(_currentTaskId);
+                            if (success)
+                            {
+                                Console.WriteLine($"[INFO] 서버 학습 취소 성공: taskId={_currentTaskId}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[WARNING] 서버 학습 취소 실패: taskId={_currentTaskId}");
+                            }
                         }
                     }
-                    else
+                    catch (TaskCanceledException)
                     {
-                        Console.WriteLine("[WARNING] 서버 학습 취소 요청이 실패했습니다.");
-                        // UI에 실패 메시지 표시
-                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
-                        {
-                            viewControl.Invoke(new Action(() => 
-                                _yolotutorialview.AppendLog("[WARNING] 서버 학습 취소 요청이 실패했습니다.")
-                            ));
-                        }
-                        else
-                        {
-                            _yolotutorialview.AppendLog("[WARNING] 서버 학습 취소 요청이 실패했습니다.");
-                        }
+                        Console.WriteLine("[INFO] 취소 요청 중 타임아웃 발생 (정상적인 취소 과정)");
                     }
-                    
-                    // taskId 초기화
-                    _currentTaskId = null;
+                    catch (OperationCanceledException)
+                    {
+                        Console.WriteLine("[INFO] 취소 요청이 취소됨 (정상적인 취소 과정)");
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        Console.WriteLine($"[WARNING] HTTP 요청 실패: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[WARNING] 서버 학습 취소 요청 중 오류: {ex.Message}");
+                    }
                 }
                 else
                 {
                     Console.WriteLine("[INFO] 취소할 서버 학습 작업이 없습니다.");
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}");
-                // UI에 오류 메시지 표시
-                if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+
+                // 3단계: WebSocket 연결 정리 (잠시 대기 후)
+                try
                 {
-                    viewControl.Invoke(new Action(() => 
-                        _yolotutorialview.AppendLog($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}")
+                    await Task.Delay(500); // 서버 응답 대기
+                    await _apiService.DisconnectWebSocket();
+                    Console.WriteLine("[INFO] WebSocket 연결 정리 완료");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[INFO] WebSocket 정리 중 예외 (정상적인 취소 과정): {ex.Message}");
+                }
+
+                // 4단계: 다이얼로그 정리
+                await CleanupProgressDialog("사용자 취소");
+
+                // 5단계: 상태 초기화
+                _currentTaskId = null;
+
+                Console.WriteLine("[INFO] 서버 학습이 성공적으로 취소되었습니다.");
+                
+                // UI에 취소 메시지 표시
+                if (_yolotutorialview is Control messageControl && messageControl.InvokeRequired)
+                {
+                    messageControl.Invoke(new Action(() =>
+                        _yolotutorialview.AppendLog("[INFO] 학습이 취소되었습니다.")
                     ));
                 }
                 else
                 {
-                    _yolotutorialview.AppendLog($"[ERROR] 서버 학습 취소 중 오류 발생: {ex.Message}");
+                    _yolotutorialview.AppendLog("[INFO] 학습이 취소되었습니다.");
+                }
+
+                Console.WriteLine("[YOLO Tutorial] [INFO] 서버 학습이 취소되었습니다.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 취소 처리 중 예상치 못한 오류: {ex.Message}");
+                
+                // 강제로 다이얼로그 정리
+                try
+                {
+                    await CleanupProgressDialog("오류로 인한 강제 취소");
+                }
+                catch (Exception cleanupEx)
+                {
+                    Console.WriteLine($"[ERROR] 강제 정리 중 오류: {cleanupEx.Message}");
                 }
             }
         }
 
-        // 서버 모드에서 학습 완료 후 자동으로 추론 실행하는 메서드
-        private async void CheckAndShowInferenceResultRemote()
+        // 다이얼로그 정리를 위한 별도 메서드
+        private async Task CleanupProgressDialog(string reason)
         {
+            Console.WriteLine($"[INFO] 다이얼로그 정리 시작: {reason}");
+            
             try
             {
-                // 블록 모델에서 이미지 경로 가져오기
-                var model = BlocklyModel.Instance;
-                string imagePath = model?.imgPath;
-                double conf = model?.accuracy ?? 0.25;
-                
-                if (string.IsNullOrEmpty(imagePath))
+                if (_progressDialog != null && !_progressDialog.IsDisposed)
                 {
-                    Console.WriteLine("[WARNING] 서버 추론: 이미지 경로가 없습니다.");
-                    return;
-                }
-                
-                Console.WriteLine($"[INFO] 서버에서 자동 추론을 시작합니다: {imagePath}, conf={conf}");
-                
-                // 서버에서 추론 실행
-                var result = await RunInferenceDirectRemote(imagePath, conf);
-                
-                Console.WriteLine($"[DEBUG] 서버 추론 결과: success={result.Success}, error={result.Error}");
-                
-                // UI 스레드에서 결과 표시
-                if (_itutorialInferenceView != null)
-                {
-                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
+                    if (_progressDialog.InvokeRequired)
                     {
-                        viewControl.Invoke(new Action(() => {
-                            _itutorialInferenceView.ShowInferenceResult(result);
-                        }));
+                        await Task.Run(() =>
+                        {
+                            try
+                            {
+                                _progressDialog.Invoke(new Action(() =>
+                                {
+                                    try
+                                    {
+                                        if (!_progressDialog.IsDisposed)
+                                        {
+                                            _progressDialog.Close();
+                                            _progressDialog.Dispose();
+                                            Console.WriteLine("[INFO] 다이얼로그 정리 완료 (Invoke)");
+                                        }
+                                    }
+                                    catch (ObjectDisposedException)
+                                    {
+                                        Console.WriteLine("[INFO] 다이얼로그 이미 정리됨 (Invoke)");
+                                    }
+                                }));
+                            }
+                            catch (InvalidOperationException ex)
+                            {
+                                Console.WriteLine($"[WARNING] 다이얼로그 Invoke 실패: {ex.Message}");
+                                // UI 스레드가 종료된 경우 강제 정리
+                                try
+                                {
+                                    _progressDialog.Close();
+                                    _progressDialog.Dispose();
+                                }
+                                catch (Exception disposeEx)
+                                {
+                                    Console.WriteLine($"[WARNING] 강제 정리 실패: {disposeEx.Message}");
+                                }
+                            }
+                        });
                     }
                     else
                     {
-                        _itutorialInferenceView.ShowInferenceResult(result);
+                        try
+                        {
+                            _progressDialog.Close();
+                            _progressDialog.Dispose();
+                            Console.WriteLine("[INFO] 다이얼로그 정리 완료 (Direct)");
+                        }
+                        catch (ObjectDisposedException)
+                        {
+                            Console.WriteLine("[INFO] 다이얼로그 이미 정리됨 (Direct)");
+                        }
                     }
+                    
+                    _progressDialog = null;
                 }
                 else
                 {
-                    Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
+                    Console.WriteLine("[INFO] 정리할 다이얼로그가 없음");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] 서버 추론 실행 중 오류 발생: {ex.Message}");
+                Console.WriteLine($"[ERROR] 다이얼로그 정리 중 오류: {ex.Message}");
                 
-                // 에러 결과 표시
-                var errorResult = new PythonService.InferenceResult
-                {
-                    Success = false,
-                    Error = $"서버 추론 실행 중 오류 발생: {ex.Message}"
-                };
-                
-                if (_itutorialInferenceView != null)
-                {
-                    if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
-                    {
-                        viewControl.Invoke(new Action(() => {
-                            _itutorialInferenceView.ShowInferenceResult(errorResult);
-                        }));
-                    }
-                    else
-                    {
-                        _itutorialInferenceView.ShowInferenceResult(errorResult);
-                    }
-                }
+                // 마지막 수단: 강제 null 할당
+                _progressDialog = null;
             }
         }
 
+        // 서버 모드에서 학습 완료 후 자동으로 추론 실행하면서 다이얼로그를 유지하는 메서드
         private async Task CheckAndShowInferenceResultRemoteWithDialog()
         {
             try
