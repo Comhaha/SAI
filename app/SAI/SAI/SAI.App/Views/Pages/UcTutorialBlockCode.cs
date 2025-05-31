@@ -640,8 +640,23 @@ namespace SAI.SAI.App.Views.Pages
 
         }
 
+        /// <summary>
+        /// Run 버튼을 다시 활성화하는 메서드 (학습 취소 시 호출)
+        /// </summary>
+        public void EnableRunButton()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(EnableRunButton));
+                return;
+            }
+            
+            btnRunModel.Enabled = true;
+            btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            Console.WriteLine("[DEBUG] UcTutorialBlockCode: Run 버튼이 다시 활성화되었습니다.");
+        }
+
         // threshold 바에서 threshold 값을 생성
-        // 마우스 떼면 추론 스크립트 실행
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
@@ -656,9 +671,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 추론은 백그라운드에서 실행
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
-                        _result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = await yoloTutorialPresenter.RunInferenceDirect(
                             blocklyModel.imgPath,
                             currentThreshold
                         );
@@ -738,12 +753,13 @@ namespace SAI.SAI.App.Views.Pages
 
 					var mainModel = MainModel.Instance;
 
+                    btnRunModel.Enabled = false; // 실행 후 버튼 비활성화
+
                     // 기존 모델 삭제 후 런 돌림
-					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+                    if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
                         btnRunModel.BackgroundImage = Properties.Resources.btnRunModel_clicked;
-                        btnRunModel.Enabled = false; // 실행 후 버튼 비활성화
 					}
 					else
 					{
@@ -771,7 +787,7 @@ namespace SAI.SAI.App.Views.Pages
         {
 			// 파이썬 코드 실행
 			RunButtonClicked?.Invoke(sender, e);
-			pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
+            pTxtDescription.BackgroundImage = Properties.Resources.lbl_report;
 			pToDoList.BackgroundImage = Properties.Resources.p_todolist_step3;
 		}
 
@@ -1258,6 +1274,8 @@ namespace SAI.SAI.App.Views.Pages
         //tutorialView.ShowTutorialInferResultImage(resultImage);
         public void ShowInferenceResult(PythonService.InferenceResult result)
         {
+            btnRunModel.Enabled = true;
+
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ShowInferenceResult(result)));
@@ -1275,6 +1293,7 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
+                        _result = result;
                         
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))

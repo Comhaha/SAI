@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Models; // BlocklyModel 사용을 위해 추가
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -11,11 +12,19 @@ namespace SAI.SAI.App.Forms.Dialogs
     {
         // 파이썬 스크립트 종료 감지를 위함
         private Process pythonProcess;
+        // 서버 모니터링 취소를 위한 Presenter 참조
+        private object serverPresenter; // YoloTutorialPresenter 또는 다른 Presenter
 
         
         public void SetProcess(Process process)
         {
             pythonProcess = process;
+        }
+
+        // 서버 모니터링을 취소할 수 있는 Presenter 설정
+        public void SetPresenter(object presenter)
+        {
+            serverPresenter = presenter;
         }
 
         public DialogModelProgress()
@@ -91,14 +100,44 @@ namespace SAI.SAI.App.Forms.Dialogs
         {
             try
             {
-                if (pythonProcess != null)
+                var model = BlocklyModel.Instance;
+                var gpuType = model?.gpuType ?? GpuType.Local; // null일 경우 기본값은 Local
+
+                DialogResult result = DialogResult.Cancel;
+
+                using (DialogQuitTrain quitDialog = new DialogQuitTrain())
                 {
-                    if (!pythonProcess.HasExited)
-                    {
-                        pythonProcess.Kill();         // 프로세스 강제 종료
-                    }
-                    pythonProcess.Dispose();      // 리소스 정리
+                    result = quitDialog.ShowDialog(this);
                 }
+                
+                // 사용자가 확인을 선택한 경우에만 종료 처리
+                if (result == DialogResult.OK)
+                {
+                    // 로컬 프로세스 종료 (로컬 모드인 경우에만)
+                    if (pythonProcess != null && gpuType == GpuType.Local)
+                    {
+                        if (!pythonProcess.HasExited)
+                        {
+                            pythonProcess.Kill();         // 프로세스 강제 종료
+                        }
+                        pythonProcess.Dispose();      // 리소스 정리
+                    }
+
+                    // 서버 모니터링 및 학습 취소 (서버 모드인 경우 또는 서버 Presenter가 있는 경우)
+                    if (serverPresenter != null)
+                    {
+                        // Reflection을 사용하여 CancelServerMonitoring 메서드 호출
+                        var cancelMethod = serverPresenter.GetType().GetMethod("CancelServerMonitoring");
+                        if (cancelMethod != null)
+                        {
+                            cancelMethod.Invoke(serverPresenter, null);
+                        }
+                    }
+
+                    this.DialogResult = DialogResult.Cancel;
+                    this.Close();
+                }
+                // 사용자가 취소를 선택한 경우 아무것도 하지 않음
             }
             catch (InvalidOperationException)
             {
@@ -108,9 +147,6 @@ namespace SAI.SAI.App.Forms.Dialogs
             {
                 MessageBox.Show($"프로세스를 종료하는 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
         }
     }
 }

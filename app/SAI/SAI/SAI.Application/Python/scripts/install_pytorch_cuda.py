@@ -145,13 +145,16 @@ def install_pytorch_cuda():
         cuda_tag = "cu118"
     
     # 안정적인 PyTorch 버전 설치
-    print(f"{cuda_tag} 버전의 PyTorch 2.2.0 설치 중...")
-    torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
+    print(f"PyTorch 1.8.1+cu111 설치 중...")
+    torch_url = f"https://download.pytorch.org/whl/cu111"
+    
+    # PyTorch 1.8.1+cu111 기준으로 통일
     install_cmd = [
         sys.executable, "-m", "pip", "install", 
-        "torch==2.2.0", "torchvision==0.17.0", "torchaudio==2.2.0", 
+        "torch==1.8.1+cu111", "torchvision==0.9.1+cu111", "torchaudio==0.8.1",
         "--index-url", torch_url
     ]
+    
     result = subprocess.run(install_cmd)
     
     if result.returncode != 0:

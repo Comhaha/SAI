@@ -401,9 +401,9 @@ namespace SAI.SAI.App.Views.Pages
 
                     // 추론은 백그라운드에서 실행
                     // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
-                        _result = yoloTutorialPresenter.RunInferenceDirect(
+                        _result = await yoloTutorialPresenter.RunInferenceDirect(
                             selectedImagePath,
                             currentThreshold
                         );
@@ -914,7 +914,9 @@ namespace SAI.SAI.App.Views.Pages
 
 					var mainModel = MainModel.Instance;
 
-					if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
+                    btnRunModel.Enabled = false;
+
+                    if (!File.Exists(modelPath) || mainModel.DontShowDeleteModelDialog)
 					{
 						runModel(sender, e);
 					}
@@ -986,6 +988,23 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
         }
+
+        /// <summary>
+        /// Run 버튼을 다시 활성화하는 메서드 (연습 학습 취소 시 호출)
+        /// </summary>
+        public void EnableRunButton()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(EnableRunButton));
+                return;
+            }
+            
+            btnRunModel.Enabled = true;
+            btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            Console.WriteLine("[DEBUG] UcPracticeBlockCode: Run 버튼이 다시 활성화되었습니다.");
+        }
+
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
@@ -1076,6 +1095,8 @@ namespace SAI.SAI.App.Views.Pages
             //practiceView.ShowPracticeInferResultImage(resultImage); 사용하시면 됩니다.
         public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
+            btnRunModel.Enabled = true;
+
             if (InvokeRequired)
             {
                 Invoke(new Action(() => ShowPracticeInferResultImage(result)));
@@ -1093,6 +1114,7 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
+                        _result = result;
                         
                         // 파일 이름에 한글이 포함된 경우 Stream을 통해 로드하여 문제 해결
                         using (var stream = new FileStream(result.ResultImage, FileMode.Open, FileAccess.Read))

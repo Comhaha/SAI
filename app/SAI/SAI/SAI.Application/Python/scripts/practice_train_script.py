@@ -19,6 +19,7 @@ import glob
 import io
 import re
 import shutil
+import torch
 
 from datetime import datetime
 # 로깅 레벨 설정
@@ -145,11 +146,12 @@ def install_packages_block(block_params=None):
     start_time = time.time()
     show_tagged_progress('TRAIN', '필수 패키지 설치를 시작합니다', start_time, 0)
     
-    # 패키지 설치 순서 변경 및 버전 명시
+    # 패키지 설치 순서 변경 및 버전 명시 (numpy 1.19.2 호환)
     packages = [
-        "numpy==1.24.3",
-        "ultralytics==8.0.196",
-        "opencv-python==4.8.0.76"
+        "numpy==1.19.2",
+        "matplotlib==3.3.4",  # numpy 1.19.2와 호환
+        "ultralytics==8.0.100",  # 더 낮은 버전 사용
+        "opencv-python==4.6.0.66"  # 더 낮은 버전 사용
     ]
     
     try:
@@ -370,29 +372,43 @@ def download_dataset_block(block_params=None):
                     # 이미 폴더가 있으면 기존대로 압축 해제
                     potential_extracted_dir = os.path.join(dataset_dir, "practice_dataset")
                     for i, file in enumerate(file_list):
-                        zip_ref.extract(file, dataset_dir)
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                        try:
+                            zip_ref.extract(file, dataset_dir)
+                            if i % 50 == 0 or i == total_files - 1:
+                                extract_progress = 55 + (i / total_files) * 40
+                                show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                        except Exception as e:
+                            show_tagged_progress('ERROR', f'파일 압축 해제 실패 ({file}): {str(e)}', start_time)
+                            continue
                     extracted_dir = potential_extracted_dir
                 else:
                     # 폴더가 없으면 dataset/practice_dataset/에 압축 해제
                     os.makedirs(target_subdir, exist_ok=True)
                     for i, file in enumerate(file_list):
-                        # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
-                        dest_path = os.path.join(target_subdir, file)
-                        dest_folder = os.path.dirname(dest_path)
-                        os.makedirs(dest_folder, exist_ok=True)
-                        
-                        # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
-                        if file.endswith('/'):
+                        try:
+                            # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
+                            dest_path = os.path.join(target_subdir, file)
+                            dest_folder = os.path.dirname(dest_path)
+                            os.makedirs(dest_folder, exist_ok=True)
+                            
+                            # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
+                            if file.endswith('/'):
+                                continue
+                            
+                            # 청크 단위로 파일 복사
+                            with zip_ref.open(file) as source, open(dest_path, "wb") as target:
+                                while True:
+                                    chunk = source.read(8192)  # 8KB 청크로 읽기
+                                    if not chunk:
+                                        break
+                                    target.write(chunk)
+                            
+                            if i % 50 == 0 or i == total_files - 1:
+                                extract_progress = 55 + (i / total_files) * 40
+                                show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
+                        except Exception as e:
+                            show_tagged_progress('ERROR', f'파일 압축 해제 실패 ({file}): {str(e)}', start_time)
                             continue
-                        
-                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
-                            target.write(source.read())
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = target_subdir
                     show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
             show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
@@ -494,8 +510,8 @@ def train_model_block(block_params=None):
     start_time = time.time()
     show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
 
-    epochs = block_params.get("epoch") if block_params else None
-    imgsz = block_params.get("imgsz") if block_params else None
+    epochs = block_params.get("epochs") if block_params else None
+    imgsz = block_params.get("image_size") if block_params else None
     if "accuracy" in block_params:
         accuracy = block_params["accuracy"]
     if "model" in block_params:
@@ -531,33 +547,34 @@ def train_model_block(block_params=None):
             "error": "데이터셋 YAML 파일 없음"
         }
     
-    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨)
-    gpu_info = install_packages.check_gpu(start_time)
-    device = "cuda" if gpu_info.get("available", False) else "cpu"
+    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨, 중복 호출 방지)
+    # GPU 사용 가능 여부만 간단히 확인
+    if torch.cuda.is_available():
+        device = 0  # YOLOv8에서는 디바이스 번호를 직접 사용
+    else:
+        device = "cpu"
     
     # 학습 파라미터 설정
     batch_size = 16
-    if device == "cuda" and gpu_info.get("available", False):
-        # GPU 메모리에 따른 배치 크기 조정
-        memory = gpu_info.get("memory_gb", [0])[0]
-        if memory and memory < 6:
-            batch_size = 8
-            show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
+    if torch.cuda.is_available():
+        # GPU 메모리에 따른 배치 크기 조정 (간단히 처리)
+        batch_size = 8
+        show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
     
     # 에폭 수 설정 - 사용자 지정 값 또는 기본값
     if epochs is None:
-        # 기본 에폭 수 설정
-        epochs = 5 if device == "cuda" else 2
+        # 기본 에폭 수 설정 (클라이언트에서 명시적으로 전달한 경우 우선 사용)
+        epochs = 1  # 기본값을 1로 변경 (로컬과 동일하게)
     else:
         # 사용자 지정 에폭 수를 정수로 변환
         try:
             epochs = int(epochs)
             if epochs <= 0:
                 show_tagged_progress('ERROR', f'에폭 수는 양수여야 합니다. 기본값을 사용합니다.', start_time, 15)
-                epochs = 5 if device == "cuda" else 2
+                epochs = 1  # 기본값을 1로 변경
         except ValueError:
             show_tagged_progress('ERROR', f'유효하지 않은 에폭 수입니다. 기본값을 사용합니다.', start_time, 15)
-            epochs = 5 if device == "cuda" else 2
+            epochs = 1  # 기본값을 1로 변경
     
     # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
     if imgsz is None:
@@ -589,38 +606,15 @@ def train_model_block(block_params=None):
         completed_epochs = 0
         total_epochs = epochs
         
-        # 학습 실행 (클래스 속성을 사용하여 진행 상황 업데이트)
-        class ProgressCallback:
-            def __init__(self):
-                self.start_time = time.time()
-            
-            def on_train_epoch_end(self, trainer):
-                nonlocal completed_epochs
-                completed_epochs = trainer.epoch + 1
-                progress = (completed_epochs / total_epochs) * 100
-                elapsed = time.time() - self.start_time
-                minutes, seconds = divmod(elapsed, 60)
-                
-                # 잔여 시간 추정
-                if completed_epochs > 1:
-                    time_per_epoch = elapsed / completed_epochs
-                    remaining_epochs = total_epochs - completed_epochs
-                    remaining_time = time_per_epoch * remaining_epochs
-                    rem_minutes, rem_seconds = divmod(remaining_time, 60)
-                    bar = make_progress_bar(progress)
-                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과 | {int(rem_minutes):02d}:{int(rem_seconds):02d} 남음] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
-                else:
-                    bar = make_progress_bar(progress)
-                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
-        
-        # 콜백 객체 생성
-        callbacks = [ProgressCallback()]
+        # 학습 시작 메시지 추가
+        show_tagged_progress('TRAIN', f'YOLOv8 모델 학습을 시작합니다 (에폭: {epochs}, 배치: {batch_size}, 디바이스: {device})', start_time, 25)
         
         # 학습 실행
         model = tutorial_state["model"]
         data_yaml_path = tutorial_state["data_yaml_path"]
         
-        # YOLOv8 학습 실행
+        # YOLOv8 학습 실행 - verbose=True로 설정하여 로그 출력 활성화
+        show_tagged_progress('TRAIN', 'YOLO train() 메소드 호출 중...', start_time, 30)
         results = model.train(
             data=data_yaml_path,
             epochs=epochs,
@@ -630,8 +624,13 @@ def train_model_block(block_params=None):
             project=os.path.join(base_dir, "runs"),
             name="detect/train",  # 하위 폴더 구조 지정
             exist_ok=True,
+            verbose=True,  # 상세 로그 출력 활성화
+            save=True,     # 모델 저장 활성화
+            patience=50,    # 조기 종료 방지
             workers = 0,
         )
+        
+        show_tagged_progress('TRAIN', 'YOLO 학습이 완료되었습니다', start_time, 90)
         
         # 결과 경로 설정
         results_dir = find_latest_results_dir()
