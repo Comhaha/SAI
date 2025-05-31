@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Net.WebSockets;
+using SAI.SAI.App.Views.Pages;
 
 namespace SAI.SAI.App.Presenters
 {
@@ -42,7 +43,7 @@ namespace SAI.SAI.App.Presenters
        
         //}
 
-        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://127.0.0.1:9000")
+        public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://3.39.207.72:9000")
         {
             _yolotutorialview = yolotutorialview;
             _pythonService = new PythonService();
@@ -1057,6 +1058,13 @@ namespace SAI.SAI.App.Presenters
                 }
             }
             
+            // Run 버튼 다시 활성화
+            if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+            {
+                tutorialView.EnableRunButton();
+                Console.WriteLine("[INFO] 학습 실패로 인한 Run 버튼 상태 복원 완료");
+            }
+            
             // 실패 메시지 표시
             string errorMessage = e.Error ?? "학습이 실패했습니다.";
             Console.WriteLine($"[YOLO Tutorial] 학습 실패: {errorMessage}");
@@ -1293,6 +1301,13 @@ namespace SAI.SAI.App.Presenters
 
                 // 5단계: 상태 초기화
                 _currentTaskId = null;
+                
+                // 6단계: UI 상태 복원 - Run 버튼 다시 활성화
+                if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+                {
+                    tutorialView.EnableRunButton();
+                    Console.WriteLine("[INFO] Run 버튼 상태 복원 완료");
+                }
 
                 Console.WriteLine("[INFO] 서버 학습이 성공적으로 취소되었습니다.");
                 
@@ -1401,6 +1416,13 @@ namespace SAI.SAI.App.Presenters
                 
                 // 마지막 수단: 강제 null 할당
                 _progressDialog = null;
+            }
+            
+            // 다이얼로그 정리 완료 후 Run 버튼 활성화
+            if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+            {
+                tutorialView.EnableRunButton();
+                Console.WriteLine($"[INFO] 다이얼로그 정리 완료 후 Run 버튼 활성화: {reason}");
             }
         }
 

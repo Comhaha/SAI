@@ -7,7 +7,7 @@ namespace SAI.SAI.Application.Service
         // EC2 서버 URL - 실제 배포시 변경 필요
         private const string EC2_SERVER_URL = "http://54.180.168.49:8000";
         // 로컬 개발 서버 URL - Docker 컨테이너의 실제 포트로 수정
-        private const string LOCAL_SERVER_URL = "http://127.0.0.1:9000";
+        private const string LOCAL_SERVER_URL = "http://3.39.207.72:9000";
 
         /// <summary>
         /// 현재 GPU 설정에 따라 적절한 추론 서비스를 반환합니다.

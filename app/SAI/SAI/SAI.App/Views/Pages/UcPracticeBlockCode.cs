@@ -988,6 +988,23 @@ namespace SAI.SAI.App.Views.Pages
             SetupThresholdControls();
             MemoUtils.ApplyStyle(tboxMemo);
         }
+
+        /// <summary>
+        /// Run 버튼을 다시 활성화하는 메서드 (연습 학습 취소 시 호출)
+        /// </summary>
+        public void EnableRunButton()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(EnableRunButton));
+                return;
+            }
+            
+            btnRunModel.Enabled = true;
+            btnRunModel.BackgroundImage = Properties.Resources.btn_run_model;
+            Console.WriteLine("[DEBUG] UcPracticeBlockCode: Run 버튼이 다시 활성화되었습니다.");
+        }
+
         private void ucCode1_Load(object sender, EventArgs e)
         {
             // ucCode２ 로드 이벤트 처리
