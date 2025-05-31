@@ -110,6 +110,7 @@
             this.ibtnAiFeedback.PressedState.ImageSize = new System.Drawing.Size(520, 135);
             this.ibtnAiFeedback.Size = new System.Drawing.Size(520, 135);
             this.ibtnAiFeedback.TabIndex = 11;
+            this.ibtnAiFeedback.Click += new System.EventHandler(this.ibtnAiFeedback_Click);
             // 
             // fpParent
             // 
@@ -198,7 +199,7 @@
             this.fplblThreshold.Font = new System.Drawing.Font("Noto Sans KR Medium", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.fplblThreshold.Location = new System.Drawing.Point(45, 122);
             this.fplblThreshold.Name = "fplblThreshold";
-            this.fplblThreshold.Size = new System.Drawing.Size(261, 54);
+            this.fplblThreshold.Size = new System.Drawing.Size(261, 49);
             this.fplblThreshold.TabIndex = 0;
             // 
             // lblThreshold
@@ -206,7 +207,7 @@
             this.lblThreshold.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblThreshold.Location = new System.Drawing.Point(3, 3);
             this.lblThreshold.Name = "lblThreshold";
-            this.lblThreshold.Size = new System.Drawing.Size(179, 50);
+            this.lblThreshold.Size = new System.Drawing.Size(179, 45);
             this.lblThreshold.TabIndex = 1;
             this.lblThreshold.Text = "Threshold";
             this.lblThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -288,7 +289,7 @@
             this.fplblInferGraph.Controls.Add(this.btnInfoGraph);
             this.fplblInferGraph.Location = new System.Drawing.Point(47, 592);
             this.fplblInferGraph.Name = "fplblInferGraph";
-            this.fplblInferGraph.Size = new System.Drawing.Size(261, 60);
+            this.fplblInferGraph.Size = new System.Drawing.Size(283, 60);
             this.fplblInferGraph.TabIndex = 24;
             // 
             // lblInferGraph
@@ -296,7 +297,7 @@
             this.lblInferGraph.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
             this.lblInferGraph.Location = new System.Drawing.Point(3, 3);
             this.lblInferGraph.Name = "lblInferGraph";
-            this.lblInferGraph.Size = new System.Drawing.Size(200, 50);
+            this.lblInferGraph.Size = new System.Drawing.Size(242, 50);
             this.lblInferGraph.TabIndex = 0;
             this.lblInferGraph.Text = "모델 성능 그래프";
             this.lblInferGraph.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -312,7 +313,7 @@
             this.btnInfoGraph.FillColor = System.Drawing.Color.Transparent;
             this.btnInfoGraph.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnInfoGraph.ForeColor = System.Drawing.Color.White;
-            this.btnInfoGraph.Location = new System.Drawing.Point(209, 16);
+            this.btnInfoGraph.Location = new System.Drawing.Point(251, 16);
             this.btnInfoGraph.Margin = new System.Windows.Forms.Padding(3, 16, 3, 3);
             this.btnInfoGraph.Name = "btnInfoGraph";
             this.btnInfoGraph.Size = new System.Drawing.Size(25, 25);

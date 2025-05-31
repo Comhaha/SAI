@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models;
 using SAI.SAI.App.Presenters;
@@ -18,13 +20,22 @@ namespace SAI.SAI.App.Views.Pages
         private readonly IMainView mainView;
         private BlocklyModel blocklyModel;
         private MemoPresenter memoPresenter;
+
         private PythonService.InferenceResult _result;
         private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
+
+        // 이건 아니지만,,,일단 테스트용
+        public Guna2TrackBar ThresholdTrackBar => this.tbarThreshold;
+        public Guna2TextBox ThresholdTextBox => this.tboxThreshold;
+        public UcCsvChart CsvChart => ucCsvChart1;
+
+
 
         public UcInferenceTab(IMainView view)
         {
             InitializeComponent();
             this.mainView = view;
+            blocklyModel = BlocklyModel.Instance;
 
             SetupbtnSelectInferImageOverlay();
 
@@ -42,6 +53,12 @@ namespace SAI.SAI.App.Views.Pages
             ButtonUtils.SetTransparentStyle(btnInfoGraph);
             ButtonUtils.SetTransparentStyle(btnInfoThreshold);
 
+            //var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            //var csvPath = Path.Combine(baseDir,
+            //    @"..\..\SAI.Application\Python\runs\detect\train\example.csv");
+            //csvPath = Path.GetFullPath(csvPath);
+            //ShowTutorialTrainingChart(csvPath);
+
         }
         public void showDialog(Form dialog)
         {
@@ -57,7 +74,7 @@ namespace SAI.SAI.App.Views.Pages
             btnSelectInferImage.Location = new Point(0, 0);
             btnSelectInferImage.Enabled = true;
             btnSelectInferImage.Cursor = Cursors.Hand;
-            btnSelectInferImage.Click += btnSelectInferImage_Click;
+            //btnSelectInferImage.Click += btnSelectInferImage_Click;
 
             pboxInferAccuracy.MouseEnter += (s, e) =>
             {
@@ -170,6 +187,16 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
+        private void ibtnAiFeedback_Click(object sender, EventArgs e)
+        {
+            string memo = memoPresenter.GetMemoText();
+            double thresholdValue = tbarThreshold.Value / 100.0;
+
+            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
+            {
+                dialog.ShowDialog(this);
+            }
+        }
         private async void ibtnDownloadAIModel_Click(object sender, EventArgs e)
         {
             string modelFileName = "best.pt";
@@ -216,5 +243,49 @@ namespace SAI.SAI.App.Views.Pages
                 File.Copy(source, destination, overwrite: true);
             });
         }
+
+        /* 이미 있는 ucCsvChart1을 재활용 */
+        //public void ShowTutorialTrainingChart(string csvPath)
+        //{
+        //    try
+        //    {
+        //        if (!File.Exists(csvPath))
+        //        {
+        //            //ShowErrorMessage($"CSV 파일을 찾을 수 없습니다.\n{csvPath}");
+        //            return;
+        //        }
+
+        //        /* ① CSV → LogCsvModel 채우기 */
+        //        var model = LogCsvModel.instance;
+        //        new LogCsvPresenter(null).LoadCsv(csvPath);   // 데이터만 채우는 전용 메서드(아래 4-b) 참고)
+
+        //        /* ② 차트 갱신 */
+        //        ucCsvChart1.SetData();      // 내부에서 model 값을 읽어 그림
+        //        ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //ShowErrorMessage($"차트 로드 중 오류가 발생했습니다: {ex.Message}");
+        //    }
+        //}
+
+        // 외부에서 접근할 메서드들
+        public void SetAccuracyTooltip(ToolTip tip)
+        {
+            tip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
+        }
+
+        public void SetThresholdValue(double value)
+        {
+            tbarThreshold.Value = (int)(value * 100);
+            tboxThreshold.Text = value.ToString("0.00");
+        }
+
+        public void HidePleaseControlMessage()
+        {
+            pleaseControlThreshold.Visible = false;
+        }
+
+
     }
 }

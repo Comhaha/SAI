@@ -45,7 +45,7 @@ namespace SAI.SAI.App.Views.Pages
         private JsBridge jsBridge;
 
         private bool isInferPanelVisible = false;
-        private double currentThreshold = 0.5;
+        private double currentThreshold = 0.25;
         private bool isMemoPanelVisible = false;
         private MemoPresenter memoPresenter;
         private string selectedImagePath = string.Empty; //추론탭에서 선택한 이미지 저장할 변수
@@ -64,6 +64,8 @@ namespace SAI.SAI.App.Views.Pages
 
         private string currentImagePath = string.Empty; // 현재 표시 중인 이미지 경로
 
+        private UcInferenceTab ucInferenceTab;
+
         public UcTutorialBlockCode(IMainView view)
         {
             InitializeComponent();
@@ -73,7 +75,7 @@ namespace SAI.SAI.App.Views.Pages
 
             blocklyModel = BlocklyModel.Instance;
             pSideInfer.Visible = false;
-            pleaseControlThreshold.Visible = false;
+            //pleaseControlThreshold.Visible = false;
             errorMessage = "";
             missingType = "";
 
@@ -118,50 +120,50 @@ namespace SAI.SAI.App.Views.Pages
             currentZoomLevel = 60;
             UpdateCodeZoom();
 
-            btnSelectInferImage.Visible = false;
+            //btnSelectInferImage.Visible = false;
 
-            // 새 이미지 불러오기 버튼 설정
-            btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
-            pboxInferAccuracy.Controls.Add(btnSelectInferImage);
-            btnSelectInferImage.Location = new Point(0, 0);
-            btnSelectInferImage.Enabled = true;
-            btnSelectInferImage.Cursor = Cursors.Hand;
-            btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
+            //// 새 이미지 불러오기 버튼 설정
+            //btnSelectInferImage.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
+            //pboxInferAccuracy.Controls.Add(btnSelectInferImage);
+            //btnSelectInferImage.Location = new Point(0, 0);
+            //btnSelectInferImage.Enabled = true;
+            //btnSelectInferImage.Cursor = Cursors.Hand;
+            //btnSelectInferImage.Click += new EventHandler(btnSelectInferImage_Click);
 
-            pboxInferAccuracy.MouseEnter += (s, e) =>
-            {
-                if (pSideInfer.Visible)
-                {
-                    btnSelectInferImage.Visible = true;
-                    btnSelectInferImage.BringToFront();
-                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
-                }
-            };
+            //pboxInferAccuracy.MouseEnter += (s, e) =>
+            //{
+            //    if (pSideInfer.Visible)
+            //    {
+            //        btnSelectInferImage.Visible = true;
+            //        btnSelectInferImage.BringToFront();
+            //        btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+            //    }
+            //};
 
-            pboxInferAccuracy.MouseLeave += (s, e) =>
-            {
-                if (!btnSelectInferImage.ClientRectangle.Contains(btnSelectInferImage.PointToClient(Control.MousePosition)))
-                {
-                    btnSelectInferImage.Visible = false;
-                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
-                }
-            };
+            //pboxInferAccuracy.MouseLeave += (s, e) =>
+            //{
+            //    if (!btnSelectInferImage.ClientRectangle.Contains(btnSelectInferImage.PointToClient(Control.MousePosition)))
+            //    {
+            //        btnSelectInferImage.Visible = false;
+            //        btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
+            //    }
+            //};
 
-            //// 버튼에도 MouseEnter/Leave 이벤트 추가
-            btnSelectInferImage.MouseEnter += (s, e) =>
-            {
-                btnSelectInferImage.Visible = true;
-                btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
-            };
+            ////// 버튼에도 MouseEnter/Leave 이벤트 추가
+            //btnSelectInferImage.MouseEnter += (s, e) =>
+            //{
+            //    btnSelectInferImage.Visible = true;
+            //    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+            //};
 
-            btnSelectInferImage.MouseLeave += (s, e) =>
-            {
-                if (!pboxInferAccuracy.ClientRectangle.Contains(pboxInferAccuracy.PointToClient(Control.MousePosition)))
-                {
-                    btnSelectInferImage.Visible = false;
-                    btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
-                }
-            };
+            //btnSelectInferImage.MouseLeave += (s, e) =>
+            //{
+            //    if (!pboxInferAccuracy.ClientRectangle.Contains(pboxInferAccuracy.PointToClient(Control.MousePosition)))
+            //    {
+            //        btnSelectInferImage.Visible = false;
+            //        btnSelectInferImage.BackgroundImage = Properties.Resources.btn_selectinferimage;
+            //    }
+            //};
 
 
             ibtnHome.BackColor = Color.Transparent;
@@ -194,23 +196,22 @@ namespace SAI.SAI.App.Views.Pages
                 LogCsvModel.instance.clear();
             };
 
-            //ToolTipUtils.CustomToolTip(ucCsvChart1, "자세히 보려면 클릭하세요.");
-            ToolTipUtils.CustomToolTip(btnInfoThreshold,
-            "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+            //ToolTipUtils.CustomToolTip(btnInfoThreshold,
+            //"AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
 
-            ToolTipUtils.CustomToolTip(btnInfoGraph,
-              "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
-            ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
+            //ToolTipUtils.CustomToolTip(btnInfoGraph,
+            //  "AI 모델의 성능을 한눈에 확인할 수 있는 그래프입니다. 정확도, 재현율 등의 성능 지표가 포함되어 있습니다.");
+            //ToolTipUtils.CustomToolTip(btnSelectInferImage, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
 
             ButtonUtils.SetupButton(btnRunModel, "btnRunModel_clicked", "btn_run_model");
             ButtonUtils.SetupButton(btnQuestionMemo, "btn_question_memo_clicked", "btn_question_memo");
             ButtonUtils.SetupButton(btnCloseMemo, "btn_close_25_clicked", "btn_close_25");
-            ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
+            //ButtonUtils.SetupButton(btnSelectInferImage, "btn_selectinferimage_hover", "btn_selectinferimage");
             ButtonUtils.SetupButton(btnCopy, "btn_copy_hover", "btn_copy");
-            ButtonUtils.SetTransparentStyle(btnSelectInferImage);
-            ButtonUtils.SetTransparentStyle(btnInfoGraph);
-            ButtonUtils.SetTransparentStyle(btnInfoThreshold);
-            pboxInferAccuracy.Image = null;
+            //ButtonUtils.SetTransparentStyle(btnSelectInferImage);
+            //ButtonUtils.SetTransparentStyle(btnInfoGraph);
+            //ButtonUtils.SetTransparentStyle(btnInfoThreshold);
+            //pboxInferAccuracy.Image = null;
 
 
             // 복사 버튼 클릭 이벤트 추가
@@ -350,15 +351,16 @@ namespace SAI.SAI.App.Views.Pages
 
                 if (File.Exists(newPath))
                 {
-                    // 기존 이미지 정리
-                    pboxInferAccuracy.Image?.Dispose();
+                    ucInferenceTab.ShowResultImage(newPath);
+                    //// 기존 이미지 정리
+                    //pboxInferAccuracy.Image?.Dispose();
 
-                    // string 경로를 Image 객체로 변환
-                    pboxInferAccuracy.Size = new Size(494, 278);
-                    pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                    pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
-                    pboxInferAccuracy.Visible = true;
-                    pleaseControlThreshold.Visible = true;
+                    //// string 경로를 Image 객체로 변환
+                    //pboxInferAccuracy.Size = new Size(494, 278);
+                    //pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                    //pboxInferAccuracy.Image = System.Drawing.Image.FromFile(newPath);
+                    //pboxInferAccuracy.Visible = true;
+                    //pleaseControlThreshold.Visible = true;
                 }
             };
 
@@ -366,22 +368,71 @@ namespace SAI.SAI.App.Views.Pages
 			blocklyModel.AccuracyChanged += (newAccuracy) => {
 				// 웹뷰에 threshold 전달
 				webViewblock.ExecuteScriptAsync($"thresholdChanged({newAccuracy})");
-                tboxThreshold.Text = newAccuracy.ToString();
-                tbarThreshold.Value = (int)(newAccuracy * 100);
-                pleaseControlThreshold.Visible = false;
+                //tboxThreshold.Text = newAccuracy.ToString();
+                //tbarThreshold.Value = (int)(newAccuracy * 100);
+                //pleaseControlThreshold.Visible = false;
+                ucInferenceTab.SetThresholdValue(newAccuracy);
+                ucInferenceTab.HidePleaseControlMessage();
             };
             ///////////////////////////////////////////////////
-            
+
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
                 @"..\..\SAI.Application\Python\runs\detect\train\example.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTutorialTrainingChart(csvPath);
+
+            // 🔧 추론탭 스크롤바 설정 -------------------
+            ucInferenceTab = new UcInferenceTab(view);
+            pSideInfer.Controls.Add(ucInferenceTab);
+
+            pSideInfer.AutoScroll = false;
+            ucInferenceTab.AutoScroll = false;
+
+            pInferTabvScrollBar.Scroll += (s, e) =>
+            {
+                if (!pInferTabvScrollBar.Visible) return;
+                ucInferenceTab.Top = -pInferTabvScrollBar.Value;
+            };
+
+            ucInferenceTab.SizeChanged += (s, e) =>
+            {
+                int contentHeight = ucInferenceTab.Height;
+                int viewportHeight = pSideInfer.Height;
+
+                int newMax = contentHeight - viewportHeight;
+                if (newMax <= 0)
+                {
+                    pInferTabvScrollBar.Visible = false;
+                    pInferTabvScrollBar.Maximum = 0;
+                    pInferTabvScrollBar.Value = 0;
+                    ucInferenceTab.Top = 0;
+                }
+                else
+                {
+                    pInferTabvScrollBar.Visible = true;
+                    pInferTabvScrollBar.Maximum = newMax;
+                }
+            };
+
+            pSideInfer.MouseEnter += (s, e) => pSideInfer.Focus();
+
+            // 마우스 휠 수동 처리
+            pSideInfer.MouseWheel += (s, e) =>
+            {
+                if (!pInferTabvScrollBar.Visible) return;
+
+                int newValue = pInferTabvScrollBar.Value - e.Delta / 5;
+                newValue = Math.Max(pInferTabvScrollBar.Minimum, Math.Min(pInferTabvScrollBar.Maximum, newValue));
+                pInferTabvScrollBar.Value = newValue;
+            };
+
+
         }
 
 
 
-		private void setButtonVisible(Guna2Button button)
+        private void setButtonVisible(Guna2Button button)
         {
             button.Visible = true;
         }
@@ -645,8 +696,8 @@ namespace SAI.SAI.App.Views.Pages
         private void SetupThresholdControls()
         {
             ThresholdUtilsTutorial.Setup(
-                tbarThreshold,
-                tboxThreshold,
+                 ucInferenceTab.ThresholdTrackBar,
+                 ucInferenceTab.ThresholdTextBox,
                 (newValue) =>
                 {
                     currentThreshold = newValue;
@@ -822,20 +873,20 @@ namespace SAI.SAI.App.Views.Pages
             pMemo.Visible = isMemoPanelVisible;
         }
 
-        private void ibtnGoNotion_Click(object sender, EventArgs e)
-        {
-            string memo = memoPresenter.GetMemoText();
-            double thresholdValue = tbarThreshold.Value/100.0;
+        //private void ibtnGoNotion_Click(object sender, EventArgs e)
+        //{
+        //    string memo = memoPresenter.GetMemoText();
+        //    double thresholdValue = tbarThreshold.Value/100.0;
 
-            Console.WriteLine("[DEBUG] memo : " + memo + " !");
-            Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
-            Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
+        //    Console.WriteLine("[DEBUG] memo : " + memo + " !");
+        //    Console.WriteLine("[DEBUG] thresholdValue : " + thresholdValue + " !");
+        //    Console.WriteLine("[DEBUG] _result.ResultImage : " + _result.ResultImage + " !");
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
-            {
-                dialog.ShowDialog(this);
-            }
-        }
+        //    using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
+        //    {
+        //        dialog.ShowDialog(this);
+        //    }
+        //}
 
         public void showDialog(Form dialog)
         {
@@ -1008,24 +1059,17 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void ibtnAiFeedback_Click(object sender, EventArgs e)
-        {
-            string memo = memoPresenter.GetMemoText();
-            double thresholdValue = tbarThreshold.Value / 100.0;
+   //     private void ibtnAiFeedback_Click(object sender, EventArgs e)
+   //     {
+   //         string memo = memoPresenter.GetMemoText();
+   //         double thresholdValue = tbarThreshold.Value / 100.0;
 
-            using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
-            {
-                dialog.ShowDialog(this);
-			}
-        }
+   //         using (var dialog = new DialogNotion(memo, thresholdValue, _result.ResultImage, true))
+   //         {
+   //             dialog.ShowDialog(this);
+			//}
+   //     }
 
-        private void pboxGraphe_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new DialogModelPerformance())
-            {
-                dialog.ShowDialog(this);
-            }
-        }
 
         private bool checkBlockPosition(string blockType, int nowPosition)
         {
@@ -1216,43 +1260,43 @@ namespace SAI.SAI.App.Views.Pages
 
         // 추론 이미지 불러오기 버튼 클릭시
         // 사용자 지정 이미지 경로를 blockly.imagepath에 던져줌
-        private void btnSelectInferImage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                {
-                    openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                    openFileDialog.Title = "이미지 파일 선택";
+        //private void btnSelectInferImage_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        //        {
+        //            openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+        //            openFileDialog.Title = "이미지 파일 선택";
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        string absolutePath = openFileDialog.FileName;
-                        selectedImagePath = absolutePath;
-                        currentImagePath = absolutePath; // 현재 이미지 경로 저장
-                        blocklyModel.imgPath = selectedImagePath;
+        //            if (openFileDialog.ShowDialog() == DialogResult.OK)
+        //            {
+        //                string absolutePath = openFileDialog.FileName;
+        //                selectedImagePath = absolutePath;
+        //                currentImagePath = absolutePath; // 현재 이미지 경로 저장
+        //                blocklyModel.imgPath = selectedImagePath;
 
-                        // UI 표시용 이미지
-                        using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
-                        {
-                            var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(494, 278);
-                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                            pboxInferAccuracy.Image = originalImage;
-                            pboxInferAccuracy.Visible = true;
-                        }
+        //                // UI 표시용 이미지
+        //                using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
+        //                {
+        //                    var originalImage = System.Drawing.Image.FromStream(stream);
+        //                    pboxInferAccuracy.Size = new Size(494, 278);
+        //                    pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+        //                    pboxInferAccuracy.Image = originalImage;
+        //                    pboxInferAccuracy.Visible = true;
+        //                }
 
-                        btnSelectInferImage.Visible = false;
-                    }
-                
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"이미지 로드 중 오류가 발생했습니다: {ex.Message}", "오류",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //                btnSelectInferImage.Visible = false;
+        //            }
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"이미지 로드 중 오류가 발생했습니다: {ex.Message}", "오류",
+        //            MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
         // DialogInferenceLoading 닫고 pboxInferAccuracy에 추론 결과 이미지 띄우는 함수
         // var tutorialView = new UcTutorialBlockCode(mainView);
@@ -1286,11 +1330,12 @@ namespace SAI.SAI.App.Views.Pages
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxInferAccuracy.Size = new Size(494, 278);
-                            pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
-                            pboxInferAccuracy.Image = image;
-                            pboxInferAccuracy.Visible = true;
-                            btnSelectInferImage.Visible = false;
+                            ucInferenceTab.ShowResultImage(result.ResultImage);
+                            //pboxInferAccuracy.Size = new Size(494, 278);
+                            //pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
+                            //pboxInferAccuracy.Image = image;
+                            //pboxInferAccuracy.Visible = true;
+                            //btnSelectInferImage.Visible = false;
                             
                             // 추론 패널이 현재 표시되어 있지 않다면 표시
                             if (!isInferPanelVisible)
@@ -1301,7 +1346,9 @@ namespace SAI.SAI.App.Views.Pages
                             
                             // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
                             ToolTip toolTip = new ToolTip();
-                            toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
+                            //toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
+                            ucInferenceTab.SetAccuracyTooltip(toolTip);
+
                             
                             // 원본 파일명 정보 표시 (필요한 경우)
                             if (!string.IsNullOrEmpty(result.OriginalName))
@@ -1398,54 +1445,54 @@ namespace SAI.SAI.App.Views.Pages
             timer.Start();
         }
 
-        private async void ibtnDownloadAIModel_Click(object sender, EventArgs e)
-        {
-            string modelFileName = "best.pt";
+        //private async void ibtnDownloadAIModel_Click(object sender, EventArgs e)
+        //{
+        //    string modelFileName = "best.pt";
 
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            //모델 경로 다시 물어보기
-            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+        //    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        //    //모델 경로 다시 물어보기
+        //    string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
 
-            if (!File.Exists(_modelPath))
-            {
-                MessageBox.Show(
-                    $"모델 파일을 찾을 수 없습니다.\n{_modelPath}",
-                    "오류",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
+        //    if (!File.Exists(_modelPath))
+        //    {
+        //        MessageBox.Show(
+        //            $"모델 파일을 찾을 수 없습니다.\n{_modelPath}",
+        //            "오류",
+        //            MessageBoxButtons.OK,
+        //            MessageBoxIcon.Error);
+        //        return;
+        //    }
 
-            using (var folderDialog = new FolderBrowserDialog())
-            {
-                folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
-                folderDialog.ShowNewFolderButton = true;
+        //    using (var folderDialog = new FolderBrowserDialog())
+        //    {
+        //        folderDialog.Description = "모델을 복사할 폴더를 선택하세요.";
+        //        folderDialog.ShowNewFolderButton = true;
 
-                if (folderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
+        //        if (folderDialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            string destPath = Path.Combine(folderDialog.SelectedPath, modelFileName);
 
-                    // 비동기 복사 (UI 멈춤 방지)
-                    await CopyModelAsync(_modelPath, destPath);
+        //            // 비동기 복사 (UI 멈춤 방지)
+        //            await CopyModelAsync(_modelPath, destPath);
 
-                    MessageBox.Show(
-                        $"모델이 복사되었습니다.\n{destPath}",
-                        "완료",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-            }
-        }
-        private Task CopyModelAsync(string source, string destination)
-        {
-            return Task.Run(() =>
-            {
-                // 존재할 경우 덮어쓰기(true)
-                File.Copy(source, destination, overwrite: true);
-            });
-        }
+        //            MessageBox.Show(
+        //                $"모델이 복사되었습니다.\n{destPath}",
+        //                "완료",
+        //                MessageBoxButtons.OK,
+        //                MessageBoxIcon.Information);
+        //        }
+        //    }
+        //}
+        //private Task CopyModelAsync(string source, string destination)
+        //{
+        //    return Task.Run(() =>
+        //    {
+        //        // 존재할 경우 덮어쓰기(true)
+        //        File.Copy(source, destination, overwrite: true);
+        //    });
+        //}
 
-        /* 이미 있는 ucCsvChart1을 재활용 */
+        ///* 이미 있는 ucCsvChart1을 재활용 */
         public void ShowTutorialTrainingChart(string csvPath)
         {
             try
@@ -1461,8 +1508,9 @@ namespace SAI.SAI.App.Views.Pages
                 new LogCsvPresenter(null).LoadCsv(csvPath);   // 데이터만 채우는 전용 메서드(아래 4-b) 참고)
 
                 /* ② 차트 갱신 */
-                ucCsvChart1.SetData();      // 내부에서 model 값을 읽어 그림
-                ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+                ucInferenceTab.CsvChart.SetData();      // 내부에서 model 값을 읽어 그림
+                //ucCsvChart1.Visible = true; // 필요하면 처음엔 Visible=false 로 해두고 여기서 켜기
+                ucInferenceTab.CsvChart.Visible = true;
             }
             catch (Exception ex)
             {
@@ -1474,5 +1522,5 @@ namespace SAI.SAI.App.Views.Pages
         {
             pErrorToast.Visible = false;
         }
-	}
+    }
 }
