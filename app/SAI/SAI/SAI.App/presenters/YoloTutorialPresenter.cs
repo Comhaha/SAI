@@ -42,8 +42,8 @@ namespace SAI.SAI.App.Presenters
         //    _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
        
         //}
-
         public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://3.39.207.72:9000")
+        // public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://localhost:9000")
         {
             _yolotutorialview = yolotutorialview;
             _pythonService = new PythonService();
@@ -782,23 +782,38 @@ namespace SAI.SAI.App.Presenters
         {
             try
             {
-                Console.WriteLine($"[YOLO Tutorial] {e.Progress}:{e.Message}");
+                // 진행률 메시지를 AppendLog를 통해 출력 (중복 방지를 위해 Console.WriteLine 제거)
+                if (!string.IsNullOrEmpty(e.Message))
+                {
+                    var logMessage = $"{e.Progress}:{e.Message}";
+                    if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
+                    {
+                        logControl.Invoke(new Action(() => _yolotutorialview.AppendLog($"[YOLO Tutorial] {logMessage}")));
+                    }
+                    else
+                    {
+                        _yolotutorialview.AppendLog($"[YOLO Tutorial] {logMessage}");
+                    }
+                }
 
-                // 새로운 로그 처리
+                // 새로운 로그 처리 (서버에서 받은 추가 로그들)
                 if (e.Logs != null && e.Logs.Length > 0)
                 {
                     foreach (var log in e.Logs)
                     {
                         if (!string.IsNullOrEmpty(log))
                         {
+                            // 이미 "[YOLO Tutorial]" 접두사가 있는지 확인하여 중복 방지
+                            var logToDisplay = log.StartsWith("[YOLO Tutorial]") ? log : $"[YOLO Tutorial] {log}";
+                            
                             // 로그 추가 (UI 스레드에서)
                             if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
                             {
-                                logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(log)));
+                                logControl.Invoke(new Action(() => _yolotutorialview.AppendLog(logToDisplay)));
                             }
                             else
                             {
-                                _yolotutorialview.AppendLog(log);
+                                _yolotutorialview.AppendLog(logToDisplay);
                             }
                         }
                     }
@@ -981,27 +996,46 @@ namespace SAI.SAI.App.Presenters
                             }
                             
                             byte[] csvBytes = Convert.FromBase64String(csvBase64);
-
-                            string csvPath = Path.Combine(
+                            
+                            // 로컬과 동일한 경로 구조로 CSV 파일 저장
+                            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                            var localCsvPath = Path.Combine(baseDir,
+                                @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                            localCsvPath = Path.GetFullPath(localCsvPath);
+                            
+                            // 디렉토리가 없으면 생성
+                            var csvDir = Path.GetDirectoryName(localCsvPath);
+                            if (!Directory.Exists(csvDir))
+                            {
+                                Directory.CreateDirectory(csvDir);
+                                Console.WriteLine($"[INFO] 디렉토리 생성: {csvDir}");
+                            }
+                            
+                            // CSV 파일을 로컬 경로에 저장
+                            File.WriteAllBytes(localCsvPath, csvBytes);
+                            Console.WriteLine($"[INFO] 서버 학습 결과 CSV 파일 저장: {localCsvPath}");
+                            
+                            // 추가로 임시 파일에도 저장 (기존 코드 유지)
+                            string tempCsvPath = Path.Combine(
                                 Path.GetTempPath(),
                                 $"training_results_{_currentTaskId}.csv"
                             );
-
-                            File.WriteAllBytes(csvPath, csvBytes);
+                            File.WriteAllBytes(tempCsvPath, csvBytes);
 
                             if (_yolotutorialview is Control chartControl && chartControl.InvokeRequired)
                             {
                                 chartControl.Invoke(new Action(() =>
                                 {
-                                    _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                    // 로컬과 동일한 경로의 파일을 사용하여 차트 표시
+                                    _yolotutorialview.ShowTutorialTrainingChart(localCsvPath);
                                 }));
                             }
                             else
                             {
-                                _yolotutorialview.ShowTutorialTrainingChart(csvPath);
+                                _yolotutorialview.ShowTutorialTrainingChart(localCsvPath);
                             }
                             
-                            Console.WriteLine($"[INFO] 학습 차트 생성 완료");
+                            Console.WriteLine($"[INFO] 학습 차트 생성 완료 (경로: {localCsvPath})");
                         }
                     }
                 }

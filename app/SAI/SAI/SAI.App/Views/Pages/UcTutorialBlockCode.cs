@@ -374,7 +374,7 @@ namespace SAI.SAI.App.Views.Pages
             
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                @"..\..\SAI.Application\Python\runs\detect\train\example.csv");
+                @"..\..\SAI.Application\Python\runs\detect\train\result.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTutorialTrainingChart(csvPath);
         }
@@ -1034,13 +1034,6 @@ namespace SAI.SAI.App.Views.Pages
 			}
         }
 
-        private void pboxGraphe_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new DialogModelPerformance())
-            {
-                dialog.ShowDialog(this);
-            }
-        }
 
         private bool checkBlockPosition(string blockType, int nowPosition)
         {
