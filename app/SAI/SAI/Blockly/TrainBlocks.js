@@ -148,9 +148,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "Upsample_scale",
                 "options": [
-                    ["1.5", "1.5"],
-                    ["2.0", "2.0"],
-                    ["2.5", "2.5"]
+                    ["2.0", "2.0"]
                 ]
             }
         ],
