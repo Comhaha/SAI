@@ -221,6 +221,207 @@ def check_gpu_yolo_load_block(block_params=None):
             "gpu_info": gpu_info
         }
 
+# ================== 2-1. 커스텀 모델 레이어 설정 및 로드 블록 함수 ==================
+def load_model_with_layer_block(block_params=None):
+    """
+    loadModelWithLayer 블록 실행 함수
+    사용자 파라미터로 커스텀 YAML을 생성하고 모델을 로드
+    
+    Args:
+        block_params (dict): 블록에서 전달받은 파라미터
+            - Conv: 64, 128, 256
+            - C2f: 1, 2, 3  
+            - Upsample_scale: 2.0, 3.0, 4.0
+    """
+    start_time = time.time()
+    show_tagged_progress('TRAIN', '커스텀 모델 레이어 설정 시작...', start_time, 0)
+    
+    try:
+        # 1. GPU 정보 확인 (기존 함수 재사용)
+        show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', start_time, 10)
+        gpu_info = install_packages.check_gpu(start_time)
+        
+        # 2. 블록 파라미터 검증 및 기본값 설정
+        # C#에서 전달되는 모델 구조 파라미터들
+        conv = block_params.get("Conv", 64) if block_params else 64
+        c2f = block_params.get("C2f", 1) if block_params else 1
+        upsample_scale = block_params.get("Upsample_scale", 2.0) if block_params else 2.0
+        
+        # 기타 파라미터들 (있는 경우 처리)
+        if block_params:
+            # 모델 이름 (있는 경우)
+            if "model" in block_params:
+                model_name = block_params["model"]
+                show_tagged_progress('DEBUG', f'모델 이름: {model_name}', start_time, 25)
+            
+            # 블록 타입들 (있는 경우)
+            if "blockTypes" in block_params:
+                block_types = block_params["blockTypes"] 
+                show_tagged_progress('DEBUG', f'블록 타입들: {block_types}', start_time, 25)
+        
+        # 유효 범위 확인
+        valid_conv = [64, 128, 256]
+        valid_c2f = [1, 2, 3]
+        valid_upsample = [2.0, 3.0, 4.0]
+        
+        if conv not in valid_conv:
+            show_tagged_progress('WARN', f'Conv 값 {conv}이 유효하지 않습니다. 기본값 64 사용', start_time, 15)
+            conv = 64
+        if c2f not in valid_c2f:
+            show_tagged_progress('WARN', f'C2f 값 {c2f}이 유효하지 않습니다. 기본값 1 사용', start_time, 15)
+            c2f = 1
+        if upsample_scale not in valid_upsample:
+            show_tagged_progress('WARN', f'Upsample_scale 값 {upsample_scale}이 유효하지 않습니다. 기본값 2.0 사용', start_time, 15)
+            upsample_scale = 2.0
+        
+        show_tagged_progress('TRAIN', f'파라미터 확인 완료: Conv={conv}, C2f={c2f}, Upsample={upsample_scale}', start_time, 20)
+        
+        # 3. 데이터셋 경로 확인 (클래스 수 자동 감지용)
+        dataset_path = practice_state.get("dataset_path")
+        if not dataset_path:
+            show_tagged_progress('WARN', '데이터셋이 준비되지 않았습니다. 기본 클래스 수(3) 사용', start_time, 25)
+            dataset_path = base_dir  # 임시 경로
+        
+        # 4. 커스텀 YAML 생성
+        show_tagged_progress('TRAIN', '사용자 파라미터로 커스텀 YAML 생성 중...', start_time, 40)
+        custom_yaml_path = generate_and_save_custom_yaml(
+            conv_channels=conv,
+            c2f_layers=c2f,
+            upsample_scale=upsample_scale,
+            dataset_path=dataset_path
+        )
+        
+        # 5. 커스텀 모델 로드
+        show_tagged_progress('TRAIN', '커스텀 YAML로 모델 로드 중...', start_time, 70)
+        from ultralytics import YOLO
+        
+        # 진행 시뮬레이션
+        for progress in [75, 80, 85, 90, 95]:
+            show_tagged_progress('TRAIN', f'커스텀 모델 로드 중... ({progress}%)', start_time, progress)
+            time.sleep(0.2)
+        
+        model = YOLO(custom_yaml_path)
+        
+        # 6. 전역 상태 업데이트
+        practice_state["model"] = model
+        practice_state["model_path"] = custom_yaml_path
+        practice_state["is_custom_model"] = True
+        practice_state["custom_config"] = {
+            "Conv": conv,
+            "C2f": c2f, 
+            "Upsample_scale": upsample_scale
+        }
+        
+        show_tagged_progress('TRAIN', '✅ 커스텀 모델 로드 완료!', start_time, 100)
+        print("custom.yaml 생성 완료")  # 사용자 피드백
+        
+        return {
+            "success": True,
+            "model_path": custom_yaml_path,
+            "custom_config": {
+                "Conv": conv,
+                "C2f": c2f,
+                "Upsample_scale": upsample_scale
+            },
+            "gpu_info": gpu_info,
+            "elapsed_time": time.time() - start_time
+        }
+        
+    except Exception as e:
+        show_tagged_progress('ERROR', f'커스텀 모델 로드 오류: {e}', start_time, 100)
+        return {
+            "success": False,
+            "error": str(e),
+            "elapsed_time": time.time() - start_time
+        }
+
+def generate_and_save_custom_yaml(conv_channels=64, c2f_layers=1, upsample_scale=2.0, dataset_path=None):
+    """
+    커스텀 YAML 생성 및 저장 함수
+    
+    Returns:
+        str: 생성된 YAML 파일 경로
+    """
+    import os
+    
+    # 클래스 수 자동 감지
+    num_classes = 3  # 기본값
+    if dataset_path:
+        data_yaml_path = os.path.join(dataset_path, "data.yaml")
+        if os.path.exists(data_yaml_path):
+            try:
+                import yaml
+                with open(data_yaml_path, 'r', encoding='utf-8') as f:
+                    data_config = yaml.safe_load(f)
+                    num_classes = data_config.get('nc', 3)
+            except Exception:
+                pass
+    
+    # 채널 수 계산
+    ch1 = conv_channels
+    ch2 = ch1 * 2
+    ch3 = ch2 * 2  
+    ch4 = ch3 * 2
+    
+    # YAML 내용 생성
+    yaml_content = f"""# YOLOv8 Custom Model - Generated from Block Parameters
+# Conv={conv_channels}, C2f={c2f_layers}, Upsample={upsample_scale}
+nc: {num_classes}  # number of classes
+depth_multiple: 0.33
+width_multiple: 0.5
+
+backbone:
+  # [from, number, module, args]
+  - [-1, 1, Conv, [{ch1}, 3, 2]]      # P1/2
+  - [-1, 1, Conv, [{ch1}, 3, 2]]      # P2/4
+  - [-1, {c2f_layers}, C2f, [{ch1}, True]]    # C2f layers = {c2f_layers}
+  - [-1, 1, Conv, [{ch2}, 3, 2]]      # P3/8
+  - [-1, {c2f_layers}, C2f, [{ch2}, True]]
+  - [-1, 1, Conv, [{ch3}, 3, 2]]      # P4/16
+  - [-1, {c2f_layers}, C2f, [{ch3}, True]]
+  - [-1, 1, Conv, [{ch4}, 3, 2]]      # P5/32
+  - [-1, {c2f_layers}, C2f, [{ch4}, True]]
+  - [-1, 1, SPPF, [{ch4}, 5]]         # SPPF
+
+head:
+  - [-1, 1, nn.Upsample, [None, {upsample_scale}, 'nearest']]    # upsample = {upsample_scale}
+  - [[-1, 6], 1, Concat, [1]]
+  - [-1, {c2f_layers}, C2f, [{ch3}]]
+
+  - [-1, 1, nn.Upsample, [None, {upsample_scale}, 'nearest']]
+  - [[-1, 4], 1, Concat, [1]]
+  - [-1, {c2f_layers}, C2f, [{ch2}]]
+
+  - [-1, 1, Conv, [{ch2}, 3, 2]]
+  - [[-1, 12], 1, Concat, [1]]
+  - [-1, {c2f_layers}, C2f, [{ch3}]]
+
+  - [-1, 1, Conv, [{ch3}, 3, 2]]
+  - [[-1, 9], 1, Concat, [1]]
+  - [-1, {c2f_layers}, C2f, [{ch4}]]
+
+  - [[15, 18, 21], 1, Detect, [nc]]
+
+# ========== 생성된 설정 요약 ==========
+# Conv 채널: {conv_channels} → 계층별 채널 수: {ch1}-{ch2}-{ch3}-{ch4}
+# C2f 반복: {c2f_layers}회 (높을수록 더 깊은 특징 학습)
+# Upsample: {upsample_scale}배 (정수배로 안정적 업샘플링)
+# 클래스 수: {num_classes}개
+"""
+    
+    # 파일 저장
+    if dataset_path and os.path.exists(dataset_path):
+        custom_yaml_path = os.path.join(dataset_path, "custom_model.yaml")
+    else:
+        custom_yaml_path = os.path.join(base_dir, "custom_model.yaml")
+    
+    with open(custom_yaml_path, 'w', encoding='utf-8') as f:
+        f.write(yaml_content)
+    
+    print(f"📊 커스텀 모델 설정: Conv={conv_channels}, C2f={c2f_layers}, Upsample={upsample_scale}, Classes={num_classes}")
+    
+    return custom_yaml_path
+
 # ================== 3. 데이터셋 다운로드 블록 함수 ==================
 def download_dataset_block(block_params=None):
     """데이터셋 다운로드 블록 실행 함수"""
@@ -488,26 +689,38 @@ def train_model_block(block_params=None):
     모델 학습 블록 실행 함수
     
     Args:
-        epochs (int, optional): 사용자가 지정한 에폭 수. None이면 기본값 사용
-        imgsz (int, optional): 사용자가 지정한 이미지 크기. None이면 기본값 사용
+        block_params (dict): 블록에서 전달받은 파라미터
+            - epoch (int): 사용자가 지정한 에폭 수
+            - imgsz (int): 사용자가 지정한 이미지 크기
+            - accuracy (float): 신뢰도 임계값 (추론에서 사용)
+            
+    주의: Conv, C2f, Upsample_scale은 load_model_with_layer_block에서 처리됨
     """
     start_time = time.time()
     show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
 
+    # 학습 관련 파라미터만 추출
     epochs = block_params.get("epoch") if block_params else None
     imgsz = block_params.get("imgsz") if block_params else None
-    if "accuracy" in block_params:
-        accuracy = block_params["accuracy"]
-    if "model" in block_params:
-        model_name = block_params["model"]
-    if "Conv" in block_params:
-        conv = block_params["Conv"]
-    if "C2f" in block_params:
-        c2f = block_params["C2f"]
-    if "Upsample_scale" in block_params:
-        upsample_scale = block_params["Upsample_scale"]
-    if "blockTypes" in block_params:
-        block_types = block_params["blockTypes"]
+    
+    # 추론에서 사용할 파라미터 (학습에서는 저장만)
+    if block_params and "accuracy" in block_params:
+        practice_state["inference_accuracy"] = block_params["accuracy"]
+    
+    # 모델 구조 관련 파라미터는 더 이상 여기서 처리하지 않음
+    # (load_model_with_layer_block에서 이미 처리됨)
+    
+    # Conv, C2f, Upsample 관련 코드 제거
+    # if "model" in block_params:
+    #     model_name = block_params["model"]
+    # if "Conv" in block_params:
+    #     conv = block_params["Conv"]
+    # if "C2f" in block_params:
+    #     c2f = block_params["C2f"]
+    # if "Upsample_scale" in block_params:
+    #     upsample_scale = block_params["Upsample_scale"]
+    # if "blockTypes" in block_params:
+    #     block_types = block_params["blockTypes"]
 
     # 기존 results.csv 삭제
     results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
@@ -515,7 +728,6 @@ def train_model_block(block_params=None):
         os.remove(results_csv)
         show_tagged_progress('DEBUG', '기존 results.csv 파일 삭제 완료', start_time, 18)
 
-    
     # 필요한 데이터가 있는지 확인
     if not practice_state.get("model"):
         show_tagged_progress('ERROR', '모델이 로드되지 않았습니다. 모델 로드 단계를 먼저 실행하세요.', start_time, 10)
@@ -531,14 +743,18 @@ def train_model_block(block_params=None):
             "error": "데이터셋 YAML 파일 없음"
         }
     
-    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨)
+    # 커스텀 모델 정보 표시 (있는 경우)
+    if practice_state.get("is_custom_model") and practice_state.get("custom_config"):
+        config = practice_state["custom_config"]
+        show_tagged_progress('TRAIN', f'커스텀 모델 설정으로 학습: Conv={config.get("Conv")}, C2f={config.get("C2f")}, Upsample={config.get("Upsample_scale")}', start_time, 15)
+    
+    # GPU 정보 확인
     gpu_info = install_packages.check_gpu(start_time)
     device = "cuda" if gpu_info.get("available", False) else "cpu"
     
     # 학습 파라미터 설정
     batch_size = 16
     if device == "cuda" and gpu_info.get("available", False):
-        # GPU 메모리에 따른 배치 크기 조정
         memory = gpu_info.get("memory_gb", [0])[0]
         if memory and memory < 6:
             batch_size = 8
@@ -546,10 +762,8 @@ def train_model_block(block_params=None):
     
     # 에폭 수 설정 - 사용자 지정 값 또는 기본값
     if epochs is None:
-        # 기본 에폭 수 설정
         epochs = 5 if device == "cuda" else 2
     else:
-        # 사용자 지정 에폭 수를 정수로 변환
         try:
             epochs = int(epochs)
             if epochs <= 0:
@@ -561,16 +775,12 @@ def train_model_block(block_params=None):
     
     # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
     if imgsz is None:
-        # 기본 이미지 크기 설정
         imgsz = 640
     else:
-        # 사용자 지정 이미지 크기를 정수로 변환
         try:
             imgsz = int(imgsz)
-            # 유효한 이미지 크기 범위 확인 (YOLO 권장 크기)
             valid_sizes = [512, 640, 960, 1024, 1280]
             if imgsz not in valid_sizes:
-                # 가장 가까운 유효 크기 찾기
                 closest_size = min(valid_sizes, key=lambda x: abs(x - imgsz))
                 show_tagged_progress('ERROR', f'이미지 크기 {imgsz}는 권장되지 않습니다. 가장 가까운 권장 크기 {closest_size}를 사용합니다.', start_time, 15)
                 imgsz = closest_size
@@ -580,6 +790,8 @@ def train_model_block(block_params=None):
     
     show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
     
+    # 나머지 학습 코드는 기존과 동일...
+    # (try-except 블록과 학습 실행 부분은 그대로 유지)
     try:
         # 학습 시작 시간 기록
         epoch_start_time = time.time()
