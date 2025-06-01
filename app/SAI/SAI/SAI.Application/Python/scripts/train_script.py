@@ -45,7 +45,7 @@ from IPython.display import Image, display
 display(Image(filename = 'runs/detect/train/results.png'))
 
 
-img_path ='C:/Users/SSAFY/Desktop/3rd PJT/자율 리소스/testimg/unnamed.jpg'))
+img_path ='C:\Users\SSAFY\Desktop\1598542999444.jpg'))
 
 
 # 추론 실행
