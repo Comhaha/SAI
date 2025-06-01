@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-tutorial_train_script.py - AI 블록 코딩 튜토리얼 모드 구현
+practice_train_script.py - AI 블록 코딩 튜토리얼 모드 구현
 
 이 스크립트는 AI 블록 코딩 튜토리얼 모드를 위한 기능을 구현합니다.
 install_packages.py의 유틸리티 함수를 활용하여 패키지 설치, GPU 확인 등을 수행합니다.
@@ -24,7 +24,7 @@ from datetime import datetime
 # 로깅 레벨 설정
 logging.getLogger().setLevel(logging.INFO)
 
-print("[DEBUG] tutorial_train_script.py 시작", flush=True)
+print("[DEBUG] practice_train_script.py 시작", flush=True)
 
 try:
     # 기본 디렉토리 설정
@@ -118,8 +118,8 @@ try:
     # show_tagged_progress('TRAIN', '학습 시작', start_time, 10)
 
     # 튜토리얼 상태 관리용 전역 변수
-    print("[DEBUG] tutorial_state 초기화 시도", flush=True)
-    tutorial_state = {
+    print("[DEBUG] practice_state 초기화 시도", flush=True)
+    practice_state = {
         "model": None,
         "model_path": None,
         "dataset_path": None,
@@ -128,12 +128,12 @@ try:
         "result_image_path": None,
         "training_completed": False
     }
-    print("[DEBUG] tutorial_state 초기화 완료", flush=True)
+    print("[DEBUG] practice_state 초기화 완료", flush=True)
 
-    print("[DEBUG] tutorial_train_script.py 초기화 완료", flush=True)
+    print("[DEBUG] practice_train_script.py 초기화 완료", flush=True)
 
 except Exception as e:
-    logger.error(f"tutorial_train_script.py 초기화 중 오류 발생: {str(e)}", exc_info=True)
+    logger.error(f"practice_train_script.py 초기화 중 오류 발생: {str(e)}", exc_info=True)
     print(f"PROGRESS::스크립트 초기화 오류가 발생했습니다: {str(e)}", flush=True)
     raise
 
@@ -204,8 +204,8 @@ def check_gpu_yolo_load_block(block_params=None):
         show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
 
         # 전역 상태 업데이트
-        tutorial_state["model"] = model
-        tutorial_state["model_path"] = model_path
+        practice_state["model"] = model
+        practice_state["model_path"] = model_path
 
         return {
             "success": True,
@@ -248,8 +248,8 @@ def download_dataset_block(block_params=None):
         time.sleep(1.5)  # 메시지 인지 시간 확보
         extracted_dir = os.path.join(dataset_dir, "practice_dataset")
         data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
-        tutorial_state["dataset_path"] = extracted_dir
-        tutorial_state["data_yaml_path"] = data_yaml_path
+        practice_state["dataset_path"] = extracted_dir
+        practice_state["data_yaml_path"] = data_yaml_path
         return {
             "success": True,
             "location": extracted_dir,
@@ -281,7 +281,7 @@ def download_dataset_block(block_params=None):
         show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time)
         
         # 테스트용 더미 데이터 생성
-        tutorial_state["dataset_path"] = dataset_dir
+        practice_state["dataset_path"] = dataset_dir
         return {
             "success": True,
             "message": "테스트용 더미 데이터 사용",
@@ -307,7 +307,7 @@ def download_dataset_block(block_params=None):
             show_tagged_progress('DEBUG', '다운로드 URL 획득 성공', start_time)
         else:
             show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time)
-            tutorial_state["dataset_path"] = dataset_dir
+            practice_state["dataset_path"] = dataset_dir
             return {
                 "success": False,
                 "error": f"API 응답 오류: {response.text}",
@@ -315,7 +315,7 @@ def download_dataset_block(block_params=None):
             }
     except Exception as e:
         show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time)
-        tutorial_state["dataset_path"] = dataset_dir
+        practice_state["dataset_path"] = dataset_dir
         return {
             "success": False,
             "error": str(e),
@@ -341,7 +341,7 @@ def download_dataset_block(block_params=None):
         show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
     except Exception as e:
         show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
-        tutorial_state["dataset_path"] = dataset_dir
+        practice_state["dataset_path"] = dataset_dir
         return {
             "success": False,
             "error": str(e),
@@ -413,7 +413,7 @@ def download_dataset_block(block_params=None):
                 
         
     # 데이터셋 경로 저장
-    tutorial_state["dataset_path"] = extracted_dir
+    practice_state["dataset_path"] = extracted_dir
 
     # data.yaml 파일 찾기
     data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
@@ -421,7 +421,7 @@ def download_dataset_block(block_params=None):
         show_tagged_progress('ERROR', 'data.yaml 파일을 찾을 수 없습니다. 기본 경로를 사용합니다.', start_time)
         data_yaml_path = os.path.join(extracted_dir, 'data.yaml')  # 기본 경로 설정
 
-    tutorial_state["data_yaml_path"] = data_yaml_path
+    practice_state["data_yaml_path"] = data_yaml_path
     show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
 
     # 완료 파일 생성
@@ -449,7 +449,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice"):
         dataset_dir: 기본 데이터셋 디렉토리
         extracted_dir: 압축 해제된 디렉토리
         start_time: 시작 시간 (로깅용)
-        mode: 검색 모드 ('tutorial' 또는 'practice')
+        mode: 검색 모드 ('practice' 또는 'practice')
     """
     show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
     
@@ -517,14 +517,14 @@ def train_model_block(block_params=None):
 
     
     # 필요한 데이터가 있는지 확인
-    if not tutorial_state.get("model"):
+    if not practice_state.get("model"):
         show_tagged_progress('ERROR', '모델이 로드되지 않았습니다. 모델 로드 단계를 먼저 실행하세요.', start_time, 10)
         return {
             "success": False,
             "error": "모델이 로드되지 않음"
         }
     
-    if not tutorial_state.get("data_yaml_path"):
+    if not practice_state.get("data_yaml_path"):
         show_tagged_progress('ERROR', '데이터셋 YAML 파일이 설정되지 않았습니다. 데이터셋 준비 단계를 먼저 실행하세요.', start_time, 10)
         return {
             "success": False,
@@ -617,8 +617,8 @@ def train_model_block(block_params=None):
         callbacks = [ProgressCallback()]
         
         # 학습 실행
-        model = tutorial_state["model"]
-        data_yaml_path = tutorial_state["data_yaml_path"]
+        model = practice_state["model"]
+        data_yaml_path = practice_state["data_yaml_path"]
         
         # YOLOv8 학습 실행
         results = model.train(
@@ -638,9 +638,9 @@ def train_model_block(block_params=None):
         model_path = os.path.join(results_dir, "weights", "best.pt")
         
         # 전역 상태 업데이트
-        tutorial_state["model_path"] = model_path
-        tutorial_state["results_dir"] = results_dir
-        tutorial_state["training_completed"] = True
+        practice_state["model_path"] = model_path
+        practice_state["results_dir"] = results_dir
+        practice_state["training_completed"] = True
         
         train_elapsed = time.time() - start_time
         minutes, seconds = divmod(train_elapsed, 60)
@@ -668,9 +668,9 @@ def train_model_block(block_params=None):
                 show_tagged_progress('TRAIN', f'줄어든 배치 크기로 재시도 중 (배치 크기: {reduced_batch})...', start_time, 80)
                 
                 # 재시도
-                model = tutorial_state["model"]
+                model = practice_state["model"]
                 results = model.train(
-                    data=tutorial_state["data_yaml_path"],
+                    data=practice_state["data_yaml_path"],
                     epochs=epochs,
                     batch=reduced_batch,
                     imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
@@ -686,9 +686,9 @@ def train_model_block(block_params=None):
                 model_path = os.path.join(results_dir, "weights", "best.pt")
                 
                 # 전역 상태 업데이트
-                tutorial_state["model_path"] = model_path
-                tutorial_state["results_dir"] = results_dir
-                tutorial_state["training_completed"] = True
+                practice_state["model_path"] = model_path
+                practice_state["results_dir"] = results_dir
+                practice_state["training_completed"] = True
                 
                 retry_elapsed = time.time() - retry_start
                 minutes, seconds = divmod(retry_elapsed, 60)
@@ -712,10 +712,10 @@ def train_model_block(block_params=None):
                 try:
                     # CPU로 전환하고 에폭 수 줄임
                     cpu_epochs = min(2, epochs)  # 원래 에폭보다 크지 않게
-                    model = tutorial_state["model"]
+                    model = practice_state["model"]
                     
                     results = model.train(
-                        data=tutorial_state["data_yaml_path"],
+                        data=practice_state["data_yaml_path"],
                         epochs=cpu_epochs,
                         batch=4,
                         imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
@@ -731,9 +731,9 @@ def train_model_block(block_params=None):
                     model_path = os.path.join(results_dir, "weights", "best.pt")
                     
                     # 전역 상태 업데이트
-                    tutorial_state["model_path"] = model_path
-                    tutorial_state["results_dir"] = results_dir
-                    tutorial_state["training_completed"] = True
+                    practice_state["model_path"] = model_path
+                    practice_state["results_dir"] = results_dir
+                    practice_state["training_completed"] = True
                     
                     cpu_elapsed = time.time() - start_time
                     minutes, seconds = divmod(cpu_elapsed, 60)
@@ -799,7 +799,7 @@ def visualize_training_results_block(block_params=None):
     show_tagged_progress('TRAIN', '학습 결과 시각화 중...', start_time, 0)
     
     # 학습이 완료되었는지 확인
-    if not tutorial_state.get("training_completed"):
+    if not practice_state.get("training_completed"):
         show_tagged_progress('ERROR', '학습이 완료되지 않았습니다. 모델 학습 단계를 먼저 실행하세요.', start_time, 10)
         return {
             "success": False,
@@ -807,10 +807,10 @@ def visualize_training_results_block(block_params=None):
         }
     
     # 결과 디렉토리 확인
-    results_dir = tutorial_state.get("results_dir")
+    results_dir = practice_state.get("results_dir")
     if not results_dir or not os.path.exists(results_dir):
         results_dir = find_latest_results_dir()
-        tutorial_state["results_dir"] = results_dir
+        practice_state["results_dir"] = results_dir
     
     # 결과 이미지 경로 확인
     results_path = os.path.join(results_dir, "results.png")
@@ -846,7 +846,7 @@ def visualize_training_results_block(block_params=None):
                 show_tagged_progress('TRAIN', 'IPython 환경이 아니므로 결과 파일 경로만 반환합니다.', start_time, 90)
             
             # 결과 경로 저장
-            tutorial_state["results_image_path"] = results_path
+            practice_state["results_image_path"] = results_path
             
             return {
                 "success": True,
@@ -891,7 +891,7 @@ def set_image_path_block(image_path=None, block_params=None):
             # 이미지 파일 확장자 확인
             if image_path.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp')):
                 # 경로 저장
-                tutorial_state["image_path"] = image_path
+                practice_state["image_path"] = image_path
                 show_tagged_progress('DATASET', f'사용자 지정 이미지 경로 설정 완료: {image_path}', start_time, 100)
                 return {
                     "success": True,
@@ -921,13 +921,13 @@ def run_inference_block(block_params=None):
     show_tagged_progress('INFER', '모델 추론 실행 중...', start_time, 0)
     
     # 필요한 정보가 있는지 확인
-    model_path = tutorial_state.get("model_path")
+    model_path = practice_state.get("model_path")
     if not model_path:
         # 학습된 모델이 없다면 기본 모델 사용
         model_path = os.path.join(base_dir, "yolov8n.pt")
         show_tagged_progress('TRAIN', f'학습된 모델 경로가 설정되지 않았습니다. 기본 모델을 사용합니다: {model_path}', start_time, 10)
     
-    image_path = tutorial_state.get("image_path")
+    image_path = practice_state.get("image_path")
     if not image_path:
         show_tagged_progress('ERROR', '테스트 이미지 경로가 설정되지 않았습니다. 이미지 경로 설정 단계를 먼저 실행하세요.', start_time, 10)
         return {
@@ -1009,7 +1009,7 @@ def run_inference_block(block_params=None):
         if inference_result:
             # 결과 이미지 경로 저장
             if "result_image" in inference_result:
-                tutorial_state["result_image_path"] = inference_result["result_image"]
+                practice_state["result_image_path"] = inference_result["result_image"]
             
             show_tagged_progress('INFER', f'추론 완료: {inference_result.get("success", False)}', start_time, 100)
             return {
@@ -1039,7 +1039,7 @@ def visualize_results_block(block_params=None):
     show_tagged_progress('INFER', '추론 결과 시각화 중...', start_time, 0)
     
     # 결과 이미지 경로 확인
-    result_image_path = tutorial_state.get("result_image_path")
+    result_image_path = practice_state.get("result_image_path")
     if not result_image_path:
         show_tagged_progress('ERROR', '추론 결과 이미지 경로가 설정되지 않았습니다. 모델 추론 단계를 먼저 실행하세요.', start_time, 10)
         return {
@@ -1245,7 +1245,7 @@ def print_block_progress(block_progress, message):
 if __name__ == "__main__":
     # 명령행 인수 확인
     if len(sys.argv) > 2 and sys.argv[1] == "infer":
-        # 추론 모드: python tutorial_train_script.py infer <모델_경로> <이미지_경로>
+        # 추론 모드: python practice_train_script.py infer <모델_경로> <이미지_경로>
         try:
             model_path = sys.argv[2]
             image_path = sys.argv[3]

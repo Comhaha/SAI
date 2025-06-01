@@ -1,4 +1,9 @@
-﻿# ================================================
+﻿# 데이터 불러오기
+# 코드로 서버에 있는 데이터 땡겨오게 하기
+
+
+
+# ================================================
 # 🔷 SAI AI 블록 코딩 튜토리얼 🔷
 # ================================================
 
@@ -6,11 +11,23 @@
 !pip install ultralytics
 
 
+  # 레이어 수정
+  Conv = 64 # Conv (합성곱 계층): 이미지에서 특징을 찾는 기본적인 눈 역할을 하는 층
+  C2f = 1 # C2f (병목 현상을 개선한 Conv): Conv 보다 조금 더 똑똑하게 특징을 추출해서 효율을 높이는 층
+  Upsample = 1.5 # Upsample (업샘플링): 더 넓은 영역의 정보를 볼 수 있게 확대하는 층
+  						      # Upsample 레이어의 scale 값을 수정합니다.
+
+  # custom.yaml 파일 생성
+  # 입력한 Conv, C2f, Upsample_scale으로 SAI가 custom.yaml 파일을 생성해드려요!
+   print("custom.yaml 생성 완료")
+
 # 모델 불러오기
 from ultralytics import YOLO
 
-model = YOLO("yolov8n.pt")   # YOLOv8 모델 불러오기
-print("✅ YOLOv8 설치 및 yolov8n.pt 모델 로드 완료!")
+model = YOLO("custom.yaml") # 커스텀 레이어 적용
+model.load("yolov8n.pt") # Yolov8 모델 불러오기
+# YOLOv8 모델 불러오기
+print("✅ YOLOv8 설치 및 yolov8n.pt 모델 로드 완료!")')
 
 
 # 데이터 불러오기
@@ -33,7 +50,7 @@ from IPython.display import Image, display
 display(Image(filename = 'runs/detect/train/results.png'))
 
 
-img_path ='C:/Users/SSAFY/Desktop/3rd PJT/자율 리소스/testimg/포트홀.jpg'))
+img_path ='C:/Users/SSAFY/Desktop/3rd PJT/자율 리소스/testimg/unnamed.jpg'))
 
 
 # 추론 실행
