@@ -63,6 +63,7 @@ namespace SAI.SAI.App.Views.Pages
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pSideInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.tpModelGraph = new System.Windows.Forms.TableLayoutPanel();
             this.lblModelGraph = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
@@ -80,7 +81,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnDownloadAIModel = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnGoNotion = new Guna.UI2.WinForms.Guna2ImageButton();
             this.ibtnAiFeedback = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.pFake = new Guna.UI2.WinForms.Guna2Panel();
             this.pMemo = new Guna.UI2.WinForms.Guna2Panel();
             this.mAlertPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxMemo = new Guna.UI2.WinForms.Guna2TextBox();
@@ -474,6 +474,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Controls.Add(this.tpModelGraph);
             this.pSideInfer.Controls.Add(this.guna2Panel2);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
@@ -489,6 +490,12 @@ namespace SAI.SAI.App.Views.Pages
             this.pSideInfer.Controls.Add(this.ibtnGoNotion);
             this.pSideInfer.Controls.Add(this.ibtnAiFeedback);
             this.pSideInfer.Name = "pSideInfer";
+            // 
+            // pFake
+            // 
+            this.pFake.BorderColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.pFake, "pFake");
+            this.pFake.Name = "pFake";
             // 
             // tpModelGraph
             // 
@@ -624,7 +631,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnDownloadAIModel.ImageSize = new System.Drawing.Size(240, 75);
             resources.ApplyResources(this.ibtnDownloadAIModel, "ibtnDownloadAIModel");
             this.ibtnDownloadAIModel.Name = "ibtnDownloadAIModel";
-            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(160, 50);
+            this.ibtnDownloadAIModel.PressedState.ImageSize = new System.Drawing.Size(240, 75);
             this.ibtnDownloadAIModel.Click += new System.EventHandler(this.btnSaveModel_Click);
             // 
             // ibtnGoNotion
@@ -654,12 +661,6 @@ namespace SAI.SAI.App.Views.Pages
             this.ibtnAiFeedback.Name = "ibtnAiFeedback";
             this.ibtnAiFeedback.PressedState.ImageSize = new System.Drawing.Size(520, 135);
             this.ibtnAiFeedback.Click += new System.EventHandler(this.ibtnAiFeedback_Click);
-            // 
-            // pFake
-            // 
-            this.pFake.BorderColor = System.Drawing.Color.Transparent;
-            resources.ApplyResources(this.pFake, "pFake");
-            this.pFake.Name = "pFake";
             // 
             // pMemo
             // 

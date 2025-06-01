@@ -77,46 +77,48 @@ Blockly.Python.forBlock['loadModel'] = function (block) {
 Blockly.defineBlocksWithJsonArray([
     {
         "type": "loadModelWithLayer", // 블록 타입
-        "message0": "레이어수정\n%1Yolov8 %2 모델 불러오기\n", // 블록에 표시되는 문구
+        "message0": "레이어수정\n%1커스텀 YOLOv8 모델 생성\n", // 블록에 표시되는 문구
         "args0": [
             {
                 "type": "input_statement",
                 "name": "LAYERS"  // 여러 레이어 블록이 여기에 들어감
             },
-            {
-                "type": "field_custom_dropdown",
-                "name": "MODEL_VERSION",
-                "options": [
-                    ["Nano", "yolov8n.pt"],
-                    ["Small", "yolov8s.pt"],
-                    ["Medium", "yolov8m.pt"],
-                    ["Large", "yolov8l.pt"]
-                ]
-            }
+            //{
+            //    "type": "field_custom_dropdown",
+            //    "name": "MODEL_VERSION",
+            //    "options": [
+            //        ["Nano", "yolov8n.pt"],
+            //        ["Small", "yolov8s.pt"],
+            //        ["Medium", "yolov8m.pt"],
+            //        ["Large", "yolov8l.pt"]
+            //    ]
+            //}
         ],
         "previousStatement": null,
         "nextStatement": null,
         "colour": 100,
         "tooltip":
             `더 똑똑한 모델을 만들기 위해서 레이어를 수정합니다.\n` +
-            `YOLOv8 모델을 불러옵니다.\n` +
-            `YOLOv8의 나노버전부터 Large버전까지 제공됩니다.\n\n` +
-            `더 똑똑한 모델을 만들기 위해서 레이어를 수정합니다.\n`,
+            `사용자가 설정한 레이어 파라미터로 커스텀 YOLOv8 모델을 생성합니다.\n` +
+            `Conv, C2f, Upsample 값에 따라 완전히 새로운 네트워크 구조가 만들어집니다.\n\n` +
+            `⚠️ 주의: 기존 사전훈련 모델이 아닌 처음부터 학습하는 새 모델입니다.\n`,
         "helpUrl": ""
     }
 ]);
 
 Blockly.Python.forBlock['loadModelWithLayer'] = function (block) {
     const layersCode = Blockly.Python.statementToCode(block, 'LAYERS');
-    const modelFile = block.getFieldValue('MODEL_VERSION');
+    // 들여쓰기 제거 - layersCode의 앞쪽 공백 제거
+    const cleanLayersCode = layersCode.replace(/^  /gm, '');
+    //const modelFile = block.getFieldValue('MODEL_VERSION');
     return (
-            `${layersCode}` +
-            `# 모델 불러오기\n` +
+        `${cleanLayersCode}` +
+            `# 커스텀 모델 생성\n` +
             `from ultralytics import YOLO\n\n` +
-            `model = YOLO("custom.yaml") # 커스텀 레이어 적용\n` +
-            `model.load("${modelFile}") # Yolov8 모델 불러오기\n` +
-            `# YOLOv8 모델 불러오기\n` +
-            `print("✅ YOLOv8 설치 및 ${modelFile} 모델 로드 완료!")')\n\n\n`
+            `# 사용자 레이어 설정으로 커스텀 YAML 생성됨\n` +
+            `model = YOLO("custom_model.yaml")  # 동적 생성된 커스텀 구조\n` +
+            `print("✅ 커스텀 YOLOv8 모델 생성 완료!")\n` +
+            `print("custom.yaml 생성 완료")\n\n\n`
     );
 };
 
@@ -148,9 +150,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "Upsample_scale",
                 "options": [
-                    ["1.5", "1.5"],
-                    ["2.0", "2.0"],
-                    ["2.5", "2.5"]
+                    ["2.0", "2.0"]
                 ]
             }
         ],

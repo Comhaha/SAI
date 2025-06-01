@@ -22,21 +22,22 @@ logger = logging.getLogger(__name__)
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-class TutorialRunner:
-    def __init__(self, tutorial_train_script_path: str):
-        self.tutorial_train_script_path = tutorial_train_script_path
-        self.tutorial_train_script = self._load_script()
+class practiceRunner:
+    def __init__(self, practice_train_script_path: str):
+        self.practice_train_script_path = practice_train_script_path
+        self.practice_train_script = self._load_script()
 
         self.block_mappings = {
             "start": None,
-            "pipInstall": self.tutorial_train_script.install_packages_block,
-            "loadModel": self.tutorial_train_script.check_gpu_yolo_load_block,
-            "loadDataset": self.tutorial_train_script.download_dataset_block,
-            "machineLearning": self.tutorial_train_script.train_model_block,
-            "resultGraph": self.tutorial_train_script.visualize_training_results_block,
-            "imgPath": self.tutorial_train_script.set_image_path_block,
-            "modelInference": self.tutorial_train_script.run_inference_block,
-            "visualizeResult": self.tutorial_train_script.visualize_results_block
+            "pipInstall": self.practice_train_script.install_packages_block,
+            "loadModel": self.practice_train_script.check_gpu_yolo_load_block,
+            "loadModelWithLayer": self.practice_train_script.load_model_with_layer_block,
+            "loadDataset": self.practice_train_script.download_dataset_block,
+            "machineLearning": self.practice_train_script.train_model_block,
+            "resultGraph": self.practice_train_script.visualize_training_results_block,
+            "imgPath": self.practice_train_script.set_image_path_block,
+            "modelInference": self.practice_train_script.run_inference_block,
+            "visualizeResult": self.practice_train_script.visualize_results_block
         }
         logger.debug("[Runner] 블록 함수 매핑 완료")
         print(f"[DEBUG] block_mappings.keys(): {list(self.block_mappings.keys())}", flush=True)
@@ -44,18 +45,18 @@ class TutorialRunner:
 
     def _load_script(self):
         """튜토리얼 스크립트 로드"""
-        print(f"[DEBUG] 스크립트 로딩 시도: {self.tutorial_train_script_path}", flush=True)
+        print(f"[DEBUG] 스크립트 로딩 시도: {self.practice_train_script_path}", flush=True)
         
         try:
             # 스크립트 파일 존재 확인
-            if not os.path.exists(self.tutorial_train_script_path):
-                print(f"[DEBUG] 스크립트 파일이 존재하지 않음: {self.tutorial_train_script_path}", flush=True)
-                raise FileNotFoundError(f"튜토리얼 스크립트를 찾을 수 없습니다: {self.tutorial_train_script_path}")
+            if not os.path.exists(self.practice_train_script_path):
+                print(f"[DEBUG] 스크립트 파일이 존재하지 않음: {self.practice_train_script_path}", flush=True)
+                raise FileNotFoundError(f"튜토리얼 스크립트를 찾을 수 없습니다: {self.practice_train_script_path}")
             
             print(f"[DEBUG] 스크립트 파일 존재 확인됨", flush=True)
             
             # 스크립트 디렉토리를 sys.path에 추가
-            script_dir = os.path.dirname(self.tutorial_train_script_path)
+            script_dir = os.path.dirname(self.practice_train_script_path)
             if script_dir not in sys.path:
                 sys.path.insert(0, script_dir)
                 print(f"[DEBUG] sys.path에 추가됨: {script_dir}", flush=True)
@@ -63,8 +64,8 @@ class TutorialRunner:
             # 모듈 사양 생성
             print(f"[DEBUG] 모듈 사양 생성 시도", flush=True)
             spec = importlib.util.spec_from_file_location(
-                "tutorial_train_script",
-                self.tutorial_train_script_path
+                "practice_train_script",
+                self.practice_train_script_path
             )
             print(f"[DEBUG] 모듈 사양 생성됨", flush=True)
             
@@ -177,7 +178,7 @@ def main():
     logger.debug(f"[Runner] 받은 인자: {args}")
 
     try:
-        runner = TutorialRunner(args.train_script)
+        runner = practiceRunner(args.train_script)
 
         # 파라미터 초기화
         params = {}
