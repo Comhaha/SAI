@@ -1034,13 +1034,6 @@ namespace SAI.SAI.App.Views.Pages
 			}
         }
 
-        private void pboxGraphe_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new DialogModelPerformance())
-            {
-                dialog.ShowDialog(this);
-            }
-        }
 
         private bool checkBlockPosition(string blockType, int nowPosition)
         {
