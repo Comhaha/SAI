@@ -368,7 +368,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                @"..\..\SAI.Application\Python\runs\detect\train\result.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTrainingChart(csvPath);
         }
@@ -1271,9 +1271,6 @@ namespace SAI.SAI.App.Views.Pages
                         "완료",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
-
-
-                    throw new NotImplementedException();
                 }
             }
         }
