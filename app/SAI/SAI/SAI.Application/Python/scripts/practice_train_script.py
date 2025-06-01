@@ -19,7 +19,6 @@ import glob
 import io
 import re
 import shutil
-import torch
 
 from datetime import datetime
 # 로깅 레벨 설정
@@ -146,12 +145,11 @@ def install_packages_block(block_params=None):
     start_time = time.time()
     show_tagged_progress('TRAIN', '필수 패키지 설치를 시작합니다', start_time, 0)
     
-    # 패키지 설치 순서 변경 및 버전 명시 (numpy 1.19.2 호환)
+    # 패키지 설치 순서 변경 및 버전 명시
     packages = [
-        "numpy==1.19.2",
-        "matplotlib==3.3.4",  # numpy 1.19.2와 호환
-        "ultralytics==8.0.100",  # 더 낮은 버전 사용
-        "opencv-python==4.6.0.66"  # 더 낮은 버전 사용
+        "numpy==1.24.3",
+        "ultralytics==8.0.196",
+        "opencv-python==4.8.0.76"
     ]
     
     try:
@@ -573,43 +571,29 @@ def download_dataset_block(block_params=None):
                     # 이미 폴더가 있으면 기존대로 압축 해제
                     potential_extracted_dir = os.path.join(dataset_dir, "practice_dataset")
                     for i, file in enumerate(file_list):
-                        try:
-                            zip_ref.extract(file, dataset_dir)
-                            if i % 50 == 0 or i == total_files - 1:
-                                extract_progress = 55 + (i / total_files) * 40
-                                show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                        except Exception as e:
-                            show_tagged_progress('ERROR', f'파일 압축 해제 실패 ({file}): {str(e)}', start_time)
-                            continue
+                        zip_ref.extract(file, dataset_dir)
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 55 + (i / total_files) * 40
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = potential_extracted_dir
                 else:
                     # 폴더가 없으면 dataset/practice_dataset/에 압축 해제
                     os.makedirs(target_subdir, exist_ok=True)
                     for i, file in enumerate(file_list):
-                        try:
-                            # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
-                            dest_path = os.path.join(target_subdir, file)
-                            dest_folder = os.path.dirname(dest_path)
-                            os.makedirs(dest_folder, exist_ok=True)
-                            
-                            # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
-                            if file.endswith('/'):
-                                continue
-                            
-                            # 청크 단위로 파일 복사
-                            with zip_ref.open(file) as source, open(dest_path, "wb") as target:
-                                while True:
-                                    chunk = source.read(8192)  # 8KB 청크로 읽기
-                                    if not chunk:
-                                        break
-                                    target.write(chunk)
-                            
-                            if i % 50 == 0 or i == total_files - 1:
-                                extract_progress = 55 + (i / total_files) * 40
-                                show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                        except Exception as e:
-                            show_tagged_progress('ERROR', f'파일 압축 해제 실패 ({file}): {str(e)}', start_time)
+                        # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
+                        dest_path = os.path.join(target_subdir, file)
+                        dest_folder = os.path.dirname(dest_path)
+                        os.makedirs(dest_folder, exist_ok=True)
+                        
+                        # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
+                        if file.endswith('/'):
                             continue
+                        
+                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
+                            target.write(source.read())
+                        if i % 50 == 0 or i == total_files - 1:
+                            extract_progress = 55 + (i / total_files) * 40
+                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
                     extracted_dir = target_subdir
                     show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
             show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
@@ -666,7 +650,7 @@ def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice"):
         dataset_dir: 기본 데이터셋 디렉토리
         extracted_dir: 압축 해제된 디렉토리
         start_time: 시작 시간 (로깅용)
-        mode: 검색 모드 ('tutorial' 또는 'practice')
+        mode: 검색 모드 ('practice' 또는 'practice')
     """
     show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
     
@@ -716,12 +700,27 @@ def train_model_block(block_params=None):
     show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
 
     # 학습 관련 파라미터만 추출
-    epochs = block_params.get("epochs") if block_params else None
-    imgsz = block_params.get("image_size") if block_params else None
+    epochs = block_params.get("epoch") if block_params else None
+    imgsz = block_params.get("imgsz") if block_params else None
     
     # 추론에서 사용할 파라미터 (학습에서는 저장만)
     if block_params and "accuracy" in block_params:
-        practice_state["inference_accuracy"] = block_params["accuracy"]    
+        practice_state["inference_accuracy"] = block_params["accuracy"]
+    
+    # 모델 구조 관련 파라미터는 더 이상 여기서 처리하지 않음
+    # (load_model_with_layer_block에서 이미 처리됨)
+    
+    # Conv, C2f, Upsample 관련 코드 제거
+    # if "model" in block_params:
+    #     model_name = block_params["model"]
+    # if "Conv" in block_params:
+    #     conv = block_params["Conv"]
+    # if "C2f" in block_params:
+    #     c2f = block_params["C2f"]
+    # if "Upsample_scale" in block_params:
+    #     upsample_scale = block_params["Upsample_scale"]
+    # if "blockTypes" in block_params:
+    #     block_types = block_params["blockTypes"]
 
     # 기존 results.csv 삭제
     results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
@@ -763,31 +762,25 @@ def train_model_block(block_params=None):
     
     # 에폭 수 설정 - 사용자 지정 값 또는 기본값
     if epochs is None:
-        # 기본 에폭 수 설정 (클라이언트에서 명시적으로 전달한 경우 우선 사용)
-        epochs = 1  # 기본값을 1로 변경 (로컬과 동일하게)
+        epochs = 5 if device == "cuda" else 2
     else:
-        # 사용자 지정 에폭 수를 정수로 변환
         try:
             epochs = int(epochs)
             if epochs <= 0:
                 show_tagged_progress('ERROR', f'에폭 수는 양수여야 합니다. 기본값을 사용합니다.', start_time, 15)
-                epochs = 1  # 기본값을 1로 변경
+                epochs = 5 if device == "cuda" else 2
         except ValueError:
             show_tagged_progress('ERROR', f'유효하지 않은 에폭 수입니다. 기본값을 사용합니다.', start_time, 15)
-            epochs = 1  # 기본값을 1로 변경
+            epochs = 5 if device == "cuda" else 2
     
     # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
     if imgsz is None:
-        # 기본 이미지 크기 설정
         imgsz = 640
     else:
-        # 사용자 지정 이미지 크기를 정수로 변환
         try:
             imgsz = int(imgsz)
-            # 유효한 이미지 크기 범위 확인 (YOLO 권장 크기)
             valid_sizes = [512, 640, 960, 1024, 1280]
             if imgsz not in valid_sizes:
-                # 가장 가까운 유효 크기 찾기
                 closest_size = min(valid_sizes, key=lambda x: abs(x - imgsz))
                 show_tagged_progress('ERROR', f'이미지 크기 {imgsz}는 권장되지 않습니다. 가장 가까운 권장 크기 {closest_size}를 사용합니다.', start_time, 15)
                 imgsz = closest_size
@@ -797,6 +790,8 @@ def train_model_block(block_params=None):
     
     show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
     
+    # 나머지 학습 코드는 기존과 동일...
+    # (try-except 블록과 학습 실행 부분은 그대로 유지)
     try:
         # 학습 시작 시간 기록
         epoch_start_time = time.time()
@@ -837,8 +832,7 @@ def train_model_block(block_params=None):
         model = practice_state["model"]
         data_yaml_path = practice_state["data_yaml_path"]
         
-        # YOLOv8 학습 실행 - verbose=True로 설정하여 로그 출력 활성화
-        show_tagged_progress('TRAIN', 'YOLO train() 메소드 호출 중...', start_time, 30)
+        # YOLOv8 학습 실행
         results = model.train(
             data=data_yaml_path,
             epochs=epochs,
@@ -850,8 +844,6 @@ def train_model_block(block_params=None):
             exist_ok=True,
             workers = 0,
         )
-        
-        show_tagged_progress('TRAIN', 'YOLO 학습이 완료되었습니다', start_time, 90)
         
         # 결과 경로 설정
         results_dir = find_latest_results_dir()
