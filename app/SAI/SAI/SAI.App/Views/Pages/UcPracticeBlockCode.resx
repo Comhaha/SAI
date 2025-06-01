@@ -921,13 +921,34 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;guna2Panel2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="pSideInfer.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="pSideInfer.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
+    <value>251, 2350</value>
+  </data>
+  <data name="pFake.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 33</value>
+  </data>
+  <data name="pFake.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;pFake.Name" xml:space="preserve">
+    <value>pFake</value>
+  </data>
+  <data name="&gt;&gt;pFake.Type" xml:space="preserve">
+    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
+  </data>
+  <data name="&gt;&gt;pFake.Parent" xml:space="preserve">
+    <value>pSideInfer</value>
+  </data>
+  <data name="&gt;&gt;pFake.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="tpModelGraph.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -984,7 +1005,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;tpModelGraph.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tpModelGraph.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lblModelGraph" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -1014,7 +1035,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;btnInfoGraph.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="lblThreshold.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1065,7 +1086,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ptxtThreshold.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnInfoThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1092,7 +1113,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;btnInfoThreshold.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="lblInfer.Font" type="System.Drawing.Font, System.Drawing">
     <value>Noto Sans KR, 9pt, style=Bold</value>
@@ -1140,7 +1161,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ptxtInfer.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="pboxInferAccuracy.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1170,7 +1191,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pboxInferAccuracy.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="btnSelectInferImage.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1197,7 +1218,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;btnSelectInferImage.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="ucCsvChart1.Location" type="System.Drawing.Point, System.Drawing">
     <value>40, 612</value>
@@ -1221,7 +1242,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ucCsvChart1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="pThreshold.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
@@ -1275,7 +1296,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;pThreshold.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tbarThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>51, 163</value>
@@ -1296,7 +1317,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;tbarThreshold.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="ibtnDownloadAIModel.Location" type="System.Drawing.Point, System.Drawing">
     <value>303, 2250</value>
@@ -1320,7 +1341,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnDownloadAIModel.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="ibtnGoNotion.Location" type="System.Drawing.Point, System.Drawing">
     <value>45, 2250</value>
@@ -1344,7 +1365,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnGoNotion.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="ibtnAiFeedback.Location" type="System.Drawing.Point, System.Drawing">
     <value>40, 2085</value>
@@ -1365,7 +1386,7 @@
     <value>pSideInfer</value>
   </data>
   <data name="&gt;&gt;ibtnAiFeedback.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="pSideInfer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -1390,21 +1411,6 @@
   </data>
   <data name="&gt;&gt;pSideInfer.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="pFake.Location" type="System.Drawing.Point, System.Drawing">
-    <value>251, 2350</value>
-  </data>
-  <data name="pFake.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 33</value>
-  </data>
-  <data name="pFake.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;pFake.Name" xml:space="preserve">
-    <value>pFake</value>
-  </data>
-  <data name="&gt;&gt;pFake.Type" xml:space="preserve">
-    <value>Guna.UI2.WinForms.Guna2Panel, Guna.UI2, Version=2.0.4.7, Culture=neutral, PublicKeyToken=8b9d14aa5142e261</value>
   </data>
   <data name="pMemo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
