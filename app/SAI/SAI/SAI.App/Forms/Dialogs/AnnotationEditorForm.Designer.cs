@@ -112,7 +112,6 @@
             this.annotationText1.BackColor = System.Drawing.Color.Transparent;
             this.annotationText1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.annotationText1.BorderColor = System.Drawing.Color.White;
-            this.annotationText1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.annotationText1.BorderThickness = 0;
             this.annotationText1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.annotationText1.DefaultText = "";
@@ -122,14 +121,15 @@
             this.annotationText1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.annotationText1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.annotationText1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.annotationText1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.annotationText1.ForeColor = System.Drawing.Color.DimGray;
+            this.annotationText1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.annotationText1.ForeColor = System.Drawing.SystemColors.MenuText;
             this.annotationText1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.annotationText1.Location = new System.Drawing.Point(5, 6);
             this.annotationText1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.annotationText1.MaximumSize = new System.Drawing.Size(415, 36);
             this.annotationText1.MinimumSize = new System.Drawing.Size(415, 36);
             this.annotationText1.Name = "annotationText1";
+            this.annotationText1.PlaceholderForeColor = System.Drawing.Color.DarkGray;
             this.annotationText1.PlaceholderText = "클래스 작성";
             this.annotationText1.SelectedText = "";
             this.annotationText1.Size = new System.Drawing.Size(415, 36);
