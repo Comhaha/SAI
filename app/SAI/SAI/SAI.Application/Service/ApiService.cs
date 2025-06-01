@@ -458,13 +458,25 @@ namespace SAI.SAI.Application.Service
                     };
                 }
 
-                // Base64 이미지를 파일로 저장
+                // Local 환경과 동일한 경로에 Base64 이미지를 파일로 저장
+                string filename = Path.GetFileNameWithoutExtension(imagePath);
+                string extension = Path.GetExtension(imagePath);
                 string resultImagePath = Path.Combine(
-                    Path.GetDirectoryName(imagePath),
-                    $"{Path.GetFileNameWithoutExtension(imagePath)}_result{Path.GetExtension(imagePath)}"
-                );
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\SAI.Application\Python\runs\result",
+                    $"{filename}_result{extension}");
+                resultImagePath = Path.GetFullPath(resultImagePath);
+                
+                // 디렉토리가 없으면 생성
+                string resultDir = Path.GetDirectoryName(resultImagePath);
+                if (!Directory.Exists(resultDir))
+                {
+                    Directory.CreateDirectory(resultDir);
+                    Console.WriteLine($"[INFO] 결과 디렉토리 생성: {resultDir}");
+                }
 
                 File.WriteAllBytes(resultImagePath, Convert.FromBase64String(result.result_image_base64));
+                Console.WriteLine($"[INFO] 서버 추론 결과를 Local과 동일한 경로에 저장: {resultImagePath}");
 
                 return new InferenceResult
                 {
