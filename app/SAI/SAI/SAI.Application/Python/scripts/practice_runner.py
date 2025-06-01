@@ -22,21 +22,22 @@ logger = logging.getLogger(__name__)
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-class TutorialRunner:
-    def __init__(self, tutorial_train_script_path: str):
-        self.tutorial_train_script_path = tutorial_train_script_path
-        self.tutorial_train_script = self._load_script()
+class practiceRunner:
+    def __init__(self, practice_train_script_path: str):
+        self.practice_train_script_path = practice_train_script_path
+        self.practice_train_script = self._load_script()
 
         self.block_mappings = {
             "start": None,
-            "pipInstall": self.tutorial_train_script.install_packages_block,
-            "loadModel": self.tutorial_train_script.check_gpu_yolo_load_block,
-            "loadDataset": self.tutorial_train_script.download_dataset_block,
-            "machineLearning": self.tutorial_train_script.train_model_block,
-            "resultGraph": self.tutorial_train_script.visualize_training_results_block,
-            "imgPath": self.tutorial_train_script.set_image_path_block,
-            "modelInference": self.tutorial_train_script.run_inference_block,
-            "visualizeResult": self.tutorial_train_script.visualize_results_block
+            "pipInstall": self.practice_train_script.install_packages_block,
+            "loadModel": self.practice_train_script.check_gpu_yolo_load_block,
+            "loadModelWithLayer": self.practice_train_script.load_model_with_layer_block,
+            "loadDataset": self.practice_train_script.download_dataset_block,
+            "machineLearning": self.practice_train_script.train_model_block,
+            "resultGraph": self.practice_train_script.visualize_training_results_block,
+            "imgPath": self.practice_train_script.set_image_path_block,
+            "modelInference": self.practice_train_script.run_inference_block,
+            "visualizeResult": self.practice_train_script.visualize_results_block
         }
         logger.debug("[Runner] 블록 함수 매핑 완료")
         print(f"[DEBUG] block_mappings.keys(): {list(self.block_mappings.keys())}", flush=True)
@@ -44,18 +45,18 @@ class TutorialRunner:
 
     def _load_script(self):
         """튜토리얼 스크립트 로드"""
-        print(f"[DEBUG] 스크립트 로딩 시도: {self.tutorial_train_script_path}", flush=True)
+        print(f"[DEBUG] 스크립트 로딩 시도: {self.practice_train_script_path}", flush=True)
         
         try:
             # 스크립트 파일 존재 확인
-            if not os.path.exists(self.tutorial_train_script_path):
-                print(f"[DEBUG] 스크립트 파일이 존재하지 않음: {self.tutorial_train_script_path}", flush=True)
-                raise FileNotFoundError(f"튜토리얼 스크립트를 찾을 수 없습니다: {self.tutorial_train_script_path}")
+            if not os.path.exists(self.practice_train_script_path):
+                print(f"[DEBUG] 스크립트 파일이 존재하지 않음: {self.practice_train_script_path}", flush=True)
+                raise FileNotFoundError(f"튜토리얼 스크립트를 찾을 수 없습니다: {self.practice_train_script_path}")
             
             print(f"[DEBUG] 스크립트 파일 존재 확인됨", flush=True)
             
             # 스크립트 디렉토리를 sys.path에 추가
-            script_dir = os.path.dirname(self.tutorial_train_script_path)
+            script_dir = os.path.dirname(self.practice_train_script_path)
             if script_dir not in sys.path:
                 sys.path.insert(0, script_dir)
                 print(f"[DEBUG] sys.path에 추가됨: {script_dir}", flush=True)
@@ -63,8 +64,8 @@ class TutorialRunner:
             # 모듈 사양 생성
             print(f"[DEBUG] 모듈 사양 생성 시도", flush=True)
             spec = importlib.util.spec_from_file_location(
-                "tutorial_train_script",
-                self.tutorial_train_script_path
+                "practice_train_script",
+                self.practice_train_script_path
             )
             print(f"[DEBUG] 모듈 사양 생성됨", flush=True)
             
@@ -177,31 +178,48 @@ def main():
     logger.debug(f"[Runner] 받은 인자: {args}")
 
     try:
-        runner = TutorialRunner(args.train_script)
+        runner = practiceRunner(args.train_script)
 
+        # 파라미터 초기화
         params = {}
+        blocks = args.blocks
+
+        # 개별 인자들 처리
         if args.image_path:
             params["image_path"] = args.image_path
         if args.epochs:
             params["epochs"] = args.epochs
         if args.imgsz:
             params["imgsz"] = args.imgsz
+
+        # JSON 파라미터 처리
         print(f"[DEBUG] args.params: {args.params}")
         if args.params:
-            params = json.loads(args.params)
+            json_params = json.loads(args.params)
+            params.update(json_params)
+            
+            # JSON에서 blocks를 추출 (개별 인자보다 우선)
+            if "blocks" in json_params and not blocks:
+                blocks = json_params["blocks"]
+                print(f"[DEBUG] JSON에서 blocks 추출: {blocks}")
         else:
             print("[DEBUG] --params 인자가 비어있음")
 
+        # blocks가 여전히 None이면 오류
+        if not blocks:
+            raise ValueError("blocks 파라미터가 제공되지 않았습니다.")
+
+        logger.debug(f"[Runner] 실행할 블록: {blocks}")
         logger.debug(f"[Runner] 전달할 최종 파라미터: {params}")
 
-        results = runner.execute_blocks(args.blocks, params)
-        print(f"RESULT_JSON:{json.dumps(results)}")
+        results = runner.execute_blocks(blocks, params)
+        print(f"TRAINING_RESULT:{json.dumps(results)}")
 
         return 0 if results["success"] else 1
 
     except Exception as e:
         logger.error(f"[Runner] 전체 실행 중 오류 발생: {e}", exc_info=True)
-        print(f"PROGRESS::오류 발생: {str(e)}", flush=True)
+        print(f"PROGRESS:0:오류 발생: {str(e)}", flush=True)
         return 1
 
 if __name__ == "__main__":

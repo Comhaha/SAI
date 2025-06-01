@@ -606,29 +606,35 @@ def install_torch_cuda(start_time=None):
         cuda_tag = "cu118"
     
    # 안정적인 PyTorch 버전 설치 - 버전 다운그레이드
-    show_progress(f"{cuda_tag} 버전의 PyTorch 1.13.1 설치 중...", start_time, 50)  # 더 안정적인 버전으로 변경
+    show_progress(f"{cuda_tag} 버전의 PyTorch 1.8.1 설치 중...", start_time, 50)  # 기준 버전으로 변경
     torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
     
-    # 버전 선택 - 더 안정적인 조합 사용
+    # 버전 선택 - PyTorch 1.8.1 기준으로 통일
     if cuda_tag == "cu121":
-        # CUDA 12.1 호환 버전
+        # CUDA 12.1은 PyTorch 1.8.1과 호환되지 않으므로 cu111 사용
+        cuda_tag = "cu111"
+        torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
         install_cmd = [
             sys.executable, "-m", "pip", "install", 
-            "torch==2.0.1", "torchvision==0.15.2", "torchaudio==2.0.2",
+            "torch==1.8.1+cu111", "torchvision==0.9.1+cu111", "torchaudio==0.8.1",
             "--index-url", torch_url
         ]
     elif cuda_tag == "cu118":
-        # CUDA 11.8 호환 버전 (매우 안정적)
+        # CUDA 11.8도 cu111로 대체 (호환성을 위해)
+        cuda_tag = "cu111"
+        torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
         install_cmd = [
             sys.executable, "-m", "pip", "install", 
-            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "torch==1.8.1+cu111", "torchvision==0.9.1+cu111", "torchaudio==0.8.1",
             "--index-url", torch_url
         ]
     else:
-        # 기타 CUDA 버전
+        # 기타 CUDA 버전도 cu111 사용
+        cuda_tag = "cu111"
+        torch_url = f"https://download.pytorch.org/whl/{cuda_tag}"
         install_cmd = [
             sys.executable, "-m", "pip", "install", 
-            "torch==1.13.1", "torchvision==0.14.1", "torchaudio==0.13.1",
+            "torch==1.8.1+cu111", "torchvision==0.9.1+cu111", "torchaudio==0.8.1",
             "--index-url", torch_url
         ]
     

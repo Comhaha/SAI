@@ -69,6 +69,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -98,6 +99,7 @@
     <Compile Include="SAI.Application\Dto\AiFeedbackResponseDto.cs" />
     <Compile Include="SAI.Application\Dto\BaseResponse.cs" />
     <Compile Include="SAI.Application\Service\AiFeedbackService.cs" />
+    <Compile Include="SAI.Application\Service\ApiService.cs" />
     <Compile Include="SAI.Application\Service\BlocklyService.cs" />
     <Compile Include="SAI.Application\Service\CodeBoxService.cs" />
     <Compile Include="SAI.Application\Service\PythonService.cs" />
