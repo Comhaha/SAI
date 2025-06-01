@@ -142,13 +142,13 @@ namespace SAI.SAI.App.Presenters
                                         {
                                             if (!_progressDialog.IsDisposed)
                                             {
-                                                _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                                _progressDialog.UpdateProgress(0, $"{text}");
                                             }
                                         }));
                                     }
                                     else
                                     {
-                                        _progressDialog.UpdateProgress(0, $"오류: {text}");
+                                        _progressDialog.UpdateProgress(0, $"{text}");
                                     }
                                 }
                             }
@@ -209,25 +209,101 @@ namespace SAI.SAI.App.Presenters
                             {
                                 if (!_progressDialog.IsDisposed)
                                 {
+                                    _yolopracticeview.AppendLog("스크립트가 종료됐습니다!");
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
+
 
                                     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                                     var csvPath = Path.Combine(baseDir,
                                         @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
                                     csvPath = Path.GetFullPath(csvPath);
                                     _yolopracticeview.ShowTrainingChart(csvPath);
+
+                                    CheckAndShowInferenceResult();
                                 }
                             }));
                         }
                         else
                         {
+                            _yolopracticeview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
+                            CheckAndShowInferenceResult();
                         }
                     }
                 }
             });
+        }
+
+        // YoloPracticePresenter.cs에 추가
+
+        private void CheckAndShowInferenceResult()
+        {
+            try
+            {
+                var model = BlocklyModel.Instance;
+                string imagePath = model?.imgPath;
+
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("[WARNING] 이미지 경로가 없습니다.");
+                    return;
+                }
+
+                Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
+
+                // 🔥 결과 이미지 경로는 동일 (inference.py가 같으니까)
+                string resultImagePath = null;
+                string filename = Path.GetFileNameWithoutExtension(imagePath);
+                string extension = Path.GetExtension(imagePath);
+                resultImagePath = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\SAI.Application\Python\runs\result",
+                    $"{filename}_result{extension}");
+                resultImagePath = Path.GetFullPath(resultImagePath);
+
+                Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
+
+                if (File.Exists(resultImagePath))
+                {
+                    Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
+
+                    var result = new PythonService.InferenceResult
+                    {
+                        Success = true,
+                        ResultImage = resultImagePath,
+                        OriginalName = Path.GetFileName(imagePath)
+                    };
+
+                    // 🔥 Practice용 인터페이스 사용
+                    if (_practiceInferenceView != null)
+                    {
+                        if (_yolopracticeview is Control viewControl && viewControl.InvokeRequired)
+                        {
+                            viewControl.Invoke(new Action(() => {
+                                _practiceInferenceView.ShowPracticeInferResultImage(result);
+                            }));
+                        }
+                        else
+                        {
+                            _practiceInferenceView.ShowPracticeInferResultImage(result);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[ERROR] _practiceInferenceView가 null입니다.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"[WARNING] 결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] 추론 결과 확인 중 오류 발생: {ex.Message}");
+            }
         }
 
         // 추론시 PythonService에 구현된 추론스크립트 함수를 실행
