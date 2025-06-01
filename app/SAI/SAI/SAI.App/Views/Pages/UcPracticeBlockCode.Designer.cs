@@ -474,6 +474,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             resources.ApplyResources(this.pSideInfer, "pSideInfer");
             this.pSideInfer.BackgroundImage = global::SAI.Properties.Resources.p_side_infer;
+            this.pSideInfer.Controls.Add(this.pFake);
             this.pSideInfer.Controls.Add(this.tpModelGraph);
             this.pSideInfer.Controls.Add(this.guna2Panel2);
             this.pSideInfer.Controls.Add(this.btnInfoGraph);
