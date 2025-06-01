@@ -341,7 +341,9 @@ namespace SAI.SAI.App.Views.Pages
 			// 이미지 경로가 바뀌면 블록에서도 적용되게
 			blocklyModel.ImgPathChanged += (newPath) => {
 				// 웹뷰에 이미지 경로 전달
-				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+				//webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+                string escapedPath = JsonSerializer.Serialize(newPath);
+                webViewblock.ExecuteScriptAsync($"imgPathChanged({escapedPath})");
 
                 if (File.Exists(newPath))
                 {
@@ -1043,33 +1045,23 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         string absolutePath = openFileDialog.FileName;
                         selectedImagePath = absolutePath;
-                        currentImagePath = absolutePath; // 현재 이미지 경로 저장
+                        //currentImagePath = absolutePath;
+                        blocklyModel.imgPath = selectedImagePath;
 
                         // 1. 현재 스크롤 위치 저장
-                        var scrollPos = pSideInfer.AutoScrollPosition;
+                        //var scrollPos = pSideInfer.AutoScrollPosition;
 
-                        // 2. 이미지 표시
+                        // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxInferAccuracy.Size = new Size(494,278);
+                            pboxInferAccuracy.Size = new Size(494, 278);
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
-                            pleaseControlThreshold.Visible = true;
                         }
-                        btnSelectInferImage.Visible = false;
 
-                        // 3. 레이아웃이 끝난 뒤 스크롤 복원 (BeginInvoke 사용)
-                        pSideInfer.BeginInvoke(new Action(() =>
-                        {
-                            try
-                            {
-                                // AutoScrollPosition은 음수값으로 저장됨에 주의!
-                                pSideInfer.AutoScrollPosition = new Point(-scrollPos.X, -scrollPos.Y);
-                            }
-                            catch { }
-                        }));
+                        btnSelectInferImage.Visible = false;
                     }
                 }
             }
@@ -1127,7 +1119,13 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.Image = image;
                             pboxInferAccuracy.Visible = true;
                             btnSelectInferImage.Visible = false;
-                            
+
+                            if (!isInferPanelVisible)
+                            {
+                                ShowpSIdeInfer();
+                                Console.WriteLine("[DEBUG] 추론 패널 표시됨");
+                            }
+
                             // 이미지 클릭 시 원본 이미지를 열 수 있다는 정보 표시
                             ToolTip toolTip = new ToolTip();
                             toolTip.SetToolTip(pboxInferAccuracy, "이미지를 클릭하여 원본 크기로 보기");
@@ -1335,23 +1333,6 @@ namespace SAI.SAI.App.Views.Pages
             return;
         }
 
-        private void pboxInferAccuracy_Click(object sender, EventArgs e)
-        {
-            // 이미지가 있고 경로가 있으면 이미지 뷰어로 열기
-            if (pboxInferAccuracy.Image != null && !string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
-            {
-                try
-                {
-                    // 기본 이미지 뷰어로 이미지 열기
-                    Process.Start(currentImagePath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"이미지를 여는 중 오류가 발생했습니다: {ex.Message}", "오류", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
 
         private void pErrorCloseBtn_Click(object sender, EventArgs e)
         {
