@@ -453,7 +453,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void UpdateNavigationButtonState()
+        private void UpdateNavigationButtonState() // 임시 
         {
             bool isCurrentImageLabeled = false;
             double currentAccuracy = 0;
@@ -484,7 +484,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel == "Classification" && currentAccuracy >= 1)
+            if (currentLevel == "Classification" && currentAccuracy >= 0)
             {
                 nextBtn.Enabled = true;
                 if (currentImageIndex >1)
@@ -494,22 +494,22 @@ namespace SAI.SAI.App.Views.Pages
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 90 && currentImageIndex != 8)
+            else if (currentAccuracy >= 0 && currentImageIndex != 8)
             {
                 nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 90 && currentImageIndex == 8)
+            else if (currentAccuracy >= 0 && currentImageIndex == 8)
             {
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (0 < currentAccuracy && currentAccuracy < 90)
-            {
-                imageStatusCode[currentImageIndex] = -1;
-                UpdateProgressIndicator(currentImageIndex, -1);
-            }
+            // else if (0 < currentAccuracy && currentAccuracy < 90)
+            // {
+            //     imageStatusCode[currentImageIndex] = -1;
+            //     UpdateProgressIndicator(currentImageIndex, -1);
+            // }
             else
             {
                 imageStatusCode[currentImageIndex] = 0;
