@@ -1,6 +1,6 @@
-# <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/a1754d0a91b9c80ddc92d37114703c71/icon192.png" width="20" alt="로고"> SAI(SSAFY AI Interface)
+# <img src="https://private-user-images.githubusercontent.com/161617508/453488173-1581912e-ee60-4eec-8f28-c6283756dd09.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU0MzUsIm5iZiI6MTc0OTU2NTEzNSwicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg4MTczLTE1ODE5MTJlLWVlNjAtNGVlYy04ZjI4LWM2MjgzNzU2ZGQwOS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDE4NTVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jNjcxNDkxMzg2Y2Y5MzE4MDYyNzI5NzdlMTBlZGZmYjIxOTUwYTRiNmVmNWY5NjI4N2U1YzJjYTdhMzExZGE5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.0Xft4SHywI0tVUmcvfmHX9dr-jmTPhoo6KlFWFvOBL4" width="20" alt="로고"> SAI(SSAFY AI Interface)
 
-[<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/136ab697f8e86a4bf4d8bd7b0484de54/%EC%8A%A4%ED%94%8C%EB%9E%98%EC%8B%9C_%EB%A1%9C%EA%B3%A0_%EB%B0%94%EA%BE%BCver.png">](https://k12d201.p.ssafy.io/)
+[<img src="https://private-user-images.githubusercontent.com/161617508/453486938-b03c1dd3-37a6-4b2a-84d8-ccd79e63249f.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU0MzUsIm5iZiI6MTc0OTU2NTEzNSwicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg2OTM4LWIwM2MxZGQzLTM3YTYtNGIyYS04NGQ4LWNjZDc5ZTYzMjQ5Zi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDE4NTVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mZmEyNzhlMGViNTA5ZmFiNDYyYTkwYTE2NDFiN2QwYTA5MzcyYzA2OWQ0MDA2NDM3YjcxZjQ4MjMxMDU4MzRjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.Cq0QysfReA5EB83j34L5fPdFTAnM3AmKR6xrja-jtOE">](https://k12d201.p.ssafy.io/)
 
 #### 👆 위 이미지 클릭하면 `랜딩페이지로` 이동합니다 👆
 
@@ -98,7 +98,7 @@
 
 # ✨ 서비스 화면
 
-### [서비스 상세 화면 보러가기↗️](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
+### [서비스 상세 화면 보러가기↗️](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
 
 <br/>
 
@@ -184,17 +184,17 @@
 
 -   사용자가 블럭을 조립하면 학습 및 추론이 가능한 직관적인 구조
 
-    <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/db1f1801a131d82a33aedb8b54addeb0/%EC%9E%90%EC%9C%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.jpg" width="800">
+    <img src="https://private-user-images.githubusercontent.com/161617508/453501343-54044e3e-71f4-4855-af92-1b06f8f8dfb2.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNTAxMzQzLTU0MDQ0ZTNlLTcxZjQtNDg1NS1hZjkyLTFiMDZmOGY4ZGZiMi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03MTMzZDMwNTU0MjliNjBkNTA3MGZhNjFhZDFlYjY5ZmMzMzM1ZmY2ZjFjZGQ5NjQyYzRlYWM0MDBjZGU3NjkyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.H7KijgBMx_-VNFmQHRrVznvRMShiaSe2ygneFOTbiZ8" width="800">
 
 ### 2. 간단한 파라미터 조정으로 모델 구조와 성능을 체감할 수 있는 데이터셋 제공
 
 -   튜토리얼 모드는 `바나나` 데이터셋, 실습 모드는 `가위바위보` 데이터셋을 제공
 
-    <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/4d8ac409b7820af96324ba68bccc8b81/%EC%9E%90%EC%9C%A8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EA%B8%B0%EC%88%A0%EC%84%A4%EB%AA%85.jpg" width="800">
+    <img src="https://private-user-images.githubusercontent.com/161617508/453501272-e408157c-1caf-4e02-ab12-e12a29846693.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNTAxMjcyLWU0MDgxNTdjLTFjYWYtNGUwMi1hYjEyLWUxMmEyOTg0NjY5My5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xZWY1YTY0Mzg5YzJiNjgxNmZkNzE5ZDIzZmY3OWIzZTgyMzkyNTM5ZDI4YjY4NGZkYTg0ZTk0MGVkMzc0ZmQxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.htnW8_ENkj46s0ctwTxLG6qho8__NcGmekVx9j_ejWA" width="800">
 
 ## 시스템 아키텍처
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ed9f4335e896c6d611bc5199bbf0022/image__6_.png" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453487688-74a2fe7c-ce09-45b1-b919-d54b67f48f92.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3Njg4LTc0YTJmZTdjLWNlMDktNDViMS1iOTE5LWQ1NGI2N2Y0OGY5Mi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iZmY2OGFkM2Y2MzZjZjg5ZmQ0N2MzNGZlZWE0YzRjMWY2NDc2YzIwMzg1NTYwYzljMzYwNzgyMjliMGUxODk4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.gJ0y-eGfYAB3b1FdaimkPp3NiizmwaPEimmoMX4BoVU" width="800">
 
 <br/>
 
@@ -206,17 +206,17 @@
 
 #### [피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/29f971cddc7fcff97fd9b0b9a64f22b9/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C1.webp" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453506781-9f8fa5ed-79cc-45f5-895e-08964baf303d.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNTA2NzgxLTlmOGZhNWVkLTc5Y2MtNDVmNS04OTVlLTA4OTY0YmFmMzAzZC5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yMzUwNGYxN2EyNjRlNzc3MDAzNGJlMWY5NjcyZmFiMmUyMjNmM2Y4OGRiMGQ1ZDkxZmZmZjgyYzIyZWNlNjg0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.KMDomHFwq3IyBjXOtGpf5QuE08l7--M8LJqkeqG4bIA" width="800">
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/3e038f0abfeed60fbf503280aa78ad9a/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C2.webp" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453506729-8ec58b1a-1fcc-4de6-a7dc-73c229411cd1.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNTA2NzI5LThlYzU4YjFhLTFmY2MtNGRlNi1hN2RjLTczYzIyOTQxMWNkMS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jMmQxYmVkZjQ1Zjg4NWRjNDIxYzE3MDBhMGU4ZGI1MTg4Zjg0NjQzYWNlMDE0OTMwMDJjYTU4OWJkOGI1YjI3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.acuV9UK0A4rtUHRvsKipd9BhtzNcTgDhiFyWOUonzmc" width="800">
 
 ## API 명세서
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5fdbef1b691bf64fd0c1f9acfdc263c6/image.png" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453487782-6f610f56-2fce-459c-8706-d3bc196cdfec.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3NzgyLTZmNjEwZjU2LTJmY2UtNDU5Yy04NzA2LWQzYmMxOTZjZGZlYy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT00YjI0NWI0ZTZlNGI4MTdhMGZmN2VlNmNhYzUzNjI1NmE3NWJlYjMzYTRiNjQyMmJjZmQ2MGYyNGM2NWZlYWYyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.RJtyj5iyDQKzdd0yAL3sj2gCvEr1KtPHpGoE2sCcXN0" width="800">
 
 ## ERD
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/b25d73d3d9c65fd1369ac4b61c47d0dd/image.png" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453487848-2a6b5f6f-9682-4b57-9759-1032b517a62d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3ODQ4LTJhNmI1ZjZmLTk2ODItNGI1Ny05NzU5LTEwMzJiNTE3YTYyZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wMDEwYjQyMDA0ZWMwMzZiMTRhN2I1MDNkY2NmMDE5ZjRjYzJmOGU4ZmM0MzQ5MGVjYzdjYTc5MDg1Zjg2YWNmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.PrhQtebO_yOinb52kAGHCoZVX2VCE0SYGnE8dg1IsaY" width="800">
 
 ## Git
 
@@ -231,17 +231,17 @@
   <tr>
     <!-- 1 -->
     <td align="center" width="260">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/5ebc5118139ebdecb3f59ae732f3213d/%EC%A0%95%EC%9C%A0%EC%A7%84.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487569-a35b93ee-c5a0-4912-bc1a-a961c3c03280.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3NTY5LWEzNWI5M2VlLWM1YTAtNDkxMi1iYzFhLWE5NjFjM2MwMzI4MC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02NzczYmEyMjRiNGNkZGU4NWEzYTY0MTMzN2RjMGE0OTQ2MmQ2YTQ0ZjIxMTcxZDRlNGQxNmI2M2M1MTUxMGRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.xxBM3qVL1GjHQ3sCODVeh2O4dKXswvuWu6T2O5iw6S8" width="100"><br>
       <a href="https://github.com/breadbirds"><strong>정유진</strong></a>
     </td>
     <!-- 2 -->
     <td align="center" width="260">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cb66373687b47ae6e04f15a4490b9ef/%EA%B6%8C%EB%8F%99%ED%98%84.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487455-67abeacc-f512-4afe-aa8c-2f7afaced521.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3NDU1LTY3YWJlYWNjLWY1MTItNGFmZS1hYThjLTJmN2FmYWNlZDUyMS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xMTMyYTUyYjQ1MzZkYmQ1NDg4NTk4MTdjNGVjYTcyNGNmNTgyYzU5NTM0YTRlYThhNWRhYmE2Y2Q5ZjZmMTM3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.aW9wjvKC-N40pOvtxSLLVEDHLSjqFbLKRpiyftVsyGA" width="100"><br>
       <a href="https://github.com/DonghyeonKwon"><strong>권동현</strong></a>
     </td>
     <!-- 3 -->
     <td align="center" width="260">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/6428dd61a1f361ad6eb05efc7cfbc5ae/%EA%B9%80%EC%A0%95%EC%96%B8.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487511-ff791cc1-f590-4ca0-bd02-50ad489c17e6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3NTExLWZmNzkxY2MxLWY1OTAtNGNhMC1iZDAyLTUwYWQ0ODljMTdlNi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02ZDdhNWVkZDUyOTQyY2YxNDViZThjMjFiZWFkMGZkNzQzZTVmOGIwYmU4YTk4NWY3NjI4NWE1YWY4MzAzNjEzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.UxOUthmHayvXQ0I9JmhTFlnWSIhnlFCMaL7ZIGIgsdE" width="100"><br>
       <a href="https://github.com/JeongEon8"><strong>김정언</strong></a>
     </td>
   </tr>
@@ -262,17 +262,17 @@
   <tr>
     <!-- 4 -->
     <td align="center">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/67548002f143ad004f061e3d9def8fb2/%EB%8F%84%EC%8A%B9%EA%B5%AD.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487185-2cf0514b-ab77-4bef-b696-0280bbaf3c20.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3MTg1LTJjZjA1MTRiLWFiNzctNGJlZi1iNjk2LTAyODBiYmFmM2MyMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jOGIyYmQyMGQ4MWEyOTMzMjM0ZDg2YTk4ODc3NWZmMzJiZTQ2MTQyODVmNDJlMmY4OWI5OWI4M2FiY2FmYTQwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.GV8ppXBp3U4HUOMYbLDWDqzFojIJN40d8zFVCY4rgFo" width="100"><br>
       <a href="https://github.com/DoSeungGuk"><strong>도승국</strong></a>
     </td>
     <!-- 5 -->
     <td align="center">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/1cd61ace7afbc6dbe7938376030633fe/%EB%B0%95%EC%9E%AC%EC%98%81.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487354-fcbb3537-f583-4668-ab7b-f1719fe79140.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3MzU0LWZjYmIzNTM3LWY1ODMtNDY2OC1hYjdiLWYxNzE5ZmU3OTE0MC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zOGYyYjMxMmUyZjE2MzFhNjgwZTQ3ODY2MDY1MTMwMDczMDkyNmE0MjVlODNkOGI0M2E1YTZlMjVjYWJhYTRhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.a9uaNC2HjalPX0_HLUdxe7yTdxEQ-b8SvkK9twBYYyc" width="100"><br>
       <a href="https://github.com/estel2005"><strong>박재영</strong></a>
     </td>
     <!-- 6 -->
     <td align="center">
-      <img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/72da216584bd09d0c07c74f2fb186c16/%EC%A1%B0%ED%98%9C%EC%A0%95.png" width="100"><br>
+      <img src="https://private-user-images.githubusercontent.com/161617508/453487638-d7712699-454f-4747-bb0a-44a72d852252.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNDg3NjM4LWQ3NzEyNjk5LTQ1NGYtNDc0Ny1iYjBhLTQ0YTcyZDg1MjI1Mi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05NzczNjA5NGI2MzQ5OGI3OTc3ZDgyZmE3YmQxNDA0ZDQ4MmY0NjlmZjM0MTZiNmJiOGYzZDdiZjNmZTUwOTk1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.3B5zafoOMgpny0UgPxvcVRykwuXb7XJcXwYuyZiy1I8" width="100"><br>
       <a href="https://github.com/joehyejeong"><strong>조혜정</strong></a>
     </td>
   </tr>
@@ -295,12 +295,12 @@
 
 <br/>
 
-<img src="https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/uploads/669e161633a410171f1cee4b2e1c22be/%EC%97%AD%ED%95%A0%EB%B6%84%EB%8B%B4.jpg" width="800">
+<img src="https://private-user-images.githubusercontent.com/161617508/453501605-5ed7ee92-0672-463f-9061-aa8fe50456ce.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDk1NjU2NDcsIm5iZiI6MTc0OTU2NTM0NywicGF0aCI6Ii8xNjE2MTc1MDgvNDUzNTAxNjA1LTVlZDdlZTkyLTA2NzItNDYzZi05MDYxLWFhOGZlNTA0NTZjZS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxMFQxNDIyMjdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yYTRjNTAzMjgyZmEzYTBmODc5MmM0ZWMwZDk4NjMwMWVlOGQ0MTU4ZDcwMDZlNDkyMTdkOTIxMWM2NzdhOGExJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.4fQDP0eXZ9ZX7-_zV_dhtZBtTxd6Exe5ru7E7_t2Rtc" width="800">
 
 <div id="8"></div>
 
 # 📒 메뉴얼 및 상세 문서
 
--   [포팅메뉴얼](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/%ED%8F%AC%ED%8C%85-%EB%A9%94%EB%89%B4%EC%96%BC)
+-   [포팅메뉴얼]https://github.com/breadbirds/SAI/wiki/%ED%8F%AC%ED%8C%85-%EB%A9%94%EB%89%B4%EC%96%BC)
 -   [Git]()
--   [서비스 화면](https://lab.ssafy.com/s12-final/S12P31D201/-/wikis/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
+-   [서비스 화면](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
