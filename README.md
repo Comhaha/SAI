@@ -1,18 +1,20 @@
-# <img src="/docs/icon192.png" width="20" alt="로고"> SAI(SSAFY AI Interface)
+# <img src="/docs/icon192.png" width="20" alt="로고"> SAI
 
 [<img src="/docs/스플래시_로고_바꾼ver.png">](https://k12d201.p.ssafy.io/)
 
 #### 👆 위 이미지 클릭하면 `랜딩페이지로` 이동합니다 👆
+[영상 포트폴리오 보러가기 ▶️](https://youtu.be/ww6OEHa8NBc)
 
 <br/>
 
-# 목차
+## 목차
 
 1. [**개요**](#✨-개요)
 1. [**기획 배경**](#-기획-배경)
 1. [**주요 기능**](#-주요-기능)
 1. [**서비스 화면**](#-서비스-화면)
 1. [**기술 스택**](#-기술-스택)
+1. [**기술 설명**](#-기술적-특징)
 1. [**프로젝트 진행 및 산출물**](#-프로젝트-진행-및-산출물)
 1. [**개발 멤버 및 회고**](#-개발-멤버-및-역할분담)
 1. [**메뉴얼 및 상세문서**](#-메뉴얼-및-상세-문서)
@@ -21,21 +23,21 @@
 
 <div id="1"></div>
 
-# ✨ 개요
+## ✨ 개요
 
-#### 🥇 SSAFY 자율 PJT 1등 🥇 | 🏆 SSAFY 자율 PJT 전시팀 선정 🏆 | [영상 포트폴리오 보러가기 ▶️](https://youtu.be/ww6OEHa8NBc)
+### 🥇 SSAFY 12기 자율 PJT 1등 🥇 | 🏆 SSAFY 12기 자율 PJT 전시회 입상 🏆
 
-#### 서비스명 : SAI
+**서비스명** : SAI
 
-#### 한줄 설명 : AI 모델 학습 과정을 블록 코딩 방식으로 구현하여 누구나 쉽게 실습할 수 있는 교육용 플랫폼
+**한줄 설명** : AI 모델 학습 과정을 블록 코딩 방식으로 구현하여 누구나 쉽게 실습할 수 있는 교육용 플랫폼
 
-#### 프로젝트 기간 : 2025.04.14 ~ 2025.05.22
+**프로젝트 기간** : 2025.04.14 ~ 2025.05.22
 
 <br/>
 
 <div id="2"></div>
 
-# ✨ 기획 배경
+## ✨ 기획 배경
 
 -   **진입 장벽 완화**  
     기존 AI 실습 환경은 설치·구성 난이도가 높아 초보자가 쉽게 접근하기 어려웠습니다.
@@ -54,7 +56,7 @@
 
 <div id="3"></div>
 
-# ✨ 주요 기능
+## ✨ 주요 기능
 
 #### 서비스 설명
 
@@ -96,15 +98,15 @@
 
 <div id="4"></div>
 
-# ✨ 서비스 화면
+## ✨ 서비스 화면
 
-### [서비스 상세 화면 보러가기↗️](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
+[서비스 상세 화면 보러가기↗️](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
 
 <br/>
 
 <div id="5"></div>
 
-# 📚 기술 스택
+## 📚 기술 스택
 
 ### Backend
 
@@ -178,7 +180,7 @@
  
 </div>
 
-## 기술적 특징
+## ✨ 기술적 특징
 
 ### 1. JS <-> C# <-> Python 데이터 흐름 자동화
 
@@ -202,33 +204,33 @@
 - 프로젝트 내 Python 가상환경에 모든 라이브러리 및 버전이 사전 설정되어 있음
 - 추가 설치 과정 없이 코드 실행 및 모델 학습 가능
 
-## 시스템 아키텍처
-
-<img src="/docs/시스템아키텍처.png" width="800">
-
-<br/>
-
 <div id="6"></div>
 
-# ✨ 프로젝트 진행 및 산출물
+## ✨ 프로젝트 진행 및 산출물
 
-## 화면 설계서
+###  1. 화면 설계서
 
-#### [피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
+[피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
 
 <img src="/docs/화면설계서1.webp" width="800">
 
 <img src="/docs/화면설계서2.webp" width="800">
 
-## API 명세서
+### 2. API 명세서
 
 <img src="/docs/api 설계서.png" width="800">
 
-## ERD
+### 3. ERD
 
 <img src="/docs/ERD.png" width="800">
 
-## Git
+### 4. 시스템 아키텍처
+
+<img src="/docs/시스템아키텍처.png" width="800">
+
+<br/>
+
+### Git
 <!-- -   [Git Convention 노션](https://thinkable-bear-51d.notion.site/1a4c2f3f4a77815299c7feb0724d372c?pvs=4) -->
 <!-- -   [Git Wiki](https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/Git) -->
 
@@ -242,21 +244,21 @@
   <tr>
     <td align="center" width="200">
       <a href="https://github.com/breadbirds">
-        <img src="https://github.com/breadbirds.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/breadbirds.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>정유진</strong>
       </a>
     </td>
     <td align="center" width="200">
       <a href="https://github.com/DonghyeonKwon">
-        <img src="https://github.com/DonghyeonKwon.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/DonghyeonKwon.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>권동현</strong>
       </a>
     </td>
     <td align="center" width="200">
       <a href="https://github.com/JeongEon8">
-        <img src="https://github.com/JeongEon8.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/JeongEon8.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>김정언</strong>
       </a>
@@ -276,21 +278,21 @@
   <tr>
     <td align="center" width="200">
       <a href="https://github.com/DoSeungGuk">
-        <img src="https://github.com/DoSeungGuk.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/DoSeungGuk.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>도승국</strong>
       </a>
     </td>
     <td align="center" width="200">
       <a href="https://github.com/estel2005">
-        <img src="https://github.com/estel2005.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/estel2005.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>박재영</strong>
       </a>
     </td>
     <td align="center" width="200">
       <a href="https://github.com/joehyejeong">
-        <img src="https://github.com/joehyejeong.png" width="100" style="border-radius: 50%;">
+        <img src="https://github.com/joehyejeong.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>조혜정</strong>
       </a>
@@ -316,5 +318,4 @@
 # 📒 메뉴얼 및 상세 문서
 
 -   [포팅메뉴얼](https://github.com/breadbirds/SAI/wiki/%ED%8F%AC%ED%8C%85-%EB%A9%94%EB%89%B4%EC%96%BC)
--   [Git]()
 -   [서비스 화면](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
