@@ -242,21 +242,21 @@
 
 <table>
   <tr>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/breadbirds">
         <img src="https://github.com/breadbirds.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>정유진</strong>
       </a>
     </td>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/DonghyeonKwon">
         <img src="https://github.com/DonghyeonKwon.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>권동현</strong>
       </a>
     </td>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/JeongEon8">
         <img src="https://github.com/JeongEon8.png" width="200" style="border-radius: 50%;">
         <br>
@@ -276,21 +276,21 @@
     </td>
   </tr>
   <tr>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/DoSeungGuk">
         <img src="https://github.com/DoSeungGuk.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>도승국</strong>
       </a>
     </td>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/estel2005">
         <img src="https://github.com/estel2005.png" width="200" style="border-radius: 50%;">
         <br>
         <strong>박재영</strong>
       </a>
     </td>
-    <td align="center" width="200">
+    <td align="center" width="300">
       <a href="https://github.com/joehyejeong">
         <img src="https://github.com/joehyejeong.png" width="200" style="border-radius: 50%;">
         <br>
