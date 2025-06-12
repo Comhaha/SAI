@@ -130,7 +130,7 @@
 
 - 각 블록에 대한 사용 가이드 및 툴팁 제공
 
-<img src="/docs/gif/블럭 툴팁.gif" width="800">
+<img src="/docs/gif/블록기능.webp" width="800">
 
 ### 3. 학습 결과 피드백 기능
 
