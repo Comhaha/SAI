@@ -70,6 +70,7 @@
 
     -   pip 설치, 모델 불러오기, 데이터셋 불러오기, 파라미터 설정 등 학습 과정을 블록으로 구성
     -   Run 버튼 클릭만으로 실제 학습 코드 실행 가능
+    
 
 -   **라벨링 체험 가능**
 
@@ -101,7 +102,7 @@
 
 ## ✨ 서비스 화면
 
-[서비스 상세 화면 보러가기↗️](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
+[전체 서비스 화면 보러가기↗️](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
 
 <br/>
 
@@ -209,31 +210,11 @@
 
 ## ✨ 프로젝트 진행 및 산출물
 
-###  1. 화면 설계서
-
-[피그마 바로가기 ↗️](https://www.figma.com/design/ku5Sdq7QepQOk2uL4EeMZr/%EC%9E%90%EC%9C%A8-PJT--%EA%B0%80%EC%A0%9C-?node-id=450-9380)
-
-<img src="/docs/화면설계서1.webp" width="800">
-
-<img src="/docs/화면설계서2.webp" width="800">
-
-### 2. API 명세서
-
-<img src="/docs/api 설계서.png" width="800">
-
-### 3. ERD
-
-<img src="/docs/ERD.png" width="800">
-
-### 4. 시스템 아키텍처
-
-<img src="/docs/시스템아키텍처.png" width="800">
-
-<br/>
-
-### Git
-<!-- -   [Git Convention 노션](https://thinkable-bear-51d.notion.site/1a4c2f3f4a77815299c7feb0724d372c?pvs=4) -->
-<!-- -   [Git Wiki](https://lab.ssafy.com/s12-ai-image-sub1/S12P21D101/-/wikis/Git) -->
+- [API 명세서](https://github.com/breadbirds/SAI/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%82%B0%EC%B6%9C%EB%AC%BC#1-api-%EB%AA%85%EC%84%B8%EC%84%9C)
+- [ERD](https://github.com/breadbirds/SAI/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%82%B0%EC%B6%9C%EB%AC%BC#2-erd)
+- [시스템 아키텍쳐](https://github.com/breadbirds/SAI/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%82%B0%EC%B6%9C%EB%AC%BC#3-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90)
+- [화면 설계서](https://github.com/breadbirds/SAI/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%82%B0%EC%B6%9C%EB%AC%BC#4-%ED%99%94%EB%A9%B4-%EC%84%A4%EA%B3%84%EC%84%9C)
+<!-- - [GIT]()-->
 
 <br/>
 
@@ -319,4 +300,4 @@
 # 📒 메뉴얼 및 상세 문서
 
 -   [포팅메뉴얼](https://github.com/breadbirds/SAI/wiki/%ED%8F%AC%ED%8C%85-%EB%A9%94%EB%89%B4%EC%96%BC)
--   [서비스 화면](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
+-   [전체 서비스 화면](https://github.com/breadbirds/SAI/wiki/%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%99%94%EB%A9%B4)
