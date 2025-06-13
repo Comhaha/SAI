@@ -148,8 +148,10 @@
   <img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white">
   <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
-   <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+  <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
   <img src="https://img.shields.io/badge/openjdk-000000?style=for-the-badge&logo=openjdk&logoColor=white">
+  <img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=python&logoColor=white">
+
 
 </div>
 
@@ -170,6 +172,8 @@
   <img src="https://img.shields.io/badge/winforms-00DDB3?style=for-the-badge&logo=&logoColor=white">
   <img src="https://img.shields.io/badge/blockly-61DAFB?style=for-the-badge&logo=&logoColor=white">
   <img src="https://img.shields.io/badge/Guna-663399?style=for-the-badge&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=&logoColor=white">
+
 
 </div>
 
