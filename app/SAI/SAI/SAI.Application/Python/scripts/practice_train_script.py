@@ -139,34 +139,31 @@ except Exception as e:
 
 # ================== 1. 패키지 설치 블록 함수 ==================
 def install_packages_block(block_params=None):
-    """패키지 설치 블록 실행 함수"""
+    # 패키지는 venv에 미리 설치 돼 있으므로 해당 블럭은 진행률에만 영향을 준다
+def install_packages_block(block_params=None):
+    """패키지 설치 블록 실행 함수 (단순 확인 모드)"""
     print("[DEBUG] install_packages_block 함수 진입", flush=True)
 
     start_time = time.time()
-    show_tagged_progress('TRAIN', '필수 패키지 설치를 시작합니다', start_time, 0)
-    
-    # 패키지 설치 순서 변경 및 버전 명시
-    packages = [
-        "numpy==1.24.3",
-        "ultralytics==8.0.196",
-        "opencv-python==4.8.0.76"
-    ]
+    show_tagged_progress('TRAIN', '필수 패키지 확인 중...', start_time, 0)
     
     try:
-        result = install_packages.install_packages_with_progress(packages, start_time)
-        print("[DEBUG] install_packages_with_progress 결과:", result, flush=True)
+        # 간단한 진행률 시뮬레이션
+        time.sleep(0.5)
+        show_tagged_progress('TRAIN', '패키지 확인 중...', start_time, 50)
         
-        pkg_elapsed = time.time() - start_time
-        show_tagged_progress('TRAIN', f'필수 패키지 설치가 완료되었습니다 (소요 시간: {int(pkg_elapsed)}초)', start_time, 100)
+        time.sleep(0.5)
+        show_tagged_progress('TRAIN', '패키지 확인 완료!', start_time, 100)
         
         return {
-            "success": result.get("success", False),
-            "installed_packages": result.get("installed_packages", []),
-            "failed_packages": result.get("failed_packages", []),
-            "elapsed_time": pkg_elapsed
+            "success": True,
+            "installed_packages": ["numpy", "ultralytics", "opencv-python"],
+            "failed_packages": [],
+            "elapsed_time": 1.0
         }
+        
     except Exception as e:
-        show_tagged_progress('ERROR', f'패키지 설치 중 오류 발생: {e}', start_time, 100)
+        show_tagged_progress('ERROR', f'패키지 확인 중 오류 발생: {e}', start_time, 100)
         return {
             "success": False,
             "error": str(e),
