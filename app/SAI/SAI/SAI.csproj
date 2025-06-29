@@ -934,5 +934,25 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_model_inference_lodaing.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
+    <!--빌드 준비-->
+  <ItemGroup>
+    <None Remove="Resources\**\*.*" />
+    <None Remove="SAI.App\Resources\Images\**\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SAI.App\Resources\Images\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Python 폴더 전체를 복사 -->
+   <Content Include="SAI.Application\Python\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+  <!-- Python 폴더 전체를 복사 -->
+  <Content Include="Blockly\**">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
