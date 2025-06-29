@@ -252,7 +252,7 @@ namespace SAI.SAI.App.Views.Pages
             if (!Directory.Exists(folderPath))
             {
                 // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
-                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\SAI.APP\Resources\Images"));
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.APP", "Resources","Images"));
                 if (Directory.Exists(devPath))
                 {
                     folderPath = devPath;
@@ -1270,7 +1270,7 @@ namespace SAI.SAI.App.Views.Pages
             if (!Directory.Exists(folderPath))
             {
                 // 디렉터리가 존재하지 않으면 개발환경용 경로 시도
-                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\Resources"));
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, "Resources"));
 
                 if (Directory.Exists(devPath))
                 {
@@ -1426,7 +1426,7 @@ namespace SAI.SAI.App.Views.Pages
             try
             {
                 string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                string devPath = Path.GetFullPath(Path.Combine(baseDir, @"..\..\Resources"));
+                string devPath = Path.GetFullPath(Path.Combine(baseDir, "Resources"));
 
                 // classImages가 비어있는 경우에만 로드
                 if (classImages.Count == 0)

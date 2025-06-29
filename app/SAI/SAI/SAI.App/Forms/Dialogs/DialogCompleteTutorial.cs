@@ -67,7 +67,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 				presenter.clickGoTrain();
 				// tutorial에서 생성한 모델 삭제
 				string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-				string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+				string modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "weights", "best.pt"));
 
 				if (File.Exists(modelPath))
 				{

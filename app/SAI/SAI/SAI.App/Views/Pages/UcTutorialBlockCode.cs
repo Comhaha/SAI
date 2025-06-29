@@ -374,7 +374,7 @@ namespace SAI.SAI.App.Views.Pages
             
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                @"..\..\SAI.Application\Python\runs\detect\train\result.csv");
+                "SAI.Application", "Python","runs","detect","train","result.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTutorialTrainingChart(csvPath);
         }
@@ -749,7 +749,7 @@ namespace SAI.SAI.App.Views.Pages
                 if (!isBlockError()) // 순서가 맞을 떄
                 {
 					string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-					string modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+					string modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application","Python","runs","detect","train","weights","best.pt"));
 
 					var mainModel = MainModel.Instance;
 
@@ -868,7 +868,7 @@ namespace SAI.SAI.App.Views.Pages
 
             // tutorial blockly html 가져오는 경로 설정
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string localPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\Blockly\\TutorialBlockly.html"));
+            string localPath = Path.GetFullPath(Path.Combine(baseDir, "Blockly","TutorialBlockly.html"));
             string uri = new Uri(localPath).AbsoluteUri;
 
 
@@ -1412,7 +1412,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             //모델 경로 다시 물어보기
-            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\weights\\best.pt"));
+            string _modelPath = Path.GetFullPath(Path.Combine(baseDir, "SAI.Application","Python","runs","detect","train","weights","best.pt"));
 
             if (!File.Exists(_modelPath))
             {

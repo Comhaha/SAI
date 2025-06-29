@@ -463,7 +463,7 @@ namespace SAI.SAI.Application.Service
                 string extension = Path.GetExtension(imagePath);
                 string resultImagePath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
-                    @"..\..\SAI.Application\Python\runs\result",
+                    "SAI.Application","Python","runs","result",
                     $"{filename}_result{extension}");
                 resultImagePath = Path.GetFullPath(resultImagePath);
                 

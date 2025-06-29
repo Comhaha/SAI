@@ -71,10 +71,10 @@ namespace SAI.SAI.App.Forms.Dialogs
 		//Code 경로
 		public string baseDir = AppDomain.CurrentDomain.BaseDirectory;
         public string CodeText => this.isTutorial ? 
-                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\tutorial_script.py")) :
-                                Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\scripts\\train_script.py"));
+                                Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "tutorial_script.py")) :
+                                Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "scripts", "train_script.py"));
         //log 사진 경로
-        public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, @"..\\..\\SAI.Application\\Python\\runs\\detect\\train\\results.png"));
+        public string LogImagePath => Path.GetFullPath(Path.Combine(baseDir, "SAI.Application", "Python", "runs", "detect", "train", "results.png"));
         //무슨 사진이 결과 사진인지?
         public string ResultImagePath => Path.GetFullPath(_resultImagePath);
         public string memo => _initialMemo;

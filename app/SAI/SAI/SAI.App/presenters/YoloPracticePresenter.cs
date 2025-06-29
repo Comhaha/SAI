@@ -216,7 +216,7 @@ namespace SAI.SAI.App.Presenters
 
                                     var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                                     var csvPath = Path.Combine(baseDir,
-                                        @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
+                                        "SAI.Application","Python","runs","detect","train","results.csv");
                                     csvPath = Path.GetFullPath(csvPath);
                                     _yolopracticeview.ShowTrainingChart(csvPath);
 
@@ -259,7 +259,7 @@ namespace SAI.SAI.App.Presenters
                 string extension = Path.GetExtension(imagePath);
                 resultImagePath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
-                    @"..\..\SAI.Application\Python\runs\result",
+                    "SAI.Application","Python","runs","result",
                     $"{filename}_result{extension}");
                 resultImagePath = Path.GetFullPath(resultImagePath);
 
