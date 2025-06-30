@@ -204,21 +204,21 @@ namespace SAI.SAI.App.Views.Pages
 
         private void RegisterExport()
         {
-            //// 좌표 내보내기 버튼 임시
-            //this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
-            //this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            //this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            //this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            //this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            //this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            //this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
-            //this.exportBtn.ForeColor = System.Drawing.Color.White;
-            //this.exportBtn.Location = new System.Drawing.Point(0, 0);
-            //this.exportBtn.Name = "exportBtn";
-            //this.exportBtn.Size = new System.Drawing.Size(138, 35);
-            //this.exportBtn.TabIndex = 14;
-            //this.exportBtn.Text = "좌표 내보내기";
-            //this.imageContainer.Controls.Add(this.exportBtn);
+            // 좌표 내보내기 버튼 임시
+            this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
+            this.exportBtn.ForeColor = System.Drawing.Color.White;
+            this.exportBtn.Location = new System.Drawing.Point(0, 0);
+            this.exportBtn.Name = "exportBtn";
+            this.exportBtn.Size = new System.Drawing.Size(138, 35);
+            this.exportBtn.TabIndex = 14;
+            this.exportBtn.Text = "좌표 내보내기";
+            this.imageContainer.Controls.Add(this.exportBtn);
         }
 
         /// <summary>
@@ -2274,33 +2274,33 @@ namespace SAI.SAI.App.Views.Pages
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 바운딩 박스 좌표를 JSON 형태로 내보내기
 
-        //private string ExportBoundingBoxCoordinates(int imageIndex)
-        //{
-        //    if (imageBoundingBoxes.ContainsKey(imageIndex) &&
-        //        imageBoundingBoxes[imageIndex].Count > 0)
-        //    {
-        //        var box = imageBoundingBoxes[imageIndex][0];
-        //        return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
-        //    }
-        //    return "{}";
-        //}
+        private string ExportBoundingBoxCoordinates(int imageIndex)
+        {
+            if (imageBoundingBoxes.ContainsKey(imageIndex) &&
+                imageBoundingBoxes[imageIndex].Count > 0)
+            {
+                var box = imageBoundingBoxes[imageIndex][0];
+                return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
+            }
+            return "{}";
+        }
 
-        //// 폴리곤 좌표를 JSON 형태로 내보내기
-        //private string ExportPolygonCoordinates(int imageIndex)
-        //{
-        //    if (imagePolygons.ContainsKey(imageIndex) &&
-        //        imagePolygons[imageIndex].Count > 0)
-        //    {
-        //        var polygon = imagePolygons[imageIndex][0];
+        // 폴리곤 좌표를 JSON 형태로 내보내기
+        private string ExportPolygonCoordinates(int imageIndex)
+        {
+            if (imagePolygons.ContainsKey(imageIndex) &&
+                imagePolygons[imageIndex].Count > 0)
+            {
+                var polygon = imagePolygons[imageIndex][0];
 
-        //        // 점들의 좌표를 배열로 변환
-        //        var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
-        //        string pointsJson = string.Join(",", points);
+                // 점들의 좌표를 배열로 변환
+                var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
+                string pointsJson = string.Join(",", points);
 
-        //        return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
-        //    }
-        //    return "{}";
-        //}
+                return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
+            }
+            return "{}";
+        }
 
         /// <summary>
         /// 현재 이미지 인덱스에 해당하는 바운딩 박스 목록을 가져옴
