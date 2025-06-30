@@ -3303,9 +3303,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_1_9 {
+        internal static System.Drawing.Bitmap level_1_15 {
             get {
-                object obj = ResourceManager.GetObject("level_1_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 1-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3313,9 +3313,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_2_9 {
+        internal static System.Drawing.Bitmap level_10_15 {
             get {
-                object obj = ResourceManager.GetObject("level_2_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 10-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3323,9 +3323,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_3_9 {
+        internal static System.Drawing.Bitmap level_11_15 {
             get {
-                object obj = ResourceManager.GetObject("level_3_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 11-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3333,9 +3333,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_4_9 {
+        internal static System.Drawing.Bitmap level_12_15 {
             get {
-                object obj = ResourceManager.GetObject("level_4_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 12-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3343,9 +3343,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_5_9 {
+        internal static System.Drawing.Bitmap level_13_15 {
             get {
-                object obj = ResourceManager.GetObject("level_5_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 13-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3353,9 +3353,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_6_9 {
+        internal static System.Drawing.Bitmap level_14_15 {
             get {
-                object obj = ResourceManager.GetObject("level_6_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 14-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3363,9 +3363,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_7_9 {
+        internal static System.Drawing.Bitmap level_15_15 {
             get {
-                object obj = ResourceManager.GetObject("level_7_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 15-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3373,9 +3373,9 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_8_9 {
+        internal static System.Drawing.Bitmap level_2_15 {
             get {
-                object obj = ResourceManager.GetObject("level_8_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 2-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3383,9 +3383,69 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap level_9_9 {
+        internal static System.Drawing.Bitmap level_3_15 {
             get {
-                object obj = ResourceManager.GetObject("level_9_9", resourceCulture);
+                object obj = ResourceManager.GetObject("level 3-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_4_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 4-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_5_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 5-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_6_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 6-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_7_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 7-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_8_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 8-15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_9_15 {
+            get {
+                object obj = ResourceManager.GetObject("level 9-15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3563,6 +3623,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap p_left_labeling {
+            get {
+                object obj = ResourceManager.GetObject("p_left_labeling", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap p_memo {
             get {
                 object obj = ResourceManager.GetObject("p_memo", resourceCulture);
@@ -3606,6 +3676,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap p_todolist {
             get {
                 object obj = ResourceManager.GetObject("p_todolist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_todolist_progress_0 {
+            get {
+                object obj = ResourceManager.GetObject("p_todolist_progress_0", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

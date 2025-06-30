@@ -36,19 +36,12 @@ namespace SAI.SAI.App.Views.Pages
             this.class1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.mainpanel = new Guna.UI2.WinForms.Guna2Panel();
             this.leftPanel = new Guna.UI2.WinForms.Guna2GradientPanel();
+            this.progressSeg = new Guna.UI2.WinForms.Guna2Panel();
+            this.progressBox = new Guna.UI2.WinForms.Guna2Panel();
+            this.progressClass = new Guna.UI2.WinForms.Guna2Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.class3 = new SAI.App.Views.Pages.AutoSizeLabel();
             this.classBtn = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
-            this.progress0 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress2 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress1 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress6 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress8 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress5 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress7 = new Guna.UI2.WinForms.Guna2Panel();
-            this.progress4 = new Guna.UI2.WinForms.Guna2Panel();
             this.imageContainer = new Guna.UI2.WinForms.Guna2GradientPanel();
             this.toolHandPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.toolHandGif = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -87,10 +80,10 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.goModel = new Guna.UI2.WinForms.Guna2Button();
             this.homeBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.guna2CustomGradientPanel1.SuspendLayout();
             this.imageContainer.SuspendLayout();
             this.toolHandPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toolHandGif)).BeginInit();
@@ -148,7 +141,7 @@ namespace SAI.SAI.App.Views.Pages
             this.class1.ForeColor = System.Drawing.Color.Black;
             this.class1.Location = new System.Drawing.Point(0, 0);
             this.class1.Name = "class1";
-            this.class1.Size = new System.Drawing.Size(113, 36);
+            this.class1.Size = new System.Drawing.Size(181, 56);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
             this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -157,7 +150,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             this.mainpanel.BackColor = System.Drawing.Color.Transparent;
             this.mainpanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("mainpanel.BackgroundImage")));
-            this.mainpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.mainpanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.mainpanel.Controls.Add(this.leftPanel);
             this.mainpanel.Controls.Add(this.imageContainer);
             this.mainpanel.FillColor = System.Drawing.Color.Transparent;
@@ -169,12 +162,14 @@ namespace SAI.SAI.App.Views.Pages
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.Transparent;
-            this.leftPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("leftPanel.BackgroundImage")));
-            this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.leftPanel.BackgroundImage = global::SAI.Properties.Resources.p_left_labeling;
+            this.leftPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.leftPanel.BorderColor = System.Drawing.Color.Transparent;
+            this.leftPanel.Controls.Add(this.progressSeg);
+            this.leftPanel.Controls.Add(this.progressBox);
+            this.leftPanel.Controls.Add(this.progressClass);
             this.leftPanel.Controls.Add(this.panel1);
             this.leftPanel.Controls.Add(this.classBtn);
-            this.leftPanel.Controls.Add(this.guna2CustomGradientPanel1);
             this.leftPanel.CustomBorderColor = System.Drawing.Color.DimGray;
             this.leftPanel.CustomizableEdges.BottomLeft = false;
             this.leftPanel.CustomizableEdges.BottomRight = false;
@@ -183,6 +178,36 @@ namespace SAI.SAI.App.Views.Pages
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Size = new System.Drawing.Size(351, 696);
             this.leftPanel.TabIndex = 4;
+            // 
+            // progressSeg
+            // 
+            this.progressSeg.BackColor = System.Drawing.Color.Transparent;
+            this.progressSeg.BackgroundImage = global::SAI.Properties.Resources.p_todolist_progress_0;
+            this.progressSeg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.progressSeg.Location = new System.Drawing.Point(184, 670);
+            this.progressSeg.Name = "progressSeg";
+            this.progressSeg.Size = new System.Drawing.Size(160, 26);
+            this.progressSeg.TabIndex = 18;
+            // 
+            // progressBox
+            // 
+            this.progressBox.BackColor = System.Drawing.Color.Transparent;
+            this.progressBox.BackgroundImage = global::SAI.Properties.Resources.p_todolist_progress_0;
+            this.progressBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.progressBox.Location = new System.Drawing.Point(184, 616);
+            this.progressBox.Name = "progressBox";
+            this.progressBox.Size = new System.Drawing.Size(160, 26);
+            this.progressBox.TabIndex = 17;
+            // 
+            // progressClass
+            // 
+            this.progressClass.BackColor = System.Drawing.Color.Transparent;
+            this.progressClass.BackgroundImage = global::SAI.Properties.Resources.p_todolist_progress_0;
+            this.progressClass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.progressClass.Location = new System.Drawing.Point(184, 562);
+            this.progressClass.Name = "progressClass";
+            this.progressClass.Size = new System.Drawing.Size(160, 26);
+            this.progressClass.TabIndex = 16;
             // 
             // panel1
             // 
@@ -222,153 +247,6 @@ namespace SAI.SAI.App.Views.Pages
             this.classBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.classBtn.Size = new System.Drawing.Size(24, 24);
             this.classBtn.TabIndex = 12;
-            // 
-            // guna2CustomGradientPanel1
-            // 
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress0);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress2);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress1);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress6);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress3);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress8);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress5);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress7);
-            this.guna2CustomGradientPanel1.Controls.Add(this.progress4);
-            this.guna2CustomGradientPanel1.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.guna2CustomGradientPanel1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2CustomGradientPanel1.FillColor2 = System.Drawing.Color.Transparent;
-            this.guna2CustomGradientPanel1.FillColor3 = System.Drawing.Color.Transparent;
-            this.guna2CustomGradientPanel1.FillColor4 = System.Drawing.Color.Transparent;
-            this.guna2CustomGradientPanel1.Location = new System.Drawing.Point(219, 553);
-            this.guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
-            this.guna2CustomGradientPanel1.Size = new System.Drawing.Size(129, 143);
-            this.guna2CustomGradientPanel1.TabIndex = 13;
-            // 
-            // progress0
-            // 
-            this.progress0.BackColor = System.Drawing.Color.Transparent;
-            this.progress0.BorderColor = System.Drawing.Color.Black;
-            this.progress0.BorderRadius = 15;
-            this.progress0.BorderThickness = 1;
-            this.progress0.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress0.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress0.Location = new System.Drawing.Point(0, 2);
-            this.progress0.Margin = new System.Windows.Forms.Padding(0);
-            this.progress0.Name = "progress0";
-            this.progress0.Size = new System.Drawing.Size(30, 30);
-            this.progress0.TabIndex = 17;
-            // 
-            // progress2
-            // 
-            this.progress2.BackColor = System.Drawing.Color.Transparent;
-            this.progress2.BorderColor = System.Drawing.Color.Black;
-            this.progress2.BorderRadius = 15;
-            this.progress2.BorderThickness = 1;
-            this.progress2.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress2.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress2.Location = new System.Drawing.Point(99, 2);
-            this.progress2.Margin = new System.Windows.Forms.Padding(0);
-            this.progress2.Name = "progress2";
-            this.progress2.Size = new System.Drawing.Size(30, 30);
-            this.progress2.TabIndex = 17;
-            // 
-            // progress1
-            // 
-            this.progress1.BackColor = System.Drawing.Color.Transparent;
-            this.progress1.BorderColor = System.Drawing.Color.Black;
-            this.progress1.BorderRadius = 15;
-            this.progress1.BorderThickness = 1;
-            this.progress1.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress1.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress1.Location = new System.Drawing.Point(50, 2);
-            this.progress1.Margin = new System.Windows.Forms.Padding(0);
-            this.progress1.Name = "progress1";
-            this.progress1.Size = new System.Drawing.Size(30, 30);
-            this.progress1.TabIndex = 16;
-            // 
-            // progress6
-            // 
-            this.progress6.BackColor = System.Drawing.Color.Transparent;
-            this.progress6.BorderColor = System.Drawing.Color.Black;
-            this.progress6.BorderRadius = 15;
-            this.progress6.BorderThickness = 1;
-            this.progress6.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress6.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress6.Location = new System.Drawing.Point(0, 112);
-            this.progress6.Margin = new System.Windows.Forms.Padding(0);
-            this.progress6.Name = "progress6";
-            this.progress6.Size = new System.Drawing.Size(30, 30);
-            this.progress6.TabIndex = 16;
-            // 
-            // progress3
-            // 
-            this.progress3.BackColor = System.Drawing.Color.Transparent;
-            this.progress3.BorderColor = System.Drawing.Color.Black;
-            this.progress3.BorderRadius = 15;
-            this.progress3.BorderThickness = 1;
-            this.progress3.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress3.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress3.Location = new System.Drawing.Point(0, 57);
-            this.progress3.Margin = new System.Windows.Forms.Padding(0);
-            this.progress3.Name = "progress3";
-            this.progress3.Size = new System.Drawing.Size(30, 30);
-            this.progress3.TabIndex = 16;
-            // 
-            // progress8
-            // 
-            this.progress8.BackColor = System.Drawing.Color.Transparent;
-            this.progress8.BorderColor = System.Drawing.Color.Black;
-            this.progress8.BorderRadius = 15;
-            this.progress8.BorderThickness = 1;
-            this.progress8.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress8.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress8.Location = new System.Drawing.Point(99, 112);
-            this.progress8.Margin = new System.Windows.Forms.Padding(0);
-            this.progress8.Name = "progress8";
-            this.progress8.Size = new System.Drawing.Size(30, 30);
-            this.progress8.TabIndex = 15;
-            // 
-            // progress5
-            // 
-            this.progress5.BackColor = System.Drawing.Color.Transparent;
-            this.progress5.BorderColor = System.Drawing.Color.Black;
-            this.progress5.BorderRadius = 15;
-            this.progress5.BorderThickness = 1;
-            this.progress5.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress5.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress5.Location = new System.Drawing.Point(99, 57);
-            this.progress5.Margin = new System.Windows.Forms.Padding(0);
-            this.progress5.Name = "progress5";
-            this.progress5.Size = new System.Drawing.Size(30, 30);
-            this.progress5.TabIndex = 15;
-            // 
-            // progress7
-            // 
-            this.progress7.BackColor = System.Drawing.Color.Transparent;
-            this.progress7.BorderColor = System.Drawing.Color.Black;
-            this.progress7.BorderRadius = 15;
-            this.progress7.BorderThickness = 1;
-            this.progress7.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress7.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress7.Location = new System.Drawing.Point(50, 112);
-            this.progress7.Margin = new System.Windows.Forms.Padding(0);
-            this.progress7.Name = "progress7";
-            this.progress7.Size = new System.Drawing.Size(30, 30);
-            this.progress7.TabIndex = 15;
-            // 
-            // progress4
-            // 
-            this.progress4.BackColor = System.Drawing.Color.Transparent;
-            this.progress4.BorderColor = System.Drawing.Color.Black;
-            this.progress4.BorderRadius = 15;
-            this.progress4.BorderThickness = 1;
-            this.progress4.CustomBorderColor = System.Drawing.Color.Black;
-            this.progress4.CustomBorderThickness = new System.Windows.Forms.Padding(1);
-            this.progress4.Location = new System.Drawing.Point(50, 57);
-            this.progress4.Margin = new System.Windows.Forms.Padding(0);
-            this.progress4.Name = "progress4";
-            this.progress4.Size = new System.Drawing.Size(30, 30);
-            this.progress4.TabIndex = 15;
             // 
             // imageContainer
             // 
@@ -622,7 +500,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
-            this.ZoomCurrent.Size = new System.Drawing.Size(44, 23);
+            this.ZoomCurrent.Size = new System.Drawing.Size(68, 37);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
             this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
@@ -815,11 +693,11 @@ namespace SAI.SAI.App.Views.Pages
             // showLevel1
             // 
             this.showLevel1.BackColor = System.Drawing.Color.Transparent;
-            this.showLevel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("showLevel1.BackgroundImage")));
-            this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.showLevel1.BackgroundImage = global::SAI.Properties.Resources.level_1_15;
+            this.showLevel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.showLevel1.Location = new System.Drawing.Point(932, 58);
             this.showLevel1.Name = "showLevel1";
-            this.showLevel1.Size = new System.Drawing.Size(57, 37);
+            this.showLevel1.Size = new System.Drawing.Size(100, 38);
             this.showLevel1.TabIndex = 0;
             // 
             // totalLevelpanel
@@ -880,11 +758,27 @@ namespace SAI.SAI.App.Views.Pages
             this.homeBtn.Size = new System.Drawing.Size(62, 62);
             this.homeBtn.TabIndex = 13;
             // 
+            // exportBtn
+            // 
+            this.exportBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.exportBtn.FillColor = System.Drawing.Color.Transparent;
+            this.exportBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.exportBtn.ForeColor = System.Drawing.Color.White;
+            this.exportBtn.Location = new System.Drawing.Point(1196, 50);
+            this.exportBtn.Name = "exportBtn";
+            this.exportBtn.Size = new System.Drawing.Size(180, 45);
+            this.exportBtn.TabIndex = 14;
+            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.exportBtn);
             this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.goModel);
             this.Controls.Add(this.totalLevelpanel);
@@ -899,7 +793,6 @@ namespace SAI.SAI.App.Views.Pages
             this.mainpanel.ResumeLayout(false);
             this.leftPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.guna2CustomGradientPanel1.ResumeLayout(false);
             this.imageContainer.ResumeLayout(false);
             this.toolHandPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.toolHandGif)).EndInit();
@@ -928,7 +821,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2HtmlLabel class1;
         private Guna.UI2.WinForms.Guna2Panel mainpanel;
         private Guna.UI2.WinForms.Guna2GradientPanel leftPanel;
-        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel1;
         private Guna.UI2.WinForms.Guna2GradientPanel imageContainer;
         private Guna.UI2.WinForms.Guna2Panel accuracyPanel;
         private Guna.UI2.WinForms.Guna2Panel levelPanel;
@@ -955,15 +847,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel toastPopupPanel;
         private Guna.UI2.WinForms.Guna2Button popupCloseBtn;
         private Guna.UI2.WinForms.Guna2Panel nextBtnVisible;
-        private Guna.UI2.WinForms.Guna2Panel progress4;
-        private Guna.UI2.WinForms.Guna2Panel progress5;
-        private Guna.UI2.WinForms.Guna2Panel progress1;
-        private Guna.UI2.WinForms.Guna2Panel progress6;
-        private Guna.UI2.WinForms.Guna2Panel progress3;
-        private Guna.UI2.WinForms.Guna2Panel progress8;
-        private Guna.UI2.WinForms.Guna2Panel progress7;
-        private Guna.UI2.WinForms.Guna2Panel progress0;
-        private Guna.UI2.WinForms.Guna2Panel progress2;
         private Guna.UI2.WinForms.Guna2Button goModel;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -979,5 +862,9 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel toolHandPanel;
         private Guna.UI2.WinForms.Guna2PictureBox toolHandGif;
         private Guna.UI2.WinForms.Guna2Button homeBtn;
+        private Guna.UI2.WinForms.Guna2Panel progressClass;
+        private Guna.UI2.WinForms.Guna2Panel progressSeg;
+        private Guna.UI2.WinForms.Guna2Panel progressBox;
+        private Guna.UI2.WinForms.Guna2Button exportBtn;
     }
 }

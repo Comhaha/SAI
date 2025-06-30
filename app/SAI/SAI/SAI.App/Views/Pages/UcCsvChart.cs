@@ -52,6 +52,7 @@ namespace SAI.SAI.App.Views.Pages
         public void SetData()
         {
             if (_grid == null) BuildGrid();
+            else _grid.Controls.Clear();  // 기존 차트 초기화
 
             var m = LogCsvModel.instance;
             if (m.titles == null || m.values == null || m.smoothes == null) return;
