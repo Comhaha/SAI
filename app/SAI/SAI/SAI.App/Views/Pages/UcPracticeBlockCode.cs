@@ -341,7 +341,9 @@ namespace SAI.SAI.App.Views.Pages
 			// 이미지 경로가 바뀌면 블록에서도 적용되게
 			blocklyModel.ImgPathChanged += (newPath) => {
 				// 웹뷰에 이미지 경로 전달
-				webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+				//webViewblock.ExecuteScriptAsync($"imgPathChanged({{newPath}})");
+                string escapedPath = JsonSerializer.Serialize(newPath);
+                webViewblock.ExecuteScriptAsync($"imgPathChanged({escapedPath})");
 
                 if (File.Exists(newPath))
                 {
@@ -368,7 +370,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                @"..\..\SAI.Application\Python\runs\detect\train\result.csv");
+                @"..\..\SAI.Application\Python\runs\detect\train\results.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTrainingChart(csvPath);
         }
@@ -404,7 +406,7 @@ namespace SAI.SAI.App.Views.Pages
                     Task.Run(async () =>
                     {
                         _result = await yoloTutorialPresenter.RunInferenceDirect(
-                            blocklyModel.imgPath,
+                            selectedImagePath,
                             currentThreshold
                         );
 
@@ -1043,13 +1045,12 @@ namespace SAI.SAI.App.Views.Pages
                     {
                         string absolutePath = openFileDialog.FileName;
                         selectedImagePath = absolutePath;
-                        currentImagePath = absolutePath;
+                        //currentImagePath = absolutePath;
                         blocklyModel.imgPath = selectedImagePath;
 
                         // 1. 현재 스크롤 위치 저장
-                        var scrollPos = pSideInfer.AutoScrollPosition;
+                        //var scrollPos = pSideInfer.AutoScrollPosition;
 
-                        // 2. 이미지 표시
                         // UI 표시용 이미지
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
@@ -1058,19 +1059,8 @@ namespace SAI.SAI.App.Views.Pages
                             pboxInferAccuracy.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxInferAccuracy.Image = originalImage;
                             pboxInferAccuracy.Visible = true;
-                            pleaseControlThreshold.Visible = true;
                         }
 
-                        // 3. 레이아웃이 끝난 뒤 스크롤 복원 (BeginInvoke 사용)
-                        pSideInfer.BeginInvoke(new Action(() =>
-                        {
-                            try 
-                            {
-                                // AutoScrollPosition은 음수값으로 저장됨에 주의!}
-                                pSideInfer.AutoScrollPosition = new Point(-scrollPos.X, -scrollPos.Y);
-                            }
-                            catch { }
-                        }));
                         btnSelectInferImage.Visible = false;
                     }
                 }
@@ -1271,6 +1261,9 @@ namespace SAI.SAI.App.Views.Pages
                         "완료",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
+
+
+                    throw new NotImplementedException();
                 }
             }
         }

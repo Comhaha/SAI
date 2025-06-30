@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clipper2Lib;
 using SAI.SAI.App.Views.Interfaces;
-using SAI.Properties;
 using SAI.SAI.App.Forms.Dialogs;
 using SAI.SAI.App.Models.Events;
 using SAI.SAI.App.Presenters;
@@ -85,7 +84,6 @@ namespace SAI.SAI.App.Views.Pages
 
         // 이미지 통과 여부 저장을 위한 변수
         private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
-        private int imagePassedCnt = 0;
 
         // 이미지 상태 코드 저장을 위한 변수 (임시)
         // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
@@ -189,27 +187,19 @@ namespace SAI.SAI.App.Views.Pages
         private void InitializeGroundTruthData()
         {
             // 바운딩 박스 정답 데이터
+            groundTruthBoundingBoxes[3] = ParseBoundingBoxFromJson(
+                "{\"label\":\"cat\",\"x\":230,\"y\":79,\"width\":307,\"height\":305}");
+            groundTruthBoundingBoxes[4] = ParseBoundingBoxFromJson(
+                "{\"label\":\"dog\",\"x\":247,\"y\":58,\"width\":251,\"height\":265}");
             groundTruthBoundingBoxes[5] = ParseBoundingBoxFromJson(
-                "{\"label\":\"cat\",\"x\":230,\"y\":76,\"width\":305,\"height\":306}");
-            groundTruthBoundingBoxes[6] = ParseBoundingBoxFromJson(
-                "{\"label\":\"dog\",\"x\":246,\"y\":59,\"width\":250,\"height\":267}");
-            groundTruthBoundingBoxes[7] = ParseBoundingBoxFromJson(
-                "{\"label\":\"rabbit\",\"x\":532,\"y\":212,\"width\":680,\"height\":465}");
-            groundTruthBoundingBoxes[8] = ParseBoundingBoxFromJson(
-                "{\"label\":\"penguin\",\"x\":369,\"y\":94,\"width\":203,\"height\":307}");
-            groundTruthBoundingBoxes[9] = ParseBoundingBoxFromJson(
-                "{\"label\":\"bear\",\"x\":64,\"y\":45,\"width\":611,\"height\":368}");
+                "{\"label\":\"dog\",\"x\":534,\"y\":211,\"width\":690,\"height\":470}");
             // 세그멘테이션 정답 데이터(폴리곤)
-            groundTruthPolygons[10] = ParsePolygonFromJson(
-                "{\"label\":\"apple\",\"points\":[{\"x\":387,\"y\":163},{\"x\":479,\"y\":128},{\"x\":615,\"y\":126},{\"x\":730,\"y\":180},{\"x\":788,\"y\":241},{\"x\":819,\"y\":307},{\"x\":828,\"y\":385},{\"x\":828,\"y\":498},{\"x\":790,\"y\":591},{\"x\":702,\"y\":671},{\"x\":596,\"y\":701},{\"x\":526,\"y\":707},{\"x\":454,\"y\":700},{\"x\":445,\"y\":672},{\"x\":417,\"y\":660},{\"x\":407,\"y\":687},{\"x\":351,\"y\":668},{\"x\":274,\"y\":608},{\"x\":230,\"y\":551},{\"x\":212,\"y\":440},{\"x\":214,\"y\":357},{\"x\":256,\"y\":281},{\"x\":302,\"y\":226}]}");
-            groundTruthPolygons[11] = ParsePolygonFromJson(
-                "{\"label\":\"watermelon\",\"points\":[{\"x\":357,\"y\":69},{\"x\":404,\"y\":62},{\"x\":442,\"y\":76},{\"x\":457,\"y\":55},{\"x\":475,\"y\":59},{\"x\":464,\"y\":71},{\"x\":458,\"y\":79},{\"x\":461,\"y\":85},{\"x\":495,\"y\":102},{\"x\":523,\"y\":138},{\"x\":532,\"y\":178},{\"x\":525,\"y\":231},{\"x\":506,\"y\":272},{\"x\":472,\"y\":299},{\"x\":432,\"y\":310},{\"x\":391,\"y\":311},{\"x\":352,\"y\":300},{\"x\":321,\"y\":280},{\"x\":301,\"y\":258},{\"x\":286,\"y\":219},{\"x\":283,\"y\":180},{\"x\":289,\"y\":156},{\"x\":299,\"y\":126},{\"x\":324,\"y\":94}]}");
-            groundTruthPolygons[12] = ParsePolygonFromJson(
-                "{\"label\":\"strawberry\",\"points\":[{\"x\":379,\"y\":374},{\"x\":341,\"y\":413},{\"x\":309,\"y\":468},{\"x\":238,\"y\":491},{\"x\":343,\"y\":498},{\"x\":398,\"y\":465},{\"x\":392,\"y\":523},{\"x\":381,\"y\":531},{\"x\":384,\"y\":578},{\"x\":370,\"y\":606},{\"x\":400,\"y\":606},{\"x\":416,\"y\":550},{\"x\":445,\"y\":595},{\"x\":527,\"y\":629},{\"x\":615,\"y\":650},{\"x\":659,\"y\":656},{\"x\":711,\"y\":665},{\"x\":731,\"y\":644},{\"x\":797,\"y\":658},{\"x\":876,\"y\":624},{\"x\":917,\"y\":607},{\"x\":954,\"y\":581},{\"x\":970,\"y\":541},{\"x\":948,\"y\":489},{\"x\":909,\"y\":451},{\"x\":835,\"y\":338},{\"x\":760,\"y\":261},{\"x\":658,\"y\":208},{\"x\":563,\"y\":202},{\"x\":629,\"y\":131},{\"x\":533,\"y\":166},{\"x\":498,\"y\":228},{\"x\":510,\"y\":154},{\"x\":470,\"y\":166},{\"x\":428,\"y\":205},{\"x\":431,\"y\":261}]}");
-            groundTruthPolygons[13] = ParsePolygonFromJson(
-                "{\"label\":\"banana\",\"points\":[{\"x\":580,\"y\":125},{\"x\":543,\"y\":102},{\"x\":480,\"y\":122},{\"x\":161,\"y\":631},{\"x\":140,\"y\":770},{\"x\":199,\"y\":778},{\"x\":272,\"y\":720},{\"x\":451,\"y\":472},{\"x\":517,\"y\":441},{\"x\":413,\"y\":654},{\"x\":378,\"y\":811},{\"x\":450,\"y\":816},{\"x\":517,\"y\":755},{\"x\":576,\"y\":686},{\"x\":560,\"y\":755},{\"x\":626,\"y\":796},{\"x\":733,\"y\":726},{\"x\":804,\"y\":645},{\"x\":784,\"y\":704},{\"x\":816,\"y\":723},{\"x\":854,\"y\":721},{\"x\":907,\"y\":669},{\"x\":941,\"y\":654},{\"x\":989,\"y\":611},{\"x\":1051,\"y\":498},{\"x\":1067,\"y\":382},{\"x\":1051,\"y\":316},{\"x\":1019,\"y\":267},{\"x\":982,\"y\":226},{\"x\":972,\"y\":180},{\"x\":944,\"y\":134},{\"x\":901,\"y\":99},{\"x\":851,\"y\":67},{\"x\":788,\"y\":67},{\"x\":759,\"y\":35},{\"x\":719,\"y\":15},{\"x\":670,\"y\":39},{\"x\":623,\"y\":91}]}");
-            groundTruthPolygons[14] = ParsePolygonFromJson(
-                "{\"label\":\"grape\",\"points\":[{\"x\":193,\"y\":3},{\"x\":181,\"y\":20},{\"x\":164,\"y\":13},{\"x\":139,\"y\":6},{\"x\":118,\"y\":13},{\"x\":109,\"y\":38},{\"x\":116,\"y\":54},{\"x\":134,\"y\":64},{\"x\":121,\"y\":73},{\"x\":118,\"y\":93},{\"x\":127,\"y\":107},{\"x\":144,\"y\":113},{\"x\":163,\"y\":111},{\"x\":157,\"y\":125},{\"x\":162,\"y\":141},{\"x\":175,\"y\":152},{\"x\":164,\"y\":162},{\"x\":157,\"y\":180},{\"x\":162,\"y\":196},{\"x\":179,\"y\":205},{\"x\":197,\"y\":206},{\"x\":185,\"y\":215},{\"x\":178,\"y\":231},{\"x\":184,\"y\":249},{\"x\":199,\"y\":258},{\"x\":195,\"y\":269},{\"x\":182,\"y\":277},{\"x\":174,\"y\":290},{\"x\":177,\"y\":307},{\"x\":189,\"y\":322},{\"x\":208,\"y\":325},{\"x\":216,\"y\":321},{\"x\":222,\"y\":326},{\"x\":224,\"y\":341},{\"x\":238,\"y\":353},{\"x\":253,\"y\":357},{\"x\":272,\"y\":347},{\"x\":277,\"y\":328},{\"x\":269,\"y\":306},{\"x\":261,\"y\":301},{\"x\":274,\"y\":291},{\"x\":279,\"y\":271},{\"x\":271,\"y\":252},{\"x\":288,\"y\":248},{\"x\":299,\"y\":228},{\"x\":293,\"y\":207},{\"x\":278,\"y\":196},{\"x\":300,\"y\":191},{\"x\":309,\"y\":174},{\"x\":317,\"y\":179},{\"x\":331,\"y\":178},{\"x\":322,\"y\":192},{\"x\":324,\"y\":208},{\"x\":332,\"y\":218},{\"x\":344,\"y\":222},{\"x\":330,\"y\":227},{\"x\":324,\"y\":239},{\"x\":322,\"y\":253},{\"x\":330,\"y\":264},{\"x\":342,\"y\":272},{\"x\":355,\"y\":270},{\"x\":348,\"y\":282},{\"x\":352,\"y\":300},{\"x\":371,\"y\":315},{\"x\":388,\"y\":317},{\"x\":402,\"y\":308},{\"x\":408,\"y\":292},{\"x\":398,\"y\":269},{\"x\":387,\"y\":260},{\"x\":401,\"y\":255},{\"x\":408,\"y\":237},{\"x\":404,\"y\":221},{\"x\":421,\"y\":219},{\"x\":434,\"y\":204},{\"x\":432,\"y\":184},{\"x\":412,\"y\":168},{\"x\":424,\"y\":159},{\"x\":430,\"y\":142},{\"x\":423,\"y\":128},{\"x\":433,\"y\":117},{\"x\":432,\"y\":101},{\"x\":446,\"y\":94},{\"x\":450,\"y\":70},{\"x\":438,\"y\":53},{\"x\":418,\"y\":49},{\"x\":425,\"y\":33},{\"x\":422,\"y\":10},{\"x\":408,\"y\":0},{\"x\":387,\"y\":0},{\"x\":374,\"y\":5},{\"x\":367,\"y\":19},{\"x\":348,\"y\":24},{\"x\":324,\"y\":19},{\"x\":311,\"y\":26},{\"x\":295,\"y\":10},{\"x\":297,\"y\":0},{\"x\":211,\"y\":0}]}");
+            groundTruthPolygons[6] = ParsePolygonFromJson(
+                "{\"label\":\"apple\",\"points\":[{\"x\":362,\"y\":171},{\"x\":237,\"y\":293},{\"x\":204,\"y\":417},{\"x\":250,\"y\":591},{\"x\":329,\"y\":653},{\"x\":435,\"y\":687},{\"x\":547,\"y\":720},{\"x\":692,\"y\":683},{\"x\":782,\"y\":605},{\"x\":824,\"y\":536},{\"x\":829,\"y\":456},{\"x\":840,\"y\":394},{\"x\":804,\"y\":263},{\"x\":767,\"y\":206},{\"x\":657,\"y\":139},{\"x\":552,\"y\":123},{\"x\":457,\"y\":139},{\"x\":400,\"y\":153}]}");
+            groundTruthPolygons[7] = ParsePolygonFromJson(
+                "{\"label\":\"strawberry\",\"points\":[{\"x\":294,\"y\":424},{\"x\":160,\"y\":646},{\"x\":147,\"y\":703},{\"x\":127,\"y\":763},{\"x\":178,\"y\":795},{\"x\":224,\"y\":758},{\"x\":259,\"y\":742},{\"x\":448,\"y\":472},{\"x\":530,\"y\":431},{\"x\":424,\"y\":621},{\"x\":371,\"y\":804},{\"x\":446,\"y\":814},{\"x\":521,\"y\":749},{\"x\":591,\"y\":660},{\"x\":558,\"y\":747},{\"x\":604,\"y\":788},{\"x\":738,\"y\":724},{\"x\":822,\"y\":614},{\"x\":782,\"y\":699},{\"x\":840,\"y\":722},{\"x\":906,\"y\":667},{\"x\":945,\"y\":667},{\"x\":965,\"y\":628},{\"x\":998,\"y\":596},{\"x\":1053,\"y\":483},{\"x\":1066,\"y\":389},{\"x\":1035,\"y\":282},{\"x\":987,\"y\":222},{\"x\":939,\"y\":126},{\"x\":873,\"y\":75},{\"x\":785,\"y\":61},{\"x\":730,\"y\":16},{\"x\":655,\"y\":43},{\"x\":620,\"y\":89},{\"x\":650,\"y\":121},{\"x\":602,\"y\":183},{\"x\":582,\"y\":126},{\"x\":543,\"y\":105},{\"x\":501,\"y\":114},{\"x\":468,\"y\":137}]}");
+            groundTruthPolygons[8] = ParsePolygonFromJson(
+                "{\"label\":\"banana\",\"points\":[{\"x\":404,\"y\":399},{\"x\":404,\"y\":463},{\"x\":424,\"y\":528},{\"x\":448,\"y\":606},{\"x\":567,\"y\":642},{\"x\":653,\"y\":665},{\"x\":716,\"y\":647},{\"x\":771,\"y\":640},{\"x\":824,\"y\":661},{\"x\":956,\"y\":583},{\"x\":967,\"y\":534},{\"x\":945,\"y\":488},{\"x\":895,\"y\":424},{\"x\":853,\"y\":362},{\"x\":798,\"y\":291},{\"x\":736,\"y\":245},{\"x\":668,\"y\":213},{\"x\":620,\"y\":204},{\"x\":567,\"y\":199},{\"x\":479,\"y\":252},{\"x\":439,\"y\":286},{\"x\":413,\"y\":348}]}");
         }
 
         private void RegisterExport()
@@ -275,7 +265,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
             }
 
-            for (int i = 1; i <= 15; i++)
+            for (int i = 1; i <= 9; i++)
             {
                 string filePath = Path.Combine(folderPath, $"{i}.jpg");
                 if (File.Exists(filePath))
@@ -329,7 +319,7 @@ namespace SAI.SAI.App.Views.Pages
             // 이미지 갱신하여 바운딩 박스 표시
             pictureBoxImage.Invalidate();
         }
-        
+
 
         /// <summary>
         /// 컨트롤 이벤트 등록
@@ -363,8 +353,8 @@ namespace SAI.SAI.App.Views.Pages
                 var dialog = new DialogHomeFromLabeling();
                 dialog.ShowDialog(this);
             };
-            // 좌표 내보내기 버튼 클릭 이벤트 등록
-            //exportBtn.Click += (s, e) => MessageBox.Show(ExportPolygonCoordinates(currentImageIndex));
+            //// 좌표 내보내기 버튼 클릭 이벤트 등록
+            //exportBtn.Click += ExportBtn_Click;
         }
 
 
@@ -463,7 +453,7 @@ namespace SAI.SAI.App.Views.Pages
             }
         }
 
-        private void UpdateNavigationButtonState() // 임시 
+        private void UpdateNavigationButtonState()
         {
             bool isCurrentImageLabeled = false;
             double currentAccuracy = 0;
@@ -494,7 +484,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel == "Classification" && currentAccuracy >= 90)
+            if (currentLevel == "Classification" && currentAccuracy >= 1)
             {
                 nextBtn.Enabled = true;
                 if (currentImageIndex >1)
@@ -504,18 +494,18 @@ namespace SAI.SAI.App.Views.Pages
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 65 && currentImageIndex != 14)
+            else if (currentAccuracy >= 90 && currentImageIndex != 8)
             {
                 nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 65 && currentImageIndex == 14)
+            else if (currentAccuracy >= 90 && currentImageIndex == 8)
             {
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (0 < currentAccuracy && currentAccuracy < 65)
+            else if (0 < currentAccuracy && currentAccuracy < 90)
             {
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
@@ -587,28 +577,17 @@ namespace SAI.SAI.App.Views.Pages
                 // 이미지를 통과했으면 통과 상태 기록
                 if (passed == 1)
                 {
-                    if(imagePassedCnt < imageIndex)
-                    {
-                        imagePassedCnt = Math.Max(imagePassedCnt, imageIndex);
-                        //progressControl.FillColor = Color.Green;
-                        progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
-                            "p_todolist_progress_" + (imagePassedCnt % 5 + 1).ToString() + "-1.png"));
-                        ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
-                    }
+                    progressControl.FillColor = Color.Green;
+                    ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
                 }
                 else if (passed == -1)
                 {
-                    imagePassedCnt = imageIndex - 1;
-                    //progressControl.FillColor = Color.Red;
-                    progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
-                        "p_todolist_progress_" + (imageIndex % 5 + 1).ToString() + "-2.png"));
+                    progressControl.FillColor = Color.Red;
                     ShowToast(false); // 실패 시 빨간색 토스트 메시지 표시
                 }
                 else
                 {
-                    //progressControl.FillColor = Color.Yellow;
-                    progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
-                        "p_todolist_progress_" + (imageIndex % 5 + 1).ToString() + "-0.png"));
+                    progressControl.FillColor = Color.Yellow;
                 }
             }
         }
@@ -617,7 +596,7 @@ namespace SAI.SAI.App.Views.Pages
         private void InitializeProgressIndicators()
         {
             // 모든 progress 버튼 초기화
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 9; i++)
             {
                 var progressControl = GetProgressControl(i);
                 if (progressControl != null)
@@ -639,35 +618,23 @@ namespace SAI.SAI.App.Views.Pages
             switch (imageIndex)
             {
                 case 0:
-                    return progressClass;
+                    return progress0;
                 case 1:
-                    return progressClass;
+                    return progress1;
                 case 2:
-                    return progressClass;
+                    return progress2;
                 case 3:
-                    return progressClass;
+                    return progress3;
                 case 4:
-                    return progressClass;
+                    return progress4;
                 case 5:
-                    return progressBox;
+                    return progress5;
                 case 6:
-                    return progressBox;
+                    return progress6;
                 case 7:
-                    return progressBox;
+                    return progress7;
                 case 8:
-                    return progressBox;
-                case 9:
-                    return progressBox;
-                case 10:
-                    return progressSeg;
-                case 11:
-                    return progressSeg;
-                case 12:
-                    return progressSeg;
-                case 13:
-                    return progressSeg;
-                case 14:
-                    return progressSeg;
+                    return progress8;
                 default:
                     return null;
             }
@@ -700,6 +667,7 @@ namespace SAI.SAI.App.Views.Pages
             {
                 // 확대/축소 계수 조정 (휠을 위로 올리면 확대, 아래로 내리면 축소)
                 float delta = e.Delta > 0 ? 0.1f : -0.1f;
+
                 // 현재 마우스 위치를 기준으로 줌 적용
                 Point mousePos = pictureBoxImage.PointToClient(Cursor.Position);
                 ApplyZoom(delta, mousePos);
@@ -1007,22 +975,22 @@ namespace SAI.SAI.App.Views.Pages
             // 이미지 인덱스에 따라 적절한 도구 활성화
             int imageIndex = currentImageIndex + 1; // 1부터 시작하는 인덱스
             
-            if (imageIndex >= 1 && imageIndex <= 5) {
-                // Classification 모드 (이미지 1-5)
+            if (imageIndex >= 1 && imageIndex <= 3) {
+                // Classification 모드 (이미지 1-3)
                 isHandToolActive = true;
                 isSquareToolActive = false;
                 isPolygonToolActive = false;
                 pictureBoxImage.Cursor = Cursors.Hand;
             } 
-            else if (imageIndex >= 6 && imageIndex <= 10) {
-                // Bounding Box 모드 (이미지 6-10)
+            else if (imageIndex >= 4 && imageIndex <= 6) {
+                // Bounding Box 모드 (이미지 4-6)
                 isHandToolActive = false;
                 isSquareToolActive = true;
                 isPolygonToolActive = false;
                 pictureBoxImage.Cursor = Cursors.Cross;
             }
-            else if (imageIndex >= 11 && imageIndex <= 15) {
-                // Segmentation 모드 (이미지 11-15)
+            else if (imageIndex >= 7 && imageIndex <= 9) {
+                // Segmentation 모드 (이미지 7-9)
                 isHandToolActive = false;
                 isSquareToolActive = false;
                 isPolygonToolActive = true;
@@ -1212,9 +1180,9 @@ namespace SAI.SAI.App.Views.Pages
             isSquareToolActive = false;
             isPolygonToolActive = false;
 
-            if (imageIndex >= 1 && imageIndex <= 5)
+            if (imageIndex >= 1 && imageIndex <= 3)
             {
-                currentLevel = "Classification"; // 이미지 1,2,3,4,5
+                currentLevel = "Classification"; // 이미지 1,2,3
                 toolBox.Visible = false; // Classification 단계에서는 도구창 숨김
                 accuracyPanel.Visible = false; // 정확도 패널 숨김
                 //accuracyLabel.Visible = false; // 정확도 숨김
@@ -1235,9 +1203,9 @@ namespace SAI.SAI.App.Views.Pages
                     toolVisible.Text = "라벨 숨기기";
                 }
             }
-            else if (imageIndex >= 6 && imageIndex <= 10)
+            else if (imageIndex >= 4 && imageIndex <= 6)
             {
-                currentLevel = "Bounding Box"; // 이미지 6,7,8,9,10
+                currentLevel = "Bounding Box"; // 이미지 4,5,6
                 toolBox.Visible = true; // Bounding Box 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
@@ -1258,9 +1226,9 @@ namespace SAI.SAI.App.Views.Pages
                     toolVisible.Text = isBoundingBoxVisible ? "라벨 숨기기" : "라벨 표시하기";
                 }
             }
-            else if (imageIndex >= 11 && imageIndex <= 15)
+            else if (imageIndex >= 7 && imageIndex <= 9)
             {
-                currentLevel = "Segmentation"; // 이미지 11,12,13,14,15
+                currentLevel = "Segmentation"; // 이미지 7,8,9
                 toolBox.Visible = true; // Segmentation 단계에서는 도구창 표시
                 //accuracyLabel.Visible = true; // Bounding Box 단계에서는 정확도 라벨 표시
                 accuracyPanel.Visible = true; // 정확도 패널 숨김
@@ -1319,9 +1287,9 @@ namespace SAI.SAI.App.Views.Pages
             // 레벨 이미지가 비어있는 경우에만 로드
             if (levelImages.Count == 0)
             {
-                for (int i = 1; i <= 15; i++)
+                for (int i = 1; i <= 9; i++)
                 {
-                    string filePath = Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images", $"level {i}-15.png");
+                    string filePath = Path.Combine(folderPath, $"level {i}-9.png");
                     if (File.Exists(filePath))
                     {
                         levelImages.Add(Image.FromFile(filePath));
@@ -1352,14 +1320,14 @@ namespace SAI.SAI.App.Views.Pages
             {   
                 currentImageIndex = currentImageIndex + 1; // 다음 이미지로 이동
 
-                if (currentImageIndex == 14)
+                if (currentImageIndex == 8)
                 {
                     nextBtn.Enabled = false;
                     nextBtn.Visible = false; // 마지막 이미지일 경우 다음 버튼 비활성화
                 }
                 else
                 {
-                    nextBtn.Enabled = false;
+                    nextBtn.Enabled = true;
                     nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                 }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
@@ -1378,19 +1346,19 @@ namespace SAI.SAI.App.Views.Pages
                 else
                 {
                     accuracyLabel1.Text = "Accuracy: 0%";
-                }
+                }   
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, 1);
-                }
-                else
-                {
-                    //통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
 
@@ -1404,15 +1372,15 @@ namespace SAI.SAI.App.Views.Pages
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
 
-                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
-                if (currentImageIndex == 0)
-                {
-                    preBtn.Visible = true;
-                }
-                else
-                {
-                    preBtn.Visible = true;
-                }
+                //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                //if (currentImageIndex == 0)
+                //{
+                //    preBtn.Visible = true;
+                //}
+                //else
+                //{
+                //    preBtn.Visible = true;
+                //}
 
                 // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
                 nextBtn.Enabled = true;
@@ -1435,17 +1403,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel1.Text = "Accuracy: 0%";
                 }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, 1);
-                }
-                else
-                {
-                    // 통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
-                }
+                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                // {
+                //     //nextBtn.Enabled = true;
+                //     UpdateProgressIndicator(currentImageIndex, true);
+                // }
+                // else
+                // {
+                // 통과 여부에 따라 진행 상태 표시
+                UpdateNavigationButtonState();
+                // }
             }
         }
         
@@ -1463,7 +1431,7 @@ namespace SAI.SAI.App.Views.Pages
                 // classImages가 비어있는 경우에만 로드
                 if (classImages.Count == 0)
                 {
-                    for (int i = 1; i <= 5; i++)
+                    for (int i = 1; i <= 3; i++)
                     {
                         string filePath = Path.Combine(devPath, $"class{i}.png");
                         if (File.Exists(filePath))
