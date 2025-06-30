@@ -85,6 +85,7 @@ namespace SAI.SAI.App.Views.Pages
 
         // 이미지 통과 여부 저장을 위한 변수
         private Dictionary<int, bool> imagePassedStatus = new Dictionary<int, bool>();
+        private int imagePassedCnt = 0;
 
         // 이미지 상태 코드 저장을 위한 변수 (임시)
         // 상태 코드: 0 = 처음 진입(노란색), -1 = 틀림(빨간색), 1 = 맞음(녹색)
@@ -208,26 +209,26 @@ namespace SAI.SAI.App.Views.Pages
             groundTruthPolygons[13] = ParsePolygonFromJson(
                 "{\"label\":\"banana\",\"points\":[{\"x\":580,\"y\":125},{\"x\":543,\"y\":102},{\"x\":480,\"y\":122},{\"x\":161,\"y\":631},{\"x\":140,\"y\":770},{\"x\":199,\"y\":778},{\"x\":272,\"y\":720},{\"x\":451,\"y\":472},{\"x\":517,\"y\":441},{\"x\":413,\"y\":654},{\"x\":378,\"y\":811},{\"x\":450,\"y\":816},{\"x\":517,\"y\":755},{\"x\":576,\"y\":686},{\"x\":560,\"y\":755},{\"x\":626,\"y\":796},{\"x\":733,\"y\":726},{\"x\":804,\"y\":645},{\"x\":784,\"y\":704},{\"x\":816,\"y\":723},{\"x\":854,\"y\":721},{\"x\":907,\"y\":669},{\"x\":941,\"y\":654},{\"x\":989,\"y\":611},{\"x\":1051,\"y\":498},{\"x\":1067,\"y\":382},{\"x\":1051,\"y\":316},{\"x\":1019,\"y\":267},{\"x\":982,\"y\":226},{\"x\":972,\"y\":180},{\"x\":944,\"y\":134},{\"x\":901,\"y\":99},{\"x\":851,\"y\":67},{\"x\":788,\"y\":67},{\"x\":759,\"y\":35},{\"x\":719,\"y\":15},{\"x\":670,\"y\":39},{\"x\":623,\"y\":91}]}");
             groundTruthPolygons[14] = ParsePolygonFromJson(
-                "{\"label\":\"grape\",\"points\":[{\"x\":404,\"y\":399},{\"x\":404,\"y\":463},{\"x\":424,\"y\":528},{\"x\":448,\"y\":606},{\"x\":567,\"y\":642},{\"x\":653,\"y\":665},{\"x\":716,\"y\":647},{\"x\":771,\"y\":640},{\"x\":824,\"y\":661},{\"x\":956,\"y\":583},{\"x\":967,\"y\":534},{\"x\":945,\"y\":488},{\"x\":895,\"y\":424},{\"x\":853,\"y\":362},{\"x\":798,\"y\":291},{\"x\":736,\"y\":245},{\"x\":668,\"y\":213},{\"x\":620,\"y\":204},{\"x\":567,\"y\":199},{\"x\":479,\"y\":252},{\"x\":439,\"y\":286},{\"x\":413,\"y\":348}]}");
+                "{\"label\":\"grape\",\"points\":[{\"x\":193,\"y\":3},{\"x\":181,\"y\":20},{\"x\":164,\"y\":13},{\"x\":139,\"y\":6},{\"x\":118,\"y\":13},{\"x\":109,\"y\":38},{\"x\":116,\"y\":54},{\"x\":134,\"y\":64},{\"x\":121,\"y\":73},{\"x\":118,\"y\":93},{\"x\":127,\"y\":107},{\"x\":144,\"y\":113},{\"x\":163,\"y\":111},{\"x\":157,\"y\":125},{\"x\":162,\"y\":141},{\"x\":175,\"y\":152},{\"x\":164,\"y\":162},{\"x\":157,\"y\":180},{\"x\":162,\"y\":196},{\"x\":179,\"y\":205},{\"x\":197,\"y\":206},{\"x\":185,\"y\":215},{\"x\":178,\"y\":231},{\"x\":184,\"y\":249},{\"x\":199,\"y\":258},{\"x\":195,\"y\":269},{\"x\":182,\"y\":277},{\"x\":174,\"y\":290},{\"x\":177,\"y\":307},{\"x\":189,\"y\":322},{\"x\":208,\"y\":325},{\"x\":216,\"y\":321},{\"x\":222,\"y\":326},{\"x\":224,\"y\":341},{\"x\":238,\"y\":353},{\"x\":253,\"y\":357},{\"x\":272,\"y\":347},{\"x\":277,\"y\":328},{\"x\":269,\"y\":306},{\"x\":261,\"y\":301},{\"x\":274,\"y\":291},{\"x\":279,\"y\":271},{\"x\":271,\"y\":252},{\"x\":288,\"y\":248},{\"x\":299,\"y\":228},{\"x\":293,\"y\":207},{\"x\":278,\"y\":196},{\"x\":300,\"y\":191},{\"x\":309,\"y\":174},{\"x\":317,\"y\":179},{\"x\":331,\"y\":178},{\"x\":322,\"y\":192},{\"x\":324,\"y\":208},{\"x\":332,\"y\":218},{\"x\":344,\"y\":222},{\"x\":330,\"y\":227},{\"x\":324,\"y\":239},{\"x\":322,\"y\":253},{\"x\":330,\"y\":264},{\"x\":342,\"y\":272},{\"x\":355,\"y\":270},{\"x\":348,\"y\":282},{\"x\":352,\"y\":300},{\"x\":371,\"y\":315},{\"x\":388,\"y\":317},{\"x\":402,\"y\":308},{\"x\":408,\"y\":292},{\"x\":398,\"y\":269},{\"x\":387,\"y\":260},{\"x\":401,\"y\":255},{\"x\":408,\"y\":237},{\"x\":404,\"y\":221},{\"x\":421,\"y\":219},{\"x\":434,\"y\":204},{\"x\":432,\"y\":184},{\"x\":412,\"y\":168},{\"x\":424,\"y\":159},{\"x\":430,\"y\":142},{\"x\":423,\"y\":128},{\"x\":433,\"y\":117},{\"x\":432,\"y\":101},{\"x\":446,\"y\":94},{\"x\":450,\"y\":70},{\"x\":438,\"y\":53},{\"x\":418,\"y\":49},{\"x\":425,\"y\":33},{\"x\":422,\"y\":10},{\"x\":408,\"y\":0},{\"x\":387,\"y\":0},{\"x\":374,\"y\":5},{\"x\":367,\"y\":19},{\"x\":348,\"y\":24},{\"x\":324,\"y\":19},{\"x\":311,\"y\":26},{\"x\":295,\"y\":10},{\"x\":297,\"y\":0},{\"x\":211,\"y\":0}]}");
         }
 
         private void RegisterExport()
         {
-            // 좌표 내보내기 버튼 임시
-            this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
-            this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
-            this.exportBtn.ForeColor = System.Drawing.Color.White;
-            this.exportBtn.Location = new System.Drawing.Point(0, 0);
-            this.exportBtn.Name = "exportBtn";
-            this.exportBtn.Size = new System.Drawing.Size(138, 35);
-            this.exportBtn.TabIndex = 14;
-            this.exportBtn.Text = "좌표 내보내기";
-            this.imageContainer.Controls.Add(this.exportBtn);
+            //// 좌표 내보내기 버튼 임시
+            //this.exportBtn = new Guna.UI2.WinForms.Guna2Button();
+            //this.exportBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            //this.exportBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            //this.exportBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            //this.exportBtn.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            //this.exportBtn.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            //this.exportBtn.Font = new System.Drawing.Font("Noto Sans KR", 9F, System.Drawing.FontStyle.Bold);
+            //this.exportBtn.ForeColor = System.Drawing.Color.White;
+            //this.exportBtn.Location = new System.Drawing.Point(0, 0);
+            //this.exportBtn.Name = "exportBtn";
+            //this.exportBtn.Size = new System.Drawing.Size(138, 35);
+            //this.exportBtn.TabIndex = 14;
+            //this.exportBtn.Text = "좌표 내보내기";
+            //this.imageContainer.Controls.Add(this.exportBtn);
         }
 
         /// <summary>
@@ -363,7 +364,7 @@ namespace SAI.SAI.App.Views.Pages
                 dialog.ShowDialog(this);
             };
             // 좌표 내보내기 버튼 클릭 이벤트 등록
-            exportBtn.Click += (s, e) => MessageBox.Show(ExportPolygonCoordinates(currentImageIndex));
+            //exportBtn.Click += (s, e) => MessageBox.Show(ExportPolygonCoordinates(currentImageIndex));
         }
 
 
@@ -493,7 +494,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 이미지가 classification일 경우 라벨링만으로 통과
-            if (currentLevel == "Classification" && currentAccuracy >= 0)
+            if (currentLevel == "Classification" && currentAccuracy >= 90)
             {
                 nextBtn.Enabled = true;
                 if (currentImageIndex >1)
@@ -503,18 +504,18 @@ namespace SAI.SAI.App.Views.Pages
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 0 && currentImageIndex != 14)
+            else if (currentAccuracy >= 65 && currentImageIndex != 14)
             {
                 nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 0 && currentImageIndex == 14)
+            else if (currentAccuracy >= 65 && currentImageIndex == 14)
             {
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (0 < currentAccuracy && currentAccuracy < 90)
+            else if (0 < currentAccuracy && currentAccuracy < 65)
             {
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
@@ -586,13 +587,18 @@ namespace SAI.SAI.App.Views.Pages
                 // 이미지를 통과했으면 통과 상태 기록
                 if (passed == 1)
                 {
-                    //progressControl.FillColor = Color.Green;
-                    progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
-                        "p_todolist_progress_" + (imageIndex % 5 + 1).ToString() + "-1.png"));
-                    ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
+                    if(imagePassedCnt < imageIndex)
+                    {
+                        imagePassedCnt = Math.Max(imagePassedCnt, imageIndex);
+                        //progressControl.FillColor = Color.Green;
+                        progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
+                            "p_todolist_progress_" + (imagePassedCnt % 5 + 1).ToString() + "-1.png"));
+                        ShowToast(true); // 통과 시 초록색 토스트 메시지 표시
+                    }
                 }
                 else if (passed == -1)
                 {
+                    imagePassedCnt = imageIndex - 1;
                     //progressControl.FillColor = Color.Red;
                     progressControl.BackgroundImage = Image.FromFile(Path.Combine(baseDir, @"..\\..\SAI.App", "Resources", "Images",
                         "p_todolist_progress_" + (imageIndex % 5 + 1).ToString() + "-2.png"));
@@ -1353,7 +1359,7 @@ namespace SAI.SAI.App.Views.Pages
                 }
                 else
                 {
-                    nextBtn.Enabled = true;
+                    nextBtn.Enabled = false;
                     nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
                 }
                 pictureBoxImage.BackgroundImage = images[currentImageIndex];
@@ -1374,17 +1380,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel1.Text = "Accuracy: 0%";
                 }
 
-                //// 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                //if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                //{
-                //    nextBtn.Enabled = true;
-                //    UpdateProgressIndicator(currentImageIndex, 1);
-                //}
-                //else
-                //{
+                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                {
+                    nextBtn.Enabled = true;
+                    UpdateProgressIndicator(currentImageIndex, 1);
+                }
+                else
+                {
                     //통과 여부에 따라 진행 상태 표시
                     UpdateNavigationButtonState();
-                //}
+                }
             }
         }
 
@@ -1398,15 +1404,15 @@ namespace SAI.SAI.App.Views.Pages
                 
                 currentImageIndex = currentImageIndex - 1; // 이전 이미지로 이동
 
-                //// 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
-                //if (currentImageIndex == 0)
-                //{
-                //    preBtn.Visible = true;
-                //}
-                //else
-                //{
-                //    preBtn.Visible = true;
-                //}
+                // 첫 번째 이미지로 이동한 경우 이전 버튼 비활성화
+                if (currentImageIndex == 0)
+                {
+                    preBtn.Visible = true;
+                }
+                else
+                {
+                    preBtn.Visible = true;
+                }
 
                 // 다음 버튼은 항상 활성화 (마지막 이미지가 아니므로)
                 nextBtn.Enabled = true;
@@ -1429,17 +1435,17 @@ namespace SAI.SAI.App.Views.Pages
                     accuracyLabel1.Text = "Accuracy: 0%";
                 }
 
-                // // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                // if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                // {
-                //     //nextBtn.Enabled = true;
-                //     UpdateProgressIndicator(currentImageIndex, true);
-                // }
-                // else
-                // {
-                // 통과 여부에 따라 진행 상태 표시
-                UpdateNavigationButtonState();
-                // }
+                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                {
+                    nextBtn.Enabled = true;
+                    UpdateProgressIndicator(currentImageIndex, 1);
+                }
+                else
+                {
+                    // 통과 여부에 따라 진행 상태 표시
+                    UpdateNavigationButtonState();
+                }
             }
         }
         
@@ -2300,33 +2306,33 @@ namespace SAI.SAI.App.Views.Pages
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 바운딩 박스 좌표를 JSON 형태로 내보내기
 
-        private string ExportBoundingBoxCoordinates(int imageIndex)
-        {
-            if (imageBoundingBoxes.ContainsKey(imageIndex) &&
-                imageBoundingBoxes[imageIndex].Count > 0)
-            {
-                var box = imageBoundingBoxes[imageIndex][0];
-                return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
-            }
-            return "{}";
-        }
+        //private string ExportBoundingBoxCoordinates(int imageIndex)
+        //{
+        //    if (imageBoundingBoxes.ContainsKey(imageIndex) &&
+        //        imageBoundingBoxes[imageIndex].Count > 0)
+        //    {
+        //        var box = imageBoundingBoxes[imageIndex][0];
+        //        return $"{{\"label\":\"{box.Item2}\",\"x\":{box.Item1.X},\"y\":{box.Item1.Y},\"width\":{box.Item1.Width},\"height\":{box.Item1.Height}}}";
+        //    }
+        //    return "{}";
+        //}
 
-        // 폴리곤 좌표를 JSON 형태로 내보내기
-        private string ExportPolygonCoordinates(int imageIndex)
-        {
-            if (imagePolygons.ContainsKey(imageIndex) &&
-                imagePolygons[imageIndex].Count > 0)
-            {
-                var polygon = imagePolygons[imageIndex][0];
+        //// 폴리곤 좌표를 JSON 형태로 내보내기
+        //private string ExportPolygonCoordinates(int imageIndex)
+        //{
+        //    if (imagePolygons.ContainsKey(imageIndex) &&
+        //        imagePolygons[imageIndex].Count > 0)
+        //    {
+        //        var polygon = imagePolygons[imageIndex][0];
 
-                // 점들의 좌표를 배열로 변환
-                var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
-                string pointsJson = string.Join(",", points);
+        //        // 점들의 좌표를 배열로 변환
+        //        var points = polygon.Item1.Select(p => $"{{\"x\":{p.X},\"y\":{p.Y}}}").ToArray();
+        //        string pointsJson = string.Join(",", points);
 
-                return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
-            }
-            return "{}";
-        }
+        //        return $"{{\"label\":\"{polygon.Item2}\",\"points\":[{pointsJson}]}}";
+        //    }
+        //    return "{}";
+        //}
 
         /// <summary>
         /// 현재 이미지 인덱스에 해당하는 바운딩 박스 목록을 가져옴
