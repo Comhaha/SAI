@@ -182,7 +182,7 @@ def load_pretrained_model_block(block_params=None):
         from ultralytics import YOLO
         
         # 🎯 미리 COCO로 학습한 모델 경로 (고정)
-        pretrained_model_path = os.path.join(base_dir, "models", "coco_pretrained_yolov8m.pt")
+        pretrained_model_path = os.path.join(base_dir, "model", "coco_pretrained_yolov8m.pt")
         
         # 모델 파일 존재 확인
         if not os.path.exists(pretrained_model_path):
