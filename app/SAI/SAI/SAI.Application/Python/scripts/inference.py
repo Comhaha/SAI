@@ -164,7 +164,7 @@ def run_inference(model_path, image_path, conf=0.25):
         log_message(traceback.format_exc())  # 상세 오류 추적
         result = {"success": False, "error": error_msg}
     finally:
-        print(f"INFERENCE_RESULT:{json.dumps(result, ensure_ascii=False)}")
+        print(f"INFERENCE_RESULT:{json.dumps(result, ensure_ascii=True)}")
         return result
 
 
