@@ -431,7 +431,7 @@ def download_dataset_block(block_params=None):
     show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 중...', start_time, 0)
     
     # 로컬에 미리 배포된 데이터셋 경로
-    dataset_dir = os.path.join(base_dir, "datasets", "coco128")
+    dataset_dir = os.path.join(base_dir, "dataset", "coco128")
     data_yaml_path = os.path.join(dataset_dir, "coco128.yaml")
     
     # 데이터셋 존재 확인
