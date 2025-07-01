@@ -170,52 +170,57 @@ def install_packages_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-# ================== 2. GPU 확인 및 모델 로드 블록 함수 ==================
-def check_gpu_yolo_load_block(block_params=None):
-    """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
-    # 1. GPU 확인 프로그레스
-    gpu_start_time = time.time()
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', gpu_start_time, 0)
-    gpu_info = install_packages.check_gpu(gpu_start_time)
-    time.sleep(0.5)  # 실제 확인 시간 대체(시뮬레이션)
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
-
-    # 2. block_params에서 model_type 받기 (기본값: 'n')
-    model_type = 'n'
-    if block_params and 'model_type' in block_params:
-        if block_params['model_type'] in ['n', 's', 'm', 'l']:
-            model_type = block_params['model_type']
-
-    # 3. 모델 로드 프로그레스 (별도 start_time 사용)
+# ================== 2. CPU 에서 사전 학습 모델 로드 블록 함수 ==================
+def load_pretrained_model_block(block_params=None):
+    """CPU 환경에서 사전학습 모델 로드 블록 실행 함수"""
+    
+    # 사전학습된 COCO 모델 로드
     model_load_time = time.time()
-    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
+    show_tagged_progress('TRAIN', 'COCO 사전학습 모델 로드 중...', model_load_time, 0)
+    
     try:
         from ultralytics import YOLO
-        model_filename = f'yolov8{model_type}.pt'
-        model_path = os.path.join(base_dir, model_filename)
+        
+        # 🎯 미리 COCO로 학습한 모델 경로 (고정)
+        pretrained_model_path = os.path.join(base_dir, "models", "coco_pretrained_yolov8m.pt")
+        
+        # 모델 파일 존재 확인
+        if not os.path.exists(pretrained_model_path):
+            error_msg = f"COCO 사전학습 모델을 찾을 수 없습니다: {pretrained_model_path}"
+            show_tagged_progress('ERROR', error_msg, model_load_time, 50)
+            return {
+                "success": False,
+                "error": error_msg
+            }
+        
         # 모델 로딩 진행 시뮬레이션
-        for progress in [10, 30, 50, 70, 90]:
-            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
+        for progress in [20, 40, 60, 80, 95]:
+            show_tagged_progress('TRAIN', f'COCO 사전학습 모델 로드 중... ({progress}%)', model_load_time, progress)
             time.sleep(0.2)
-        model = YOLO(model_path)
-        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
+        
+        # 실제 모델 로드
+        model = YOLO(pretrained_model_path)
+        show_tagged_progress('TRAIN', f'✅ COCO 사전학습 모델 로드 완료!', model_load_time, 100)
 
         # 전역 상태 업데이트
         practice_state["model"] = model
-        practice_state["model_path"] = model_path
+        practice_state["model_path"] = pretrained_model_path
+        practice_state["is_pretrained"] = True
+        practice_state["device"] = "cpu"  # CPU 사용 명시
 
         return {
             "success": True,
-            "gpu_info": gpu_info,
-            "model_path": model_path,
-            "elapsed_time": time.time() - gpu_start_time
+            "model_path": pretrained_model_path,
+            "model_type": "COCO 사전학습 YOLOv8m",
+            "device": "cpu",
+            "elapsed_time": time.time() - model_load_time
         }
+        
     except Exception as e:
         show_tagged_progress('ERROR', f'모델 로드 오류: {e}', model_load_time, 100)
         return {
             "success": False,
-            "error": str(e),
-            "gpu_info": gpu_info
+            "error": str(e)
         }
 
 # ================== 2-1. 커스텀 모델 레이어 설정 및 로드 블록 함수 ==================

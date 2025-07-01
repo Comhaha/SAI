@@ -30,7 +30,7 @@ class practiceRunner:
         self.block_mappings = {
             "start": None,
             "pipInstall": self.practice_train_script.install_packages_block,
-            "loadModel": self.practice_train_script.check_gpu_yolo_load_block,
+            "loadModel": self.practice_train_script.load_pretrained_model_block,
             "loadModelWithLayer": self.practice_train_script.load_model_with_layer_block,
             "loadDataset": self.practice_train_script.download_dataset_block,
             "machineLearning": self.practice_train_script.train_model_block,
