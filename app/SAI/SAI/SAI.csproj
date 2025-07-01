@@ -501,7 +501,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SAI.Application\Python\" />
     <Folder Include="SAI.App\Resources\Colors\" />
     <Folder Include="SAI.App\Resources\Icons\" />
     <Folder Include="SAI.App\Resources\Styles\" />
@@ -517,6 +516,38 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\level 15-15.png" />
+    <None Include="SAI.App\Resources\Images\level 14-15.png" />
+    <None Include="SAI.App\Resources\Images\level 13-15.png" />
+    <None Include="SAI.App\Resources\Images\level 12-15.png" />
+    <None Include="SAI.App\Resources\Images\level 11-15.png" />
+    <None Include="SAI.App\Resources\Images\level 10-15.png" />
+    <None Include="SAI.App\Resources\Images\level 9-15.png" />
+    <None Include="SAI.App\Resources\Images\level 8-15.png" />
+    <None Include="SAI.App\Resources\Images\level 7-15.png" />
+    <None Include="SAI.App\Resources\Images\level 6-15.png" />
+    <None Include="SAI.App\Resources\Images\level 5-15.png" />
+    <None Include="SAI.App\Resources\Images\level 4-15.png" />
+    <None Include="SAI.App\Resources\Images\level 3-15.png" />
+    <None Include="SAI.App\Resources\Images\level 2-15.png" />
+    <None Include="SAI.App\Resources\Images\level 1-15.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_5-2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_5-1.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_5-0.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_4-2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_4-1.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_4-0.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_3-2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_3-1.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_3-0.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_2-2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_2-1.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_2-0.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_1-2.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_1-1.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_1-0.png" />
+    <None Include="SAI.App\Resources\Images\p_todolist_progress_0.png" />
+    <None Include="SAI.App\Resources\Images\p_left_labeling.png" />
     <None Include="SAI.App\Resources\Images\btn_home_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_goTutorialTrain_clicked.png" />
     <None Include="SAI.App\Resources\Images\btn_goTutorialTrain.png" />
@@ -934,7 +965,7 @@
     <None Include="SAI.App\Resources\Images\bg_dialog_model_inference_lodaing.png" />
     <Content Include="SAI.App\Resources\Images\bg_redDialog.png" />
   </ItemGroup>
-    <!--빌드 준비-->
+  <!--빌드 준비-->
   <ItemGroup>
     <None Remove="Resources\**\*.*" />
     <None Remove="SAI.App\Resources\Images\**\*.*" />
@@ -947,13 +978,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <!-- Python 폴더 전체를 복사 -->
-   <Content Include="SAI.Application\Python\**\*.*">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-  <!-- Python 폴더 전체를 복사 -->
-  <Content Include="Blockly\**">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
+    <Content Include="SAI.Application\Python\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Python 폴더 전체를 복사 -->
+    <Content Include="Blockly\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

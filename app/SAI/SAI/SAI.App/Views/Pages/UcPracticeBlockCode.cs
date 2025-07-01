@@ -368,7 +368,7 @@ namespace SAI.SAI.App.Views.Pages
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var csvPath = Path.Combine(baseDir,
-                "SAI.Application", "Python", "runs","detect",,"train","result.csv");
+                "SAI.Application", "Python", "runs","detect","train","result.csv");
             csvPath = Path.GetFullPath(csvPath);
             ShowTrainingChart(csvPath);
         }
