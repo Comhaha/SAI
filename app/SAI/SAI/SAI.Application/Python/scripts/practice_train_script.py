@@ -170,52 +170,57 @@ def install_packages_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-# ================== 2. GPU 확인 및 모델 로드 블록 함수 ==================
-def check_gpu_yolo_load_block(block_params=None):
-    """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
-    # 1. GPU 확인 프로그레스
-    gpu_start_time = time.time()
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', gpu_start_time, 0)
-    gpu_info = install_packages.check_gpu(gpu_start_time)
-    time.sleep(0.5)  # 실제 확인 시간 대체(시뮬레이션)
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
-
-    # 2. block_params에서 model_type 받기 (기본값: 'n')
-    model_type = 'n'
-    if block_params and 'model_type' in block_params:
-        if block_params['model_type'] in ['n', 's', 'm', 'l']:
-            model_type = block_params['model_type']
-
-    # 3. 모델 로드 프로그레스 (별도 start_time 사용)
+# ================== 2. CPU 에서 사전 학습 모델 로드 블록 함수 ==================
+def load_pretrained_model_block(block_params=None):
+    """CPU 환경에서 사전학습 모델 로드 블록 실행 함수"""
+    
+    # 사전학습된 COCO 모델 로드
     model_load_time = time.time()
-    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
+    show_tagged_progress('TRAIN', 'COCO 사전학습 모델 로드 중...', model_load_time, 0)
+    
     try:
         from ultralytics import YOLO
-        model_filename = f'yolov8{model_type}.pt'
-        model_path = os.path.join(base_dir, model_filename)
+        
+        # 🎯 미리 COCO로 학습한 모델 경로 (고정)
+        pretrained_model_path = os.path.join(base_dir, "model", "coco_pretrained_yolov8m.pt")
+        
+        # 모델 파일 존재 확인
+        if not os.path.exists(pretrained_model_path):
+            error_msg = f"COCO 사전학습 모델을 찾을 수 없습니다: {pretrained_model_path}"
+            show_tagged_progress('ERROR', error_msg, model_load_time, 50)
+            return {
+                "success": False,
+                "error": error_msg
+            }
+        
         # 모델 로딩 진행 시뮬레이션
-        for progress in [10, 30, 50, 70, 90]:
-            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
+        for progress in [20, 40, 60, 80, 95]:
+            show_tagged_progress('TRAIN', f'COCO 사전학습 모델 로드 중... ({progress}%)', model_load_time, progress)
             time.sleep(0.2)
-        model = YOLO(model_path)
-        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
+        
+        # 실제 모델 로드
+        model = YOLO(pretrained_model_path)
+        show_tagged_progress('TRAIN', f'✅ COCO 사전학습 모델 로드 완료!', model_load_time, 100)
 
         # 전역 상태 업데이트
         practice_state["model"] = model
-        practice_state["model_path"] = model_path
+        practice_state["model_path"] = pretrained_model_path
+        practice_state["is_pretrained"] = True
+        practice_state["device"] = "cpu"  # CPU 사용 명시
 
         return {
             "success": True,
-            "gpu_info": gpu_info,
-            "model_path": model_path,
-            "elapsed_time": time.time() - gpu_start_time
+            "model_path": pretrained_model_path,
+            "model_type": "COCO 사전학습 YOLOv8m",
+            "device": "cpu",
+            "elapsed_time": time.time() - model_load_time
         }
+        
     except Exception as e:
         show_tagged_progress('ERROR', f'모델 로드 오류: {e}', model_load_time, 100)
         return {
             "success": False,
-            "error": str(e),
-            "gpu_info": gpu_info
+            "error": str(e)
         }
 
 # ================== 2-1. 커스텀 모델 레이어 설정 및 로드 블록 함수 ==================
@@ -421,264 +426,34 @@ head:
 
 # ================== 3. 데이터셋 다운로드 블록 함수 ==================
 def download_dataset_block(block_params=None):
-    """데이터셋 다운로드 블록 실행 함수"""
+    """데이터셋 확인 블록 (로컬 배포 버전)"""
     start_time = time.time()
-    show_tagged_progress('DEBUG', '서버에서 데이터셋 다운로드 중...', start_time)
+    show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 중...', start_time, 0)
     
-    # API 서버에서 데이터셋 다운로드
-    try:
-        import requests
-        from tqdm import tqdm
-    except ImportError:
-        show_tagged_progress('ERROR', '필요한 패키지 설치 중...', start_time)
-        install_packages.install_packages_with_progress(["requests", "tqdm"], start_time)
-        import requests
-        from tqdm import tqdm
+    # 로컬에 미리 배포된 데이터셋 경로
+    dataset_dir = os.path.join(base_dir, "dataset", "coco128")
+    data_yaml_path = os.path.join(dataset_dir, "coco128.yaml")
     
-    # 데이터셋 저장 경로 및 완료 파일 경로 설정
-    dataset_dir = os.path.join(base_dir, "dataset")
-    os.makedirs(dataset_dir, exist_ok=True)
-    done_file = os.path.join(dataset_dir, "practice_dataset_done.txt")
-
-    # 1. 캐싱: 완료 파일이 있으면 스킵
-    if os.path.exists(done_file):
-        show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
-        time.sleep(1.5)  # 메시지 인지 시간 확보
-        extracted_dir = os.path.join(dataset_dir, "practice_dataset")
-        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
-        practice_state["dataset_path"] = extracted_dir
+    # 데이터셋 존재 확인
+    if os.path.exists(data_yaml_path):
+        show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 완료', start_time, 100)
+        
+        practice_state["dataset_path"] = dataset_dir
         practice_state["data_yaml_path"] = data_yaml_path
+        
         return {
             "success": True,
-            "location": extracted_dir,
-            "extracted_dir": extracted_dir,
+            "location": dataset_dir,
             "data_yaml_path": data_yaml_path,
             "cached": True,
             "elapsed_time": time.time() - start_time
         }
-
-    # 2. 기존 practice 데이터셋 관련 파일만 삭제
-    practice_specific_files = ["practice_dataset", "practice_dataset.zip", "practice_dataset_done.txt"]
-    for filename in practice_specific_files:
-        file_path = os.path.join(dataset_dir, filename)
-        try:
-            if os.path.exists(file_path):
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                    show_tagged_progress('DEBUG', f'기존 파일 삭제: {file_path}', start_time)
-                elif os.path.isdir(file_path):
-                    import shutil
-                    shutil.rmtree(file_path)
-                    show_tagged_progress('DEBUG', f'기존 폴더 삭제: {file_path}', start_time)
-        except Exception as e:
-            show_tagged_progress('ERROR', f'기존 practice 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
-
-    # 환경 변수에서 서버 주소 가져오기
-    server_url = os.environ.get("API_SERVER_URL")
-    if not server_url:
-        show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time)
-        
-        # 테스트용 더미 데이터 생성
-        practice_state["dataset_path"] = dataset_dir
-        return {
-            "success": True,
-            "message": "테스트용 더미 데이터 사용",
-            "location": dataset_dir
-        }
-    
-    # 슬래시로 끝나지 않는지 확인
-    if server_url.endswith('/'):
-        server_url = server_url[:-1]
-    
-    # API 엔드포인트 URL 구성
-    api_url = f"{server_url}/api/download/practice"
-    show_tagged_progress('DEBUG', 'API에서 다운로드 URL 요청 중...', start_time)
-    
-    zip_path = os.path.join(dataset_dir, "practice_dataset.zip")
-    
-    # API 호출하여 presigned URL 받기
-    try:
-        response = requests.get(api_url)
-        if response.status_code == 200:
-            data = response.json()
-            download_url = data['result']
-            show_tagged_progress('DEBUG', '다운로드 URL 획득 성공', start_time)
-        else:
-            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time)
-            practice_state["dataset_path"] = dataset_dir
-            return {
-                "success": False,
-                "error": f"API 응답 오류: {response.text}",
-                "location": dataset_dir
-            }
-    except Exception as e:
-        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time)
-        practice_state["dataset_path"] = dataset_dir
-        return {
-            "success": False,
-            "error": str(e),
-            "location": dataset_dir
-        }
-    
-    # 파일 다운로드 (진행률 표시)
-    show_tagged_progress('DATASET', '데이터셋 다운로드 시작...', start_time, 0)
-    try:
-        response = requests.get(download_url, stream=True)
-        total_size = int(response.headers.get('content-length', 0))
-        
-        # 다운로드 진행률 표시 및 파일 저장
-        with open(zip_path, 'wb') as f:
-            downloaded = 0
-            for chunk in response.iter_content(chunk_size=1024*1024):  # 1MB 단위로 청크 다운로드
-                if chunk:
-                    f.write(chunk)
-                    downloaded += len(chunk)
-                    progress = min(0 + (downloaded / total_size * 50), 50) 
-                    show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
-        
-        show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
-    except Exception as e:
-        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
-        practice_state["dataset_path"] = dataset_dir
-        return {
-            "success": False,
-            "error": str(e),
-            "location": dataset_dir
-        }
-    
-    # ZIP 파일 압축 해제
-    extracted_dir = dataset_dir  # 기본값 설정
-    target_subdir = os.path.join(dataset_dir, "practice_dataset")
-
-    if os.path.exists(zip_path):
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                file_list = zip_ref.namelist()
-                total_files = len(file_list)
-                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 70)
-
-                # zip 내부에 practice_dataset/ 폴더가 있는지 확인
-                has_top_dir = False
-                if file_list and file_list[0].count('/') > 0:
-                    top_dir = file_list[0].split('/')[0]
-                    if top_dir == "practice_dataset":
-                        has_top_dir = True
-
-                if has_top_dir:
-                    # 이미 폴더가 있으면 기존대로 압축 해제
-                    potential_extracted_dir = os.path.join(dataset_dir, "practice_dataset")
-                    for i, file in enumerate(file_list):
-                        zip_ref.extract(file, dataset_dir)
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                    extracted_dir = potential_extracted_dir
-                else:
-                    # 폴더가 없으면 dataset/practice_dataset/에 압축 해제
-                    os.makedirs(target_subdir, exist_ok=True)
-                    for i, file in enumerate(file_list):
-                        # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
-                        dest_path = os.path.join(target_subdir, file)
-                        dest_folder = os.path.dirname(dest_path)
-                        os.makedirs(dest_folder, exist_ok=True)
-                        
-                        # 디렉토리만 나타내는 항목은 건너뛰기 (마지막이 '/'로 끝나는 경우)
-                        if file.endswith('/'):
-                            continue
-                        
-                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
-                            target.write(source.read())
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                    extracted_dir = target_subdir
-                    show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
-            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 100)
-                
-            # 임시 ZIP 파일 삭제 (잠시 기다린 후 시도)
-            time.sleep(1)  # 파일 핸들이 모두 닫힐 시간을 줍니다
-            try:
-                os.remove(zip_path)
-                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time)
-            except Exception as e:
-                show_tagged_progress('DEBUG', f'임시 ZIP 파일 삭제 실패: {str(e)}', start_time)
-        
-        except Exception as e:
-            show_tagged_progress('DEBUG', f'ZIP 파일 압축 해제 오류: {e}', start_time)
     else:
-        show_tagged_progress('ERROR', '다운로드된 ZIP 파일을 찾을 수 없습니다.', start_time)                           
-                
-                
-        
-    # 데이터셋 경로 저장
-    practice_state["dataset_path"] = extracted_dir
-
-    # data.yaml 파일 찾기
-    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice")
-    if data_yaml_path is None:
-        show_tagged_progress('ERROR', 'data.yaml 파일을 찾을 수 없습니다. 기본 경로를 사용합니다.', start_time)
-        data_yaml_path = os.path.join(extracted_dir, 'data.yaml')  # 기본 경로 설정
-
-    practice_state["data_yaml_path"] = data_yaml_path
-    show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
-
-    # 완료 파일 생성
-    try:
-        with open(done_file, "w") as f:
-            f.write("done")
-        show_tagged_progress('DEBUG', '데이터셋 완료 파일 생성', start_time, 100)
-    except Exception as e:
-        show_tagged_progress('ERROR', f'완료 파일 생성 실패: {e}', start_time)
-
-    return {
-            "success": True,
-            "location": extracted_dir,
-            "extracted_dir": extracted_dir,
-            "data_yaml_path": data_yaml_path,
-            "elapsed_time": time.time() - start_time
-        }   
-
-# data.yaml 파일 찾기 도우미 함수 수정
-def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="practice"):
-    """
-    데이터셋 디렉토리에서 data.yaml 파일 찾기
-    
-    Args:
-        dataset_dir: 기본 데이터셋 디렉토리
-        extracted_dir: 압축 해제된 디렉토리
-        start_time: 시작 시간 (로깅용)
-        mode: 검색 모드 ('practice' 또는 'practice')
-    """
-    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
-    
-    # 모드별 디렉토리 설정
-    target_dir = os.path.join(dataset_dir, f"{mode}_dataset")
-    show_tagged_progress('DEBUG', f'타겟 디렉토리: {target_dir}', start_time)
-    
-    # 1. 직접 지정된 경로에서 찾기
-    yaml_path = os.path.join(extracted_dir, "data.yaml")
-    if os.path.exists(yaml_path):
-        show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-        return yaml_path
-    
-    # 2. 모드별 디렉토리에서 찾기
-    yaml_path = os.path.join(target_dir, "data.yaml")
-    if os.path.exists(yaml_path):
-        show_tagged_progress('DEBUG', f'모드별 디렉토리에서 데이터 파일 확인됨: {yaml_path}', start_time)
-        return yaml_path
-    
-    # 3. 모드별 디렉토리의 하위 폴더들에서만 data.yaml 찾기
-    if os.path.exists(target_dir):
-        for root, dirs, files in os.walk(target_dir):
-            for file in files:
-                if file == "data.yaml":
-                    yaml_path = os.path.join(root, file)
-                    show_tagged_progress('DEBUG', f'모드별 하위 폴더에서 데이터 파일 확인됨: {yaml_path}', start_time)
-                    return yaml_path
-    
-    # 파일을 찾지 못했을 경우
-    show_tagged_progress('ERROR', f'{mode}_dataset에서 data.yaml 파일을 찾을 수 없습니다', start_time)
-    return None
+        show_tagged_progress('ERROR', 'COCO128 데이터셋을 찾을 수 없습니다', start_time, 100)
+        return {
+            "success": False,
+            "error": "로컬 데이터셋 없음"
+        }
 
 # ================== 4. 모델 학습 블럭 ==================
 def train_model_block(block_params=None):
