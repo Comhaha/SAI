@@ -507,18 +507,18 @@ namespace SAI.SAI.App.Views.Pages
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 65 && currentImageIndex != 14)
+            else if (currentAccuracy >= 50 && currentImageIndex != 14)
             {
                 nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (currentAccuracy >= 65 && currentImageIndex == 14)
+            else if (currentAccuracy >= 50 && currentImageIndex == 14)
             {
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
-            else if (0 < currentAccuracy && currentAccuracy < 65)
+            else if (0 < currentAccuracy && currentAccuracy < 49)
             {
                 imageStatusCode[currentImageIndex] = -1;
                 UpdateProgressIndicator(currentImageIndex, -1);
@@ -3206,7 +3206,7 @@ namespace SAI.SAI.App.Views.Pages
                         double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
                         double accuracy = iou * 100;
 
-                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}X%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
@@ -3228,7 +3228,7 @@ namespace SAI.SAI.App.Views.Pages
                         double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
                         double accuracy = ioa * 100;
 
-                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}X%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
