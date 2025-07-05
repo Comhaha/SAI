@@ -39,7 +39,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
             // 새 이미지 불러오기 버튼 설정
-            btnStartcampInput.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
+            btnStartcampInput.Size = new Size(720, 687); 
             pboxStartcampInput.Controls.Add(btnStartcampInput);
             btnStartcampInput.Location = new Point(0, 0);
             btnStartcampInput.Enabled = true;
@@ -164,7 +164,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
-                            pboxStartcampInput.Size = new Size(494, 278);
+                            pboxStartcampInput.Size = new Size(720, 687);
                             pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxStartcampInput.Image = originalImage;
                             pboxStartcampInput.Visible = true;
@@ -220,7 +220,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                             var image = System.Drawing.Image.FromStream(stream);
 
                             // ✅ 직접 PictureBox에 표시
-                            pboxStartcampInput.Size = new Size(494, 278);
+                            pboxStartcampInput.Size = new Size(720, 687);
                             pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
                             pboxStartcampInput.Image = image;
                             pboxStartcampInput.Visible = true;
