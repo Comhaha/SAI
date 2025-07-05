@@ -31,6 +31,7 @@ namespace SAI.SAI.App.Presenters
         private CancellationTokenSource _monitoringCancellationTokenSource; // 서버 모니터링 취소용
         private string _currentTaskId; // 현재 실행 중인 서버 학습 작업 ID
         private bool _userCancelled = false; // 사용자가 직접 취소했는지 여부
+        private DialogStartcampInput dialogStartcampInput;
 
         //public YoloTutorialPresenter(IYoloTutorialView yolotutorialview)
         //{
@@ -40,7 +41,7 @@ namespace SAI.SAI.App.Presenters
         //    _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
 
         //    _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
-       
+
         //}
         public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://3.39.207.72:9000")
         // public YoloTutorialPresenter(IYoloTutorialView yolotutorialview, string serverUrl = "http://localhost:9000")
@@ -50,6 +51,11 @@ namespace SAI.SAI.App.Presenters
             _apiService = new ApiService(serverUrl);
             _itutorialInferenceView = yolotutorialview as ITutorialInferenceView;
             _yolotutorialview.RunButtonClicked += OnRunButtonClicked;
+        }
+
+        public YoloTutorialPresenter(DialogStartcampInput dialogStartcampInput)
+        {
+            this.dialogStartcampInput = dialogStartcampInput;
         }
 
         //private void OnRunButtonClicked(object sender, EventArgs e)
