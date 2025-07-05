@@ -102,6 +102,7 @@ namespace SAI.SAI.App.Views.Pages
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.btnStartcampInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -573,6 +574,7 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // ptxtInfer
             // 
+            this.ptxtInfer.Controls.Add(this.btnStartcampInfer);
             this.ptxtInfer.Controls.Add(this.lblinfer);
             resources.ApplyResources(this.ptxtInfer, "ptxtInfer");
             this.ptxtInfer.Name = "ptxtInfer";
@@ -838,6 +840,19 @@ namespace SAI.SAI.App.Views.Pages
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnStartcampInfer
+            // 
+            this.btnStartcampInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_go_pratice_hover;
+            this.btnStartcampInfer.HoverState.ImageSize = new System.Drawing.Size(231, 59);
+            this.btnStartcampInfer.Image = global::SAI.Properties.Resources.btn_StartcampInfer;
+            this.btnStartcampInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnStartcampInfer.ImageRotate = 0F;
+            this.btnStartcampInfer.ImageSize = new System.Drawing.Size(231, 59);
+            resources.ApplyResources(this.btnStartcampInfer, "btnStartcampInfer");
+            this.btnStartcampInfer.Name = "btnStartcampInfer";
+            this.btnStartcampInfer.PressedState.ImageSize = new System.Drawing.Size(231, 59);
+            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -847,12 +862,12 @@ namespace SAI.SAI.App.Views.Pages
             this.Controls.Add(this.pErrorToast);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pMemo);
-            this.Controls.Add(this.pSideInfer);
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.ibtnMemo);
             this.Controls.Add(this.ibtnDone);
             this.Controls.Add(this.ibtnInfer);
             this.Controls.Add(this.ibtnHome);
+            this.Controls.Add(this.pSideInfer);
             this.DoubleBuffered = true;
             this.Name = "UcTutorialBlockCode";
             this.Load += new System.EventHandler(this.UcTutorialBlockCode_Load);
@@ -951,5 +966,6 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Button pErrorToastCloseBtn;
 		private System.Windows.Forms.TableLayoutPanel tpModelGraph;
 		private SAI.App.Views.Pages.AutoSizeLabel lblModelGraph;
-	}
+        private Guna.UI2.WinForms.Guna2ImageButton btnStartcampInfer;
+    }
 }

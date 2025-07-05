@@ -525,6 +525,7 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\btn_StartcampInfer.png" />
     <None Include="SAI.App\Resources\Images\p_Startcamp_input.png" />
     <None Include="SAI.App\Resources\Images\btn_startcamp_sizeup.png" />
     <None Include="SAI.App\Resources\Images\btn_startcamp_input.png" />
