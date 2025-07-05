@@ -33,7 +33,7 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 log_message(f"Base directory: {base_dir}")
 
 # model_dir은 YOLOv8 best.pt 파일이 있는 폴더
-default_model_path = os.path.join(base_dir, "runs", "detect", "train", "weights", "best.pt")
+default_model_path = os.path.join(base_dir, "model", "yolov8m-oiv7.pt")
 log_message(f"Default model path: {default_model_path}")
 
 

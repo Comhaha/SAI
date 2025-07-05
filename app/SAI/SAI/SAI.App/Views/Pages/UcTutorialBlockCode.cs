@@ -1499,7 +1499,19 @@ namespace SAI.SAI.App.Views.Pages
         // 추론 버튼 클릭시 추론 다이얼로그 호출
         private void btnStartcampInfer_Click(object sender, EventArgs e)
         {
-            DialogStartcampInput dialog = new DialogStartcampInput();
+            // blocklyModel에서 현재 설정된 이미지 경로 가져오기
+            string currentImagePath = blocklyModel.imgPath;
+
+            // 이미지 경로가 설정되어 있는지 확인
+            if (string.IsNullOrEmpty(currentImagePath) || !File.Exists(currentImagePath))
+            {
+                MessageBox.Show("먼저 이미지를 선택해주세요.", "알림",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // 이미지 경로와 함께 다이얼로그 생성
+            DialogStartcampInput dialog = new DialogStartcampInput(currentImagePath);
             dialog.ShowDialog(this); // 모달 다이얼로그로 표시
         }
     }

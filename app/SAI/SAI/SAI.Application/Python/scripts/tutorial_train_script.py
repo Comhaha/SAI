@@ -169,686 +169,162 @@ def install_packages_block(block_params=None):
             "elapsed_time": time.time() - start_time
         }
 
-# ================== 2. GPU 확인 및 모델 로드 블록 함수 ==================
-def check_gpu_yolo_load_block(block_params=None):
-    """GPU 상태 확인 및 모델 로드 블록 실행 함수"""
-    # 1. GPU 확인 프로그레스
-    gpu_start_time = time.time()
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 중...', gpu_start_time, 0)
-    gpu_info = install_packages.check_gpu(gpu_start_time)
-    time.sleep(0.5)  # 실제 확인 시간 대체(시뮬레이션)
-    show_tagged_progress('TRAIN', 'GPU 정보 확인 완료', gpu_start_time, 100)
-
-    # 2. block_params에서 model_type 받기 (기본값: 'n')
-    model_type = 'n'
-    if block_params and 'model_type' in block_params:
-        if block_params['model_type'] in ['n', 's', 'm', 'l']:
-            model_type = block_params['model_type']
-
-    # 3. 모델 로드 프로그레스 (별도 start_time 사용)
+# ================== 2. CPU 에서 사전 학습 모델 로드 블록 함수 ==================
+def load_pretrained_model_block(block_params=None):
+    """CPU 환경에서 사전학습 모델 로드 블록 실행 함수"""
+    
+    # 사전학습된 모델 로드
     model_load_time = time.time()
-    show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, 0)
+    show_tagged_progress('TRAIN', 'ovi7 사전학습 모델 로드 중...', model_load_time, 0)
+    
     try:
         from ultralytics import YOLO
-        model_filename = f'yolov8{model_type}.pt'
-        model_path = os.path.join(base_dir, model_filename)
+        
+        # 🎯 미리 ovi7로 학습한 모델 경로 (고정)
+        pretrained_model_path = os.path.join(base_dir, "model", "yolov8m-oiv7.pt")
+        
+        # 모델 파일 존재 확인
+        if not os.path.exists(pretrained_model_path):
+            error_msg = f"사전학습 모델을 찾을 수 없습니다: {pretrained_model_path}"
+            show_tagged_progress('ERROR', error_msg, model_load_time, 50)
+            return {
+                "success": False,
+                "error": error_msg
+            }
+        
         # 모델 로딩 진행 시뮬레이션
-        for progress in [10, 30, 50, 70, 90]:
-            show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 중...', model_load_time, progress)
+        for progress in [20, 40, 60, 80, 95]:
+            show_tagged_progress('TRAIN', f'사전학습 모델 로드 중... ({progress}%)', model_load_time, progress)
             time.sleep(0.2)
-        model = YOLO(model_path)
-        show_tagged_progress('TRAIN', f'YOLOv8{model_type} 모델 로드 완료!', model_load_time, 100)
+        
+        # 실제 모델 로드
+        model = YOLO(pretrained_model_path)
+        show_tagged_progress('TRAIN', f'✅ 사전학습 모델 로드 완료!', model_load_time, 100)
 
         # 전역 상태 업데이트
         tutorial_state["model"] = model
-        tutorial_state["model_path"] = model_path
+        tutorial_state["model_path"] = pretrained_model_path
+        tutorial_state["is_pretrained"] = True
+        tutorial_state["device"] = "cpu"  # CPU 사용 명시
 
         return {
             "success": True,
-            "gpu_info": gpu_info,
-            "model_path": model_path,
-            "elapsed_time": time.time() - gpu_start_time
+            "model_path": pretrained_model_path,
+            "model_type": "ovi7 사전학습 YOLOv8m",
+            "device": "cpu",
+            "elapsed_time": time.time() - model_load_time
         }
+        
     except Exception as e:
         show_tagged_progress('ERROR', f'모델 로드 오류: {e}', model_load_time, 100)
-        return {
-            "success": False,
-            "error": str(e),
-            "gpu_info": gpu_info
-        }
-
-# ================== 3. 데이터셋 다운로드 블록 함수 ==================
-def download_dataset_block(block_params=None):
-    """데이터셋 다운로드 블록 실행 함수"""
-    start_time = time.time()
-    show_tagged_progress('DEBUG', '서버에서 데이터셋 다운로드 중...', start_time)
-
-    # 데이터셋 저장 경로 및 완료 파일 경로 설정
-    dataset_dir = os.path.join(base_dir, "dataset")
-    os.makedirs(dataset_dir, exist_ok=True)
-    done_file = os.path.join(dataset_dir, "tutorial_dataset_done.txt")
-
-    # 1. 캐싱: 완료 파일이 있으면 스킵
-    if os.path.exists(done_file):
-        show_tagged_progress('DATASET', '데이터셋이 이미 준비되어 있어 다운로드를 건너뜁니다.', start_time, 100)
-        time.sleep(1.5)  # 메시지 인지 시간 확보
-        # data.yaml 경로도 찾아서 반환
-        extracted_dir = dataset_dir
-        data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial")
-        tutorial_state["dataset_path"] = extracted_dir
-        tutorial_state["data_yaml_path"] = data_yaml_path
-        return {
-            "success": True,
-            "location": extracted_dir,
-            "extracted_dir": extracted_dir,
-            "data_yaml_path": data_yaml_path,
-            "cached": True,
-            "elapsed_time": time.time() - start_time
-        }
-
-    # 2. 기존 tutorial 데이터셋 관련 파일만 삭제
-    tutorial_specific_files = ["tutorial_dataset", "tutorial_dataset.zip", "tutorial_dataset_done.txt"]
-    for filename in tutorial_specific_files:
-        file_path = os.path.join(dataset_dir, filename)
-        try:
-            if os.path.exists(file_path):
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                    show_tagged_progress('DEBUG', f'기존 파일 삭제: {file_path}', start_time)
-                elif os.path.isdir(file_path):
-                    import shutil
-                    shutil.rmtree(file_path)
-                    show_tagged_progress('DEBUG', f'기존 폴더 삭제: {file_path}', start_time)
-        except Exception as e:
-            show_tagged_progress('ERROR', f'기존 tutorial 데이터셋 파일 삭제 실패: {file_path} - {e}', start_time)
-
-    # 3. 데이터셋 다운로드 및 압축 해제 (기존 로직)
-    try:
-        import requests
-        from tqdm import tqdm
-    except ImportError:
-        show_tagged_progress('ERROR', '필요한 패키지 설치 중...', start_time)
-        install_packages.install_packages_with_progress(["requests", "tqdm"], start_time)
-        import requests
-        from tqdm import tqdm
-
-    show_tagged_progress('DEBUG', f'데이터셋 기본 경로: {dataset_dir}', start_time)
-
-    server_url = os.environ.get("API_SERVER_URL")
-    if not server_url:
-        show_tagged_progress('ERROR', 'API_SERVER_URL 환경 변수가 설정되지 않았습니다.', start_time)
-        
-        # 테스트용 더미 데이터 생성
-        tutorial_state["dataset_path"] = dataset_dir
-        return {
-            "success": True,
-            "message": "테스트용 더미 데이터 사용",
-            "location": dataset_dir
-        }
-    
-    # 슬래시로 끝나지 않는지 확인
-    if server_url.endswith('/'):
-        server_url = server_url[:-1]
-    
-    # API 엔드포인트 URL 구성
-    api_url = f"{server_url}/api/download/tutorial"
-    show_tagged_progress('DEBUG', 'API에서 다운로드 URL 요청 중...', start_time)
-    zip_path = os.path.join(dataset_dir, "tutorial_dataset.zip")
-    
-    # API 호출하여 presigned URL 받기
-    try:
-        response = requests.get(api_url)
-        if response.status_code == 200:
-            data = response.json()
-            download_url = data['result']
-            show_tagged_progress('DEBUG', '다운로드 URL 획득 성공', start_time)
-        else:
-            show_tagged_progress('ERROR', f'API 호출 실패: 상태 코드 {response.status_code}', start_time)
-            tutorial_state["dataset_path"] = dataset_dir
-            return {
-                "success": False,
-                "error": f"API 응답 오류: {response.text}",
-                "location": dataset_dir
-            }
-    except Exception as e:
-        show_tagged_progress('ERROR', f'API 호출 중 오류 발생: {e}', start_time)
-        tutorial_state["dataset_path"] = dataset_dir
-        return {
-            "success": False,
-            "error": str(e),
-            "location": dataset_dir
-        }
-    
-    # 파일 다운로드 (진행률 표시)
-    show_tagged_progress('DATASET', '데이터셋 다운로드 시작...', start_time, 0)
-    try:
-        response = requests.get(download_url, stream=True)
-        total_size = int(response.headers.get('content-length', 0))
-        
-        # 다운로드 진행률 표시 및 파일 저장
-        with open(zip_path, 'wb') as f:
-            downloaded = 0
-            for chunk in response.iter_content(chunk_size=1024*1024):
-                if chunk:
-                    f.write(chunk)
-                    downloaded += len(chunk)
-                    progress = min(0 + (downloaded / total_size * 50), 50)
-                    show_tagged_progress('DATASET', f'다운로드 중: {downloaded//(1024*1024)}MB/{total_size//(1024*1024)}MB', start_time, progress)
-        show_tagged_progress('DEBUG', '데이터셋 다운로드 완료', start_time)
-    except Exception as e:
-        show_tagged_progress('ERROR', f'다운로드 중 오류 발생: {e}', start_time)
-        tutorial_state["dataset_path"] = dataset_dir
-        return {
-            "success": False,
-            "error": str(e),
-            "location": dataset_dir
-        }
-    
-    # ZIP 파일 압축 해제
-    extracted_dir = dataset_dir  # 기본값 설정
-    target_subdir = os.path.join(dataset_dir, "tutorial_dataset")
-
-    if os.path.exists(zip_path):
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                file_list = zip_ref.namelist()
-                total_files = len(file_list)
-                show_tagged_progress('DATASET', f'압축 파일 내 {total_files}개 파일 발견', start_time, 55)
-
-                # zip 내부에 tutorial_dataset/ 폴더가 있는지 확인
-                has_top_dir = False
-                if file_list and file_list[0].count('/') > 0:
-                    top_dir = file_list[0].split('/')[0]
-                    if top_dir == "tutorial_dataset":
-                        has_top_dir = True
-
-                if has_top_dir:
-                    # 이미 폴더가 있으면 기존대로 압축 해제
-                    potential_extracted_dir = os.path.join(dataset_dir, "tutorial_dataset")
-                    for i, file in enumerate(file_list):
-                        zip_ref.extract(file, dataset_dir)
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                    extracted_dir = potential_extracted_dir
-                else:
-                    # 폴더가 없으면 dataset/tutorial_dataset/에 압축 해제
-                    os.makedirs(target_subdir, exist_ok=True)
-                    for i, file in enumerate(file_list):
-                        # file이 하위 폴더 구조를 포함할 수 있으므로, 상대 경로로 추출
-                        dest_path = os.path.join(target_subdir, file)
-                        dest_folder = os.path.dirname(dest_path)
-                        os.makedirs(dest_folder, exist_ok=True)
-                        with zip_ref.open(file) as source, open(dest_path, "wb") as target:
-                            target.write(source.read())
-                        if i % 50 == 0 or i == total_files - 1:
-                            extract_progress = 55 + (i / total_files) * 40
-                            show_tagged_progress('DATASET', f'압축 해제 중: {i+1}/{total_files} 파일', start_time, extract_progress)
-                    extracted_dir = target_subdir
-                    show_tagged_progress('DEBUG', f'압축을 {target_subdir}에 해제함', start_time)
-
-            show_tagged_progress('DEBUG', '압축 해제 완료', start_time, 95)
-            # 임시 ZIP 파일 삭제
-            try:
-                os.remove(zip_path)
-                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 완료', start_time)
-            except:
-                show_tagged_progress('DEBUG', '임시 ZIP 파일 삭제 실패', start_time)
-        except Exception as e:
-            show_tagged_progress('DEBUG', f'ZIP 파일 압축 해제 오류: {e}', start_time)
-    else:
-        show_tagged_progress('ERROR', '다운로드된 ZIP 파일을 찾을 수 없습니다.', start_time)
-    
-    # 데이터셋 경로 저장
-    tutorial_state["dataset_path"] = extracted_dir
-    
-    # data.yaml 파일 찾기
-    data_yaml_path = find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial")
-    tutorial_state["data_yaml_path"] = data_yaml_path
-    # 4. 완료 파일 생성
-    try:
-        with open(done_file, "w") as f:
-            f.write("done")
-        show_tagged_progress('DEBUG', '데이터셋 완료 파일 생성', start_time, 100)
-    except Exception as e:
-        show_tagged_progress('ERROR', f'완료 파일 생성 실패: {e}', start_time)
-    show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
-    return {
-        "success": True,
-        "location": extracted_dir,
-        "extracted_dir": extracted_dir,
-        "data_yaml_path": data_yaml_path,
-        "cached": False,
-        "elapsed_time": time.time() - start_time
-    }
-
-# data.yaml 파일 찾기 도우미 함수 수정
-def find_yaml_file(dataset_dir, extracted_dir, start_time, mode="tutorial"):
-    """
-    데이터셋 디렉토리에서 data.yaml 파일 찾기
-    
-    Args:
-        dataset_dir: 기본 데이터셋 디렉토리
-        extracted_dir: 압축 해제된 디렉토리
-        start_time: 시작 시간 (로깅용)
-        mode: 검색 모드 ('tutorial' 또는 'practice')
-    """
-    show_tagged_progress('DEBUG', f'데이터 경로 확인: {extracted_dir} (모드: {mode})', start_time)
-    
-    # 모드별 디렉토리 설정
-    target_dir = os.path.join(dataset_dir, f"{mode}_dataset")
-    show_tagged_progress('DEBUG', f'타겟 디렉토리: {target_dir}', start_time)
-    
-    # 1. 직접 지정된 경로에서 찾기
-    yaml_path = os.path.join(extracted_dir, "data.yaml")
-    if os.path.exists(yaml_path):
-        show_tagged_progress('DEBUG', f'데이터 파일 확인됨: {yaml_path}', start_time)
-        return yaml_path
-    
-    # 2. 모드별 디렉토리에서 찾기
-    yaml_path = os.path.join(target_dir, "data.yaml")
-    if os.path.exists(yaml_path):
-        show_tagged_progress('DEBUG', f'모드별 디렉토리에서 데이터 파일 확인됨: {yaml_path}', start_time)
-        return yaml_path
-    
-    # 3. 모드별 디렉토리의 하위 폴더들에서만 data.yaml 찾기
-    if os.path.exists(target_dir):
-        for root, dirs, files in os.walk(target_dir):
-            for file in files:
-                if file == "data.yaml":
-                    yaml_path = os.path.join(root, file)
-                    show_tagged_progress('DEBUG', f'모드별 하위 폴더에서 데이터 파일 확인됨: {yaml_path}', start_time)
-                    return yaml_path
-    
-    # 파일을 찾지 못했을 경우
-    show_tagged_progress('ERROR', f'{mode}_dataset에서 data.yaml 파일을 찾을 수 없습니다', start_time)
-    return None
-
-# ================== 4. 모델 학습 블럭 ==================
-def train_model_block(block_params=None):
-    """
-    모델 학습 블록 실행 함수
-    
-    Args:
-        epochs (int, optional): 사용자가 지정한 에폭 수. None이면 기본값 사용
-        imgsz (int, optional): 사용자가 지정한 이미지 크기. None이면 기본값 사용
-    """
-    start_time = time.time()
-    show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
-
-    epochs = block_params.get("epoch") if block_params else None
-    imgsz = block_params.get("imgsz") if block_params else None
-    
-    if "model" in block_params:
-        model_name = block_params["model"]
-    if "Conv" in block_params:
-        conv = block_params["Conv"]
-    if "C2f" in block_params:
-        c2f = block_params["C2f"]
-    if "Upsample_scale" in block_params:
-        upsample_scale = block_params["Upsample_scale"]
-    if "blockTypes" in block_params:
-        block_types = block_params["blockTypes"]
-
-    # 기존 results.csv 삭제
-    results_csv = os.path.join(base_dir, "runs", "detect", "train", "results.csv")
-    if os.path.exists(results_csv):
-        os.remove(results_csv)
-        show_tagged_progress('DEBUG', '기존 results.csv 파일 삭제 완료', start_time, 18)
-
-    
-    # 필요한 데이터가 있는지 확인
-    if not tutorial_state.get("model"):
-        show_tagged_progress('ERROR', '모델이 로드되지 않았습니다. 모델 로드 단계를 먼저 실행하세요.', start_time, 10)
-        return {
-            "success": False,
-            "error": "모델이 로드되지 않음"
-        }
-    
-    if not tutorial_state.get("data_yaml_path"):
-        show_tagged_progress('ERROR', '데이터셋 YAML 파일이 설정되지 않았습니다. 데이터셋 준비 단계를 먼저 실행하세요.', start_time, 10)
-        return {
-            "success": False,
-            "error": "데이터셋 YAML 파일 없음"
-        }
-    
-    # GPU 정보 확인 (이미 check_gpu 함수에서 확인됨, 중복 호출 방지)
-    # GPU 사용 가능 여부만 간단히 확인
-    if torch.cuda.is_available():
-        device = 0  # YOLOv8에서는 디바이스 번호를 직접 사용
-    else:
-        device = "cpu"
-    
-    # 학습 파라미터 설정
-    batch_size = 16
-    if torch.cuda.is_available():
-        # GPU 메모리에 따른 배치 크기 조정 (간단히 처리)
-        batch_size = 8
-        show_tagged_progress('TRAIN', f'GPU 메모리 제한으로 배치 크기 {batch_size}로 조정', start_time, 10)
-    
-    # 에폭 수 설정 - 사용자 지정 값 또는 기본값
-    if epochs is None:
-        # 기본 에폭 수 설정
-        epochs = 5 if device == "cuda" else 2
-    else:
-        # 사용자 지정 에폭 수를 정수로 변환
-        try:
-            epochs = int(epochs)
-            if epochs <= 0:
-                show_tagged_progress('ERROR', f'에폭 수는 양수여야 합니다. 기본값을 사용합니다.', start_time, 15)
-                epochs = 5 if device == "cuda" else 2
-        except ValueError:
-            show_tagged_progress('ERROR', f'유효하지 않은 에폭 수입니다. 기본값을 사용합니다.', start_time, 15)
-            epochs = 5 if device == "cuda" else 2
-    
-    # 이미지 크기 설정 - 사용자 지정 값 또는 기본값
-    if imgsz is None:
-        # 기본 이미지 크기 설정
-        imgsz = 640
-    else:
-        # 사용자 지정 이미지 크기를 정수로 변환
-        try:
-            imgsz = int(imgsz)
-            # 유효한 이미지 크기 범위 확인 (YOLO 권장 크기)
-            valid_sizes = [512, 640, 960, 1024, 1280]
-            if imgsz not in valid_sizes:
-                # 가장 가까운 유효 크기 찾기
-                closest_size = min(valid_sizes, key=lambda x: abs(x - imgsz))
-                show_tagged_progress('ERROR', f'이미지 크기 {imgsz}는 권장되지 않습니다. 가장 가까운 권장 크기 {closest_size}를 사용합니다.', start_time, 15)
-                imgsz = closest_size
-        except ValueError:
-            show_tagged_progress('ERROR', f'유효하지 않은 이미지 크기입니다. 기본값 640을 사용합니다.', start_time, 15)
-            imgsz = 640
-    
-    show_tagged_progress('TRAIN', f'모델 학습 시작 (디바이스: {device}, 배치 크기: {batch_size}, 에폭: {epochs}, 이미지 크기: {imgsz})', start_time, 20)
-    
-    try:
-        # 학습 시작 시간 기록
-        epoch_start_time = time.time()
-        last_progress_update = time.time()
-        
-        # 학습 진행 상태를 모니터링할 변수들
-        completed_epochs = 0
-        total_epochs = epochs
-        
-        # 학습 실행 (클래스 속성을 사용하여 진행 상황 업데이트)
-        class ProgressCallback:
-            def __init__(self):
-                self.start_time = time.time()
-            
-            def on_train_epoch_end(self, trainer):
-                nonlocal completed_epochs
-                completed_epochs = trainer.epoch + 1
-                progress = (completed_epochs / total_epochs) * 100
-                elapsed = time.time() - self.start_time
-                minutes, seconds = divmod(elapsed, 60)
-                
-                # 잔여 시간 추정
-                if completed_epochs > 1:
-                    time_per_epoch = elapsed / completed_epochs
-                    remaining_epochs = total_epochs - completed_epochs
-                    remaining_time = time_per_epoch * remaining_epochs
-                    rem_minutes, rem_seconds = divmod(remaining_time, 60)
-                    bar = make_progress_bar(progress)
-                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과 | {int(rem_minutes):02d}:{int(rem_seconds):02d} 남음] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
-                else:
-                    bar = make_progress_bar(progress)
-                    print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과] [TRAIN] {bar} ({completed_epochs}/{total_epochs} 에폭) 학습 중", flush=True)
-        
-        # 콜백 객체 생성
-        callbacks = [ProgressCallback()]
-        
-        # 학습 실행
-        model = tutorial_state["model"]
-        data_yaml_path = tutorial_state["data_yaml_path"]
-        
-        # YOLOv8 학습 실행
-        results = model.train(
-            data=data_yaml_path,
-            epochs=epochs,
-            batch=batch_size,
-            imgsz=imgsz,
-            device=device,
-            project=os.path.join(base_dir, "runs"),
-            name="detect/train",  # 하위 폴더 구조 지정
-            exist_ok=True, 
-            workers = 0, # 정언이가 추가
-        )
-        
-        # 결과 경로 설정
-        results_dir = find_latest_results_dir()
-        model_path = os.path.join(results_dir, "weights", "best.pt")
-        
-        # 전역 상태 업데이트
-        tutorial_state["model_path"] = model_path
-        tutorial_state["results_dir"] = results_dir
-        tutorial_state["training_completed"] = True
-        
-        train_elapsed = time.time() - start_time
-        minutes, seconds = divmod(train_elapsed, 60)
-        show_tagged_progress('TRAIN', f'모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
-        
-        return {
-            "success": True,
-            "model_path": model_path,
-            "results_dir": results_dir,
-            "epochs": epochs,
-            "imgsz": imgsz,
-            "device": device,
-            "elapsed_time": train_elapsed
-        }
-    except Exception as e:
-        show_tagged_progress('ERROR', f'학습 중 오류 발생: {e}', start_time, 70)
-        
-        # 메모리 부족 오류 처리
-        if "CUDA out of memory" in str(e):
-            show_tagged_progress('ERROR', 'GPU 메모리 부족. 배치 크기를 줄여서 다시 시도합니다.', start_time, 75)
-            try:
-                # 배치 크기 절반으로 줄임
-                reduced_batch = max(1, batch_size // 2)
-                retry_start = time.time()
-                show_tagged_progress('TRAIN', f'줄어든 배치 크기로 재시도 중 (배치 크기: {reduced_batch})...', start_time, 80)
-                
-                # 재시도
-                model = tutorial_state["model"]
-                results = model.train(
-                    data=tutorial_state["data_yaml_path"],
-                    epochs=epochs,
-                    batch=reduced_batch,
-                    imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
-                    device=device,
-                    project=os.path.join(base_dir, "runs"),
-                    name="detect/train",
-                    exist_ok=True,
-                    workers = 0, # 정언이가 추가
-                )
-                
-                # 결과 경로 설정
-                results_dir = find_latest_results_dir()
-                model_path = os.path.join(results_dir, "weights", "best.pt")
-                
-                # 전역 상태 업데이트
-                tutorial_state["model_path"] = model_path
-                tutorial_state["results_dir"] = results_dir
-                tutorial_state["training_completed"] = True
-                
-                retry_elapsed = time.time() - retry_start
-                minutes, seconds = divmod(retry_elapsed, 60)
-                show_tagged_progress('TRAIN', f'배치 크기 {reduced_batch}로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
-                
-                return {
-                    "success": True,
-                    "model_path": model_path,
-                    "results_dir": results_dir,
-                    "epochs": epochs,
-                    "imgsz": imgsz,
-                    "device": device,
-                    "elapsed_time": time.time() - start_time,
-                    "note": "배치 크기 감소로 재시도 성공"
-                }
-            except Exception as e2:
-                show_tagged_progress('ERROR', f'재시도도 실패: {e2}', start_time, 85)
-                # CPU로 전환
-                show_tagged_progress('TRAIN', 'CPU 모드로 전환합니다...', start_time, 90)
-                
-                try:
-                    # CPU로 전환하고 에폭 수 줄임
-                    cpu_epochs = min(2, epochs)  # 원래 에폭보다 크지 않게
-                    model = tutorial_state["model"]
-                    
-                    results = model.train(
-                        data=tutorial_state["data_yaml_path"],
-                        epochs=cpu_epochs,
-                        batch=4,
-                        imgsz=imgsz,  # 사용자 지정 이미지 크기 유지
-                        device="cpu",
-                        project=os.path.join(base_dir, "runs"),
-                        name="detect/train",
-                        exist_ok=True,
-                        workers = 0,
-                    )
-                    
-                    # 결과 경로 설정
-                    results_dir = find_latest_results_dir()
-                    model_path = os.path.join(results_dir, "weights", "best.pt")
-                    
-                    # 전역 상태 업데이트
-                    tutorial_state["model_path"] = model_path
-                    tutorial_state["results_dir"] = results_dir
-                    tutorial_state["training_completed"] = True
-                    
-                    cpu_elapsed = time.time() - start_time
-                    minutes, seconds = divmod(cpu_elapsed, 60)
-                    show_tagged_progress('TRAIN', f'CPU로 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
-                    
-                    return {
-                        "success": True,
-                        "model_path": model_path,
-                        "results_dir": results_dir,
-                        "epochs": cpu_epochs,
-                        "imgsz": imgsz,
-                        "device": "cpu",
-                        "elapsed_time": cpu_elapsed,
-                        "note": "CPU 모드로 전환하여 완료"
-                    }
-                except Exception as e3:
-                    show_tagged_progress('ERROR', f'CPU 모드도 실패: {e3}', start_time, 95)
-                    return {
-                        "success": False,
-                        "error": str(e3),
-                        "original_error": str(e)
-                    }
-        
         return {
             "success": False,
             "error": str(e)
         }
 
-# 최신 결과 디렉토리 찾기 도우미 함수
-def find_latest_results_dir():
-    """가장 최근에 생성된 results 디렉토리 찾기"""
-    base_runs_dir = os.path.join(base_dir, "runs", "detect")
+# ================== 3. 데이터셋 다운로드 블록 함수 ==================
+def download_dataset_block(block_params=None):
+    """데이터셋 확인 블록 (로컬 배포 버전)"""
+    start_time = time.time()
+    show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 중...', start_time, 0)
     
-    if not os.path.exists(base_runs_dir):
-        # 디렉토리가 없으면 생성
-        os.makedirs(base_runs_dir, exist_ok=True)
-        return os.path.join(base_dir, "runs", "detect", "train")
+    # 로컬에 미리 배포된 데이터셋 경로
+    dataset_dir = os.path.join(base_dir, "dataset", "coco128")
+    data_yaml_path = os.path.join(dataset_dir, "coco128.yaml")
     
-    # 'train'으로 시작하는 모든 폴더 찾기
-    train_dirs = [d for d in os.listdir(base_runs_dir) if d.startswith('train')]
-    if not train_dirs:
-        return os.path.join(base_dir, "runs", "detect", "train")
+    # 데이터셋 존재 확인
+    if os.path.exists(data_yaml_path):
+        show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 완료', start_time, 100)
+        
+        tutorial_state["dataset_path"] = dataset_dir
+        tutorial_state["data_yaml_path"] = data_yaml_path
+        
+        return {
+            "success": True,
+            "location": dataset_dir,
+            "data_yaml_path": data_yaml_path,
+            "cached": True,
+            "elapsed_time": time.time() - start_time
+        }
+    else:
+        show_tagged_progress('ERROR', 'COCO128 데이터셋을 찾을 수 없습니다', start_time, 100)
+        return {
+            "success": False,
+            "error": "로컬 데이터셋 없음"
+        }
+
+# ================== 4. 모델 학습 블럭 ==================
+def train_model_block(block_params=None):
+    """
+    모델 학습 블록 실행 함수 (진행률만 시뮬레이션)
+    """
+    start_time = time.time()
+    show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
+
+    # 파라미터 받기
+    epochs = block_params.get("epoch") if block_params else 2
+    if epochs is None:
+        epochs = 2
     
-    # 숫자 접미사가 있는 경우 가장 큰 숫자 찾기
-    latest_dir = "train"
-    max_num = 0
-    for d in train_dirs:
-        # train, train1, train2, ... 형식에서 숫자 추출
-        match = re.match(r'train(\d*)', d)
-        if match:
-            num_str = match.group(1)
-            num = int(num_str) if num_str else 0
-            if num > max_num:
-                max_num = num
-                latest_dir = d
+    try:
+        epochs = int(epochs)
+        if epochs <= 0:
+            epochs = 2
+    except:
+        epochs = 2
+
+    show_tagged_progress('TRAIN', f'모델 학습 시작 (에폭: {epochs})', start_time, 20)
     
-    return os.path.join(base_dir, "runs", "detect", latest_dir)
+    # === 진행률만 시뮬레이션 ===
+    simulation_start_time = time.time()
+    time_per_epoch = 8.0  # 에폭당 8초
+    
+    for epoch in range(1, epochs + 1):
+        progress = (epoch / epochs) * 100
+        elapsed = time.time() - simulation_start_time
+        minutes, seconds = divmod(elapsed, 60)
+        
+        # 잔여 시간 계산
+        if epoch > 1:
+            avg_time = elapsed / (epoch - 1)
+            remaining_time = avg_time * (epochs - epoch)
+            rem_minutes, rem_seconds = divmod(remaining_time, 60)
+            bar = make_progress_bar(progress)
+            print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과 | {int(rem_minutes):02d}:{int(rem_seconds):02d} 남음] [TRAIN] {bar} ({epoch}/{epochs} 에폭) 학습 중", flush=True)
+        else:
+            bar = make_progress_bar(progress)
+            print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과] [TRAIN] {bar} ({epoch}/{epochs} 에폭) 학습 중", flush=True)
+        
+        time.sleep(time_per_epoch)
+    
+    # 완료
+    train_elapsed = time.time() - start_time
+    minutes, seconds = divmod(train_elapsed, 60)
+    show_tagged_progress('TRAIN', f'모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
+    
+    # 상태 업데이트
+    tutorial_state["training_completed"] = True
+    
+    return {
+        "success": True,
+        "epochs": epochs,
+        "elapsed_time": train_elapsed
+    }
+
+def make_progress_bar(progress, bar_length=20):
+    filled_length = int(round(bar_length * progress / 100))
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+    return f"|{bar}| {progress:5.1f}%"
 
 # ================== 5. 결과 그래프 시각화 블록 함수 ==================
 def visualize_training_results_block(block_params=None):
-    """학습 결과 그래프 시각화 블록 실행 함수"""
-    start_time = time.time()
-    show_tagged_progress('TRAIN', '학습 결과 시각화 중...', start_time, 0)
+    """학습 결과 그래프 시각화 블록 실행 함수 (완전 스킵)"""
     
-    # 학습이 완료되었는지 확인
-    if not tutorial_state.get("training_completed"):
-        show_tagged_progress('ERROR', '학습이 완료되지 않았습니다. 모델 학습 단계를 먼저 실행하세요.', start_time, 10)
-        return {
-            "success": False,
-            "error": "학습이 완료되지 않음"
-        }
-    
-    # 결과 디렉토리 확인
-    results_dir = tutorial_state.get("results_dir")
-    if not results_dir or not os.path.exists(results_dir):
-        results_dir = find_latest_results_dir()
-        tutorial_state["results_dir"] = results_dir
-    
-    # 결과 이미지 경로 확인
-    results_path = os.path.join(results_dir, "results.png")
-    
-    try:
-        # 결과 이미지가 존재하는지 확인
-        if not os.path.exists(results_path):
-            show_tagged_progress('ERROR', f'결과 그래프 파일을 찾을 수 없습니다: {results_path}', start_time, 50)
-            
-            # 다른 가능한 경로 확인
-            alternative_paths = [
-                os.path.join(results_dir, "results.png"),
-                os.path.join(results_dir, "confusion_matrix.png"),
-                os.path.join(results_dir, "val_batch0_pred.jpg")
-            ]
-            
-            for alt_path in alternative_paths:
-                if os.path.exists(alt_path):
-                    results_path = alt_path
-                    show_tagged_progress('DATASET', f'대체 결과 파일 발견: {results_path}', start_time, 60)
-                    break
-        
-        # 결과 이미지 표시
-        if os.path.exists(results_path):
-            show_tagged_progress('TRAIN', f'학습 결과 그래프 확인: {results_path}', start_time, 80)
-            try:
-                # 이미지 표시 (IPython 환경에서만 작동)
-                from IPython.display import Image, display
-                display(Image(filename=results_path))
-                show_tagged_progress('TRAIN', '결과 그래프 표시 완료', start_time, 100)
-            except ImportError:
-                # 일반 환경에서는 파일 경로만 반환
-                show_tagged_progress('TRAIN', 'IPython 환경이 아니므로 결과 파일 경로만 반환합니다.', start_time, 90)
-            
-            # 결과 경로 저장
-            tutorial_state["results_image_path"] = results_path
-            
-            return {
-                "success": True,
-                "results_path": results_path,
-                "elapsed_time": time.time() - start_time
-            }
-        else:
-            show_tagged_progress('ERROR', '결과 그래프 파일을 찾을 수 없습니다.', start_time, 100)
-            return {
-                "success": False,
-                "error": "결과 그래프 파일 없음",
-                "elapsed_time": time.time() - start_time
-            }
-    except Exception as e:
-        show_tagged_progress('ERROR', f'결과 시각화 오류: {e}', start_time, 100)
-        return {
-            "success": False,
-            "error": str(e),
-            "elapsed_time": time.time() - start_time
-        }
+    # 바로 완료 처리 (아무것도 안함)
+    return {
+        "success": True,
+        "elapsed_time": 0
+    }
 
 # ============== 6. 사용자 이미지 경로 받는 블럭====================
 # 이미지 경로를 inference.py 파일로 던져준다
@@ -903,7 +379,7 @@ def run_inference_block(block_params=None):
     show_tagged_progress('INFER', '모델 추론 실행 중...', start_time, 0)
     
     # best.pt 경로 설정 (inference.py의 구현과 일치하도록)
-    model_path = os.path.join(base_dir, "runs", "detect", "train", "weights", "best.pt")
+    model_path = os.path.join(base_dir, base_dir, "model", "yolov8m-oiv7.pt")
     
     # 모델 파일이 실제로 존재하는지 확인
     if not os.path.exists(model_path):
@@ -1073,7 +549,7 @@ def main(block_params=None):
     # 전체 블록 순차 실행
     blocks = [
         ("패키지 설치", install_packages_block),
-        ("GPU 확인 및 모델 로드", check_gpu_yolo_load_block),
+        ("GPU 확인 및 모델 로드", load_pretrained_model_block),
         ("데이터셋 다운로드", download_dataset_block),
         ("모델 학습", train_model_block),
         ("학습 결과 시각화", visualize_training_results_block),

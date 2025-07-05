@@ -30,7 +30,7 @@ class TutorialRunner:
         self.block_mappings = {
             "start": None,
             "pipInstall": self.tutorial_train_script.install_packages_block,
-            "loadModel": self.tutorial_train_script.check_gpu_yolo_load_block,
+            "loadModel": self.tutorial_train_script.load_pretrained_model_block,
             "loadDataset": self.tutorial_train_script.download_dataset_block,
             "machineLearning": self.tutorial_train_script.train_model_block,
             "resultGraph": self.tutorial_train_script.visualize_training_results_block,

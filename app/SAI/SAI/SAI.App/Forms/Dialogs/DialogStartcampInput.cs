@@ -39,7 +39,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
 
             // 새 이미지 불러오기 버튼 설정
-            btnStartcampInput.Size = new Size(720, 687); 
+            btnStartcampInput.Size = new Size(720, 687);
             pboxStartcampInput.Controls.Add(btnStartcampInput);
             btnStartcampInput.Location = new Point(0, 0);
             btnStartcampInput.Enabled = true;
@@ -64,6 +64,35 @@ namespace SAI.SAI.App.Forms.Dialogs
             // 툴팁 설정
             ToolTipUtils.CustomToolTip(btnStartcampInput, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
             //ToolTipUtils.CustomToolTip(btnInfoThreshold, "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+        }
+
+        // 이미지 경로를 받는 생성자 추가
+        public DialogStartcampInput(string imagePath) : this()
+        {
+            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+            {
+                selectedImagePath = imagePath;
+                currentImagePath = imagePath;
+
+                try
+                {
+                    using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                    {
+                        var originalImage = System.Drawing.Image.FromStream(stream);
+                        pboxStartcampInput.Size = new Size(720, 687);
+                        pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
+                        pboxStartcampInput.Image = originalImage;
+                        pboxStartcampInput.Visible = true;
+                    }
+
+                    btnStartcampInput.Visible = false;
+                    Console.WriteLine($"[DEBUG] DialogStartcampInput: 전달받은 이미지 로드 완료 - {imagePath}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] DialogStartcampInput: 전달받은 이미지 로드 실패 - {ex.Message}");
+                }
+            }
         }
 
         private void SetupHoverEvents()
