@@ -207,16 +207,17 @@ namespace SAI.SAI.App.Forms.Dialogs
             // btnTrain 클릭 이벤트
             btnTrain.Click += (s, e) =>
             {
-                if (clicked == "btnYolo")
-                {
-                    presenter.clickTrainAtModelSelect();
-                    this.Close();
-                }
-                else
-                {
+				// 현 상태는 Train 작동 안되게 막음
+                //if (clicked == "btnYolo")
+                //{
+                //    presenter.clickTrainAtModelSelect();
+                //    this.Close();
+                //}
+                //else
+                //{
                     var prepareDialog = new DialogPrepare();
                     prepareDialog.ShowDialog(this);
-                }
+                //}
             };
         }
 

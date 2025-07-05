@@ -63,59 +63,59 @@ namespace SAI.SAI.App.Views.Pages
         private void SetupButtonPositions()
         {
             // 전체 튜토리얼 가이드 1 (1.5배 확대)
-            prevButtonPositions.Add(new Point(326, 540)); // 첫 페이지 이전 버튼 위치
-            nextButtonPositions.Add(new Point(1539, 540)); // 첫 페이지 다음 버튼 위치
+            prevButtonPositions.Add(new Point(321, 463)); // 첫 페이지 이전 버튼 위치
+            nextButtonPositions.Add(new Point(1534, 463)); // 첫 페이지 다음 버튼 위치
             exitButtonPositions.Add(new Point(0, 0)); // 안 보이는 위치 (전체 튜토리얼)
             
             // 전체 튜토리얼 가이드 2 (1.5배 확대)
-            prevButtonPositions.Add(new Point(326, 540));
-            nextButtonPositions.Add(new Point(1539, 540));
+            prevButtonPositions.Add(new Point(327, 463));
+            nextButtonPositions.Add(new Point(1534, 463));
             exitButtonPositions.Add(new Point(0, 0)); // 안 보이는 위치 (전체 튜토리얼)
-            
+
             // 전체 튜토리얼 가이드 3 (1.5배 확대)
-            prevButtonPositions.Add(new Point(326, 540));
-            nextButtonPositions.Add(new Point(1539, 540));
+            prevButtonPositions.Add(new Point(327, 463));
+            nextButtonPositions.Add(new Point(1534, 463));
             exitButtonPositions.Add(new Point(0, 0)); // 안 보이는 위치 (전체 튜토리얼)
 
             // 라벨링 가이드 1 (1.5배 확대)
-            prevButtonPositions.Add(new Point(263, 581));
-            nextButtonPositions.Add(new Point(1245, 612));
-            exitButtonPositions.Add(new Point(1270, 430));
+            prevButtonPositions.Add(new Point(1182, 568));
+            nextButtonPositions.Add(new Point(1243, 568));
+            exitButtonPositions.Add(new Point(1248, 375));
 
             // 라벨링 가이드 2 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1176, 316));
-            nextButtonPositions.Add(new Point(1245, 316));
-            exitButtonPositions.Add(new Point(1269, 166));
+            prevButtonPositions.Add(new Point(1182, 317));
+            nextButtonPositions.Add(new Point(1243, 317));
+            exitButtonPositions.Add(new Point(1248, 165));
 
             // 라벨링 가이드 3 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1432, 342));
-            nextButtonPositions.Add(new Point(1501, 342));
-            exitButtonPositions.Add(new Point(1526, 155));
+            prevButtonPositions.Add(new Point(1159, 597));
+            nextButtonPositions.Add(new Point(1219, 597));
+            exitButtonPositions.Add(new Point(1224, 394));
 
             // 라벨링 가이드 4 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1143, 312));
-            nextButtonPositions.Add(new Point(1212, 312));
-            exitButtonPositions.Add(new Point(1237, 126));
+            prevButtonPositions.Add(new Point(1154, 333));
+            nextButtonPositions.Add(new Point(1214, 333));
+            exitButtonPositions.Add(new Point(1219, 129));
 
             // 라벨링 가이드 5 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1318, 556));
-            nextButtonPositions.Add(new Point(1387, 556));
-            exitButtonPositions.Add(new Point(1412, 369));
+            prevButtonPositions.Add(new Point(1304, 582));
+            nextButtonPositions.Add(new Point(1366, 582));
+            exitButtonPositions.Add(new Point(1371, 381));
 
             // 라벨링 가이드 6 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1200, 879));
-            nextButtonPositions.Add(new Point(1269, 879));
-            exitButtonPositions.Add(new Point(1294, 620));
+            prevButtonPositions.Add(new Point(1192, 883));
+            nextButtonPositions.Add(new Point(1253, 883));
+            exitButtonPositions.Add(new Point(1258, 617));
 
             // 라벨링 가이드 7 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1484, 725));
-            nextButtonPositions.Add(new Point(1553, 725));
-            exitButtonPositions.Add(new Point(1588, 214));
+            prevButtonPositions.Add(new Point(1503, 695));
+            nextButtonPositions.Add(new Point(1566, 695));
+            exitButtonPositions.Add(new Point(1571, 165));
 
             // 라벨링 가이드 8 (1.5배 확대)
-            prevButtonPositions.Add(new Point(1560, 288));
-            nextButtonPositions.Add(new Point(1640, 288));
-            exitButtonPositions.Add(new Point(1667, 140));
+            prevButtonPositions.Add(new Point(1611, 310));
+            nextButtonPositions.Add(new Point(1671, 310));
+            exitButtonPositions.Add(new Point(1676, 149));
         }
 
         private void UpdatePage(int pageIndex)
@@ -155,6 +155,10 @@ namespace SAI.SAI.App.Views.Pages
                 case 0: // 첫 페이지
                     nextBtn.Location = nextButtonPositions[0];
                     nextBtn.Visible = true;
+                    nextBtn.Size = new Size(70, 70);
+                    preBtn.Size = new Size(70, 70);
+                    nextBtn.ImageSize = new Size(70, 70);
+                    preBtn.ImageSize = new Size(70, 70);
                     break;
                 
                 case 2: // 전체 튜토리얼 마지막

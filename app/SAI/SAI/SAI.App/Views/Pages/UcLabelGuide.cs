@@ -249,7 +249,9 @@ namespace SAI.SAI.App.Views.Pages
 
             // 툴팁 패널 초기화
             InitializeTooltipPanel();
+            pTotal.Visible = false; // 초기에는 최종 결과 안 보이게
 
+            pLow90.Visible = false; // 초기에는 낮다고 말 안하게
         }
 
         /// <summary>
@@ -515,6 +517,7 @@ namespace SAI.SAI.App.Views.Pages
             }
             else if (currentAccuracy >= 50 && currentImageIndex == 14)
             {
+                nextBtn.Enabled = true;
                 imageStatusCode[currentImageIndex] = 1;
                 UpdateProgressIndicator(currentImageIndex, 1);
             }
@@ -564,7 +567,7 @@ namespace SAI.SAI.App.Views.Pages
             }
 
             // 모든 이미지가 완료된 경우 완료 다이얼로그 표시
-            if (allCompleted)
+            if (allCompleted && currentImageIndex == 15)
             {
                 // 이미 대화상자가 표시된 경우 중복 표시 방지
                 if (!isCompletionDialogShown)
@@ -1350,6 +1353,79 @@ namespace SAI.SAI.App.Views.Pages
         }
 
         /// <summary>
+        /// 최종 결과를 보여주기
+        /// </summary>
+        private void ShowFinalResult()
+        {
+            pbClass1.BackgroundImage = images[0];
+            pbClass1.BackgroundImageLayout = ImageLayout.Stretch;
+            pbClass2.BackgroundImage = images[1];
+            pbClass2.BackgroundImageLayout = ImageLayout.Stretch;
+            pbClass3.BackgroundImage = images[2];
+            pbClass3.BackgroundImageLayout = ImageLayout.Stretch;
+            pbClass4.BackgroundImage = images[3];
+            pbClass4.BackgroundImageLayout = ImageLayout.Stretch;
+            pbClass5.BackgroundImage = images[4];
+            pbClass5.BackgroundImageLayout = ImageLayout.Stretch;
+
+            pbBox1.BackgroundImage = images[5];
+            pbBox1.BackgroundImageLayout = ImageLayout.Stretch;
+            pbBox2.BackgroundImage = images[6];
+            pbBox2.BackgroundImageLayout = ImageLayout.Stretch;
+            pbBox3.BackgroundImage = images[7];
+            pbBox3.BackgroundImageLayout = ImageLayout.Stretch;
+            pbBox4.BackgroundImage = images[8];
+            pbBox4.BackgroundImageLayout = ImageLayout.Stretch;
+            pbBox5.BackgroundImage = images[9];
+            pbBox5.BackgroundImageLayout = ImageLayout.Stretch;
+
+            pbSeg1.BackgroundImage = images[10];
+            pbSeg1.BackgroundImageLayout = ImageLayout.Stretch;
+            pbSeg2.BackgroundImage = images[11];
+            pbSeg2.BackgroundImageLayout = ImageLayout.Stretch;
+            pbSeg3.BackgroundImage = images[12];
+            pbSeg3.BackgroundImageLayout = ImageLayout.Stretch;
+            pbSeg4.BackgroundImage = images[13];
+            pbSeg4.BackgroundImageLayout = ImageLayout.Stretch;
+            pbSeg5.BackgroundImage = images[14];
+            pbSeg5.BackgroundImageLayout = ImageLayout.Stretch;
+
+            lClass1.Text = $"{imageAccuracies[0]}%";
+            lClass2.Text = $"{imageAccuracies[1]}%";
+            lClass3.Text = $"{imageAccuracies[2]}%";
+            lClass4.Text = $"{imageAccuracies[3]}%";
+            lClass5.Text = $"{imageAccuracies[4]}%";
+
+            lBox1.Text = $"{Math.Round(imageAccuracies[5], 2)}%";
+            lBox2.Text = $"{Math.Round(imageAccuracies[6], 2)}%";
+            lBox3.Text = $"{Math.Round(imageAccuracies[7], 2)}%";
+            lBox4.Text = $"{Math.Round(imageAccuracies[8], 2)}%";
+            lBox5.Text = $"{Math.Round(imageAccuracies[9], 2)}%";
+
+            lSeg1.Text = $"{Math.Round(imageAccuracies[10], 2)}%";
+            lSeg2.Text = $"{Math.Round(imageAccuracies[11], 2)}%";
+            lSeg3.Text = $"{Math.Round(imageAccuracies[12], 2)}%";
+            lSeg4.Text = $"{Math.Round(imageAccuracies[13], 2)}%";
+            lSeg5.Text = $"{Math.Round(imageAccuracies[14], 2)}%";
+
+            int isLow = 0;
+            double sumAccuracy = 0;
+            for(int i = 0; i < 15; i++)
+            {
+                sumAccuracy += imageAccuracies[i];
+                if (isLow == 0 && imageAccuracies[i] < 90)
+                {
+                    isLow = 1;
+                    pLow90.Visible = true; // 90% 미만인 경우 경고 표시
+                }
+            }
+            double averageAccuracy = sumAccuracy / 15.0;
+
+            lTotalAccuracy.Text = $"{Math.Round(averageAccuracy, 2)}%";
+
+        }
+
+        /// <summary>
         /// 다음 이미지로 이동
         /// </summary>
         private void ShowNextImage()
@@ -1358,44 +1434,52 @@ namespace SAI.SAI.App.Views.Pages
             {
                 currentImageIndex = currentImageIndex + 1; // 다음 이미지로 이동
 
-                if (currentImageIndex == 14)
+                if (currentImageIndex == 15)
                 {
-                    nextBtn.Enabled = false;
-                    nextBtn.Visible = false; // 마지막 이미지일 경우 다음 버튼 비활성화
+                    pTotal.Visible = true;
+
+                    nextBtn.Visible = false; // 마지막 이미지가 통과할 경우 다음 버튼 비활성화
+                    preBtn.Visible = false;
+
+                    mainpanel.Visible = false; // 메인 패널 숨김
+                    showLevel1.Visible = false;
+                    tooltipPanel.Visible = false; // 툴팁 패널 숨김
+                    tooltipLabel.Visible = false; // 툴팁 라벨 숨김
+                    ShowFinalResult(); // 최종 결과 보여주기
                 }
                 else
                 {
                     nextBtn.Enabled = false;
                     nextBtn.Visible = true; // 마지막 이미지가 아니므로 다음 버튼 활성화
-                }
-                pictureBoxImage.BackgroundImage = images[currentImageIndex];
-                ResetZoom(); // 줌 초기화
-                UpdateShowLevel(); // showLevel 업데이트
-                ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
-                UpdateCurrentLevel(); // currentLevel 업데이트
-                LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
+                    pictureBoxImage.BackgroundImage = images[currentImageIndex];
+                    ResetZoom(); // 줌 초기화
+                    UpdateShowLevel(); // showLevel 업데이트
+                    ResetToolState(); // 도구 상태 초기화 (UpdateCurrentLevel 전에 실행)
+                    UpdateCurrentLevel(); // currentLevel 업데이트
+                    LoadImageLabels(); // 현재 이미지의 라벨링 불러오기
 
-                // 정확도 표시 업데이트
-                if (imageAccuracies.ContainsKey(currentImageIndex))
-                {
-                    accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
+                    // 정확도 표시 업데이트
+                    if (imageAccuracies.ContainsKey(currentImageIndex))
+                    {
+                        accuracyLabel1.Text = $"Accuracy: {imageAccuracies[currentImageIndex]:F0}%";
 
-                }
-                else
-                {
-                    accuracyLabel1.Text = "Accuracy: 0%";
-                }
+                    }
+                    else
+                    {
+                        accuracyLabel1.Text = "Accuracy: 0%";
+                    }
 
-                // 이전에 통과한 이미지인 경우 다음 버튼 활성화
-                if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
-                {
-                    nextBtn.Enabled = true;
-                    UpdateProgressIndicator(currentImageIndex, 1);
-                }
-                else
-                {
-                    //통과 여부에 따라 진행 상태 표시
-                    UpdateNavigationButtonState();
+                    // 이전에 통과한 이미지인 경우 다음 버튼 활성화
+                    if (imagePassedStatus.ContainsKey(currentImageIndex) && imagePassedStatus[currentImageIndex])
+                    {
+                        nextBtn.Enabled = true;
+                        UpdateProgressIndicator(currentImageIndex, 1);
+                    }
+                    else
+                    {
+                        //통과 여부에 따라 진행 상태 표시
+                        UpdateNavigationButtonState();
+                    }
                 }
             }
         }
@@ -2293,6 +2377,1043 @@ namespace SAI.SAI.App.Views.Pages
                                         center.Y - textSize.Height / 2);
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void pbBox1_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            foreach (var box in imageBoundingBoxes[5])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbBox1.ClientSize.Width / (float)pbBox1.BackgroundImage.Width;
+                float scaleY = pbBox1.ClientSize.Height / (float)pbBox1.BackgroundImage.Height;
+
+                // 좌표 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                displayRect.Inflate(-2, -2);
+
+                using (Pen pen = new Pen(Color.OrangeRed, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, displayRect);
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(box.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(box.Item2, font, brush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                        }
+                    }
+                }
+            }
+
+            var boxTruth = groundTruthBoundingBoxes[5];
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbBox1.ClientSize.Width / (float)pbBox1.BackgroundImage.Width;
+            float scaleYTruth = pbBox1.ClientSize.Height / (float)pbBox1.BackgroundImage.Height;
+
+            // 좌표 변환
+            Rectangle displayRectTruth = new Rectangle(
+                (int)(boxTruth.Item1.X * scaleXTruth),
+                (int)(boxTruth.Item1.Y * scaleYTruth),
+                (int)(boxTruth.Item1.Width * scaleXTruth),
+                (int)(boxTruth.Item1.Height * scaleYTruth)
+            );
+
+            // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+            displayRectTruth.Inflate(-2, -2);
+
+            using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+            {
+                e.Graphics.DrawRectangle(pen, displayRectTruth);
+
+                // 라벨 텍스트 그리기
+                if (!string.IsNullOrEmpty(boxTruth.Item2))
+                {
+                    using (Font font = new Font("Arial", 10))
+                    using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                    {
+                        SizeF textSize = e.Graphics.MeasureString(boxTruth.Item2, font);
+
+                        // 텍스트 배경
+                        e.Graphics.FillRectangle(bgBrush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y,
+                            textSize.Width, textSize.Height);
+
+                        // 텍스트
+                        e.Graphics.DrawString(boxTruth.Item2, font, brush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y);
+                    }
+                }
+            }
+        }
+        private void pbBox2_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            foreach (var box in imageBoundingBoxes[6])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbBox2.ClientSize.Width / (float)pbBox2.BackgroundImage.Width;
+                float scaleY = pbBox2.ClientSize.Height / (float)pbBox2.BackgroundImage.Height;
+
+                // 좌표 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                displayRect.Inflate(-2, -2);
+
+                using (Pen pen = new Pen(Color.OrangeRed, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, displayRect);
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(box.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(box.Item2, font, brush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                        }
+                    }
+                }
+            }
+
+            var boxTruth = groundTruthBoundingBoxes[6];
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbBox2.ClientSize.Width / (float)pbBox2.BackgroundImage.Width;
+            float scaleYTruth = pbBox2.ClientSize.Height / (float)pbBox2.BackgroundImage.Height;
+
+            // 좌표 변환
+            Rectangle displayRectTruth = new Rectangle(
+                (int)(boxTruth.Item1.X * scaleXTruth),
+                (int)(boxTruth.Item1.Y * scaleYTruth),
+                (int)(boxTruth.Item1.Width * scaleXTruth),
+                (int)(boxTruth.Item1.Height * scaleYTruth)
+            );
+
+            // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+            displayRectTruth.Inflate(-2, -2);
+
+            using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+            {
+                e.Graphics.DrawRectangle(pen, displayRectTruth);
+
+                // 라벨 텍스트 그리기
+                if (!string.IsNullOrEmpty(boxTruth.Item2))
+                {
+                    using (Font font = new Font("Arial", 10))
+                    using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                    {
+                        SizeF textSize = e.Graphics.MeasureString(boxTruth.Item2, font);
+
+                        // 텍스트 배경
+                        e.Graphics.FillRectangle(bgBrush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y,
+                            textSize.Width, textSize.Height);
+
+                        // 텍스트
+                        e.Graphics.DrawString(boxTruth.Item2, font, brush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y);
+                    }
+                }
+            }
+        }
+        private void pbBox3_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            foreach (var box in imageBoundingBoxes[7])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbBox3.ClientSize.Width / (float)pbBox3.BackgroundImage.Width;
+                float scaleY = pbBox3.ClientSize.Height / (float)pbBox3.BackgroundImage.Height;
+
+                // 좌표 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                displayRect.Inflate(-2, -2);
+
+                using (Pen pen = new Pen(Color.OrangeRed, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, displayRect);
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(box.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(box.Item2, font, brush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                        }
+                    }
+                }
+            }
+
+            var boxTruth = groundTruthBoundingBoxes[7];
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbBox3.ClientSize.Width / (float)pbBox3.BackgroundImage.Width;
+            float scaleYTruth = pbBox3.ClientSize.Height / (float)pbBox3.BackgroundImage.Height;
+
+            // 좌표 변환
+            Rectangle displayRectTruth = new Rectangle(
+                (int)(boxTruth.Item1.X * scaleXTruth),
+                (int)(boxTruth.Item1.Y * scaleYTruth),
+                (int)(boxTruth.Item1.Width * scaleXTruth),
+                (int)(boxTruth.Item1.Height * scaleYTruth)
+            );
+
+            // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+            displayRectTruth.Inflate(-2, -2);
+
+            using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+            {
+                e.Graphics.DrawRectangle(pen, displayRectTruth);
+
+                // 라벨 텍스트 그리기
+                if (!string.IsNullOrEmpty(boxTruth.Item2))
+                {
+                    using (Font font = new Font("Arial", 10))
+                    using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                    {
+                        SizeF textSize = e.Graphics.MeasureString(boxTruth.Item2, font);
+
+                        // 텍스트 배경
+                        e.Graphics.FillRectangle(bgBrush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y,
+                            textSize.Width, textSize.Height);
+
+                        // 텍스트
+                        e.Graphics.DrawString(boxTruth.Item2, font, brush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y);
+                    }
+                }
+            }
+        }
+        private void pbBox4_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            foreach (var box in imageBoundingBoxes[8])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbBox4.ClientSize.Width / (float)pbBox4.BackgroundImage.Width;
+                float scaleY = pbBox4.ClientSize.Height / (float)pbBox4.BackgroundImage.Height;
+
+                // 좌표 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                displayRect.Inflate(-2, -2);
+
+                using (Pen pen = new Pen(Color.OrangeRed, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, displayRect);
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(box.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(box.Item2, font, brush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                        }
+                    }
+                }
+            }
+
+            var boxTruth = groundTruthBoundingBoxes[8];
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbBox4.ClientSize.Width / (float)pbBox4.BackgroundImage.Width;
+            float scaleYTruth = pbBox4.ClientSize.Height / (float)pbBox4.BackgroundImage.Height;
+
+            // 좌표 변환
+            Rectangle displayRectTruth = new Rectangle(
+                (int)(boxTruth.Item1.X * scaleXTruth),
+                (int)(boxTruth.Item1.Y * scaleYTruth),
+                (int)(boxTruth.Item1.Width * scaleXTruth),
+                (int)(boxTruth.Item1.Height * scaleYTruth)
+            );
+
+            // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+            displayRectTruth.Inflate(-2, -2);
+
+            using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+            {
+                e.Graphics.DrawRectangle(pen, displayRectTruth);
+
+                // 라벨 텍스트 그리기
+                if (!string.IsNullOrEmpty(boxTruth.Item2))
+                {
+                    using (Font font = new Font("Arial", 10))
+                    using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                    {
+                        SizeF textSize = e.Graphics.MeasureString(boxTruth.Item2, font);
+
+                        // 텍스트 배경
+                        e.Graphics.FillRectangle(bgBrush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y,
+                            textSize.Width, textSize.Height);
+
+                        // 텍스트
+                        e.Graphics.DrawString(boxTruth.Item2, font, brush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y);
+                    }
+                }
+            }
+        }
+        private void pbBox5_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 바운딩 박스들 그리기 - 현재 이미지에 해당하는 바운딩 박스만 표시
+            foreach (var box in imageBoundingBoxes[9])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbBox5.ClientSize.Width / (float)pbBox5.BackgroundImage.Width;
+                float scaleY = pbBox5.ClientSize.Height / (float)pbBox5.BackgroundImage.Height;
+
+                // 좌표 변환
+                Rectangle displayRect = new Rectangle(
+                    (int)(box.Item1.X * scaleX),
+                    (int)(box.Item1.Y * scaleY),
+                    (int)(box.Item1.Width * scaleX),
+                    (int)(box.Item1.Height * scaleY)
+                );
+
+                // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+                displayRect.Inflate(-2, -2);
+
+                using (Pen pen = new Pen(Color.OrangeRed, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, displayRect);
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(box.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            SizeF textSize = e.Graphics.MeasureString(box.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(box.Item2, font, brush,
+                                displayRect.X,
+                                displayRect.Y > textSize.Height ? displayRect.Y - textSize.Height : displayRect.Y);
+                        }
+                    }
+                }
+            }
+
+            var boxTruth = groundTruthBoundingBoxes[9];
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbBox5.ClientSize.Width / (float)pbBox5.BackgroundImage.Width;
+            float scaleYTruth = pbBox5.ClientSize.Height / (float)pbBox5.BackgroundImage.Height;
+
+            // 좌표 변환
+            Rectangle displayRectTruth = new Rectangle(
+                (int)(boxTruth.Item1.X * scaleXTruth),
+                (int)(boxTruth.Item1.Y * scaleYTruth),
+                (int)(boxTruth.Item1.Width * scaleXTruth),
+                (int)(boxTruth.Item1.Height * scaleYTruth)
+            );
+
+            // 테두리가 잘리지 않도록 안쪽으로 2픽셀 조정
+            displayRectTruth.Inflate(-2, -2);
+
+            using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+            {
+                e.Graphics.DrawRectangle(pen, displayRectTruth);
+
+                // 라벨 텍스트 그리기
+                if (!string.IsNullOrEmpty(boxTruth.Item2))
+                {
+                    using (Font font = new Font("Arial", 10))
+                    using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                    {
+                        SizeF textSize = e.Graphics.MeasureString(boxTruth.Item2, font);
+
+                        // 텍스트 배경
+                        e.Graphics.FillRectangle(bgBrush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y,
+                            textSize.Width, textSize.Height);
+
+                        // 텍스트
+                        e.Graphics.DrawString(boxTruth.Item2, font, brush,
+                            displayRectTruth.X,
+                            displayRectTruth.Y > textSize.Height ? displayRectTruth.Y - textSize.Height : displayRectTruth.Y);
+                    }
+                }
+            }
+        }
+
+        private void pbSeg1_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            foreach (var polygon in imagePolygons[10])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbSeg1.ClientSize.Width / (float)pbSeg1.BackgroundImage.Width;
+                float scaleY = pbSeg1.ClientSize.Height / (float)pbSeg1.BackgroundImage.Height;
+
+                // 이미지 좌표를 화면 좌표로 변환
+                List<Point> displayPoints = new List<Point>();
+                foreach (var point in polygon.Item1)
+                {
+                    displayPoints.Add(new Point(
+                        (int)(point.X * scaleX),
+                        (int)(point.Y * scaleY)
+                    ));
+                }
+
+                if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                {
+                    using (Pen pen = new Pen(Color.OrangeRed, 2))
+                    {
+                        // 폴리곤 그리기
+                        e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(polygon.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in displayPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(polygon.Item2, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var polyconTruth = groundTruthPolygons[10];
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbSeg1.ClientSize.Width / (float)pbSeg1.BackgroundImage.Width;
+            float scaleYTruth = pbSeg1.ClientSize.Height / (float)pbSeg1.BackgroundImage.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPointsTruth = new List<Point>();
+            foreach (var point in polyconTruth.Item1)
+            {
+                displayPointsTruth.Add(new Point(
+                    (int)(point.X * scaleXTruth),
+                    (int)(point.Y * scaleYTruth)
+                ));
+            }
+
+            if (displayPointsTruth.Count >= 3) // 최소 3개 점 필요
+            {
+                using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+                {
+                    // 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, displayPointsTruth.ToArray());
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(polyconTruth.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            // 폴리곤의 중심 계산
+                            int sumX = 0, sumY = 0;
+                            foreach (var point in displayPointsTruth)
+                            {
+                                sumX += point.X;
+                                sumY += point.Y;
+                            }
+                            Point center = new Point(sumX / displayPointsTruth.Count, sumY / displayPointsTruth.Count);
+
+                            SizeF textSize = e.Graphics.MeasureString(polyconTruth.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(polyconTruth.Item2, font, brush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2);
+                        }
+                    }
+                }
+            }
+        }
+        private void pbSeg2_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            foreach (var polygon in imagePolygons[11])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbSeg2.ClientSize.Width / (float)pbSeg2.BackgroundImage.Width;
+                float scaleY = pbSeg2.ClientSize.Height / (float)pbSeg2.BackgroundImage.Height;
+
+                // 이미지 좌표를 화면 좌표로 변환
+                List<Point> displayPoints = new List<Point>();
+                foreach (var point in polygon.Item1)
+                {
+                    displayPoints.Add(new Point(
+                        (int)(point.X * scaleX),
+                        (int)(point.Y * scaleY)
+                    ));
+                }
+
+                if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                {
+                    using (Pen pen = new Pen(Color.OrangeRed, 2))
+                    {
+                        // 폴리곤 그리기
+                        e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(polygon.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in displayPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(polygon.Item2, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var polyconTruth = groundTruthPolygons[11];
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbSeg2.ClientSize.Width / (float)pbSeg2.BackgroundImage.Width;
+            float scaleYTruth = pbSeg2.ClientSize.Height / (float)pbSeg2.BackgroundImage.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPointsTruth = new List<Point>();
+            foreach (var point in polyconTruth.Item1)
+            {
+                displayPointsTruth.Add(new Point(
+                    (int)(point.X * scaleXTruth),
+                    (int)(point.Y * scaleYTruth)
+                ));
+            }
+
+            if (displayPointsTruth.Count >= 3) // 최소 3개 점 필요
+            {
+                using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+                {
+                    // 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, displayPointsTruth.ToArray());
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(polyconTruth.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            // 폴리곤의 중심 계산
+                            int sumX = 0, sumY = 0;
+                            foreach (var point in displayPointsTruth)
+                            {
+                                sumX += point.X;
+                                sumY += point.Y;
+                            }
+                            Point center = new Point(sumX / displayPointsTruth.Count, sumY / displayPointsTruth.Count);
+
+                            SizeF textSize = e.Graphics.MeasureString(polyconTruth.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(polyconTruth.Item2, font, brush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2);
+                        }
+                    }
+                }
+            }
+        }
+        private void pbSeg3_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            foreach (var polygon in imagePolygons[12])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbSeg3.ClientSize.Width / (float)pbSeg3.BackgroundImage.Width;
+                float scaleY = pbSeg3.ClientSize.Height / (float)pbSeg3.BackgroundImage.Height;
+
+                // 이미지 좌표를 화면 좌표로 변환
+                List<Point> displayPoints = new List<Point>();
+                foreach (var point in polygon.Item1)
+                {
+                    displayPoints.Add(new Point(
+                        (int)(point.X * scaleX),
+                        (int)(point.Y * scaleY)
+                    ));
+                }
+
+                if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                {
+                    using (Pen pen = new Pen(Color.OrangeRed, 2))
+                    {
+                        // 폴리곤 그리기
+                        e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(polygon.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in displayPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(polygon.Item2, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var polyconTruth = groundTruthPolygons[12];
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbSeg3.ClientSize.Width / (float)pbSeg3.BackgroundImage.Width;
+            float scaleYTruth = pbSeg3.ClientSize.Height / (float)pbSeg3.BackgroundImage.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPointsTruth = new List<Point>();
+            foreach (var point in polyconTruth.Item1)
+            {
+                displayPointsTruth.Add(new Point(
+                    (int)(point.X * scaleXTruth),
+                    (int)(point.Y * scaleYTruth)
+                ));
+            }
+
+            if (displayPointsTruth.Count >= 3) // 최소 3개 점 필요
+            {
+                using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+                {
+                    // 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, displayPointsTruth.ToArray());
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(polyconTruth.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            // 폴리곤의 중심 계산
+                            int sumX = 0, sumY = 0;
+                            foreach (var point in displayPointsTruth)
+                            {
+                                sumX += point.X;
+                                sumY += point.Y;
+                            }
+                            Point center = new Point(sumX / displayPointsTruth.Count, sumY / displayPointsTruth.Count);
+
+                            SizeF textSize = e.Graphics.MeasureString(polyconTruth.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(polyconTruth.Item2, font, brush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2);
+                        }
+                    }
+                }
+            }
+        }
+        private void pbSeg4_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            foreach (var polygon in imagePolygons[13])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbSeg4.ClientSize.Width / (float)pbSeg4.BackgroundImage.Width;
+                float scaleY = pbSeg4.ClientSize.Height / (float)pbSeg4.BackgroundImage.Height;
+
+                // 이미지 좌표를 화면 좌표로 변환
+                List<Point> displayPoints = new List<Point>();
+                foreach (var point in polygon.Item1)
+                {
+                    displayPoints.Add(new Point(
+                        (int)(point.X * scaleX),
+                        (int)(point.Y * scaleY)
+                    ));
+                }
+
+                if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                {
+                    using (Pen pen = new Pen(Color.OrangeRed, 2))
+                    {
+                        // 폴리곤 그리기
+                        e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(polygon.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in displayPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(polygon.Item2, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var polyconTruth = groundTruthPolygons[13];
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbSeg4.ClientSize.Width / (float)pbSeg4.BackgroundImage.Width;
+            float scaleYTruth = pbSeg4.ClientSize.Height / (float)pbSeg4.BackgroundImage.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPointsTruth = new List<Point>();
+            foreach (var point in polyconTruth.Item1)
+            {
+                displayPointsTruth.Add(new Point(
+                    (int)(point.X * scaleXTruth),
+                    (int)(point.Y * scaleYTruth)
+                ));
+            }
+
+            if (displayPointsTruth.Count >= 3) // 최소 3개 점 필요
+            {
+                using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+                {
+                    // 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, displayPointsTruth.ToArray());
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(polyconTruth.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            // 폴리곤의 중심 계산
+                            int sumX = 0, sumY = 0;
+                            foreach (var point in displayPointsTruth)
+                            {
+                                sumX += point.X;
+                                sumY += point.Y;
+                            }
+                            Point center = new Point(sumX / displayPointsTruth.Count, sumY / displayPointsTruth.Count);
+
+                            SizeF textSize = e.Graphics.MeasureString(polyconTruth.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(polyconTruth.Item2, font, brush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2);
+                        }
+                    }
+                }
+            }
+        }
+        private void pbSeg5_Paint(object sender, PaintEventArgs e)
+        {
+            // 저장된 폴리곤들 그리기 - 편집 모드가 아닐 때만
+            foreach (var polygon in imagePolygons[14])
+            {
+                // 이미지와 PictureBox 간의 비율 계산
+                float scaleX = pbSeg5.ClientSize.Width / (float)pbSeg5.BackgroundImage.Width;
+                float scaleY = pbSeg5.ClientSize.Height / (float)pbSeg5.BackgroundImage.Height;
+
+                // 이미지 좌표를 화면 좌표로 변환
+                List<Point> displayPoints = new List<Point>();
+                foreach (var point in polygon.Item1)
+                {
+                    displayPoints.Add(new Point(
+                        (int)(point.X * scaleX),
+                        (int)(point.Y * scaleY)
+                    ));
+                }
+
+                if (displayPoints.Count >= 3) // 최소 3개 점 필요
+                {
+                    using (Pen pen = new Pen(Color.OrangeRed, 2))
+                    {
+                        // 폴리곤 그리기
+                        e.Graphics.DrawPolygon(pen, displayPoints.ToArray());
+
+                        // 라벨 텍스트 그리기
+                        if (!string.IsNullOrEmpty(polygon.Item2))
+                        {
+                            using (Font font = new Font("Arial", 10))
+                            using (SolidBrush brush = new SolidBrush(Color.OrangeRed))
+                            using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                            {
+                                // 폴리곤의 중심 계산
+                                int sumX = 0, sumY = 0;
+                                foreach (var point in displayPoints)
+                                {
+                                    sumX += point.X;
+                                    sumY += point.Y;
+                                }
+                                Point center = new Point(sumX / displayPoints.Count, sumY / displayPoints.Count);
+
+                                SizeF textSize = e.Graphics.MeasureString(polygon.Item2, font);
+
+                                // 텍스트 배경
+                                e.Graphics.FillRectangle(bgBrush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2,
+                                    textSize.Width, textSize.Height);
+
+                                // 텍스트
+                                e.Graphics.DrawString(polygon.Item2, font, brush,
+                                    center.X - textSize.Width / 2,
+                                    center.Y - textSize.Height / 2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var polyconTruth = groundTruthPolygons[14];
+
+            // 이미지와 PictureBox 간의 비율 계산
+            float scaleXTruth = pbSeg5.ClientSize.Width / (float)pbSeg5.BackgroundImage.Width;
+            float scaleYTruth = pbSeg5.ClientSize.Height / (float)pbSeg5.BackgroundImage.Height;
+
+            // 이미지 좌표를 화면 좌표로 변환
+            List<Point> displayPointsTruth = new List<Point>();
+            foreach (var point in polyconTruth.Item1)
+            {
+                displayPointsTruth.Add(new Point(
+                    (int)(point.X * scaleXTruth),
+                    (int)(point.Y * scaleYTruth)
+                ));
+            }
+
+            if (displayPointsTruth.Count >= 3) // 최소 3개 점 필요
+            {
+                using (Pen pen = new Pen(Color.CornflowerBlue, 2))
+                {
+                    // 폴리곤 그리기
+                    e.Graphics.DrawPolygon(pen, displayPointsTruth.ToArray());
+
+                    // 라벨 텍스트 그리기
+                    if (!string.IsNullOrEmpty(polyconTruth.Item2))
+                    {
+                        using (Font font = new Font("Arial", 10))
+                        using (SolidBrush brush = new SolidBrush(Color.CornflowerBlue))
+                        using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, Color.White)))
+                        {
+                            // 폴리곤의 중심 계산
+                            int sumX = 0, sumY = 0;
+                            foreach (var point in displayPointsTruth)
+                            {
+                                sumX += point.X;
+                                sumY += point.Y;
+                            }
+                            Point center = new Point(sumX / displayPointsTruth.Count, sumY / displayPointsTruth.Count);
+
+                            SizeF textSize = e.Graphics.MeasureString(polyconTruth.Item2, font);
+
+                            // 텍스트 배경
+                            e.Graphics.FillRectangle(bgBrush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2,
+                                textSize.Width, textSize.Height);
+
+                            // 텍스트
+                            e.Graphics.DrawString(polyconTruth.Item2, font, brush,
+                                center.X - textSize.Width / 2,
+                                center.Y - textSize.Height / 2);
                         }
                     }
                 }
@@ -3206,7 +4327,7 @@ namespace SAI.SAI.App.Views.Pages
                         double iou = CalculateIoU(userBox.Item1, groundTruthBox.Item1);
                         double accuracy = iou * 100;
 
-                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}X%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
@@ -3228,7 +4349,7 @@ namespace SAI.SAI.App.Views.Pages
                         double ioa = CalculateIoA(userPolygon.Item1, groundTruthPolygon.Item1);
                         double accuracy = ioa * 100;
 
-                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}X%";
+                        accuracyLabel1.Text = $"Accuracy: {accuracy:F0}%";
                         imageAccuracies[currentImageIndex] = accuracy;
                     }
                     else
@@ -3579,7 +4700,7 @@ namespace SAI.SAI.App.Views.Pages
             RegisterTooltip(questClassificationPanel, "이미지를 클릭하여 class를 분류합니다.");
             RegisterTooltip(questBoxPanel, "바운딩 박스를 통해 객체를 라벨링합니다.");
             RegisterTooltip(questSegPanel, "폴리곤을 통해 객체의 세밀한 윤곽을 라벨링합니다.");
-            RegisterTooltip(nextBtnVisible, "라벨링 정확도가 90% 이상인 경우 활성화됩니다");
+            RegisterTooltip(nextBtnVisible, "라벨링 정확도가 50% 이상인 경우 활성화됩니다");
         }
 
         // 컨트롤에 툴팁 이벤트 등록

@@ -13,9 +13,10 @@ namespace SAI.SAI.App.Forms
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.TopMost = true;
+            this.Size = new System.Drawing.Size(1920, 1080);
 
             timer = new Timer();
-            timer.Interval = 1500;
+            timer.Interval = 1000;
             timer.Tick += Timer_Tick;
             timer.Start();
         }

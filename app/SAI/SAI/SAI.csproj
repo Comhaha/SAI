@@ -530,6 +530,9 @@
     <None Include="SAI.App\Resources\Images\btn_startcamp_sizeup.png" />
     <None Include="SAI.App\Resources\Images\btn_startcamp_input.png" />
     <None Include="SAI.App\Resources\Images\bg_titlebar_input.png" />
+    <None Include="SAI.App\Resources\Images\l90LowText.png" />
+    <None Include="SAI.App\Resources\Images\splash.png" />
+    <None Include="SAI.App\Resources\Images\pTotal.png" />
     <None Include="SAI.App\Resources\Images\level 15-15.png" />
     <None Include="SAI.App\Resources\Images\level 14-15.png" />
     <None Include="SAI.App\Resources\Images\level 13-15.png" />

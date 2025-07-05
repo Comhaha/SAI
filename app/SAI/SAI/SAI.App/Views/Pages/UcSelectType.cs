@@ -92,10 +92,5 @@ namespace SAI.SAI.App.Views.Pages
 			dialog.Owner = mainView as Form;
 			dialog.ShowDialog();
 		}
-
-		private void tpParent_Paint(object sender, PaintEventArgs e)
-		{
-
-		}
 	}
 }

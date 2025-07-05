@@ -80,6 +80,40 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtnVisible = new Guna.UI2.WinForms.Guna2Panel();
             this.goModel = new Guna.UI2.WinForms.Guna2Button();
             this.homeBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.pTotal = new Guna.UI2.WinForms.Guna2Panel();
+            this.pLow90 = new Guna.UI2.WinForms.Guna2Panel();
+            this.lTotalAccuracy = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lSeg5 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lSeg4 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lSeg3 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lSeg2 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lSeg1 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lBox5 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lBox4 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lBox3 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lBox2 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lBox1 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lClass5 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lClass4 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lClass3 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lClass2 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lClass1 = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.pbSeg5 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbSeg3 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbSeg4 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbSeg2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbSeg1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbBox5 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbClass5 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbClass3 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbClass4 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pbClass2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            this.pbClass1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.mainpanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -99,6 +133,23 @@ namespace SAI.SAI.App.Views.Pages
             this.tableLayoutPanel3.SuspendLayout();
             this.toolBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
+            this.pTotal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass1)).BeginInit();
             this.SuspendLayout();
             // 
             // nextBtn
@@ -140,7 +191,7 @@ namespace SAI.SAI.App.Views.Pages
             this.class1.ForeColor = System.Drawing.Color.Black;
             this.class1.Location = new System.Drawing.Point(0, 0);
             this.class1.Name = "class1";
-            this.class1.Size = new System.Drawing.Size(181, 56);
+            this.class1.Size = new System.Drawing.Size(113, 36);
             this.class1.TabIndex = 8;
             this.class1.Text = "클래스 예시";
             this.class1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -496,7 +547,7 @@ namespace SAI.SAI.App.Views.Pages
             this.ZoomCurrent.Font = new System.Drawing.Font("Noto Sans KR Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.ZoomCurrent.Location = new System.Drawing.Point(3, 16);
             this.ZoomCurrent.Name = "ZoomCurrent";
-            this.ZoomCurrent.Size = new System.Drawing.Size(68, 37);
+            this.ZoomCurrent.Size = new System.Drawing.Size(44, 23);
             this.ZoomCurrent.TabIndex = 11;
             this.ZoomCurrent.Text = "100%";
             this.ZoomCurrent.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
@@ -754,11 +805,424 @@ namespace SAI.SAI.App.Views.Pages
             this.homeBtn.Size = new System.Drawing.Size(62, 62);
             this.homeBtn.TabIndex = 13;
             // 
+            // pTotal
+            // 
+            this.pTotal.BackColor = System.Drawing.Color.Transparent;
+            this.pTotal.BackgroundImage = global::SAI.Properties.Resources.pTotal;
+            this.pTotal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pTotal.Controls.Add(this.pLow90);
+            this.pTotal.Controls.Add(this.lTotalAccuracy);
+            this.pTotal.Controls.Add(this.lSeg5);
+            this.pTotal.Controls.Add(this.lSeg4);
+            this.pTotal.Controls.Add(this.lSeg3);
+            this.pTotal.Controls.Add(this.lSeg2);
+            this.pTotal.Controls.Add(this.lSeg1);
+            this.pTotal.Controls.Add(this.lBox5);
+            this.pTotal.Controls.Add(this.lBox4);
+            this.pTotal.Controls.Add(this.lBox3);
+            this.pTotal.Controls.Add(this.lBox2);
+            this.pTotal.Controls.Add(this.lBox1);
+            this.pTotal.Controls.Add(this.lClass5);
+            this.pTotal.Controls.Add(this.lClass4);
+            this.pTotal.Controls.Add(this.lClass3);
+            this.pTotal.Controls.Add(this.lClass2);
+            this.pTotal.Controls.Add(this.lClass1);
+            this.pTotal.Controls.Add(this.pbSeg5);
+            this.pTotal.Controls.Add(this.pbSeg3);
+            this.pTotal.Controls.Add(this.pbSeg4);
+            this.pTotal.Controls.Add(this.pbSeg2);
+            this.pTotal.Controls.Add(this.pbSeg1);
+            this.pTotal.Controls.Add(this.pbBox5);
+            this.pTotal.Controls.Add(this.pbBox3);
+            this.pTotal.Controls.Add(this.pbBox4);
+            this.pTotal.Controls.Add(this.pbBox2);
+            this.pTotal.Controls.Add(this.pbBox1);
+            this.pTotal.Controls.Add(this.pbClass5);
+            this.pTotal.Controls.Add(this.pbClass3);
+            this.pTotal.Controls.Add(this.pbClass4);
+            this.pTotal.Controls.Add(this.pbClass2);
+            this.pTotal.Controls.Add(this.guna2CirclePictureBox1);
+            this.pTotal.Controls.Add(this.pbClass1);
+            this.pTotal.Location = new System.Drawing.Point(168, 141);
+            this.pTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.pTotal.Name = "pTotal";
+            this.pTotal.Size = new System.Drawing.Size(1601, 875);
+            this.pTotal.TabIndex = 5;
+            // 
+            // pLow90
+            // 
+            this.pLow90.BackgroundImage = global::SAI.Properties.Resources.l90LowText;
+            this.pLow90.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pLow90.Location = new System.Drawing.Point(291, 3);
+            this.pLow90.Name = "pLow90";
+            this.pLow90.Size = new System.Drawing.Size(1016, 60);
+            this.pLow90.TabIndex = 33;
+            // 
+            // lTotalAccuracy
+            // 
+            this.lTotalAccuracy.Location = new System.Drawing.Point(965, 729);
+            this.lTotalAccuracy.Name = "lTotalAccuracy";
+            this.lTotalAccuracy.Size = new System.Drawing.Size(451, 40);
+            this.lTotalAccuracy.TabIndex = 32;
+            this.lTotalAccuracy.Text = "90%";
+            this.lTotalAccuracy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lSeg5
+            // 
+            this.lSeg5.Location = new System.Drawing.Point(1314, 657);
+            this.lSeg5.Name = "lSeg5";
+            this.lSeg5.Size = new System.Drawing.Size(200, 30);
+            this.lSeg5.TabIndex = 31;
+            this.lSeg5.Text = "90%";
+            this.lSeg5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lSeg4
+            // 
+            this.lSeg4.Location = new System.Drawing.Point(1078, 657);
+            this.lSeg4.Name = "lSeg4";
+            this.lSeg4.Size = new System.Drawing.Size(200, 30);
+            this.lSeg4.TabIndex = 30;
+            this.lSeg4.Text = "90%";
+            this.lSeg4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lSeg3
+            // 
+            this.lSeg3.Location = new System.Drawing.Point(842, 657);
+            this.lSeg3.Name = "lSeg3";
+            this.lSeg3.Size = new System.Drawing.Size(200, 30);
+            this.lSeg3.TabIndex = 29;
+            this.lSeg3.Text = "90%";
+            this.lSeg3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lSeg2
+            // 
+            this.lSeg2.Location = new System.Drawing.Point(606, 657);
+            this.lSeg2.Name = "lSeg2";
+            this.lSeg2.Size = new System.Drawing.Size(200, 30);
+            this.lSeg2.TabIndex = 28;
+            this.lSeg2.Text = "90%";
+            this.lSeg2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lSeg1
+            // 
+            this.lSeg1.Location = new System.Drawing.Point(372, 657);
+            this.lSeg1.Name = "lSeg1";
+            this.lSeg1.Size = new System.Drawing.Size(200, 30);
+            this.lSeg1.TabIndex = 27;
+            this.lSeg1.Text = "90%";
+            this.lSeg1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lBox5
+            // 
+            this.lBox5.Location = new System.Drawing.Point(1314, 445);
+            this.lBox5.Name = "lBox5";
+            this.lBox5.Size = new System.Drawing.Size(200, 30);
+            this.lBox5.TabIndex = 26;
+            this.lBox5.Text = "90%";
+            this.lBox5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lBox4
+            // 
+            this.lBox4.Location = new System.Drawing.Point(1078, 445);
+            this.lBox4.Name = "lBox4";
+            this.lBox4.Size = new System.Drawing.Size(200, 30);
+            this.lBox4.TabIndex = 25;
+            this.lBox4.Text = "90%";
+            this.lBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lBox3
+            // 
+            this.lBox3.Location = new System.Drawing.Point(842, 445);
+            this.lBox3.Name = "lBox3";
+            this.lBox3.Size = new System.Drawing.Size(200, 30);
+            this.lBox3.TabIndex = 24;
+            this.lBox3.Text = "90%";
+            this.lBox3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lBox2
+            // 
+            this.lBox2.Location = new System.Drawing.Point(606, 445);
+            this.lBox2.Name = "lBox2";
+            this.lBox2.Size = new System.Drawing.Size(200, 30);
+            this.lBox2.TabIndex = 23;
+            this.lBox2.Text = "90%";
+            this.lBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lBox1
+            // 
+            this.lBox1.Location = new System.Drawing.Point(372, 445);
+            this.lBox1.Name = "lBox1";
+            this.lBox1.Size = new System.Drawing.Size(200, 30);
+            this.lBox1.TabIndex = 22;
+            this.lBox1.Text = "90%";
+            this.lBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lClass5
+            // 
+            this.lClass5.Location = new System.Drawing.Point(1312, 231);
+            this.lClass5.Name = "lClass5";
+            this.lClass5.Size = new System.Drawing.Size(200, 30);
+            this.lClass5.TabIndex = 21;
+            this.lClass5.Text = "90%";
+            this.lClass5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lClass4
+            // 
+            this.lClass4.Location = new System.Drawing.Point(1076, 231);
+            this.lClass4.Name = "lClass4";
+            this.lClass4.Size = new System.Drawing.Size(200, 30);
+            this.lClass4.TabIndex = 20;
+            this.lClass4.Text = "90%";
+            this.lClass4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lClass3
+            // 
+            this.lClass3.Location = new System.Drawing.Point(840, 231);
+            this.lClass3.Name = "lClass3";
+            this.lClass3.Size = new System.Drawing.Size(200, 30);
+            this.lClass3.TabIndex = 19;
+            this.lClass3.Text = "90%";
+            this.lClass3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lClass2
+            // 
+            this.lClass2.Location = new System.Drawing.Point(604, 231);
+            this.lClass2.Name = "lClass2";
+            this.lClass2.Size = new System.Drawing.Size(200, 30);
+            this.lClass2.TabIndex = 18;
+            this.lClass2.Text = "90%";
+            this.lClass2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lClass1
+            // 
+            this.lClass1.Location = new System.Drawing.Point(370, 231);
+            this.lClass1.Name = "lClass1";
+            this.lClass1.Size = new System.Drawing.Size(200, 30);
+            this.lClass1.TabIndex = 17;
+            this.lClass1.Text = "90%";
+            this.lClass1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pbSeg5
+            // 
+            this.pbSeg5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbSeg5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbSeg5.FillColor = System.Drawing.Color.Transparent;
+            this.pbSeg5.ImageRotate = 0F;
+            this.pbSeg5.InitialImage = null;
+            this.pbSeg5.Location = new System.Drawing.Point(1295, 487);
+            this.pbSeg5.Name = "pbSeg5";
+            this.pbSeg5.Size = new System.Drawing.Size(234, 157);
+            this.pbSeg5.TabIndex = 15;
+            this.pbSeg5.TabStop = false;
+            this.pbSeg5.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSeg5_Paint);
+            // 
+            // pbSeg3
+            // 
+            this.pbSeg3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbSeg3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbSeg3.FillColor = System.Drawing.Color.Transparent;
+            this.pbSeg3.ImageRotate = 0F;
+            this.pbSeg3.InitialImage = null;
+            this.pbSeg3.Location = new System.Drawing.Point(823, 487);
+            this.pbSeg3.Name = "pbSeg3";
+            this.pbSeg3.Size = new System.Drawing.Size(234, 157);
+            this.pbSeg3.TabIndex = 14;
+            this.pbSeg3.TabStop = false;
+            this.pbSeg3.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSeg3_Paint);
+            // 
+            // pbSeg4
+            // 
+            this.pbSeg4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbSeg4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbSeg4.FillColor = System.Drawing.Color.Transparent;
+            this.pbSeg4.ImageRotate = 0F;
+            this.pbSeg4.InitialImage = null;
+            this.pbSeg4.Location = new System.Drawing.Point(1059, 487);
+            this.pbSeg4.Name = "pbSeg4";
+            this.pbSeg4.Size = new System.Drawing.Size(234, 157);
+            this.pbSeg4.TabIndex = 13;
+            this.pbSeg4.TabStop = false;
+            this.pbSeg4.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSeg4_Paint);
+            // 
+            // pbSeg2
+            // 
+            this.pbSeg2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbSeg2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbSeg2.FillColor = System.Drawing.Color.Transparent;
+            this.pbSeg2.ImageRotate = 0F;
+            this.pbSeg2.InitialImage = null;
+            this.pbSeg2.Location = new System.Drawing.Point(587, 487);
+            this.pbSeg2.Name = "pbSeg2";
+            this.pbSeg2.Size = new System.Drawing.Size(234, 157);
+            this.pbSeg2.TabIndex = 12;
+            this.pbSeg2.TabStop = false;
+            this.pbSeg2.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSeg2_Paint);
+            // 
+            // pbSeg1
+            // 
+            this.pbSeg1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbSeg1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbSeg1.FillColor = System.Drawing.Color.Transparent;
+            this.pbSeg1.ImageRotate = 0F;
+            this.pbSeg1.InitialImage = null;
+            this.pbSeg1.Location = new System.Drawing.Point(352, 487);
+            this.pbSeg1.Name = "pbSeg1";
+            this.pbSeg1.Size = new System.Drawing.Size(234, 157);
+            this.pbSeg1.TabIndex = 11;
+            this.pbSeg1.TabStop = false;
+            this.pbSeg1.Paint += new System.Windows.Forms.PaintEventHandler(this.pbSeg1_Paint);
+            // 
+            // pbBox5
+            // 
+            this.pbBox5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbBox5.FillColor = System.Drawing.Color.Transparent;
+            this.pbBox5.ImageRotate = 0F;
+            this.pbBox5.InitialImage = null;
+            this.pbBox5.Location = new System.Drawing.Point(1295, 275);
+            this.pbBox5.Name = "pbBox5";
+            this.pbBox5.Size = new System.Drawing.Size(234, 157);
+            this.pbBox5.TabIndex = 10;
+            this.pbBox5.TabStop = false;
+            this.pbBox5.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBox5_Paint);
+            // 
+            // pbBox3
+            // 
+            this.pbBox3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbBox3.FillColor = System.Drawing.Color.Transparent;
+            this.pbBox3.ImageRotate = 0F;
+            this.pbBox3.InitialImage = null;
+            this.pbBox3.Location = new System.Drawing.Point(823, 275);
+            this.pbBox3.Name = "pbBox3";
+            this.pbBox3.Size = new System.Drawing.Size(234, 157);
+            this.pbBox3.TabIndex = 9;
+            this.pbBox3.TabStop = false;
+            this.pbBox3.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBox3_Paint);
+            // 
+            // pbBox4
+            // 
+            this.pbBox4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbBox4.FillColor = System.Drawing.Color.Transparent;
+            this.pbBox4.ImageRotate = 0F;
+            this.pbBox4.InitialImage = null;
+            this.pbBox4.Location = new System.Drawing.Point(1059, 275);
+            this.pbBox4.Name = "pbBox4";
+            this.pbBox4.Size = new System.Drawing.Size(234, 157);
+            this.pbBox4.TabIndex = 8;
+            this.pbBox4.TabStop = false;
+            this.pbBox4.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBox4_Paint);
+            // 
+            // pbBox2
+            // 
+            this.pbBox2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbBox2.FillColor = System.Drawing.Color.Transparent;
+            this.pbBox2.ImageRotate = 0F;
+            this.pbBox2.InitialImage = null;
+            this.pbBox2.Location = new System.Drawing.Point(587, 275);
+            this.pbBox2.Name = "pbBox2";
+            this.pbBox2.Size = new System.Drawing.Size(234, 157);
+            this.pbBox2.TabIndex = 7;
+            this.pbBox2.TabStop = false;
+            this.pbBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBox2_Paint);
+            // 
+            // pbBox1
+            // 
+            this.pbBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbBox1.FillColor = System.Drawing.Color.Transparent;
+            this.pbBox1.ImageRotate = 0F;
+            this.pbBox1.InitialImage = null;
+            this.pbBox1.Location = new System.Drawing.Point(352, 275);
+            this.pbBox1.Name = "pbBox1";
+            this.pbBox1.Size = new System.Drawing.Size(234, 157);
+            this.pbBox1.TabIndex = 6;
+            this.pbBox1.TabStop = false;
+            this.pbBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBox1_Paint);
+            // 
+            // pbClass5
+            // 
+            this.pbClass5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbClass5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbClass5.FillColor = System.Drawing.Color.Transparent;
+            this.pbClass5.ImageRotate = 0F;
+            this.pbClass5.InitialImage = null;
+            this.pbClass5.Location = new System.Drawing.Point(1295, 62);
+            this.pbClass5.Name = "pbClass5";
+            this.pbClass5.Size = new System.Drawing.Size(234, 157);
+            this.pbClass5.TabIndex = 5;
+            this.pbClass5.TabStop = false;
+            // 
+            // pbClass3
+            // 
+            this.pbClass3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbClass3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbClass3.FillColor = System.Drawing.Color.Transparent;
+            this.pbClass3.ImageRotate = 0F;
+            this.pbClass3.InitialImage = null;
+            this.pbClass3.Location = new System.Drawing.Point(823, 62);
+            this.pbClass3.Name = "pbClass3";
+            this.pbClass3.Size = new System.Drawing.Size(234, 157);
+            this.pbClass3.TabIndex = 4;
+            this.pbClass3.TabStop = false;
+            // 
+            // pbClass4
+            // 
+            this.pbClass4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbClass4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbClass4.FillColor = System.Drawing.Color.Transparent;
+            this.pbClass4.ImageRotate = 0F;
+            this.pbClass4.InitialImage = null;
+            this.pbClass4.Location = new System.Drawing.Point(1059, 62);
+            this.pbClass4.Name = "pbClass4";
+            this.pbClass4.Size = new System.Drawing.Size(234, 157);
+            this.pbClass4.TabIndex = 3;
+            this.pbClass4.TabStop = false;
+            // 
+            // pbClass2
+            // 
+            this.pbClass2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbClass2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbClass2.FillColor = System.Drawing.Color.Transparent;
+            this.pbClass2.ImageRotate = 0F;
+            this.pbClass2.InitialImage = null;
+            this.pbClass2.Location = new System.Drawing.Point(587, 62);
+            this.pbClass2.Name = "pbClass2";
+            this.pbClass2.Size = new System.Drawing.Size(234, 157);
+            this.pbClass2.TabIndex = 2;
+            this.pbClass2.TabStop = false;
+            // 
+            // guna2CirclePictureBox1
+            // 
+            this.guna2CirclePictureBox1.ImageRotate = 0F;
+            this.guna2CirclePictureBox1.Location = new System.Drawing.Point(867, 123);
+            this.guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
+            this.guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CirclePictureBox1.Size = new System.Drawing.Size(64, 64);
+            this.guna2CirclePictureBox1.TabIndex = 1;
+            this.guna2CirclePictureBox1.TabStop = false;
+            // 
+            // pbClass1
+            // 
+            this.pbClass1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pbClass1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbClass1.FillColor = System.Drawing.Color.Transparent;
+            this.pbClass1.ImageRotate = 0F;
+            this.pbClass1.InitialImage = null;
+            this.pbClass1.Location = new System.Drawing.Point(352, 62);
+            this.pbClass1.Name = "pbClass1";
+            this.pbClass1.Size = new System.Drawing.Size(234, 157);
+            this.pbClass1.TabIndex = 0;
+            this.pbClass1.TabStop = false;
+            // 
             // UcLabelGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.pTotal);
             this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.goModel);
             this.Controls.Add(this.totalLevelpanel);
@@ -791,6 +1255,23 @@ namespace SAI.SAI.App.Views.Pages
             this.tableLayoutPanel3.PerformLayout();
             this.toolBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
+            this.pTotal.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSeg1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClass1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -845,5 +1326,39 @@ namespace SAI.SAI.App.Views.Pages
         private Guna.UI2.WinForms.Guna2Panel progressClass;
         private Guna.UI2.WinForms.Guna2Panel progressSeg;
         private Guna.UI2.WinForms.Guna2Panel progressBox;
+        private Guna.UI2.WinForms.Guna2Panel pTotal;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
+        private Guna.UI2.WinForms.Guna2PictureBox pbClass1;
+        private Guna.UI2.WinForms.Guna2PictureBox pbClass5;
+        private Guna.UI2.WinForms.Guna2PictureBox pbClass3;
+        private Guna.UI2.WinForms.Guna2PictureBox pbClass4;
+        private Guna.UI2.WinForms.Guna2PictureBox pbClass2;
+        private Guna.UI2.WinForms.Guna2PictureBox pbSeg5;
+        private Guna.UI2.WinForms.Guna2PictureBox pbSeg3;
+        private Guna.UI2.WinForms.Guna2PictureBox pbSeg4;
+        private Guna.UI2.WinForms.Guna2PictureBox pbSeg2;
+        private Guna.UI2.WinForms.Guna2PictureBox pbSeg1;
+        private Guna.UI2.WinForms.Guna2PictureBox pbBox5;
+        private Guna.UI2.WinForms.Guna2PictureBox pbBox3;
+        private Guna.UI2.WinForms.Guna2PictureBox pbBox4;
+        private Guna.UI2.WinForms.Guna2PictureBox pbBox2;
+        private Guna.UI2.WinForms.Guna2PictureBox pbBox1;
+        private SAI.App.Views.Pages.AutoSizeLabel lSeg5;
+        private SAI.App.Views.Pages.AutoSizeLabel lSeg4;
+        private SAI.App.Views.Pages.AutoSizeLabel lSeg3;
+        private SAI.App.Views.Pages.AutoSizeLabel lSeg2;
+        private SAI.App.Views.Pages.AutoSizeLabel lSeg1;
+        private SAI.App.Views.Pages.AutoSizeLabel lBox5;
+        private SAI.App.Views.Pages.AutoSizeLabel lBox4;
+        private SAI.App.Views.Pages.AutoSizeLabel lBox3;
+        private SAI.App.Views.Pages.AutoSizeLabel lBox2;
+        private SAI.App.Views.Pages.AutoSizeLabel lBox1;
+        private SAI.App.Views.Pages.AutoSizeLabel lClass5;
+        private SAI.App.Views.Pages.AutoSizeLabel lClass4;
+        private SAI.App.Views.Pages.AutoSizeLabel lClass3;
+        private SAI.App.Views.Pages.AutoSizeLabel lClass2;
+        private SAI.App.Views.Pages.AutoSizeLabel lClass1;
+        private SAI.App.Views.Pages.AutoSizeLabel lTotalAccuracy;
+        private Guna.UI2.WinForms.Guna2Panel pLow90;
     }
 }

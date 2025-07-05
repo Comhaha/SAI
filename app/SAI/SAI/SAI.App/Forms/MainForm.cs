@@ -61,7 +61,8 @@ namespace SAI
 
 
 			// btnSetting
-			btnSetting.BackColor = Color.Transparent;
+			btnSetting.Visible = false; // 설정 버튼은 현재 사용하지 않음(GPU 설정은 현재 막아둠)
+            btnSetting.BackColor = Color.Transparent;
 			btnSetting.PressedColor = Color.Transparent;
 			btnSetting.CheckedState.FillColor = Color.Transparent;
 			btnSetting.DisabledState.FillColor = Color.Transparent;

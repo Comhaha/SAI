@@ -490,7 +490,7 @@ namespace SAI.SAI.App.Views.Pages
             });
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string localPath = Path.GetFullPath(Path.Combine(baseDir, ".Blockly","TrainBlockly.html"));
+            string localPath = Path.GetFullPath(Path.Combine(baseDir, "Blockly","TrainBlockly.html"));
             string uri = new Uri(localPath).AbsoluteUri;
 
             webViewblock.WebMessageReceived += async (s, e) =>

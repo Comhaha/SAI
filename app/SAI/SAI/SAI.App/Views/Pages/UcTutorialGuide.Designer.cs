@@ -41,7 +41,7 @@ namespace SAI.SAI.App.Views.Pages
             // nextBtn
             // 
             this.nextBtn.BackColor = System.Drawing.Color.Transparent;
-            this.nextBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.nextBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.nextBtn.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.nextBtn.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
             this.nextBtn.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
@@ -51,12 +51,12 @@ namespace SAI.SAI.App.Views.Pages
             this.nextBtn.ForeColor = System.Drawing.Color.White;
             this.nextBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverR;
             this.nextBtn.Image = global::SAI.Properties.Resources.NoCircleArrowR;
-            this.nextBtn.ImageSize = new System.Drawing.Size(70, 70);
-            this.nextBtn.Location = new System.Drawing.Point(1527, 509);
+            this.nextBtn.ImageSize = new System.Drawing.Size(45, 45);
+            this.nextBtn.Location = new System.Drawing.Point(1243, 568);
             this.nextBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.nextBtn.Size = new System.Drawing.Size(70, 70);
+            this.nextBtn.Size = new System.Drawing.Size(45, 45);
             this.nextBtn.TabIndex = 0;
             this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click_1);
             // 
@@ -73,12 +73,12 @@ namespace SAI.SAI.App.Views.Pages
             this.preBtn.ForeColor = System.Drawing.Color.White;
             this.preBtn.HoverState.Image = global::SAI.Properties.Resources.NoCircleArrowHoverL;
             this.preBtn.Image = global::SAI.Properties.Resources.NoCircleArrowL;
-            this.preBtn.ImageSize = new System.Drawing.Size(70, 70);
-            this.preBtn.Location = new System.Drawing.Point(321, 509);
+            this.preBtn.ImageSize = new System.Drawing.Size(45, 45);
+            this.preBtn.Location = new System.Drawing.Point(1182, 568);
             this.preBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.preBtn.Name = "preBtn";
             this.preBtn.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.preBtn.Size = new System.Drawing.Size(70, 70);
+            this.preBtn.Size = new System.Drawing.Size(45, 45);
             this.preBtn.TabIndex = 1;
             // 
             // goLabelingBtn
@@ -97,7 +97,7 @@ namespace SAI.SAI.App.Views.Pages
             this.goLabelingBtn.HoverState.Image = global::SAI.Properties.Resources.btn_goLabelingHover;
             this.goLabelingBtn.Image = ((System.Drawing.Image)(resources.GetObject("goLabelingBtn.Image")));
             this.goLabelingBtn.ImageSize = new System.Drawing.Size(201, 47);
-            this.goLabelingBtn.Location = new System.Drawing.Point(1390, 809);
+            this.goLabelingBtn.Location = new System.Drawing.Point(1390, 774);
             this.goLabelingBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.goLabelingBtn.Name = "goLabelingBtn";
             this.goLabelingBtn.PressedColor = System.Drawing.Color.Transparent;
@@ -118,7 +118,7 @@ namespace SAI.SAI.App.Views.Pages
             this.exit.HoverState.Image = global::SAI.Properties.Resources.btn_exit_3030_hover;
             this.exit.Image = global::SAI.Properties.Resources.btn_exit_3030;
             this.exit.ImageSize = new System.Drawing.Size(37, 37);
-            this.exit.Location = new System.Drawing.Point(1802, 206);
+            this.exit.Location = new System.Drawing.Point(1248, 375);
             this.exit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.exit.Name = "exit";
             this.exit.PressedColor = System.Drawing.Color.Transparent;
@@ -129,7 +129,7 @@ namespace SAI.SAI.App.Views.Pages
             // goToLabeling
             // 
             this.goToLabeling.BackColor = System.Drawing.Color.Transparent;
-            this.goToLabeling.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.goToLabeling.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.goToLabeling.BorderColor = System.Drawing.Color.Transparent;
             this.goToLabeling.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
             this.goToLabeling.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
@@ -144,26 +144,26 @@ namespace SAI.SAI.App.Views.Pages
             this.goToLabeling.HoverState.Image = global::SAI.Properties.Resources.btn_close_whole_click;
             this.goToLabeling.Image = global::SAI.Properties.Resources.btn_close_whole_5;
             this.goToLabeling.ImageSize = new System.Drawing.Size(75, 60);
-            this.goToLabeling.Location = new System.Drawing.Point(1555, 191);
-            this.goToLabeling.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.goToLabeling.Location = new System.Drawing.Point(1555, 149);
+            this.goToLabeling.Margin = new System.Windows.Forms.Padding(0);
             this.goToLabeling.Name = "goToLabeling";
             this.goToLabeling.PressedColor = System.Drawing.Color.Transparent;
-            this.goToLabeling.Size = new System.Drawing.Size(75, 55);
+            this.goToLabeling.Size = new System.Drawing.Size(76, 56);
             this.goToLabeling.TabIndex = 5;
             this.goToLabeling.Click += new System.EventHandler(this.goToLabeling_Click_2);
             // 
             // UcTutorialGuide
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackgroundImage = global::SAI.Properties.Resources.전체튜토리얼가이드1;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BackgroundImage = global::SAI.Properties.Resources.라벨링가이드1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Controls.Add(this.exit);
             this.Controls.Add(this.goLabelingBtn);
             this.Controls.Add(this.preBtn);
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.goToLabeling);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "UcTutorialGuide";
             this.Size = new System.Drawing.Size(1920, 1080);
             this.Load += new System.EventHandler(this.UcTutorialGuide_Load);
