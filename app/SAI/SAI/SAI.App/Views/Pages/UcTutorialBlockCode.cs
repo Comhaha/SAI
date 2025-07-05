@@ -1482,5 +1482,15 @@ namespace SAI.SAI.App.Views.Pages
         {
             pErrorToast.Visible = false;
         }
-	}
+
+        private void lblThreshold_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pboxInferAccuracy_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

@@ -11,9 +11,9 @@ using SAI.SAI.App.Views.Common;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
-    public partial class DialogModelPerformance : Form
+    public partial class DialogStartcampInput : Form
     {
-        public DialogModelPerformance()
+        public DialogStartcampInput()
         {
             InitializeComponent();
 
@@ -22,9 +22,31 @@ namespace SAI.SAI.App.Forms.Dialogs
             ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
             btnClose.Click += (s, e) => { this.Close(); };
 
+            
+
         }
 
         private void panelTitleBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tbarThreshold_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void lblThreshold_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pboxInferAccuracy_Click(object sender, EventArgs e)
         {
 
         }

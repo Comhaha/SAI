@@ -82,6 +82,7 @@
             this.panelTitleBar.Name = "panelTitleBar";
             this.panelTitleBar.Size = new System.Drawing.Size(880, 60);
             this.panelTitleBar.TabIndex = 4;
+            this.panelTitleBar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTitleBar_Paint);
             // 
             // DialogInferenceLoading
             // 

@@ -1,0 +1,240 @@
+﻿namespace SAI.SAI.App.Forms.Dialogs
+{
+    partial class DialogStartcampInput
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnClose2 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnClose = new Guna.UI2.WinForms.Guna2Button();
+            this.btnStartcampInput = new Guna.UI2.WinForms.Guna2Button();
+            this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
+            this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
+            this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
+            this.ibtnSizeup = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pboxStartcampInput = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.panelTitleBar.SuspendLayout();
+            this.pThreshold.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // panelTitleBar
+            // 
+            this.panelTitleBar.BackColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_input;
+            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelTitleBar.Controls.Add(this.btnClose2);
+            this.panelTitleBar.Controls.Add(this.btnClose);
+            this.panelTitleBar.ForeColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.Location = new System.Drawing.Point(0, -5);
+            this.panelTitleBar.Name = "panelTitleBar";
+            this.panelTitleBar.Size = new System.Drawing.Size(870, 60);
+            this.panelTitleBar.TabIndex = 0;
+            this.panelTitleBar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTitleBar_Paint);
+            // 
+            // btnClose2
+            // 
+            this.btnClose2.BackgroundImage = global::SAI.Properties.Resources.btn_close_prepare;
+            this.btnClose2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose2.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose2.ForeColor = System.Drawing.Color.White;
+            this.btnClose2.Location = new System.Drawing.Point(790, 0);
+            this.btnClose2.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose2.Name = "btnClose2";
+            this.btnClose2.Size = new System.Drawing.Size(80, 60);
+            this.btnClose2.TabIndex = 8;
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::SAI.Properties.Resources.btn_close_white;
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnClose.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnClose.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnClose.FillColor = System.Drawing.Color.Transparent;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnClose.ImageOffset = new System.Drawing.Point(8, 0);
+            this.btnClose.ImageSize = new System.Drawing.Size(15, 16);
+            this.btnClose.Location = new System.Drawing.Point(1029, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(71, 49);
+            this.btnClose.TabIndex = 2;
+            // 
+            // btnStartcampInput
+            // 
+            this.btnStartcampInput.BackgroundImage = global::SAI.Properties.Resources.btn_startcamp_input;
+            this.btnStartcampInput.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnStartcampInput.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnStartcampInput.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnStartcampInput.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnStartcampInput.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnStartcampInput.FillColor = System.Drawing.Color.Transparent;
+            this.btnStartcampInput.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnStartcampInput.ForeColor = System.Drawing.Color.White;
+            this.btnStartcampInput.Location = new System.Drawing.Point(79, 211);
+            this.btnStartcampInput.Name = "btnStartcampInput";
+            this.btnStartcampInput.Size = new System.Drawing.Size(720, 687);
+            this.btnStartcampInput.TabIndex = 4;
+            // 
+            // tbarThreshold
+            // 
+            this.tbarThreshold.Location = new System.Drawing.Point(79, 152);
+            this.tbarThreshold.Name = "tbarThreshold";
+            this.tbarThreshold.Size = new System.Drawing.Size(306, 21);
+            this.tbarThreshold.TabIndex = 10;
+            this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
+            this.tbarThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbarThreshold_Scroll);
+            // 
+            // lblThreshold
+            // 
+            this.lblThreshold.Font = new System.Drawing.Font("Noto Sans KR Medium", 13.8F, System.Drawing.FontStyle.Bold);
+            this.lblThreshold.Location = new System.Drawing.Point(79, 82);
+            this.lblThreshold.Name = "lblThreshold";
+            this.lblThreshold.Size = new System.Drawing.Size(170, 46);
+            this.lblThreshold.TabIndex = 11;
+            this.lblThreshold.Text = "Threshold";
+            this.lblThreshold.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.lblThreshold.Load += new System.EventHandler(this.lblThreshold_Load);
+            // 
+            // pThreshold
+            // 
+            this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
+            this.pThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pThreshold.Controls.Add(this.tboxThreshold);
+            this.pThreshold.Location = new System.Drawing.Point(421, 144);
+            this.pThreshold.Name = "pThreshold";
+            this.pThreshold.Size = new System.Drawing.Size(73, 37);
+            this.pThreshold.TabIndex = 13;
+            // 
+            // tboxThreshold
+            // 
+            this.tboxThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tboxThreshold.BorderColor = System.Drawing.Color.Transparent;
+            this.tboxThreshold.BorderThickness = 0;
+            this.tboxThreshold.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tboxThreshold.DefaultText = "";
+            this.tboxThreshold.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tboxThreshold.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tboxThreshold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tboxThreshold.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.Font = new System.Drawing.Font("Noto Sans KR Medium", 10.2F, System.Drawing.FontStyle.Bold);
+            this.tboxThreshold.ForeColor = System.Drawing.Color.Black;
+            this.tboxThreshold.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tboxThreshold.Location = new System.Drawing.Point(7, 8);
+            this.tboxThreshold.Margin = new System.Windows.Forms.Padding(6);
+            this.tboxThreshold.Name = "tboxThreshold";
+            this.tboxThreshold.PlaceholderText = "";
+            this.tboxThreshold.SelectedText = "";
+            this.tboxThreshold.Size = new System.Drawing.Size(58, 19);
+            this.tboxThreshold.TabIndex = 10;
+            this.tboxThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // ibtnSizeup
+            // 
+            this.ibtnSizeup.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.ibtnSizeup.HoverState.Image = global::SAI.Properties.Resources.btn_goNotion_hover;
+            this.ibtnSizeup.HoverState.ImageSize = new System.Drawing.Size(240, 75);
+            this.ibtnSizeup.Image = global::SAI.Properties.Resources.btn_startcamp_sizeup;
+            this.ibtnSizeup.ImageOffset = new System.Drawing.Point(0, 0);
+            this.ibtnSizeup.ImageRotate = 0F;
+            this.ibtnSizeup.ImageSize = new System.Drawing.Size(164, 50);
+            this.ibtnSizeup.Location = new System.Drawing.Point(626, 132);
+            this.ibtnSizeup.Name = "ibtnSizeup";
+            this.ibtnSizeup.PressedState.ImageSize = new System.Drawing.Size(240, 75);
+            this.ibtnSizeup.Size = new System.Drawing.Size(173, 55);
+            this.ibtnSizeup.TabIndex = 14;
+            this.ibtnSizeup.Click += new System.EventHandler(this.ibtnGoNotion_Click);
+            // 
+            // pboxStartcampInput
+            // 
+            this.pboxStartcampInput.BackgroundImage = global::SAI.Properties.Resources.p_Startcamp_input;
+            this.pboxStartcampInput.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pboxStartcampInput.ErrorImage = null;
+            this.pboxStartcampInput.FillColor = System.Drawing.Color.Transparent;
+            this.pboxStartcampInput.ImageRotate = 0F;
+            this.pboxStartcampInput.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pboxStartcampInput.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
+            this.pboxStartcampInput.Location = new System.Drawing.Point(79, 211);
+            this.pboxStartcampInput.Name = "pboxStartcampInput";
+            this.pboxStartcampInput.Size = new System.Drawing.Size(720, 687);
+            this.pboxStartcampInput.TabIndex = 24;
+            this.pboxStartcampInput.TabStop = false;
+            this.pboxStartcampInput.Click += new System.EventHandler(this.pboxInferAccuracy_Click);
+            // 
+            // DialogStartcampInput
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_modelInference;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(870, 941);
+            this.Controls.Add(this.pboxStartcampInput);
+            this.Controls.Add(this.ibtnSizeup);
+            this.Controls.Add(this.pThreshold);
+            this.Controls.Add(this.lblThreshold);
+            this.Controls.Add(this.tbarThreshold);
+            this.Controls.Add(this.btnStartcampInput);
+            this.Controls.Add(this.panelTitleBar);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.Name = "DialogStartcampInput";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "DialogInput";
+            this.TopMost = true;
+            this.panelTitleBar.ResumeLayout(false);
+            this.pThreshold.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
+        private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Guna.UI2.WinForms.Guna2Button btnClose2;
+        private Guna.UI2.WinForms.Guna2Button btnStartcampInput;
+        private Guna.UI2.WinForms.Guna2TrackBar tbarThreshold;
+        private SAI.App.Views.Pages.AutoSizeLabel lblThreshold;
+        private Guna.UI2.WinForms.Guna2Panel pThreshold;
+        private Guna.UI2.WinForms.Guna2TextBox tboxThreshold;
+        private Guna.UI2.WinForms.Guna2ImageButton ibtnSizeup;
+        private Guna.UI2.WinForms.Guna2PictureBox pboxStartcampInput;
+    }
+}

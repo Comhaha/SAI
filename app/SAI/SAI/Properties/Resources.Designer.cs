@@ -793,6 +793,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_titlebar_input {
+            get {
+                object obj = ResourceManager.GetObject("bg_titlebar_input", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap bg_titlebar_modelPerformance {
             get {
                 object obj = ResourceManager.GetObject("bg_titlebar_modelPerformance", resourceCulture);
@@ -2176,6 +2186,26 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap btn_selectinferimage_hover {
             get {
                 object obj = ResourceManager.GetObject("btn_selectinferimage_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_startcamp_input {
+            get {
+                object obj = ResourceManager.GetObject("btn_startcamp_input", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_startcamp_sizeup {
+            get {
+                object obj = ResourceManager.GetObject("btn_startcamp_sizeup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3746,6 +3776,16 @@ namespace SAI.Properties {
         internal static System.Drawing.Bitmap p_sideinfer_accuracy {
             get {
                 object obj = ResourceManager.GetObject("p_sideinfer_accuracy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap p_Startcamp_input {
+            get {
+                object obj = ResourceManager.GetObject("p_Startcamp_input", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -80,5 +80,10 @@ namespace SAI.SAI.App.Forms.Dialogs
                 MessageBox.Show($"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void panelTitleBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

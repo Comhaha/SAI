@@ -31,11 +31,11 @@
             this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
-            this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnLocal = new Guna.UI2.WinForms.Guna2Button();
             this.btnServer = new Guna.UI2.WinForms.Guna2Button();
-            this.lblLocal = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lblServer = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblLocal = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
             this.panelTitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,17 +88,6 @@
             this.btnSave.TabIndex = 1;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // lblTitle
-            // 
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Noto Sans KR Medium", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblTitle.Location = new System.Drawing.Point(295, 135);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(207, 27);
-            this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "모델 학습 GPU 설정";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // btnLocal
             // 
             this.btnLocal.BackgroundImage = global::SAI.Properties.Resources.btn_checked;
@@ -133,6 +122,17 @@
             this.btnServer.Size = new System.Drawing.Size(24, 24);
             this.btnServer.TabIndex = 4;
             // 
+            // lblServer
+            // 
+            this.lblServer.BackColor = System.Drawing.Color.Transparent;
+            this.lblServer.Font = new System.Drawing.Font("Noto Sans KR Medium", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblServer.Location = new System.Drawing.Point(352, 219);
+            this.lblServer.Name = "lblServer";
+            this.lblServer.Size = new System.Drawing.Size(90, 27);
+            this.lblServer.TabIndex = 6;
+            this.lblServer.Text = "Server";
+            this.lblServer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblLocal
             // 
             this.lblLocal.BackColor = System.Drawing.Color.Transparent;
@@ -144,16 +144,16 @@
             this.lblLocal.Text = "Local";
             this.lblLocal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblServer
+            // lblTitle
             // 
-            this.lblServer.BackColor = System.Drawing.Color.Transparent;
-            this.lblServer.Font = new System.Drawing.Font("Noto Sans KR Medium", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblServer.Location = new System.Drawing.Point(352, 219);
-            this.lblServer.Name = "lblServer";
-            this.lblServer.Size = new System.Drawing.Size(90, 27);
-            this.lblServer.TabIndex = 6;
-            this.lblServer.Text = "Server";
-            this.lblServer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.Font = new System.Drawing.Font("Noto Sans KR Medium", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblTitle.Location = new System.Drawing.Point(295, 135);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(207, 27);
+            this.lblTitle.TabIndex = 2;
+            this.lblTitle.Text = "모델 학습 GPU 설정";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DialogSetting
             // 

@@ -544,6 +544,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pboxInferAccuracy.InitialImage = global::SAI.Properties.Resources.p_sideinfer_accuracy;
             this.pboxInferAccuracy.Name = "pboxInferAccuracy";
             this.pboxInferAccuracy.TabStop = false;
+            this.pboxInferAccuracy.Click += new System.EventHandler(this.pboxInferAccuracy_Click);
             // 
             // ptxtThreshold
             // 
@@ -556,6 +557,7 @@ namespace SAI.SAI.App.Views.Pages
             resources.ApplyResources(this.lblThreshold, "lblThreshold");
             this.lblThreshold.Name = "lblThreshold";
             this.lblThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblThreshold.Load += new System.EventHandler(this.lblThreshold_Load);
             // 
             // btnInfoGraph
             // 

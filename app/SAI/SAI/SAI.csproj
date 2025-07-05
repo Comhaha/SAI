@@ -200,6 +200,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogSetting.Designer.cs">
       <DependentUpon>DialogSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogStartcampInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogStartcampInput.Designer.cs">
+      <DependentUpon>DialogStartcampInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogZoomChart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -433,6 +439,9 @@
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogSetting.resx">
       <DependentUpon>DialogSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SAI.App\Forms\Dialogs\DialogStartcampInput.resx">
+      <DependentUpon>DialogStartcampInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SAI.App\Forms\Dialogs\TutorialGuideForm.resx">
       <DependentUpon>TutorialGuideForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -516,6 +525,10 @@
     <Content Include="Blockly\TrainBlocks.js" />
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
+    <None Include="SAI.App\Resources\Images\p_Startcamp_input.png" />
+    <None Include="SAI.App\Resources\Images\btn_startcamp_sizeup.png" />
+    <None Include="SAI.App\Resources\Images\btn_startcamp_input.png" />
+    <None Include="SAI.App\Resources\Images\bg_titlebar_input.png" />
     <None Include="SAI.App\Resources\Images\level 15-15.png" />
     <None Include="SAI.App\Resources\Images\level 14-15.png" />
     <None Include="SAI.App\Resources\Images\level 13-15.png" />
