@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.btnLocal = new Guna.UI2.WinForms.Guna2Button();
@@ -36,22 +35,9 @@
             this.lblServer = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lblLocal = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.panelTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.panelTitleBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelTitleBar
-            // 
-            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_setting;
-            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelTitleBar.BorderColor = System.Drawing.Color.Transparent;
-            this.panelTitleBar.Controls.Add(this.btnClose);
-            this.panelTitleBar.CustomBorderColor = System.Drawing.Color.Transparent;
-            this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
-            this.panelTitleBar.Margin = new System.Windows.Forms.Padding(0);
-            this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(796, 60);
-            this.panelTitleBar.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -155,6 +141,21 @@
             this.lblTitle.Text = "모델 학습 GPU 설정";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panelTitleBar
+            // 
+            this.panelTitleBar.BackgroundImage = global::SAI.Properties.Resources.bg_titlebar_setting;
+            this.panelTitleBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelTitleBar.BorderColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.Controls.Add(this.btnClose);
+            this.panelTitleBar.CustomBorderColor = System.Drawing.Color.Transparent;
+            this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.panelTitleBar.Margin = new System.Windows.Forms.Padding(0);
+            this.panelTitleBar.Name = "panelTitleBar";
+            this.panelTitleBar.Size = new System.Drawing.Size(796, 60);
+            this.panelTitleBar.TabIndex = 0;
+            this.panelTitleBar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTitleBar_Paint);
+            // 
             // DialogSetting
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -182,8 +183,6 @@
         }
 
         #endregion
-
-        private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
         private Guna.UI2.WinForms.Guna2Button btnSave;
         private Guna.UI2.WinForms.Guna2Button btnLocal;
         private Guna.UI2.WinForms.Guna2Button btnServer;
@@ -191,5 +190,6 @@
         private SAI.App.Views.Pages.AutoSizeLabel lblLocal;
         private SAI.App.Views.Pages.AutoSizeLabel lblServer;
         private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Guna.UI2.WinForms.Guna2Panel panelTitleBar;
     }
 }
