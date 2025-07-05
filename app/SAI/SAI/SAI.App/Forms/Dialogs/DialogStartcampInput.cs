@@ -72,7 +72,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             pboxStartcampInput.MouseEnter += (s, e) =>
             {
                 btnStartcampInput.Visible = true;
-                btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+                btnStartcampInput.BackgroundImage = Properties.Resources.btn_startcamp_input;
             };
 
             pboxStartcampInput.MouseLeave += (s, e) =>
@@ -80,7 +80,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 if (!btnStartcampInput.ClientRectangle.Contains(btnStartcampInput.PointToClient(Control.MousePosition)))
                 {
                     btnStartcampInput.Visible = false;
-                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_startcamp_input;
                 }
             };
 
@@ -88,7 +88,7 @@ namespace SAI.SAI.App.Forms.Dialogs
             btnStartcampInput.MouseEnter += (s, e) =>
             {
                 btnStartcampInput.Visible = true;
-                btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+                btnStartcampInput.BackgroundImage = Properties.Resources.btn_startcamp_input;
             };
 
             btnStartcampInput.MouseLeave += (s, e) =>
@@ -96,7 +96,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 if (!pboxStartcampInput.ClientRectangle.Contains(pboxStartcampInput.PointToClient(Control.MousePosition)))
                 {
                     btnStartcampInput.Visible = false;
-                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_startcamp_input;
                 }
             };
         }

@@ -2243,6 +2243,16 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_StartcampInfer1 {
+            get {
+                object obj = ResourceManager.GetObject("btn_StartcampInfer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_titlebar_close {
             get {
                 object obj = ResourceManager.GetObject("btn_titlebar_close", resourceCulture);
