@@ -1,7 +1,4 @@
-﻿
-using System.Diagnostics.Tracing;
-
-namespace SAI.SAI.App.Views.Pages
+﻿namespace SAI.SAI.App.Views.Pages
 {
     partial class UcTutorialBlockCode
     {
@@ -581,7 +578,7 @@ namespace SAI.SAI.App.Views.Pages
             // btnStartcampInfer
             // 
             this.btnStartcampInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_go_pratice_hover;
+            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_StartcampInfer_hover;
             this.btnStartcampInfer.HoverState.ImageSize = new System.Drawing.Size(231, 59);
             this.btnStartcampInfer.Image = global::SAI.Properties.Resources.btn_StartcampInfer;
             this.btnStartcampInfer.ImageOffset = new System.Drawing.Point(0, 0);

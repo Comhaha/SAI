@@ -2213,9 +2213,29 @@ namespace SAI.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_startcamp_sizeup_hover {
+            get {
+                object obj = ResourceManager.GetObject("btn_startcamp_sizeup_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_StartcampInfer {
             get {
                 object obj = ResourceManager.GetObject("btn_StartcampInfer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_StartcampInfer_hover {
+            get {
+                object obj = ResourceManager.GetObject("btn_StartcampInfer_hover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

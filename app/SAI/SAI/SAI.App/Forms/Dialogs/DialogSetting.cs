@@ -64,5 +64,10 @@ namespace SAI.SAI.App.Forms.Dialogs
                 ? Properties.Resources.btn_checked
                 : Properties.Resources.btn_unchecked;
         }
+
+        private void panelTitleBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

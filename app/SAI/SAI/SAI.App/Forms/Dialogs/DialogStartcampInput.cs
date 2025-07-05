@@ -19,12 +19,55 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(btnClose, "btn_close_white_clicked", "btn_close_white");
-            btnClose.Click += (s, e) => { this.Close(); };
+            ButtonUtils.SetupButton(btnClose2, "bg_yellow_btn_close_clicked", "bg_yellow_btn_close");
+            btnClose2.Click += (s, e) => { this.Close(); };
 
-            
+            //pbox 호버 -> seletimage 보임
+            // 새 이미지 불러오기 버튼 설정
+            btnStartcampInput.Size = new Size(494, 278);  // pInferAccuracy와 동일한 크기
+            pboxStartcampInput.Controls.Add(btnStartcampInput);
+            btnStartcampInput.Location = new Point(0, 0);
+            btnStartcampInput.Enabled = true;
+            btnStartcampInput.Cursor = Cursors.Hand;
+
+            //pboxStartcampInput.MouseEnter += (s, e) =>
+            //{
+            //    if (pSideInfer.Visible)
+            //    {
+            //        btnStartcampInput.Visible = true;
+            //        btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+            //    }
+            //};
+
+            pboxStartcampInput.MouseLeave += (s, e) =>
+            {
+                if (!btnStartcampInput.ClientRectangle.Contains(btnStartcampInput.PointToClient(Control.MousePosition)))
+                {
+                    btnStartcampInput.Visible = false;
+                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                }
+            };
+
+            // 버튼에도 MouseEnter/Leave 이벤트 추가
+            btnStartcampInput.MouseEnter += (s, e) =>
+            {
+                btnStartcampInput.Visible = true;
+                btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage_hover;
+            };
+
+            btnStartcampInput.MouseLeave += (s, e) =>
+            {
+                if (!pboxStartcampInput.ClientRectangle.Contains(pboxStartcampInput.PointToClient(Control.MousePosition)))
+                {
+                    btnStartcampInput.Visible = false;
+                    btnStartcampInput.BackgroundImage = Properties.Resources.btn_selectinferimage;
+                }
+            };
+
+
 
         }
+        
 
         private void panelTitleBar_Paint(object sender, PaintEventArgs e)
         {
@@ -41,12 +84,22 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         }
 
-        private void ibtnGoNotion_Click(object sender, EventArgs e)
+        private void pboxInferAccuracy_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void pboxInferAccuracy_Click(object sender, EventArgs e)
+        private void ibtnSizeup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStartcampInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pboxStartcampInput_Click(object sender, EventArgs e)
         {
 
         }
