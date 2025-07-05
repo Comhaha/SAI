@@ -75,6 +75,7 @@ namespace SAI.SAI.App.Views.Pages
             this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoGraph = new Guna.UI2.WinForms.Guna2Button();
             this.ptxtInfer = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnStartcampInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.lblinfer = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.pFake = new Guna.UI2.WinForms.Guna2Panel();
@@ -102,7 +103,6 @@ namespace SAI.SAI.App.Views.Pages
             this.lbMissingType = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lbErrorMessage = new SAI.App.Views.Pages.AutoSizeLabel();
             this.lblTitle = new SAI.App.Views.Pages.AutoSizeLabel();
-            this.btnStartcampInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pMain.SuspendLayout();
             this.pBlockList.SuspendLayout();
             this.pCode.SuspendLayout();
@@ -574,10 +574,23 @@ namespace SAI.SAI.App.Views.Pages
             // 
             // ptxtInfer
             // 
-            this.ptxtInfer.Controls.Add(this.btnStartcampInfer);
             this.ptxtInfer.Controls.Add(this.lblinfer);
             resources.ApplyResources(this.ptxtInfer, "ptxtInfer");
             this.ptxtInfer.Name = "ptxtInfer";
+            // 
+            // btnStartcampInfer
+            // 
+            this.btnStartcampInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_go_pratice_hover;
+            this.btnStartcampInfer.HoverState.ImageSize = new System.Drawing.Size(231, 59);
+            this.btnStartcampInfer.Image = global::SAI.Properties.Resources.btn_StartcampInfer;
+            this.btnStartcampInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnStartcampInfer.ImageRotate = 0F;
+            this.btnStartcampInfer.ImageSize = new System.Drawing.Size(231, 59);
+            resources.ApplyResources(this.btnStartcampInfer, "btnStartcampInfer");
+            this.btnStartcampInfer.Name = "btnStartcampInfer";
+            this.btnStartcampInfer.PressedState.ImageSize = new System.Drawing.Size(231, 59);
+            this.btnStartcampInfer.Click += new System.EventHandler(this.btnStartcampInfer_Click);
             // 
             // lblinfer
             // 
@@ -840,25 +853,13 @@ namespace SAI.SAI.App.Views.Pages
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnStartcampInfer
-            // 
-            this.btnStartcampInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_go_pratice_hover;
-            this.btnStartcampInfer.HoverState.ImageSize = new System.Drawing.Size(231, 59);
-            this.btnStartcampInfer.Image = global::SAI.Properties.Resources.btn_StartcampInfer;
-            this.btnStartcampInfer.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnStartcampInfer.ImageRotate = 0F;
-            this.btnStartcampInfer.ImageSize = new System.Drawing.Size(231, 59);
-            resources.ApplyResources(this.btnStartcampInfer, "btnStartcampInfer");
-            this.btnStartcampInfer.Name = "btnStartcampInfer";
-            this.btnStartcampInfer.PressedState.ImageSize = new System.Drawing.Size(231, 59);
-            // 
             // UcTutorialBlockCode
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImage = global::SAI.Properties.Resources.img_background1;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.btnStartcampInfer);
             this.Controls.Add(this.pErrorToast);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pMemo);

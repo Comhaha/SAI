@@ -166,6 +166,7 @@ namespace SAI.SAI.App.Views.Pages
 
             ibtnHome.BackColor = Color.Transparent;
             ibtnDone.BackColor = Color.Transparent;
+            btnStartcampInfer.BackColor  = Color.Transparent;
             ibtnInfer.BackColor = Color.Transparent;
             ibtnMemo.BackColor = Color.Transparent;
             ButtonUtils.SetTransparentStyle(btnCopy);
@@ -739,6 +740,8 @@ namespace SAI.SAI.App.Views.Pages
         {
             ucShowDialogPresenter.clickGoTrain();
         }
+
+        
 
         // 실행 버튼 클릭 이벤트
         private void btnRunModel_Click(object sender, EventArgs e)
@@ -1491,6 +1494,13 @@ namespace SAI.SAI.App.Views.Pages
         private void pboxInferAccuracy_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // 추론 버튼 클릭시 추론 다이얼로그 호출
+        private void btnStartcampInfer_Click(object sender, EventArgs e)
+        {
+            DialogStartcampInput dialog = new DialogStartcampInput();
+            dialog.ShowDialog(this); // 모달 다이얼로그로 표시
         }
     }
 }
