@@ -414,6 +414,52 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void ibtnSizeup_Click(object sender, EventArgs e)
         {
+            string imageToShow = null;
+
+            // 1. 추론 결과 이미지가 있는지 확인 (우선순위)
+            if (_result != null && _result.Success && !string.IsNullOrEmpty(_result.ResultImage) && File.Exists(_result.ResultImage))
+            {
+                imageToShow = _result.ResultImage;
+                Console.WriteLine($"[INFO] 추론 결과 이미지 표시: {imageToShow}");
+            }
+            // 2. 추론 결과가 없으면 현재 표시된 이미지 사용
+            else if (!string.IsNullOrEmpty(currentImagePath) && File.Exists(currentImagePath))
+            {
+                imageToShow = currentImagePath;
+                Console.WriteLine($"[INFO] 현재 이미지 표시: {imageToShow}");
+            }
+            // 3. 그것도 없으면 원본 선택된 이미지 사용
+            else if (!string.IsNullOrEmpty(selectedImagePath) && File.Exists(selectedImagePath))
+            {
+                imageToShow = selectedImagePath;
+                Console.WriteLine($"[INFO] 선택된 이미지 표시: {imageToShow}");
+            }
+
+            // 이미지가 있으면 기본 뷰어로 열기
+            if (!string.IsNullOrEmpty(imageToShow))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = imageToShow,
+                        UseShellExecute = true
+                    });
+                    Console.WriteLine($"[INFO] 원본 크기 이미지 열기 성공: {imageToShow}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] 이미지 열기 실패: {ex.Message}");
+                    MessageBox.Show($"이미지를 열 수 없습니다.\n{ex.Message}", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("표시할 이미지가 없습니다.\n먼저 이미지를 선택하고 추론을 실행해주세요.", "알림",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine("[WARNING] 표시할 이미지 없음");
+            }
         }
 
         private void pboxStartcampInput_Click(object sender, EventArgs e)
