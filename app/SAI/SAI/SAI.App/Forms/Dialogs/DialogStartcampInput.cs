@@ -19,6 +19,9 @@ namespace SAI.SAI.App.Forms.Dialogs
 {
     public partial class DialogStartcampInput : Form, IPracticeInferenceView
     {
+        // ✅ 추가: 정적 변수로 현재 열려있는 다이얼로그 추적
+        private static DialogStartcampInput _currentInstance = null;
+
         private YoloTutorialPresenter yoloTutorialPresenter;
         private string selectedImagePath = string.Empty;
         private string currentImagePath = string.Empty;
@@ -29,6 +32,8 @@ namespace SAI.SAI.App.Forms.Dialogs
         public DialogStartcampInput()
         {
             InitializeComponent();
+
+            _currentInstance = this;
 
             // 기본 다이얼로그 스타일 적용
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
@@ -64,6 +69,32 @@ namespace SAI.SAI.App.Forms.Dialogs
             // 툴팁 설정
             ToolTipUtils.CustomToolTip(btnStartcampInput, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
             //ToolTipUtils.CustomToolTip(btnInfoThreshold, "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+        }
+
+        // 3. 정적 메서드 추가
+        /// <summary>
+        /// 현재 열려있는 DialogStartcampInput에 추론 결과를 전달
+        /// </summary>
+        public static void UpdateCurrentDialogWithResult(PythonService.InferenceResult result)
+        {
+            if (_currentInstance != null && !_currentInstance.IsDisposed)
+            {
+                if (_currentInstance.InvokeRequired)
+                {
+                    _currentInstance.Invoke(new Action(() => {
+                        _currentInstance.ShowPracticeInferResultImage(result);
+                    }));
+                }
+                else
+                {
+                    _currentInstance.ShowPracticeInferResultImage(result);
+                }
+                Console.WriteLine("[DEBUG] DialogStartcampInput 자동 업데이트 완료");
+            }
+            else
+            {
+                Console.WriteLine("[DEBUG] DialogStartcampInput 인스턴스가 없어서 업데이트 스킵");
+            }
         }
 
         // 이미지 경로를 받는 생성자 추가
@@ -341,6 +372,12 @@ namespace SAI.SAI.App.Forms.Dialogs
         // 다이얼로그 종료 시 정리
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
+            // ✅ 추가: 다이얼로그 닫힐 때 추적 해제
+            if (_currentInstance == this)
+            {
+                _currentInstance = null;
+            }
+
             // 리소스 정리
             pboxStartcampInput.Image?.Dispose();
             dialogLoadingInfer?.Close();

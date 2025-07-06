@@ -447,67 +447,164 @@ namespace SAI.SAI.App.Presenters
                 // 블록 모델에서 이미지 경로 가져오기
                 var model = BlocklyModel.Instance;
                 string imagePath = model?.imgPath;
-                
+
                 if (string.IsNullOrEmpty(imagePath))
                 {
                     Console.WriteLine("[WARNING] 이미지 경로가 없습니다.");
                     return;
                 }
-                
+
                 Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
-                
-                // 결과 이미지 경로 생성 (inference.py 스크립트와 동일한 방식으로)
-                string resultImagePath = null;
-                string directory = Path.GetDirectoryName(imagePath);
+
+                // ✅ 결과 이미지 경로 생성 (inference.py와 동일한 방식)
                 string filename = Path.GetFileNameWithoutExtension(imagePath);
                 string extension = Path.GetExtension(imagePath);
-                resultImagePath = Path.Combine(
+                string resultImagePath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
                     "SAI.Application", "Python", "runs", "result",
-                    $"{filename}_result{extension}");
+                    $"{filename}{extension}");
                 resultImagePath = Path.GetFullPath(resultImagePath);
-                
+
                 Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
-                
+
+                // ✅ 추론 결과 객체 생성
+                PythonService.InferenceResult result;
+
                 if (File.Exists(resultImagePath))
                 {
                     Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
-                    
-                    // 추론 결과 객체 생성
-                    var result = new PythonService.InferenceResult
+
+                    result = new PythonService.InferenceResult
                     {
                         Success = true,
                         ResultImage = resultImagePath,
                         OriginalName = Path.GetFileName(imagePath)
                     };
-                    
-                    // UI 스레드에서 결과 표시
-                    if (_itutorialInferenceView != null)
-                    {
-                        if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
-                        {
-                            viewControl.Invoke(new Action(() => {
-                                _itutorialInferenceView.ShowInferenceResult(result);
-                            }));
-                        }
-                        else
-                        {
-                            _itutorialInferenceView.ShowInferenceResult(result);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("[ERROR] _itutorialInferenceView가 null입니다.");
-                    }
                 }
                 else
                 {
                     Console.WriteLine($"[WARNING] 결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}");
+                    Console.WriteLine("[INFO] 원본 이미지로 DialogStartcampInput을 띄웁니다.");
+
+                    // 결과 이미지가 없어도 추론은 성공한 것으로 간주하고 원본 이미지로 다이얼로그 띄움
+                    result = new PythonService.InferenceResult
+                    {
+                        Success = true,
+                        ResultImage = imagePath, // 원본 이미지 사용
+                        OriginalName = Path.GetFileName(imagePath)
+                    };
+                }
+
+                // ✅ 핵심 수정: UI 스레드에서 DialogStartcampInput 자동 띄우기
+                if (_yolotutorialview is Control tutorialControl)
+                {
+                    if (tutorialControl.InvokeRequired)
+                    {
+                        tutorialControl.Invoke(new Action(() =>
+                        {
+                            ShowInferenceResultDialog(result, imagePath);
+                        }));
+                    }
+                    else
+                    {
+                        ShowInferenceResultDialog(result, imagePath);
+                    }
+                }
+                else
+                {
+                    // Control이 아닌 경우에도 다이얼로그 띄우기 시도
+                    ShowInferenceResultDialog(result, imagePath);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] CheckAndShowInferenceResult 실행 중 오류: {ex.Message}");
+
+                // 에러 발생시에도 기본 DialogStartcampInput 띄우기
+                try
+                {
+                    var model = BlocklyModel.Instance;
+                    string imagePath = model?.imgPath;
+
+                    if (!string.IsNullOrEmpty(imagePath))
+                    {
+                        if (_yolotutorialview is Control tutorialControl)
+                        {
+                            if (tutorialControl.InvokeRequired)
+                            {
+                                tutorialControl.Invoke(new Action(() =>
+                                {
+                                    var dialog = new DialogStartcampInput(imagePath);
+                                    dialog.Text = "추론 완료 - AI 블록 코딩";
+                                    dialog.ShowDialog();
+                                }));
+                            }
+                            else
+                            {
+                                var dialog = new DialogStartcampInput(imagePath);
+                                dialog.Text = "추론 완료 - AI 블록 코딩";
+                                dialog.ShowDialog();
+                            }
+                        }
+                    }
+                }
+                catch (Exception innerEx)
+                {
+                    Console.WriteLine($"[ERROR] 에러 처리 중 추가 오류: {innerEx.Message}");
+                }
+            }
+        }
+
+        // 추론 결과 다이얼로그 표시 (로컬용)
+        private void ShowInferenceResultDialog(PythonService.InferenceResult result, string originalImagePath)
+        {
+            try
+            {
+                Console.WriteLine($"[DEBUG] ShowInferenceResultDialog 호출됨: success={result.Success}");
+
+                if (result.Success)
+                {
+                    string dialogImagePath = originalImagePath; // 기본값은 원본 이미지
+
+                    // 추론 결과 이미지가 있고 파일이 존재하면 결과 이미지 사용
+                    if (!string.IsNullOrEmpty(result.ResultImage) && File.Exists(result.ResultImage))
+                    {
+                        dialogImagePath = result.ResultImage;
+                        Console.WriteLine($"[DEBUG] 추론 결과 이미지 사용: {result.ResultImage}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[DEBUG] 원본 이미지 사용: {originalImagePath}");
+                    }
+
+                    // ✅ DialogStartcampInput 자동 띄우기
+                    var dialog = new DialogStartcampInput(dialogImagePath);
+
+                    // 다이얼로그 제목 설정
+                    if (!string.IsNullOrEmpty(result.ResultImage) && File.Exists(result.ResultImage) && dialogImagePath == result.ResultImage)
+                    {
+                        dialog.Text = "추론 완료 - AI 블록 코딩";
+                    }
+                    else
+                    {
+                        dialog.Text = "학습 완료 - AI 블록 코딩";
+                    }
+
+                    dialog.ShowDialog();
+
+                    Console.WriteLine($"[DEBUG] DialogStartcampInput 자동 호출 완료: {dialogImagePath}");
+                }
+                else
+                {
+                    // 추론 실패시 에러 다이얼로그 표시
+                    //ShowErrorDialog(result.Error ?? "추론 실행 중 오류가 발생했습니다.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] 추론 결과 확인 중 오류 발생: {ex.Message}");
+                Console.WriteLine($"[ERROR] ShowInferenceResultDialog 실행 중 오류: {ex.Message}");
+                //ShowErrorDialog($"추론 결과 표시 중 오류가 발생했습니다: {ex.Message}");
             }
         }
 
