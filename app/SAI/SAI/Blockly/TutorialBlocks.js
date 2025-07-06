@@ -50,7 +50,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
-                    ["Nano", "yolov8n.pt"],
+                    ["Nano", "yolov8n-oiv7.pt"],
                 ]
             }
         ],
@@ -81,7 +81,7 @@ Blockly.defineBlocksWithJsonArray([
         "previousStatement": null,
         "nextStatement": null,
         "colour": 150,
-        "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 바나나 데이터셋이 제공됩니다.",
+        "tooltip": "데이터셋을 불러옵니다.\n튜토리얼에서는 Open Images V7이 제공됩니다.",
         "helpUrl": ""
         , "deletable": false
     }
@@ -105,6 +105,10 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "epochs",
                 "options": [
                     ["1", "1"],
+                    ["50", "50"],
+                    ["100", "100"],
+                    ["150", "150"],
+                    ["200", "200"]
                 ]
             },
             {
@@ -112,6 +116,9 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "imgsz",
                 "options": [
                     ["640", "640"],
+                    ["960", "960"],
+                    ["1024", "1024"],
+                    ["1280", "1280"]
                 ]
             }
         ],
@@ -186,7 +193,7 @@ Blockly.Python.forBlock['imgPath'] = function (block) {
     const filePath = block.getFieldValue('FILE_PATH');
     return (
         `# 이미지 경로 지정\n` +
-        `img_path ='${filePath}'))\n\n\n`
+        `img_path ='${filePath}'\n\n\n`
     );
 };
 
@@ -199,7 +206,7 @@ Blockly.defineBlocksWithJsonArray([
             {
                 "type": "field_number",
                 "name": "THRESHOLD",
-                "value": 0.25,
+                "value": 0.01,
                 "min": 0,
                 "max": 1,
                 "precision": 0.01
