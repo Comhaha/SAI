@@ -138,6 +138,8 @@ def run_inference(model_path, image_path, conf=0.25):
             # OpenCV로 이미지 저장
             cv2.imwrite(result_image_path, result_img)
             log_message(f"결과 이미지 저장 완료: {result_image_path}")
+
+            time.sleep(0.2)  # 파일 시스템 안정화 대기
             
             # 감지된 객체 정보
             detections = []

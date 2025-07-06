@@ -474,10 +474,13 @@ namespace SAI.SAI.App.Presenters
         }
 
         // 추론 결과를 확인하고 UI에 표시하는 메서드
-        private void CheckAndShowInferenceResult()
+        private async void CheckAndShowInferenceResult()
         {
             try
             {
+                // ✅ 이 한 줄 추가
+                await Task.Delay(500); // 0.5초 대기
+
                 // 블록 모델에서 이미지 경로 가져오기
                 var model = BlocklyModel.Instance;
                 string imagePath = model?.imgPath;
@@ -495,7 +498,7 @@ namespace SAI.SAI.App.Presenters
 
                 if (Directory.Exists(resultDir))
                 {
-                    var imageFiles = Directory.GetFiles(resultDir, "*.png");
+                    var imageFiles = Directory.GetFiles(resultDir, "*_result.*");
 
                     if (imageFiles.Length > 0)
                     {
