@@ -34,7 +34,7 @@ namespace SAI.SAI.App.Views.Pages
         private DialogInferenceLoading dialogLoadingInfer;
 
         private BlocklyModel blocklyModel;
-
+        
         private readonly IMainView mainView;
 
         public event EventHandler HomeButtonClicked;

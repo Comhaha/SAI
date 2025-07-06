@@ -14,7 +14,7 @@ namespace SAI.SAI.App.Views.Pages
 
         private string[] imageNames = new string[]
         {
-            "bg_blockGuide1",
+            "bg_startcamp_guide",
             "bg_blockGuide2",
             "bg_blockGuide3",
             "bg_blockGuide4",
