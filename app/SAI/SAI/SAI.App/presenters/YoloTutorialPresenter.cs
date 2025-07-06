@@ -462,7 +462,7 @@ namespace SAI.SAI.App.Presenters
                 string resultImagePath = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
                     "SAI.Application", "Python", "runs", "result",
-                    $"{filename}{extension}");
+                    $"{filename}_result{extension}");
                 resultImagePath = Path.GetFullPath(resultImagePath);
 
                 Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
