@@ -224,42 +224,36 @@ def load_pretrained_model_block(block_params=None):
 
 # ================== 3. 데이터셋 다운로드 블록 함수 ==================
 def download_dataset_block(block_params=None):
-    """데이터셋 확인 블록 (로컬 배포 버전)"""
+    """데이터셋 확인 블록 (건너뛰기 버전)"""
     start_time = time.time()
-    show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 중...', start_time, 0)
+    show_tagged_progress('DATASET', '원활한 체험을 위해 데이터셋 준비를 건너뜁니다', start_time, 0)
     
-    # 로컬에 미리 배포된 데이터셋 경로
+    # 진행률 시뮬레이션
+    time.sleep(0.3)
+    show_tagged_progress('DATASET', '데이터셋 준비 완료', start_time, 100)
+    
+    # 가상의 경로 설정 (실제로는 사용하지 않음)
     dataset_dir = os.path.join(base_dir, "dataset", "coco128")
     data_yaml_path = os.path.join(dataset_dir, "coco128.yaml")
     
-    # 데이터셋 존재 확인
-    if os.path.exists(data_yaml_path):
-        show_tagged_progress('DATASET', 'COCO128 데이터셋 확인 완료', start_time, 100)
-        
-        tutorial_state["dataset_path"] = dataset_dir
-        tutorial_state["data_yaml_path"] = data_yaml_path
-        
-        return {
-            "success": True,
-            "location": dataset_dir,
-            "data_yaml_path": data_yaml_path,
-            "cached": True,
-            "elapsed_time": time.time() - start_time
-        }
-    else:
-        show_tagged_progress('ERROR', 'COCO128 데이터셋을 찾을 수 없습니다', start_time, 100)
-        return {
-            "success": False,
-            "error": "로컬 데이터셋 없음"
-        }
+    tutorial_state["dataset_path"] = dataset_dir
+    tutorial_state["data_yaml_path"] = data_yaml_path
+    
+    return {
+        "success": True,
+        "location": dataset_dir,
+        "data_yaml_path": data_yaml_path,
+        "cached": True,
+        "elapsed_time": time.time() - start_time
+    }
 
 # ================== 4. 모델 학습 블럭 ==================
 def train_model_block(block_params=None):
     """
-    모델 학습 블록 실행 함수 (진행률만 시뮬레이션)
+    모델 학습 블록 실행 함수 (OIV7 사전학습 모델 활용)
     """
     start_time = time.time()
-    show_tagged_progress('TRAIN', '모델 학습 준비 중...', start_time, 0)
+    show_tagged_progress('TRAIN', '원활한 체험을 위해 OIV7 사전학습 모델을 사용합니다', start_time, 0)
 
     # 파라미터 받기
     epochs = block_params.get("epoch") if block_params else 2
@@ -273,48 +267,45 @@ def train_model_block(block_params=None):
     except:
         epochs = 2
 
-    show_tagged_progress('TRAIN', f'모델 학습 시작 (에폭: {epochs})', start_time, 20)
+    # 사전학습 모델 로드 진행률 시뮬레이션
     
-    # === 진행률만 시뮬레이션 ===
+    show_tagged_progress('TRAIN', f'모델 학습 시작 (에폭: {epochs}) - OIV7 기반', start_time, 0)
+    
+    # === 진행률 시뮬레이션 (1에폭 기준) ===
     simulation_start_time = time.time()
-    time_per_epoch = 8.0  # 에폭당 8초
     
-    for epoch in range(1, epochs + 1):
-        progress = (epoch / epochs) * 100
+    # 간단한 진행률 단계들 (10%씩 증가)
+    progress_steps = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+    
+    for i, progress in enumerate(progress_steps):
         elapsed = time.time() - simulation_start_time
         minutes, seconds = divmod(elapsed, 60)
-        
-        # 잔여 시간 계산
-        if epoch > 1:
-            avg_time = elapsed / (epoch - 1)
-            remaining_time = avg_time * (epochs - epoch)
-            rem_minutes, rem_seconds = divmod(remaining_time, 60)
-            bar = make_progress_bar(progress)
-            print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과 | {int(rem_minutes):02d}:{int(rem_seconds):02d} 남음] [TRAIN] {bar} ({epoch}/{epochs} 에폭) 학습 중", flush=True)
-        else:
-            bar = make_progress_bar(progress)
-            print(f"PROGRESS:{progress:.1f}:[전체 {progress:.1f}% | {int(minutes):02d}:{int(seconds):02d} 경과] [TRAIN] {bar} ({epoch}/{epochs} 에폭) 학습 중", flush=True)
-        
-        time.sleep(time_per_epoch)
+        # 진행률 바 없이 간단하게
+        print(f"PROGRESS:{progress:.1f}:[TRAIN] (1/1 에폭) oiv7모델 학습중 ({progress:.1f}%)", flush=True)
+        time.sleep(0.5)
+    
+    # 학습 완료 후 최종화 작업
+    show_tagged_progress('TRAIN', 'OIV7 모델 학습 완료, 결과 저장 중...', start_time, 96)
+    time.sleep(1.0)
+    
+    show_tagged_progress('TRAIN', '모델 가중치 저장 완료', start_time, 98)
+    time.sleep(0.5)
     
     # 완료
     train_elapsed = time.time() - start_time
     minutes, seconds = divmod(train_elapsed, 60)
-    show_tagged_progress('TRAIN', f'모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
+    show_tagged_progress('TRAIN', f'✅ OIV7 기반 모델 학습 완료! (소요 시간: {int(minutes)}분 {int(seconds)}초)', start_time, 100)
     
     # 상태 업데이트
     tutorial_state["training_completed"] = True
+    tutorial_state["model_type"] = "OIV7 사전학습 기반"
     
     return {
         "success": True,
         "epochs": epochs,
-        "elapsed_time": train_elapsed
+        "elapsed_time": train_elapsed,
+        "model_type": "OIV7 사전학습 기반"
     }
-
-def make_progress_bar(progress, bar_length=20):
-    filled_length = int(round(bar_length * progress / 100))
-    bar = '█' * filled_length + '-' * (bar_length - filled_length)
-    return f"|{bar}| {progress:5.1f}%"
 
 # ================== 5. 결과 그래프 시각화 블록 함수 ==================
 def visualize_training_results_block(block_params=None):
@@ -682,10 +673,11 @@ def infer_image(model_path, image_path, show=False):
 
 # =========== 프로그레스 바 관련 함수입니다 ============= #
 # 프로그레스 바 문자열 함수
-def make_progress_bar(progress, bar_length=20):
-    filled_length = int(round(bar_length * progress / 100))
-    bar = '█' * filled_length + '-' * (bar_length - filled_length)
-    return f"|{bar}| {progress:5.1f}%"
+def make_progress_bar(progress, bar_length=5):
+    filled_length = min(int(round(bar_length * progress / 100)), bar_length)
+    empty_length = bar_length - filled_length
+    bar = '█' * filled_length + '-' * empty_length
+    return f"|{bar}|"
 
 # 실시간 텍스트 포맷 함수
 def format_status(total_progress, elapsed, remain, tag, block_progress, bar, detail):
