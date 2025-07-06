@@ -200,7 +200,7 @@
             this.Name = "DialogStartcampInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DialogInput";
-            this.TopMost = true;
+            this.TopMost = false;
             this.panelTitleBar.ResumeLayout(false);
             this.pThreshold.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).EndInit();

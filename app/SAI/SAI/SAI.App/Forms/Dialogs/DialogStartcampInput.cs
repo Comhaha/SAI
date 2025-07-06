@@ -32,6 +32,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         public DialogStartcampInput()
         {
             InitializeComponent();
+            this.TopMost = false;
 
             _currentInstance = this;
 
@@ -100,6 +101,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         // 이미지 경로를 받는 생성자 추가
         public DialogStartcampInput(string imagePath) : this()
         {
+            this.TopMost = false;
             Console.WriteLine($"[DEBUG] DialogStartcampInput 생성자 호출: {imagePath}");
 
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
@@ -481,6 +483,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         // 다이얼로그 로드 시 초기화
         private void DialogStartcampInput_Load(object sender, EventArgs e)
         {
+            this.TopMost = false;
             // 필요한 초기화 작업
             Console.WriteLine("[DEBUG] DialogStartcampInput 로드 완료");
         }
