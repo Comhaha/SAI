@@ -159,7 +159,7 @@
             this.ibtnSizeup.ImageSize = new System.Drawing.Size(164, 50);
             this.ibtnSizeup.Location = new System.Drawing.Point(626, 132);
             this.ibtnSizeup.Name = "ibtnSizeup";
-            this.ibtnSizeup.PressedState.ImageSize = new System.Drawing.Size(240, 75);
+            this.ibtnSizeup.PressedState.ImageSize = new System.Drawing.Size(164, 50);
             this.ibtnSizeup.Size = new System.Drawing.Size(173, 55);
             this.ibtnSizeup.TabIndex = 14;
             this.ibtnSizeup.Click += new System.EventHandler(this.ibtnSizeup_Click);
