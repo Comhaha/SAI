@@ -100,6 +100,8 @@ namespace SAI.SAI.App.Forms.Dialogs
         // 이미지 경로를 받는 생성자 추가
         public DialogStartcampInput(string imagePath) : this()
         {
+            Console.WriteLine($"[DEBUG] DialogStartcampInput 생성자 호출: {imagePath}");
+
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 selectedImagePath = imagePath;
@@ -110,29 +112,97 @@ namespace SAI.SAI.App.Forms.Dialogs
                     using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                     {
                         var originalImage = System.Drawing.Image.FromStream(stream);
+
+                        // ✅ PictureBox 설정 및 이미지 표시
                         pboxStartcampInput.Size = new Size(720, 687);
                         pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
                         pboxStartcampInput.Image = originalImage;
                         pboxStartcampInput.Visible = true;
                     }
 
+                    // ✅ 버튼 숨기기 (이미지가 이미 로드되었으므로)
                     btnStartcampInput.Visible = false;
 
-                    // threshold 컨트롤 다시 설정 (이미지가 로드된 후)
+                    // ✅ 블록에서 사용한 threshold 값을 가져와서 동기화
+                    var blocklyModel = BlocklyModel.Instance;
+                    double blockThreshold = blocklyModel?.accuracy ?? 0.5;
+
+                    // threshold 컨트롤 설정 (블록 값으로 동기화)
                     if (tbarThreshold != null && tboxThreshold != null)
                     {
-                        tbarThreshold.Value = 50; // 기본값 0.5
-                        tboxThreshold.Text = "0.5";
+                        // 블록의 accuracy 값을 threshold 컨트롤에 설정
+                        int trackBarValue = (int)(blockThreshold * 100); // 0.5 -> 50
+                        tbarThreshold.Value = Math.Max(tbarThreshold.Minimum, Math.Min(tbarThreshold.Maximum, trackBarValue));
+                        tboxThreshold.Text = blockThreshold.ToString("F2"); // 0.50 형식으로 표시
+                        currentThreshold = blockThreshold;
+
+                        Console.WriteLine($"[DEBUG] 블록 threshold 값 동기화: {blockThreshold} (TrackBar: {trackBarValue})");
                     }
-                    Console.WriteLine($"[DEBUG] DialogStartcampInput: 전달받은 이미지 로드 완료 - {imagePath}");
+                    
+
+                    Console.WriteLine($"[DEBUG] DialogStartcampInput: 이미지 로드 완료 - {imagePath}");
+
+                    // ✅ 추론 결과 이미지인지 확인하여 UI 상태 조정
+                    if (imagePath.Contains("predict") || imagePath.Contains("result") || imagePath.Contains("inference"))
+                    {
+                        // 추론 결과 이미지인 경우
+                        this.Text = "추론 결과 - AI 블록 코딩";
+                        Console.WriteLine("[DEBUG] 추론 결과 이미지로 인식됨");
+                    }
+                    else
+                    {
+                        // 일반 이미지인 경우
+                        this.Text = "이미지 선택 - AI 블록 코딩";
+                        Console.WriteLine("[DEBUG] 일반 이미지로 인식됨");
+                    }
+
+                    // ✅ 이미지 로드 후 폼 중앙 정렬
+                    this.StartPosition = FormStartPosition.CenterParent;
+
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[ERROR] DialogStartcampInput: 전달받은 이미지 로드 실패 - {ex.Message}");
+                    Console.WriteLine($"[ERROR] DialogStartcampInput: 이미지 로드 실패 - {ex.Message}");
+
+                    // 실패시 기본 상태로 되돌리기
+                    pboxStartcampInput.Image = null;
+                    btnStartcampInput.Visible = true;
+                    selectedImagePath = string.Empty;
+                    currentImagePath = string.Empty;
+
+                    MessageBox.Show($"이미지를 로드하는 중 오류가 발생했습니다: {ex.Message}", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"[WARNING] DialogStartcampInput: 유효하지 않은 이미지 경로 - {imagePath}");
+
+                // 기본 상태 유지 (이미지 선택 버튼 표시)
+                btnStartcampInput.Visible = true;
+                this.Text = "이미지 선택 - AI 블록 코딩";
+
+                // ✅ 블록 threshold 값 동기화 (이미지가 없어도)
+                var blocklyModel = BlocklyModel.Instance;
+                double blockThreshold = blocklyModel?.accuracy ?? 0.5;
+
+                if (tbarThreshold != null && tboxThreshold != null)
+                {
+                    int trackBarValue = (int)(blockThreshold * 100);
+                    tbarThreshold.Value = Math.Max(tbarThreshold.Minimum, Math.Min(tbarThreshold.Maximum, trackBarValue));
+                    tboxThreshold.Text = blockThreshold.ToString("F2");
+                    currentThreshold = blockThreshold;
+
+                    Console.WriteLine($"[DEBUG] 기본 상태에서 블록 threshold 값 동기화: {blockThreshold}");
+                }
+
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    MessageBox.Show($"지정된 이미지 파일을 찾을 수 없습니다:\n{imagePath}", "파일 없음",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
-
         private void SetupHoverEvents()
         {
             // pboxStartcampInput 마우스 이벤트
