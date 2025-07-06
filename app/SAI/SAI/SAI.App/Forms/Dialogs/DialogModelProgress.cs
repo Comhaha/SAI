@@ -148,5 +148,10 @@ namespace SAI.SAI.App.Forms.Dialogs
                 MessageBox.Show($"프로세스를 종료하는 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void progressGuideLabel_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
