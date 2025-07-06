@@ -158,6 +158,12 @@
     <Compile Include="SAI.App\Forms\Dialogs\DialogModelProgress.Designer.cs">
       <DependentUpon>DialogModelProgress.cs</DependentUpon>
     </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNoTrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SAI.App\Forms\Dialogs\DialogNoTrain.Designer.cs">
+      <DependentUpon>DialogNoTrain.cs</DependentUpon>
+    </Compile>
     <Compile Include="SAI.App\Forms\Dialogs\DialogPrepare.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -526,6 +532,7 @@
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
     <Content Include="SAI.App\Resources\Images\btn_StartcampInfer_hover.png" />
+    <None Include="SAI.App\Resources\Images\DialogNoTrain.png" />
     <None Include="SAI.App\Resources\Images\btn_startcamp_sizeup_hover.png" />
     <None Include="SAI.App\Resources\Images\btn_StartcampInfer.png" />
     <None Include="SAI.App\Resources\Images\p_Startcamp_input.png" />
