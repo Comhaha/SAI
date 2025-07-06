@@ -214,10 +214,21 @@ namespace SAI.SAI.App.Forms.Dialogs
                 //    this.Close();
                 //}
                 //else
-                //{
+                ////{
+                //    var noTrainDailog = new DialogNoTrain();
+                //    noTrainDailog.ShowDialog(this);
+                //}
+
+				if(clicked == "btnYolo")
+				{
                     var noTrainDailog = new DialogNoTrain();
                     noTrainDailog.ShowDialog(this);
-                //}
+                }
+				else
+				{
+                    var prepareDialog = new DialogPrepare();
+                    prepareDialog.ShowDialog(this);
+                }
             };
         }
 
