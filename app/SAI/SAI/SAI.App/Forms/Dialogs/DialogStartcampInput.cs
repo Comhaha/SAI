@@ -29,6 +29,9 @@ namespace SAI.SAI.App.Forms.Dialogs
         private PythonService.InferenceResult _result;
         private DialogInferenceLoading dialogLoadingInfer;
 
+        // ✅ 추가: 추론 결과 표시 중인지 확인하는 플래그
+        private bool isShowingInferenceResult = false;
+
         public DialogStartcampInput()
         {
             InitializeComponent();
@@ -43,6 +46,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             // YoloTutorialPresenter 초기화
             yoloTutorialPresenter = new YoloTutorialPresenter(this);
+
+            // ✅ 추가: BlocklyModel의 ImgPathChanged 이벤트 구독
+            var blocklyModel = BlocklyModel.Instance;
+            if (blocklyModel != null)
+            {
+                blocklyModel.ImgPathChanged += OnBlocklyImagePathChanged;
+            }
 
             // 새 이미지 불러오기 버튼 설정
             btnStartcampInput.Size = new Size(720, 687);
@@ -71,6 +81,55 @@ namespace SAI.SAI.App.Forms.Dialogs
             ToolTipUtils.CustomToolTip(btnStartcampInput, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
             //ToolTipUtils.CustomToolTip(btnInfoThreshold, "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
         }
+
+        // ✅ 추가: BlocklyModel에서 이미지 경로가 변경될 때 호출되는 메서드
+        private void OnBlocklyImagePathChanged(string newPath)
+        {
+            // ✅ 추론 결과 표시 중이면 동기화 스킵
+            if (isShowingInferenceResult)
+            {
+                Console.WriteLine("[DEBUG] DialogStartcampInput: 추론 결과 표시 중이므로 이미지 경로 동기화 스킵");
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => OnBlocklyImagePathChanged(newPath)));
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(newPath) && File.Exists(newPath))
+            {
+                selectedImagePath = newPath;
+                currentImagePath = newPath;
+
+                try
+                {
+                    // 기존 이미지 정리
+                    pboxStartcampInput.Image?.Dispose();
+
+                    // 새 이미지 로드
+                    using (var stream = new FileStream(newPath, FileMode.Open, FileAccess.Read))
+                    {
+                        var originalImage = System.Drawing.Image.FromStream(stream);
+                        pboxStartcampInput.Size = new Size(720, 687);
+                        pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
+                        pboxStartcampInput.Image = originalImage;
+                        pboxStartcampInput.Visible = true;
+                    }
+
+                    btnStartcampInput.Visible = false;
+
+                    Console.WriteLine($"[DEBUG] DialogStartcampInput: 블록에서 이미지 경로 변경됨 - {newPath}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] DialogStartcampInput: 블록 이미지 로드 실패 - {ex.Message}");
+                }
+            }
+        }
+
+
 
         // 3. 정적 메서드 추가
         /// <summary>
@@ -249,6 +308,10 @@ namespace SAI.SAI.App.Forms.Dialogs
                 {
                     currentThreshold = newValue;
 
+                    // 현재 BlocklyModel의 이미지 경로 사용 (항상 최신 상태 보장)
+                    var blocklyModel = BlocklyModel.Instance;
+                    string imagePathToUse = !string.IsNullOrEmpty(blocklyModel?.imgPath) ? blocklyModel.imgPath : selectedImagePath;
+
                     Console.WriteLine($"[LOG] DialogStartcampInput - selectedImagePath: {selectedImagePath}");
                     Console.WriteLine($"[LOG] DialogStartcampInput - currentThreshold: {currentThreshold}");
 
@@ -257,7 +320,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                     Task.Run(async () =>
                     {
                         _result = await yoloTutorialPresenter.RunInferenceDirect(
-                            selectedImagePath,
+                            imagePathToUse,
                             currentThreshold
                         );
 
@@ -284,6 +347,7 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         // 추론 이미지 불러오기
+        // 추론 이미지 불러오기
         private void btnStartcampInput_Click(object sender, EventArgs e)
         {
             try
@@ -299,12 +363,20 @@ namespace SAI.SAI.App.Forms.Dialogs
                         selectedImagePath = absolutePath;
                         currentImagePath = absolutePath;
 
+                        // ✅ 추가: BlocklyModel의 imgPath도 동기화
+                        var blocklyModel = BlocklyModel.Instance;
+                        if (blocklyModel != null)
+                        {
+                            blocklyModel.imgPath = absolutePath;
+                            Console.WriteLine($"[DEBUG] DialogStartcampInput: BlocklyModel.imgPath 동기화 완료 - {absolutePath}");
+                        }
+
                         // 이미지 표시
                         using (var stream = new FileStream(absolutePath, FileMode.Open, FileAccess.Read))
                         {
                             var originalImage = System.Drawing.Image.FromStream(stream);
                             pboxStartcampInput.Size = new Size(720, 687);
-                            pboxStartcampInput.SizeMode = PictureBoxSizeMode.Zoom;
+                            //pboxStartcampInput.SizeMode = PicticeBoxSizeMode.Zoom;
                             pboxStartcampInput.Image = originalImage;
                             pboxStartcampInput.Visible = true;
                         }
@@ -332,6 +404,8 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         // IPracticeInferenceView 인터페이스 구현
+        // DialogStartcampInput.cs에서 ShowPracticeInferResultImage 메서드만 수정
+
         public void ShowPracticeInferResultImage(PythonService.InferenceResult result)
         {
             if (InvokeRequired)
@@ -340,8 +414,24 @@ namespace SAI.SAI.App.Forms.Dialogs
                 return;
             }
 
-            dialogLoadingInfer?.Close();
-            dialogLoadingInfer = null;
+            // ✅ 핵심 수정: 더 안전하게 다이얼로그 닫기
+            try
+            {
+                if (dialogLoadingInfer != null && !dialogLoadingInfer.IsDisposed)
+                {
+                    dialogLoadingInfer.Close();
+                    dialogLoadingInfer.Dispose();
+                    Console.WriteLine("[DEBUG] DialogInferenceLoading 닫기 완료");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[WARNING] DialogInferenceLoading 닫기 중 오류: {ex.Message}");
+            }
+            finally
+            {
+                dialogLoadingInfer = null;
+            }
 
             if (result.Success)
             {
@@ -396,6 +486,7 @@ namespace SAI.SAI.App.Forms.Dialogs
                 dialog.ShowDialog(this);
             }
         }
+
 
         // 기존 이벤트 핸들러들
         private void panelTitleBar_Paint(object sender, PaintEventArgs e)
@@ -489,9 +580,17 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         // 다이얼로그 종료 시 정리
+        // ✅ 추가: 다이얼로그 종료 시 이벤트 구독 해제
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            // ✅ 추가: 다이얼로그 닫힐 때 추적 해제
+            // BlocklyModel 이벤트 구독 해제
+            var blocklyModel = BlocklyModel.Instance;
+            if (blocklyModel != null)
+            {
+                blocklyModel.ImgPathChanged -= OnBlocklyImagePathChanged;
+            }
+
+            // ✅ 기존: 다이얼로그 닫힐 때 추적 해제
             if (_currentInstance == this)
             {
                 _currentInstance = null;

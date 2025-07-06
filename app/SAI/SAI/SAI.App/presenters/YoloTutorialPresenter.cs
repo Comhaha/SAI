@@ -613,7 +613,9 @@ namespace SAI.SAI.App.Presenters
                     }
 
                     // ✅ DialogStartcampInput 자동 띄우기
-                    var dialog = new DialogStartcampInput(dialogImagePath);
+                    var dialog = new DialogStartcampInput(originalImagePath);
+
+                    dialog.ShowPracticeInferResultImage(result);
 
                     // 다이얼로그 제목 설정
                     if (!string.IsNullOrEmpty(result.ResultImage) && File.Exists(result.ResultImage) && dialogImagePath == result.ResultImage)
