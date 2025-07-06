@@ -469,6 +469,7 @@ namespace SAI.SAI.App.Views.Pages
             this.pleaseControlThreshold.ForeColor = System.Drawing.Color.Tomato;
             this.pleaseControlThreshold.Name = "pleaseControlThreshold";
             this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pleaseControlThreshold.Load += new System.EventHandler(this.pleaseControlThreshold_Load);
             // 
             // pSideInfer
             // 

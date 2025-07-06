@@ -1346,5 +1346,10 @@ namespace SAI.SAI.App.Views.Pages
         {
             pErrorToast.Visible = false;
         }
+
+        private void pleaseControlThreshold_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

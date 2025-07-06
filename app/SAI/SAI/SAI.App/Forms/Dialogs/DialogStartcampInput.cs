@@ -502,5 +502,10 @@ namespace SAI.SAI.App.Forms.Dialogs
             dialogLoadingInfer?.Close();
             base.OnFormClosed(e);
         }
+
+        private void DialogStartcampInput_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

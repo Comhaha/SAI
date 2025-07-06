@@ -37,6 +37,7 @@
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnSizeup = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pboxStartcampInput = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.panelTitleBar.SuspendLayout();
             this.pThreshold.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).BeginInit();
@@ -94,9 +95,9 @@
             // tbarThreshold
             // 
             this.tbarThreshold.BackColor = System.Drawing.Color.Transparent;
-            this.tbarThreshold.Location = new System.Drawing.Point(79, 152);
+            this.tbarThreshold.Location = new System.Drawing.Point(84, 168);
             this.tbarThreshold.Name = "tbarThreshold";
-            this.tbarThreshold.Size = new System.Drawing.Size(306, 21);
+            this.tbarThreshold.Size = new System.Drawing.Size(344, 21);
             this.tbarThreshold.TabIndex = 10;
             this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
             this.tbarThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbarThreshold_Scroll);
@@ -118,7 +119,7 @@
             this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
             this.pThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pThreshold.Controls.Add(this.tboxThreshold);
-            this.pThreshold.Location = new System.Drawing.Point(421, 144);
+            this.pThreshold.Location = new System.Drawing.Point(461, 156);
             this.pThreshold.Name = "pThreshold";
             this.pThreshold.Size = new System.Drawing.Size(73, 37);
             this.pThreshold.TabIndex = 13;
@@ -181,12 +182,25 @@
             this.pboxStartcampInput.TabStop = false;
             this.pboxStartcampInput.Click += new System.EventHandler(this.pboxStartcampInput_Click);
             // 
+            // pleaseControlThreshold
+            // 
+            this.pleaseControlThreshold.BackColor = System.Drawing.Color.Transparent;
+            this.pleaseControlThreshold.Font = new System.Drawing.Font("Noto Sans KR", 9F);
+            this.pleaseControlThreshold.ForeColor = System.Drawing.Color.Tomato;
+            this.pleaseControlThreshold.Location = new System.Drawing.Point(80, 125);
+            this.pleaseControlThreshold.Name = "pleaseControlThreshold";
+            this.pleaseControlThreshold.Size = new System.Drawing.Size(241, 32);
+            this.pleaseControlThreshold.TabIndex = 25;
+            this.pleaseControlThreshold.Text = "threshold를 설정해주세요";
+            this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // DialogStartcampInput
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_modelInference;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(870, 941);
+            this.Controls.Add(this.pleaseControlThreshold);
             this.Controls.Add(this.pboxStartcampInput);
             this.Controls.Add(this.ibtnSizeup);
             this.Controls.Add(this.pThreshold);
@@ -200,7 +214,7 @@
             this.Name = "DialogStartcampInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DialogInput";
-            this.TopMost = false;
+            this.Load += new System.EventHandler(this.DialogStartcampInput_Load_1);
             this.panelTitleBar.ResumeLayout(false);
             this.pThreshold.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).EndInit();
@@ -219,5 +233,6 @@
         private Guna.UI2.WinForms.Guna2TextBox tboxThreshold;
         private Guna.UI2.WinForms.Guna2ImageButton ibtnSizeup;
         private Guna.UI2.WinForms.Guna2PictureBox pboxStartcampInput;
+        private SAI.App.Views.Pages.AutoSizeLabel pleaseControlThreshold;
     }
 }
