@@ -41,14 +41,6 @@ log_message(f"Default model path: {default_model_path}")
 def run_inference(model_path, image_path, conf=0.25):
     """
     YOLOv8 모델을 사용하여 이미지 추론 실행
-    
-    Args:
-        model_path (str): 모델 파일 경로
-        image_path (str): 이미지 파일 경로
-        conf (float): 신뢰도 임계값
-        
-    Returns:
-        dict: 추론 결과 정보
     """
     start_time = time.time()
     log_message(f"모델 로드 중: {model_path}")
@@ -67,10 +59,40 @@ def run_inference(model_path, image_path, conf=0.25):
     # 결과 저장 디렉토리 설정
     result_dir = os.path.join(base_dir, "runs", "result")
     os.makedirs(result_dir, exist_ok=True)
+    
+    # ✅ 안전한 이전 결과 파일 삭제
+    try:
+        import time as time_module
+        log_message("이전 결과 파일 정리 시작...")
+        
+        deleted_count = 0
+        for existing_file in os.listdir(result_dir):
+            if existing_file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+                old_file_path = os.path.join(result_dir, existing_file)
+                try:
+                    # 파일이 사용 중인지 확인하고 안전하게 삭제
+                    os.remove(old_file_path)
+                    deleted_count += 1
+                    log_message(f"삭제됨: {existing_file}")
+                except PermissionError:
+                    log_message(f"삭제 실패 (사용 중): {existing_file}")
+                except Exception as file_error:
+                    log_message(f"삭제 실패: {existing_file} - {file_error}")
+        
+        if deleted_count > 0:
+            log_message(f"이전 결과 파일 {deleted_count}개 삭제 완료")
+            # ✅ 삭제 후 잠시 대기 (파일 시스템 안정화)
+            time_module.sleep(0.1)
+        else:
+            log_message("삭제할 이전 결과 파일이 없음")
+            
+    except Exception as e:
+        log_message(f"이전 결과 파일 정리 중 오류 (무시하고 계속): {e}")
+    
     log_message(f"결과 저장 디렉토리: {result_dir}")
     
     try:
-        # YOLO 모델 로드
+        # YOLO 모델 로드 (삭제 작업과 분리)
         log_message("ultralytics 패키지 임포트 중...")
         from ultralytics import YOLO
         log_message("YOLO 모델 로드 중...")

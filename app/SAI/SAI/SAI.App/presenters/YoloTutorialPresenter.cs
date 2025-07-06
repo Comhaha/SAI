@@ -294,7 +294,7 @@ namespace SAI.SAI.App.Presenters
                                         var tagMatch = Regex.Match(message, @"\[(\w+)\]");
                                         if (tagMatch.Success)
                                         {
-                                            tag = tagMatch.Groups[1].Value; 
+                                            tag = tagMatch.Groups[1].Value;
                                         }
 
                                         //if (!string.IsNullOrEmpty(tag))
@@ -414,13 +414,13 @@ namespace SAI.SAI.App.Presenters
                                     _progressDialog.Close();
                                     _progressDialog.Dispose();
 
-                                    var baseDir   = AppDomain.CurrentDomain.BaseDirectory;
-                                    var csvPath   = Path.Combine(baseDir,
-                                        "SAI.Application","Python", "runs", "detect", "train", "results.csv");
-                                    csvPath       = Path.GetFullPath(csvPath);
+                                    var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                                    var csvPath = Path.Combine(baseDir,
+                                        "SAI.Application", "Python", "runs", "detect", "train", "results.csv");
+                                    csvPath = Path.GetFullPath(csvPath);
                                     _yolotutorialview.ShowTutorialTrainingChart(csvPath);
-                                    
-                            // 스크립트 종료시 추론 결과 이미지 확인 및 표시
+
+                                    // 스크립트 종료시 추론 결과 이미지 확인 및 표시
                                     CheckAndShowInferenceResult();
 
                                     //  Run 버튼 활성화
@@ -437,7 +437,7 @@ namespace SAI.SAI.App.Presenters
                             _yolotutorialview.AppendLog("스크립트가 종료됐습니다!");
                             _progressDialog.Close();
                             _progressDialog.Dispose();
-                            
+
                             // 스크립트 종료시 추론 결과 이미지 확인 및 표시
                             CheckAndShowInferenceResult();
 
@@ -481,111 +481,91 @@ namespace SAI.SAI.App.Presenters
                 // 블록 모델에서 이미지 경로 가져오기
                 var model = BlocklyModel.Instance;
                 string imagePath = model?.imgPath;
-
                 if (string.IsNullOrEmpty(imagePath))
                 {
                     Console.WriteLine("[WARNING] 이미지 경로가 없습니다.");
                     return;
                 }
-
                 Console.WriteLine($"[DEBUG] 원본 이미지 경로: {imagePath}");
 
-                // ✅ 결과 이미지 경로 생성 (inference.py와 동일한 방식)
-                string filename = Path.GetFileNameWithoutExtension(imagePath);
-                string extension = Path.GetExtension(imagePath);
-                string resultImagePath = Path.Combine(
+                // ✅ 간단한 해결책: runs/result에 파일 있으면 사용, 없으면 원본 사용
+                string resultDir = Path.Combine(
                     AppDomain.CurrentDomain.BaseDirectory,
-                    "SAI.Application", "Python", "runs", "result",
-                    $"{filename}_result{extension}");
-                resultImagePath = Path.GetFullPath(resultImagePath);
+                    "SAI.Application", "Python", "runs", "result");
 
-                Console.WriteLine($"[DEBUG] 결과 이미지 경로: {resultImagePath}");
-
-                // ✅ 추론 결과 객체 생성
-                PythonService.InferenceResult result;
-
-                if (File.Exists(resultImagePath))
+                if (Directory.Exists(resultDir))
                 {
-                    Console.WriteLine($"[INFO] 결과 이미지 파일 발견: {resultImagePath}");
+                    var imageFiles = Directory.GetFiles(resultDir, "*.png");
 
-                    result = new PythonService.InferenceResult
+                    if (imageFiles.Length > 0)
                     {
-                        Success = true,
-                        ResultImage = resultImagePath,
-                        OriginalName = Path.GetFileName(imagePath)
-                    };
-                }
-                else
-                {
-                    Console.WriteLine($"[WARNING] 결과 이미지 파일을 찾을 수 없습니다: {resultImagePath}");
-                    Console.WriteLine("[INFO] 원본 이미지로 DialogStartcampInput을 띄웁니다.");
+                        // 첫 번째 파일 사용 (방금 블록에서 만든 것)
+                        string resultImagePath = imageFiles[0];
+                        Console.WriteLine($"[INFO] 추론 결과 이미지 사용: {resultImagePath}");
 
-                    // 결과 이미지가 없어도 추론은 성공한 것으로 간주하고 원본 이미지로 다이얼로그 띄움
-                    result = new PythonService.InferenceResult
-                    {
-                        Success = true,
-                        ResultImage = imagePath, // 원본 이미지 사용
-                        OriginalName = Path.GetFileName(imagePath)
-                    };
-                }
-
-                // ✅ 핵심 수정: UI 스레드에서 DialogStartcampInput 자동 띄우기
-                if (_yolotutorialview is Control tutorialControl)
-                {
-                    if (tutorialControl.InvokeRequired)
-                    {
-                        tutorialControl.Invoke(new Action(() =>
+                        var result = new PythonService.InferenceResult
                         {
-                            ShowInferenceResultDialog(result, imagePath);
-                        }));
-                    }
-                    else
-                    {
+                            Success = true,
+                            ResultImage = resultImagePath,
+                            OriginalName = Path.GetFileNameWithoutExtension(imagePath)
+                        };
+
                         ShowInferenceResultDialog(result, imagePath);
+                        return;
                     }
-                }
-                else
-                {
-                    // Control이 아닌 경우에도 다이얼로그 띄우기 시도
-                    ShowInferenceResultDialog(result, imagePath);
                 }
 
+                // 결과 없으면 원본 이미지로 다이얼로그 표시
+                Console.WriteLine("[INFO] 추론 결과 없음 - 원본 이미지 사용");
+                var fallbackResult = new PythonService.InferenceResult
+                {
+                    Success = true,
+                    ResultImage = imagePath,
+                    OriginalName = Path.GetFileName(imagePath)
+                };
+
+                ShowInferenceResultDialog(fallbackResult, imagePath);
+
+                Console.WriteLine("[INFO] CheckAndShowInferenceResult 완료");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] CheckAndShowInferenceResult 실행 중 오류: {ex.Message}");
 
-                // 에러 발생시에도 기본 DialogStartcampInput 띄우기
+                // 에러 시 원본 이미지로 다이얼로그 표시
                 try
                 {
                     var model = BlocklyModel.Instance;
                     string imagePath = model?.imgPath;
-
                     if (!string.IsNullOrEmpty(imagePath))
                     {
-                        if (_yolotutorialview is Control tutorialControl)
-                        {
-                            if (tutorialControl.InvokeRequired)
-                            {
-                                tutorialControl.Invoke(new Action(() =>
-                                {
-                                    var dialog = new DialogStartcampInput(imagePath);
-                                    dialog.Text = "추론 완료 - AI 블록 코딩";
-                                    dialog.ShowDialog();
-                                }));
-                            }
-                            else
-                            {
-                                var dialog = new DialogStartcampInput(imagePath);
-                                dialog.Text = "추론 완료 - AI 블록 코딩";
-                                dialog.ShowDialog();
-                            }
-                        }
+                        var dialog = new DialogStartcampInput(imagePath);
+                        dialog.ShowDialog();
                     }
                 }
                 catch (Exception innerEx)
                 {
                     Console.WriteLine($"[ERROR] 에러 처리 중 추가 오류: {innerEx.Message}");
+                }
+            }
+            finally
+            {
+                // Run 버튼 활성화
+                if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+                {
+                    if (tutorialView.InvokeRequired)
+                    {
+                        tutorialView.Invoke(new Action(() =>
+                        {
+                            tutorialView.EnableRunButton();
+                            Console.WriteLine("[DEBUG] CheckAndShowInferenceResult finally: Run 버튼 활성화 완료 (Invoke)");
+                        }));
+                    }
+                    else
+                    {
+                        tutorialView.EnableRunButton();
+                        Console.WriteLine("[DEBUG] CheckAndShowInferenceResult finally: Run 버튼 활성화 완료");
+                    }
                 }
             }
         }
@@ -692,7 +672,7 @@ namespace SAI.SAI.App.Presenters
             return result;
         }
         */
-        
+
         // RunButtonClicked 이벤트 구독 해제 메서드 추가
         public void UnsubscribeFromRunButtonClicked(IYoloTutorialView view)
         {
@@ -707,7 +687,7 @@ namespace SAI.SAI.App.Presenters
             try
             {
                 Console.WriteLine($"[DEBUG] RunInferenceDirect() 실행: {imagePath}, conf={conf}");
-                
+
                 var model = BlocklyModel.Instance;
                 var gpuType = model.gpuType;
 
@@ -726,14 +706,14 @@ namespace SAI.SAI.App.Presenters
 
                 Console.WriteLine($"[DEBUG] RunInferenceDirect() 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
                 Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={result.Success}, image={result.ResultImage}, error={result.Error}");
-                
+
                 if (!string.IsNullOrEmpty(result.ResultImage))
                 {
                     Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {File.Exists(result.ResultImage)}");
                 }
-                
+
                 Console.WriteLine($"[INFO] 원본 이미지 파일명: {result.OriginalName}");
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -804,10 +784,10 @@ namespace SAI.SAI.App.Presenters
                 // 응답 파싱
                 var responseContent = await response.Content.ReadAsStringAsync();
                 Console.WriteLine($"[DEBUG] 서버 응답: {responseContent}");
-                
+
                 var result = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(responseContent);
-                
-                if (result.TryGetValue("task_id", out var taskIdElement) && 
+
+                if (result.TryGetValue("task_id", out var taskIdElement) &&
                     taskIdElement.ValueKind == JsonValueKind.String)
                 {
                     string taskId = taskIdElement.GetString();
@@ -815,13 +795,13 @@ namespace SAI.SAI.App.Presenters
                     {
                         // 현재 실행 중인 taskId 저장
                         _currentTaskId = taskId;
-                        
+
                         // 학습 진행 상황을 모니터링하는 메서드 호출
                         MonitorTrainingProgress(taskId);
                         return taskId;
                     }
                 }
-                
+
                 throw new Exception("응답에서 유효한 task_id를 찾을 수 없습니다.");
             }
             catch (Exception ex)
@@ -840,15 +820,15 @@ namespace SAI.SAI.App.Presenters
             try
             {
                 Console.WriteLine($"[INFO] WebSocket을 통한 학습 진행률 모니터링 시작: taskId={taskId}");
-                
+
                 // WebSocket 이벤트 핸들러 등록
                 _apiService.TrainingProgressReceived += OnTrainingProgressReceived;
                 _apiService.WebSocketError += OnWebSocketError;
                 _apiService.WebSocketDisconnected += OnWebSocketDisconnected;
-                
+
                 // WebSocket 연결 시도
                 bool connected = await _apiService.ConnectWebSocket(taskId);
-                
+
                 if (!connected)
                 {
                     Console.WriteLine($"[ERROR] WebSocket 연결 실패, HTTP 폴링으로 대체");
@@ -856,9 +836,9 @@ namespace SAI.SAI.App.Presenters
                     await MonitorTrainingProgressHttp(taskId);
                     return;
                 }
-                
+
                 Console.WriteLine($"[INFO] WebSocket 연결 성공, 실시간 모니터링 시작");
-                
+
                 // Ping 전송 루프 (연결 유지용)
                 _ = Task.Run(async () =>
                 {
@@ -879,7 +859,7 @@ namespace SAI.SAI.App.Presenters
                         }
                     }
                 });
-                
+
                 // 모니터링 완료까지 대기
                 while (!_monitoringCancellationTokenSource.Token.IsCancellationRequested)
                 {
@@ -893,7 +873,7 @@ namespace SAI.SAI.App.Presenters
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] 학습 모니터링 중 오류: {ex.Message}");
-                
+
                 // 오류 발생시 HTTP 폴링으로 대체
                 try
                 {
@@ -910,10 +890,10 @@ namespace SAI.SAI.App.Presenters
                 _apiService.TrainingProgressReceived -= OnTrainingProgressReceived;
                 _apiService.WebSocketError -= OnWebSocketError;
                 _apiService.WebSocketDisconnected -= OnWebSocketDisconnected;
-                
+
                 // WebSocket 연결 종료
                 await _apiService.DisconnectWebSocket();
-                
+
                 Console.WriteLine($"[INFO] 학습 모니터링 종료");
             }
         }
@@ -946,7 +926,7 @@ namespace SAI.SAI.App.Presenters
                         {
                             // 이미 "[YOLO Tutorial]" 접두사가 있는지 확인하여 중복 방지
                             var logToDisplay = log.StartsWith("[YOLO Tutorial]") ? log : $"[YOLO Tutorial] {log}";
-                            
+
                             // 로그 추가 (UI 스레드에서)
                             if (_yolotutorialview is Control logControl && logControl.InvokeRequired)
                             {
@@ -992,7 +972,7 @@ namespace SAI.SAI.App.Presenters
                     {
                         HandleTrainingFailed(e);
                     }
-                    
+
                     // 모니터링 종료
                     _monitoringCancellationTokenSource?.Cancel();
                 }
@@ -1007,7 +987,7 @@ namespace SAI.SAI.App.Presenters
         private void OnWebSocketError(object sender, string error)
         {
             Console.WriteLine($"[ERROR] WebSocket 오류: {error}");
-            
+
             // 오류 발생시 HTTP 폴링으로 대체할 수 있지만, 여기서는 로그만 출력
         }
 
@@ -1041,7 +1021,7 @@ namespace SAI.SAI.App.Presenters
 
             // 결과 데이터 처리
             object finalResults = e.Results;
-            
+
             // 결과 데이터가 요약 정보만 있는 경우 전체 데이터 조회
             if (e.Results != null)
             {
@@ -1049,13 +1029,13 @@ namespace SAI.SAI.App.Presenters
                 {
                     var resultsJson = JsonSerializer.Serialize(e.Results);
                     var resultsSummary = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsJson);
-                    
+
                     // data_available 플래그 확인
-                    if (resultsSummary.ContainsKey("data_available") && 
+                    if (resultsSummary.ContainsKey("data_available") &&
                         resultsSummary["data_available"].GetBoolean())
                     {
                         Console.WriteLine($"[INFO] 큰 결과 데이터 감지, HTTP API로 전체 데이터 조회 중...");
-                        
+
                         // 진행률 업데이트
                         if (_progressDialog != null && !_progressDialog.IsDisposed)
                         {
@@ -1074,15 +1054,15 @@ namespace SAI.SAI.App.Presenters
                                 _progressDialog.UpdateProgress(100, "큰 결과 데이터 다운로드 중...");
                             }
                         }
-                        
+
                         // HTTP API로 전체 결과 조회
                         var fullResultsResponse = await _apiService.GetAsync($"/api/training/results/{_currentTaskId}");
-                        
+
                         if (fullResultsResponse.IsSuccessStatusCode)
                         {
                             var fullResultsContent = await fullResultsResponse.Content.ReadAsStringAsync();
                             var fullResultsData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(fullResultsContent);
-                            
+
                             if (fullResultsData.ContainsKey("results"))
                             {
                                 finalResults = JsonSerializer.Deserialize<object>(fullResultsData["results"].GetRawText());
@@ -1110,8 +1090,8 @@ namespace SAI.SAI.App.Presenters
                 {
                     var resultsJson = JsonSerializer.Serialize(finalResults);
                     var results = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(resultsJson);
-                    
-                    if (results.TryGetValue("csv_base64", out var csvElement) && 
+
+                    if (results.TryGetValue("csv_base64", out var csvElement) &&
                         csvElement.ValueKind == JsonValueKind.String)
                     {
                         string csvBase64 = csvElement.GetString();
@@ -1135,15 +1115,15 @@ namespace SAI.SAI.App.Presenters
                                     _progressDialog.UpdateProgress(100, "학습 차트 생성 중...");
                                 }
                             }
-                            
+
                             byte[] csvBytes = Convert.FromBase64String(csvBase64);
-                            
+
                             // 로컬과 동일한 경로 구조로 CSV 파일 저장
                             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                             var localCsvPath = Path.Combine(baseDir,
-                                "SAI.Application","Python","runs","detect", "train", "results.csv");
+                                "SAI.Application", "Python", "runs", "detect", "train", "results.csv");
                             localCsvPath = Path.GetFullPath(localCsvPath);
-                            
+
                             // 디렉토리가 없으면 생성
                             var csvDir = Path.GetDirectoryName(localCsvPath);
                             if (!Directory.Exists(csvDir))
@@ -1151,11 +1131,11 @@ namespace SAI.SAI.App.Presenters
                                 Directory.CreateDirectory(csvDir);
                                 Console.WriteLine($"[INFO] 디렉토리 생성: {csvDir}");
                             }
-                            
+
                             // CSV 파일을 로컬 경로에 저장
                             File.WriteAllBytes(localCsvPath, csvBytes);
                             Console.WriteLine($"[INFO] 서버 학습 결과 CSV 파일 저장: {localCsvPath}");
-                            
+
                             // 추가로 임시 파일에도 저장 (기존 코드 유지)
                             string tempCsvPath = Path.Combine(
                                 Path.GetTempPath(),
@@ -1175,7 +1155,7 @@ namespace SAI.SAI.App.Presenters
                             {
                                 _yolotutorialview.ShowTutorialTrainingChart(localCsvPath);
                             }
-                            
+
                             Console.WriteLine($"[INFO] 학습 차트 생성 완료 (경로: {localCsvPath})");
                         }
                     }
@@ -1185,7 +1165,7 @@ namespace SAI.SAI.App.Presenters
                     Console.WriteLine($"[ERROR] 결과 처리 중 오류: {ex.Message}");
                 }
             }
-            
+
             // 최종 진행률 업데이트
             if (_progressDialog != null && !_progressDialog.IsDisposed)
             {
@@ -1204,7 +1184,7 @@ namespace SAI.SAI.App.Presenters
                     _progressDialog.UpdateProgress(100, "학습 완료 - 추론을 시작합니다...");
                 }
             }
-            
+
             // 추론 실행 (다이얼로그는 유지)
             _ = Task.Run(async () =>
             {
@@ -1232,18 +1212,18 @@ namespace SAI.SAI.App.Presenters
                     _progressDialog.Dispose();
                 }
             }
-            
+
             // Run 버튼 다시 활성화
             if (_yolotutorialview is UcTutorialBlockCode tutorialView)
             {
                 tutorialView.EnableRunButton();
                 Console.WriteLine("[INFO] 학습 실패로 인한 Run 버튼 상태 복원 완료");
             }
-            
+
             // 실패 메시지 표시
             string errorMessage = e.Error ?? "학습이 실패했습니다.";
             Console.WriteLine($"[YOLO Tutorial] 학습 실패: {errorMessage}");
-            
+
             if (_yolotutorialview is Control errorControl && errorControl.InvokeRequired)
             {
                 errorControl.Invoke(new Action(() =>
@@ -1260,7 +1240,7 @@ namespace SAI.SAI.App.Presenters
         private async Task MonitorTrainingProgressHttp(string taskId)
         {
             Console.WriteLine($"[INFO] HTTP 폴링 방식으로 학습 진행률 모니터링 시작");
-            
+
             bool isCompleted = false;
             int consecutiveErrors = 0;
             const int maxConsecutiveErrors = 5;
@@ -1276,7 +1256,7 @@ namespace SAI.SAI.App.Presenters
                     if (response.IsSuccessStatusCode)
                     {
                         consecutiveErrors = 0;
-                        
+
                         var content = await response.Content.ReadAsStringAsync();
                         var progressData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(content);
 
@@ -1291,11 +1271,11 @@ namespace SAI.SAI.App.Presenters
                             Console.WriteLine($"[YOLO Tutorial] {progress}:{message}");
 
                             // 새로운 로그 처리
-                            if (progressData.TryGetValue("logs", out var logsElement) && 
+                            if (progressData.TryGetValue("logs", out var logsElement) &&
                                 logsElement.ValueKind == JsonValueKind.Array)
                             {
                                 var logs = logsElement.EnumerateArray().Select(x => x.GetString()).ToList();
-                                
+
                                 if (logs.Count > lastLogCount)
                                 {
                                     var newLogs = logs.Skip(lastLogCount).ToList();
@@ -1350,7 +1330,7 @@ namespace SAI.SAI.App.Presenters
                                         Status = status,
                                         Progress = progress,
                                         Message = message,
-                                        Results = progressData.ContainsKey("results") ? 
+                                        Results = progressData.ContainsKey("results") ?
                                             JsonSerializer.Deserialize<object>(progressData["results"].GetRawText()) : null
                                     };
                                     HandleTrainingCompleted(fakeArgs);
@@ -1420,7 +1400,7 @@ namespace SAI.SAI.App.Presenters
                 if (!string.IsNullOrEmpty(_currentTaskId))
                 {
                     Console.WriteLine($"[INFO] 서버 학습 취소를 요청합니다. TaskId: {_currentTaskId}");
-                    
+
                     try
                     {
                         // 타임아웃을 짧게 설정하여 빠른 응답
@@ -1476,7 +1456,7 @@ namespace SAI.SAI.App.Presenters
 
                 // 5단계: 상태 초기화
                 _currentTaskId = null;
-                
+
                 // 6단계: UI 상태 복원 - Run 버튼 다시 활성화
                 if (_yolotutorialview is UcTutorialBlockCode tutorialView)
                 {
@@ -1485,7 +1465,7 @@ namespace SAI.SAI.App.Presenters
                 }
 
                 Console.WriteLine("[INFO] 서버 학습이 성공적으로 취소되었습니다.");
-                
+
                 // UI에 취소 메시지 표시
                 if (_yolotutorialview is Control messageControl && messageControl.InvokeRequired)
                 {
@@ -1503,7 +1483,7 @@ namespace SAI.SAI.App.Presenters
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] 취소 처리 중 예상치 못한 오류: {ex.Message}");
-                
+
                 // 강제로 다이얼로그 정리
                 try
                 {
@@ -1520,7 +1500,7 @@ namespace SAI.SAI.App.Presenters
         private async Task CleanupProgressDialog(string reason)
         {
             Console.WriteLine($"[INFO] 다이얼로그 정리 시작: {reason}");
-            
+
             try
             {
                 if (_progressDialog != null && !_progressDialog.IsDisposed)
@@ -1577,7 +1557,7 @@ namespace SAI.SAI.App.Presenters
                             Console.WriteLine("[INFO] 다이얼로그 이미 정리됨 (Direct)");
                         }
                     }
-                    
+
                     _progressDialog = null;
                 }
                 else
@@ -1588,11 +1568,11 @@ namespace SAI.SAI.App.Presenters
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] 다이얼로그 정리 중 오류: {ex.Message}");
-                
+
                 // 마지막 수단: 강제 null 할당
                 _progressDialog = null;
             }
-            
+
             // 다이얼로그 정리 완료 후 Run 버튼 활성화
             if (_yolotutorialview is UcTutorialBlockCode tutorialView)
             {
@@ -1624,16 +1604,16 @@ namespace SAI.SAI.App.Presenters
                         _progressDialog.UpdateProgress(100, "추론을 진행하고 있습니다...");
                     }
                 }
-                
+
                 // 블록 모델에서 이미지 경로 가져오기
                 var model = BlocklyModel.Instance;
                 string imagePath = model?.imgPath;
                 double conf = model?.accuracy ?? 0.25;
-                
+
                 if (string.IsNullOrEmpty(imagePath))
                 {
                     Console.WriteLine("[WARNING] 서버 추론: 이미지 경로가 없습니다.");
-                    
+
                     // 다이얼로그 닫기
                     if (_progressDialog != null && !_progressDialog.IsDisposed)
                     {
@@ -1653,14 +1633,14 @@ namespace SAI.SAI.App.Presenters
                     }
                     return;
                 }
-                
+
                 Console.WriteLine($"[INFO] 서버에서 자동 추론을 시작합니다: {imagePath}, conf={conf}");
-                
+
                 // 서버에서 추론 실행
                 var result = await RunInferenceDirectRemote(imagePath, conf);
-                
+
                 Console.WriteLine($"[DEBUG] 서버 추론 결과: success={result.Success}, error={result.Error}");
-                
+
                 // 추론 완료 상태 업데이트
                 if (_progressDialog != null && !_progressDialog.IsDisposed)
                 {
@@ -1679,10 +1659,10 @@ namespace SAI.SAI.App.Presenters
                         _progressDialog.UpdateProgress(100, "추론이 완료되었습니다!");
                     }
                 }
-                
+
                 // 잠시 대기 후 다이얼로그 닫기
                 await Task.Delay(1000);
-                
+
                 // UI 스레드에서 결과 표시 및 다이얼로그 닫기
                 if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
                 {
@@ -1693,7 +1673,7 @@ namespace SAI.SAI.App.Presenters
                             _progressDialog.Close();
                             _progressDialog.Dispose();
                         }
-                        
+
                         // 추론 결과 표시
                         if (_itutorialInferenceView != null)
                         {
@@ -1713,7 +1693,7 @@ namespace SAI.SAI.App.Presenters
                         _progressDialog.Close();
                         _progressDialog.Dispose();
                     }
-                    
+
                     // 추론 결과 표시
                     if (_itutorialInferenceView != null)
                     {
@@ -1728,14 +1708,14 @@ namespace SAI.SAI.App.Presenters
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] 서버 추론 실행 중 오류 발생: {ex.Message}");
-                
+
                 // 에러 결과 표시 및 다이얼로그 닫기
                 var errorResult = new PythonService.InferenceResult
                 {
                     Success = false,
                     Error = $"서버 추론 실행 중 오류 발생: {ex.Message}"
                 };
-                
+
                 if (_yolotutorialview is Control viewControl && viewControl.InvokeRequired)
                 {
                     viewControl.Invoke(new Action(() => {
@@ -1745,7 +1725,7 @@ namespace SAI.SAI.App.Presenters
                             _progressDialog.Close();
                             _progressDialog.Dispose();
                         }
-                        
+
                         // 에러 결과 표시
                         if (_itutorialInferenceView != null)
                         {
@@ -1761,7 +1741,7 @@ namespace SAI.SAI.App.Presenters
                         _progressDialog.Close();
                         _progressDialog.Dispose();
                     }
-                    
+
                     // 에러 결과 표시
                     if (_itutorialInferenceView != null)
                     {

@@ -439,6 +439,12 @@ namespace SAI.SAI.App.Forms.Dialogs
                 {
                     try
                     {
+
+                        // ✅ 추가: 기존 이미지 정리
+                        if (pboxStartcampInput.Image != null)
+                        {
+                            pboxStartcampInput.Image.Dispose();
+                        }
                         // 결과 이미지 경로 저장
                         currentImagePath = result.ResultImage;
                         _result = result;
