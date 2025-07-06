@@ -56,6 +56,8 @@ namespace SAI.SAI.App.Presenters
         public YoloTutorialPresenter(DialogStartcampInput dialogStartcampInput)
         {
             this.dialogStartcampInput = dialogStartcampInput;
+
+            _pythonService = new PythonService();
         }
 
         //private void OnRunButtonClicked(object sender, EventArgs e)

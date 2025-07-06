@@ -86,6 +86,13 @@ namespace SAI.SAI.App.Forms.Dialogs
                     }
 
                     btnStartcampInput.Visible = false;
+
+                    // threshold 컨트롤 다시 설정 (이미지가 로드된 후)
+                    if (tbarThreshold != null && tboxThreshold != null)
+                    {
+                        tbarThreshold.Value = 50; // 기본값 0.5
+                        tboxThreshold.Text = "0.5";
+                    }
                     Console.WriteLine($"[DEBUG] DialogStartcampInput: 전달받은 이미지 로드 완료 - {imagePath}");
                 }
                 catch (Exception ex)
