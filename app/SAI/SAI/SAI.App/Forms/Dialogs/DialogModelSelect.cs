@@ -215,8 +215,8 @@ namespace SAI.SAI.App.Forms.Dialogs
                 //}
                 //else
                 //{
-                    var prepareDialog = new DialogPrepare();
-                    prepareDialog.ShowDialog(this);
+                    var noTrainDailog = new DialogNoTrain();
+                    noTrainDailog.ShowDialog(this);
                 //}
             };
         }
