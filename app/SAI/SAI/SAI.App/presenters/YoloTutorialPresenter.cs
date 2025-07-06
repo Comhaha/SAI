@@ -422,6 +422,13 @@ namespace SAI.SAI.App.Presenters
                                     
                             // 스크립트 종료시 추론 결과 이미지 확인 및 표시
                                     CheckAndShowInferenceResult();
+
+                                    //  Run 버튼 활성화
+                                    if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+                                    {
+                                        tutorialView.EnableRunButton();
+                                        Console.WriteLine("[DEBUG] StartPythonScript finally: Run 버튼 활성화 완료");
+                                    }
                                 }
                             }));
                         }
@@ -433,6 +440,33 @@ namespace SAI.SAI.App.Presenters
                             
                             // 스크립트 종료시 추론 결과 이미지 확인 및 표시
                             CheckAndShowInferenceResult();
+
+                            // Run 버튼 활성화
+                            if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+                            {
+                                tutorialView.EnableRunButton();
+                                Console.WriteLine("[DEBUG] StartPythonScript finally: Run 버튼 활성화 완료");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // ✅ 프로그레스 다이얼로그가 없는 경우에도 Run 버튼 활성화
+                        if (_yolotutorialview is UcTutorialBlockCode tutorialView)
+                        {
+                            if (tutorialView.InvokeRequired)
+                            {
+                                tutorialView.Invoke(new Action(() =>
+                                {
+                                    tutorialView.EnableRunButton();
+                                    Console.WriteLine("[DEBUG] StartPythonScript finally (no dialog): Run 버튼 활성화 완료");
+                                }));
+                            }
+                            else
+                            {
+                                tutorialView.EnableRunButton();
+                                Console.WriteLine("[DEBUG] StartPythonScript finally (no dialog): Run 버튼 활성화 완료");
+                            }
                         }
                     }
                 }
