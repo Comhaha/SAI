@@ -1,19 +1,20 @@
-﻿using System;
+﻿using SAI.SAI.App.Forms.Dialogs;
+using SAI.SAI.App.Models;
+using SAI.SAI.App.Presenters;
+using SAI.SAI.App.Views.Common;
+using SAI.SAI.App.Views.Interfaces;
+using SAI.SAI.Application.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using SAI.SAI.App.Views.Common;
-using SAI.SAI.App.Presenters;
-using SAI.SAI.App.Views.Interfaces;
-using SAI.SAI.App.Models;
-using SAI.SAI.Application.Service;
-using SAI.SAI.App.Forms.Dialogs;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SAI.SAI.App.Forms.Dialogs
 {
@@ -356,6 +357,9 @@ namespace SAI.SAI.App.Forms.Dialogs
                 {
                     openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
                     openFileDialog.Title = "이미지 파일 선택";
+
+                    // ✅ 기본 경로 설정
+                    openFileDialog.InitialDirectory = @"C:\SAI\Input"; // 원하는 기본 경로
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {

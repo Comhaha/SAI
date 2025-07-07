@@ -903,6 +903,10 @@ namespace SAI.SAI.App.Views.Pages
                                 {
                                     dialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
                                     dialog.Multiselect = false;
+
+                                    // ✅ 기본 경로 설정
+                                    dialog.InitialDirectory = @"C:\SAI\Input"; // 원하는 기본 경로
+
                                     string blockId = root.GetProperty("blockId").GetString(); // blockId를 가져옴
                                     if (dialog.ShowDialog() == DialogResult.OK)
                                     {
