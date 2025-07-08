@@ -45,7 +45,7 @@ namespace SAI.SAI.App.Views.Common
                 blocklyModel.accuracy = currentThreshold;
                 Console.WriteLine($"[MouseUp] BlocklyModel accuracy 값 업데이트: {blocklyModel.accuracy:0.00}");
                 onThresholdChanged?.Invoke(currentThreshold);
-                view.ShowDialogInferenceLoading();
+                //view.ShowDialogInferenceLoading();
             };
         }
     }

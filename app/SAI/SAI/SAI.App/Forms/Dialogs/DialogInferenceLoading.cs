@@ -24,12 +24,13 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             DialogUtils.ApplyDefaultStyle(this, Color.Gray);
 
-            ButtonUtils.SetupButton(guna2Button1, "btn_close_prepare_clicked", "btn_close_prepare");
-            guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록 
+            //ButtonUtils.SetupButton(guna2Button1, "btn_close_prepare_clicked", "btn_close_prepare");
+            //guna2Button1.Click += guna2Button1_Click;  // 이벤트 핸들러 등록 
 
             // 폼 스타일 설정
             this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(525, 200);
             this.TopMost = true;
         }
 
