@@ -32,12 +32,14 @@
             this.btnClose2 = new Guna.UI2.WinForms.Guna2Button();
             this.btnStartcampInput = new Guna.UI2.WinForms.Guna2Button();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
-            this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnSizeup = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pboxStartcampInput = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
+            this.pleaseControlThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.btnStartcampInfer = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.panelTitleBar.SuspendLayout();
             this.pThreshold.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxStartcampInput)).BeginInit();
@@ -97,7 +99,7 @@
             this.tbarThreshold.BackColor = System.Drawing.Color.Transparent;
             this.tbarThreshold.Location = new System.Drawing.Point(84, 168);
             this.tbarThreshold.Name = "tbarThreshold";
-            this.tbarThreshold.Size = new System.Drawing.Size(344, 21);
+            this.tbarThreshold.Size = new System.Drawing.Size(265, 21);
             this.tbarThreshold.TabIndex = 10;
             this.tbarThreshold.ThumbColor = System.Drawing.Color.Gold;
             this.tbarThreshold.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbarThreshold_Scroll);
@@ -119,7 +121,7 @@
             this.pThreshold.BackgroundImage = global::SAI.Properties.Resources.tbox_threshold;
             this.pThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pThreshold.Controls.Add(this.tboxThreshold);
-            this.pThreshold.Location = new System.Drawing.Point(461, 156);
+            this.pThreshold.Location = new System.Drawing.Point(369, 158);
             this.pThreshold.Name = "pThreshold";
             this.pThreshold.Size = new System.Drawing.Size(73, 37);
             this.pThreshold.TabIndex = 13;
@@ -153,15 +155,15 @@
             this.ibtnSizeup.BackColor = System.Drawing.Color.Transparent;
             this.ibtnSizeup.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
             this.ibtnSizeup.HoverState.Image = global::SAI.Properties.Resources.btn_startcamp_sizeup_hover;
-            this.ibtnSizeup.HoverState.ImageSize = new System.Drawing.Size(164, 50);
+            this.ibtnSizeup.HoverState.ImageSize = new System.Drawing.Size(130, 50);
             this.ibtnSizeup.Image = global::SAI.Properties.Resources.btn_startcamp_sizeup;
             this.ibtnSizeup.ImageOffset = new System.Drawing.Point(0, 0);
             this.ibtnSizeup.ImageRotate = 0F;
-            this.ibtnSizeup.ImageSize = new System.Drawing.Size(164, 50);
-            this.ibtnSizeup.Location = new System.Drawing.Point(626, 132);
+            this.ibtnSizeup.ImageSize = new System.Drawing.Size(130, 50);
+            this.ibtnSizeup.Location = new System.Drawing.Point(660, 141);
             this.ibtnSizeup.Name = "ibtnSizeup";
-            this.ibtnSizeup.PressedState.ImageSize = new System.Drawing.Size(164, 50);
-            this.ibtnSizeup.Size = new System.Drawing.Size(173, 55);
+            this.ibtnSizeup.PressedState.ImageSize = new System.Drawing.Size(130, 50);
+            this.ibtnSizeup.Size = new System.Drawing.Size(139, 61);
             this.ibtnSizeup.TabIndex = 14;
             this.ibtnSizeup.Click += new System.EventHandler(this.ibtnSizeup_Click);
             // 
@@ -194,12 +196,49 @@
             this.pleaseControlThreshold.Text = "threshold를 설정해주세요";
             this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnStartcampInfer
+            // 
+            this.btnStartcampInfer.BackColor = System.Drawing.Color.Transparent;
+            this.btnStartcampInfer.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btnStartcampInfer.HoverState.Image = global::SAI.Properties.Resources.btn_dialog_infer_click;
+            this.btnStartcampInfer.HoverState.ImageSize = new System.Drawing.Size(130, 50);
+            this.btnStartcampInfer.Image = global::SAI.Properties.Resources.btn_dialog_infer1;
+            this.btnStartcampInfer.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnStartcampInfer.ImageRotate = 0F;
+            this.btnStartcampInfer.ImageSize = new System.Drawing.Size(130, 50);
+            this.btnStartcampInfer.Location = new System.Drawing.Point(517, 141);
+            this.btnStartcampInfer.Name = "btnStartcampInfer";
+            this.btnStartcampInfer.PressedState.ImageSize = new System.Drawing.Size(130, 50);
+            this.btnStartcampInfer.Size = new System.Drawing.Size(139, 61);
+            this.btnStartcampInfer.TabIndex = 14;
+            this.btnStartcampInfer.Click += new System.EventHandler(this.btnStartcampInfer_Click);
+            // 
+            // btnInfoThreshold
+            // 
+            this.btnInfoThreshold.BackColor = System.Drawing.Color.Transparent;
+            this.btnInfoThreshold.BackgroundImage = global::SAI.Properties.Resources.btn_info_12;
+            this.btnInfoThreshold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnInfoThreshold.BorderColor = System.Drawing.Color.Transparent;
+            this.btnInfoThreshold.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnInfoThreshold.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnInfoThreshold.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnInfoThreshold.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnInfoThreshold.FillColor = System.Drawing.Color.Transparent;
+            this.btnInfoThreshold.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnInfoThreshold.ForeColor = System.Drawing.Color.White;
+            this.btnInfoThreshold.Location = new System.Drawing.Point(255, 104);
+            this.btnInfoThreshold.Name = "btnInfoThreshold";
+            this.btnInfoThreshold.Size = new System.Drawing.Size(15, 15);
+            this.btnInfoThreshold.TabIndex = 26;
+            // 
             // DialogStartcampInput
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::SAI.Properties.Resources.bg_dialog_modelInference;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(870, 941);
+            this.Controls.Add(this.btnInfoThreshold);
+            this.Controls.Add(this.btnStartcampInfer);
             this.Controls.Add(this.pleaseControlThreshold);
             this.Controls.Add(this.pboxStartcampInput);
             this.Controls.Add(this.ibtnSizeup);
@@ -234,5 +273,7 @@
         private Guna.UI2.WinForms.Guna2ImageButton ibtnSizeup;
         private Guna.UI2.WinForms.Guna2PictureBox pboxStartcampInput;
         private SAI.App.Views.Pages.AutoSizeLabel pleaseControlThreshold;
+        private Guna.UI2.WinForms.Guna2ImageButton btnStartcampInfer;
+        private Guna.UI2.WinForms.Guna2Button btnInfoThreshold;
     }
 }

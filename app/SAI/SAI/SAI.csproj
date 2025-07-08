@@ -532,6 +532,8 @@
     <Content Include="Blockly\TutorialBlocks.js" />
     <Content Include="Blockly\TutorialBlockly.html" />
     <None Include="SAI.App\Resources\Images\bg_startcamp_guide.png" />
+    <None Include="SAI.App\Resources\Images\btn_dialog_infer_click.png" />
+    <None Include="SAI.App\Resources\Images\btn_dialog_infer.png" />
     <Content Include="SAI.App\Resources\Images\btn_StartcampInfer_hover.png" />
     <None Include="SAI.App\Resources\Images\DialogNoTrain.png" />
     <None Include="SAI.App\Resources\Images\btn_startcamp_sizeup_hover.png" />

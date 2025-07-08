@@ -80,7 +80,7 @@ namespace SAI.SAI.App.Forms.Dialogs
 
             // 툴팁 설정
             ToolTipUtils.CustomToolTip(btnStartcampInput, "추론에 사용할 이미지를 가져오려면 클릭하세요.");
-            //ToolTipUtils.CustomToolTip(btnInfoThreshold, "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
+            ToolTipUtils.CustomToolTip(btnInfoThreshold, "AI의 분류 기준입니다. 예측 결과가 이 값보다 높으면 '맞다(1)'고 판단하고, 낮으면 '아니다(0)'로 처리합니다.");
         }
 
         // ✅ 추가: BlocklyModel에서 이미지 경로가 변경될 때 호출되는 메서드
@@ -613,6 +613,11 @@ namespace SAI.SAI.App.Forms.Dialogs
         }
 
         private void DialogStartcampInput_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStartcampInfer_Click(object sender, EventArgs e)
         {
 
         }

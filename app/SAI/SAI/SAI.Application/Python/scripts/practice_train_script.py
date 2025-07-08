@@ -138,7 +138,6 @@ except Exception as e:
     raise
 
 # ================== 1. 패키지 설치 블록 함수 ==================
-def install_packages_block(block_params=None):
     # 패키지는 venv에 미리 설치 돼 있으므로 해당 블럭은 진행률에만 영향을 준다
 def install_packages_block(block_params=None):
     """패키지 설치 블록 실행 함수 (단순 확인 모드)"""
