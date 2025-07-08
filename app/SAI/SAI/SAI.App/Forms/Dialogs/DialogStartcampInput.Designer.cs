@@ -189,11 +189,11 @@
             this.pleaseControlThreshold.BackColor = System.Drawing.Color.Transparent;
             this.pleaseControlThreshold.Font = new System.Drawing.Font("Noto Sans KR", 9F);
             this.pleaseControlThreshold.ForeColor = System.Drawing.Color.Tomato;
-            this.pleaseControlThreshold.Location = new System.Drawing.Point(80, 125);
+            this.pleaseControlThreshold.Location = new System.Drawing.Point(80, 123);
             this.pleaseControlThreshold.Name = "pleaseControlThreshold";
-            this.pleaseControlThreshold.Size = new System.Drawing.Size(241, 32);
+            this.pleaseControlThreshold.Size = new System.Drawing.Size(375, 32);
             this.pleaseControlThreshold.TabIndex = 25;
-            this.pleaseControlThreshold.Text = "threshold를 설정해주세요";
+            this.pleaseControlThreshold.Text = "Threshold 설정 후 \"추론 실행하기\"를 눌러주세요";
             this.pleaseControlThreshold.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnStartcampInfer
@@ -226,7 +226,7 @@
             this.btnInfoThreshold.FillColor = System.Drawing.Color.Transparent;
             this.btnInfoThreshold.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnInfoThreshold.ForeColor = System.Drawing.Color.White;
-            this.btnInfoThreshold.Location = new System.Drawing.Point(255, 104);
+            this.btnInfoThreshold.Location = new System.Drawing.Point(253, 99);
             this.btnInfoThreshold.Name = "btnInfoThreshold";
             this.btnInfoThreshold.Size = new System.Drawing.Size(15, 15);
             this.btnInfoThreshold.TabIndex = 26;

@@ -50,7 +50,7 @@ Blockly.defineBlocksWithJsonArray([
                 "type": "field_custom_dropdown",
                 "name": "MODEL_VERSION",
                 "options": [
-                    ["Nano", "yolov8n-oiv7.pt"],
+                    ["Nano", "yolov8m-oiv7.pt"],
                 ]
             }
         ],
