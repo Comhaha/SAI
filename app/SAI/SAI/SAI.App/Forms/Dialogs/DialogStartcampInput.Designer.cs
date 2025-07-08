@@ -32,12 +32,12 @@
             this.btnClose2 = new Guna.UI2.WinForms.Guna2Button();
             this.btnStartcampInput = new Guna.UI2.WinForms.Guna2Button();
             this.tbarThreshold = new Guna.UI2.WinForms.Guna2TrackBar();
-            this.lblThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.lblThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.pThreshold = new Guna.UI2.WinForms.Guna2Panel();
             this.tboxThreshold = new Guna.UI2.WinForms.Guna2TextBox();
             this.ibtnSizeup = new Guna.UI2.WinForms.Guna2ImageButton();
             this.pboxStartcampInput = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.pleaseControlThreshold = new SAI.SAI.App.Views.Pages.AutoSizeLabel();
+            this.pleaseControlThreshold = new SAI.App.Views.Pages.AutoSizeLabel();
             this.btnStartcampInfer = new Guna.UI2.WinForms.Guna2ImageButton();
             this.btnInfoThreshold = new Guna.UI2.WinForms.Guna2Button();
             this.panelTitleBar.SuspendLayout();

@@ -302,49 +302,61 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void SetupThresholdControls()
         {
+            //ThresholdUtilsPractice.Setup(
+            //    tbarThreshold,
+            //    tboxThreshold,
+            //    (newValue) =>
+            //    {
+            //        currentThreshold = newValue;
+
+            //        // 현재 BlocklyModel의 이미지 경로 사용 (항상 최신 상태 보장)
+            //        var blocklyModel = BlocklyModel.Instance;
+            //        string imagePathToUse = !string.IsNullOrEmpty(blocklyModel?.imgPath) ? blocklyModel.imgPath : selectedImagePath;
+
+            //        Console.WriteLine($"[LOG] DialogStartcampInput - selectedImagePath: {selectedImagePath}");
+            //        Console.WriteLine($"[LOG] DialogStartcampInput - currentThreshold: {currentThreshold}");
+
+            //        // 추론은 백그라운드에서 실행
+            //        // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
+            //        Task.Run(async () =>
+            //        {
+            //            _result = await yoloTutorialPresenter.RunInferenceDirect(
+            //                imagePathToUse,
+            //                currentThreshold
+            //            );
+
+            //            Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={_result.Success}, image={_result.ResultImage}, error={_result.Error}");
+            //            if (!string.IsNullOrEmpty(_result.ResultImage))
+            //            {
+            //                bool fileExists = System.IO.File.Exists(_result.ResultImage);
+            //                Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("[LOG] ResultImage가 비어있음");
+            //            }
+
+            //            // 결과는 UI 스레드로 전달
+            //            this.Invoke(new Action(() =>
+            //            {
+            //                ShowPracticeInferResultImage(_result);
+            //            }));
+            //        });
+            //    },
+            //    this
+            //);
             ThresholdUtilsPractice.Setup(
-                tbarThreshold,
-                tboxThreshold,
-                (newValue) =>
-                {
-                    currentThreshold = newValue;
-
-                    // 현재 BlocklyModel의 이미지 경로 사용 (항상 최신 상태 보장)
-                    var blocklyModel = BlocklyModel.Instance;
-                    string imagePathToUse = !string.IsNullOrEmpty(blocklyModel?.imgPath) ? blocklyModel.imgPath : selectedImagePath;
-
-                    Console.WriteLine($"[LOG] DialogStartcampInput - selectedImagePath: {selectedImagePath}");
-                    Console.WriteLine($"[LOG] DialogStartcampInput - currentThreshold: {currentThreshold}");
-
-                    // 추론은 백그라운드에서 실행
-                    // 이미지경로, threshold 값을 던져야 추론스크립트 실행 가능
-                    Task.Run(async () =>
-                    {
-                        _result = await yoloTutorialPresenter.RunInferenceDirect(
-                            imagePathToUse,
-                            currentThreshold
-                        );
-
-                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={_result.Success}, image={_result.ResultImage}, error={_result.Error}");
-                        if (!string.IsNullOrEmpty(_result.ResultImage))
-                        {
-                            bool fileExists = System.IO.File.Exists(_result.ResultImage);
-                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("[LOG] ResultImage가 비어있음");
-                        }
-
-                        // 결과는 UI 스레드로 전달
-                        this.Invoke(new Action(() =>
-                        {
-                            ShowPracticeInferResultImage(_result);
-                        }));
-                    });
-                },
-                this
-            );
+        tbarThreshold,
+        tboxThreshold,
+        (newValue) =>
+        {
+            // threshold 값만 업데이트하고 추론은 실행하지 않음
+            currentThreshold = newValue;
+            Console.WriteLine($"[LOG] Threshold 값 변경: {currentThreshold}");
+            
+        },
+        this
+    );
         }
 
         // 추론 이미지 불러오기
@@ -619,7 +631,84 @@ namespace SAI.SAI.App.Forms.Dialogs
 
         private void btnStartcampInfer_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // 이미지 경로 확인
+                var blocklyModel = BlocklyModel.Instance;
+                string imagePathToUse = !string.IsNullOrEmpty(blocklyModel?.imgPath) ?
+                    blocklyModel.imgPath : selectedImagePath;
 
+                if (string.IsNullOrEmpty(imagePathToUse) || !File.Exists(imagePathToUse))
+                {
+                    MessageBox.Show("추론할 이미지를 먼저 선택해주세요.", "이미지 없음",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Console.WriteLine($"[LOG] btnStartcampInfer 클릭 - selectedImagePath: {imagePathToUse}");
+                Console.WriteLine($"[LOG] btnStartcampInfer 클릭 - currentThreshold: {currentThreshold}");
+
+                // 로딩 다이얼로그 표시
+                dialogLoadingInfer = new DialogInferenceLoading();
+                dialogLoadingInfer.Show(this);
+
+                // 추론을 백그라운드에서 실행
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        _result = await yoloTutorialPresenter.RunInferenceDirect(
+                            imagePathToUse,
+                            currentThreshold
+                        );
+
+                        Console.WriteLine($"[LOG] RunInferenceDirect 결과: success={_result.Success}, image={_result.ResultImage}, error={_result.Error}");
+
+                        if (!string.IsNullOrEmpty(_result.ResultImage))
+                        {
+                            bool fileExists = System.IO.File.Exists(_result.ResultImage);
+                            Console.WriteLine($"[LOG] ResultImage 파일 존재 여부: {fileExists}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[LOG] ResultImage가 비어있음");
+                        }
+
+                        // 결과는 UI 스레드로 전달
+                        this.Invoke(new Action(() =>
+                        {
+                            // 로딩 다이얼로그 닫기
+                            dialogLoadingInfer?.Close();
+                            dialogLoadingInfer?.Dispose();
+                            dialogLoadingInfer = null;
+
+                            // 추론 결과 표시
+                            ShowPracticeInferResultImage(_result);
+                        }));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[ERROR] 추론 실행 중 오류: {ex.Message}");
+
+                        this.Invoke(new Action(() =>
+                        {
+                            // 로딩 다이얼로그 닫기
+                            dialogLoadingInfer?.Close();
+                            dialogLoadingInfer?.Dispose();
+                            dialogLoadingInfer = null;
+
+                            MessageBox.Show($"추론 실행 중 오류가 발생했습니다: {ex.Message}", "오류",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] btnStartcampInfer_Click 오류: {ex.Message}");
+                MessageBox.Show($"추론 시작 중 오류가 발생했습니다: {ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
