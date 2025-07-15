@@ -7,6 +7,7 @@ install_packages.py - 패키지 설치 유틸리티
 이 스크립트는 AI 학습용 필수 패키지 설치 및 CUDA 지원 PyTorch 설치를 관리합니다.
 튜토리얼 모드 및 실습 모드에서 공통으로 사용됩니다.
 """
+## 테스트용 주석입니다
 
 import os
 import sys
